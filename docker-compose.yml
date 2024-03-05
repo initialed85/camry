@@ -1,0 +1,41 @@
+volumes:
+  postgres:
+  minio:
+
+services:
+  postgres:
+    image: postgres:16.1-bullseye
+    restart: unless-stopped
+    stop_grace_period: 0s
+    healthcheck:
+        interval: 5s
+        timeout: 4s
+        start_period: 10s
+        test: ["CMD", "pg_isready", "-U", "postgres"]
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=camry
+      - POSTGRES_PASSWORD=camry
+    ports:
+     - 5432:5432/tcp
+
+  minio:
+    image: quay.io/minio/minio
+    restart: unless-stopped
+    stop_grace_period: 0s
+    healthcheck:
+        interval: 5s
+        timeout: 4s
+        start_period: 10s
+        test: ["CMD", "curl", "-I", "http://minio:9000/minio/health/live"]
+    volumes:
+      - minio:/data
+    ports:
+      - 9000:9000/tcp
+      - 9001:9001/tcp
+    command:
+      - server
+      - /data
+      - --console-address
+      - ":9001"
