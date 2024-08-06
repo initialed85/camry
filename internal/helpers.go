@@ -12,7 +12,11 @@ type X struct {
 	Var any
 }
 
-func GetEnvironment[T any](key string, required bool, defaultValue *T) (T, error) {
+func Ptr[T any](x T) *T {
+	return &x
+}
+
+func GetEnvironment[T any](key string, required bool, defaultValue *T, isNumericBools ...bool) (T, error) {
 	rawValue := strings.TrimSpace(os.Getenv(key))
 	if rawValue == "" {
 		if required {
@@ -23,6 +27,15 @@ func GetEnvironment[T any](key string, required bool, defaultValue *T) (T, error
 			return *defaultValue, nil
 		} else {
 			return *new(T), fmt.Errorf("env var %#+v default value nil", key)
+		}
+	}
+
+	if len(isNumericBools) > 0 && isNumericBools[0] {
+		switch rawValue {
+		case "1":
+			rawValue = "true"
+		case "0":
+			rawValue = "false"
 		}
 	}
 
@@ -49,8 +62,4 @@ func GetEnvironment[T any](key string, required bool, defaultValue *T) (T, error
 	}
 
 	return x.Var, nil
-}
-
-func Ptr[T any](x T) *T {
-	return &x
 }
