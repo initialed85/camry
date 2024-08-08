@@ -3,18 +3,22 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@carefully-coded/react-text-gradient": "^1.0.6",
     "@emotion/react": "^11.13.0",
     "@emotion/styled": "^11.13.0",
     "@fontsource/inter": "^5.0.20",
+    "@mui/icons-material": "^5.16.6",
     "@mui/joy": "^5.0.0-beta.48",
+    "@mui/material": "^5.16.6",
+    "@tanstack/query-async-storage-persister": "^5.51.21",
+    "@tanstack/query-sync-storage-persister": "^5.51.21",
     "@tanstack/react-query": "^5.51.21",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@tanstack/react-query-persist-client": "^5.51.23",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.104",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
+    "http-proxy-middleware": "^3.0.0",
     "openapi-fetch": "^0.10.5",
     "openapi-react-query": "^0.0.3",
     "prettier": "^3.3.3",
@@ -22,8 +26,27 @@
     "react-dom": "^18.3.1",
     "react-scripts": "5.0.1",
     "typescript": "^5.5.4",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "workbox-background-sync": "^6.6.0",
+    "workbox-broadcast-update": "^6.6.0",
+    "workbox-cacheable-response": "^6.6.0",
+    "workbox-core": "^6.6.0",
+    "workbox-expiration": "^6.6.0",
+    "workbox-google-analytics": "^6.6.1",
+    "workbox-navigation-preload": "^6.6.0",
+    "workbox-precaching": "^6.6.0",
+    "workbox-range-requests": "^6.6.0",
+    "workbox-routing": "^6.6.0",
+    "workbox-strategies": "^6.6.0",
+    "workbox-streams": "^6.6.0"
   },
+  "overrides": {
+    "typescript": "^5.5.4"
+  },
+  "devDependencies": {
+    "openapi-typescript": "^7.3.0"
+  },
+  "proxy": "http://localhost:7070",
   "scripts": {
     "openapi-typescript": "mkdir -p ./src/api && openapi-typescript ../schema/openapi.json -o ./src/api/api.d.ts",
     "prettier": "prettier -w src",
@@ -48,12 +71,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "overrides": {
-    "typescript": "^5.5.4"
-  },
-  "devDependencies": {
-    "openapi-typescript": "^7.3.0"
-  },
-  "proxy": "http://localhost:7070"
+  }
 }

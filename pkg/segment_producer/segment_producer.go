@@ -399,13 +399,6 @@ func Run() error {
 	var video *api.Video
 
 	onOpen := func(path string) error {
-		video = &api.Video{
-			FilePath:  path,
-			StartedAt: time.Now(),
-			Status:    helpers.Ptr("recording"),
-			CameraID:  camera.ID,
-		}
-
 		mu.Lock()
 		defer mu.Unlock()
 
@@ -417,6 +410,23 @@ func Run() error {
 		defer func() {
 			_ = tx.Rollback()
 		}()
+
+		if video != nil && video.Status != nil && *video.Status == "recording" {
+			video.Status = helpers.Ptr("failed")
+			err = video.Update(ctx, tx, false)
+			if err != nil {
+				return err
+			}
+		}
+
+		_, fileName := filepath.Split(path)
+
+		video = &api.Video{
+			FilePath:  fileName,
+			StartedAt: time.Now(),
+			Status:    helpers.Ptr("recording"),
+			CameraID:  camera.ID,
+		}
 
 		err = video.Insert(ctx, tx, false, false)
 		if err != nil {
@@ -438,21 +448,8 @@ func Run() error {
 	}
 
 	onSave := func(path string) error {
-		_, file := filepath.Split(path)
-		ext := filepath.Ext(file)
-		thumbnailPath := fmt.Sprintf("%v.jpg", path[:len(path)-len(ext)])
-
-		err = getThumbail(path, thumbnailPath)
-		if err != nil {
-			return err
-		}
-
 		mu.Lock()
 		defer mu.Unlock()
-
-		if video == nil {
-			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can finalize with the database")
-		}
 
 		tx, err := db.BeginTxx(ctx, nil)
 		if err != nil {
@@ -463,9 +460,24 @@ func Run() error {
 			_ = tx.Rollback()
 		}()
 
+		_, fileName := filepath.Split(path)
+		ext := filepath.Ext(fileName)
+		thumbnailPath := fmt.Sprintf("%v.jpg", path[:len(path)-len(ext)])
+
+		err = getThumbail(path, thumbnailPath)
+		if err != nil {
+			return err
+		}
+
+		_, thumbnailName := filepath.Split(thumbnailPath)
+
+		if video == nil {
+			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can finalize with the database")
+		}
+
 		video.EndedAt = helpers.Ptr(time.Now())
 		video.Duration = helpers.Ptr(video.EndedAt.Sub(video.StartedAt))
-		video.ThumbnailPath = &thumbnailPath
+		video.ThumbnailPath = &thumbnailName
 		video.Status = helpers.Ptr("needs detection")
 
 		err = video.Update(ctx, tx, false)

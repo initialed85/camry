@@ -881,7 +881,7 @@ func SelectVideo(
 	return object, nil
 }
 
-func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisConn redis.Conn, modelMiddlewares []server.ModelMiddleware) {
+func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware) {
 	ctx := r.Context()
 
 	insaneOrderParams := make([]string, 0)
@@ -1140,6 +1140,11 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisC
 		return
 	}
 
+	redisConn := redisPool.Get()
+	defer func() {
+		_ = redisConn.Close()
+	}()
+
 	cacheHit, err := helpers.AttemptCachedResponse(requestHash, redisConn, w)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1182,7 +1187,7 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisC
 	}
 }
 
-func handleGetVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisConn redis.Conn, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+func handleGetVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
 	ctx := r.Context()
 
 	wheres := []string{fmt.Sprintf("%s = $$??", VideoTablePrimaryKeyColumn)}
@@ -1193,6 +1198,11 @@ func handleGetVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisCo
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
 	}
+
+	redisConn := redisPool.Get()
+	defer func() {
+		_ = redisConn.Close()
+	}()
 
 	cacheHit, err := helpers.AttemptCachedResponse(requestHash, redisConn, w)
 	if err != nil {
@@ -1236,8 +1246,8 @@ func handleGetVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisCo
 	}
 }
 
-func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisConn redis.Conn, modelMiddlewares []server.ModelMiddleware) {
-	_ = redisConn
+func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware) {
+	_ = redisPool
 
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -1299,8 +1309,8 @@ func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 	helpers.HandleObjectsResponse(w, http.StatusCreated, objects)
 }
 
-func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisConn redis.Conn, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
-	_ = redisConn
+func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+	_ = redisPool
 
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -1355,8 +1365,8 @@ func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisCo
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Video{object})
 }
 
-func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisConn redis.Conn, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
-	_ = redisConn
+func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+	_ = redisPool
 
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -1420,8 +1430,8 @@ func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Video{object})
 }
 
-func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisConn redis.Conn, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
-	_ = redisConn
+func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+	_ = redisPool
 
 	var item = make(map[string]any)
 
@@ -1463,7 +1473,7 @@ func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 	helpers.HandleObjectsResponse(w, http.StatusNoContent, nil)
 }
 
-func GetVideoRouter(db *sqlx.DB, redisConn redis.Conn, httpMiddlewares []server.HTTPMiddleware, modelMiddlewares []server.ModelMiddleware) chi.Router {
+func GetVideoRouter(db *sqlx.DB, redisPool *redis.Pool, httpMiddlewares []server.HTTPMiddleware, modelMiddlewares []server.ModelMiddleware) chi.Router {
 	r := chi.NewRouter()
 
 	for _, m := range httpMiddlewares {
@@ -1471,27 +1481,27 @@ func GetVideoRouter(db *sqlx.DB, redisConn redis.Conn, httpMiddlewares []server.
 	}
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		handleGetVideos(w, r, db, redisConn, modelMiddlewares)
+		handleGetVideos(w, r, db, redisPool, modelMiddlewares)
 	})
 
 	r.Get("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handleGetVideo(w, r, db, redisConn, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handleGetVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
 	})
 
 	r.Post("/", func(w http.ResponseWriter, r *http.Request) {
-		handlePostVideos(w, r, db, redisConn, modelMiddlewares)
+		handlePostVideos(w, r, db, redisPool, modelMiddlewares)
 	})
 
 	r.Put("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handlePutVideo(w, r, db, redisConn, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handlePutVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
 	})
 
 	r.Patch("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handlePatchVideo(w, r, db, redisConn, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handlePatchVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
 	})
 
 	r.Delete("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handleDeleteVideo(w, r, db, redisConn, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handleDeleteVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
 	})
 
 	return r

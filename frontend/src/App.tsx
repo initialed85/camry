@@ -1,43 +1,13 @@
-import { CssVarsProvider, useColorScheme } from "@mui/joy/styles";
-
-import Dropdown from "@mui/joy/Dropdown";
 import Grid from "@mui/joy/Grid";
-import Menu from "@mui/joy/Menu";
-import MenuButton from "@mui/joy/MenuButton";
-import MenuItem from "@mui/joy/MenuItem";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 
-import "./App.css";
-
-import Button from "@mui/joy/Button";
-import React from "react";
-import { useQuery } from "./api";
-
-function ModeToggle() {
-  const { mode, setMode } = useColorScheme();
-  const [mounted, setMounted] = React.useState(false);
-
-  // necessary for server-side rendering
-  // because mode is undefined on the server
-  React.useEffect(() => {
-    setMounted(true);
-  }, []);
-  if (!mounted) {
-    return null;
-  }
-
-  return (
-    <Button
-      variant="outlined"
-      onClick={() => {
-        setMode(mode === "light" ? "dark" : "light");
-      }}
-    >
-      {mode === "light" ? "Dark" : "Light"}
-    </Button>
-  );
-}
+import Input from "@mui/joy/Input";
+import { useEffect, useState } from "react";
+import CameraToggleButtonGroup from "./components/CameraToggleButtonGroup";
+import DateDropdownMenu from "./components/DateDropdownMenu";
+import ModeToggle from "./components/ModeToggle";
+import { VideoTable } from "./components/VideoTable";
 
 function App() {
   // TODO: for future reference
@@ -53,85 +23,68 @@ function App() {
   //   }
   // };
 
-  const {
-    data: camerasData,
-    error: camerasError,
-    isLoading: camerasIsLoading,
-  } = useQuery("get", "/cameras", {}, { refetchInterval: 1_000 });
+  const [responsive, setResponsive] = useState(window.innerWidth < 992);
+  const [cameraId, setCameraId] = useState<string | null>();
+  const [date, setDate] = useState<string | null>();
 
-  const {
-    data: videosData,
-    error: videosError,
-    isLoading: videosIsLoading,
-  } = useQuery(
-    "get",
-    "/videos",
-    { params: { query: { order_by__desc: "started_at", limit: 2 } } },
-    { refetchInterval: 1_000 },
-  );
+  useEffect(() => {
+    const handleResize = () => {
+      setResponsive(window.innerWidth < 992);
+    };
 
-  if (camerasIsLoading || videosIsLoading) {
-    return <b>Loading...</b>;
-  }
-
-  if (camerasError) {
-    return <h1>Failed to load cameras: ${camerasError.error}</h1>;
-  }
-
-  if (videosError) {
-    return <h1>Failed to load videos: ${videosError.error}</h1>;
-  }
+    window.addEventListener("resize", () => {
+      handleResize();
+    });
+  }, []);
 
   return (
-    <CssVarsProvider>
-      <Sheet
-        variant="outlined"
-        sx={{
-          // width: "99%",
-          mx: 1, // margin left & right
-          my: 1, // margin top & bottom
-          py: 1, // padding top & bottom
-          px: 1, // padding left & right
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          borderRadius: "sm",
-          boxShadow: "md",
-        }}
-      >
-        <Grid container spacing={2} sx={{ flexGrow: 1 }}>
-          <Grid xs={2}>
-            <Dropdown>
-              <MenuButton>Cameras</MenuButton>
-              <Menu>
-                {camerasData?.objects?.map((c) => {
-                  return <MenuItem>{c.name}</MenuItem>;
-                })}
-              </Menu>
-            </Dropdown>
-          </Grid>
-          <Grid xs={2}>
-            <ModeToggle />
-          </Grid>
-        </Grid>
-
-        <div>
-          <Typography level="h4" component="h1">
-            Camry
+    <Sheet
+      variant="soft"
+      sx={{
+        mx: 0,
+        my: 0,
+        py: 1,
+        px: 1,
+        display: "flex",
+        flexDirection: "column",
+        borderRadius: "none",
+        boxShadow: "md",
+        height: "100%",
+      }}
+    >
+      <Grid container sx={{ pb: 1 }}>
+        <Grid xs={1}>
+          <Typography
+            level="h4"
+            component="h4"
+            sx={{ pt: 0.1, textAlign: "center" }}
+            color="neutral"
+          >
+            {responsive ? "C" : "Camry"}
           </Typography>
-          <div>
-            <pre style={{ fontSize: 10 }}>
-              {JSON.stringify(camerasData?.objects, null, 2)}
-            </pre>
-          </div>
-          <div>
-            <pre style={{ fontSize: 10 }}>
-              {JSON.stringify(videosData?.objects, null, 2)}
-            </pre>
-          </div>
-        </div>
-      </Sheet>
-    </CssVarsProvider>
+        </Grid>
+        <Grid
+          xs={10}
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+          }}
+        >
+          <CameraToggleButtonGroup
+            responsive={responsive}
+            setCameraId={setCameraId}
+          />
+          <DateDropdownMenu responsive={responsive} setDate={setDate} />
+          <Input size="sm" sx={{ mr: 1.5 }} />
+        </Grid>
+        <Grid xs={1} sx={{ display: "flex", justifyContent: "end", pr: 0.5 }}>
+          <ModeToggle responsive={responsive} />
+        </Grid>
+      </Grid>
+
+      <VideoTable responsive={responsive} cameraId={cameraId} date={date} />
+    </Sheet>
   );
 }
 
