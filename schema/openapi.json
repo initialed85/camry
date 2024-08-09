@@ -4,8 +4,9 @@
     "title": "Djangolang",
     "version": "1.0"
   },
+  "servers": null,
   "paths": {
-    "/cameras": {
+    "/api/cameras": {
       "get": {
         "tags": [
           "Camera"
@@ -31,24 +32,6 @@
               "format": "int32"
             },
             "description": "SQL OFFSET operator"
-          },
-          {
-            "name": "order_by__asc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ ASC operator, permits comma-separated values"
-          },
-          {
-            "name": "order_by__desc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ DESC operator, permits comma-separated values"
           },
           {
             "name": "id__eq",
@@ -148,7 +131,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__nisnull",
@@ -158,7 +141,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__isnotnull",
@@ -168,7 +151,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__l",
@@ -271,6 +254,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "created_at__eq",
             "in": "query",
             "required": false,
@@ -368,7 +371,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__nisnull",
@@ -378,7 +381,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__isnotnull",
@@ -388,7 +391,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__l",
@@ -491,6 +494,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "created_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "created_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "updated_at__eq",
             "in": "query",
             "required": false,
@@ -588,7 +611,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__nisnull",
@@ -598,7 +621,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__isnotnull",
@@ -608,7 +631,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__l",
@@ -711,6 +734,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "updated_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "updated_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "deleted_at__eq",
             "in": "query",
             "required": false,
@@ -808,7 +851,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__nisnull",
@@ -818,7 +861,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__isnotnull",
@@ -828,7 +871,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__l",
@@ -931,6 +974,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "deleted_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "name__eq",
             "in": "query",
             "required": false,
@@ -1018,7 +1081,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "name__nisnull",
@@ -1027,7 +1090,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "name__isnotnull",
@@ -1036,7 +1099,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "name__l",
@@ -1129,6 +1192,24 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "name__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "name__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "stream_url__eq",
             "in": "query",
             "required": false,
@@ -1216,7 +1297,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "stream_url__nisnull",
@@ -1225,7 +1306,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "stream_url__isnotnull",
@@ -1234,7 +1315,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "stream_url__l",
@@ -1325,6 +1406,24 @@
               "type": "string"
             },
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "stream_url__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "stream_url__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "last_seen__eq",
@@ -1424,7 +1523,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "last_seen__nisnull",
@@ -1434,7 +1533,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "last_seen__isnotnull",
@@ -1444,7 +1543,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "last_seen__l",
@@ -1545,6 +1644,26 @@
               "format": "date-time"
             },
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "last_seen__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "last_seen__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -1688,7 +1807,7 @@
         }
       }
     },
-    "/cameras/{primaryKey}": {
+    "/api/cameras/{primaryKey}": {
       "get": {
         "tags": [
           "Camera"
@@ -1981,7 +2100,7 @@
         }
       }
     },
-    "/detections": {
+    "/api/detections": {
       "get": {
         "tags": [
           "Detection"
@@ -2007,24 +2126,6 @@
               "format": "int32"
             },
             "description": "SQL OFFSET operator"
-          },
-          {
-            "name": "order_by__asc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ ASC operator, permits comma-separated values"
-          },
-          {
-            "name": "order_by__desc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ DESC operator, permits comma-separated values"
           },
           {
             "name": "id__eq",
@@ -2124,7 +2225,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__nisnull",
@@ -2134,7 +2235,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__isnotnull",
@@ -2144,7 +2245,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__l",
@@ -2247,6 +2348,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "created_at__eq",
             "in": "query",
             "required": false,
@@ -2344,7 +2465,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__nisnull",
@@ -2354,7 +2475,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__isnotnull",
@@ -2364,7 +2485,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__l",
@@ -2467,6 +2588,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "created_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "created_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "updated_at__eq",
             "in": "query",
             "required": false,
@@ -2564,7 +2705,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__nisnull",
@@ -2574,7 +2715,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__isnotnull",
@@ -2584,7 +2725,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__l",
@@ -2687,6 +2828,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "updated_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "updated_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "deleted_at__eq",
             "in": "query",
             "required": false,
@@ -2784,7 +2945,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__nisnull",
@@ -2794,7 +2955,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__isnotnull",
@@ -2804,7 +2965,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__l",
@@ -2907,6 +3068,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "deleted_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "seen_at__eq",
             "in": "query",
             "required": false,
@@ -3004,7 +3185,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "seen_at__nisnull",
@@ -3014,7 +3195,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "seen_at__isnotnull",
@@ -3024,7 +3205,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "seen_at__l",
@@ -3127,6 +3308,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "seen_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "seen_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "class_id__eq",
             "in": "query",
             "required": false,
@@ -3224,7 +3425,7 @@
               "type": "integer",
               "format": "int64"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "class_id__nisnull",
@@ -3234,7 +3435,7 @@
               "type": "integer",
               "format": "int64"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "class_id__isnotnull",
@@ -3244,7 +3445,7 @@
               "type": "integer",
               "format": "int64"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "class_id__l",
@@ -3347,6 +3548,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "class_id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "class_id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "class_name__eq",
             "in": "query",
             "required": false,
@@ -3434,7 +3655,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "class_name__nisnull",
@@ -3443,7 +3664,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "class_name__isnotnull",
@@ -3452,7 +3673,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "class_name__l",
@@ -3543,6 +3764,24 @@
               "type": "string"
             },
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "class_name__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "class_name__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "score__eq",
@@ -3642,7 +3881,7 @@
               "type": "number",
               "format": "double"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "score__nisnull",
@@ -3652,7 +3891,7 @@
               "type": "number",
               "format": "double"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "score__isnotnull",
@@ -3662,7 +3901,7 @@
               "type": "number",
               "format": "double"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "score__l",
@@ -3765,6 +4004,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "score__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "score__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "camera_id__eq",
             "in": "query",
             "required": false,
@@ -3862,7 +4121,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "camera_id__nisnull",
@@ -3872,7 +4131,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "camera_id__isnotnull",
@@ -3882,7 +4141,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "camera_id__l",
@@ -3983,6 +4242,26 @@
               "format": "uuid"
             },
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "camera_id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -4126,7 +4405,7 @@
         }
       }
     },
-    "/detections/{primaryKey}": {
+    "/api/detections/{primaryKey}": {
       "get": {
         "tags": [
           "Detection"
@@ -4419,7 +4698,7 @@
         }
       }
     },
-    "/videos": {
+    "/api/videos": {
       "get": {
         "tags": [
           "Video"
@@ -4445,24 +4724,6 @@
               "format": "int32"
             },
             "description": "SQL OFFSET operator"
-          },
-          {
-            "name": "order_by__asc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ ASC operator, permits comma-separated values"
-          },
-          {
-            "name": "order_by__desc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ DESC operator, permits comma-separated values"
           },
           {
             "name": "id__eq",
@@ -4562,7 +4823,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__nisnull",
@@ -4572,7 +4833,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__isnotnull",
@@ -4582,7 +4843,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__l",
@@ -4685,6 +4946,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "created_at__eq",
             "in": "query",
             "required": false,
@@ -4782,7 +5063,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__nisnull",
@@ -4792,7 +5073,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__isnotnull",
@@ -4802,7 +5083,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "created_at__l",
@@ -4905,6 +5186,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "created_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "created_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "updated_at__eq",
             "in": "query",
             "required": false,
@@ -5002,7 +5303,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__nisnull",
@@ -5012,7 +5313,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__isnotnull",
@@ -5022,7 +5323,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "updated_at__l",
@@ -5125,6 +5426,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "updated_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "updated_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "deleted_at__eq",
             "in": "query",
             "required": false,
@@ -5222,7 +5543,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__nisnull",
@@ -5232,7 +5553,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__isnotnull",
@@ -5242,7 +5563,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "deleted_at__l",
@@ -5345,6 +5666,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "deleted_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "file_path__eq",
             "in": "query",
             "required": false,
@@ -5432,7 +5773,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "file_path__nisnull",
@@ -5441,7 +5782,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "file_path__isnotnull",
@@ -5450,7 +5791,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "file_path__l",
@@ -5541,6 +5882,24 @@
               "type": "string"
             },
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_path__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_path__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "started_at__eq",
@@ -5640,7 +5999,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "started_at__nisnull",
@@ -5650,7 +6009,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "started_at__isnotnull",
@@ -5660,7 +6019,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "started_at__l",
@@ -5763,6 +6122,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "started_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "started_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "ended_at__eq",
             "in": "query",
             "required": false,
@@ -5860,7 +6239,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "ended_at__nisnull",
@@ -5870,7 +6249,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "ended_at__isnotnull",
@@ -5880,7 +6259,7 @@
               "type": "string",
               "format": "date-time"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "ended_at__l",
@@ -5983,6 +6362,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "ended_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "ended_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "duration__eq",
             "in": "query",
             "required": false,
@@ -6080,7 +6479,7 @@
               "type": "integer",
               "format": "int64"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "duration__nisnull",
@@ -6090,7 +6489,7 @@
               "type": "integer",
               "format": "int64"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "duration__isnotnull",
@@ -6100,7 +6499,7 @@
               "type": "integer",
               "format": "int64"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "duration__l",
@@ -6203,6 +6602,26 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "duration__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "duration__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "thumbnail_path__eq",
             "in": "query",
             "required": false,
@@ -6290,7 +6709,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "thumbnail_path__nisnull",
@@ -6299,7 +6718,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "thumbnail_path__isnotnull",
@@ -6308,7 +6727,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "thumbnail_path__l",
@@ -6401,6 +6820,24 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
+            "name": "thumbnail_path__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "thumbnail_path__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "status__eq",
             "in": "query",
             "required": false,
@@ -6488,7 +6925,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "status__nisnull",
@@ -6497,7 +6934,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "status__isnotnull",
@@ -6506,7 +6943,7 @@
             "schema": {
               "type": "string"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "status__l",
@@ -6597,6 +7034,24 @@
               "type": "string"
             },
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "status__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "status__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "camera_id__eq",
@@ -6696,7 +7151,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NULL operator, value is ignored"
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "camera_id__nisnull",
@@ -6706,7 +7161,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "camera_id__isnotnull",
@@ -6716,7 +7171,7 @@
               "type": "string",
               "format": "uuid"
             },
-            "description": "SQL IS NOT NULL operator, value is ignored"
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "camera_id__l",
@@ -6817,6 +7272,26 @@
               "format": "uuid"
             },
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "camera_id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -6960,7 +7435,7 @@
         }
       }
     },
-    "/videos/{primaryKey}": {
+    "/api/videos/{primaryKey}": {
       "get": {
         "tags": [
           "Video"

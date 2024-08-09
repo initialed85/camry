@@ -82,12 +82,6 @@ type GetCamerasParams struct {
 	// Offset SQL OFFSET operator
 	Offset *int32 `form:"offset,omitempty" json:"offset,omitempty"`
 
-	// OrderByAsc SQL ORDER BY _ ASC operator, permits comma-separated values
-	OrderByAsc *string `form:"order_by__asc,omitempty" json:"order_by__asc,omitempty"`
-
-	// OrderByDesc SQL ORDER BY _ DESC operator, permits comma-separated values
-	OrderByDesc *string `form:"order_by__desc,omitempty" json:"order_by__desc,omitempty"`
-
 	// IdEq SQL = operator
 	IdEq *openapi_types.UUID `form:"id__eq,omitempty" json:"id__eq,omitempty"`
 
@@ -115,13 +109,13 @@ type GetCamerasParams struct {
 	// IdNotin SQL NOT IN operator, permits comma-separated values
 	IdNotin *openapi_types.UUID `form:"id__notin,omitempty" json:"id__notin,omitempty"`
 
-	// IdIsnull SQL IS NULL operator, value is ignored
+	// IdIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	IdIsnull *openapi_types.UUID `form:"id__isnull,omitempty" json:"id__isnull,omitempty"`
 
-	// IdNisnull SQL IS NOT NULL operator, value is ignored
+	// IdNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	IdNisnull *openapi_types.UUID `form:"id__nisnull,omitempty" json:"id__nisnull,omitempty"`
 
-	// IdIsnotnull SQL IS NOT NULL operator, value is ignored
+	// IdIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	IdIsnotnull *openapi_types.UUID `form:"id__isnotnull,omitempty" json:"id__isnotnull,omitempty"`
 
 	// IdL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -154,6 +148,12 @@ type GetCamerasParams struct {
 	// IdNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	IdNotilike *openapi_types.UUID `form:"id__notilike,omitempty" json:"id__notilike,omitempty"`
 
+	// IdDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	IdDesc *openapi_types.UUID `form:"id__desc,omitempty" json:"id__desc,omitempty"`
+
+	// IdAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	IdAsc *openapi_types.UUID `form:"id__asc,omitempty" json:"id__asc,omitempty"`
+
 	// CreatedAtEq SQL = operator
 	CreatedAtEq *time.Time `form:"created_at__eq,omitempty" json:"created_at__eq,omitempty"`
 
@@ -181,13 +181,13 @@ type GetCamerasParams struct {
 	// CreatedAtNotin SQL NOT IN operator, permits comma-separated values
 	CreatedAtNotin *time.Time `form:"created_at__notin,omitempty" json:"created_at__notin,omitempty"`
 
-	// CreatedAtIsnull SQL IS NULL operator, value is ignored
+	// CreatedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtIsnull *time.Time `form:"created_at__isnull,omitempty" json:"created_at__isnull,omitempty"`
 
-	// CreatedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// CreatedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtNisnull *time.Time `form:"created_at__nisnull,omitempty" json:"created_at__nisnull,omitempty"`
 
-	// CreatedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// CreatedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtIsnotnull *time.Time `form:"created_at__isnotnull,omitempty" json:"created_at__isnotnull,omitempty"`
 
 	// CreatedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -220,6 +220,12 @@ type GetCamerasParams struct {
 	// CreatedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	CreatedAtNotilike *time.Time `form:"created_at__notilike,omitempty" json:"created_at__notilike,omitempty"`
 
+	// CreatedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	CreatedAtDesc *time.Time `form:"created_at__desc,omitempty" json:"created_at__desc,omitempty"`
+
+	// CreatedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	CreatedAtAsc *time.Time `form:"created_at__asc,omitempty" json:"created_at__asc,omitempty"`
+
 	// UpdatedAtEq SQL = operator
 	UpdatedAtEq *time.Time `form:"updated_at__eq,omitempty" json:"updated_at__eq,omitempty"`
 
@@ -247,13 +253,13 @@ type GetCamerasParams struct {
 	// UpdatedAtNotin SQL NOT IN operator, permits comma-separated values
 	UpdatedAtNotin *time.Time `form:"updated_at__notin,omitempty" json:"updated_at__notin,omitempty"`
 
-	// UpdatedAtIsnull SQL IS NULL operator, value is ignored
+	// UpdatedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtIsnull *time.Time `form:"updated_at__isnull,omitempty" json:"updated_at__isnull,omitempty"`
 
-	// UpdatedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// UpdatedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtNisnull *time.Time `form:"updated_at__nisnull,omitempty" json:"updated_at__nisnull,omitempty"`
 
-	// UpdatedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// UpdatedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtIsnotnull *time.Time `form:"updated_at__isnotnull,omitempty" json:"updated_at__isnotnull,omitempty"`
 
 	// UpdatedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -286,6 +292,12 @@ type GetCamerasParams struct {
 	// UpdatedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	UpdatedAtNotilike *time.Time `form:"updated_at__notilike,omitempty" json:"updated_at__notilike,omitempty"`
 
+	// UpdatedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	UpdatedAtDesc *time.Time `form:"updated_at__desc,omitempty" json:"updated_at__desc,omitempty"`
+
+	// UpdatedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	UpdatedAtAsc *time.Time `form:"updated_at__asc,omitempty" json:"updated_at__asc,omitempty"`
+
 	// DeletedAtEq SQL = operator
 	DeletedAtEq *time.Time `form:"deleted_at__eq,omitempty" json:"deleted_at__eq,omitempty"`
 
@@ -313,13 +325,13 @@ type GetCamerasParams struct {
 	// DeletedAtNotin SQL NOT IN operator, permits comma-separated values
 	DeletedAtNotin *time.Time `form:"deleted_at__notin,omitempty" json:"deleted_at__notin,omitempty"`
 
-	// DeletedAtIsnull SQL IS NULL operator, value is ignored
+	// DeletedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtIsnull *time.Time `form:"deleted_at__isnull,omitempty" json:"deleted_at__isnull,omitempty"`
 
-	// DeletedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// DeletedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtNisnull *time.Time `form:"deleted_at__nisnull,omitempty" json:"deleted_at__nisnull,omitempty"`
 
-	// DeletedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// DeletedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtIsnotnull *time.Time `form:"deleted_at__isnotnull,omitempty" json:"deleted_at__isnotnull,omitempty"`
 
 	// DeletedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -352,6 +364,12 @@ type GetCamerasParams struct {
 	// DeletedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	DeletedAtNotilike *time.Time `form:"deleted_at__notilike,omitempty" json:"deleted_at__notilike,omitempty"`
 
+	// DeletedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	DeletedAtDesc *time.Time `form:"deleted_at__desc,omitempty" json:"deleted_at__desc,omitempty"`
+
+	// DeletedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	DeletedAtAsc *time.Time `form:"deleted_at__asc,omitempty" json:"deleted_at__asc,omitempty"`
+
 	// NameEq SQL = operator
 	NameEq *string `form:"name__eq,omitempty" json:"name__eq,omitempty"`
 
@@ -379,13 +397,13 @@ type GetCamerasParams struct {
 	// NameNotin SQL NOT IN operator, permits comma-separated values
 	NameNotin *string `form:"name__notin,omitempty" json:"name__notin,omitempty"`
 
-	// NameIsnull SQL IS NULL operator, value is ignored
+	// NameIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	NameIsnull *string `form:"name__isnull,omitempty" json:"name__isnull,omitempty"`
 
-	// NameNisnull SQL IS NOT NULL operator, value is ignored
+	// NameNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	NameNisnull *string `form:"name__nisnull,omitempty" json:"name__nisnull,omitempty"`
 
-	// NameIsnotnull SQL IS NOT NULL operator, value is ignored
+	// NameIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	NameIsnotnull *string `form:"name__isnotnull,omitempty" json:"name__isnotnull,omitempty"`
 
 	// NameL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -418,6 +436,12 @@ type GetCamerasParams struct {
 	// NameNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	NameNotilike *string `form:"name__notilike,omitempty" json:"name__notilike,omitempty"`
 
+	// NameDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	NameDesc *string `form:"name__desc,omitempty" json:"name__desc,omitempty"`
+
+	// NameAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	NameAsc *string `form:"name__asc,omitempty" json:"name__asc,omitempty"`
+
 	// StreamUrlEq SQL = operator
 	StreamUrlEq *string `form:"stream_url__eq,omitempty" json:"stream_url__eq,omitempty"`
 
@@ -445,13 +469,13 @@ type GetCamerasParams struct {
 	// StreamUrlNotin SQL NOT IN operator, permits comma-separated values
 	StreamUrlNotin *string `form:"stream_url__notin,omitempty" json:"stream_url__notin,omitempty"`
 
-	// StreamUrlIsnull SQL IS NULL operator, value is ignored
+	// StreamUrlIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	StreamUrlIsnull *string `form:"stream_url__isnull,omitempty" json:"stream_url__isnull,omitempty"`
 
-	// StreamUrlNisnull SQL IS NOT NULL operator, value is ignored
+	// StreamUrlNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	StreamUrlNisnull *string `form:"stream_url__nisnull,omitempty" json:"stream_url__nisnull,omitempty"`
 
-	// StreamUrlIsnotnull SQL IS NOT NULL operator, value is ignored
+	// StreamUrlIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	StreamUrlIsnotnull *string `form:"stream_url__isnotnull,omitempty" json:"stream_url__isnotnull,omitempty"`
 
 	// StreamUrlL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -484,6 +508,12 @@ type GetCamerasParams struct {
 	// StreamUrlNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	StreamUrlNotilike *string `form:"stream_url__notilike,omitempty" json:"stream_url__notilike,omitempty"`
 
+	// StreamUrlDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	StreamUrlDesc *string `form:"stream_url__desc,omitempty" json:"stream_url__desc,omitempty"`
+
+	// StreamUrlAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	StreamUrlAsc *string `form:"stream_url__asc,omitempty" json:"stream_url__asc,omitempty"`
+
 	// LastSeenEq SQL = operator
 	LastSeenEq *time.Time `form:"last_seen__eq,omitempty" json:"last_seen__eq,omitempty"`
 
@@ -511,13 +541,13 @@ type GetCamerasParams struct {
 	// LastSeenNotin SQL NOT IN operator, permits comma-separated values
 	LastSeenNotin *time.Time `form:"last_seen__notin,omitempty" json:"last_seen__notin,omitempty"`
 
-	// LastSeenIsnull SQL IS NULL operator, value is ignored
+	// LastSeenIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	LastSeenIsnull *time.Time `form:"last_seen__isnull,omitempty" json:"last_seen__isnull,omitempty"`
 
-	// LastSeenNisnull SQL IS NOT NULL operator, value is ignored
+	// LastSeenNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	LastSeenNisnull *time.Time `form:"last_seen__nisnull,omitempty" json:"last_seen__nisnull,omitempty"`
 
-	// LastSeenIsnotnull SQL IS NOT NULL operator, value is ignored
+	// LastSeenIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	LastSeenIsnotnull *time.Time `form:"last_seen__isnotnull,omitempty" json:"last_seen__isnotnull,omitempty"`
 
 	// LastSeenL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -549,6 +579,12 @@ type GetCamerasParams struct {
 
 	// LastSeenNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	LastSeenNotilike *time.Time `form:"last_seen__notilike,omitempty" json:"last_seen__notilike,omitempty"`
+
+	// LastSeenDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	LastSeenDesc *time.Time `form:"last_seen__desc,omitempty" json:"last_seen__desc,omitempty"`
+
+	// LastSeenAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	LastSeenAsc *time.Time `form:"last_seen__asc,omitempty" json:"last_seen__asc,omitempty"`
 }
 
 // PostCamerasJSONBody defines parameters for PostCameras.
@@ -561,12 +597,6 @@ type GetDetectionsParams struct {
 
 	// Offset SQL OFFSET operator
 	Offset *int32 `form:"offset,omitempty" json:"offset,omitempty"`
-
-	// OrderByAsc SQL ORDER BY _ ASC operator, permits comma-separated values
-	OrderByAsc *string `form:"order_by__asc,omitempty" json:"order_by__asc,omitempty"`
-
-	// OrderByDesc SQL ORDER BY _ DESC operator, permits comma-separated values
-	OrderByDesc *string `form:"order_by__desc,omitempty" json:"order_by__desc,omitempty"`
 
 	// IdEq SQL = operator
 	IdEq *openapi_types.UUID `form:"id__eq,omitempty" json:"id__eq,omitempty"`
@@ -595,13 +625,13 @@ type GetDetectionsParams struct {
 	// IdNotin SQL NOT IN operator, permits comma-separated values
 	IdNotin *openapi_types.UUID `form:"id__notin,omitempty" json:"id__notin,omitempty"`
 
-	// IdIsnull SQL IS NULL operator, value is ignored
+	// IdIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	IdIsnull *openapi_types.UUID `form:"id__isnull,omitempty" json:"id__isnull,omitempty"`
 
-	// IdNisnull SQL IS NOT NULL operator, value is ignored
+	// IdNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	IdNisnull *openapi_types.UUID `form:"id__nisnull,omitempty" json:"id__nisnull,omitempty"`
 
-	// IdIsnotnull SQL IS NOT NULL operator, value is ignored
+	// IdIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	IdIsnotnull *openapi_types.UUID `form:"id__isnotnull,omitempty" json:"id__isnotnull,omitempty"`
 
 	// IdL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -634,6 +664,12 @@ type GetDetectionsParams struct {
 	// IdNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	IdNotilike *openapi_types.UUID `form:"id__notilike,omitempty" json:"id__notilike,omitempty"`
 
+	// IdDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	IdDesc *openapi_types.UUID `form:"id__desc,omitempty" json:"id__desc,omitempty"`
+
+	// IdAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	IdAsc *openapi_types.UUID `form:"id__asc,omitempty" json:"id__asc,omitempty"`
+
 	// CreatedAtEq SQL = operator
 	CreatedAtEq *time.Time `form:"created_at__eq,omitempty" json:"created_at__eq,omitempty"`
 
@@ -661,13 +697,13 @@ type GetDetectionsParams struct {
 	// CreatedAtNotin SQL NOT IN operator, permits comma-separated values
 	CreatedAtNotin *time.Time `form:"created_at__notin,omitempty" json:"created_at__notin,omitempty"`
 
-	// CreatedAtIsnull SQL IS NULL operator, value is ignored
+	// CreatedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtIsnull *time.Time `form:"created_at__isnull,omitempty" json:"created_at__isnull,omitempty"`
 
-	// CreatedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// CreatedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtNisnull *time.Time `form:"created_at__nisnull,omitempty" json:"created_at__nisnull,omitempty"`
 
-	// CreatedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// CreatedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtIsnotnull *time.Time `form:"created_at__isnotnull,omitempty" json:"created_at__isnotnull,omitempty"`
 
 	// CreatedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -700,6 +736,12 @@ type GetDetectionsParams struct {
 	// CreatedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	CreatedAtNotilike *time.Time `form:"created_at__notilike,omitempty" json:"created_at__notilike,omitempty"`
 
+	// CreatedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	CreatedAtDesc *time.Time `form:"created_at__desc,omitempty" json:"created_at__desc,omitempty"`
+
+	// CreatedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	CreatedAtAsc *time.Time `form:"created_at__asc,omitempty" json:"created_at__asc,omitempty"`
+
 	// UpdatedAtEq SQL = operator
 	UpdatedAtEq *time.Time `form:"updated_at__eq,omitempty" json:"updated_at__eq,omitempty"`
 
@@ -727,13 +769,13 @@ type GetDetectionsParams struct {
 	// UpdatedAtNotin SQL NOT IN operator, permits comma-separated values
 	UpdatedAtNotin *time.Time `form:"updated_at__notin,omitempty" json:"updated_at__notin,omitempty"`
 
-	// UpdatedAtIsnull SQL IS NULL operator, value is ignored
+	// UpdatedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtIsnull *time.Time `form:"updated_at__isnull,omitempty" json:"updated_at__isnull,omitempty"`
 
-	// UpdatedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// UpdatedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtNisnull *time.Time `form:"updated_at__nisnull,omitempty" json:"updated_at__nisnull,omitempty"`
 
-	// UpdatedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// UpdatedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtIsnotnull *time.Time `form:"updated_at__isnotnull,omitempty" json:"updated_at__isnotnull,omitempty"`
 
 	// UpdatedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -766,6 +808,12 @@ type GetDetectionsParams struct {
 	// UpdatedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	UpdatedAtNotilike *time.Time `form:"updated_at__notilike,omitempty" json:"updated_at__notilike,omitempty"`
 
+	// UpdatedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	UpdatedAtDesc *time.Time `form:"updated_at__desc,omitempty" json:"updated_at__desc,omitempty"`
+
+	// UpdatedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	UpdatedAtAsc *time.Time `form:"updated_at__asc,omitempty" json:"updated_at__asc,omitempty"`
+
 	// DeletedAtEq SQL = operator
 	DeletedAtEq *time.Time `form:"deleted_at__eq,omitempty" json:"deleted_at__eq,omitempty"`
 
@@ -793,13 +841,13 @@ type GetDetectionsParams struct {
 	// DeletedAtNotin SQL NOT IN operator, permits comma-separated values
 	DeletedAtNotin *time.Time `form:"deleted_at__notin,omitempty" json:"deleted_at__notin,omitempty"`
 
-	// DeletedAtIsnull SQL IS NULL operator, value is ignored
+	// DeletedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtIsnull *time.Time `form:"deleted_at__isnull,omitempty" json:"deleted_at__isnull,omitempty"`
 
-	// DeletedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// DeletedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtNisnull *time.Time `form:"deleted_at__nisnull,omitempty" json:"deleted_at__nisnull,omitempty"`
 
-	// DeletedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// DeletedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtIsnotnull *time.Time `form:"deleted_at__isnotnull,omitempty" json:"deleted_at__isnotnull,omitempty"`
 
 	// DeletedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -832,6 +880,12 @@ type GetDetectionsParams struct {
 	// DeletedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	DeletedAtNotilike *time.Time `form:"deleted_at__notilike,omitempty" json:"deleted_at__notilike,omitempty"`
 
+	// DeletedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	DeletedAtDesc *time.Time `form:"deleted_at__desc,omitempty" json:"deleted_at__desc,omitempty"`
+
+	// DeletedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	DeletedAtAsc *time.Time `form:"deleted_at__asc,omitempty" json:"deleted_at__asc,omitempty"`
+
 	// SeenAtEq SQL = operator
 	SeenAtEq *time.Time `form:"seen_at__eq,omitempty" json:"seen_at__eq,omitempty"`
 
@@ -859,13 +913,13 @@ type GetDetectionsParams struct {
 	// SeenAtNotin SQL NOT IN operator, permits comma-separated values
 	SeenAtNotin *time.Time `form:"seen_at__notin,omitempty" json:"seen_at__notin,omitempty"`
 
-	// SeenAtIsnull SQL IS NULL operator, value is ignored
+	// SeenAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	SeenAtIsnull *time.Time `form:"seen_at__isnull,omitempty" json:"seen_at__isnull,omitempty"`
 
-	// SeenAtNisnull SQL IS NOT NULL operator, value is ignored
+	// SeenAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	SeenAtNisnull *time.Time `form:"seen_at__nisnull,omitempty" json:"seen_at__nisnull,omitempty"`
 
-	// SeenAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// SeenAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	SeenAtIsnotnull *time.Time `form:"seen_at__isnotnull,omitempty" json:"seen_at__isnotnull,omitempty"`
 
 	// SeenAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -898,6 +952,12 @@ type GetDetectionsParams struct {
 	// SeenAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	SeenAtNotilike *time.Time `form:"seen_at__notilike,omitempty" json:"seen_at__notilike,omitempty"`
 
+	// SeenAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	SeenAtDesc *time.Time `form:"seen_at__desc,omitempty" json:"seen_at__desc,omitempty"`
+
+	// SeenAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	SeenAtAsc *time.Time `form:"seen_at__asc,omitempty" json:"seen_at__asc,omitempty"`
+
 	// ClassIdEq SQL = operator
 	ClassIdEq *int64 `form:"class_id__eq,omitempty" json:"class_id__eq,omitempty"`
 
@@ -925,13 +985,13 @@ type GetDetectionsParams struct {
 	// ClassIdNotin SQL NOT IN operator, permits comma-separated values
 	ClassIdNotin *int64 `form:"class_id__notin,omitempty" json:"class_id__notin,omitempty"`
 
-	// ClassIdIsnull SQL IS NULL operator, value is ignored
+	// ClassIdIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	ClassIdIsnull *int64 `form:"class_id__isnull,omitempty" json:"class_id__isnull,omitempty"`
 
-	// ClassIdNisnull SQL IS NOT NULL operator, value is ignored
+	// ClassIdNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ClassIdNisnull *int64 `form:"class_id__nisnull,omitempty" json:"class_id__nisnull,omitempty"`
 
-	// ClassIdIsnotnull SQL IS NOT NULL operator, value is ignored
+	// ClassIdIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ClassIdIsnotnull *int64 `form:"class_id__isnotnull,omitempty" json:"class_id__isnotnull,omitempty"`
 
 	// ClassIdL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -964,6 +1024,12 @@ type GetDetectionsParams struct {
 	// ClassIdNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	ClassIdNotilike *int64 `form:"class_id__notilike,omitempty" json:"class_id__notilike,omitempty"`
 
+	// ClassIdDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	ClassIdDesc *int64 `form:"class_id__desc,omitempty" json:"class_id__desc,omitempty"`
+
+	// ClassIdAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	ClassIdAsc *int64 `form:"class_id__asc,omitempty" json:"class_id__asc,omitempty"`
+
 	// ClassNameEq SQL = operator
 	ClassNameEq *string `form:"class_name__eq,omitempty" json:"class_name__eq,omitempty"`
 
@@ -991,13 +1057,13 @@ type GetDetectionsParams struct {
 	// ClassNameNotin SQL NOT IN operator, permits comma-separated values
 	ClassNameNotin *string `form:"class_name__notin,omitempty" json:"class_name__notin,omitempty"`
 
-	// ClassNameIsnull SQL IS NULL operator, value is ignored
+	// ClassNameIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	ClassNameIsnull *string `form:"class_name__isnull,omitempty" json:"class_name__isnull,omitempty"`
 
-	// ClassNameNisnull SQL IS NOT NULL operator, value is ignored
+	// ClassNameNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ClassNameNisnull *string `form:"class_name__nisnull,omitempty" json:"class_name__nisnull,omitempty"`
 
-	// ClassNameIsnotnull SQL IS NOT NULL operator, value is ignored
+	// ClassNameIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ClassNameIsnotnull *string `form:"class_name__isnotnull,omitempty" json:"class_name__isnotnull,omitempty"`
 
 	// ClassNameL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1030,6 +1096,12 @@ type GetDetectionsParams struct {
 	// ClassNameNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	ClassNameNotilike *string `form:"class_name__notilike,omitempty" json:"class_name__notilike,omitempty"`
 
+	// ClassNameDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	ClassNameDesc *string `form:"class_name__desc,omitempty" json:"class_name__desc,omitempty"`
+
+	// ClassNameAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	ClassNameAsc *string `form:"class_name__asc,omitempty" json:"class_name__asc,omitempty"`
+
 	// ScoreEq SQL = operator
 	ScoreEq *float64 `form:"score__eq,omitempty" json:"score__eq,omitempty"`
 
@@ -1057,13 +1129,13 @@ type GetDetectionsParams struct {
 	// ScoreNotin SQL NOT IN operator, permits comma-separated values
 	ScoreNotin *float64 `form:"score__notin,omitempty" json:"score__notin,omitempty"`
 
-	// ScoreIsnull SQL IS NULL operator, value is ignored
+	// ScoreIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	ScoreIsnull *float64 `form:"score__isnull,omitempty" json:"score__isnull,omitempty"`
 
-	// ScoreNisnull SQL IS NOT NULL operator, value is ignored
+	// ScoreNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ScoreNisnull *float64 `form:"score__nisnull,omitempty" json:"score__nisnull,omitempty"`
 
-	// ScoreIsnotnull SQL IS NOT NULL operator, value is ignored
+	// ScoreIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ScoreIsnotnull *float64 `form:"score__isnotnull,omitempty" json:"score__isnotnull,omitempty"`
 
 	// ScoreL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1096,6 +1168,12 @@ type GetDetectionsParams struct {
 	// ScoreNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	ScoreNotilike *float64 `form:"score__notilike,omitempty" json:"score__notilike,omitempty"`
 
+	// ScoreDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	ScoreDesc *float64 `form:"score__desc,omitempty" json:"score__desc,omitempty"`
+
+	// ScoreAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	ScoreAsc *float64 `form:"score__asc,omitempty" json:"score__asc,omitempty"`
+
 	// CameraIdEq SQL = operator
 	CameraIdEq *openapi_types.UUID `form:"camera_id__eq,omitempty" json:"camera_id__eq,omitempty"`
 
@@ -1123,13 +1201,13 @@ type GetDetectionsParams struct {
 	// CameraIdNotin SQL NOT IN operator, permits comma-separated values
 	CameraIdNotin *openapi_types.UUID `form:"camera_id__notin,omitempty" json:"camera_id__notin,omitempty"`
 
-	// CameraIdIsnull SQL IS NULL operator, value is ignored
+	// CameraIdIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	CameraIdIsnull *openapi_types.UUID `form:"camera_id__isnull,omitempty" json:"camera_id__isnull,omitempty"`
 
-	// CameraIdNisnull SQL IS NOT NULL operator, value is ignored
+	// CameraIdNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CameraIdNisnull *openapi_types.UUID `form:"camera_id__nisnull,omitempty" json:"camera_id__nisnull,omitempty"`
 
-	// CameraIdIsnotnull SQL IS NOT NULL operator, value is ignored
+	// CameraIdIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CameraIdIsnotnull *openapi_types.UUID `form:"camera_id__isnotnull,omitempty" json:"camera_id__isnotnull,omitempty"`
 
 	// CameraIdL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1161,6 +1239,12 @@ type GetDetectionsParams struct {
 
 	// CameraIdNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	CameraIdNotilike *openapi_types.UUID `form:"camera_id__notilike,omitempty" json:"camera_id__notilike,omitempty"`
+
+	// CameraIdDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	CameraIdDesc *openapi_types.UUID `form:"camera_id__desc,omitempty" json:"camera_id__desc,omitempty"`
+
+	// CameraIdAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	CameraIdAsc *openapi_types.UUID `form:"camera_id__asc,omitempty" json:"camera_id__asc,omitempty"`
 }
 
 // PostDetectionsJSONBody defines parameters for PostDetections.
@@ -1173,12 +1257,6 @@ type GetVideosParams struct {
 
 	// Offset SQL OFFSET operator
 	Offset *int32 `form:"offset,omitempty" json:"offset,omitempty"`
-
-	// OrderByAsc SQL ORDER BY _ ASC operator, permits comma-separated values
-	OrderByAsc *string `form:"order_by__asc,omitempty" json:"order_by__asc,omitempty"`
-
-	// OrderByDesc SQL ORDER BY _ DESC operator, permits comma-separated values
-	OrderByDesc *string `form:"order_by__desc,omitempty" json:"order_by__desc,omitempty"`
 
 	// IdEq SQL = operator
 	IdEq *openapi_types.UUID `form:"id__eq,omitempty" json:"id__eq,omitempty"`
@@ -1207,13 +1285,13 @@ type GetVideosParams struct {
 	// IdNotin SQL NOT IN operator, permits comma-separated values
 	IdNotin *openapi_types.UUID `form:"id__notin,omitempty" json:"id__notin,omitempty"`
 
-	// IdIsnull SQL IS NULL operator, value is ignored
+	// IdIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	IdIsnull *openapi_types.UUID `form:"id__isnull,omitempty" json:"id__isnull,omitempty"`
 
-	// IdNisnull SQL IS NOT NULL operator, value is ignored
+	// IdNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	IdNisnull *openapi_types.UUID `form:"id__nisnull,omitempty" json:"id__nisnull,omitempty"`
 
-	// IdIsnotnull SQL IS NOT NULL operator, value is ignored
+	// IdIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	IdIsnotnull *openapi_types.UUID `form:"id__isnotnull,omitempty" json:"id__isnotnull,omitempty"`
 
 	// IdL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1246,6 +1324,12 @@ type GetVideosParams struct {
 	// IdNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	IdNotilike *openapi_types.UUID `form:"id__notilike,omitempty" json:"id__notilike,omitempty"`
 
+	// IdDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	IdDesc *openapi_types.UUID `form:"id__desc,omitempty" json:"id__desc,omitempty"`
+
+	// IdAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	IdAsc *openapi_types.UUID `form:"id__asc,omitempty" json:"id__asc,omitempty"`
+
 	// CreatedAtEq SQL = operator
 	CreatedAtEq *time.Time `form:"created_at__eq,omitempty" json:"created_at__eq,omitempty"`
 
@@ -1273,13 +1357,13 @@ type GetVideosParams struct {
 	// CreatedAtNotin SQL NOT IN operator, permits comma-separated values
 	CreatedAtNotin *time.Time `form:"created_at__notin,omitempty" json:"created_at__notin,omitempty"`
 
-	// CreatedAtIsnull SQL IS NULL operator, value is ignored
+	// CreatedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtIsnull *time.Time `form:"created_at__isnull,omitempty" json:"created_at__isnull,omitempty"`
 
-	// CreatedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// CreatedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtNisnull *time.Time `form:"created_at__nisnull,omitempty" json:"created_at__nisnull,omitempty"`
 
-	// CreatedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// CreatedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CreatedAtIsnotnull *time.Time `form:"created_at__isnotnull,omitempty" json:"created_at__isnotnull,omitempty"`
 
 	// CreatedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1312,6 +1396,12 @@ type GetVideosParams struct {
 	// CreatedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	CreatedAtNotilike *time.Time `form:"created_at__notilike,omitempty" json:"created_at__notilike,omitempty"`
 
+	// CreatedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	CreatedAtDesc *time.Time `form:"created_at__desc,omitempty" json:"created_at__desc,omitempty"`
+
+	// CreatedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	CreatedAtAsc *time.Time `form:"created_at__asc,omitempty" json:"created_at__asc,omitempty"`
+
 	// UpdatedAtEq SQL = operator
 	UpdatedAtEq *time.Time `form:"updated_at__eq,omitempty" json:"updated_at__eq,omitempty"`
 
@@ -1339,13 +1429,13 @@ type GetVideosParams struct {
 	// UpdatedAtNotin SQL NOT IN operator, permits comma-separated values
 	UpdatedAtNotin *time.Time `form:"updated_at__notin,omitempty" json:"updated_at__notin,omitempty"`
 
-	// UpdatedAtIsnull SQL IS NULL operator, value is ignored
+	// UpdatedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtIsnull *time.Time `form:"updated_at__isnull,omitempty" json:"updated_at__isnull,omitempty"`
 
-	// UpdatedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// UpdatedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtNisnull *time.Time `form:"updated_at__nisnull,omitempty" json:"updated_at__nisnull,omitempty"`
 
-	// UpdatedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// UpdatedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	UpdatedAtIsnotnull *time.Time `form:"updated_at__isnotnull,omitempty" json:"updated_at__isnotnull,omitempty"`
 
 	// UpdatedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1378,6 +1468,12 @@ type GetVideosParams struct {
 	// UpdatedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	UpdatedAtNotilike *time.Time `form:"updated_at__notilike,omitempty" json:"updated_at__notilike,omitempty"`
 
+	// UpdatedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	UpdatedAtDesc *time.Time `form:"updated_at__desc,omitempty" json:"updated_at__desc,omitempty"`
+
+	// UpdatedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	UpdatedAtAsc *time.Time `form:"updated_at__asc,omitempty" json:"updated_at__asc,omitempty"`
+
 	// DeletedAtEq SQL = operator
 	DeletedAtEq *time.Time `form:"deleted_at__eq,omitempty" json:"deleted_at__eq,omitempty"`
 
@@ -1405,13 +1501,13 @@ type GetVideosParams struct {
 	// DeletedAtNotin SQL NOT IN operator, permits comma-separated values
 	DeletedAtNotin *time.Time `form:"deleted_at__notin,omitempty" json:"deleted_at__notin,omitempty"`
 
-	// DeletedAtIsnull SQL IS NULL operator, value is ignored
+	// DeletedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtIsnull *time.Time `form:"deleted_at__isnull,omitempty" json:"deleted_at__isnull,omitempty"`
 
-	// DeletedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// DeletedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtNisnull *time.Time `form:"deleted_at__nisnull,omitempty" json:"deleted_at__nisnull,omitempty"`
 
-	// DeletedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// DeletedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DeletedAtIsnotnull *time.Time `form:"deleted_at__isnotnull,omitempty" json:"deleted_at__isnotnull,omitempty"`
 
 	// DeletedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1444,6 +1540,12 @@ type GetVideosParams struct {
 	// DeletedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	DeletedAtNotilike *time.Time `form:"deleted_at__notilike,omitempty" json:"deleted_at__notilike,omitempty"`
 
+	// DeletedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	DeletedAtDesc *time.Time `form:"deleted_at__desc,omitempty" json:"deleted_at__desc,omitempty"`
+
+	// DeletedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	DeletedAtAsc *time.Time `form:"deleted_at__asc,omitempty" json:"deleted_at__asc,omitempty"`
+
 	// FilePathEq SQL = operator
 	FilePathEq *string `form:"file_path__eq,omitempty" json:"file_path__eq,omitempty"`
 
@@ -1471,13 +1573,13 @@ type GetVideosParams struct {
 	// FilePathNotin SQL NOT IN operator, permits comma-separated values
 	FilePathNotin *string `form:"file_path__notin,omitempty" json:"file_path__notin,omitempty"`
 
-	// FilePathIsnull SQL IS NULL operator, value is ignored
+	// FilePathIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	FilePathIsnull *string `form:"file_path__isnull,omitempty" json:"file_path__isnull,omitempty"`
 
-	// FilePathNisnull SQL IS NOT NULL operator, value is ignored
+	// FilePathNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	FilePathNisnull *string `form:"file_path__nisnull,omitempty" json:"file_path__nisnull,omitempty"`
 
-	// FilePathIsnotnull SQL IS NOT NULL operator, value is ignored
+	// FilePathIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	FilePathIsnotnull *string `form:"file_path__isnotnull,omitempty" json:"file_path__isnotnull,omitempty"`
 
 	// FilePathL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1510,6 +1612,12 @@ type GetVideosParams struct {
 	// FilePathNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	FilePathNotilike *string `form:"file_path__notilike,omitempty" json:"file_path__notilike,omitempty"`
 
+	// FilePathDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	FilePathDesc *string `form:"file_path__desc,omitempty" json:"file_path__desc,omitempty"`
+
+	// FilePathAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	FilePathAsc *string `form:"file_path__asc,omitempty" json:"file_path__asc,omitempty"`
+
 	// StartedAtEq SQL = operator
 	StartedAtEq *time.Time `form:"started_at__eq,omitempty" json:"started_at__eq,omitempty"`
 
@@ -1537,13 +1645,13 @@ type GetVideosParams struct {
 	// StartedAtNotin SQL NOT IN operator, permits comma-separated values
 	StartedAtNotin *time.Time `form:"started_at__notin,omitempty" json:"started_at__notin,omitempty"`
 
-	// StartedAtIsnull SQL IS NULL operator, value is ignored
+	// StartedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	StartedAtIsnull *time.Time `form:"started_at__isnull,omitempty" json:"started_at__isnull,omitempty"`
 
-	// StartedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// StartedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	StartedAtNisnull *time.Time `form:"started_at__nisnull,omitempty" json:"started_at__nisnull,omitempty"`
 
-	// StartedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// StartedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	StartedAtIsnotnull *time.Time `form:"started_at__isnotnull,omitempty" json:"started_at__isnotnull,omitempty"`
 
 	// StartedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1576,6 +1684,12 @@ type GetVideosParams struct {
 	// StartedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	StartedAtNotilike *time.Time `form:"started_at__notilike,omitempty" json:"started_at__notilike,omitempty"`
 
+	// StartedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	StartedAtDesc *time.Time `form:"started_at__desc,omitempty" json:"started_at__desc,omitempty"`
+
+	// StartedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	StartedAtAsc *time.Time `form:"started_at__asc,omitempty" json:"started_at__asc,omitempty"`
+
 	// EndedAtEq SQL = operator
 	EndedAtEq *time.Time `form:"ended_at__eq,omitempty" json:"ended_at__eq,omitempty"`
 
@@ -1603,13 +1717,13 @@ type GetVideosParams struct {
 	// EndedAtNotin SQL NOT IN operator, permits comma-separated values
 	EndedAtNotin *time.Time `form:"ended_at__notin,omitempty" json:"ended_at__notin,omitempty"`
 
-	// EndedAtIsnull SQL IS NULL operator, value is ignored
+	// EndedAtIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	EndedAtIsnull *time.Time `form:"ended_at__isnull,omitempty" json:"ended_at__isnull,omitempty"`
 
-	// EndedAtNisnull SQL IS NOT NULL operator, value is ignored
+	// EndedAtNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	EndedAtNisnull *time.Time `form:"ended_at__nisnull,omitempty" json:"ended_at__nisnull,omitempty"`
 
-	// EndedAtIsnotnull SQL IS NOT NULL operator, value is ignored
+	// EndedAtIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	EndedAtIsnotnull *time.Time `form:"ended_at__isnotnull,omitempty" json:"ended_at__isnotnull,omitempty"`
 
 	// EndedAtL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1642,6 +1756,12 @@ type GetVideosParams struct {
 	// EndedAtNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	EndedAtNotilike *time.Time `form:"ended_at__notilike,omitempty" json:"ended_at__notilike,omitempty"`
 
+	// EndedAtDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	EndedAtDesc *time.Time `form:"ended_at__desc,omitempty" json:"ended_at__desc,omitempty"`
+
+	// EndedAtAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	EndedAtAsc *time.Time `form:"ended_at__asc,omitempty" json:"ended_at__asc,omitempty"`
+
 	// DurationEq SQL = operator
 	DurationEq *int64 `form:"duration__eq,omitempty" json:"duration__eq,omitempty"`
 
@@ -1669,13 +1789,13 @@ type GetVideosParams struct {
 	// DurationNotin SQL NOT IN operator, permits comma-separated values
 	DurationNotin *int64 `form:"duration__notin,omitempty" json:"duration__notin,omitempty"`
 
-	// DurationIsnull SQL IS NULL operator, value is ignored
+	// DurationIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	DurationIsnull *int64 `form:"duration__isnull,omitempty" json:"duration__isnull,omitempty"`
 
-	// DurationNisnull SQL IS NOT NULL operator, value is ignored
+	// DurationNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DurationNisnull *int64 `form:"duration__nisnull,omitempty" json:"duration__nisnull,omitempty"`
 
-	// DurationIsnotnull SQL IS NOT NULL operator, value is ignored
+	// DurationIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	DurationIsnotnull *int64 `form:"duration__isnotnull,omitempty" json:"duration__isnotnull,omitempty"`
 
 	// DurationL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1708,6 +1828,12 @@ type GetVideosParams struct {
 	// DurationNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	DurationNotilike *int64 `form:"duration__notilike,omitempty" json:"duration__notilike,omitempty"`
 
+	// DurationDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	DurationDesc *int64 `form:"duration__desc,omitempty" json:"duration__desc,omitempty"`
+
+	// DurationAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	DurationAsc *int64 `form:"duration__asc,omitempty" json:"duration__asc,omitempty"`
+
 	// ThumbnailPathEq SQL = operator
 	ThumbnailPathEq *string `form:"thumbnail_path__eq,omitempty" json:"thumbnail_path__eq,omitempty"`
 
@@ -1735,13 +1861,13 @@ type GetVideosParams struct {
 	// ThumbnailPathNotin SQL NOT IN operator, permits comma-separated values
 	ThumbnailPathNotin *string `form:"thumbnail_path__notin,omitempty" json:"thumbnail_path__notin,omitempty"`
 
-	// ThumbnailPathIsnull SQL IS NULL operator, value is ignored
+	// ThumbnailPathIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	ThumbnailPathIsnull *string `form:"thumbnail_path__isnull,omitempty" json:"thumbnail_path__isnull,omitempty"`
 
-	// ThumbnailPathNisnull SQL IS NOT NULL operator, value is ignored
+	// ThumbnailPathNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ThumbnailPathNisnull *string `form:"thumbnail_path__nisnull,omitempty" json:"thumbnail_path__nisnull,omitempty"`
 
-	// ThumbnailPathIsnotnull SQL IS NOT NULL operator, value is ignored
+	// ThumbnailPathIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	ThumbnailPathIsnotnull *string `form:"thumbnail_path__isnotnull,omitempty" json:"thumbnail_path__isnotnull,omitempty"`
 
 	// ThumbnailPathL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1774,6 +1900,12 @@ type GetVideosParams struct {
 	// ThumbnailPathNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	ThumbnailPathNotilike *string `form:"thumbnail_path__notilike,omitempty" json:"thumbnail_path__notilike,omitempty"`
 
+	// ThumbnailPathDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	ThumbnailPathDesc *string `form:"thumbnail_path__desc,omitempty" json:"thumbnail_path__desc,omitempty"`
+
+	// ThumbnailPathAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	ThumbnailPathAsc *string `form:"thumbnail_path__asc,omitempty" json:"thumbnail_path__asc,omitempty"`
+
 	// StatusEq SQL = operator
 	StatusEq *string `form:"status__eq,omitempty" json:"status__eq,omitempty"`
 
@@ -1801,13 +1933,13 @@ type GetVideosParams struct {
 	// StatusNotin SQL NOT IN operator, permits comma-separated values
 	StatusNotin *string `form:"status__notin,omitempty" json:"status__notin,omitempty"`
 
-	// StatusIsnull SQL IS NULL operator, value is ignored
+	// StatusIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	StatusIsnull *string `form:"status__isnull,omitempty" json:"status__isnull,omitempty"`
 
-	// StatusNisnull SQL IS NOT NULL operator, value is ignored
+	// StatusNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	StatusNisnull *string `form:"status__nisnull,omitempty" json:"status__nisnull,omitempty"`
 
-	// StatusIsnotnull SQL IS NOT NULL operator, value is ignored
+	// StatusIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	StatusIsnotnull *string `form:"status__isnotnull,omitempty" json:"status__isnotnull,omitempty"`
 
 	// StatusL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1840,6 +1972,12 @@ type GetVideosParams struct {
 	// StatusNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	StatusNotilike *string `form:"status__notilike,omitempty" json:"status__notilike,omitempty"`
 
+	// StatusDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	StatusDesc *string `form:"status__desc,omitempty" json:"status__desc,omitempty"`
+
+	// StatusAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	StatusAsc *string `form:"status__asc,omitempty" json:"status__asc,omitempty"`
+
 	// CameraIdEq SQL = operator
 	CameraIdEq *openapi_types.UUID `form:"camera_id__eq,omitempty" json:"camera_id__eq,omitempty"`
 
@@ -1867,13 +2005,13 @@ type GetVideosParams struct {
 	// CameraIdNotin SQL NOT IN operator, permits comma-separated values
 	CameraIdNotin *openapi_types.UUID `form:"camera_id__notin,omitempty" json:"camera_id__notin,omitempty"`
 
-	// CameraIdIsnull SQL IS NULL operator, value is ignored
+	// CameraIdIsnull SQL IS NULL operator, value is ignored (presence of key is sufficient)
 	CameraIdIsnull *openapi_types.UUID `form:"camera_id__isnull,omitempty" json:"camera_id__isnull,omitempty"`
 
-	// CameraIdNisnull SQL IS NOT NULL operator, value is ignored
+	// CameraIdNisnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CameraIdNisnull *openapi_types.UUID `form:"camera_id__nisnull,omitempty" json:"camera_id__nisnull,omitempty"`
 
-	// CameraIdIsnotnull SQL IS NOT NULL operator, value is ignored
+	// CameraIdIsnotnull SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
 	CameraIdIsnotnull *openapi_types.UUID `form:"camera_id__isnotnull,omitempty" json:"camera_id__isnotnull,omitempty"`
 
 	// CameraIdL SQL LIKE operator, value is implicitly prefixed and suffixed with %
@@ -1905,6 +2043,12 @@ type GetVideosParams struct {
 
 	// CameraIdNotilike SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
 	CameraIdNotilike *openapi_types.UUID `form:"camera_id__notilike,omitempty" json:"camera_id__notilike,omitempty"`
+
+	// CameraIdDesc SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+	CameraIdDesc *openapi_types.UUID `form:"camera_id__desc,omitempty" json:"camera_id__desc,omitempty"`
+
+	// CameraIdAsc SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+	CameraIdAsc *openapi_types.UUID `form:"camera_id__asc,omitempty" json:"camera_id__asc,omitempty"`
 }
 
 // PostVideosJSONBody defines parameters for PostVideos.
@@ -2416,7 +2560,7 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/cameras")
+	operationPath := fmt.Sprintf("/api/cameras")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -2448,38 +2592,6 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OrderByAsc != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "order_by__asc", runtime.ParamLocationQuery, *params.OrderByAsc); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OrderByDesc != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "order_by__desc", runtime.ParamLocationQuery, *params.OrderByDesc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -2845,6 +2957,38 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 
 		}
 
+		if params.IdDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "id__desc", runtime.ParamLocationQuery, *params.IdDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IdAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "id__asc", runtime.ParamLocationQuery, *params.IdAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.CreatedAtEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__eq", runtime.ParamLocationQuery, *params.CreatedAtEq); err != nil {
@@ -3184,6 +3328,38 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 		if params.CreatedAtNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__notilike", runtime.ParamLocationQuery, *params.CreatedAtNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__desc", runtime.ParamLocationQuery, *params.CreatedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__asc", runtime.ParamLocationQuery, *params.CreatedAtAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -3549,6 +3725,38 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 
 		}
 
+		if params.UpdatedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_at__desc", runtime.ParamLocationQuery, *params.UpdatedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UpdatedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_at__asc", runtime.ParamLocationQuery, *params.UpdatedAtAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.DeletedAtEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__eq", runtime.ParamLocationQuery, *params.DeletedAtEq); err != nil {
@@ -3888,6 +4096,38 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 		if params.DeletedAtNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__notilike", runtime.ParamLocationQuery, *params.DeletedAtNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DeletedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__desc", runtime.ParamLocationQuery, *params.DeletedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DeletedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__asc", runtime.ParamLocationQuery, *params.DeletedAtAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -4253,6 +4493,38 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 
 		}
 
+		if params.NameDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "name__desc", runtime.ParamLocationQuery, *params.NameDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.NameAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "name__asc", runtime.ParamLocationQuery, *params.NameAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.StreamUrlEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "stream_url__eq", runtime.ParamLocationQuery, *params.StreamUrlEq); err != nil {
@@ -4592,6 +4864,38 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 		if params.StreamUrlNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "stream_url__notilike", runtime.ParamLocationQuery, *params.StreamUrlNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.StreamUrlDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "stream_url__desc", runtime.ParamLocationQuery, *params.StreamUrlDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.StreamUrlAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "stream_url__asc", runtime.ParamLocationQuery, *params.StreamUrlAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -4957,6 +5261,38 @@ func NewGetCamerasRequest(server string, params *GetCamerasParams) (*http.Reques
 
 		}
 
+		if params.LastSeenDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "last_seen__desc", runtime.ParamLocationQuery, *params.LastSeenDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.LastSeenAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "last_seen__asc", runtime.ParamLocationQuery, *params.LastSeenAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -4988,7 +5324,7 @@ func NewPostCamerasRequestWithBody(server string, contentType string, body io.Re
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/cameras")
+	operationPath := fmt.Sprintf("/api/cameras")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -5024,7 +5360,7 @@ func NewDeleteCameraRequest(server string, primaryKey interface{}) (*http.Reques
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/cameras/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/cameras/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -5058,7 +5394,7 @@ func NewGetCameraRequest(server string, primaryKey interface{}) (*http.Request, 
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/cameras/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/cameras/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -5103,7 +5439,7 @@ func NewPatchCameraRequestWithBody(server string, primaryKey interface{}, conten
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/cameras/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/cameras/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -5150,7 +5486,7 @@ func NewPutCameraRequestWithBody(server string, primaryKey interface{}, contentT
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/cameras/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/cameras/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -5179,7 +5515,7 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/detections")
+	operationPath := fmt.Sprintf("/api/detections")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -5211,38 +5547,6 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OrderByAsc != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "order_by__asc", runtime.ParamLocationQuery, *params.OrderByAsc); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OrderByDesc != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "order_by__desc", runtime.ParamLocationQuery, *params.OrderByDesc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -5608,6 +5912,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 
 		}
 
+		if params.IdDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "id__desc", runtime.ParamLocationQuery, *params.IdDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IdAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "id__asc", runtime.ParamLocationQuery, *params.IdAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.CreatedAtEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__eq", runtime.ParamLocationQuery, *params.CreatedAtEq); err != nil {
@@ -5947,6 +6283,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 		if params.CreatedAtNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__notilike", runtime.ParamLocationQuery, *params.CreatedAtNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__desc", runtime.ParamLocationQuery, *params.CreatedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__asc", runtime.ParamLocationQuery, *params.CreatedAtAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -6312,6 +6680,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 
 		}
 
+		if params.UpdatedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_at__desc", runtime.ParamLocationQuery, *params.UpdatedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UpdatedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_at__asc", runtime.ParamLocationQuery, *params.UpdatedAtAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.DeletedAtEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__eq", runtime.ParamLocationQuery, *params.DeletedAtEq); err != nil {
@@ -6651,6 +7051,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 		if params.DeletedAtNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__notilike", runtime.ParamLocationQuery, *params.DeletedAtNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DeletedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__desc", runtime.ParamLocationQuery, *params.DeletedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DeletedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__asc", runtime.ParamLocationQuery, *params.DeletedAtAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -7016,6 +7448,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 
 		}
 
+		if params.SeenAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "seen_at__desc", runtime.ParamLocationQuery, *params.SeenAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.SeenAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "seen_at__asc", runtime.ParamLocationQuery, *params.SeenAtAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.ClassIdEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "class_id__eq", runtime.ParamLocationQuery, *params.ClassIdEq); err != nil {
@@ -7355,6 +7819,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 		if params.ClassIdNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "class_id__notilike", runtime.ParamLocationQuery, *params.ClassIdNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ClassIdDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "class_id__desc", runtime.ParamLocationQuery, *params.ClassIdDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ClassIdAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "class_id__asc", runtime.ParamLocationQuery, *params.ClassIdAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -7720,6 +8216,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 
 		}
 
+		if params.ClassNameDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "class_name__desc", runtime.ParamLocationQuery, *params.ClassNameDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ClassNameAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "class_name__asc", runtime.ParamLocationQuery, *params.ClassNameAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.ScoreEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "score__eq", runtime.ParamLocationQuery, *params.ScoreEq); err != nil {
@@ -8059,6 +8587,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 		if params.ScoreNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "score__notilike", runtime.ParamLocationQuery, *params.ScoreNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ScoreDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "score__desc", runtime.ParamLocationQuery, *params.ScoreDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ScoreAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "score__asc", runtime.ParamLocationQuery, *params.ScoreAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -8424,6 +8984,38 @@ func NewGetDetectionsRequest(server string, params *GetDetectionsParams) (*http.
 
 		}
 
+		if params.CameraIdDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "camera_id__desc", runtime.ParamLocationQuery, *params.CameraIdDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CameraIdAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "camera_id__asc", runtime.ParamLocationQuery, *params.CameraIdAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -8455,7 +9047,7 @@ func NewPostDetectionsRequestWithBody(server string, contentType string, body io
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/detections")
+	operationPath := fmt.Sprintf("/api/detections")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -8491,7 +9083,7 @@ func NewDeleteDetectionRequest(server string, primaryKey interface{}) (*http.Req
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/detections/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/detections/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -8525,7 +9117,7 @@ func NewGetDetectionRequest(server string, primaryKey interface{}) (*http.Reques
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/detections/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/detections/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -8570,7 +9162,7 @@ func NewPatchDetectionRequestWithBody(server string, primaryKey interface{}, con
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/detections/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/detections/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -8617,7 +9209,7 @@ func NewPutDetectionRequestWithBody(server string, primaryKey interface{}, conte
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/detections/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/detections/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -8646,7 +9238,7 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/videos")
+	operationPath := fmt.Sprintf("/api/videos")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -8678,38 +9270,6 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 		if params.Offset != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "offset", runtime.ParamLocationQuery, *params.Offset); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OrderByAsc != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "order_by__asc", runtime.ParamLocationQuery, *params.OrderByAsc); err != nil {
-				return nil, err
-			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
-				return nil, err
-			} else {
-				for k, v := range parsed {
-					for _, v2 := range v {
-						queryValues.Add(k, v2)
-					}
-				}
-			}
-
-		}
-
-		if params.OrderByDesc != nil {
-
-			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "order_by__desc", runtime.ParamLocationQuery, *params.OrderByDesc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -9075,6 +9635,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 
 		}
 
+		if params.IdDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "id__desc", runtime.ParamLocationQuery, *params.IdDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.IdAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "id__asc", runtime.ParamLocationQuery, *params.IdAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.CreatedAtEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__eq", runtime.ParamLocationQuery, *params.CreatedAtEq); err != nil {
@@ -9414,6 +10006,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 		if params.CreatedAtNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__notilike", runtime.ParamLocationQuery, *params.CreatedAtNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__desc", runtime.ParamLocationQuery, *params.CreatedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CreatedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "created_at__asc", runtime.ParamLocationQuery, *params.CreatedAtAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -9779,6 +10403,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 
 		}
 
+		if params.UpdatedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_at__desc", runtime.ParamLocationQuery, *params.UpdatedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.UpdatedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "updated_at__asc", runtime.ParamLocationQuery, *params.UpdatedAtAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.DeletedAtEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__eq", runtime.ParamLocationQuery, *params.DeletedAtEq); err != nil {
@@ -10118,6 +10774,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 		if params.DeletedAtNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__notilike", runtime.ParamLocationQuery, *params.DeletedAtNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DeletedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__desc", runtime.ParamLocationQuery, *params.DeletedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DeletedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "deleted_at__asc", runtime.ParamLocationQuery, *params.DeletedAtAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -10483,6 +11171,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 
 		}
 
+		if params.FilePathDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "file_path__desc", runtime.ParamLocationQuery, *params.FilePathDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.FilePathAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "file_path__asc", runtime.ParamLocationQuery, *params.FilePathAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.StartedAtEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "started_at__eq", runtime.ParamLocationQuery, *params.StartedAtEq); err != nil {
@@ -10822,6 +11542,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 		if params.StartedAtNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "started_at__notilike", runtime.ParamLocationQuery, *params.StartedAtNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.StartedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "started_at__desc", runtime.ParamLocationQuery, *params.StartedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.StartedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "started_at__asc", runtime.ParamLocationQuery, *params.StartedAtAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11187,6 +11939,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 
 		}
 
+		if params.EndedAtDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ended_at__desc", runtime.ParamLocationQuery, *params.EndedAtDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.EndedAtAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "ended_at__asc", runtime.ParamLocationQuery, *params.EndedAtAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.DurationEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "duration__eq", runtime.ParamLocationQuery, *params.DurationEq); err != nil {
@@ -11526,6 +12310,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 		if params.DurationNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "duration__notilike", runtime.ParamLocationQuery, *params.DurationNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DurationDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "duration__desc", runtime.ParamLocationQuery, *params.DurationDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.DurationAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "duration__asc", runtime.ParamLocationQuery, *params.DurationAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -11891,6 +12707,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 
 		}
 
+		if params.ThumbnailPathDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "thumbnail_path__desc", runtime.ParamLocationQuery, *params.ThumbnailPathDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.ThumbnailPathAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "thumbnail_path__asc", runtime.ParamLocationQuery, *params.ThumbnailPathAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		if params.StatusEq != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status__eq", runtime.ParamLocationQuery, *params.StatusEq); err != nil {
@@ -12230,6 +13078,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 		if params.StatusNotilike != nil {
 
 			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status__notilike", runtime.ParamLocationQuery, *params.StatusNotilike); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.StatusDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status__desc", runtime.ParamLocationQuery, *params.StatusDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.StatusAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "status__asc", runtime.ParamLocationQuery, *params.StatusAsc); err != nil {
 				return nil, err
 			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
 				return nil, err
@@ -12595,6 +13475,38 @@ func NewGetVideosRequest(server string, params *GetVideosParams) (*http.Request,
 
 		}
 
+		if params.CameraIdDesc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "camera_id__desc", runtime.ParamLocationQuery, *params.CameraIdDesc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
+		if params.CameraIdAsc != nil {
+
+			if queryFrag, err := runtime.StyleParamWithLocation("form", true, "camera_id__asc", runtime.ParamLocationQuery, *params.CameraIdAsc); err != nil {
+				return nil, err
+			} else if parsed, err := url.ParseQuery(queryFrag); err != nil {
+				return nil, err
+			} else {
+				for k, v := range parsed {
+					for _, v2 := range v {
+						queryValues.Add(k, v2)
+					}
+				}
+			}
+
+		}
+
 		queryURL.RawQuery = queryValues.Encode()
 	}
 
@@ -12626,7 +13538,7 @@ func NewPostVideosRequestWithBody(server string, contentType string, body io.Rea
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/videos")
+	operationPath := fmt.Sprintf("/api/videos")
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -12662,7 +13574,7 @@ func NewDeleteVideoRequest(server string, primaryKey interface{}) (*http.Request
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/videos/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/videos/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -12696,7 +13608,7 @@ func NewGetVideoRequest(server string, primaryKey interface{}) (*http.Request, e
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/videos/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/videos/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -12741,7 +13653,7 @@ func NewPatchVideoRequestWithBody(server string, primaryKey interface{}, content
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/videos/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/videos/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -12788,7 +13700,7 @@ func NewPutVideoRequestWithBody(server string, primaryKey interface{}, contentTy
 		return nil, err
 	}
 
-	operationPath := fmt.Sprintf("/videos/%s", pathParam0)
+	operationPath := fmt.Sprintf("/api/videos/%s", pathParam0)
 	if operationPath[0] == '/' {
 		operationPath = "." + operationPath
 	}
@@ -14439,81 +15351,88 @@ func ParsePutVideoResponse(rsp *http.Response) (*PutVideoResponse, error) {
 // Base64 encoded, gzipped, json marshaled Swagger object
 var swaggerSpec = []string{
 
-	"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",
+	"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",
 }
 
 // GetSwagger returns the content of the embedded swagger specification file

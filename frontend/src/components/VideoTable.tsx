@@ -12,10 +12,10 @@ export interface VideoTableProps {
 }
 
 export function VideoTable(props: VideoTableProps) {
-  const { data, error, isLoading } = useQuery("get", "/videos", {
+  const { data, error, isLoading } = useQuery("get", "/api/videos", {
     params: {
       query: {
-        order_by__desc: "started_at",
+        started_at__desc: "",
         camera_id__eq: props.cameraId || undefined,
         started_at__gte: props.date
           ? `${props.date}T00:00:00+08:00`

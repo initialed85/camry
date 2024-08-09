@@ -34,12 +34,12 @@ fi
 
 # introspect the database and generate the Djangolang API
 # note: the environment variables are coupled to the environment described in docker-compose.yaml
-echo -e "\generating the api..."
-DJANGOLANG_PACKAGE_NAME=api POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR!11 djangolang template
+echo -e "\ngenerating the api..."
+DJANGOLANG_API_ROOT=/api DJANGOLANG_PACKAGE_NAME=api POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR!11 djangolang template
 
 # dump out the OpenAPI v3 schema for the Djangolang API
 mkdir -p ./schema
-./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
+DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
 
 # generate the client for use by the frontend
 echo -e "\ngenerating typescript client..."

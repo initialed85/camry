@@ -15,10 +15,10 @@ export default function CameraToggleButtonGroup(
 ) {
   const [value, setValue] = useState<string | null>();
 
-  const { data, error } = useQuery("get", "/cameras", {
+  const { data, error } = useQuery("get", "/api/cameras", {
     params: {
       query: {
-        order_by__asc: "name",
+        name__asc: "",
       },
     },
   });

@@ -4,7 +4,7 @@
  */
 
 export interface paths {
-  "/cameras": {
+  "/api/cameras": {
     parameters: {
       query?: never;
       header?: never;
@@ -20,7 +20,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/cameras/{primaryKey}": {
+  "/api/cameras/{primaryKey}": {
     parameters: {
       query?: never;
       header?: never;
@@ -36,7 +36,7 @@ export interface paths {
     patch: operations["PatchCamera"];
     trace?: never;
   };
-  "/detections": {
+  "/api/detections": {
     parameters: {
       query?: never;
       header?: never;
@@ -52,7 +52,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/detections/{primaryKey}": {
+  "/api/detections/{primaryKey}": {
     parameters: {
       query?: never;
       header?: never;
@@ -68,7 +68,7 @@ export interface paths {
     patch: operations["PatchDetection"];
     trace?: never;
   };
-  "/videos": {
+  "/api/videos": {
     parameters: {
       query?: never;
       header?: never;
@@ -84,7 +84,7 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
-  "/videos/{primaryKey}": {
+  "/api/videos/{primaryKey}": {
     parameters: {
       query?: never;
       header?: never;
@@ -197,10 +197,6 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
-        /** @description SQL ORDER BY _ ASC operator, permits comma-separated values */
-        order_by__asc?: string;
-        /** @description SQL ORDER BY _ DESC operator, permits comma-separated values */
-        order_by__desc?: string;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -219,11 +215,11 @@ export interface operations {
         id__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         id__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         id__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         id__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         id__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         id__l?: string;
@@ -245,6 +241,10 @@ export interface operations {
         id__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         id__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        id__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        id__asc?: string;
         /** @description SQL = operator */
         created_at__eq?: string;
         /** @description SQL != operator */
@@ -263,11 +263,11 @@ export interface operations {
         created_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         created_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         created_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         created_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         created_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         created_at__l?: string;
@@ -289,6 +289,10 @@ export interface operations {
         created_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         created_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        created_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        created_at__asc?: string;
         /** @description SQL = operator */
         updated_at__eq?: string;
         /** @description SQL != operator */
@@ -307,11 +311,11 @@ export interface operations {
         updated_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         updated_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         updated_at__l?: string;
@@ -333,6 +337,10 @@ export interface operations {
         updated_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         updated_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        updated_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        updated_at__asc?: string;
         /** @description SQL = operator */
         deleted_at__eq?: string;
         /** @description SQL != operator */
@@ -351,11 +359,11 @@ export interface operations {
         deleted_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         deleted_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         deleted_at__l?: string;
@@ -377,6 +385,10 @@ export interface operations {
         deleted_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         deleted_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        deleted_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        deleted_at__asc?: string;
         /** @description SQL = operator */
         name__eq?: string;
         /** @description SQL != operator */
@@ -395,11 +407,11 @@ export interface operations {
         name__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         name__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         name__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         name__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         name__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         name__l?: string;
@@ -421,6 +433,10 @@ export interface operations {
         name__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         name__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        name__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        name__asc?: string;
         /** @description SQL = operator */
         stream_url__eq?: string;
         /** @description SQL != operator */
@@ -439,11 +455,11 @@ export interface operations {
         stream_url__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         stream_url__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         stream_url__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         stream_url__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         stream_url__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         stream_url__l?: string;
@@ -465,6 +481,10 @@ export interface operations {
         stream_url__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         stream_url__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        stream_url__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        stream_url__asc?: string;
         /** @description SQL = operator */
         last_seen__eq?: string;
         /** @description SQL != operator */
@@ -483,11 +503,11 @@ export interface operations {
         last_seen__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         last_seen__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         last_seen__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         last_seen__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         last_seen__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         last_seen__l?: string;
@@ -509,6 +529,10 @@ export interface operations {
         last_seen__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         last_seen__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        last_seen__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        last_seen__asc?: string;
       };
       header?: never;
       path?: never;
@@ -770,10 +794,6 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
-        /** @description SQL ORDER BY _ ASC operator, permits comma-separated values */
-        order_by__asc?: string;
-        /** @description SQL ORDER BY _ DESC operator, permits comma-separated values */
-        order_by__desc?: string;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -792,11 +812,11 @@ export interface operations {
         id__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         id__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         id__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         id__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         id__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         id__l?: string;
@@ -818,6 +838,10 @@ export interface operations {
         id__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         id__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        id__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        id__asc?: string;
         /** @description SQL = operator */
         created_at__eq?: string;
         /** @description SQL != operator */
@@ -836,11 +860,11 @@ export interface operations {
         created_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         created_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         created_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         created_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         created_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         created_at__l?: string;
@@ -862,6 +886,10 @@ export interface operations {
         created_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         created_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        created_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        created_at__asc?: string;
         /** @description SQL = operator */
         updated_at__eq?: string;
         /** @description SQL != operator */
@@ -880,11 +908,11 @@ export interface operations {
         updated_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         updated_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         updated_at__l?: string;
@@ -906,6 +934,10 @@ export interface operations {
         updated_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         updated_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        updated_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        updated_at__asc?: string;
         /** @description SQL = operator */
         deleted_at__eq?: string;
         /** @description SQL != operator */
@@ -924,11 +956,11 @@ export interface operations {
         deleted_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         deleted_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         deleted_at__l?: string;
@@ -950,6 +982,10 @@ export interface operations {
         deleted_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         deleted_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        deleted_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        deleted_at__asc?: string;
         /** @description SQL = operator */
         seen_at__eq?: string;
         /** @description SQL != operator */
@@ -968,11 +1004,11 @@ export interface operations {
         seen_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         seen_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         seen_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         seen_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         seen_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         seen_at__l?: string;
@@ -994,6 +1030,10 @@ export interface operations {
         seen_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         seen_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        seen_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        seen_at__asc?: string;
         /** @description SQL = operator */
         class_id__eq?: number;
         /** @description SQL != operator */
@@ -1012,11 +1052,11 @@ export interface operations {
         class_id__nin?: number;
         /** @description SQL NOT IN operator, permits comma-separated values */
         class_id__notin?: number;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         class_id__isnull?: number;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         class_id__nisnull?: number;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         class_id__isnotnull?: number;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         class_id__l?: number;
@@ -1038,6 +1078,10 @@ export interface operations {
         class_id__nilike?: number;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         class_id__notilike?: number;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        class_id__desc?: number;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        class_id__asc?: number;
         /** @description SQL = operator */
         class_name__eq?: string;
         /** @description SQL != operator */
@@ -1056,11 +1100,11 @@ export interface operations {
         class_name__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         class_name__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         class_name__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         class_name__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         class_name__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         class_name__l?: string;
@@ -1082,6 +1126,10 @@ export interface operations {
         class_name__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         class_name__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        class_name__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        class_name__asc?: string;
         /** @description SQL = operator */
         score__eq?: number;
         /** @description SQL != operator */
@@ -1100,11 +1148,11 @@ export interface operations {
         score__nin?: number;
         /** @description SQL NOT IN operator, permits comma-separated values */
         score__notin?: number;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         score__isnull?: number;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         score__nisnull?: number;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         score__isnotnull?: number;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         score__l?: number;
@@ -1126,6 +1174,10 @@ export interface operations {
         score__nilike?: number;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         score__notilike?: number;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        score__desc?: number;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        score__asc?: number;
         /** @description SQL = operator */
         camera_id__eq?: string;
         /** @description SQL != operator */
@@ -1144,11 +1196,11 @@ export interface operations {
         camera_id__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         camera_id__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         camera_id__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         camera_id__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         camera_id__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         camera_id__l?: string;
@@ -1170,6 +1222,10 @@ export interface operations {
         camera_id__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         camera_id__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        camera_id__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        camera_id__asc?: string;
       };
       header?: never;
       path?: never;
@@ -1431,10 +1487,6 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
-        /** @description SQL ORDER BY _ ASC operator, permits comma-separated values */
-        order_by__asc?: string;
-        /** @description SQL ORDER BY _ DESC operator, permits comma-separated values */
-        order_by__desc?: string;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -1453,11 +1505,11 @@ export interface operations {
         id__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         id__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         id__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         id__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         id__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         id__l?: string;
@@ -1479,6 +1531,10 @@ export interface operations {
         id__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         id__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        id__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        id__asc?: string;
         /** @description SQL = operator */
         created_at__eq?: string;
         /** @description SQL != operator */
@@ -1497,11 +1553,11 @@ export interface operations {
         created_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         created_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         created_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         created_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         created_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         created_at__l?: string;
@@ -1523,6 +1579,10 @@ export interface operations {
         created_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         created_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        created_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        created_at__asc?: string;
         /** @description SQL = operator */
         updated_at__eq?: string;
         /** @description SQL != operator */
@@ -1541,11 +1601,11 @@ export interface operations {
         updated_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         updated_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         updated_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         updated_at__l?: string;
@@ -1567,6 +1627,10 @@ export interface operations {
         updated_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         updated_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        updated_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        updated_at__asc?: string;
         /** @description SQL = operator */
         deleted_at__eq?: string;
         /** @description SQL != operator */
@@ -1585,11 +1649,11 @@ export interface operations {
         deleted_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         deleted_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         deleted_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         deleted_at__l?: string;
@@ -1611,6 +1675,10 @@ export interface operations {
         deleted_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         deleted_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        deleted_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        deleted_at__asc?: string;
         /** @description SQL = operator */
         file_path__eq?: string;
         /** @description SQL != operator */
@@ -1629,11 +1697,11 @@ export interface operations {
         file_path__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         file_path__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         file_path__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         file_path__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         file_path__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         file_path__l?: string;
@@ -1655,6 +1723,10 @@ export interface operations {
         file_path__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         file_path__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        file_path__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        file_path__asc?: string;
         /** @description SQL = operator */
         started_at__eq?: string;
         /** @description SQL != operator */
@@ -1673,11 +1745,11 @@ export interface operations {
         started_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         started_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         started_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         started_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         started_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         started_at__l?: string;
@@ -1699,6 +1771,10 @@ export interface operations {
         started_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         started_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        started_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        started_at__asc?: string;
         /** @description SQL = operator */
         ended_at__eq?: string;
         /** @description SQL != operator */
@@ -1717,11 +1793,11 @@ export interface operations {
         ended_at__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         ended_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         ended_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         ended_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         ended_at__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         ended_at__l?: string;
@@ -1743,6 +1819,10 @@ export interface operations {
         ended_at__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         ended_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        ended_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        ended_at__asc?: string;
         /** @description SQL = operator */
         duration__eq?: number;
         /** @description SQL != operator */
@@ -1761,11 +1841,11 @@ export interface operations {
         duration__nin?: number;
         /** @description SQL NOT IN operator, permits comma-separated values */
         duration__notin?: number;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         duration__isnull?: number;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         duration__nisnull?: number;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         duration__isnotnull?: number;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         duration__l?: number;
@@ -1787,6 +1867,10 @@ export interface operations {
         duration__nilike?: number;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         duration__notilike?: number;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        duration__desc?: number;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        duration__asc?: number;
         /** @description SQL = operator */
         thumbnail_path__eq?: string;
         /** @description SQL != operator */
@@ -1805,11 +1889,11 @@ export interface operations {
         thumbnail_path__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         thumbnail_path__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         thumbnail_path__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         thumbnail_path__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         thumbnail_path__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         thumbnail_path__l?: string;
@@ -1831,6 +1915,10 @@ export interface operations {
         thumbnail_path__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         thumbnail_path__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        thumbnail_path__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        thumbnail_path__asc?: string;
         /** @description SQL = operator */
         status__eq?: string;
         /** @description SQL != operator */
@@ -1849,11 +1937,11 @@ export interface operations {
         status__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         status__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         status__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         status__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         status__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         status__l?: string;
@@ -1875,6 +1963,10 @@ export interface operations {
         status__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         status__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        status__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        status__asc?: string;
         /** @description SQL = operator */
         camera_id__eq?: string;
         /** @description SQL != operator */
@@ -1893,11 +1985,11 @@ export interface operations {
         camera_id__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
         camera_id__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored */
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
         camera_id__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         camera_id__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored */
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
         camera_id__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
         camera_id__l?: string;
@@ -1919,6 +2011,10 @@ export interface operations {
         camera_id__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
         camera_id__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        camera_id__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        camera_id__asc?: string;
       };
       header?: never;
       path?: never;

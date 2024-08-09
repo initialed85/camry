@@ -21,6 +21,7 @@ import (
 	"github.com/initialed85/djangolang/pkg/introspect"
 	"github.com/initialed85/djangolang/pkg/query"
 	"github.com/initialed85/djangolang/pkg/server"
+	"github.com/initialed85/djangolang/pkg/stream"
 	"github.com/initialed85/djangolang/pkg/types"
 	_pgtype "github.com/jackc/pgtype"
 	"github.com/jackc/pgx/v5/pgtype"
@@ -881,7 +882,7 @@ func SelectVideo(
 	return object, nil
 }
 
-func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware) {
+func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware) {
 	ctx := r.Context()
 
 	insaneOrderParams := make([]string, 0)
@@ -895,48 +896,11 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 
 	var orderByDirection *string
 	orderBys := make([]string, 0)
-	for rawKey, rawValues := range r.URL.Query() {
-		if !(rawKey == "order_by__desc" || rawKey == "order_by__asc") {
-			continue
-		}
-
-		for _, rawValue := range rawValues {
-			switch rawKey {
-			case "order_by__desc":
-				if orderByDirection != nil && *orderByDirection != "DESC" {
-					insaneOrderParams = append(insaneOrderParams, fmt.Sprintf("%s=%s", rawKey, rawValue))
-					hadInsaneOrderParams = true
-					continue
-				}
-
-				orderByDirection = helpers.Ptr("DESC")
-				orderBys = append(orderBys, strings.Split(rawValue, ",")...)
-			case "order_by__asc":
-				if orderByDirection != nil && *orderByDirection != "ASC" {
-					insaneOrderParams = append(insaneOrderParams, fmt.Sprintf("%s=%s", rawKey, rawValue))
-					hadInsaneOrderParams = true
-					continue
-				}
-
-				orderByDirection = helpers.Ptr("ASC")
-				orderBys = append(orderBys, strings.Split(rawValue, ",")...)
-			}
-		}
-	}
-
-	if hadInsaneOrderParams {
-		helpers.HandleErrorResponse(
-			w,
-			http.StatusInternalServerError,
-			fmt.Errorf("insane order params (e.g. conflicting asc / desc) %s", strings.Join(insaneOrderParams, ", ")),
-		)
-		return
-	}
 
 	values := make([]any, 0)
 	wheres := make([]string, 0)
 	for rawKey, rawValues := range r.URL.Query() {
-		if rawKey == "limit" || rawKey == "offset" || rawKey == "order_by__desc" || rawKey == "order_by__asc" {
+		if rawKey == "limit" || rawKey == "offset" {
 			continue
 		}
 
@@ -990,6 +954,26 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 				case "nil", "nilike", "notilike":
 					comparison = "NOT ILIKE"
 					IsLikeComparison = true
+				case "desc":
+					if orderByDirection != nil && *orderByDirection != "DESC" {
+						hadInsaneOrderParams = true
+						insaneOrderParams = append(insaneOrderParams, rawKey)
+						continue
+					}
+
+					orderByDirection = helpers.Ptr("DESC")
+					orderBys = append(orderBys, parts[0])
+					continue
+				case "asc":
+					if orderByDirection != nil && *orderByDirection != "ASC" {
+						hadInsaneOrderParams = true
+						insaneOrderParams = append(insaneOrderParams, rawKey)
+						continue
+					}
+
+					orderByDirection = helpers.Ptr("ASC")
+					orderBys = append(orderBys, parts[0])
+					continue
 				default:
 					isUnrecognized = true
 				}
@@ -1091,6 +1075,15 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 		return
 	}
 
+	if hadInsaneOrderParams {
+		helpers.HandleErrorResponse(
+			w,
+			http.StatusInternalServerError,
+			fmt.Errorf("insane order params (e.g. conflicting asc / desc) %s", strings.Join(insaneOrderParams, ", ")),
+		)
+		return
+	}
+
 	limit := 2000
 	rawLimit := r.URL.Query().Get("limit")
 	if rawLimit != "" {
@@ -1187,7 +1180,7 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 	}
 }
 
-func handleGetVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+func handleGetVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, primaryKey string) {
 	ctx := r.Context()
 
 	wheres := []string{fmt.Sprintf("%s = $$??", VideoTablePrimaryKeyColumn)}
@@ -1246,7 +1239,7 @@ func handleGetVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPo
 	}
 }
 
-func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware) {
+func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) {
 	_ = redisPool
 
 	b, err := io.ReadAll(r.Body)
@@ -1288,6 +1281,14 @@ func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		_ = tx.Rollback()
 	}()
 
+	xid, err := query.GetXid(r.Context(), tx)
+	if err != nil {
+		err = fmt.Errorf("failed to get xid: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	_ = xid
+
 	for i, object := range objects {
 		err = object.Insert(r.Context(), tx, false, false)
 		if err != nil {
@@ -1306,10 +1307,17 @@ func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		return
 	}
 
+	_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, VideoTable, xid)
+	if err != nil {
+		err = fmt.Errorf("failed to wait for change: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+
 	helpers.HandleObjectsResponse(w, http.StatusCreated, objects)
 }
 
-func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
 
 	b, err := io.ReadAll(r.Body)
@@ -1348,6 +1356,14 @@ func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPo
 		_ = tx.Rollback()
 	}()
 
+	xid, err := query.GetXid(r.Context(), tx)
+	if err != nil {
+		err = fmt.Errorf("failed to get xid: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	_ = xid
+
 	err = object.Update(r.Context(), tx, true)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v: %v", object, err)
@@ -1362,10 +1378,17 @@ func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPo
 		return
 	}
 
+	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
+	if err != nil {
+		err = fmt.Errorf("failed to wait for change: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Video{object})
 }
 
-func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
 
 	b, err := io.ReadAll(r.Body)
@@ -1413,6 +1436,14 @@ func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		_ = tx.Rollback()
 	}()
 
+	xid, err := query.GetXid(r.Context(), tx)
+	if err != nil {
+		err = fmt.Errorf("failed to get xid: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	_ = xid
+
 	err = object.Update(r.Context(), tx, false, forceSetValuesForFields...)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v: %v", object, err)
@@ -1427,10 +1458,17 @@ func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		return
 	}
 
+	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
+	if err != nil {
+		err = fmt.Errorf("failed to wait for change: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Video{object})
 }
 
-func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, modelMiddlewares []server.ModelMiddleware, primaryKey string) {
+func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
 
 	var item = make(map[string]any)
@@ -1456,6 +1494,14 @@ func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		_ = tx.Rollback()
 	}()
 
+	xid, err := query.GetXid(r.Context(), tx)
+	if err != nil {
+		err = fmt.Errorf("failed to get xid: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+	_ = xid
+
 	err = object.Delete(r.Context(), tx)
 	if err != nil {
 		err = fmt.Errorf("failed to delete %#+v: %v", object, err)
@@ -1470,10 +1516,17 @@ func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
+	_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, VideoTable, xid)
+	if err != nil {
+		err = fmt.Errorf("failed to wait for change: %v", err)
+		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+		return
+	}
+
 	helpers.HandleObjectsResponse(w, http.StatusNoContent, nil)
 }
 
-func GetVideoRouter(db *sqlx.DB, redisPool *redis.Pool, httpMiddlewares []server.HTTPMiddleware, modelMiddlewares []server.ModelMiddleware) chi.Router {
+func GetVideoRouter(db *sqlx.DB, redisPool *redis.Pool, httpMiddlewares []server.HTTPMiddleware, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) chi.Router {
 	r := chi.NewRouter()
 
 	for _, m := range httpMiddlewares {
@@ -1481,27 +1534,27 @@ func GetVideoRouter(db *sqlx.DB, redisPool *redis.Pool, httpMiddlewares []server
 	}
 
 	r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		handleGetVideos(w, r, db, redisPool, modelMiddlewares)
+		handleGetVideos(w, r, db, redisPool, objectMiddlewares)
 	})
 
 	r.Get("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handleGetVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handleGetVideo(w, r, db, redisPool, objectMiddlewares, chi.URLParam(r, "primaryKey"))
 	})
 
 	r.Post("/", func(w http.ResponseWriter, r *http.Request) {
-		handlePostVideos(w, r, db, redisPool, modelMiddlewares)
+		handlePostVideos(w, r, db, redisPool, objectMiddlewares, waitForChange)
 	})
 
 	r.Put("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handlePutVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handlePutVideo(w, r, db, redisPool, objectMiddlewares, waitForChange, chi.URLParam(r, "primaryKey"))
 	})
 
 	r.Patch("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handlePatchVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handlePatchVideo(w, r, db, redisPool, objectMiddlewares, waitForChange, chi.URLParam(r, "primaryKey"))
 	})
 
 	r.Delete("/{primaryKey}", func(w http.ResponseWriter, r *http.Request) {
-		handleDeleteVideo(w, r, db, redisPool, modelMiddlewares, chi.URLParam(r, "primaryKey"))
+		handleDeleteVideo(w, r, db, redisPool, objectMiddlewares, waitForChange, chi.URLParam(r, "primaryKey"))
 	})
 
 	return r
