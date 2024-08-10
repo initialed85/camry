@@ -2,7 +2,6 @@ package segment_producer
 
 import (
 	"bufio"
-	"bytes"
 	"context"
 	"fmt"
 	"io"
@@ -24,7 +23,7 @@ import (
 
 const (
 	executable      = "ffmpeg"
-	watchdogTimeout = time.Second * 5
+	watchdogTimeout = time.Second * 10
 )
 
 var (
@@ -115,9 +114,21 @@ func getCommandLine(
 	return arguments
 }
 
-func runCommand(outerCtx context.Context, arguments []string, onOpen func(string) error, onSave func(string) error) error {
+func runCommand(
+	outerCtx context.Context,
+	arguments []string,
+	onOpen func(string, float64, time.Time) error,
+	onUpdate func(string, float64, time.Time) error,
+	onSave func(string, float64, time.Time) error,
+) error {
 	ctx, cancel := context.WithCancel(outerCtx)
 	defer cancel()
+
+	reader, writer := io.Pipe()
+	defer func() {
+		_ = reader.Close()
+		_ = writer.Close()
+	}()
 
 	cmd := exec.Command(
 		executable,
@@ -125,7 +136,12 @@ func runCommand(outerCtx context.Context, arguments []string, onOpen func(string
 	)
 	cleanup := func() {
 		if cmd.Process != nil {
-			_ = cmd.Process.Kill()
+			_ = cmd.Process.Signal(syscall.SIGINT)
+			time.Sleep(time.Second * 1)
+			go func() {
+				time.Sleep(time.Second * 4)
+				_ = cmd.Process.Signal(syscall.SIGTERM)
+			}()
 		}
 	}
 	defer func() {
@@ -137,17 +153,15 @@ func runCommand(outerCtx context.Context, arguments []string, onOpen func(string
 		cleanup()
 	}()
 
-	reader, writer := io.Pipe()
-	defer func() {
-		_ = reader.Close()
-		_ = writer.Close()
-	}()
-
 	mu := new(sync.Mutex)
-	lastLine := time.Now()
+	lastLine := internal.GetNow()
+	lastUpdate := internal.GetNow()
+
+	var readErr error
 
 	go func() {
-		lastPath := ""
+		thisFilePath := ""
+		lastFilePath := ""
 
 		r := bufio.NewReader(reader)
 		for {
@@ -159,40 +173,65 @@ func runCommand(outerCtx context.Context, arguments []string, onOpen func(string
 
 			b, err := r.ReadBytes(byte('\r'))
 			if err != nil {
-				log.Printf("warning: failed r.ReadLine(); err: %v", err)
+				readErr = err
 				return
 			}
+
 			s := string(b)
 
-			log.Printf("read line (reset watchdog): %#+v", s)
+			// TODO: handy for debugging
+			// log.Printf("read line (reset watchdog): %#+v", s)
 
 			mu.Lock()
-			lastLine = time.Now()
+			lastLine = internal.GetNow()
 			mu.Unlock()
+
+			if thisFilePath != "" {
+				if time.Since(lastUpdate) > time.Second*1 {
+					fileSize, _ := GetFileSize(thisFilePath)
+					log.Printf("invoking onUpdate(%s, %f, %s)", thisFilePath, fileSize, lastLine)
+					err = onUpdate(thisFilePath, fileSize, lastLine)
+					if err != nil {
+						readErr = fmt.Errorf("failed to invoke onUpdate(%#+v, %#+v): %v", thisFilePath, fileSize, err)
+						return
+					}
+
+					lastUpdate = lastLine
+				}
+			}
 
 			match := pattern.FindStringSubmatch(s)
 			if len(match) != 2 {
 				continue
 			}
 
-			path := match[1]
-			log.Printf("found path: %#+v", path)
+			thisFilePath = strings.TrimSpace(match[1])
+			if thisFilePath == "" {
+				continue
+			}
 
-			if lastPath != "" {
-				log.Printf("invoking onSave(%#+v)", lastPath)
-				err = onSave(lastPath)
+			// TODO: handy for debugging
+			// log.Printf("found path: %#+v", thisFilePath)
+
+			if lastFilePath != "" {
+				fileSize, _ := GetFileSize(lastFilePath)
+				log.Printf("invoking onSave(%s, %f, %s)", lastFilePath, fileSize, lastLine)
+				err = onSave(lastFilePath, fileSize, lastLine)
 				if err != nil {
-					log.Printf("warning: failed to invoke onSave(%#+v): %v", lastPath, err)
+					readErr = fmt.Errorf("failed to invoke onSave(%#+v, %#+v): %v", lastFilePath, fileSize, err)
+					return
 				}
 			}
 
-			log.Printf("invoking onOpen(%#+v)", path)
-			err = onOpen(path)
+			fileSize, _ := GetFileSize(thisFilePath)
+			log.Printf("invoking onOpen(%s, %f, %s)", thisFilePath, fileSize, lastLine)
+			err = onOpen(thisFilePath, fileSize, lastLine)
 			if err != nil {
-				log.Printf("warning: failed to invoke onOpen(%#+v): %v", lastPath, err)
+				readErr = fmt.Errorf("failed to invoke onOpen(%#+v, %#+v): %v", lastFilePath, fileSize, err)
+				return
 			}
 
-			lastPath = path
+			lastFilePath = thisFilePath
 		}
 	}()
 
@@ -207,7 +246,7 @@ func runCommand(outerCtx context.Context, arguments []string, onOpen func(string
 			default:
 			}
 
-			now := time.Now()
+			now := internal.GetNow()
 			watchdogAge := now.Sub(lastLine)
 			if watchdogAge > watchdogTimeout {
 				log.Printf("watchdog timeout at %v", watchdogAge)
@@ -215,7 +254,7 @@ func runCommand(outerCtx context.Context, arguments []string, onOpen func(string
 				return
 			}
 
-			log.Printf("watchdog okay at %v", watchdogAge)
+			// log.Printf("watchdog okay at %v", watchdogAge)
 			time.Sleep(time.Second * 1)
 		}
 	}()
@@ -227,6 +266,15 @@ func runCommand(outerCtx context.Context, arguments []string, onOpen func(string
 			executable,
 			strings.Join(arguments, " "),
 			err,
+		)
+	}
+
+	if readErr != nil {
+		return fmt.Errorf(
+			"command %v %v failed during read; err: %v",
+			executable,
+			strings.Join(arguments, " "),
+			readErr,
 		)
 	}
 
@@ -242,8 +290,9 @@ func run(
 	durationSeconds int,
 	destinationPath string,
 	cameraName string,
-	onOpen func(string) error,
-	onSave func(string) error,
+	onOpen func(string, float64, time.Time) error,
+	onUpdate func(string, float64, time.Time) error,
+	onSave func(string, float64, time.Time) error,
 ) error {
 	arguments := getCommandLine(
 		enablePassthrough,
@@ -265,7 +314,7 @@ func run(
 
 retry:
 	for {
-		err := runCommand(ctx, arguments, onOpen, onSave)
+		err := runCommand(ctx, arguments, onOpen, onUpdate, onSave)
 
 		select {
 		case <-ctx.Done():
@@ -278,36 +327,6 @@ retry:
 		}
 
 		time.Sleep(time.Second * 1)
-	}
-
-	return nil
-}
-
-func getThumbail(videoPath, imagePath string) error {
-	arguments := []string{
-		"-i",
-		videoPath,
-		"-ss",
-		"00:00:00.000",
-		"-vframes",
-		"1",
-		imagePath,
-	}
-
-	cmd := exec.Command(
-		"ffmpeg",
-		arguments...,
-	)
-
-	stdout := new(bytes.Buffer)
-	stderr := new(bytes.Buffer)
-
-	cmd.Stdout = stdout
-	cmd.Stderr = stderr
-
-	err := cmd.Run()
-	if err != nil {
-		return fmt.Errorf("%v; stdout=%#+v, stderr=%#+v", err, stdout, stderr)
 	}
 
 	return nil
@@ -393,12 +412,61 @@ func Run() error {
 		return err
 	}
 
+	func() error {
+		tx, err := db.BeginTxx(ctx, nil)
+		if err != nil {
+			return err
+		}
+
+		defer func() {
+			_ = tx.Rollback()
+		}()
+
+		orphanedVideos, err := api.SelectVideos(
+			ctx,
+			tx,
+			fmt.Sprintf(
+				"%v = $$?? AND %v = $$??",
+				api.VideoTableCameraIDColumn,
+				api.VideoTableStatusColumn,
+			),
+			nil,
+			nil,
+			nil,
+			camera.ID,
+			"recording",
+		)
+		if err != nil {
+			return err
+		}
+
+		for _, orphanedVideo := range orphanedVideos {
+			log.Printf("marking orphaned video %s as failed", orphanedVideo.ID)
+
+			orphanedVideo.Status = helpers.Ptr("failed")
+			err = orphanedVideo.Update(ctx, tx, false)
+			if err != nil {
+				return err
+			}
+		}
+
+		err = tx.Commit()
+		if err != nil {
+			return err
+		}
+
+		return nil
+	}()
+	if err != nil {
+		return fmt.Errorf("failed to handle orphaned videos: %v", err)
+	}
+
 	log.Printf("api confirmed %#+v", camera)
 
 	mu := new(sync.Mutex)
 	var video *api.Video
 
-	onOpen := func(path string) error {
+	onOpen := func(filePath string, fileSize float64, timestamp time.Time) error {
 		mu.Lock()
 		defer mu.Unlock()
 
@@ -411,19 +479,23 @@ func Run() error {
 			_ = tx.Rollback()
 		}()
 
-		if video != nil && video.Status != nil && *video.Status == "recording" {
+		if video != nil {
+			log.Printf("warning: there was a Video in-flight that should have been closed out- marking %v as failed", video.ID)
+
 			video.Status = helpers.Ptr("failed")
 			err = video.Update(ctx, tx, false)
 			if err != nil {
 				return err
 			}
+
+			video = nil
 		}
 
-		_, fileName := filepath.Split(path)
+		_, fileName := filepath.Split(filePath)
 
 		video = &api.Video{
-			FilePath:  fileName,
-			StartedAt: time.Now(),
+			FileName:  fileName,
+			StartedAt: internal.GetNow(),
 			Status:    helpers.Ptr("recording"),
 			CameraID:  camera.ID,
 		}
@@ -433,7 +505,7 @@ func Run() error {
 			return err
 		}
 
-		camera.LastSeen = helpers.Ptr(time.Now())
+		camera.LastSeen = helpers.Ptr(timestamp)
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
 			return err
@@ -447,9 +519,13 @@ func Run() error {
 		return nil
 	}
 
-	onSave := func(path string) error {
+	onUpdate := func(filePath string, fileSize float64, timestamp time.Time) error {
 		mu.Lock()
 		defer mu.Unlock()
+
+		if video == nil {
+			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can update in the database")
+		}
 
 		tx, err := db.BeginTxx(ctx, nil)
 		if err != nil {
@@ -460,32 +536,17 @@ func Run() error {
 			_ = tx.Rollback()
 		}()
 
-		_, fileName := filepath.Split(path)
-		ext := filepath.Ext(fileName)
-		thumbnailPath := fmt.Sprintf("%v.jpg", path[:len(path)-len(ext)])
+		video.FileSize = helpers.Ptr(fileSize)
 
-		err = getThumbail(path, thumbnailPath)
-		if err != nil {
-			return err
-		}
-
-		_, thumbnailName := filepath.Split(thumbnailPath)
-
-		if video == nil {
-			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can finalize with the database")
-		}
-
-		video.EndedAt = helpers.Ptr(time.Now())
-		video.Duration = helpers.Ptr(video.EndedAt.Sub(video.StartedAt))
-		video.ThumbnailPath = &thumbnailName
-		video.Status = helpers.Ptr("needs detection")
+		duration := timestamp.Sub(video.StartedAt)
+		video.Duration = &duration
 
 		err = video.Update(ctx, tx, false)
 		if err != nil {
 			return err
 		}
 
-		camera.LastSeen = helpers.Ptr(time.Now())
+		camera.LastSeen = helpers.Ptr(timestamp)
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
 			return err
@@ -495,6 +556,67 @@ func Run() error {
 		if err != nil {
 			return err
 		}
+
+		return nil
+	}
+
+	onSave := func(filePath string, fileSize float64, timestamp time.Time) error {
+		mu.Lock()
+		defer mu.Unlock()
+
+		if video == nil {
+			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can update in the database")
+		}
+
+		tx, err := db.BeginTxx(ctx, nil)
+		if err != nil {
+			return err
+		}
+
+		defer func() {
+			_ = tx.Rollback()
+		}()
+
+		_, fileName := filepath.Split(filePath)
+		video.FileName = fileName
+
+		ext := filepath.Ext(fileName)
+		thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
+		err = GenerateThumbnail(filePath, thumbnailPath)
+		if err == nil {
+			_, thumbnailName := filepath.Split(thumbnailPath)
+			video.ThumbnailName = &thumbnailName
+		}
+
+		video.FileSize = helpers.Ptr(fileSize)
+
+		video.Duration = helpers.Ptr(timestamp.Sub(video.StartedAt))
+
+		duration, err := GetVideoDuration(filePath)
+		if err == nil {
+			video.Duration = &duration
+		}
+
+		video.EndedAt = helpers.Ptr(timestamp)
+		video.Status = helpers.Ptr("needs detection")
+
+		err = video.Update(ctx, tx, false)
+		if err != nil {
+			return err
+		}
+
+		camera.LastSeen = helpers.Ptr(timestamp)
+		err = camera.Update(ctx, tx, false)
+		if err != nil {
+			return err
+		}
+
+		err = tx.Commit()
+		if err != nil {
+			return err
+		}
+
+		video = nil
 
 		return nil
 	}
@@ -509,6 +631,7 @@ func Run() error {
 		destinationPath,
 		cameraName,
 		onOpen,
+		onUpdate,
 		onSave,
 	)
 	if err != nil {

@@ -46,7 +46,6 @@
   "devDependencies": {
     "openapi-typescript": "^7.3.0"
   },
-  "proxy": "http://localhost:7070/api",
   "scripts": {
     "openapi-typescript": "mkdir -p ./src/api && openapi-typescript ../schema/openapi.json -o ./src/api/api.d.ts",
     "prettier": "prettier -w src",

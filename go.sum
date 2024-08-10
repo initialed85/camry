@@ -9,6 +9,8 @@ github.com/alecthomas/assert/v2 v2.6.0 h1:o3WJwILtexrEUk3cUVal3oiQY2tfgr/FHWiz/v
 github.com/alecthomas/assert/v2 v2.6.0/go.mod h1:Bze95FyfUr7x34QZrjL+XP+0qgp/zg8yS+TtBj1WA3k=
 github.com/alecthomas/repr v0.4.0 h1:GhI2A8MACjfegCPVq9f1FLvIBS+DrQ2KQBFZP1iFzXc=
 github.com/alecthomas/repr v0.4.0/go.mod h1:Fr0507jx4eOXV7AlPV6AVZLYrLIuIeSOWtW57eE/O/4=
+github.com/alfg/mp4 v0.0.0-20210728035756-55ea58c08aeb h1:v8z8Yym2Z/NCYgXO/aFqmYDYa/d3uRyVMq1DjgMfzn4=
+github.com/alfg/mp4 v0.0.0-20210728035756-55ea58c08aeb/go.mod h1:RfuO8OqkqAcWXXkaS3MuymrBQJbKJWi04H/bs6vNvh0=
 github.com/apapsch/go-jsonmerge/v2 v2.0.0 h1:axGnT1gRIfimI7gJifB699GoE/oq+F2MU7Dml6nw9rQ=
 github.com/apapsch/go-jsonmerge/v2 v2.0.0/go.mod h1:lvDnEdqiQrp0O42VQGgmlKpxL1AP2+08jFMw88y4klk=
 github.com/aymericbeaumet/go-tsvector v0.0.0-20210303220322-b3114343d43a h1:UnJe6N+4ZxYwmTNz6xHQMjB9z+TR6pXYlWwVLEkJBVI=
@@ -62,8 +64,8 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/hexops/gotextdiff v1.0.3 h1:gitA9+qJrrTCsiCl7+kh75nPqQt1cx4ZkudSTLoUqJM=
 github.com/hexops/gotextdiff v1.0.3/go.mod h1:pSWU5MAI3yDq+fZBTazCSJysOMbxWL1BSow5/V2vxeg=
-github.com/initialed85/djangolang v0.0.21 h1:Fsv9tvNnQnGcXY0hl241av/Myndj73sacN4ngSsPkv0=
-github.com/initialed85/djangolang v0.0.21/go.mod h1:3mqaFDBq9zfX/18jyDCHs5UpH2r5XGgBj/SlRcgfY64=
+github.com/initialed85/djangolang v0.0.25 h1:5vb/R9KpOKZ8sasD2MFFlh250ciABqqYGhEdsw4DV6w=
+github.com/initialed85/djangolang v0.0.25/go.mod h1:3mqaFDBq9zfX/18jyDCHs5UpH2r5XGgBj/SlRcgfY64=
 github.com/initialed85/structmeta v0.0.0-20240802152142-39f398ef1ab7 h1:G9Z1k4TyxQ/9Kk4ZSuw82WZCxJayZf12Aos2MorzKRg=
 github.com/initialed85/structmeta v0.0.0-20240802152142-39f398ef1ab7/go.mod h1:hTGWTsfgy6Um+L8e3Qcj8/pBkHGcIGxEpZAKziWhQfc=
 github.com/invopop/yaml v0.3.1 h1:f0+ZpmhfBSS4MhG+4HYseMdJhoeeopbSKbq5Rpeelso=

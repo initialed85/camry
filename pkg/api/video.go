@@ -37,11 +37,12 @@ type Video struct {
 	CreatedAt      time.Time      `json:"created_at"`
 	UpdatedAt      time.Time      `json:"updated_at"`
 	DeletedAt      *time.Time     `json:"deleted_at"`
-	FilePath       string         `json:"file_path"`
+	FileName       string         `json:"file_name"`
 	StartedAt      time.Time      `json:"started_at"`
 	EndedAt        *time.Time     `json:"ended_at"`
 	Duration       *time.Duration `json:"duration"`
-	ThumbnailPath  *string        `json:"thumbnail_path"`
+	FileSize       *float64       `json:"file_size"`
+	ThumbnailName  *string        `json:"thumbnail_name"`
 	Status         *string        `json:"status"`
 	CameraID       uuid.UUID      `json:"camera_id"`
 	CameraIDObject *Camera        `json:"camera_id_object"`
@@ -54,11 +55,12 @@ var (
 	VideoTableCreatedAtColumn     = "created_at"
 	VideoTableUpdatedAtColumn     = "updated_at"
 	VideoTableDeletedAtColumn     = "deleted_at"
-	VideoTableFilePathColumn      = "file_path"
+	VideoTableFileNameColumn      = "file_name"
 	VideoTableStartedAtColumn     = "started_at"
 	VideoTableEndedAtColumn       = "ended_at"
 	VideoTableDurationColumn      = "duration"
-	VideoTableThumbnailPathColumn = "thumbnail_path"
+	VideoTableFileSizeColumn      = "file_size"
+	VideoTableThumbnailNameColumn = "thumbnail_name"
 	VideoTableStatusColumn        = "status"
 	VideoTableCameraIDColumn      = "camera_id"
 )
@@ -68,11 +70,12 @@ var (
 	VideoTableCreatedAtColumnWithTypeCast     = fmt.Sprintf(`"created_at" AS created_at`)
 	VideoTableUpdatedAtColumnWithTypeCast     = fmt.Sprintf(`"updated_at" AS updated_at`)
 	VideoTableDeletedAtColumnWithTypeCast     = fmt.Sprintf(`"deleted_at" AS deleted_at`)
-	VideoTableFilePathColumnWithTypeCast      = fmt.Sprintf(`"file_path" AS file_path`)
+	VideoTableFileNameColumnWithTypeCast      = fmt.Sprintf(`"file_name" AS file_name`)
 	VideoTableStartedAtColumnWithTypeCast     = fmt.Sprintf(`"started_at" AS started_at`)
 	VideoTableEndedAtColumnWithTypeCast       = fmt.Sprintf(`"ended_at" AS ended_at`)
 	VideoTableDurationColumnWithTypeCast      = fmt.Sprintf(`"duration" AS duration`)
-	VideoTableThumbnailPathColumnWithTypeCast = fmt.Sprintf(`"thumbnail_path" AS thumbnail_path`)
+	VideoTableFileSizeColumnWithTypeCast      = fmt.Sprintf(`"file_size" AS file_size`)
+	VideoTableThumbnailNameColumnWithTypeCast = fmt.Sprintf(`"thumbnail_name" AS thumbnail_name`)
 	VideoTableStatusColumnWithTypeCast        = fmt.Sprintf(`"status" AS status`)
 	VideoTableCameraIDColumnWithTypeCast      = fmt.Sprintf(`"camera_id" AS camera_id`)
 )
@@ -82,11 +85,12 @@ var VideoTableColumns = []string{
 	VideoTableCreatedAtColumn,
 	VideoTableUpdatedAtColumn,
 	VideoTableDeletedAtColumn,
-	VideoTableFilePathColumn,
+	VideoTableFileNameColumn,
 	VideoTableStartedAtColumn,
 	VideoTableEndedAtColumn,
 	VideoTableDurationColumn,
-	VideoTableThumbnailPathColumn,
+	VideoTableFileSizeColumn,
+	VideoTableThumbnailNameColumn,
 	VideoTableStatusColumn,
 	VideoTableCameraIDColumn,
 }
@@ -96,11 +100,12 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableCreatedAtColumnWithTypeCast,
 	VideoTableUpdatedAtColumnWithTypeCast,
 	VideoTableDeletedAtColumnWithTypeCast,
-	VideoTableFilePathColumnWithTypeCast,
+	VideoTableFileNameColumnWithTypeCast,
 	VideoTableStartedAtColumnWithTypeCast,
 	VideoTableEndedAtColumnWithTypeCast,
 	VideoTableDurationColumnWithTypeCast,
-	VideoTableThumbnailPathColumnWithTypeCast,
+	VideoTableFileSizeColumnWithTypeCast,
+	VideoTableThumbnailNameColumnWithTypeCast,
 	VideoTableStatusColumnWithTypeCast,
 	VideoTableCameraIDColumnWithTypeCast,
 }
@@ -110,11 +115,12 @@ var VideoTableColumnLookup = map[string]*introspect.Column{
 	VideoTableCreatedAtColumn:     new(introspect.Column),
 	VideoTableUpdatedAtColumn:     new(introspect.Column),
 	VideoTableDeletedAtColumn:     new(introspect.Column),
-	VideoTableFilePathColumn:      new(introspect.Column),
+	VideoTableFileNameColumn:      new(introspect.Column),
 	VideoTableStartedAtColumn:     new(introspect.Column),
 	VideoTableEndedAtColumn:       new(introspect.Column),
 	VideoTableDurationColumn:      new(introspect.Column),
-	VideoTableThumbnailPathColumn: new(introspect.Column),
+	VideoTableFileSizeColumn:      new(introspect.Column),
+	VideoTableThumbnailNameColumn: new(introspect.Column),
 	VideoTableStatusColumn:        new(introspect.Column),
 	VideoTableCameraIDColumn:      new(introspect.Column),
 }
@@ -246,7 +252,7 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.DeletedAt = &temp2
 
-		case "file_path":
+		case "file_name":
 			if v == nil {
 				continue
 			}
@@ -263,7 +269,7 @@ func (m *Video) FromItem(item map[string]any) error {
 				}
 			}
 
-			m.FilePath = temp2
+			m.FileName = temp2
 
 		case "started_at":
 			if v == nil {
@@ -322,7 +328,26 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.Duration = &temp2
 
-		case "thumbnail_path":
+		case "file_size":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseFloat(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(float64)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to float64", temp1))
+				}
+			}
+
+			m.FileSize = &temp2
+
+		case "thumbnail_name":
 			if v == nil {
 				continue
 			}
@@ -339,7 +364,7 @@ func (m *Video) FromItem(item map[string]any) error {
 				}
 			}
 
-			m.ThumbnailPath = &temp2
+			m.ThumbnailName = &temp2
 
 		case "status":
 			if v == nil {
@@ -411,11 +436,12 @@ func (m *Video) Reload(
 	m.CreatedAt = t.CreatedAt
 	m.UpdatedAt = t.UpdatedAt
 	m.DeletedAt = t.DeletedAt
-	m.FilePath = t.FilePath
+	m.FileName = t.FileName
 	m.StartedAt = t.StartedAt
 	m.EndedAt = t.EndedAt
 	m.Duration = t.Duration
-	m.ThumbnailPath = t.ThumbnailPath
+	m.FileSize = t.FileSize
+	m.ThumbnailName = t.ThumbnailName
 	m.Status = t.Status
 	m.CameraID = t.CameraID
 	m.CameraIDObject = t.CameraIDObject
@@ -476,12 +502,12 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.FilePath) {
-		columns = append(columns, VideoTableFilePathColumn)
+	if setZeroValues || !types.IsZeroString(m.FileName) {
+		columns = append(columns, VideoTableFileNameColumn)
 
-		v, err := types.FormatString(m.FilePath)
+		v, err := types.FormatString(m.FileName)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.FilePath: %v", err)
+			return fmt.Errorf("failed to handle m.FileName: %v", err)
 		}
 
 		values = append(values, v)
@@ -520,12 +546,23 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.ThumbnailPath) {
-		columns = append(columns, VideoTableThumbnailPathColumn)
+	if setZeroValues || !types.IsZeroFloat(m.FileSize) {
+		columns = append(columns, VideoTableFileSizeColumn)
 
-		v, err := types.FormatString(m.ThumbnailPath)
+		v, err := types.FormatFloat(m.FileSize)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ThumbnailPath: %v", err)
+			return fmt.Errorf("failed to handle m.FileSize: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroString(m.ThumbnailName) {
+		columns = append(columns, VideoTableThumbnailNameColumn)
+
+		v, err := types.FormatString(m.ThumbnailName)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ThumbnailName: %v", err)
 		}
 
 		values = append(values, v)
@@ -644,12 +681,12 @@ func (m *Video) Update(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.FilePath) || slices.Contains(forceSetValuesForFields, VideoTableFilePathColumn) {
-		columns = append(columns, VideoTableFilePathColumn)
+	if setZeroValues || !types.IsZeroString(m.FileName) || slices.Contains(forceSetValuesForFields, VideoTableFileNameColumn) {
+		columns = append(columns, VideoTableFileNameColumn)
 
-		v, err := types.FormatString(m.FilePath)
+		v, err := types.FormatString(m.FileName)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.FilePath: %v", err)
+			return fmt.Errorf("failed to handle m.FileName: %v", err)
 		}
 
 		values = append(values, v)
@@ -688,12 +725,23 @@ func (m *Video) Update(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.ThumbnailPath) || slices.Contains(forceSetValuesForFields, VideoTableThumbnailPathColumn) {
-		columns = append(columns, VideoTableThumbnailPathColumn)
+	if setZeroValues || !types.IsZeroFloat(m.FileSize) || slices.Contains(forceSetValuesForFields, VideoTableFileSizeColumn) {
+		columns = append(columns, VideoTableFileSizeColumn)
 
-		v, err := types.FormatString(m.ThumbnailPath)
+		v, err := types.FormatFloat(m.FileSize)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ThumbnailPath: %v", err)
+			return fmt.Errorf("failed to handle m.FileSize: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroString(m.ThumbnailName) || slices.Contains(forceSetValuesForFields, VideoTableThumbnailNameColumn) {
+		columns = append(columns, VideoTableThumbnailNameColumn)
+
+		v, err := types.FormatString(m.ThumbnailName)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ThumbnailName: %v", err)
 		}
 
 		values = append(values, v)

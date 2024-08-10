@@ -15,10 +15,11 @@ export const queryClient = new QueryClient({
     queries: {
       staleTime: 1000 * 60, // 1 minute,
       gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days
+      refetchInterval: 1000 * 1, // 1 second
+      refetchIntervalInBackground: true,
       refetchOnMount: true,
       refetchOnReconnect: true,
       refetchOnWindowFocus: true,
-      refetchInterval: 1000 * 60, // 1 minute
     },
   },
 });

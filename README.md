@@ -2,7 +2,7 @@
 
 # status: not yet working
 
-Intended as the spiritual sucessor to [initialed85/cameranator](https://github.com/initialed85/cameranator), build on [initialed85/djangolang](https://github.com/initialed85/djangolang)
+Intended as the spiritual sucessor to [initialed85/cameranator](https://github.com/initialed85/cameranator), built on [initialed85/djangolang](https://github.com/initialed85/djangolang)
 
 ## Usage
 
@@ -26,15 +26,11 @@ curl -X POST http://localhost:7070/api/cameras -d '[{"name": "Driveway", "stream
 PAGER=cat PGPASSWORD=NoNVR\!11 psql -h localhost -p 5432 -U postgres camry -c 'TRUNCATE TABLE video CASCADE;'
 
 # shell 7
-DJANGOLANG_API_ROOT=/api DESTINATION_PATH=media ENABLE_PASSTHROUGH=1 CAMERA_NAME='Driveway' NET_CAM_URL=rtsp://192.168.137.31:554/Streaming/Channels/101 POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 go run ./cmd segment_producer
+find . -type f -name '*.go' | entr -n -r -cc -s "DJANGOLANG_API_ROOT=/api DESTINATION_PATH=media ENABLE_PASSTHROUGH=1 CAMERA_NAME='Driveway' NET_CAM_URL=rtsp://192.168.137.31:554/Streaming/Channels/101 POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 go run ./cmd segment_producer"
 
 # shell 8
-DJANGOLANG_API_ROOT=/api DESTINATION_PATH=media ENABLE_PASSTHROUGH=1 CAMERA_NAME='Front door' NET_CAM_URL=rtsp://192.168.137.32:554/Streaming/Channels/101 POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 go run ./cmd segment_producer
+find . -type f -name '*.go' | entr -n -r -cc -s "DJANGOLANG_API_ROOT=/api DESTINATION_PATH=media ENABLE_PASSTHROUGH=1 CAMERA_NAME='Front door' NET_CAM_URL=rtsp://192.168.137.32:554/Streaming/Channels/101 POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 go run ./cmd segment_producer"
 
 # shell 9
-DJANGOLANG_API_ROOT=/api DESTINATION_PATH=media ENABLE_PASSTHROUGH=1 CAMERA_NAME='Side gate' NET_CAM_URL=rtsp://192.168.137.33:554/Streaming/Channels/101 POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 go run ./cmd segment_producer
+find . -type f -name '*.go' | entr -n -r -cc -s "DJANGOLANG_API_ROOT=/api DESTINATION_PATH=media ENABLE_PASSTHROUGH=1 CAMERA_NAME='Side gate' NET_CAM_URL=rtsp://192.168.137.33:554/Streaming/Channels/101 POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 go run ./cmd segment_producer"
 ```
-
-## Tasks
-
-- [TODO] Add file size column + calculation

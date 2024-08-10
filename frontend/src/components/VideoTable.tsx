@@ -1,5 +1,6 @@
 import Text from "@carefully-coded/react-text-gradient";
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
+import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
 import CircularProgress from "@mui/joy/CircularProgress";
 import Table from "@mui/joy/Table";
 import Typography from "@mui/joy/Typography";
@@ -83,7 +84,7 @@ export function VideoTable(props: VideoTableProps) {
               (video?.duration || 0) / 1_000_000_000 - minutes * 60,
             );
 
-            const fileSize = 0;
+            const fileSize = (video?.file_size || 0.0).toFixed(2);
 
             var cameraName =
               video?.camera_id_object && video?.camera_id_object?.name
@@ -121,6 +122,28 @@ export function VideoTable(props: VideoTableProps) {
                 statusText
               );
 
+            var thumbnail;
+
+            if (video?.thumbnail_name) {
+              thumbnail = (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`/media/${video?.thumbnail_name}`}
+                >
+                  <img
+                    style={{ width: props.responsive ? 160 : 320 }}
+                    alt={`still from ${video?.camera_id_object?.name} @ ${props.date} ${startedAt}`}
+                    src={`/media/${video?.thumbnail_name}`}
+                  />
+                </a>
+              );
+            } else if (video?.status !== "failed") {
+              thumbnail = <CircularProgress variant="soft" size="sm" />;
+            } else {
+              thumbnail = <ErrorOutlineOutlinedIcon />;
+            }
+
             return (
               <tr key={video.id}>
                 <td>{cameraName}</td>
@@ -146,28 +169,14 @@ export function VideoTable(props: VideoTableProps) {
                     paddingRight: 4,
                   }}
                 >
-                  {video?.thumbnail_path ? (
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`/media/${video?.thumbnail_path}`}
-                    >
-                      <img
-                        style={{ width: props.responsive ? 160 : 320 }}
-                        alt={`still from ${video?.camera_id_object?.name} @ ${props.date} ${startedAt}`}
-                        src={`/media/${video?.thumbnail_path}`}
-                      />
-                    </a>
-                  ) : (
-                    <CircularProgress variant="soft" size="sm" />
-                  )}
+                  {thumbnail}
                 </td>
                 <td>
                   {available ? (
                     <a
                       target="_blank"
                       rel="noreferrer"
-                      href={`/media/${video?.file_path}`}
+                      href={`/media/${video?.file_name}`}
                     >
                       <CloudDownloadOutlinedIcon color={"success"} />
                     </a>
@@ -180,7 +189,11 @@ export function VideoTable(props: VideoTableProps) {
           })
         ) : (
           <tr>
-            <td colSpan={6}>There's nothing here...</td>
+            <td colSpan={6}>
+              <Typography color={"neutral"}>
+                (No videos for the selected camera / date)
+              </Typography>
+            </td>
           </tr>
         )}
       </tbody>

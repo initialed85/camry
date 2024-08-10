@@ -114,6 +114,8 @@ export interface components {
       /** Format: date-time */
       last_seen?: string | null;
       name?: string;
+      referenced_by_detection_camera_id_objects?: components["schemas"]["NullableArrayOfDetection"];
+      referenced_by_video_camera_id_objects?: components["schemas"]["NullableArrayOfVideo"];
       stream_url?: string;
       /** Format: date-time */
       updated_at?: string;
@@ -150,6 +152,9 @@ export interface components {
       /** Format: date-time */
       updated_at?: string;
     };
+    NullableArrayOfCamera: components["schemas"]["Camera"][];
+    NullableArrayOfDetection: components["schemas"]["Detection"][];
+    NullableArrayOfVideo: components["schemas"]["Video"][];
     NullableCamera: components["schemas"]["Camera"];
     NullableDetection: components["schemas"]["Detection"];
     NullableVideo: components["schemas"]["Video"];
@@ -171,13 +176,15 @@ export interface components {
       duration?: number | null;
       /** Format: date-time */
       ended_at?: string | null;
-      file_path?: string;
+      file_name?: string;
+      /** Format: double */
+      file_size?: number | null;
       /** Format: uuid */
       id?: string;
       /** Format: date-time */
       started_at?: string;
       status?: string;
-      thumbnail_path?: string;
+      thumbnail_name?: string;
       /** Format: date-time */
       updated_at?: string;
     };
@@ -1680,53 +1687,53 @@ export interface operations {
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
         deleted_at__asc?: string;
         /** @description SQL = operator */
-        file_path__eq?: string;
+        file_name__eq?: string;
         /** @description SQL != operator */
-        file_path__ne?: string;
+        file_name__ne?: string;
         /** @description SQL > operator, may not work with all column types */
-        file_path__gt?: string;
+        file_name__gt?: string;
         /** @description SQL >= operator, may not work with all column types */
-        file_path__gte?: string;
+        file_name__gte?: string;
         /** @description SQL < operator, may not work with all column types */
-        file_path__lt?: string;
+        file_name__lt?: string;
         /** @description SQL <= operator, may not work with all column types */
-        file_path__lte?: string;
+        file_name__lte?: string;
         /** @description SQL IN operator, permits comma-separated values */
-        file_path__in?: string;
+        file_name__in?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        file_path__nin?: string;
+        file_name__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        file_path__notin?: string;
+        file_name__notin?: string;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        file_path__isnull?: string;
+        file_name__isnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        file_path__nisnull?: string;
+        file_name__nisnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        file_path__isnotnull?: string;
+        file_name__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__l?: string;
+        file_name__l?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__like?: string;
+        file_name__like?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__nl?: string;
+        file_name__nl?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__nlike?: string;
+        file_name__nlike?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__notlike?: string;
+        file_name__notlike?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__il?: string;
+        file_name__il?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__ilike?: string;
+        file_name__ilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__nil?: string;
+        file_name__nil?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__nilike?: string;
+        file_name__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_path__notilike?: string;
+        file_name__notilike?: string;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        file_path__desc?: string;
+        file_name__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        file_path__asc?: string;
+        file_name__asc?: string;
         /** @description SQL = operator */
         started_at__eq?: string;
         /** @description SQL != operator */
@@ -1872,53 +1879,101 @@ export interface operations {
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
         duration__asc?: number;
         /** @description SQL = operator */
-        thumbnail_path__eq?: string;
+        file_size__eq?: number;
         /** @description SQL != operator */
-        thumbnail_path__ne?: string;
+        file_size__ne?: number;
         /** @description SQL > operator, may not work with all column types */
-        thumbnail_path__gt?: string;
+        file_size__gt?: number;
         /** @description SQL >= operator, may not work with all column types */
-        thumbnail_path__gte?: string;
+        file_size__gte?: number;
         /** @description SQL < operator, may not work with all column types */
-        thumbnail_path__lt?: string;
+        file_size__lt?: number;
         /** @description SQL <= operator, may not work with all column types */
-        thumbnail_path__lte?: string;
+        file_size__lte?: number;
         /** @description SQL IN operator, permits comma-separated values */
-        thumbnail_path__in?: string;
+        file_size__in?: number;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        thumbnail_path__nin?: string;
+        file_size__nin?: number;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        thumbnail_path__notin?: string;
+        file_size__notin?: number;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        thumbnail_path__isnull?: string;
+        file_size__isnull?: number;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        thumbnail_path__nisnull?: string;
+        file_size__nisnull?: number;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        thumbnail_path__isnotnull?: string;
+        file_size__isnotnull?: number;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__l?: string;
+        file_size__l?: number;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__like?: string;
+        file_size__like?: number;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__nl?: string;
+        file_size__nl?: number;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__nlike?: string;
+        file_size__nlike?: number;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__notlike?: string;
+        file_size__notlike?: number;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__il?: string;
+        file_size__il?: number;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__ilike?: string;
+        file_size__ilike?: number;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__nil?: string;
+        file_size__nil?: number;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__nilike?: string;
+        file_size__nilike?: number;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        thumbnail_path__notilike?: string;
+        file_size__notilike?: number;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        thumbnail_path__desc?: string;
+        file_size__desc?: number;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        thumbnail_path__asc?: string;
+        file_size__asc?: number;
+        /** @description SQL = operator */
+        thumbnail_name__eq?: string;
+        /** @description SQL != operator */
+        thumbnail_name__ne?: string;
+        /** @description SQL > operator, may not work with all column types */
+        thumbnail_name__gt?: string;
+        /** @description SQL >= operator, may not work with all column types */
+        thumbnail_name__gte?: string;
+        /** @description SQL < operator, may not work with all column types */
+        thumbnail_name__lt?: string;
+        /** @description SQL <= operator, may not work with all column types */
+        thumbnail_name__lte?: string;
+        /** @description SQL IN operator, permits comma-separated values */
+        thumbnail_name__in?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        thumbnail_name__nin?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        thumbnail_name__notin?: string;
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
+        thumbnail_name__isnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        thumbnail_name__nisnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        thumbnail_name__isnotnull?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__l?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__like?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__nl?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__nlike?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__notlike?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__il?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__ilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__nil?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__nilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        thumbnail_name__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        thumbnail_name__asc?: string;
         /** @description SQL = operator */
         status__eq?: string;
         /** @description SQL != operator */

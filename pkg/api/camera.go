@@ -33,13 +33,15 @@ import (
 )
 
 type Camera struct {
-	ID        uuid.UUID  `json:"id"`
-	CreatedAt time.Time  `json:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at"`
-	DeletedAt *time.Time `json:"deleted_at"`
-	Name      string     `json:"name"`
-	StreamURL string     `json:"stream_url"`
-	LastSeen  *time.Time `json:"last_seen"`
+	ID                                   uuid.UUID    `json:"id"`
+	CreatedAt                            time.Time    `json:"created_at"`
+	UpdatedAt                            time.Time    `json:"updated_at"`
+	DeletedAt                            *time.Time   `json:"deleted_at"`
+	Name                                 string       `json:"name"`
+	StreamURL                            string       `json:"stream_url"`
+	LastSeen                             *time.Time   `json:"last_seen"`
+	ReferencedByVideoCameraIDObjects     []*Video     `json:"referenced_by_video_camera_id_objects"`
+	ReferencedByDetectionCameraIDObjects []*Detection `json:"referenced_by_detection_camera_id_objects"`
 }
 
 var CameraTable = "camera"
@@ -313,6 +315,8 @@ func (m *Camera) Reload(
 	m.Name = t.Name
 	m.StreamURL = t.StreamURL
 	m.LastSeen = t.LastSeen
+	m.ReferencedByVideoCameraIDObjects = t.ReferencedByVideoCameraIDObjects
+	m.ReferencedByDetectionCameraIDObjects = t.ReferencedByDetectionCameraIDObjects
 
 	return nil
 }
@@ -640,6 +644,46 @@ func SelectCameras(
 		if err != nil {
 			return nil, fmt.Errorf("failed to call Camera.FromItem; err: %v", err)
 		}
+
+		func() {
+			possibleRootTableName := ctx.Value(_rootTableNameContextKey)
+			rootTableName, _ := possibleRootTableName.(string)
+			if rootTableName == "" {
+				ctx = context.WithValue(ctx, _rootTableNameContextKey, CameraTable)
+			}
+
+			if rootTableName != CameraTable {
+				object.ReferencedByVideoCameraIDObjects, _ = SelectVideos(
+					ctx,
+					tx,
+					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
+					nil,
+					nil,
+					nil,
+					object.ID,
+				)
+			}
+		}()
+
+		func() {
+			possibleRootTableName := ctx.Value(_rootTableNameContextKey)
+			rootTableName, _ := possibleRootTableName.(string)
+			if rootTableName == "" {
+				ctx = context.WithValue(ctx, _rootTableNameContextKey, CameraTable)
+			}
+
+			if rootTableName != CameraTable {
+				object.ReferencedByDetectionCameraIDObjects, _ = SelectDetections(
+					ctx,
+					tx,
+					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
+					nil,
+					nil,
+					nil,
+					object.ID,
+				)
+			}
+		}()
 
 		objects = append(objects, object)
 	}

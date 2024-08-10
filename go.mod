@@ -8,7 +8,7 @@ require (
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/uuid v1.6.0
-	github.com/initialed85/djangolang v0.0.21
+	github.com/initialed85/djangolang v0.0.25
 	github.com/jackc/pgtype v1.14.3
 	github.com/jackc/pgx/v5 v5.6.0
 	github.com/jmoiron/sqlx v1.4.0
@@ -20,6 +20,7 @@ require (
 )
 
 require (
+	github.com/alfg/mp4 v0.0.0-20210728035756-55ea58c08aeb
 	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/aymericbeaumet/go-tsvector v0.0.0-20210303220322-b3114343d43a // indirect
 	github.com/chanced/caps v1.0.2 // indirect

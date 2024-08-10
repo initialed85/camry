@@ -70,11 +70,12 @@ CREATE TABLE
         created_at timestamptz NOT NULL DEFAULT now(),
         updated_at timestamptz NOT NULL DEFAULT now(),
         deleted_at timestamptz NULL DEFAULT NULL,
-        file_path text NOT NULL CHECK (trim(file_path) != ''),
+        file_name text NOT NULL CHECK (trim(file_name) != ''),
         started_at timestamptz NOT NULL,
         ended_at timestamptz NULL,
         duration interval NULL,
-        thumbnail_path text NULL,
+        file_size float NULL,
+        thumbnail_name text NULL,
         status text NULL,
         camera_id uuid NOT NULL REFERENCES public.camera (id)
     );
@@ -192,7 +193,6 @@ BEGIN
   NEW.created_at = now();
   NEW.updated_at = now();
   NEW.deleted_at = null;
-  NEW.duration = NEW.ended_at - NEW.started_at;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -208,7 +208,6 @@ BEGIN
   IF OLD.deleted_at IS NOT null AND NEW.deleted_at IS NOT null THEN
     NEW.deleted_at = OLD.deleted_at;
   END IF;
-  NEW.duration = NEW.ended_at - NEW.started_at;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -238,7 +237,6 @@ BEGIN
   NEW.created_at = now();
   NEW.updated_at = now();
   NEW.deleted_at = null;
-  NEW.duration = NEW.ended_at - NEW.started_at;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;
@@ -254,7 +252,6 @@ BEGIN
   IF OLD.deleted_at IS NOT null AND NEW.deleted_at IS NOT null THEN
     NEW.deleted_at = OLD.deleted_at;
   END IF;
-  NEW.duration = NEW.ended_at - NEW.started_at;
   RETURN NEW;
 END;
 $$ LANGUAGE plpgsql;

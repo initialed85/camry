@@ -9,11 +9,11 @@ module.exports = function (app) {
     }),
   );
 
-  // app.use(
-  //     '/api',
-  //     createProxyMiddleware({
-  //         target: 'http://localhost:7070',
-  //         changeOrigin: true,
-  //     })
-  // );
+  app.use(
+    "/api",
+    createProxyMiddleware({
+      target: "http://localhost:7070/api",
+      changeOrigin: true,
+    }),
+  );
 };

@@ -4,7 +4,6 @@
     "title": "Djangolang",
     "version": "1.0"
   },
-  "servers": null,
   "paths": {
     "/api/cameras": {
       "get": {
@@ -5686,7 +5685,7 @@
             "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "file_path__eq",
+            "name": "file_name__eq",
             "in": "query",
             "required": false,
             "schema": {
@@ -5695,7 +5694,7 @@
             "description": "SQL = operator"
           },
           {
-            "name": "file_path__ne",
+            "name": "file_name__ne",
             "in": "query",
             "required": false,
             "schema": {
@@ -5704,7 +5703,7 @@
             "description": "SQL != operator"
           },
           {
-            "name": "file_path__gt",
+            "name": "file_name__gt",
             "in": "query",
             "required": false,
             "schema": {
@@ -5713,7 +5712,7 @@
             "description": "SQL \u003e operator, may not work with all column types"
           },
           {
-            "name": "file_path__gte",
+            "name": "file_name__gte",
             "in": "query",
             "required": false,
             "schema": {
@@ -5722,7 +5721,7 @@
             "description": "SQL \u003e= operator, may not work with all column types"
           },
           {
-            "name": "file_path__lt",
+            "name": "file_name__lt",
             "in": "query",
             "required": false,
             "schema": {
@@ -5731,7 +5730,7 @@
             "description": "SQL \u003c operator, may not work with all column types"
           },
           {
-            "name": "file_path__lte",
+            "name": "file_name__lte",
             "in": "query",
             "required": false,
             "schema": {
@@ -5740,7 +5739,7 @@
             "description": "SQL \u003c= operator, may not work with all column types"
           },
           {
-            "name": "file_path__in",
+            "name": "file_name__in",
             "in": "query",
             "required": false,
             "schema": {
@@ -5749,7 +5748,7 @@
             "description": "SQL IN operator, permits comma-separated values"
           },
           {
-            "name": "file_path__nin",
+            "name": "file_name__nin",
             "in": "query",
             "required": false,
             "schema": {
@@ -5758,7 +5757,7 @@
             "description": "SQL NOT IN operator, permits comma-separated values"
           },
           {
-            "name": "file_path__notin",
+            "name": "file_name__notin",
             "in": "query",
             "required": false,
             "schema": {
@@ -5767,7 +5766,7 @@
             "description": "SQL NOT IN operator, permits comma-separated values"
           },
           {
-            "name": "file_path__isnull",
+            "name": "file_name__isnull",
             "in": "query",
             "required": false,
             "schema": {
@@ -5776,7 +5775,7 @@
             "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "file_path__nisnull",
+            "name": "file_name__nisnull",
             "in": "query",
             "required": false,
             "schema": {
@@ -5785,7 +5784,7 @@
             "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "file_path__isnotnull",
+            "name": "file_name__isnotnull",
             "in": "query",
             "required": false,
             "schema": {
@@ -5794,7 +5793,7 @@
             "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "file_path__l",
+            "name": "file_name__l",
             "in": "query",
             "required": false,
             "schema": {
@@ -5803,7 +5802,7 @@
             "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__like",
+            "name": "file_name__like",
             "in": "query",
             "required": false,
             "schema": {
@@ -5812,7 +5811,7 @@
             "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__nl",
+            "name": "file_name__nl",
             "in": "query",
             "required": false,
             "schema": {
@@ -5821,7 +5820,7 @@
             "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__nlike",
+            "name": "file_name__nlike",
             "in": "query",
             "required": false,
             "schema": {
@@ -5830,7 +5829,7 @@
             "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__notlike",
+            "name": "file_name__notlike",
             "in": "query",
             "required": false,
             "schema": {
@@ -5839,7 +5838,7 @@
             "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__il",
+            "name": "file_name__il",
             "in": "query",
             "required": false,
             "schema": {
@@ -5848,7 +5847,7 @@
             "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__ilike",
+            "name": "file_name__ilike",
             "in": "query",
             "required": false,
             "schema": {
@@ -5857,7 +5856,7 @@
             "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__nil",
+            "name": "file_name__nil",
             "in": "query",
             "required": false,
             "schema": {
@@ -5866,7 +5865,7 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__nilike",
+            "name": "file_name__nilike",
             "in": "query",
             "required": false,
             "schema": {
@@ -5875,7 +5874,7 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__notilike",
+            "name": "file_name__notilike",
             "in": "query",
             "required": false,
             "schema": {
@@ -5884,7 +5883,7 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "file_path__desc",
+            "name": "file_name__desc",
             "in": "query",
             "required": false,
             "schema": {
@@ -5893,7 +5892,7 @@
             "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "file_path__asc",
+            "name": "file_name__asc",
             "in": "query",
             "required": false,
             "schema": {
@@ -6622,7 +6621,247 @@
             "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "thumbnail_path__eq",
+            "name": "file_size__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL = operator"
+          },
+          {
+            "name": "file_size__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL != operator"
+          },
+          {
+            "name": "file_size__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL \u003e operator, may not work with all column types"
+          },
+          {
+            "name": "file_size__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL \u003e= operator, may not work with all column types"
+          },
+          {
+            "name": "file_size__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL \u003c operator, may not work with all column types"
+          },
+          {
+            "name": "file_size__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL \u003c= operator, may not work with all column types"
+          },
+          {
+            "name": "file_size__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL IN operator, permits comma-separated values"
+          },
+          {
+            "name": "file_size__nin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "file_size__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "file_size__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__nisnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__l",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__nl",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__nlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__il",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__nil",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__nilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_size__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "format": "double"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "thumbnail_name__eq",
             "in": "query",
             "required": false,
             "schema": {
@@ -6631,7 +6870,7 @@
             "description": "SQL = operator"
           },
           {
-            "name": "thumbnail_path__ne",
+            "name": "thumbnail_name__ne",
             "in": "query",
             "required": false,
             "schema": {
@@ -6640,7 +6879,7 @@
             "description": "SQL != operator"
           },
           {
-            "name": "thumbnail_path__gt",
+            "name": "thumbnail_name__gt",
             "in": "query",
             "required": false,
             "schema": {
@@ -6649,7 +6888,7 @@
             "description": "SQL \u003e operator, may not work with all column types"
           },
           {
-            "name": "thumbnail_path__gte",
+            "name": "thumbnail_name__gte",
             "in": "query",
             "required": false,
             "schema": {
@@ -6658,7 +6897,7 @@
             "description": "SQL \u003e= operator, may not work with all column types"
           },
           {
-            "name": "thumbnail_path__lt",
+            "name": "thumbnail_name__lt",
             "in": "query",
             "required": false,
             "schema": {
@@ -6667,7 +6906,7 @@
             "description": "SQL \u003c operator, may not work with all column types"
           },
           {
-            "name": "thumbnail_path__lte",
+            "name": "thumbnail_name__lte",
             "in": "query",
             "required": false,
             "schema": {
@@ -6676,7 +6915,7 @@
             "description": "SQL \u003c= operator, may not work with all column types"
           },
           {
-            "name": "thumbnail_path__in",
+            "name": "thumbnail_name__in",
             "in": "query",
             "required": false,
             "schema": {
@@ -6685,7 +6924,7 @@
             "description": "SQL IN operator, permits comma-separated values"
           },
           {
-            "name": "thumbnail_path__nin",
+            "name": "thumbnail_name__nin",
             "in": "query",
             "required": false,
             "schema": {
@@ -6694,7 +6933,7 @@
             "description": "SQL NOT IN operator, permits comma-separated values"
           },
           {
-            "name": "thumbnail_path__notin",
+            "name": "thumbnail_name__notin",
             "in": "query",
             "required": false,
             "schema": {
@@ -6703,7 +6942,7 @@
             "description": "SQL NOT IN operator, permits comma-separated values"
           },
           {
-            "name": "thumbnail_path__isnull",
+            "name": "thumbnail_name__isnull",
             "in": "query",
             "required": false,
             "schema": {
@@ -6712,7 +6951,7 @@
             "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "thumbnail_path__nisnull",
+            "name": "thumbnail_name__nisnull",
             "in": "query",
             "required": false,
             "schema": {
@@ -6721,7 +6960,7 @@
             "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "thumbnail_path__isnotnull",
+            "name": "thumbnail_name__isnotnull",
             "in": "query",
             "required": false,
             "schema": {
@@ -6730,7 +6969,7 @@
             "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "thumbnail_path__l",
+            "name": "thumbnail_name__l",
             "in": "query",
             "required": false,
             "schema": {
@@ -6739,7 +6978,7 @@
             "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__like",
+            "name": "thumbnail_name__like",
             "in": "query",
             "required": false,
             "schema": {
@@ -6748,7 +6987,7 @@
             "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__nl",
+            "name": "thumbnail_name__nl",
             "in": "query",
             "required": false,
             "schema": {
@@ -6757,7 +6996,7 @@
             "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__nlike",
+            "name": "thumbnail_name__nlike",
             "in": "query",
             "required": false,
             "schema": {
@@ -6766,7 +7005,7 @@
             "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__notlike",
+            "name": "thumbnail_name__notlike",
             "in": "query",
             "required": false,
             "schema": {
@@ -6775,7 +7014,7 @@
             "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__il",
+            "name": "thumbnail_name__il",
             "in": "query",
             "required": false,
             "schema": {
@@ -6784,7 +7023,7 @@
             "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__ilike",
+            "name": "thumbnail_name__ilike",
             "in": "query",
             "required": false,
             "schema": {
@@ -6793,7 +7032,7 @@
             "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__nil",
+            "name": "thumbnail_name__nil",
             "in": "query",
             "required": false,
             "schema": {
@@ -6802,7 +7041,7 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__nilike",
+            "name": "thumbnail_name__nilike",
             "in": "query",
             "required": false,
             "schema": {
@@ -6811,7 +7050,7 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__notilike",
+            "name": "thumbnail_name__notilike",
             "in": "query",
             "required": false,
             "schema": {
@@ -6820,7 +7059,7 @@
             "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
           },
           {
-            "name": "thumbnail_path__desc",
+            "name": "thumbnail_name__desc",
             "in": "query",
             "required": false,
             "schema": {
@@ -6829,7 +7068,7 @@
             "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "thumbnail_path__asc",
+            "name": "thumbnail_name__asc",
             "in": "query",
             "required": false,
             "schema": {
@@ -7755,6 +7994,12 @@
           "name": {
             "type": "string"
           },
+          "referenced_by_detection_camera_id_objects": {
+            "$ref": "#/components/schemas/NullableArrayOfDetection"
+          },
+          "referenced_by_video_camera_id_objects": {
+            "$ref": "#/components/schemas/NullableArrayOfVideo"
+          },
           "stream_url": {
             "type": "string"
           },
@@ -7837,14 +8082,35 @@
           }
         }
       },
+      "NullableArrayOfCamera": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Camera"
+        }
+      },
+      "NullableArrayOfDetection": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Detection"
+        }
+      },
+      "NullableArrayOfVideo": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Video"
+        }
+      },
       "NullableCamera": {
-        "$ref": "#/components/schemas/Camera"
+        "$ref": "#/components/schemas/Camera",
+        "nullable": true
       },
       "NullableDetection": {
-        "$ref": "#/components/schemas/Detection"
+        "$ref": "#/components/schemas/Detection",
+        "nullable": true
       },
       "NullableVideo": {
-        "$ref": "#/components/schemas/Video"
+        "$ref": "#/components/schemas/Video",
+        "nullable": true
       },
       "Vec2": {
         "type": "object",
@@ -7888,8 +8154,13 @@
             "format": "date-time",
             "nullable": true
           },
-          "file_path": {
+          "file_name": {
             "type": "string"
+          },
+          "file_size": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
           },
           "id": {
             "type": "string",
@@ -7902,7 +8173,7 @@
           "status": {
             "type": "string"
           },
-          "thumbnail_path": {
+          "thumbnail_name": {
             "type": "string"
           },
           "updated_at": {

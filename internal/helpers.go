@@ -6,6 +6,7 @@ import (
 	"os"
 	"reflect"
 	"strings"
+	"time"
 )
 
 type X struct {
@@ -62,4 +63,8 @@ func GetEnvironment[T any](key string, required bool, defaultValue *T, isNumeric
 	}
 
 	return x.Var, nil
+}
+
+func GetNow() time.Time {
+	return time.Now().UTC()
 }
