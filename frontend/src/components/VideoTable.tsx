@@ -75,7 +75,7 @@ export function VideoTable(props: VideoTableProps) {
             const startedAt = new Date(video.started_at);
             const endedAt = video.ended_at && new Date(video.ended_at);
 
-            const available = !!endedAt;
+            const available = video?.status !== "recording";
 
             const minutes = Math.floor(
               (video?.duration || 0) / (1_000_000_000 * 60),

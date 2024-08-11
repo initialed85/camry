@@ -880,16 +880,19 @@ func SelectVideos(
 
 		err = object.FromItem(item)
 		if err != nil {
-			return nil, fmt.Errorf("failed to call Video.FromItem; err: %v", err)
+			return nil, err
 		}
 
 		if !types.IsZeroUUID(object.CameraID) {
-			object.CameraIDObject, _ = SelectCamera(
+			object.CameraIDObject, err = SelectCamera(
 				ctx,
 				tx,
 				fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
 				object.CameraID,
 			)
+			if err != nil {
+				return nil, err
+			}
 		}
 
 		objects = append(objects, object)

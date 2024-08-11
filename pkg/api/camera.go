@@ -642,10 +642,10 @@ func SelectCameras(
 
 		err = object.FromItem(item)
 		if err != nil {
-			return nil, fmt.Errorf("failed to call Camera.FromItem; err: %v", err)
+			return nil, err
 		}
 
-		func() {
+		err = func() error {
 			possibleRootTableName := ctx.Value(_rootTableNameContextKey)
 			rootTableName, _ := possibleRootTableName.(string)
 			if rootTableName == "" {
@@ -653,7 +653,7 @@ func SelectCameras(
 			}
 
 			if rootTableName != CameraTable {
-				object.ReferencedByVideoCameraIDObjects, _ = SelectVideos(
+				object.ReferencedByVideoCameraIDObjects, err = SelectVideos(
 					ctx,
 					tx,
 					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
@@ -662,10 +662,18 @@ func SelectCameras(
 					nil,
 					object.ID,
 				)
+				if err != nil {
+					return err
+				}
 			}
-		}()
 
-		func() {
+			return nil
+		}()
+		if err != nil {
+			return nil, err
+		}
+
+		err = func() error {
 			possibleRootTableName := ctx.Value(_rootTableNameContextKey)
 			rootTableName, _ := possibleRootTableName.(string)
 			if rootTableName == "" {
@@ -673,7 +681,7 @@ func SelectCameras(
 			}
 
 			if rootTableName != CameraTable {
-				object.ReferencedByDetectionCameraIDObjects, _ = SelectDetections(
+				object.ReferencedByDetectionCameraIDObjects, err = SelectDetections(
 					ctx,
 					tx,
 					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
@@ -682,8 +690,16 @@ func SelectCameras(
 					nil,
 					object.ID,
 				)
+				if err != nil {
+					return err
+				}
 			}
+
+			return nil
 		}()
+		if err != nil {
+			return nil, err
+		}
 
 		objects = append(objects, object)
 	}

@@ -64,8 +64,8 @@ github.com/gorilla/websocket v1.5.3 h1:saDtZ6Pbx/0u+bgYQ3q96pZgCzfhKXGPqt7kZ72aN
 github.com/gorilla/websocket v1.5.3/go.mod h1:YR8l580nyteQvAITg2hZ9XVh4b55+EU/adAjf1fMHhE=
 github.com/hexops/gotextdiff v1.0.3 h1:gitA9+qJrrTCsiCl7+kh75nPqQt1cx4ZkudSTLoUqJM=
 github.com/hexops/gotextdiff v1.0.3/go.mod h1:pSWU5MAI3yDq+fZBTazCSJysOMbxWL1BSow5/V2vxeg=
-github.com/initialed85/djangolang v0.0.25 h1:5vb/R9KpOKZ8sasD2MFFlh250ciABqqYGhEdsw4DV6w=
-github.com/initialed85/djangolang v0.0.25/go.mod h1:3mqaFDBq9zfX/18jyDCHs5UpH2r5XGgBj/SlRcgfY64=
+github.com/initialed85/djangolang v0.0.27 h1:y/+0WwvKmJ0eyJIq/fWGqVFjyNHRgclkZiSV7kf/r7w=
+github.com/initialed85/djangolang v0.0.27/go.mod h1:3mqaFDBq9zfX/18jyDCHs5UpH2r5XGgBj/SlRcgfY64=
 github.com/initialed85/structmeta v0.0.0-20240802152142-39f398ef1ab7 h1:G9Z1k4TyxQ/9Kk4ZSuw82WZCxJayZf12Aos2MorzKRg=
 github.com/initialed85/structmeta v0.0.0-20240802152142-39f398ef1ab7/go.mod h1:hTGWTsfgy6Um+L8e3Qcj8/pBkHGcIGxEpZAKziWhQfc=
 github.com/invopop/yaml v0.3.1 h1:f0+ZpmhfBSS4MhG+4HYseMdJhoeeopbSKbq5Rpeelso=

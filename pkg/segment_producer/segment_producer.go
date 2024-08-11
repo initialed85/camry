@@ -412,7 +412,7 @@ func Run() error {
 		return err
 	}
 
-	func() error {
+	err = func() error {
 		tx, err := db.BeginTxx(ctx, nil)
 		if err != nil {
 			return err
@@ -440,11 +440,24 @@ func Run() error {
 			return err
 		}
 
-		for _, orphanedVideo := range orphanedVideos {
-			log.Printf("marking orphaned video %s as failed", orphanedVideo.ID)
+		for _, video := range orphanedVideos {
+			log.Printf("marking orphaned video %s as failed", video.ID)
 
-			orphanedVideo.Status = helpers.Ptr("failed")
-			err = orphanedVideo.Update(ctx, tx, false)
+			filePath := filepath.Join(destinationPath, video.FileName)
+
+			_, fileName := filepath.Split(filePath)
+			video.FileName = fileName
+
+			ext := filepath.Ext(fileName)
+			thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
+			err = GenerateThumbnail(filePath, thumbnailPath)
+			if err == nil {
+				_, thumbnailName := filepath.Split(thumbnailPath)
+				video.ThumbnailName = &thumbnailName
+			}
+
+			video.Status = helpers.Ptr("failed")
+			err = video.Update(ctx, tx, false)
 			if err != nil {
 				return err
 			}
@@ -461,7 +474,7 @@ func Run() error {
 		return fmt.Errorf("failed to handle orphaned videos: %v", err)
 	}
 
-	log.Printf("api confirmed %#+v", camera)
+	log.Printf("api confirmed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
 
 	mu := new(sync.Mutex)
 	var video *api.Video
@@ -481,6 +494,19 @@ func Run() error {
 
 		if video != nil {
 			log.Printf("warning: there was a Video in-flight that should have been closed out- marking %v as failed", video.ID)
+
+			filePath := filepath.Join(destinationPath, video.FileName)
+
+			_, fileName := filepath.Split(filePath)
+			video.FileName = fileName
+
+			ext := filepath.Ext(fileName)
+			thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
+			err = GenerateThumbnail(filePath, thumbnailPath)
+			if err == nil {
+				_, thumbnailName := filepath.Split(thumbnailPath)
+				video.ThumbnailName = &thumbnailName
+			}
 
 			video.Status = helpers.Ptr("failed")
 			err = video.Update(ctx, tx, false)

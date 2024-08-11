@@ -16,7 +16,7 @@ func GenerateThumbnail(videoPath, imagePath string) error {
 		videoPath,
 		"-ss",
 		"00:00:00.000",
-		"-vframes",
+		"-frames:v",
 		"1",
 		imagePath,
 	}
@@ -34,7 +34,7 @@ func GenerateThumbnail(videoPath, imagePath string) error {
 
 	err := cmd.Run()
 	if err != nil {
-		return fmt.Errorf("failed to generate thumbnail: %v; stdout=%#+v, stderr=%#+v", err, stdout, stderr)
+		return fmt.Errorf("failed to generate thumbnail: %v; stdout=%#+v, stderr=%#+v", err, stdout.String(), stderr.String())
 	}
 
 	return nil
