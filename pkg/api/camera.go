@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -23,12 +25,10 @@ import (
 	"github.com/initialed85/djangolang/pkg/server"
 	"github.com/initialed85/djangolang/pkg/stream"
 	"github.com/initialed85/djangolang/pkg/types"
-	_pgtype "github.com/jackc/pgtype"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"github.com/lib/pq/hstore"
-	"github.com/paulmach/orb/geojson"
 	"golang.org/x/exp/maps"
 )
 
@@ -87,30 +87,40 @@ var CameraTableColumnsWithTypeCasts = []string{
 }
 
 var CameraTableColumnLookup = map[string]*introspect.Column{
-	CameraTableIDColumn:        new(introspect.Column),
-	CameraTableCreatedAtColumn: new(introspect.Column),
-	CameraTableUpdatedAtColumn: new(introspect.Column),
-	CameraTableDeletedAtColumn: new(introspect.Column),
-	CameraTableNameColumn:      new(introspect.Column),
-	CameraTableStreamURLColumn: new(introspect.Column),
-	CameraTableLastSeenColumn:  new(introspect.Column),
+	CameraTableIDColumn:        {Name: CameraTableIDColumn, NotNull: true, HasDefault: true},
+	CameraTableCreatedAtColumn: {Name: CameraTableCreatedAtColumn, NotNull: true, HasDefault: true},
+	CameraTableUpdatedAtColumn: {Name: CameraTableUpdatedAtColumn, NotNull: true, HasDefault: true},
+	CameraTableDeletedAtColumn: {Name: CameraTableDeletedAtColumn, NotNull: false, HasDefault: false},
+	CameraTableNameColumn:      {Name: CameraTableNameColumn, NotNull: true, HasDefault: false},
+	CameraTableStreamURLColumn: {Name: CameraTableStreamURLColumn, NotNull: true, HasDefault: false},
+	CameraTableLastSeenColumn:  {Name: CameraTableLastSeenColumn, NotNull: false, HasDefault: false},
 }
 
 var (
 	CameraTablePrimaryKeyColumn = CameraTableIDColumn
 )
-
-var (
-	_ = time.Time{}
-	_ = uuid.UUID{}
-	_ = pq.StringArray{}
-	_ = hstore.Hstore{}
-	_ = geojson.Point{}
-	_ = pgtype.Point{}
-	_ = _pgtype.Point{}
-	_ = postgis.PointZ{}
-	_ = netip.Prefix{}
-)
+var _ = []any{
+	time.Time{},
+	time.Duration(0),
+	nil,
+	pq.StringArray{},
+	string(""),
+	pq.Int64Array{},
+	int64(0),
+	pq.Float64Array{},
+	float64(0),
+	pq.BoolArray{},
+	bool(false),
+	map[string][]int{},
+	uuid.UUID{},
+	hstore.Hstore{},
+	pgtype.Point{},
+	pgtype.Polygon{},
+	postgis.PointZ{},
+	netip.Prefix{},
+	[]byte{},
+	errors.Is,
+}
 
 func (m *Camera) GetPrimaryKeyColumn() string {
 	return CameraTablePrimaryKeyColumn
@@ -298,6 +308,9 @@ func (m *Camera) Reload(
 		}
 	}
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	t, err := SelectCamera(
 		ctx,
 		tx,
@@ -326,11 +339,12 @@ func (m *Camera) Insert(
 	tx *sqlx.Tx,
 	setPrimaryKey bool,
 	setZeroValues bool,
+	forceSetValuesForFields ...string,
 ) error {
 	columns := make([]string, 0)
 	values := make([]any, 0)
 
-	if setPrimaryKey && (setZeroValues || !types.IsZeroUUID(m.ID)) {
+	if setPrimaryKey && (setZeroValues || !types.IsZeroUUID(m.ID)) || slices.Contains(forceSetValuesForFields, CameraTableIDColumn) || isRequired(CameraTableColumnLookup, CameraTableIDColumn) {
 		columns = append(columns, CameraTableIDColumn)
 
 		v, err := types.FormatUUID(m.ID)
@@ -341,7 +355,7 @@ func (m *Camera) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.CreatedAt) {
+	if setZeroValues || !types.IsZeroTime(m.CreatedAt) || slices.Contains(forceSetValuesForFields, CameraTableCreatedAtColumn) || isRequired(CameraTableColumnLookup, CameraTableCreatedAtColumn) {
 		columns = append(columns, CameraTableCreatedAtColumn)
 
 		v, err := types.FormatTime(m.CreatedAt)
@@ -352,7 +366,7 @@ func (m *Camera) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.UpdatedAt) {
+	if setZeroValues || !types.IsZeroTime(m.UpdatedAt) || slices.Contains(forceSetValuesForFields, CameraTableUpdatedAtColumn) || isRequired(CameraTableColumnLookup, CameraTableUpdatedAtColumn) {
 		columns = append(columns, CameraTableUpdatedAtColumn)
 
 		v, err := types.FormatTime(m.UpdatedAt)
@@ -363,7 +377,7 @@ func (m *Camera) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.DeletedAt) {
+	if setZeroValues || !types.IsZeroTime(m.DeletedAt) || slices.Contains(forceSetValuesForFields, CameraTableDeletedAtColumn) || isRequired(CameraTableColumnLookup, CameraTableDeletedAtColumn) {
 		columns = append(columns, CameraTableDeletedAtColumn)
 
 		v, err := types.FormatTime(m.DeletedAt)
@@ -374,7 +388,7 @@ func (m *Camera) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.Name) {
+	if setZeroValues || !types.IsZeroString(m.Name) || slices.Contains(forceSetValuesForFields, CameraTableNameColumn) || isRequired(CameraTableColumnLookup, CameraTableNameColumn) {
 		columns = append(columns, CameraTableNameColumn)
 
 		v, err := types.FormatString(m.Name)
@@ -385,7 +399,7 @@ func (m *Camera) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.StreamURL) {
+	if setZeroValues || !types.IsZeroString(m.StreamURL) || slices.Contains(forceSetValuesForFields, CameraTableStreamURLColumn) || isRequired(CameraTableColumnLookup, CameraTableStreamURLColumn) {
 		columns = append(columns, CameraTableStreamURLColumn)
 
 		v, err := types.FormatString(m.StreamURL)
@@ -396,7 +410,7 @@ func (m *Camera) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.LastSeen) {
+	if setZeroValues || !types.IsZeroTime(m.LastSeen) || slices.Contains(forceSetValuesForFields, CameraTableLastSeenColumn) || isRequired(CameraTableColumnLookup, CameraTableLastSeenColumn) {
 		columns = append(columns, CameraTableLastSeenColumn)
 
 		v, err := types.FormatTime(m.LastSeen)
@@ -406,6 +420,9 @@ func (m *Camera) Insert(
 
 		values = append(values, v)
 	}
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
 
 	item, err := query.Insert(
 		ctx,
@@ -448,7 +465,7 @@ func (m *Camera) Insert(
 
 	m.ID = temp2
 
-	err = m.Reload(ctx, tx)
+	err = m.Reload(ctx, tx, slices.Contains(forceSetValuesForFields, "deleted_at"))
 	if err != nil {
 		return fmt.Errorf("failed to reload after insert")
 	}
@@ -538,6 +555,9 @@ func (m *Camera) Update(
 
 	values = append(values, v)
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	_, err = query.Update(
 		ctx,
 		tx,
@@ -585,6 +605,9 @@ func (m *Camera) Delete(
 
 	values = append(values, v)
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	err = query.Delete(
 		ctx,
 		tx,
@@ -620,6 +643,9 @@ func SelectCameras(
 		}
 	}
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	items, err := query.Select(
 		ctx,
 		tx,
@@ -646,15 +672,12 @@ func SelectCameras(
 		}
 
 		err = func() error {
-			possibleRootTableName := ctx.Value(_rootTableNameContextKey)
-			rootTableName, _ := possibleRootTableName.(string)
-			if rootTableName == "" {
-				ctx = context.WithValue(ctx, _rootTableNameContextKey, CameraTable)
-			}
+			var ok bool
+			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, CameraTable)
 
-			if rootTableName != CameraTable {
+			if ok {
 				object.ReferencedByVideoCameraIDObjects, err = SelectVideos(
-					ctx,
+					thisCtx,
 					tx,
 					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
 					nil,
@@ -663,7 +686,9 @@ func SelectCameras(
 					object.ID,
 				)
 				if err != nil {
-					return err
+					if !errors.Is(err, sql.ErrNoRows) {
+						return err
+					}
 				}
 			}
 
@@ -674,15 +699,12 @@ func SelectCameras(
 		}
 
 		err = func() error {
-			possibleRootTableName := ctx.Value(_rootTableNameContextKey)
-			rootTableName, _ := possibleRootTableName.(string)
-			if rootTableName == "" {
-				ctx = context.WithValue(ctx, _rootTableNameContextKey, CameraTable)
-			}
+			var ok bool
+			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, CameraTable)
 
-			if rootTableName != CameraTable {
+			if ok {
 				object.ReferencedByDetectionCameraIDObjects, err = SelectDetections(
-					ctx,
+					thisCtx,
 					tx,
 					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
 					nil,
@@ -691,7 +713,9 @@ func SelectCameras(
 					object.ID,
 				)
 				if err != nil {
-					return err
+					if !errors.Is(err, sql.ErrNoRows) {
+						return err
+					}
 				}
 			}
 
@@ -713,6 +737,9 @@ func SelectCamera(
 	where string,
 	values ...any,
 ) (*Camera, error) {
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	objects, err := SelectCameras(
 		ctx,
 		tx,
@@ -731,7 +758,7 @@ func SelectCamera(
 	}
 
 	if len(objects) < 1 {
-		return nil, fmt.Errorf("attempt to call SelectCamera returned no rows")
+		return nil, sql.ErrNoRows
 	}
 
 	object := objects[0]
@@ -754,6 +781,8 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 	var orderByDirection *string
 	orderBys := make([]string, 0)
 
+	includes := make([]string, 0)
+
 	values := make([]any, 0)
 	wheres := make([]string, 0)
 	for rawKey, rawValues := range r.URL.Query() {
@@ -772,7 +801,9 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		if !isUnrecognized {
 			column := CameraTableColumnLookup[parts[0]]
 			if column == nil {
-				isUnrecognized = true
+				if parts[0] != "load" {
+					isUnrecognized = true
+				}
 			} else {
 				switch parts[1] {
 				case "eq":
@@ -830,6 +861,11 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 
 					orderByDirection = helpers.Ptr("ASC")
 					orderBys = append(orderBys, parts[0])
+					continue
+				case "load":
+					includes = append(includes, parts[0])
+					_ = includes
+
 					continue
 				default:
 					isUnrecognized = true
@@ -1114,8 +1150,19 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
+	forceSetValuesForFieldsByObjectIndex := make([][]string, 0)
 	objects := make([]*Camera, 0)
 	for _, item := range allItems {
+		forceSetValuesForFields := make([]string, 0)
+		for _, possibleField := range maps.Keys(item) {
+			if !slices.Contains(CameraTableColumns, possibleField) {
+				continue
+			}
+
+			forceSetValuesForFields = append(forceSetValuesForFields, possibleField)
+		}
+		forceSetValuesForFieldsByObjectIndex = append(forceSetValuesForFieldsByObjectIndex, forceSetValuesForFields)
+
 		object := &Camera{}
 		err = object.FromItem(item)
 		if err != nil {
@@ -1147,7 +1194,7 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 	_ = xid
 
 	for i, object := range objects {
-		err = object.Insert(r.Context(), tx, false, false)
+		err = object.Insert(r.Context(), tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
 		if err != nil {
 			err = fmt.Errorf("failed to insert %#+v: %v", object, err)
 			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1157,6 +1204,18 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		objects[i] = object
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, CameraTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1164,11 +1223,16 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, CameraTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusCreated, objects)
@@ -1228,6 +1292,18 @@ func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1235,11 +1311,16 @@ func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Camera{object})
@@ -1308,6 +1389,18 @@ func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1315,11 +1408,16 @@ func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Camera{object})
@@ -1366,6 +1464,18 @@ func handleDeleteCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, CameraTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1373,11 +1483,16 @@ func handleDeleteCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, CameraTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusNoContent, nil)

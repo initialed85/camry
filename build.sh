@@ -9,14 +9,8 @@ function teardown() {
 }
 trap teardown exit
 
-# ensure we've got a djangolang executable available (required for templating)
-if [[ "${FORCE_UPDATE}" == "1" ]] || ! command -v djangolang >/dev/null 2>&1; then
-    GOPRIVATE="${GOPRIVATE:-}" go install github.com/initialed85/djangolang@latest
-    GOPRIVATE="${GOPRIVATE:-}" go get -u github.com/initialed85/djangolang@latest
-fi
-
-# we need oapi-codegen to generate the client for use by Go code
-if ! command -v oapi-codegen; then
+# # we need oapi-codegen to generate the client for use by Go code
+if ! command -v oapi-codegen >/dev/null 2>&1; then
     go install github.com/oapi-codegen/oapi-codegen/v2/cmd/oapi-codegen@main
 fi
 
@@ -32,6 +26,12 @@ if ! docker compose ps | grep camry | grep postgres | grep healthy >/dev/null 2>
     exit 1
 fi
 
+# ensure we've got a djangolang executable available (required for templating)
+if [[ "${FORCE_UPDATE_DJANGOLANG}" == "1" ]] || ! command -v djangolang >/dev/null 2>&1; then
+    GOPRIVATE="${GOPRIVATE:-}" go install github.com/initialed85/djangolang@latest
+    GOPRIVATE="${GOPRIVATE:-}" go get -u github.com/initialed85/djangolang@latest
+fi
+
 # introspect the database and generate the Djangolang API
 # note: the environment variables are coupled to the environment described in docker-compose.yaml
 echo -e "\ngenerating the api..."
@@ -44,18 +44,23 @@ DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.j
 # generate the client for use by the frontend
 echo -e "\ngenerating typescript client..."
 cd frontend
-if [[ "${FORCE_UPDATE}" == "1" ]]; then
+if [[ "${SKIP_UPDATE_FRONTEND}" != "1" ]]; then
     npm ci
 fi
 npm run openapi-typescript
 npm run prettier
 cd ..
 
-# generate the client for use by Go code
-echo -e "\ngenerating go client..."
-mkdir -p ./pkg/api_client
-oapi-codegen --generate 'types,client,spec' -package api_client -o ./pkg/api_client/client.go ./schema/openapi.json
-go mod tidy
-goimports -w .
-go get ./...
-go fmt ./...
+# generate the client for use by Python code
+mkdir -p object_detector/
+openapi-generator-cli generate -i schema/openapi.json -g python -o object_detector/
+
+# TODO: disabled for now- some bug in the 3rd party generator doesn't like $ref or something
+# # generate the client for use by Go code
+# echo -e "\ngenerating go client..."
+# mkdir -p ./pkg/api_client
+# oapi-codegen --generate 'types,client,spec' -package api_client -o ./pkg/api_client/client.go ./schema/openapi.json
+# go mod tidy
+# goimports -w .
+# go get ./...
+# go fmt ./...

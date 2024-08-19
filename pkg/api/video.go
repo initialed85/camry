@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -23,29 +25,28 @@ import (
 	"github.com/initialed85/djangolang/pkg/server"
 	"github.com/initialed85/djangolang/pkg/stream"
 	"github.com/initialed85/djangolang/pkg/types"
-	_pgtype "github.com/jackc/pgtype"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"github.com/lib/pq/hstore"
-	"github.com/paulmach/orb/geojson"
 	"golang.org/x/exp/maps"
 )
 
 type Video struct {
-	ID             uuid.UUID      `json:"id"`
-	CreatedAt      time.Time      `json:"created_at"`
-	UpdatedAt      time.Time      `json:"updated_at"`
-	DeletedAt      *time.Time     `json:"deleted_at"`
-	FileName       string         `json:"file_name"`
-	StartedAt      time.Time      `json:"started_at"`
-	EndedAt        *time.Time     `json:"ended_at"`
-	Duration       *time.Duration `json:"duration"`
-	FileSize       *float64       `json:"file_size"`
-	ThumbnailName  *string        `json:"thumbnail_name"`
-	Status         *string        `json:"status"`
-	CameraID       uuid.UUID      `json:"camera_id"`
-	CameraIDObject *Camera        `json:"camera_id_object"`
+	ID                                  uuid.UUID      `json:"id"`
+	CreatedAt                           time.Time      `json:"created_at"`
+	UpdatedAt                           time.Time      `json:"updated_at"`
+	DeletedAt                           *time.Time     `json:"deleted_at"`
+	FileName                            string         `json:"file_name"`
+	StartedAt                           time.Time      `json:"started_at"`
+	EndedAt                             *time.Time     `json:"ended_at"`
+	Duration                            *time.Duration `json:"duration"`
+	FileSize                            *float64       `json:"file_size"`
+	ThumbnailName                       *string        `json:"thumbnail_name"`
+	Status                              *string        `json:"status"`
+	CameraID                            uuid.UUID      `json:"camera_id"`
+	CameraIDObject                      *Camera        `json:"camera_id_object"`
+	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
 }
 
 var VideoTable = "video"
@@ -111,35 +112,45 @@ var VideoTableColumnsWithTypeCasts = []string{
 }
 
 var VideoTableColumnLookup = map[string]*introspect.Column{
-	VideoTableIDColumn:            new(introspect.Column),
-	VideoTableCreatedAtColumn:     new(introspect.Column),
-	VideoTableUpdatedAtColumn:     new(introspect.Column),
-	VideoTableDeletedAtColumn:     new(introspect.Column),
-	VideoTableFileNameColumn:      new(introspect.Column),
-	VideoTableStartedAtColumn:     new(introspect.Column),
-	VideoTableEndedAtColumn:       new(introspect.Column),
-	VideoTableDurationColumn:      new(introspect.Column),
-	VideoTableFileSizeColumn:      new(introspect.Column),
-	VideoTableThumbnailNameColumn: new(introspect.Column),
-	VideoTableStatusColumn:        new(introspect.Column),
-	VideoTableCameraIDColumn:      new(introspect.Column),
+	VideoTableIDColumn:            {Name: VideoTableIDColumn, NotNull: true, HasDefault: true},
+	VideoTableCreatedAtColumn:     {Name: VideoTableCreatedAtColumn, NotNull: true, HasDefault: true},
+	VideoTableUpdatedAtColumn:     {Name: VideoTableUpdatedAtColumn, NotNull: true, HasDefault: true},
+	VideoTableDeletedAtColumn:     {Name: VideoTableDeletedAtColumn, NotNull: false, HasDefault: false},
+	VideoTableFileNameColumn:      {Name: VideoTableFileNameColumn, NotNull: true, HasDefault: false},
+	VideoTableStartedAtColumn:     {Name: VideoTableStartedAtColumn, NotNull: true, HasDefault: false},
+	VideoTableEndedAtColumn:       {Name: VideoTableEndedAtColumn, NotNull: false, HasDefault: false},
+	VideoTableDurationColumn:      {Name: VideoTableDurationColumn, NotNull: false, HasDefault: false},
+	VideoTableFileSizeColumn:      {Name: VideoTableFileSizeColumn, NotNull: false, HasDefault: false},
+	VideoTableThumbnailNameColumn: {Name: VideoTableThumbnailNameColumn, NotNull: false, HasDefault: false},
+	VideoTableStatusColumn:        {Name: VideoTableStatusColumn, NotNull: false, HasDefault: false},
+	VideoTableCameraIDColumn:      {Name: VideoTableCameraIDColumn, NotNull: true, HasDefault: false},
 }
 
 var (
 	VideoTablePrimaryKeyColumn = VideoTableIDColumn
 )
-
-var (
-	_ = time.Time{}
-	_ = uuid.UUID{}
-	_ = pq.StringArray{}
-	_ = hstore.Hstore{}
-	_ = geojson.Point{}
-	_ = pgtype.Point{}
-	_ = _pgtype.Point{}
-	_ = postgis.PointZ{}
-	_ = netip.Prefix{}
-)
+var _ = []any{
+	time.Time{},
+	time.Duration(0),
+	nil,
+	pq.StringArray{},
+	string(""),
+	pq.Int64Array{},
+	int64(0),
+	pq.Float64Array{},
+	float64(0),
+	pq.BoolArray{},
+	bool(false),
+	map[string][]int{},
+	uuid.UUID{},
+	hstore.Hstore{},
+	pgtype.Point{},
+	pgtype.Polygon{},
+	postgis.PointZ{},
+	netip.Prefix{},
+	[]byte{},
+	errors.Is,
+}
 
 func (m *Video) GetPrimaryKeyColumn() string {
 	return VideoTablePrimaryKeyColumn
@@ -422,6 +433,9 @@ func (m *Video) Reload(
 		}
 	}
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	t, err := SelectVideo(
 		ctx,
 		tx,
@@ -445,6 +459,7 @@ func (m *Video) Reload(
 	m.Status = t.Status
 	m.CameraID = t.CameraID
 	m.CameraIDObject = t.CameraIDObject
+	m.ReferencedByDetectionVideoIDObjects = t.ReferencedByDetectionVideoIDObjects
 
 	return nil
 }
@@ -454,11 +469,12 @@ func (m *Video) Insert(
 	tx *sqlx.Tx,
 	setPrimaryKey bool,
 	setZeroValues bool,
+	forceSetValuesForFields ...string,
 ) error {
 	columns := make([]string, 0)
 	values := make([]any, 0)
 
-	if setPrimaryKey && (setZeroValues || !types.IsZeroUUID(m.ID)) {
+	if setPrimaryKey && (setZeroValues || !types.IsZeroUUID(m.ID)) || slices.Contains(forceSetValuesForFields, VideoTableIDColumn) || isRequired(VideoTableColumnLookup, VideoTableIDColumn) {
 		columns = append(columns, VideoTableIDColumn)
 
 		v, err := types.FormatUUID(m.ID)
@@ -469,7 +485,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.CreatedAt) {
+	if setZeroValues || !types.IsZeroTime(m.CreatedAt) || slices.Contains(forceSetValuesForFields, VideoTableCreatedAtColumn) || isRequired(VideoTableColumnLookup, VideoTableCreatedAtColumn) {
 		columns = append(columns, VideoTableCreatedAtColumn)
 
 		v, err := types.FormatTime(m.CreatedAt)
@@ -480,7 +496,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.UpdatedAt) {
+	if setZeroValues || !types.IsZeroTime(m.UpdatedAt) || slices.Contains(forceSetValuesForFields, VideoTableUpdatedAtColumn) || isRequired(VideoTableColumnLookup, VideoTableUpdatedAtColumn) {
 		columns = append(columns, VideoTableUpdatedAtColumn)
 
 		v, err := types.FormatTime(m.UpdatedAt)
@@ -491,7 +507,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.DeletedAt) {
+	if setZeroValues || !types.IsZeroTime(m.DeletedAt) || slices.Contains(forceSetValuesForFields, VideoTableDeletedAtColumn) || isRequired(VideoTableColumnLookup, VideoTableDeletedAtColumn) {
 		columns = append(columns, VideoTableDeletedAtColumn)
 
 		v, err := types.FormatTime(m.DeletedAt)
@@ -502,7 +518,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.FileName) {
+	if setZeroValues || !types.IsZeroString(m.FileName) || slices.Contains(forceSetValuesForFields, VideoTableFileNameColumn) || isRequired(VideoTableColumnLookup, VideoTableFileNameColumn) {
 		columns = append(columns, VideoTableFileNameColumn)
 
 		v, err := types.FormatString(m.FileName)
@@ -513,7 +529,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.StartedAt) {
+	if setZeroValues || !types.IsZeroTime(m.StartedAt) || slices.Contains(forceSetValuesForFields, VideoTableStartedAtColumn) || isRequired(VideoTableColumnLookup, VideoTableStartedAtColumn) {
 		columns = append(columns, VideoTableStartedAtColumn)
 
 		v, err := types.FormatTime(m.StartedAt)
@@ -524,7 +540,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.EndedAt) {
+	if setZeroValues || !types.IsZeroTime(m.EndedAt) || slices.Contains(forceSetValuesForFields, VideoTableEndedAtColumn) || isRequired(VideoTableColumnLookup, VideoTableEndedAtColumn) {
 		columns = append(columns, VideoTableEndedAtColumn)
 
 		v, err := types.FormatTime(m.EndedAt)
@@ -535,7 +551,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroDuration(m.Duration) {
+	if setZeroValues || !types.IsZeroDuration(m.Duration) || slices.Contains(forceSetValuesForFields, VideoTableDurationColumn) || isRequired(VideoTableColumnLookup, VideoTableDurationColumn) {
 		columns = append(columns, VideoTableDurationColumn)
 
 		v, err := types.FormatDuration(m.Duration)
@@ -546,7 +562,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroFloat(m.FileSize) {
+	if setZeroValues || !types.IsZeroFloat(m.FileSize) || slices.Contains(forceSetValuesForFields, VideoTableFileSizeColumn) || isRequired(VideoTableColumnLookup, VideoTableFileSizeColumn) {
 		columns = append(columns, VideoTableFileSizeColumn)
 
 		v, err := types.FormatFloat(m.FileSize)
@@ -557,7 +573,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.ThumbnailName) {
+	if setZeroValues || !types.IsZeroString(m.ThumbnailName) || slices.Contains(forceSetValuesForFields, VideoTableThumbnailNameColumn) || isRequired(VideoTableColumnLookup, VideoTableThumbnailNameColumn) {
 		columns = append(columns, VideoTableThumbnailNameColumn)
 
 		v, err := types.FormatString(m.ThumbnailName)
@@ -568,7 +584,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.Status) {
+	if setZeroValues || !types.IsZeroString(m.Status) || slices.Contains(forceSetValuesForFields, VideoTableStatusColumn) || isRequired(VideoTableColumnLookup, VideoTableStatusColumn) {
 		columns = append(columns, VideoTableStatusColumn)
 
 		v, err := types.FormatString(m.Status)
@@ -579,7 +595,7 @@ func (m *Video) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroUUID(m.CameraID) {
+	if setZeroValues || !types.IsZeroUUID(m.CameraID) || slices.Contains(forceSetValuesForFields, VideoTableCameraIDColumn) || isRequired(VideoTableColumnLookup, VideoTableCameraIDColumn) {
 		columns = append(columns, VideoTableCameraIDColumn)
 
 		v, err := types.FormatUUID(m.CameraID)
@@ -589,6 +605,9 @@ func (m *Video) Insert(
 
 		values = append(values, v)
 	}
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
 
 	item, err := query.Insert(
 		ctx,
@@ -631,7 +650,7 @@ func (m *Video) Insert(
 
 	m.ID = temp2
 
-	err = m.Reload(ctx, tx)
+	err = m.Reload(ctx, tx, slices.Contains(forceSetValuesForFields, "deleted_at"))
 	if err != nil {
 		return fmt.Errorf("failed to reload after insert")
 	}
@@ -776,6 +795,9 @@ func (m *Video) Update(
 
 	values = append(values, v)
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	_, err = query.Update(
 		ctx,
 		tx,
@@ -823,6 +845,9 @@ func (m *Video) Delete(
 
 	values = append(values, v)
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	err = query.Delete(
 		ctx,
 		tx,
@@ -858,6 +883,9 @@ func SelectVideos(
 		}
 	}
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	items, err := query.Select(
 		ctx,
 		tx,
@@ -884,15 +912,49 @@ func SelectVideos(
 		}
 
 		if !types.IsZeroUUID(object.CameraID) {
-			object.CameraIDObject, err = SelectCamera(
-				ctx,
-				tx,
-				fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
-				object.CameraID,
-			)
-			if err != nil {
-				return nil, err
+			var ok bool
+			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, VideoTable)
+
+			if ok {
+				object.CameraIDObject, err = SelectCamera(
+					thisCtx,
+					tx,
+					fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
+					object.CameraID,
+				)
+				if err != nil {
+					if !errors.Is(err, sql.ErrNoRows) {
+						return nil, err
+					}
+				}
 			}
+		}
+
+		err = func() error {
+			var ok bool
+			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, VideoTable)
+
+			if ok {
+				object.ReferencedByDetectionVideoIDObjects, err = SelectDetections(
+					thisCtx,
+					tx,
+					fmt.Sprintf("%v = $1", DetectionTableVideoIDColumn),
+					nil,
+					nil,
+					nil,
+					object.ID,
+				)
+				if err != nil {
+					if !errors.Is(err, sql.ErrNoRows) {
+						return err
+					}
+				}
+			}
+
+			return nil
+		}()
+		if err != nil {
+			return nil, err
 		}
 
 		objects = append(objects, object)
@@ -907,6 +969,9 @@ func SelectVideo(
 	where string,
 	values ...any,
 ) (*Video, error) {
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	objects, err := SelectVideos(
 		ctx,
 		tx,
@@ -925,7 +990,7 @@ func SelectVideo(
 	}
 
 	if len(objects) < 1 {
-		return nil, fmt.Errorf("attempt to call SelectVideo returned no rows")
+		return nil, sql.ErrNoRows
 	}
 
 	object := objects[0]
@@ -948,6 +1013,8 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 	var orderByDirection *string
 	orderBys := make([]string, 0)
 
+	includes := make([]string, 0)
+
 	values := make([]any, 0)
 	wheres := make([]string, 0)
 	for rawKey, rawValues := range r.URL.Query() {
@@ -966,7 +1033,9 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 		if !isUnrecognized {
 			column := VideoTableColumnLookup[parts[0]]
 			if column == nil {
-				isUnrecognized = true
+				if parts[0] != "load" {
+					isUnrecognized = true
+				}
 			} else {
 				switch parts[1] {
 				case "eq":
@@ -1024,6 +1093,11 @@ func handleGetVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 
 					orderByDirection = helpers.Ptr("ASC")
 					orderBys = append(orderBys, parts[0])
+					continue
+				case "load":
+					includes = append(includes, parts[0])
+					_ = includes
+
 					continue
 				default:
 					isUnrecognized = true
@@ -1308,8 +1382,19 @@ func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		return
 	}
 
+	forceSetValuesForFieldsByObjectIndex := make([][]string, 0)
 	objects := make([]*Video, 0)
 	for _, item := range allItems {
+		forceSetValuesForFields := make([]string, 0)
+		for _, possibleField := range maps.Keys(item) {
+			if !slices.Contains(VideoTableColumns, possibleField) {
+				continue
+			}
+
+			forceSetValuesForFields = append(forceSetValuesForFields, possibleField)
+		}
+		forceSetValuesForFieldsByObjectIndex = append(forceSetValuesForFieldsByObjectIndex, forceSetValuesForFields)
+
 		object := &Video{}
 		err = object.FromItem(item)
 		if err != nil {
@@ -1341,7 +1426,7 @@ func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 	_ = xid
 
 	for i, object := range objects {
-		err = object.Insert(r.Context(), tx, false, false)
+		err = object.Insert(r.Context(), tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
 		if err != nil {
 			err = fmt.Errorf("failed to insert %#+v: %v", object, err)
 			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1351,6 +1436,18 @@ func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		objects[i] = object
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, VideoTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1358,11 +1455,16 @@ func handlePostVideos(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, VideoTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusCreated, objects)
@@ -1422,6 +1524,18 @@ func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPo
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1429,11 +1543,16 @@ func handlePutVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPo
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Video{object})
@@ -1502,6 +1621,18 @@ func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1509,11 +1640,16 @@ func handlePatchVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Video{object})
@@ -1560,6 +1696,18 @@ func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, VideoTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1567,11 +1715,16 @@ func handleDeleteVideo(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, VideoTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusNoContent, nil)

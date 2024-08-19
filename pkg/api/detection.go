@@ -2,7 +2,9 @@ package api
 
 import (
 	"context"
+	"database/sql"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -23,12 +25,10 @@ import (
 	"github.com/initialed85/djangolang/pkg/server"
 	"github.com/initialed85/djangolang/pkg/stream"
 	"github.com/initialed85/djangolang/pkg/types"
-	_pgtype "github.com/jackc/pgtype"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jmoiron/sqlx"
 	"github.com/lib/pq"
 	"github.com/lib/pq/hstore"
-	"github.com/paulmach/orb/geojson"
 	"golang.org/x/exp/maps"
 )
 
@@ -43,6 +43,8 @@ type Detection struct {
 	Score          float64       `json:"score"`
 	Centroid       pgtype.Vec2   `json:"centroid"`
 	BoundingBox    []pgtype.Vec2 `json:"bounding_box"`
+	VideoID        uuid.UUID     `json:"video_id"`
+	VideoIDObject  *Video        `json:"video_id_object"`
 	CameraID       uuid.UUID     `json:"camera_id"`
 	CameraIDObject *Camera       `json:"camera_id_object"`
 }
@@ -60,6 +62,7 @@ var (
 	DetectionTableScoreColumn       = "score"
 	DetectionTableCentroidColumn    = "centroid"
 	DetectionTableBoundingBoxColumn = "bounding_box"
+	DetectionTableVideoIDColumn     = "video_id"
 	DetectionTableCameraIDColumn    = "camera_id"
 )
 
@@ -74,6 +77,7 @@ var (
 	DetectionTableScoreColumnWithTypeCast       = fmt.Sprintf(`"score" AS score`)
 	DetectionTableCentroidColumnWithTypeCast    = fmt.Sprintf(`"centroid" AS centroid`)
 	DetectionTableBoundingBoxColumnWithTypeCast = fmt.Sprintf(`"bounding_box" AS bounding_box`)
+	DetectionTableVideoIDColumnWithTypeCast     = fmt.Sprintf(`"video_id" AS video_id`)
 	DetectionTableCameraIDColumnWithTypeCast    = fmt.Sprintf(`"camera_id" AS camera_id`)
 )
 
@@ -88,6 +92,7 @@ var DetectionTableColumns = []string{
 	DetectionTableScoreColumn,
 	DetectionTableCentroidColumn,
 	DetectionTableBoundingBoxColumn,
+	DetectionTableVideoIDColumn,
 	DetectionTableCameraIDColumn,
 }
 
@@ -102,38 +107,50 @@ var DetectionTableColumnsWithTypeCasts = []string{
 	DetectionTableScoreColumnWithTypeCast,
 	DetectionTableCentroidColumnWithTypeCast,
 	DetectionTableBoundingBoxColumnWithTypeCast,
+	DetectionTableVideoIDColumnWithTypeCast,
 	DetectionTableCameraIDColumnWithTypeCast,
 }
 
 var DetectionTableColumnLookup = map[string]*introspect.Column{
-	DetectionTableIDColumn:          new(introspect.Column),
-	DetectionTableCreatedAtColumn:   new(introspect.Column),
-	DetectionTableUpdatedAtColumn:   new(introspect.Column),
-	DetectionTableDeletedAtColumn:   new(introspect.Column),
-	DetectionTableSeenAtColumn:      new(introspect.Column),
-	DetectionTableClassIDColumn:     new(introspect.Column),
-	DetectionTableClassNameColumn:   new(introspect.Column),
-	DetectionTableScoreColumn:       new(introspect.Column),
-	DetectionTableCentroidColumn:    new(introspect.Column),
-	DetectionTableBoundingBoxColumn: new(introspect.Column),
-	DetectionTableCameraIDColumn:    new(introspect.Column),
+	DetectionTableIDColumn:          {Name: DetectionTableIDColumn, NotNull: true, HasDefault: true},
+	DetectionTableCreatedAtColumn:   {Name: DetectionTableCreatedAtColumn, NotNull: true, HasDefault: true},
+	DetectionTableUpdatedAtColumn:   {Name: DetectionTableUpdatedAtColumn, NotNull: true, HasDefault: true},
+	DetectionTableDeletedAtColumn:   {Name: DetectionTableDeletedAtColumn, NotNull: false, HasDefault: false},
+	DetectionTableSeenAtColumn:      {Name: DetectionTableSeenAtColumn, NotNull: true, HasDefault: false},
+	DetectionTableClassIDColumn:     {Name: DetectionTableClassIDColumn, NotNull: true, HasDefault: false},
+	DetectionTableClassNameColumn:   {Name: DetectionTableClassNameColumn, NotNull: true, HasDefault: false},
+	DetectionTableScoreColumn:       {Name: DetectionTableScoreColumn, NotNull: true, HasDefault: false},
+	DetectionTableCentroidColumn:    {Name: DetectionTableCentroidColumn, NotNull: true, HasDefault: false},
+	DetectionTableBoundingBoxColumn: {Name: DetectionTableBoundingBoxColumn, NotNull: true, HasDefault: false},
+	DetectionTableVideoIDColumn:     {Name: DetectionTableVideoIDColumn, NotNull: true, HasDefault: false},
+	DetectionTableCameraIDColumn:    {Name: DetectionTableCameraIDColumn, NotNull: true, HasDefault: false},
 }
 
 var (
 	DetectionTablePrimaryKeyColumn = DetectionTableIDColumn
 )
-
-var (
-	_ = time.Time{}
-	_ = uuid.UUID{}
-	_ = pq.StringArray{}
-	_ = hstore.Hstore{}
-	_ = geojson.Point{}
-	_ = pgtype.Point{}
-	_ = _pgtype.Point{}
-	_ = postgis.PointZ{}
-	_ = netip.Prefix{}
-)
+var _ = []any{
+	time.Time{},
+	time.Duration(0),
+	nil,
+	pq.StringArray{},
+	string(""),
+	pq.Int64Array{},
+	int64(0),
+	pq.Float64Array{},
+	float64(0),
+	pq.BoolArray{},
+	bool(false),
+	map[string][]int{},
+	uuid.UUID{},
+	hstore.Hstore{},
+	pgtype.Point{},
+	pgtype.Polygon{},
+	postgis.PointZ{},
+	netip.Prefix{},
+	[]byte{},
+	errors.Is,
+}
 
 func (m *Detection) GetPrimaryKeyColumn() string {
 	return DetectionTablePrimaryKeyColumn
@@ -360,6 +377,25 @@ func (m *Detection) FromItem(item map[string]any) error {
 
 			m.BoundingBox = temp2
 
+		case "video_id":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseUUID(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(uuid.UUID)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuid.UUID", temp1))
+				}
+			}
+
+			m.VideoID = temp2
+
 		case "camera_id":
 			if v == nil {
 				continue
@@ -397,6 +433,9 @@ func (m *Detection) Reload(
 		}
 	}
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	t, err := SelectDetection(
 		ctx,
 		tx,
@@ -417,6 +456,8 @@ func (m *Detection) Reload(
 	m.Score = t.Score
 	m.Centroid = t.Centroid
 	m.BoundingBox = t.BoundingBox
+	m.VideoID = t.VideoID
+	m.VideoIDObject = t.VideoIDObject
 	m.CameraID = t.CameraID
 	m.CameraIDObject = t.CameraIDObject
 
@@ -428,11 +469,12 @@ func (m *Detection) Insert(
 	tx *sqlx.Tx,
 	setPrimaryKey bool,
 	setZeroValues bool,
+	forceSetValuesForFields ...string,
 ) error {
 	columns := make([]string, 0)
 	values := make([]any, 0)
 
-	if setPrimaryKey && (setZeroValues || !types.IsZeroUUID(m.ID)) {
+	if setPrimaryKey && (setZeroValues || !types.IsZeroUUID(m.ID)) || slices.Contains(forceSetValuesForFields, DetectionTableIDColumn) || isRequired(DetectionTableColumnLookup, DetectionTableIDColumn) {
 		columns = append(columns, DetectionTableIDColumn)
 
 		v, err := types.FormatUUID(m.ID)
@@ -443,7 +485,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.CreatedAt) {
+	if setZeroValues || !types.IsZeroTime(m.CreatedAt) || slices.Contains(forceSetValuesForFields, DetectionTableCreatedAtColumn) || isRequired(DetectionTableColumnLookup, DetectionTableCreatedAtColumn) {
 		columns = append(columns, DetectionTableCreatedAtColumn)
 
 		v, err := types.FormatTime(m.CreatedAt)
@@ -454,7 +496,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.UpdatedAt) {
+	if setZeroValues || !types.IsZeroTime(m.UpdatedAt) || slices.Contains(forceSetValuesForFields, DetectionTableUpdatedAtColumn) || isRequired(DetectionTableColumnLookup, DetectionTableUpdatedAtColumn) {
 		columns = append(columns, DetectionTableUpdatedAtColumn)
 
 		v, err := types.FormatTime(m.UpdatedAt)
@@ -465,7 +507,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.DeletedAt) {
+	if setZeroValues || !types.IsZeroTime(m.DeletedAt) || slices.Contains(forceSetValuesForFields, DetectionTableDeletedAtColumn) || isRequired(DetectionTableColumnLookup, DetectionTableDeletedAtColumn) {
 		columns = append(columns, DetectionTableDeletedAtColumn)
 
 		v, err := types.FormatTime(m.DeletedAt)
@@ -476,7 +518,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.SeenAt) {
+	if setZeroValues || !types.IsZeroTime(m.SeenAt) || slices.Contains(forceSetValuesForFields, DetectionTableSeenAtColumn) || isRequired(DetectionTableColumnLookup, DetectionTableSeenAtColumn) {
 		columns = append(columns, DetectionTableSeenAtColumn)
 
 		v, err := types.FormatTime(m.SeenAt)
@@ -487,7 +529,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroInt(m.ClassID) {
+	if setZeroValues || !types.IsZeroInt(m.ClassID) || slices.Contains(forceSetValuesForFields, DetectionTableClassIDColumn) || isRequired(DetectionTableColumnLookup, DetectionTableClassIDColumn) {
 		columns = append(columns, DetectionTableClassIDColumn)
 
 		v, err := types.FormatInt(m.ClassID)
@@ -498,7 +540,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroString(m.ClassName) {
+	if setZeroValues || !types.IsZeroString(m.ClassName) || slices.Contains(forceSetValuesForFields, DetectionTableClassNameColumn) || isRequired(DetectionTableColumnLookup, DetectionTableClassNameColumn) {
 		columns = append(columns, DetectionTableClassNameColumn)
 
 		v, err := types.FormatString(m.ClassName)
@@ -509,7 +551,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroFloat(m.Score) {
+	if setZeroValues || !types.IsZeroFloat(m.Score) || slices.Contains(forceSetValuesForFields, DetectionTableScoreColumn) || isRequired(DetectionTableColumnLookup, DetectionTableScoreColumn) {
 		columns = append(columns, DetectionTableScoreColumn)
 
 		v, err := types.FormatFloat(m.Score)
@@ -520,7 +562,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroPoint(m.Centroid) {
+	if setZeroValues || !types.IsZeroPoint(m.Centroid) || slices.Contains(forceSetValuesForFields, DetectionTableCentroidColumn) || isRequired(DetectionTableColumnLookup, DetectionTableCentroidColumn) {
 		columns = append(columns, DetectionTableCentroidColumn)
 
 		v, err := types.FormatPoint(m.Centroid)
@@ -531,7 +573,7 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroPolygon(m.BoundingBox) {
+	if setZeroValues || !types.IsZeroPolygon(m.BoundingBox) || slices.Contains(forceSetValuesForFields, DetectionTableBoundingBoxColumn) || isRequired(DetectionTableColumnLookup, DetectionTableBoundingBoxColumn) {
 		columns = append(columns, DetectionTableBoundingBoxColumn)
 
 		v, err := types.FormatPolygon(m.BoundingBox)
@@ -542,7 +584,18 @@ func (m *Detection) Insert(
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroUUID(m.CameraID) {
+	if setZeroValues || !types.IsZeroUUID(m.VideoID) || slices.Contains(forceSetValuesForFields, DetectionTableVideoIDColumn) || isRequired(DetectionTableColumnLookup, DetectionTableVideoIDColumn) {
+		columns = append(columns, DetectionTableVideoIDColumn)
+
+		v, err := types.FormatUUID(m.VideoID)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.VideoID: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroUUID(m.CameraID) || slices.Contains(forceSetValuesForFields, DetectionTableCameraIDColumn) || isRequired(DetectionTableColumnLookup, DetectionTableCameraIDColumn) {
 		columns = append(columns, DetectionTableCameraIDColumn)
 
 		v, err := types.FormatUUID(m.CameraID)
@@ -552,6 +605,9 @@ func (m *Detection) Insert(
 
 		values = append(values, v)
 	}
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
 
 	item, err := query.Insert(
 		ctx,
@@ -594,7 +650,7 @@ func (m *Detection) Insert(
 
 	m.ID = temp2
 
-	err = m.Reload(ctx, tx)
+	err = m.Reload(ctx, tx, slices.Contains(forceSetValuesForFields, "deleted_at"))
 	if err != nil {
 		return fmt.Errorf("failed to reload after insert")
 	}
@@ -710,6 +766,17 @@ func (m *Detection) Update(
 		values = append(values, v)
 	}
 
+	if setZeroValues || !types.IsZeroUUID(m.VideoID) || slices.Contains(forceSetValuesForFields, DetectionTableVideoIDColumn) {
+		columns = append(columns, DetectionTableVideoIDColumn)
+
+		v, err := types.FormatUUID(m.VideoID)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.VideoID: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
 	if setZeroValues || !types.IsZeroUUID(m.CameraID) || slices.Contains(forceSetValuesForFields, DetectionTableCameraIDColumn) {
 		columns = append(columns, DetectionTableCameraIDColumn)
 
@@ -727,6 +794,9 @@ func (m *Detection) Update(
 	}
 
 	values = append(values, v)
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
 
 	_, err = query.Update(
 		ctx,
@@ -775,6 +845,9 @@ func (m *Detection) Delete(
 
 	values = append(values, v)
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	err = query.Delete(
 		ctx,
 		tx,
@@ -810,6 +883,9 @@ func SelectDetections(
 		}
 	}
 
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	items, err := query.Select(
 		ctx,
 		tx,
@@ -835,15 +911,41 @@ func SelectDetections(
 			return nil, err
 		}
 
+		if !types.IsZeroUUID(object.VideoID) {
+			var ok bool
+			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, DetectionTable)
+
+			if ok {
+				object.VideoIDObject, err = SelectVideo(
+					thisCtx,
+					tx,
+					fmt.Sprintf("%v = $1", VideoTablePrimaryKeyColumn),
+					object.VideoID,
+				)
+				if err != nil {
+					if !errors.Is(err, sql.ErrNoRows) {
+						return nil, err
+					}
+				}
+			}
+		}
+
 		if !types.IsZeroUUID(object.CameraID) {
-			object.CameraIDObject, err = SelectCamera(
-				ctx,
-				tx,
-				fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
-				object.CameraID,
-			)
-			if err != nil {
-				return nil, err
+			var ok bool
+			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, DetectionTable)
+
+			if ok {
+				object.CameraIDObject, err = SelectCamera(
+					thisCtx,
+					tx,
+					fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
+					object.CameraID,
+				)
+				if err != nil {
+					if !errors.Is(err, sql.ErrNoRows) {
+						return nil, err
+					}
+				}
 			}
 		}
 
@@ -859,6 +961,9 @@ func SelectDetection(
 	where string,
 	values ...any,
 ) (*Detection, error) {
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
 	objects, err := SelectDetections(
 		ctx,
 		tx,
@@ -877,7 +982,7 @@ func SelectDetection(
 	}
 
 	if len(objects) < 1 {
-		return nil, fmt.Errorf("attempt to call SelectDetection returned no rows")
+		return nil, sql.ErrNoRows
 	}
 
 	object := objects[0]
@@ -900,6 +1005,8 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 	var orderByDirection *string
 	orderBys := make([]string, 0)
 
+	includes := make([]string, 0)
+
 	values := make([]any, 0)
 	wheres := make([]string, 0)
 	for rawKey, rawValues := range r.URL.Query() {
@@ -918,7 +1025,9 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 		if !isUnrecognized {
 			column := DetectionTableColumnLookup[parts[0]]
 			if column == nil {
-				isUnrecognized = true
+				if parts[0] != "load" {
+					isUnrecognized = true
+				}
 			} else {
 				switch parts[1] {
 				case "eq":
@@ -976,6 +1085,11 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 
 					orderByDirection = helpers.Ptr("ASC")
 					orderBys = append(orderBys, parts[0])
+					continue
+				case "load":
+					includes = append(includes, parts[0])
+					_ = includes
+
 					continue
 				default:
 					isUnrecognized = true
@@ -1260,8 +1374,19 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		return
 	}
 
+	forceSetValuesForFieldsByObjectIndex := make([][]string, 0)
 	objects := make([]*Detection, 0)
 	for _, item := range allItems {
+		forceSetValuesForFields := make([]string, 0)
+		for _, possibleField := range maps.Keys(item) {
+			if !slices.Contains(DetectionTableColumns, possibleField) {
+				continue
+			}
+
+			forceSetValuesForFields = append(forceSetValuesForFields, possibleField)
+		}
+		forceSetValuesForFieldsByObjectIndex = append(forceSetValuesForFieldsByObjectIndex, forceSetValuesForFields)
+
 		object := &Detection{}
 		err = object.FromItem(item)
 		if err != nil {
@@ -1293,7 +1418,7 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 	_ = xid
 
 	for i, object := range objects {
-		err = object.Insert(r.Context(), tx, false, false)
+		err = object.Insert(r.Context(), tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
 		if err != nil {
 			err = fmt.Errorf("failed to insert %#+v: %v", object, err)
 			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1303,6 +1428,18 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		objects[i] = object
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, DetectionTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1310,11 +1447,16 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, DetectionTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusCreated, objects)
@@ -1374,6 +1516,18 @@ func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1381,11 +1535,16 @@ func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Detection{object})
@@ -1454,6 +1613,18 @@ func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1461,11 +1632,16 @@ func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusOK, []*Detection{object})
@@ -1512,6 +1688,18 @@ func handleDeleteDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, 
 		return
 	}
 
+	errs := make(chan error, 1)
+	go func() {
+		_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, DetectionTable, xid)
+		if err != nil {
+			err = fmt.Errorf("failed to wait for change: %v", err)
+			errs <- err
+			return
+		}
+
+		errs <- nil
+	}()
+
 	err = tx.Commit()
 	if err != nil {
 		err = fmt.Errorf("failed to commit DB transaction: %v", err)
@@ -1519,11 +1707,16 @@ func handleDeleteDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, 
 		return
 	}
 
-	_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, DetectionTable, xid)
-	if err != nil {
-		err = fmt.Errorf("failed to wait for change: %v", err)
+	select {
+	case <-r.Context().Done():
+		err = fmt.Errorf("context canceled")
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
+	case err = <-errs:
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
 	}
 
 	helpers.HandleObjectsResponse(w, http.StatusNoContent, nil)

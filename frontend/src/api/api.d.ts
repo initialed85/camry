@@ -121,12 +121,14 @@ export interface components {
       updated_at?: string;
     };
     Detection: {
-      bounding_box?: {
-        /** Format: double */
-        X?: number;
-        /** Format: double */
-        Y?: number;
-      }[];
+      bounding_box?:
+        | {
+            /** Format: double */
+            X?: number;
+            /** Format: double */
+            Y?: number;
+          }[]
+        | null;
       /** Format: uuid */
       camera_id?: string;
       camera_id_object?: components["schemas"]["NullableCamera"];
@@ -151,10 +153,13 @@ export interface components {
       seen_at?: string;
       /** Format: date-time */
       updated_at?: string;
+      /** Format: uuid */
+      video_id?: string;
+      video_id_object?: components["schemas"]["NullableVideo"];
     };
-    NullableArrayOfCamera: components["schemas"]["Camera"][];
-    NullableArrayOfDetection: components["schemas"]["Detection"][];
-    NullableArrayOfVideo: components["schemas"]["Video"][];
+    NullableArrayOfCamera: components["schemas"]["Camera"][] | null;
+    NullableArrayOfDetection: components["schemas"]["Detection"][] | null;
+    NullableArrayOfVideo: components["schemas"]["Video"][] | null;
     NullableCamera: components["schemas"]["Camera"];
     NullableDetection: components["schemas"]["Detection"];
     NullableVideo: components["schemas"]["Video"];
@@ -181,6 +186,7 @@ export interface components {
       file_size?: number | null;
       /** Format: uuid */
       id?: string;
+      referenced_by_detection_video_id_objects?: components["schemas"]["NullableArrayOfDetection"];
       /** Format: date-time */
       started_at?: string;
       status?: string;
@@ -1060,35 +1066,35 @@ export interface operations {
         /** @description SQL NOT IN operator, permits comma-separated values */
         class_id__notin?: number;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        class_id__isnull?: number;
+        class_id__isnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        class_id__nisnull?: number;
+        class_id__nisnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        class_id__isnotnull?: number;
+        class_id__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__l?: number;
+        class_id__l?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__like?: number;
+        class_id__like?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__nl?: number;
+        class_id__nl?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__nlike?: number;
+        class_id__nlike?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__notlike?: number;
+        class_id__notlike?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__il?: number;
+        class_id__il?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__ilike?: number;
+        class_id__ilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__nil?: number;
+        class_id__nil?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__nilike?: number;
+        class_id__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        class_id__notilike?: number;
+        class_id__notilike?: string;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        class_id__desc?: number;
+        class_id__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        class_id__asc?: number;
+        class_id__asc?: string;
         /** @description SQL = operator */
         class_name__eq?: string;
         /** @description SQL != operator */
@@ -1156,35 +1162,83 @@ export interface operations {
         /** @description SQL NOT IN operator, permits comma-separated values */
         score__notin?: number;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        score__isnull?: number;
+        score__isnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        score__nisnull?: number;
+        score__nisnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        score__isnotnull?: number;
+        score__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        score__l?: number;
+        score__l?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        score__like?: number;
+        score__like?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        score__nl?: number;
+        score__nl?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        score__nlike?: number;
+        score__nlike?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        score__notlike?: number;
+        score__notlike?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        score__il?: number;
+        score__il?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        score__ilike?: number;
+        score__ilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        score__nil?: number;
+        score__nil?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        score__nilike?: number;
+        score__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        score__notilike?: number;
+        score__notilike?: string;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        score__desc?: number;
+        score__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        score__asc?: number;
+        score__asc?: string;
+        /** @description SQL = operator */
+        video_id__eq?: string;
+        /** @description SQL != operator */
+        video_id__ne?: string;
+        /** @description SQL > operator, may not work with all column types */
+        video_id__gt?: string;
+        /** @description SQL >= operator, may not work with all column types */
+        video_id__gte?: string;
+        /** @description SQL < operator, may not work with all column types */
+        video_id__lt?: string;
+        /** @description SQL <= operator, may not work with all column types */
+        video_id__lte?: string;
+        /** @description SQL IN operator, permits comma-separated values */
+        video_id__in?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        video_id__nin?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        video_id__notin?: string;
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
+        video_id__isnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        video_id__nisnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        video_id__isnotnull?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__l?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__like?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__nl?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__nlike?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__notlike?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__il?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__ilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__nil?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__nilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        video_id__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        video_id__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        video_id__asc?: string;
         /** @description SQL = operator */
         camera_id__eq?: string;
         /** @description SQL != operator */
@@ -1849,35 +1903,35 @@ export interface operations {
         /** @description SQL NOT IN operator, permits comma-separated values */
         duration__notin?: number;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        duration__isnull?: number;
+        duration__isnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        duration__nisnull?: number;
+        duration__nisnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        duration__isnotnull?: number;
+        duration__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__l?: number;
+        duration__l?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__like?: number;
+        duration__like?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__nl?: number;
+        duration__nl?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__nlike?: number;
+        duration__nlike?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__notlike?: number;
+        duration__notlike?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__il?: number;
+        duration__il?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__ilike?: number;
+        duration__ilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__nil?: number;
+        duration__nil?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__nilike?: number;
+        duration__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        duration__notilike?: number;
+        duration__notilike?: string;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        duration__desc?: number;
+        duration__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        duration__asc?: number;
+        duration__asc?: string;
         /** @description SQL = operator */
         file_size__eq?: number;
         /** @description SQL != operator */
@@ -1897,35 +1951,35 @@ export interface operations {
         /** @description SQL NOT IN operator, permits comma-separated values */
         file_size__notin?: number;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        file_size__isnull?: number;
+        file_size__isnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        file_size__nisnull?: number;
+        file_size__nisnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        file_size__isnotnull?: number;
+        file_size__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__l?: number;
+        file_size__l?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__like?: number;
+        file_size__like?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__nl?: number;
+        file_size__nl?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__nlike?: number;
+        file_size__nlike?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__notlike?: number;
+        file_size__notlike?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__il?: number;
+        file_size__il?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__ilike?: number;
+        file_size__ilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__nil?: number;
+        file_size__nil?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__nilike?: number;
+        file_size__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        file_size__notilike?: number;
+        file_size__notilike?: string;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        file_size__desc?: number;
+        file_size__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        file_size__asc?: number;
+        file_size__asc?: string;
         /** @description SQL = operator */
         thumbnail_name__eq?: string;
         /** @description SQL != operator */

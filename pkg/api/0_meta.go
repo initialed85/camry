@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/chi/v5"
 	"github.com/gomodule/redigo/redis"
 	"github.com/initialed85/djangolang/pkg/helpers"
+	"github.com/initialed85/djangolang/pkg/introspect"
 	"github.com/initialed85/djangolang/pkg/openapi"
 	"github.com/initialed85/djangolang/pkg/server"
 	"github.com/initialed85/djangolang/pkg/types"
@@ -17,15 +18,20 @@ import (
 	"gopkg.in/yaml.v2"
 )
 
-type rootTableNameContextKey struct{}
-
-var _rootTableNameContextKey = rootTableNameContextKey{}
-
 var mu = new(sync.Mutex)
 var newFromItemFnByTableName = make(map[string]func(map[string]any) (any, error))
 var getRouterFnByPattern = make(map[string]server.GetRouterFn)
 var allObjects = make([]any, 0)
 var openApi *types.OpenAPI
+
+func isRequired(columns map[string]*introspect.Column, columnName string) bool {
+	column := columns[columnName]
+	if column == nil {
+		return false
+	}
+
+	return column.NotNull && !column.HasDefault
+}
 
 func register(
 	tableName string,

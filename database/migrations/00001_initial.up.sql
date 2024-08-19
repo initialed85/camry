@@ -90,6 +90,14 @@ CREATE INDEX video_ended_at ON public.video (ended_at);
 
 CREATE INDEX video_camera_id_ended_at ON public.video (camera_id, ended_at);
 
+CREATE INDEX video_file_name ON public.video (file_name);
+
+CREATE INDEX video_camera_id_file_name ON public.video (camera_id, file_name);
+
+CREATE INDEX video_status ON public.video (status);
+
+CREATE INDEX video_camera_id_status ON public.video (camera_id, status);
+
 --
 -- detection
 --
@@ -107,6 +115,7 @@ CREATE TABLE
         score float NOT NULL,
         centroid Point NOT NULL,
         bounding_box Polygon NOT NULL,
+        video_id uuid NOT NULL REFERENCES public.video (id),
         camera_id uuid NOT NULL REFERENCES public.camera (id)
     );
 
@@ -118,11 +127,11 @@ CREATE INDEX detection_class_id_seen_at ON public.detection (class_id, seen_at);
 
 CREATE INDEX detection_class_name_seen_at ON public.detection (class_name, seen_at);
 
-CREATE INDEX detection_camera_id_seen_at ON public.detection (camera_id, seen_at);
+CREATE INDEX detection_video_id_seen_at ON public.detection (video_id, seen_at);
 
-CREATE INDEX detection_camera_id_class_id_seen_at ON public.detection (camera_id, class_id, seen_at);
+CREATE INDEX detection_video_id_class_id_seen_at ON public.detection (video_id, class_id, seen_at);
 
-CREATE INDEX detection_camera_id_class_name_seen_at ON public.detection (camera_id, class_name, seen_at);
+CREATE INDEX detection_video_id_class_name_seen_at ON public.detection (video_id, class_name, seen_at);
 
 --
 -- triggers for camera
