@@ -4,6 +4,10 @@
 
 Intended as the spiritual sucessor to [initialed85/cameranator](https://github.com/initialed85/cameranator), built on [initialed85/djangolang](https://github.com/initialed85/djangolang)
 
+## Tasks
+
+
+
 ## Usage
 
 ```shell

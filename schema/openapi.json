@@ -33,6 +33,15 @@
             "description": "SQL OFFSET operator"
           },
           {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "id__eq",
             "in": "query",
             "required": false,
@@ -1656,6 +1665,17 @@
           "Camera"
         ],
         "operationId": "PostCameras",
+        "parameters": [
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -1744,6 +1764,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Camera"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -1819,6 +1848,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Camera"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "requestBody": {
@@ -1904,6 +1942,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Camera"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "requestBody": {
@@ -1989,6 +2036,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Camera"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -2050,6 +2106,15 @@
               "format": "int32"
             },
             "description": "SQL OFFSET operator"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__eq",
@@ -4359,6 +4424,17 @@
           "Detection"
         ],
         "operationId": "PostDetections",
+        "parameters": [
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -4447,6 +4523,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Detection"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -4522,6 +4607,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Detection"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "requestBody": {
@@ -4607,6 +4701,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Detection"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "requestBody": {
@@ -4692,6 +4795,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Detection"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -4753,6 +4865,15 @@
               "format": "int32"
             },
             "description": "SQL OFFSET operator"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__eq",
@@ -7494,6 +7615,17 @@
           "Video"
         ],
         "operationId": "PostVideos",
+        "parameters": [
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
@@ -7582,6 +7714,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Video"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -7657,6 +7798,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Video"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "requestBody": {
@@ -7742,6 +7892,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Video"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "requestBody": {
@@ -7827,6 +7986,15 @@
             "required": true,
             "schema": {},
             "description": "Primary key for Video"
+          },
+          {
+            "name": "shallow",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {

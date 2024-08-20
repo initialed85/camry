@@ -40,8 +40,8 @@ type Camera struct {
 	Name                                 string       `json:"name"`
 	StreamURL                            string       `json:"stream_url"`
 	LastSeen                             *time.Time   `json:"last_seen"`
-	ReferencedByVideoCameraIDObjects     []*Video     `json:"referenced_by_video_camera_id_objects"`
 	ReferencedByDetectionCameraIDObjects []*Detection `json:"referenced_by_detection_camera_id_objects"`
+	ReferencedByVideoCameraIDObjects     []*Video     `json:"referenced_by_video_camera_id_objects"`
 }
 
 var CameraTable = "camera"
@@ -328,8 +328,8 @@ func (m *Camera) Reload(
 	m.Name = t.Name
 	m.StreamURL = t.StreamURL
 	m.LastSeen = t.LastSeen
-	m.ReferencedByVideoCameraIDObjects = t.ReferencedByVideoCameraIDObjects
 	m.ReferencedByDetectionCameraIDObjects = t.ReferencedByDetectionCameraIDObjects
+	m.ReferencedByVideoCameraIDObjects = t.ReferencedByVideoCameraIDObjects
 
 	return nil
 }
@@ -671,15 +671,27 @@ func SelectCameras(
 			return nil, err
 		}
 
-		err = func() error {
-			var ok bool
-			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, CameraTable)
+		thatCtx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.ID))
+		if !ok {
+			continue
+		}
 
-			if ok {
-				object.ReferencedByVideoCameraIDObjects, err = SelectVideos(
+		thatCtx, ok = query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("ReferencedBy%s{%v}", CameraTable, object.ID))
+		if !ok {
+			continue
+		}
+
+		_ = thatCtx
+
+		err = func() error {
+			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("%s{%v}", CameraTable, object.ID))
+			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("ReferencedBy%s{%v}", CameraTable, object.ID))
+
+			if ok1 && ok2 {
+				object.ReferencedByDetectionCameraIDObjects, err = SelectDetections(
 					thisCtx,
 					tx,
-					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
+					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
 					nil,
 					nil,
 					nil,
@@ -699,14 +711,14 @@ func SelectCameras(
 		}
 
 		err = func() error {
-			var ok bool
-			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, CameraTable)
+			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("%s{%v}", CameraTable, object.ID))
+			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("ReferencedBy%s{%v}", CameraTable, object.ID))
 
-			if ok {
-				object.ReferencedByDetectionCameraIDObjects, err = SelectDetections(
+			if ok1 && ok2 {
+				object.ReferencedByVideoCameraIDObjects, err = SelectVideos(
 					thisCtx,
 					tx,
-					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
+					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
 					nil,
 					nil,
 					nil,
@@ -781,12 +793,10 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 	var orderByDirection *string
 	orderBys := make([]string, 0)
 
-	includes := make([]string, 0)
-
 	values := make([]any, 0)
 	wheres := make([]string, 0)
 	for rawKey, rawValues := range r.URL.Query() {
-		if rawKey == "limit" || rawKey == "offset" {
+		if rawKey == "limit" || rawKey == "offset" || rawKey == "shallow" {
 			continue
 		}
 
@@ -801,9 +811,7 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		if !isUnrecognized {
 			column := CameraTableColumnLookup[parts[0]]
 			if column == nil {
-				if parts[0] != "load" {
-					isUnrecognized = true
-				}
+				isUnrecognized = true
 			} else {
 				switch parts[1] {
 				case "eq":
@@ -861,11 +869,6 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 
 					orderByDirection = helpers.Ptr("ASC")
 					orderBys = append(orderBys, parts[0])
-					continue
-				case "load":
-					includes = append(includes, parts[0])
-					_ = includes
-
 					continue
 				default:
 					isUnrecognized = true
@@ -1009,6 +1012,11 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		offset = int(possibleOffset)
 	}
 
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
 	hashableOrderBy := ""
 	var orderBy *string
 	if len(orderBys) > 0 {
@@ -1020,7 +1028,7 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		orderBy = &hashableOrderBy
 	}
 
-	requestHash, err := helpers.GetRequestHash(CameraTable, wheres, hashableOrderBy, limit, offset, values, nil)
+	requestHash, err := helpers.GetRequestHash(CameraTable, wheres, hashableOrderBy, limit, offset, shallow, values, nil)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1041,7 +1049,7 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redis
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1079,7 +1087,12 @@ func handleGetCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 	wheres := []string{fmt.Sprintf("%s = $$??", CameraTablePrimaryKeyColumn)}
 	values := []any{primaryKey}
 
-	requestHash, err := helpers.GetRequestHash(CameraTable, wheres, "", 2, 0, values, primaryKey)
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
+	requestHash, err := helpers.GetRequestHash(CameraTable, wheres, "", 2, 0, shallow, values, primaryKey)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1100,7 +1113,7 @@ func handleGetCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1134,6 +1147,13 @@ func handleGetCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 
 func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) {
 	_ = redisPool
+
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
 
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -1174,7 +1194,7 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		objects = append(objects, object)
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1185,7 +1205,7 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1194,7 +1214,7 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 	_ = xid
 
 	for i, object := range objects {
-		err = object.Insert(r.Context(), tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
+		err = object.Insert(ctx, tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
 		if err != nil {
 			err = fmt.Errorf("failed to insert %#+v: %v", object, err)
 			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1206,7 +1226,7 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, CameraTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.INSERT}, CameraTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err
@@ -1241,6 +1261,13 @@ func handlePostCameras(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
 
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
 		err = fmt.Errorf("failed to read body of HTTP request: %v", err)
@@ -1266,7 +1293,7 @@ func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1277,7 +1304,7 @@ func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1285,7 +1312,7 @@ func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 	}
 	_ = xid
 
-	err = object.Update(r.Context(), tx, true)
+	err = object.Update(ctx, tx, true)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v: %v", object, err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1294,7 +1321,7 @@ func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err
@@ -1328,6 +1355,13 @@ func handlePutCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisP
 
 func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
+
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
 
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -1363,7 +1397,7 @@ func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1374,7 +1408,7 @@ func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1382,7 +1416,7 @@ func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 	}
 	_ = xid
 
-	err = object.Update(r.Context(), tx, false, forceSetValuesForFields...)
+	err = object.Update(ctx, tx, false, forceSetValuesForFields...)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v: %v", object, err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1391,7 +1425,7 @@ func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, CameraTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err
@@ -1426,6 +1460,13 @@ func handlePatchCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redi
 func handleDeleteCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
 
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
 	var item = make(map[string]any)
 
 	item[CameraTablePrimaryKeyColumn] = primaryKey
@@ -1438,7 +1479,7 @@ func handleDeleteCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1449,7 +1490,7 @@ func handleDeleteCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1457,7 +1498,7 @@ func handleDeleteCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 	}
 	_ = xid
 
-	err = object.Delete(r.Context(), tx)
+	err = object.Delete(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to delete %#+v: %v", object, err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1466,7 +1507,7 @@ func handleDeleteCamera(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, CameraTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.DELETE, stream.SOFT_DELETE}, CameraTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err

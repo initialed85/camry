@@ -20,17 +20,17 @@ if ! command -v npm >/dev/null 2>&1; then
     exit 1
 fi
 
-# ensure the docker compose environment is already running
-if ! docker compose ps | grep camry | grep postgres | grep healthy >/dev/null 2>&1; then
-    echo "error: can't find healthy docker compose environment; ensure to invoke ./run-env.sh in another shell"
-    exit 1
-fi
-
 # ensure we've got a djangolang executable available (required for templating)
 if [[ "${FORCE_UPDATE_DJANGOLANG}" == "1" ]] || ! command -v djangolang >/dev/null 2>&1; then
     GOPRIVATE="${GOPRIVATE:-}" go install github.com/initialed85/djangolang@latest
     GOPRIVATE="${GOPRIVATE:-}" go get -u github.com/initialed85/djangolang@latest
 fi
+
+# ensure the docker compose environment is already running
+echo -e "\nwaiting for healthy docker compose environment..."
+while ! docker compose ps -a | grep post-migrate | grep 'Exited (0)' >/dev/null 2>&1; do
+    sleep 0.1
+done
 
 # introspect the database and generate the Djangolang API
 # note: the environment variables are coupled to the environment described in docker-compose.yaml

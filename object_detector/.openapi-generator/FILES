@@ -43,16 +43,4 @@ setup.cfg
 setup.py
 test-requirements.txt
 test/__init__.py
-test/test_camera.py
-test/test_camera_api.py
-test/test_detection.py
-test/test_detection_api.py
-test/test_detection_bounding_box_inner.py
-test/test_get_cameras200_response.py
-test/test_get_cameras_default_response.py
-test/test_get_detections200_response.py
-test/test_get_videos200_response.py
-test/test_vec2.py
-test/test_video.py
-test/test_video_api.py
 tox.ini

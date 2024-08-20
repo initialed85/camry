@@ -45,6 +45,7 @@ class VideoApi:
     def delete_video(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -63,6 +64,8 @@ class VideoApi:
 
         :param primary_key: Primary key for Video (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -87,6 +90,7 @@ class VideoApi:
 
         _param = self._delete_video_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -111,6 +115,7 @@ class VideoApi:
     def delete_video_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -129,6 +134,8 @@ class VideoApi:
 
         :param primary_key: Primary key for Video (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -153,6 +160,7 @@ class VideoApi:
 
         _param = self._delete_video_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -177,6 +185,7 @@ class VideoApi:
     def delete_video_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -195,6 +204,8 @@ class VideoApi:
 
         :param primary_key: Primary key for Video (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -219,6 +230,7 @@ class VideoApi:
 
         _param = self._delete_video_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -238,6 +250,7 @@ class VideoApi:
     def _delete_video_serialize(
         self,
         primary_key,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -260,6 +273,10 @@ class VideoApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -300,6 +317,7 @@ class VideoApi:
     def get_video(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -318,6 +336,8 @@ class VideoApi:
 
         :param primary_key: Primary key for Video (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -342,6 +362,7 @@ class VideoApi:
 
         _param = self._get_video_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -366,6 +387,7 @@ class VideoApi:
     def get_video_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -384,6 +406,8 @@ class VideoApi:
 
         :param primary_key: Primary key for Video (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -408,6 +432,7 @@ class VideoApi:
 
         _param = self._get_video_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -432,6 +457,7 @@ class VideoApi:
     def get_video_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -450,6 +476,8 @@ class VideoApi:
 
         :param primary_key: Primary key for Video (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -474,6 +502,7 @@ class VideoApi:
 
         _param = self._get_video_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -493,6 +522,7 @@ class VideoApi:
     def _get_video_serialize(
         self,
         primary_key,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -515,6 +545,10 @@ class VideoApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -556,6 +590,7 @@ class VideoApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -864,6 +899,8 @@ class VideoApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -1465,6 +1502,7 @@ class VideoApi:
         _param = self._get_videos_serialize(
             limit=limit,
             offset=offset,
+            shallow=shallow,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -1778,6 +1816,7 @@ class VideoApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -2086,6 +2125,8 @@ class VideoApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -2687,6 +2728,7 @@ class VideoApi:
         _param = self._get_videos_serialize(
             limit=limit,
             offset=offset,
+            shallow=shallow,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -3000,6 +3042,7 @@ class VideoApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -3308,6 +3351,8 @@ class VideoApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -3909,6 +3954,7 @@ class VideoApi:
         _param = self._get_videos_serialize(
             limit=limit,
             offset=offset,
+            shallow=shallow,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -4217,6 +4263,7 @@ class VideoApi:
         self,
         limit,
         offset,
+        shallow,
         id__eq,
         id__ne,
         id__gt,
@@ -4532,6 +4579,10 @@ class VideoApi:
         if offset is not None:
             
             _query_params.append(('offset', offset))
+            
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
             
         if id__eq is not None:
             
@@ -6131,6 +6182,7 @@ class VideoApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
         video: Video,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6151,6 +6203,8 @@ class VideoApi:
         :type primary_key: object
         :param video: (required)
         :type video: Video
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6176,6 +6230,7 @@ class VideoApi:
         _param = self._patch_video_serialize(
             primary_key=primary_key,
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6201,6 +6256,7 @@ class VideoApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
         video: Video,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6221,6 +6277,8 @@ class VideoApi:
         :type primary_key: object
         :param video: (required)
         :type video: Video
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6246,6 +6304,7 @@ class VideoApi:
         _param = self._patch_video_serialize(
             primary_key=primary_key,
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6271,6 +6330,7 @@ class VideoApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
         video: Video,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6291,6 +6351,8 @@ class VideoApi:
         :type primary_key: object
         :param video: (required)
         :type video: Video
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6316,6 +6378,7 @@ class VideoApi:
         _param = self._patch_video_serialize(
             primary_key=primary_key,
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6336,6 +6399,7 @@ class VideoApi:
         self,
         primary_key,
         video,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -6358,6 +6422,10 @@ class VideoApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -6413,6 +6481,7 @@ class VideoApi:
     def post_videos(
         self,
         video: List[Video],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6431,6 +6500,8 @@ class VideoApi:
 
         :param video: (required)
         :type video: List[Video]
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6455,6 +6526,7 @@ class VideoApi:
 
         _param = self._post_videos_serialize(
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6479,6 +6551,7 @@ class VideoApi:
     def post_videos_with_http_info(
         self,
         video: List[Video],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6497,6 +6570,8 @@ class VideoApi:
 
         :param video: (required)
         :type video: List[Video]
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6521,6 +6596,7 @@ class VideoApi:
 
         _param = self._post_videos_serialize(
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6545,6 +6621,7 @@ class VideoApi:
     def post_videos_without_preload_content(
         self,
         video: List[Video],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6563,6 +6640,8 @@ class VideoApi:
 
         :param video: (required)
         :type video: List[Video]
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6587,6 +6666,7 @@ class VideoApi:
 
         _param = self._post_videos_serialize(
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6606,6 +6686,7 @@ class VideoApi:
     def _post_videos_serialize(
         self,
         video,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -6627,6 +6708,10 @@ class VideoApi:
 
         # process the path parameters
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -6683,6 +6768,7 @@ class VideoApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
         video: Video,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6703,6 +6789,8 @@ class VideoApi:
         :type primary_key: object
         :param video: (required)
         :type video: Video
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6728,6 +6816,7 @@ class VideoApi:
         _param = self._put_video_serialize(
             primary_key=primary_key,
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6753,6 +6842,7 @@ class VideoApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
         video: Video,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6773,6 +6863,8 @@ class VideoApi:
         :type primary_key: object
         :param video: (required)
         :type video: Video
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6798,6 +6890,7 @@ class VideoApi:
         _param = self._put_video_serialize(
             primary_key=primary_key,
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6823,6 +6916,7 @@ class VideoApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Video")],
         video: Video,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6843,6 +6937,8 @@ class VideoApi:
         :type primary_key: object
         :param video: (required)
         :type video: Video
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6868,6 +6964,7 @@ class VideoApi:
         _param = self._put_video_serialize(
             primary_key=primary_key,
             video=video,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6888,6 +6985,7 @@ class VideoApi:
         self,
         primary_key,
         video,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -6910,6 +7008,10 @@ class VideoApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter

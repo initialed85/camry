@@ -29,12 +29,14 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
         videos_response = video_api.get_videos(
             file_name__eq=one_shot_video_file_name,
             started_at__desc="",
+            shallow="",
         )
     else:
         videos_response = video_api.get_videos(
             camera_id__eq=camera.id,
             status__eq="needs detection",
             started_at__desc="",
+            shallow="",
         )
 
     videos = videos_response.objects or []
@@ -48,7 +50,11 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
         before = datetime.datetime.now()
 
         if one_shot_video_file_name:
-            detections_response = detection_api.get_detections(camera_id__eq=camera.id)
+            detections_response = detection_api.get_detections(
+                camera_id__eq=camera.id,
+                video_id__eq=video.id,
+                shallow="",
+            )
 
             for detection in detections_response.objects or []:
                 print(f"deleting old detection {detection.id}")
@@ -116,13 +122,20 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
 
         print(f"posting {len(detections)} detections")
 
-        detection_api.post_detections(detections)
+        detection_api.post_detections(
+            detections,
+            shallow="",
+        )
 
         print(f"updating video")
 
         before_request = datetime.datetime.now()
 
-        video_api.patch_video(video.id, Video(status="needs tracking"))
+        video_api.patch_video(
+            video.id,
+            Video(status="needs tracking"),
+            shallow="",
+        )
 
         after = datetime.datetime.now()
 
@@ -146,8 +159,6 @@ def run():
         raise ValueError("API_URL env var empty or unset")
 
     one_shot_file_name = os.getenv("ONE_SHOT_FILE_NAME", "").strip() or None
-    if not one_shot_file_name:
-        raise ValueError("ONE_SHOT_FILE_NAME env var empty or unset")
 
     configuration = Configuration(host=api_url, debug=debug)
     api_client = ApiClient(configuration)
@@ -155,7 +166,11 @@ def run():
     video_api = VideoApi(api_client)
     detection_api = DetectionApi(api_client)
 
-    cameras_response = camera_api.get_cameras(stream_url__eq=net_cam_url, name__eq=camera_name)
+    cameras_response = camera_api.get_cameras(
+        stream_url__eq=net_cam_url,
+        name__eq=camera_name,
+        shallow="",
+    )
 
     cameras = cameras_response.objects or []
 

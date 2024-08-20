@@ -911,11 +911,22 @@ func SelectDetections(
 			return nil, err
 		}
 
-		if !types.IsZeroUUID(object.VideoID) {
-			var ok bool
-			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, DetectionTable)
+		thatCtx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", DetectionTable, object.ID))
+		if !ok {
+			continue
+		}
 
-			if ok {
+		thatCtx, ok = query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("ReferencedBy%s{%v}", DetectionTable, object.ID))
+		if !ok {
+			continue
+		}
+
+		_ = thatCtx
+
+		if !types.IsZeroUUID(object.VideoID) {
+			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("%s{%v}", VideoTable, object.VideoID))
+			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("ReferencedBy%s{%v}", VideoTable, object.VideoID))
+			if ok1 && ok2 {
 				object.VideoIDObject, err = SelectVideo(
 					thisCtx,
 					tx,
@@ -931,10 +942,9 @@ func SelectDetections(
 		}
 
 		if !types.IsZeroUUID(object.CameraID) {
-			var ok bool
-			thisCtx, ok := query.HandleQueryPathGraphCycles(ctx, DetectionTable)
-
-			if ok {
+			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID))
+			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("ReferencedBy%s{%v}", CameraTable, object.CameraID))
+			if ok1 && ok2 {
 				object.CameraIDObject, err = SelectCamera(
 					thisCtx,
 					tx,
@@ -1005,12 +1015,10 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 	var orderByDirection *string
 	orderBys := make([]string, 0)
 
-	includes := make([]string, 0)
-
 	values := make([]any, 0)
 	wheres := make([]string, 0)
 	for rawKey, rawValues := range r.URL.Query() {
-		if rawKey == "limit" || rawKey == "offset" {
+		if rawKey == "limit" || rawKey == "offset" || rawKey == "shallow" {
 			continue
 		}
 
@@ -1025,9 +1033,7 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 		if !isUnrecognized {
 			column := DetectionTableColumnLookup[parts[0]]
 			if column == nil {
-				if parts[0] != "load" {
-					isUnrecognized = true
-				}
+				isUnrecognized = true
 			} else {
 				switch parts[1] {
 				case "eq":
@@ -1085,11 +1091,6 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 
 					orderByDirection = helpers.Ptr("ASC")
 					orderBys = append(orderBys, parts[0])
-					continue
-				case "load":
-					includes = append(includes, parts[0])
-					_ = includes
-
 					continue
 				default:
 					isUnrecognized = true
@@ -1233,6 +1234,11 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 		offset = int(possibleOffset)
 	}
 
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
 	hashableOrderBy := ""
 	var orderBy *string
 	if len(orderBys) > 0 {
@@ -1244,7 +1250,7 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 		orderBy = &hashableOrderBy
 	}
 
-	requestHash, err := helpers.GetRequestHash(DetectionTable, wheres, hashableOrderBy, limit, offset, values, nil)
+	requestHash, err := helpers.GetRequestHash(DetectionTable, wheres, hashableOrderBy, limit, offset, shallow, values, nil)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1265,7 +1271,7 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, re
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1303,7 +1309,12 @@ func handleGetDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 	wheres := []string{fmt.Sprintf("%s = $$??", DetectionTablePrimaryKeyColumn)}
 	values := []any{primaryKey}
 
-	requestHash, err := helpers.GetRequestHash(DetectionTable, wheres, "", 2, 0, values, primaryKey)
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
+	requestHash, err := helpers.GetRequestHash(DetectionTable, wheres, "", 2, 0, shallow, values, primaryKey)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1324,7 +1335,7 @@ func handleGetDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
 		return
@@ -1358,6 +1369,13 @@ func handleGetDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 
 func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) {
 	_ = redisPool
+
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
 
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -1398,7 +1416,7 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		objects = append(objects, object)
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1409,7 +1427,7 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1418,7 +1436,7 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 	_ = xid
 
 	for i, object := range objects {
-		err = object.Insert(r.Context(), tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
+		err = object.Insert(ctx, tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
 		if err != nil {
 			err = fmt.Errorf("failed to insert %#+v: %v", object, err)
 			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1430,7 +1448,7 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.INSERT}, DetectionTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.INSERT}, DetectionTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err
@@ -1465,6 +1483,13 @@ func handlePostDetections(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
 
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
 		err = fmt.Errorf("failed to read body of HTTP request: %v", err)
@@ -1490,7 +1515,7 @@ func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1501,7 +1526,7 @@ func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1509,7 +1534,7 @@ func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 	}
 	_ = xid
 
-	err = object.Update(r.Context(), tx, true)
+	err = object.Update(ctx, tx, true)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v: %v", object, err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1518,7 +1543,7 @@ func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err
@@ -1552,6 +1577,13 @@ func handlePutDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, red
 
 func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
+
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
 
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
@@ -1587,7 +1619,7 @@ func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1598,7 +1630,7 @@ func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1606,7 +1638,7 @@ func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 	}
 	_ = xid
 
-	err = object.Update(r.Context(), tx, false, forceSetValuesForFields...)
+	err = object.Update(ctx, tx, false, forceSetValuesForFields...)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v: %v", object, err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1615,7 +1647,7 @@ func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, DetectionTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err
@@ -1650,6 +1682,13 @@ func handlePatchDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, r
 func handleDeleteDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange, primaryKey string) {
 	_ = redisPool
 
+	ctx := r.Context()
+
+	_, shallow := r.URL.Query()["shallow"]
+	if shallow {
+		ctx = context.WithValue(ctx, query.ShallowKey, true)
+	}
+
 	var item = make(map[string]any)
 
 	item[DetectionTablePrimaryKeyColumn] = primaryKey
@@ -1662,7 +1701,7 @@ func handleDeleteDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, 
 		return
 	}
 
-	tx, err := db.BeginTxx(r.Context(), nil)
+	tx, err := db.BeginTxx(ctx, nil)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1673,7 +1712,7 @@ func handleDeleteDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, 
 		_ = tx.Rollback()
 	}()
 
-	xid, err := query.GetXid(r.Context(), tx)
+	xid, err := query.GetXid(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to get xid: %v", err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1681,7 +1720,7 @@ func handleDeleteDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, 
 	}
 	_ = xid
 
-	err = object.Delete(r.Context(), tx)
+	err = object.Delete(ctx, tx)
 	if err != nil {
 		err = fmt.Errorf("failed to delete %#+v: %v", object, err)
 		helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
@@ -1690,7 +1729,7 @@ func handleDeleteDetection(w http.ResponseWriter, r *http.Request, db *sqlx.DB, 
 
 	errs := make(chan error, 1)
 	go func() {
-		_, err = waitForChange(r.Context(), []stream.Action{stream.DELETE, stream.SOFT_DELETE}, DetectionTable, xid)
+		_, err = waitForChange(ctx, []stream.Action{stream.DELETE, stream.SOFT_DELETE}, DetectionTable, xid)
 		if err != nil {
 			err = fmt.Errorf("failed to wait for change: %v", err)
 			errs <- err

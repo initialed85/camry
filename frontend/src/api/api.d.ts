@@ -210,6 +210,8 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -586,7 +588,10 @@ export interface operations {
   };
   PostCameras: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -630,7 +635,10 @@ export interface operations {
   };
   GetCamera: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Camera */
@@ -673,7 +681,10 @@ export interface operations {
   };
   PutCamera: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Camera */
@@ -720,7 +731,10 @@ export interface operations {
   };
   DeleteCamera: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Camera */
@@ -755,7 +769,10 @@ export interface operations {
   };
   PatchCamera: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Camera */
@@ -807,6 +824,8 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -1327,7 +1346,10 @@ export interface operations {
   };
   PostDetections: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -1371,7 +1393,10 @@ export interface operations {
   };
   GetDetection: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Detection */
@@ -1414,7 +1439,10 @@ export interface operations {
   };
   PutDetection: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Detection */
@@ -1461,7 +1489,10 @@ export interface operations {
   };
   DeleteDetection: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Detection */
@@ -1496,7 +1527,10 @@ export interface operations {
   };
   PatchDetection: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Detection */
@@ -1548,6 +1582,8 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -2164,7 +2200,10 @@ export interface operations {
   };
   PostVideos: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path?: never;
       cookie?: never;
@@ -2208,7 +2247,10 @@ export interface operations {
   };
   GetVideo: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Video */
@@ -2251,7 +2293,10 @@ export interface operations {
   };
   PutVideo: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Video */
@@ -2298,7 +2343,10 @@ export interface operations {
   };
   DeleteVideo: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Video */
@@ -2333,7 +2381,10 @@ export interface operations {
   };
   PatchVideo: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
+        shallow?: string;
+      };
       header?: never;
       path: {
         /** @description Primary key for Video */

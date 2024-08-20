@@ -45,6 +45,7 @@ class CameraApi:
     def delete_camera(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -63,6 +64,8 @@ class CameraApi:
 
         :param primary_key: Primary key for Camera (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -87,6 +90,7 @@ class CameraApi:
 
         _param = self._delete_camera_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -111,6 +115,7 @@ class CameraApi:
     def delete_camera_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -129,6 +134,8 @@ class CameraApi:
 
         :param primary_key: Primary key for Camera (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -153,6 +160,7 @@ class CameraApi:
 
         _param = self._delete_camera_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -177,6 +185,7 @@ class CameraApi:
     def delete_camera_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -195,6 +204,8 @@ class CameraApi:
 
         :param primary_key: Primary key for Camera (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -219,6 +230,7 @@ class CameraApi:
 
         _param = self._delete_camera_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -238,6 +250,7 @@ class CameraApi:
     def _delete_camera_serialize(
         self,
         primary_key,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -260,6 +273,10 @@ class CameraApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -300,6 +317,7 @@ class CameraApi:
     def get_camera(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -318,6 +336,8 @@ class CameraApi:
 
         :param primary_key: Primary key for Camera (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -342,6 +362,7 @@ class CameraApi:
 
         _param = self._get_camera_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -366,6 +387,7 @@ class CameraApi:
     def get_camera_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -384,6 +406,8 @@ class CameraApi:
 
         :param primary_key: Primary key for Camera (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -408,6 +432,7 @@ class CameraApi:
 
         _param = self._get_camera_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -432,6 +457,7 @@ class CameraApi:
     def get_camera_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -450,6 +476,8 @@ class CameraApi:
 
         :param primary_key: Primary key for Camera (required)
         :type primary_key: object
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -474,6 +502,7 @@ class CameraApi:
 
         _param = self._get_camera_serialize(
             primary_key=primary_key,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -493,6 +522,7 @@ class CameraApi:
     def _get_camera_serialize(
         self,
         primary_key,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -515,6 +545,10 @@ class CameraApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -556,6 +590,7 @@ class CameraApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -744,6 +779,8 @@ class CameraApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -1105,6 +1142,7 @@ class CameraApi:
         _param = self._get_cameras_serialize(
             limit=limit,
             offset=offset,
+            shallow=shallow,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -1298,6 +1336,7 @@ class CameraApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -1486,6 +1525,8 @@ class CameraApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -1847,6 +1888,7 @@ class CameraApi:
         _param = self._get_cameras_serialize(
             limit=limit,
             offset=offset,
+            shallow=shallow,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -2040,6 +2082,7 @@ class CameraApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -2228,6 +2271,8 @@ class CameraApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -2589,6 +2634,7 @@ class CameraApi:
         _param = self._get_cameras_serialize(
             limit=limit,
             offset=offset,
+            shallow=shallow,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -2777,6 +2823,7 @@ class CameraApi:
         self,
         limit,
         offset,
+        shallow,
         id__eq,
         id__ne,
         id__gt,
@@ -2972,6 +3019,10 @@ class CameraApi:
         if offset is not None:
             
             _query_params.append(('offset', offset))
+            
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
             
         if id__eq is not None:
             
@@ -4010,6 +4061,7 @@ class CameraApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
         camera: Camera,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4030,6 +4082,8 @@ class CameraApi:
         :type primary_key: object
         :param camera: (required)
         :type camera: Camera
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4055,6 +4109,7 @@ class CameraApi:
         _param = self._patch_camera_serialize(
             primary_key=primary_key,
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4080,6 +4135,7 @@ class CameraApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
         camera: Camera,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4100,6 +4156,8 @@ class CameraApi:
         :type primary_key: object
         :param camera: (required)
         :type camera: Camera
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4125,6 +4183,7 @@ class CameraApi:
         _param = self._patch_camera_serialize(
             primary_key=primary_key,
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4150,6 +4209,7 @@ class CameraApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
         camera: Camera,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4170,6 +4230,8 @@ class CameraApi:
         :type primary_key: object
         :param camera: (required)
         :type camera: Camera
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4195,6 +4257,7 @@ class CameraApi:
         _param = self._patch_camera_serialize(
             primary_key=primary_key,
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4215,6 +4278,7 @@ class CameraApi:
         self,
         primary_key,
         camera,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -4237,6 +4301,10 @@ class CameraApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4292,6 +4360,7 @@ class CameraApi:
     def post_cameras(
         self,
         camera: List[Camera],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4310,6 +4379,8 @@ class CameraApi:
 
         :param camera: (required)
         :type camera: List[Camera]
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4334,6 +4405,7 @@ class CameraApi:
 
         _param = self._post_cameras_serialize(
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4358,6 +4430,7 @@ class CameraApi:
     def post_cameras_with_http_info(
         self,
         camera: List[Camera],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4376,6 +4449,8 @@ class CameraApi:
 
         :param camera: (required)
         :type camera: List[Camera]
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4400,6 +4475,7 @@ class CameraApi:
 
         _param = self._post_cameras_serialize(
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4424,6 +4500,7 @@ class CameraApi:
     def post_cameras_without_preload_content(
         self,
         camera: List[Camera],
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4442,6 +4519,8 @@ class CameraApi:
 
         :param camera: (required)
         :type camera: List[Camera]
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4466,6 +4545,7 @@ class CameraApi:
 
         _param = self._post_cameras_serialize(
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4485,6 +4565,7 @@ class CameraApi:
     def _post_cameras_serialize(
         self,
         camera,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -4506,6 +4587,10 @@ class CameraApi:
 
         # process the path parameters
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4562,6 +4647,7 @@ class CameraApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
         camera: Camera,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4582,6 +4668,8 @@ class CameraApi:
         :type primary_key: object
         :param camera: (required)
         :type camera: Camera
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4607,6 +4695,7 @@ class CameraApi:
         _param = self._put_camera_serialize(
             primary_key=primary_key,
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4632,6 +4721,7 @@ class CameraApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
         camera: Camera,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4652,6 +4742,8 @@ class CameraApi:
         :type primary_key: object
         :param camera: (required)
         :type camera: Camera
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4677,6 +4769,7 @@ class CameraApi:
         _param = self._put_camera_serialize(
             primary_key=primary_key,
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4702,6 +4795,7 @@ class CameraApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Camera")],
         camera: Camera,
+        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4722,6 +4816,8 @@ class CameraApi:
         :type primary_key: object
         :param camera: (required)
         :type camera: Camera
+        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
+        :type shallow: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -4747,6 +4843,7 @@ class CameraApi:
         _param = self._put_camera_serialize(
             primary_key=primary_key,
             camera=camera,
+            shallow=shallow,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -4767,6 +4864,7 @@ class CameraApi:
         self,
         primary_key,
         camera,
+        shallow,
         _request_auth,
         _content_type,
         _headers,
@@ -4789,6 +4887,10 @@ class CameraApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
+        if shallow is not None:
+            
+            _query_params.append(('shallow', shallow))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
