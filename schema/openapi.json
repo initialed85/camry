@@ -33,13 +33,13 @@
             "description": "SQL OFFSET operator"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           },
           {
             "name": "id__eq",
@@ -1667,13 +1667,13 @@
         "operationId": "PostCameras",
         "parameters": [
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -1766,13 +1766,13 @@
             "description": "Primary key for Camera"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "responses": {
@@ -1850,13 +1850,13 @@
             "description": "Primary key for Camera"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -1944,13 +1944,13 @@
             "description": "Primary key for Camera"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -2038,13 +2038,13 @@
             "description": "Primary key for Camera"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "responses": {
@@ -2108,13 +2108,13 @@
             "description": "SQL OFFSET operator"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           },
           {
             "name": "id__eq",
@@ -4426,13 +4426,13 @@
         "operationId": "PostDetections",
         "parameters": [
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -4525,13 +4525,13 @@
             "description": "Primary key for Detection"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "responses": {
@@ -4609,13 +4609,13 @@
             "description": "Primary key for Detection"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -4703,13 +4703,13 @@
             "description": "Primary key for Detection"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -4797,13 +4797,13 @@
             "description": "Primary key for Detection"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "responses": {
@@ -4867,13 +4867,13 @@
             "description": "SQL OFFSET operator"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           },
           {
             "name": "id__eq",
@@ -7617,13 +7617,13 @@
         "operationId": "PostVideos",
         "parameters": [
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -7716,13 +7716,13 @@
             "description": "Primary key for Video"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "responses": {
@@ -7800,13 +7800,13 @@
             "description": "Primary key for Video"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -7894,13 +7894,13 @@
             "description": "Primary key for Video"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "requestBody": {
@@ -7988,13 +7988,13 @@
             "description": "Primary key for Video"
           },
           {
-            "name": "shallow",
+            "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "integer"
             },
-            "description": "Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)"
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           }
         ],
         "responses": {

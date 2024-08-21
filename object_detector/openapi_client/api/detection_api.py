@@ -45,7 +45,7 @@ class DetectionApi:
     def delete_detection(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -64,8 +64,8 @@ class DetectionApi:
 
         :param primary_key: Primary key for Detection (required)
         :type primary_key: object
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -90,7 +90,7 @@ class DetectionApi:
 
         _param = self._delete_detection_serialize(
             primary_key=primary_key,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -115,7 +115,7 @@ class DetectionApi:
     def delete_detection_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -134,8 +134,8 @@ class DetectionApi:
 
         :param primary_key: Primary key for Detection (required)
         :type primary_key: object
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -160,7 +160,7 @@ class DetectionApi:
 
         _param = self._delete_detection_serialize(
             primary_key=primary_key,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -185,7 +185,7 @@ class DetectionApi:
     def delete_detection_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -204,8 +204,8 @@ class DetectionApi:
 
         :param primary_key: Primary key for Detection (required)
         :type primary_key: object
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -230,7 +230,7 @@ class DetectionApi:
 
         _param = self._delete_detection_serialize(
             primary_key=primary_key,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -250,7 +250,7 @@ class DetectionApi:
     def _delete_detection_serialize(
         self,
         primary_key,
-        shallow,
+        depth,
         _request_auth,
         _content_type,
         _headers,
@@ -273,9 +273,9 @@ class DetectionApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
-        if shallow is not None:
+        if depth is not None:
             
-            _query_params.append(('shallow', shallow))
+            _query_params.append(('depth', depth))
             
         # process the header parameters
         # process the form parameters
@@ -317,7 +317,7 @@ class DetectionApi:
     def get_detection(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -336,8 +336,8 @@ class DetectionApi:
 
         :param primary_key: Primary key for Detection (required)
         :type primary_key: object
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -362,7 +362,7 @@ class DetectionApi:
 
         _param = self._get_detection_serialize(
             primary_key=primary_key,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -387,7 +387,7 @@ class DetectionApi:
     def get_detection_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -406,8 +406,8 @@ class DetectionApi:
 
         :param primary_key: Primary key for Detection (required)
         :type primary_key: object
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -432,7 +432,7 @@ class DetectionApi:
 
         _param = self._get_detection_serialize(
             primary_key=primary_key,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -457,7 +457,7 @@ class DetectionApi:
     def get_detection_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -476,8 +476,8 @@ class DetectionApi:
 
         :param primary_key: Primary key for Detection (required)
         :type primary_key: object
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -502,7 +502,7 @@ class DetectionApi:
 
         _param = self._get_detection_serialize(
             primary_key=primary_key,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -522,7 +522,7 @@ class DetectionApi:
     def _get_detection_serialize(
         self,
         primary_key,
-        shallow,
+        depth,
         _request_auth,
         _content_type,
         _headers,
@@ -545,9 +545,9 @@ class DetectionApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
-        if shallow is not None:
+        if depth is not None:
             
-            _query_params.append(('shallow', shallow))
+            _query_params.append(('depth', depth))
             
         # process the header parameters
         # process the form parameters
@@ -590,7 +590,7 @@ class DetectionApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -851,8 +851,8 @@ class DetectionApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -1358,7 +1358,7 @@ class DetectionApi:
         _param = self._get_detections_serialize(
             limit=limit,
             offset=offset,
-            shallow=shallow,
+            depth=depth,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -1624,7 +1624,7 @@ class DetectionApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -1885,8 +1885,8 @@ class DetectionApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -2392,7 +2392,7 @@ class DetectionApi:
         _param = self._get_detections_serialize(
             limit=limit,
             offset=offset,
-            shallow=shallow,
+            depth=depth,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -2658,7 +2658,7 @@ class DetectionApi:
         self,
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -2919,8 +2919,8 @@ class DetectionApi:
         :type limit: int
         :param offset: SQL OFFSET operator
         :type offset: int
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param id__eq: SQL = operator
         :type id__eq: str
         :param id__ne: SQL != operator
@@ -3426,7 +3426,7 @@ class DetectionApi:
         _param = self._get_detections_serialize(
             limit=limit,
             offset=offset,
-            shallow=shallow,
+            depth=depth,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -3687,7 +3687,7 @@ class DetectionApi:
         self,
         limit,
         offset,
-        shallow,
+        depth,
         id__eq,
         id__ne,
         id__gt,
@@ -3956,9 +3956,9 @@ class DetectionApi:
             
             _query_params.append(('offset', offset))
             
-        if shallow is not None:
+        if depth is not None:
             
-            _query_params.append(('shallow', shallow))
+            _query_params.append(('depth', depth))
             
         if id__eq is not None:
             
@@ -5285,7 +5285,7 @@ class DetectionApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5306,8 +5306,8 @@ class DetectionApi:
         :type primary_key: object
         :param detection: (required)
         :type detection: Detection
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5333,7 +5333,7 @@ class DetectionApi:
         _param = self._patch_detection_serialize(
             primary_key=primary_key,
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5359,7 +5359,7 @@ class DetectionApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5380,8 +5380,8 @@ class DetectionApi:
         :type primary_key: object
         :param detection: (required)
         :type detection: Detection
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5407,7 +5407,7 @@ class DetectionApi:
         _param = self._patch_detection_serialize(
             primary_key=primary_key,
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5433,7 +5433,7 @@ class DetectionApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5454,8 +5454,8 @@ class DetectionApi:
         :type primary_key: object
         :param detection: (required)
         :type detection: Detection
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5481,7 +5481,7 @@ class DetectionApi:
         _param = self._patch_detection_serialize(
             primary_key=primary_key,
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5502,7 +5502,7 @@ class DetectionApi:
         self,
         primary_key,
         detection,
-        shallow,
+        depth,
         _request_auth,
         _content_type,
         _headers,
@@ -5525,9 +5525,9 @@ class DetectionApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
-        if shallow is not None:
+        if depth is not None:
             
-            _query_params.append(('shallow', shallow))
+            _query_params.append(('depth', depth))
             
         # process the header parameters
         # process the form parameters
@@ -5584,7 +5584,7 @@ class DetectionApi:
     def post_detections(
         self,
         detection: List[Detection],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5603,8 +5603,8 @@ class DetectionApi:
 
         :param detection: (required)
         :type detection: List[Detection]
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5629,7 +5629,7 @@ class DetectionApi:
 
         _param = self._post_detections_serialize(
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5654,7 +5654,7 @@ class DetectionApi:
     def post_detections_with_http_info(
         self,
         detection: List[Detection],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5673,8 +5673,8 @@ class DetectionApi:
 
         :param detection: (required)
         :type detection: List[Detection]
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5699,7 +5699,7 @@ class DetectionApi:
 
         _param = self._post_detections_serialize(
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5724,7 +5724,7 @@ class DetectionApi:
     def post_detections_without_preload_content(
         self,
         detection: List[Detection],
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5743,8 +5743,8 @@ class DetectionApi:
 
         :param detection: (required)
         :type detection: List[Detection]
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5769,7 +5769,7 @@ class DetectionApi:
 
         _param = self._post_detections_serialize(
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5789,7 +5789,7 @@ class DetectionApi:
     def _post_detections_serialize(
         self,
         detection,
-        shallow,
+        depth,
         _request_auth,
         _content_type,
         _headers,
@@ -5811,9 +5811,9 @@ class DetectionApi:
 
         # process the path parameters
         # process the query parameters
-        if shallow is not None:
+        if depth is not None:
             
-            _query_params.append(('shallow', shallow))
+            _query_params.append(('depth', depth))
             
         # process the header parameters
         # process the form parameters
@@ -5871,7 +5871,7 @@ class DetectionApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5892,8 +5892,8 @@ class DetectionApi:
         :type primary_key: object
         :param detection: (required)
         :type detection: Detection
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5919,7 +5919,7 @@ class DetectionApi:
         _param = self._put_detection_serialize(
             primary_key=primary_key,
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -5945,7 +5945,7 @@ class DetectionApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5966,8 +5966,8 @@ class DetectionApi:
         :type primary_key: object
         :param detection: (required)
         :type detection: Detection
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -5993,7 +5993,7 @@ class DetectionApi:
         _param = self._put_detection_serialize(
             primary_key=primary_key,
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6019,7 +6019,7 @@ class DetectionApi:
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        shallow: Annotated[Optional[StrictStr], Field(description="Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6040,8 +6040,8 @@ class DetectionApi:
         :type primary_key: object
         :param detection: (required)
         :type detection: Detection
-        :param shallow: Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient)
-        :type shallow: str
+        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -6067,7 +6067,7 @@ class DetectionApi:
         _param = self._put_detection_serialize(
             primary_key=primary_key,
             detection=detection,
-            shallow=shallow,
+            depth=depth,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -6088,7 +6088,7 @@ class DetectionApi:
         self,
         primary_key,
         detection,
-        shallow,
+        depth,
         _request_auth,
         _content_type,
         _headers,
@@ -6111,9 +6111,9 @@ class DetectionApi:
         if primary_key is not None:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
-        if shallow is not None:
+        if depth is not None:
             
-            _query_params.append(('shallow', shallow))
+            _query_params.append(('depth', depth))
             
         # process the header parameters
         # process the form parameters

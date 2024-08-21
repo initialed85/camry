@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 
 # **delete_camera**
-> delete_camera(primary_key, shallow=shallow)
+> delete_camera(primary_key, depth=depth)
 
 
 
@@ -37,10 +37,10 @@ with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi_client.CameraApi(api_client)
     primary_key = None # object | Primary key for Camera
-    shallow = 'shallow_example' # str | Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) (optional)
+    depth = 56 # int | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
 
     try:
-        api_instance.delete_camera(primary_key, shallow=shallow)
+        api_instance.delete_camera(primary_key, depth=depth)
     except Exception as e:
         print("Exception when calling CameraApi->delete_camera: %s\n" % e)
 ```
@@ -53,7 +53,7 @@ with openapi_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **primary_key** | [**object**](.md)| Primary key for Camera | 
- **shallow** | **str**| Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) | [optional] 
+ **depth** | **int**| Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | [optional] 
 
 ### Return type
 
@@ -78,7 +78,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_camera**
-> GetCameras200Response get_camera(primary_key, shallow=shallow)
+> GetCameras200Response get_camera(primary_key, depth=depth)
 
 
 
@@ -103,10 +103,10 @@ with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi_client.CameraApi(api_client)
     primary_key = None # object | Primary key for Camera
-    shallow = 'shallow_example' # str | Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) (optional)
+    depth = 56 # int | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
 
     try:
-        api_response = api_instance.get_camera(primary_key, shallow=shallow)
+        api_response = api_instance.get_camera(primary_key, depth=depth)
         print("The response of CameraApi->get_camera:\n")
         pprint(api_response)
     except Exception as e:
@@ -121,7 +121,7 @@ with openapi_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **primary_key** | [**object**](.md)| Primary key for Camera | 
- **shallow** | **str**| Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) | [optional] 
+ **depth** | **int**| Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | [optional] 
 
 ### Return type
 
@@ -146,7 +146,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **get_cameras**
-> GetCameras200Response get_cameras(limit=limit, offset=offset, shallow=shallow, id__eq=id__eq, id__ne=id__ne, id__gt=id__gt, id__gte=id__gte, id__lt=id__lt, id__lte=id__lte, id__in=id__in, id__nin=id__nin, id__notin=id__notin, id__isnull=id__isnull, id__nisnull=id__nisnull, id__isnotnull=id__isnotnull, id__l=id__l, id__like=id__like, id__nl=id__nl, id__nlike=id__nlike, id__notlike=id__notlike, id__il=id__il, id__ilike=id__ilike, id__nil=id__nil, id__nilike=id__nilike, id__notilike=id__notilike, id__desc=id__desc, id__asc=id__asc, created_at__eq=created_at__eq, created_at__ne=created_at__ne, created_at__gt=created_at__gt, created_at__gte=created_at__gte, created_at__lt=created_at__lt, created_at__lte=created_at__lte, created_at__in=created_at__in, created_at__nin=created_at__nin, created_at__notin=created_at__notin, created_at__isnull=created_at__isnull, created_at__nisnull=created_at__nisnull, created_at__isnotnull=created_at__isnotnull, created_at__l=created_at__l, created_at__like=created_at__like, created_at__nl=created_at__nl, created_at__nlike=created_at__nlike, created_at__notlike=created_at__notlike, created_at__il=created_at__il, created_at__ilike=created_at__ilike, created_at__nil=created_at__nil, created_at__nilike=created_at__nilike, created_at__notilike=created_at__notilike, created_at__desc=created_at__desc, created_at__asc=created_at__asc, updated_at__eq=updated_at__eq, updated_at__ne=updated_at__ne, updated_at__gt=updated_at__gt, updated_at__gte=updated_at__gte, updated_at__lt=updated_at__lt, updated_at__lte=updated_at__lte, updated_at__in=updated_at__in, updated_at__nin=updated_at__nin, updated_at__notin=updated_at__notin, updated_at__isnull=updated_at__isnull, updated_at__nisnull=updated_at__nisnull, updated_at__isnotnull=updated_at__isnotnull, updated_at__l=updated_at__l, updated_at__like=updated_at__like, updated_at__nl=updated_at__nl, updated_at__nlike=updated_at__nlike, updated_at__notlike=updated_at__notlike, updated_at__il=updated_at__il, updated_at__ilike=updated_at__ilike, updated_at__nil=updated_at__nil, updated_at__nilike=updated_at__nilike, updated_at__notilike=updated_at__notilike, updated_at__desc=updated_at__desc, updated_at__asc=updated_at__asc, deleted_at__eq=deleted_at__eq, deleted_at__ne=deleted_at__ne, deleted_at__gt=deleted_at__gt, deleted_at__gte=deleted_at__gte, deleted_at__lt=deleted_at__lt, deleted_at__lte=deleted_at__lte, deleted_at__in=deleted_at__in, deleted_at__nin=deleted_at__nin, deleted_at__notin=deleted_at__notin, deleted_at__isnull=deleted_at__isnull, deleted_at__nisnull=deleted_at__nisnull, deleted_at__isnotnull=deleted_at__isnotnull, deleted_at__l=deleted_at__l, deleted_at__like=deleted_at__like, deleted_at__nl=deleted_at__nl, deleted_at__nlike=deleted_at__nlike, deleted_at__notlike=deleted_at__notlike, deleted_at__il=deleted_at__il, deleted_at__ilike=deleted_at__ilike, deleted_at__nil=deleted_at__nil, deleted_at__nilike=deleted_at__nilike, deleted_at__notilike=deleted_at__notilike, deleted_at__desc=deleted_at__desc, deleted_at__asc=deleted_at__asc, name__eq=name__eq, name__ne=name__ne, name__gt=name__gt, name__gte=name__gte, name__lt=name__lt, name__lte=name__lte, name__in=name__in, name__nin=name__nin, name__notin=name__notin, name__isnull=name__isnull, name__nisnull=name__nisnull, name__isnotnull=name__isnotnull, name__l=name__l, name__like=name__like, name__nl=name__nl, name__nlike=name__nlike, name__notlike=name__notlike, name__il=name__il, name__ilike=name__ilike, name__nil=name__nil, name__nilike=name__nilike, name__notilike=name__notilike, name__desc=name__desc, name__asc=name__asc, stream_url__eq=stream_url__eq, stream_url__ne=stream_url__ne, stream_url__gt=stream_url__gt, stream_url__gte=stream_url__gte, stream_url__lt=stream_url__lt, stream_url__lte=stream_url__lte, stream_url__in=stream_url__in, stream_url__nin=stream_url__nin, stream_url__notin=stream_url__notin, stream_url__isnull=stream_url__isnull, stream_url__nisnull=stream_url__nisnull, stream_url__isnotnull=stream_url__isnotnull, stream_url__l=stream_url__l, stream_url__like=stream_url__like, stream_url__nl=stream_url__nl, stream_url__nlike=stream_url__nlike, stream_url__notlike=stream_url__notlike, stream_url__il=stream_url__il, stream_url__ilike=stream_url__ilike, stream_url__nil=stream_url__nil, stream_url__nilike=stream_url__nilike, stream_url__notilike=stream_url__notilike, stream_url__desc=stream_url__desc, stream_url__asc=stream_url__asc, last_seen__eq=last_seen__eq, last_seen__ne=last_seen__ne, last_seen__gt=last_seen__gt, last_seen__gte=last_seen__gte, last_seen__lt=last_seen__lt, last_seen__lte=last_seen__lte, last_seen__in=last_seen__in, last_seen__nin=last_seen__nin, last_seen__notin=last_seen__notin, last_seen__isnull=last_seen__isnull, last_seen__nisnull=last_seen__nisnull, last_seen__isnotnull=last_seen__isnotnull, last_seen__l=last_seen__l, last_seen__like=last_seen__like, last_seen__nl=last_seen__nl, last_seen__nlike=last_seen__nlike, last_seen__notlike=last_seen__notlike, last_seen__il=last_seen__il, last_seen__ilike=last_seen__ilike, last_seen__nil=last_seen__nil, last_seen__nilike=last_seen__nilike, last_seen__notilike=last_seen__notilike, last_seen__desc=last_seen__desc, last_seen__asc=last_seen__asc)
+> GetCameras200Response get_cameras(limit=limit, offset=offset, depth=depth, id__eq=id__eq, id__ne=id__ne, id__gt=id__gt, id__gte=id__gte, id__lt=id__lt, id__lte=id__lte, id__in=id__in, id__nin=id__nin, id__notin=id__notin, id__isnull=id__isnull, id__nisnull=id__nisnull, id__isnotnull=id__isnotnull, id__l=id__l, id__like=id__like, id__nl=id__nl, id__nlike=id__nlike, id__notlike=id__notlike, id__il=id__il, id__ilike=id__ilike, id__nil=id__nil, id__nilike=id__nilike, id__notilike=id__notilike, id__desc=id__desc, id__asc=id__asc, created_at__eq=created_at__eq, created_at__ne=created_at__ne, created_at__gt=created_at__gt, created_at__gte=created_at__gte, created_at__lt=created_at__lt, created_at__lte=created_at__lte, created_at__in=created_at__in, created_at__nin=created_at__nin, created_at__notin=created_at__notin, created_at__isnull=created_at__isnull, created_at__nisnull=created_at__nisnull, created_at__isnotnull=created_at__isnotnull, created_at__l=created_at__l, created_at__like=created_at__like, created_at__nl=created_at__nl, created_at__nlike=created_at__nlike, created_at__notlike=created_at__notlike, created_at__il=created_at__il, created_at__ilike=created_at__ilike, created_at__nil=created_at__nil, created_at__nilike=created_at__nilike, created_at__notilike=created_at__notilike, created_at__desc=created_at__desc, created_at__asc=created_at__asc, updated_at__eq=updated_at__eq, updated_at__ne=updated_at__ne, updated_at__gt=updated_at__gt, updated_at__gte=updated_at__gte, updated_at__lt=updated_at__lt, updated_at__lte=updated_at__lte, updated_at__in=updated_at__in, updated_at__nin=updated_at__nin, updated_at__notin=updated_at__notin, updated_at__isnull=updated_at__isnull, updated_at__nisnull=updated_at__nisnull, updated_at__isnotnull=updated_at__isnotnull, updated_at__l=updated_at__l, updated_at__like=updated_at__like, updated_at__nl=updated_at__nl, updated_at__nlike=updated_at__nlike, updated_at__notlike=updated_at__notlike, updated_at__il=updated_at__il, updated_at__ilike=updated_at__ilike, updated_at__nil=updated_at__nil, updated_at__nilike=updated_at__nilike, updated_at__notilike=updated_at__notilike, updated_at__desc=updated_at__desc, updated_at__asc=updated_at__asc, deleted_at__eq=deleted_at__eq, deleted_at__ne=deleted_at__ne, deleted_at__gt=deleted_at__gt, deleted_at__gte=deleted_at__gte, deleted_at__lt=deleted_at__lt, deleted_at__lte=deleted_at__lte, deleted_at__in=deleted_at__in, deleted_at__nin=deleted_at__nin, deleted_at__notin=deleted_at__notin, deleted_at__isnull=deleted_at__isnull, deleted_at__nisnull=deleted_at__nisnull, deleted_at__isnotnull=deleted_at__isnotnull, deleted_at__l=deleted_at__l, deleted_at__like=deleted_at__like, deleted_at__nl=deleted_at__nl, deleted_at__nlike=deleted_at__nlike, deleted_at__notlike=deleted_at__notlike, deleted_at__il=deleted_at__il, deleted_at__ilike=deleted_at__ilike, deleted_at__nil=deleted_at__nil, deleted_at__nilike=deleted_at__nilike, deleted_at__notilike=deleted_at__notilike, deleted_at__desc=deleted_at__desc, deleted_at__asc=deleted_at__asc, name__eq=name__eq, name__ne=name__ne, name__gt=name__gt, name__gte=name__gte, name__lt=name__lt, name__lte=name__lte, name__in=name__in, name__nin=name__nin, name__notin=name__notin, name__isnull=name__isnull, name__nisnull=name__nisnull, name__isnotnull=name__isnotnull, name__l=name__l, name__like=name__like, name__nl=name__nl, name__nlike=name__nlike, name__notlike=name__notlike, name__il=name__il, name__ilike=name__ilike, name__nil=name__nil, name__nilike=name__nilike, name__notilike=name__notilike, name__desc=name__desc, name__asc=name__asc, stream_url__eq=stream_url__eq, stream_url__ne=stream_url__ne, stream_url__gt=stream_url__gt, stream_url__gte=stream_url__gte, stream_url__lt=stream_url__lt, stream_url__lte=stream_url__lte, stream_url__in=stream_url__in, stream_url__nin=stream_url__nin, stream_url__notin=stream_url__notin, stream_url__isnull=stream_url__isnull, stream_url__nisnull=stream_url__nisnull, stream_url__isnotnull=stream_url__isnotnull, stream_url__l=stream_url__l, stream_url__like=stream_url__like, stream_url__nl=stream_url__nl, stream_url__nlike=stream_url__nlike, stream_url__notlike=stream_url__notlike, stream_url__il=stream_url__il, stream_url__ilike=stream_url__ilike, stream_url__nil=stream_url__nil, stream_url__nilike=stream_url__nilike, stream_url__notilike=stream_url__notilike, stream_url__desc=stream_url__desc, stream_url__asc=stream_url__asc, last_seen__eq=last_seen__eq, last_seen__ne=last_seen__ne, last_seen__gt=last_seen__gt, last_seen__gte=last_seen__gte, last_seen__lt=last_seen__lt, last_seen__lte=last_seen__lte, last_seen__in=last_seen__in, last_seen__nin=last_seen__nin, last_seen__notin=last_seen__notin, last_seen__isnull=last_seen__isnull, last_seen__nisnull=last_seen__nisnull, last_seen__isnotnull=last_seen__isnotnull, last_seen__l=last_seen__l, last_seen__like=last_seen__like, last_seen__nl=last_seen__nl, last_seen__nlike=last_seen__nlike, last_seen__notlike=last_seen__notlike, last_seen__il=last_seen__il, last_seen__ilike=last_seen__ilike, last_seen__nil=last_seen__nil, last_seen__nilike=last_seen__nilike, last_seen__notilike=last_seen__notilike, last_seen__desc=last_seen__desc, last_seen__asc=last_seen__asc)
 
 
 
@@ -172,7 +172,7 @@ with openapi_client.ApiClient(configuration) as api_client:
     api_instance = openapi_client.CameraApi(api_client)
     limit = 56 # int | SQL LIMIT operator (optional)
     offset = 56 # int | SQL OFFSET operator (optional)
-    shallow = 'shallow_example' # str | Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) (optional)
+    depth = 56 # int | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
     id__eq = 'id__eq_example' # str | SQL = operator (optional)
     id__ne = 'id__ne_example' # str | SQL != operator (optional)
     id__gt = 'id__gt_example' # str | SQL > operator, may not work with all column types (optional)
@@ -343,7 +343,7 @@ with openapi_client.ApiClient(configuration) as api_client:
     last_seen__asc = 'last_seen__asc_example' # str | SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) (optional)
 
     try:
-        api_response = api_instance.get_cameras(limit=limit, offset=offset, shallow=shallow, id__eq=id__eq, id__ne=id__ne, id__gt=id__gt, id__gte=id__gte, id__lt=id__lt, id__lte=id__lte, id__in=id__in, id__nin=id__nin, id__notin=id__notin, id__isnull=id__isnull, id__nisnull=id__nisnull, id__isnotnull=id__isnotnull, id__l=id__l, id__like=id__like, id__nl=id__nl, id__nlike=id__nlike, id__notlike=id__notlike, id__il=id__il, id__ilike=id__ilike, id__nil=id__nil, id__nilike=id__nilike, id__notilike=id__notilike, id__desc=id__desc, id__asc=id__asc, created_at__eq=created_at__eq, created_at__ne=created_at__ne, created_at__gt=created_at__gt, created_at__gte=created_at__gte, created_at__lt=created_at__lt, created_at__lte=created_at__lte, created_at__in=created_at__in, created_at__nin=created_at__nin, created_at__notin=created_at__notin, created_at__isnull=created_at__isnull, created_at__nisnull=created_at__nisnull, created_at__isnotnull=created_at__isnotnull, created_at__l=created_at__l, created_at__like=created_at__like, created_at__nl=created_at__nl, created_at__nlike=created_at__nlike, created_at__notlike=created_at__notlike, created_at__il=created_at__il, created_at__ilike=created_at__ilike, created_at__nil=created_at__nil, created_at__nilike=created_at__nilike, created_at__notilike=created_at__notilike, created_at__desc=created_at__desc, created_at__asc=created_at__asc, updated_at__eq=updated_at__eq, updated_at__ne=updated_at__ne, updated_at__gt=updated_at__gt, updated_at__gte=updated_at__gte, updated_at__lt=updated_at__lt, updated_at__lte=updated_at__lte, updated_at__in=updated_at__in, updated_at__nin=updated_at__nin, updated_at__notin=updated_at__notin, updated_at__isnull=updated_at__isnull, updated_at__nisnull=updated_at__nisnull, updated_at__isnotnull=updated_at__isnotnull, updated_at__l=updated_at__l, updated_at__like=updated_at__like, updated_at__nl=updated_at__nl, updated_at__nlike=updated_at__nlike, updated_at__notlike=updated_at__notlike, updated_at__il=updated_at__il, updated_at__ilike=updated_at__ilike, updated_at__nil=updated_at__nil, updated_at__nilike=updated_at__nilike, updated_at__notilike=updated_at__notilike, updated_at__desc=updated_at__desc, updated_at__asc=updated_at__asc, deleted_at__eq=deleted_at__eq, deleted_at__ne=deleted_at__ne, deleted_at__gt=deleted_at__gt, deleted_at__gte=deleted_at__gte, deleted_at__lt=deleted_at__lt, deleted_at__lte=deleted_at__lte, deleted_at__in=deleted_at__in, deleted_at__nin=deleted_at__nin, deleted_at__notin=deleted_at__notin, deleted_at__isnull=deleted_at__isnull, deleted_at__nisnull=deleted_at__nisnull, deleted_at__isnotnull=deleted_at__isnotnull, deleted_at__l=deleted_at__l, deleted_at__like=deleted_at__like, deleted_at__nl=deleted_at__nl, deleted_at__nlike=deleted_at__nlike, deleted_at__notlike=deleted_at__notlike, deleted_at__il=deleted_at__il, deleted_at__ilike=deleted_at__ilike, deleted_at__nil=deleted_at__nil, deleted_at__nilike=deleted_at__nilike, deleted_at__notilike=deleted_at__notilike, deleted_at__desc=deleted_at__desc, deleted_at__asc=deleted_at__asc, name__eq=name__eq, name__ne=name__ne, name__gt=name__gt, name__gte=name__gte, name__lt=name__lt, name__lte=name__lte, name__in=name__in, name__nin=name__nin, name__notin=name__notin, name__isnull=name__isnull, name__nisnull=name__nisnull, name__isnotnull=name__isnotnull, name__l=name__l, name__like=name__like, name__nl=name__nl, name__nlike=name__nlike, name__notlike=name__notlike, name__il=name__il, name__ilike=name__ilike, name__nil=name__nil, name__nilike=name__nilike, name__notilike=name__notilike, name__desc=name__desc, name__asc=name__asc, stream_url__eq=stream_url__eq, stream_url__ne=stream_url__ne, stream_url__gt=stream_url__gt, stream_url__gte=stream_url__gte, stream_url__lt=stream_url__lt, stream_url__lte=stream_url__lte, stream_url__in=stream_url__in, stream_url__nin=stream_url__nin, stream_url__notin=stream_url__notin, stream_url__isnull=stream_url__isnull, stream_url__nisnull=stream_url__nisnull, stream_url__isnotnull=stream_url__isnotnull, stream_url__l=stream_url__l, stream_url__like=stream_url__like, stream_url__nl=stream_url__nl, stream_url__nlike=stream_url__nlike, stream_url__notlike=stream_url__notlike, stream_url__il=stream_url__il, stream_url__ilike=stream_url__ilike, stream_url__nil=stream_url__nil, stream_url__nilike=stream_url__nilike, stream_url__notilike=stream_url__notilike, stream_url__desc=stream_url__desc, stream_url__asc=stream_url__asc, last_seen__eq=last_seen__eq, last_seen__ne=last_seen__ne, last_seen__gt=last_seen__gt, last_seen__gte=last_seen__gte, last_seen__lt=last_seen__lt, last_seen__lte=last_seen__lte, last_seen__in=last_seen__in, last_seen__nin=last_seen__nin, last_seen__notin=last_seen__notin, last_seen__isnull=last_seen__isnull, last_seen__nisnull=last_seen__nisnull, last_seen__isnotnull=last_seen__isnotnull, last_seen__l=last_seen__l, last_seen__like=last_seen__like, last_seen__nl=last_seen__nl, last_seen__nlike=last_seen__nlike, last_seen__notlike=last_seen__notlike, last_seen__il=last_seen__il, last_seen__ilike=last_seen__ilike, last_seen__nil=last_seen__nil, last_seen__nilike=last_seen__nilike, last_seen__notilike=last_seen__notilike, last_seen__desc=last_seen__desc, last_seen__asc=last_seen__asc)
+        api_response = api_instance.get_cameras(limit=limit, offset=offset, depth=depth, id__eq=id__eq, id__ne=id__ne, id__gt=id__gt, id__gte=id__gte, id__lt=id__lt, id__lte=id__lte, id__in=id__in, id__nin=id__nin, id__notin=id__notin, id__isnull=id__isnull, id__nisnull=id__nisnull, id__isnotnull=id__isnotnull, id__l=id__l, id__like=id__like, id__nl=id__nl, id__nlike=id__nlike, id__notlike=id__notlike, id__il=id__il, id__ilike=id__ilike, id__nil=id__nil, id__nilike=id__nilike, id__notilike=id__notilike, id__desc=id__desc, id__asc=id__asc, created_at__eq=created_at__eq, created_at__ne=created_at__ne, created_at__gt=created_at__gt, created_at__gte=created_at__gte, created_at__lt=created_at__lt, created_at__lte=created_at__lte, created_at__in=created_at__in, created_at__nin=created_at__nin, created_at__notin=created_at__notin, created_at__isnull=created_at__isnull, created_at__nisnull=created_at__nisnull, created_at__isnotnull=created_at__isnotnull, created_at__l=created_at__l, created_at__like=created_at__like, created_at__nl=created_at__nl, created_at__nlike=created_at__nlike, created_at__notlike=created_at__notlike, created_at__il=created_at__il, created_at__ilike=created_at__ilike, created_at__nil=created_at__nil, created_at__nilike=created_at__nilike, created_at__notilike=created_at__notilike, created_at__desc=created_at__desc, created_at__asc=created_at__asc, updated_at__eq=updated_at__eq, updated_at__ne=updated_at__ne, updated_at__gt=updated_at__gt, updated_at__gte=updated_at__gte, updated_at__lt=updated_at__lt, updated_at__lte=updated_at__lte, updated_at__in=updated_at__in, updated_at__nin=updated_at__nin, updated_at__notin=updated_at__notin, updated_at__isnull=updated_at__isnull, updated_at__nisnull=updated_at__nisnull, updated_at__isnotnull=updated_at__isnotnull, updated_at__l=updated_at__l, updated_at__like=updated_at__like, updated_at__nl=updated_at__nl, updated_at__nlike=updated_at__nlike, updated_at__notlike=updated_at__notlike, updated_at__il=updated_at__il, updated_at__ilike=updated_at__ilike, updated_at__nil=updated_at__nil, updated_at__nilike=updated_at__nilike, updated_at__notilike=updated_at__notilike, updated_at__desc=updated_at__desc, updated_at__asc=updated_at__asc, deleted_at__eq=deleted_at__eq, deleted_at__ne=deleted_at__ne, deleted_at__gt=deleted_at__gt, deleted_at__gte=deleted_at__gte, deleted_at__lt=deleted_at__lt, deleted_at__lte=deleted_at__lte, deleted_at__in=deleted_at__in, deleted_at__nin=deleted_at__nin, deleted_at__notin=deleted_at__notin, deleted_at__isnull=deleted_at__isnull, deleted_at__nisnull=deleted_at__nisnull, deleted_at__isnotnull=deleted_at__isnotnull, deleted_at__l=deleted_at__l, deleted_at__like=deleted_at__like, deleted_at__nl=deleted_at__nl, deleted_at__nlike=deleted_at__nlike, deleted_at__notlike=deleted_at__notlike, deleted_at__il=deleted_at__il, deleted_at__ilike=deleted_at__ilike, deleted_at__nil=deleted_at__nil, deleted_at__nilike=deleted_at__nilike, deleted_at__notilike=deleted_at__notilike, deleted_at__desc=deleted_at__desc, deleted_at__asc=deleted_at__asc, name__eq=name__eq, name__ne=name__ne, name__gt=name__gt, name__gte=name__gte, name__lt=name__lt, name__lte=name__lte, name__in=name__in, name__nin=name__nin, name__notin=name__notin, name__isnull=name__isnull, name__nisnull=name__nisnull, name__isnotnull=name__isnotnull, name__l=name__l, name__like=name__like, name__nl=name__nl, name__nlike=name__nlike, name__notlike=name__notlike, name__il=name__il, name__ilike=name__ilike, name__nil=name__nil, name__nilike=name__nilike, name__notilike=name__notilike, name__desc=name__desc, name__asc=name__asc, stream_url__eq=stream_url__eq, stream_url__ne=stream_url__ne, stream_url__gt=stream_url__gt, stream_url__gte=stream_url__gte, stream_url__lt=stream_url__lt, stream_url__lte=stream_url__lte, stream_url__in=stream_url__in, stream_url__nin=stream_url__nin, stream_url__notin=stream_url__notin, stream_url__isnull=stream_url__isnull, stream_url__nisnull=stream_url__nisnull, stream_url__isnotnull=stream_url__isnotnull, stream_url__l=stream_url__l, stream_url__like=stream_url__like, stream_url__nl=stream_url__nl, stream_url__nlike=stream_url__nlike, stream_url__notlike=stream_url__notlike, stream_url__il=stream_url__il, stream_url__ilike=stream_url__ilike, stream_url__nil=stream_url__nil, stream_url__nilike=stream_url__nilike, stream_url__notilike=stream_url__notilike, stream_url__desc=stream_url__desc, stream_url__asc=stream_url__asc, last_seen__eq=last_seen__eq, last_seen__ne=last_seen__ne, last_seen__gt=last_seen__gt, last_seen__gte=last_seen__gte, last_seen__lt=last_seen__lt, last_seen__lte=last_seen__lte, last_seen__in=last_seen__in, last_seen__nin=last_seen__nin, last_seen__notin=last_seen__notin, last_seen__isnull=last_seen__isnull, last_seen__nisnull=last_seen__nisnull, last_seen__isnotnull=last_seen__isnotnull, last_seen__l=last_seen__l, last_seen__like=last_seen__like, last_seen__nl=last_seen__nl, last_seen__nlike=last_seen__nlike, last_seen__notlike=last_seen__notlike, last_seen__il=last_seen__il, last_seen__ilike=last_seen__ilike, last_seen__nil=last_seen__nil, last_seen__nilike=last_seen__nilike, last_seen__notilike=last_seen__notilike, last_seen__desc=last_seen__desc, last_seen__asc=last_seen__asc)
         print("The response of CameraApi->get_cameras:\n")
         pprint(api_response)
     except Exception as e:
@@ -359,7 +359,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **limit** | **int**| SQL LIMIT operator | [optional] 
  **offset** | **int**| SQL OFFSET operator | [optional] 
- **shallow** | **str**| Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) | [optional] 
+ **depth** | **int**| Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | [optional] 
  **id__eq** | **str**| SQL &#x3D; operator | [optional] 
  **id__ne** | **str**| SQL !&#x3D; operator | [optional] 
  **id__gt** | **str**| SQL &gt; operator, may not work with all column types | [optional] 
@@ -552,7 +552,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **patch_camera**
-> GetCameras200Response patch_camera(primary_key, camera, shallow=shallow)
+> GetCameras200Response patch_camera(primary_key, camera, depth=depth)
 
 
 
@@ -579,10 +579,10 @@ with openapi_client.ApiClient(configuration) as api_client:
     api_instance = openapi_client.CameraApi(api_client)
     primary_key = None # object | Primary key for Camera
     camera = openapi_client.Camera() # Camera | 
-    shallow = 'shallow_example' # str | Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) (optional)
+    depth = 56 # int | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
 
     try:
-        api_response = api_instance.patch_camera(primary_key, camera, shallow=shallow)
+        api_response = api_instance.patch_camera(primary_key, camera, depth=depth)
         print("The response of CameraApi->patch_camera:\n")
         pprint(api_response)
     except Exception as e:
@@ -598,7 +598,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **primary_key** | [**object**](.md)| Primary key for Camera | 
  **camera** | [**Camera**](Camera.md)|  | 
- **shallow** | **str**| Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) | [optional] 
+ **depth** | **int**| Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | [optional] 
 
 ### Return type
 
@@ -623,7 +623,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **post_cameras**
-> GetCameras200Response post_cameras(camera, shallow=shallow)
+> GetCameras200Response post_cameras(camera, depth=depth)
 
 
 
@@ -649,10 +649,10 @@ with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi_client.CameraApi(api_client)
     camera = [openapi_client.Camera()] # List[Camera] | 
-    shallow = 'shallow_example' # str | Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) (optional)
+    depth = 56 # int | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
 
     try:
-        api_response = api_instance.post_cameras(camera, shallow=shallow)
+        api_response = api_instance.post_cameras(camera, depth=depth)
         print("The response of CameraApi->post_cameras:\n")
         pprint(api_response)
     except Exception as e:
@@ -667,7 +667,7 @@ with openapi_client.ApiClient(configuration) as api_client:
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **camera** | [**List[Camera]**](Camera.md)|  | 
- **shallow** | **str**| Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) | [optional] 
+ **depth** | **int**| Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | [optional] 
 
 ### Return type
 
@@ -692,7 +692,7 @@ No authorization required
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **put_camera**
-> GetCameras200Response put_camera(primary_key, camera, shallow=shallow)
+> GetCameras200Response put_camera(primary_key, camera, depth=depth)
 
 
 
@@ -719,10 +719,10 @@ with openapi_client.ApiClient(configuration) as api_client:
     api_instance = openapi_client.CameraApi(api_client)
     primary_key = None # object | Primary key for Camera
     camera = openapi_client.Camera() # Camera | 
-    shallow = 'shallow_example' # str | Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) (optional)
+    depth = 56 # int | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
 
     try:
-        api_response = api_instance.put_camera(primary_key, camera, shallow=shallow)
+        api_response = api_instance.put_camera(primary_key, camera, depth=depth)
         print("The response of CameraApi->put_camera:\n")
         pprint(api_response)
     except Exception as e:
@@ -738,7 +738,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **primary_key** | [**object**](.md)| Primary key for Camera | 
  **camera** | [**Camera**](Camera.md)|  | 
- **shallow** | **str**| Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) | [optional] 
+ **depth** | **int**| Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | [optional] 
 
 ### Return type
 

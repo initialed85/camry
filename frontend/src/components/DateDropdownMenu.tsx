@@ -7,6 +7,7 @@ import { Dispatch, SetStateAction } from "react";
 
 export interface DateDropdownMenuProps {
   responsive: boolean;
+  date: string | null | undefined;
   setDate: Dispatch<SetStateAction<string | null | undefined>>;
 }
 
@@ -37,12 +38,7 @@ export default function DateDropdownMenu(props: DateDropdownMenuProps) {
 
   return (
     <Dropdown>
-      <MenuButton
-        variant="soft"
-        color="danger"
-        size={"sm"}
-        sx={{ marginLeft: 0.5, marginRight: 1, width: 33 }}
-      >
+      <MenuButton variant="soft" color="danger" size={"sm"} sx={{ marginLeft: 0.5, marginRight: 1, width: 33 }}>
         <CalendarMonthIcon />
       </MenuButton>
       <Menu>
@@ -50,6 +46,7 @@ export default function DateDropdownMenu(props: DateDropdownMenuProps) {
           return (
             <MenuItem
               key={date}
+              selected={props.date === date}
               onClick={(event) => {
                 props.setDate(date);
               }}

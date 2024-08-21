@@ -29,14 +29,12 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
         videos_response = video_api.get_videos(
             file_name__eq=one_shot_video_file_name,
             started_at__desc="",
-            shallow="",
         )
     else:
         videos_response = video_api.get_videos(
             camera_id__eq=camera.id,
             status__eq="needs detection",
             started_at__desc="",
-            shallow="",
         )
 
     videos = videos_response.objects or []
@@ -53,7 +51,6 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
             detections_response = detection_api.get_detections(
                 camera_id__eq=camera.id,
                 video_id__eq=video.id,
-                shallow="",
             )
 
             for detection in detections_response.objects or []:
@@ -124,7 +121,6 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
 
         detection_api.post_detections(
             detections,
-            shallow="",
         )
 
         print(f"updating video")
@@ -134,7 +130,6 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
         video_api.patch_video(
             video.id,
             Video(status="needs tracking"),
-            shallow="",
         )
 
         after = datetime.datetime.now()
@@ -169,7 +164,6 @@ def run():
     cameras_response = camera_api.get_cameras(
         stream_url__eq=net_cam_url,
         name__eq=camera_name,
-        shallow="",
     )
 
     cameras = cameras_response.objects or []

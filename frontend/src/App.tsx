@@ -54,12 +54,7 @@ function App() {
     >
       <Grid container sx={{ pb: 1 }}>
         <Grid xs={1}>
-          <Typography
-            level="h4"
-            component="h4"
-            sx={{ pt: 0.1, textAlign: "center" }}
-            color="neutral"
-          >
+          <Typography level="h4" component="h4" sx={{ pt: 0.1, textAlign: "center" }} color="neutral">
             {responsive ? "C" : "Camry"}
           </Typography>
         </Grid>
@@ -71,11 +66,8 @@ function App() {
             justifyContent: "flex-start",
           }}
         >
-          <CameraToggleButtonGroup
-            responsive={responsive}
-            setCameraId={setCameraId}
-          />
-          <DateDropdownMenu responsive={responsive} setDate={setDate} />
+          <CameraToggleButtonGroup responsive={responsive} setCameraId={setCameraId} />
+          <DateDropdownMenu responsive={responsive} date={date} setDate={setDate} />
           <Input size="sm" sx={{ mr: 1.5 }} />
         </Grid>
         <Grid xs={1} sx={{ display: "flex", justifyContent: "end", pr: 0.5 }}>

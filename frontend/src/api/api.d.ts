@@ -210,8 +210,10 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -589,8 +591,10 @@ export interface operations {
   PostCameras: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path?: never;
@@ -636,8 +640,10 @@ export interface operations {
   GetCamera: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -682,8 +688,10 @@ export interface operations {
   PutCamera: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -732,8 +740,10 @@ export interface operations {
   DeleteCamera: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -770,8 +780,10 @@ export interface operations {
   PatchCamera: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -824,8 +836,10 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -1347,8 +1361,10 @@ export interface operations {
   PostDetections: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path?: never;
@@ -1394,8 +1410,10 @@ export interface operations {
   GetDetection: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -1440,8 +1458,10 @@ export interface operations {
   PutDetection: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -1490,8 +1510,10 @@ export interface operations {
   DeleteDetection: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -1528,8 +1550,10 @@ export interface operations {
   PatchDetection: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -1582,8 +1606,10 @@ export interface operations {
         limit?: number;
         /** @description SQL OFFSET operator */
         offset?: number;
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
         /** @description SQL = operator */
         id__eq?: string;
         /** @description SQL != operator */
@@ -2201,8 +2227,10 @@ export interface operations {
   PostVideos: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path?: never;
@@ -2248,8 +2276,10 @@ export interface operations {
   GetVideo: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -2294,8 +2324,10 @@ export interface operations {
   PutVideo: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -2344,8 +2376,10 @@ export interface operations {
   DeleteVideo: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {
@@ -2382,8 +2416,10 @@ export interface operations {
   PatchVideo: {
     parameters: {
       query?: {
-        /** @description Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) */
-        shallow?: string;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
       };
       header?: never;
       path: {

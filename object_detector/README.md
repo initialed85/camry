@@ -68,10 +68,10 @@ with openapi_client.ApiClient(configuration) as api_client:
     # Create an instance of the API class
     api_instance = openapi_client.CameraApi(api_client)
     primary_key = None # object | Primary key for Camera
-    shallow = 'shallow_example' # str | Disable loading of foreign objects (both direct and referenced-by), value is ignored (presence of key is sufficient) (optional)
+    depth = 56 # int | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
 
     try:
-        api_instance.delete_camera(primary_key, shallow=shallow)
+        api_instance.delete_camera(primary_key, depth=depth)
     except ApiException as e:
         print("Exception when calling CameraApi->delete_camera: %s\n" % e)
 
