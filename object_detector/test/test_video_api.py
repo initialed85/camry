@@ -27,41 +27,29 @@ class TestVideoApi(unittest.TestCase):
         pass
 
     def test_delete_video(self) -> None:
-        """Test case for delete_video
-
-        """
+        """Test case for delete_video"""
         pass
 
     def test_get_video(self) -> None:
-        """Test case for get_video
-
-        """
+        """Test case for get_video"""
         pass
 
     def test_get_videos(self) -> None:
-        """Test case for get_videos
-
-        """
+        """Test case for get_videos"""
         pass
 
     def test_patch_video(self) -> None:
-        """Test case for patch_video
-
-        """
+        """Test case for patch_video"""
         pass
 
     def test_post_videos(self) -> None:
-        """Test case for post_videos
-
-        """
+        """Test case for post_videos"""
         pass
 
     def test_put_video(self) -> None:
-        """Test case for put_video
-
-        """
+        """Test case for put_video"""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

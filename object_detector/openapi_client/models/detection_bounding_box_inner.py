@@ -22,10 +22,12 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class DetectionBoundingBoxInner(BaseModel):
     """
     DetectionBoundingBoxInner
-    """ # noqa: E501
+    """  # noqa: E501
+
     x: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="X")
     y: Optional[Union[StrictFloat, StrictInt]] = Field(default=None, alias="Y")
     __properties: ClassVar[List[str]] = ["X", "Y"]
@@ -35,7 +37,6 @@ class DetectionBoundingBoxInner(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -61,8 +62,7 @@ class DetectionBoundingBoxInner(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -80,10 +80,5 @@ class DetectionBoundingBoxInner(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "X": obj.get("X"),
-            "Y": obj.get("Y")
-        })
+        _obj = cls.model_validate({"X": obj.get("X"), "Y": obj.get("Y")})
         return _obj
-
-

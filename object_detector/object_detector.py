@@ -22,7 +22,12 @@ from .openapi_client import (
 debug = os.getenv("DEBUG", "") == "1"
 
 
-def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_shot_video_file_name: str | None = None):
+def do(
+    camera: Camera,
+    video_api: VideoApi,
+    detection_api: DetectionApi,
+    one_shot_video_file_name: str | None = None,
+):
     videos_response = None
 
     if one_shot_video_file_name:
@@ -43,7 +48,9 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
         return
 
     for video in videos:
-        print(f"{video.file_name} - {video.status} - {video.started_at} - {video.duration}")
+        print(
+            f"{video.file_name} - {video.status} - {video.started_at} - {video.duration}"
+        )
 
         before = datetime.datetime.now()
 
@@ -71,7 +78,9 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
 
         for result in cast(Results, results):
 
-            for box in result.boxes or []:  # should be one box per result (because stream=True)
+            for box in (
+                result.boxes or []
+            ):  # should be one box per result (because stream=True)
                 class_id = [int(v) for v in box.cls][0]
                 class_name = result.names[class_id]
                 confidence = [float(v) for v in box.conf][0]
@@ -84,7 +93,10 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
                         (rbx, lty),  # right top
                         (rbx, rby),  # right bottom
                         (ltx, rby),  # left bottom
-                        (ltx, lty),  # left top again (postgres likes its polygons closed off)
+                        (
+                            ltx,
+                            lty,
+                        ),  # left top again (postgres likes its polygons closed off)
                     ]
 
                     bounding_box = [
@@ -102,7 +114,9 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
                         Y=cy,
                     )
 
-                    print(f"{class_name} ({class_id}) @ {confidence} {[(ltx, lty), (rbx, rby)]} {(cx, cy)}")
+                    print(
+                        f"{class_name} ({class_id}) @ {confidence} {[(ltx, lty), (rbx, rby)]} {(cx, cy)}"
+                    )
 
                     detection = Detection(
                         class_id=class_id,
@@ -134,7 +148,9 @@ def do(camera: Camera, video_api: VideoApi, detection_api: DetectionApi, one_sho
 
         after = datetime.datetime.now()
 
-        print(f"{video.file_name} handled in {after - before} (request took {after - before_request})")
+        print(
+            f"{video.file_name} handled in {after - before} (request took {after - before_request})"
+        )
 
         if one_shot_video_file_name:
             break

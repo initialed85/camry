@@ -38,7 +38,12 @@ export default function DateDropdownMenu(props: DateDropdownMenuProps) {
 
   return (
     <Dropdown>
-      <MenuButton variant="soft" color="danger" size={"sm"} sx={{ marginLeft: 0.5, marginRight: 1, width: 33 }}>
+      <MenuButton
+        variant="soft"
+        color="danger"
+        size={"sm"}
+        sx={{ marginLeft: 0.5, marginRight: 1, width: 33 }}
+      >
         <CalendarMonthIcon />
       </MenuButton>
       <Menu>

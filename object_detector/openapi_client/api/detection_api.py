@@ -40,19 +40,22 @@ class DetectionApi:
             api_client = ApiClient.get_default()
         self.api_client = api_client
 
-
     @validate_call
     def delete_detection(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -86,7 +89,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._delete_detection_serialize(
             primary_key=primary_key,
@@ -94,15 +97,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '204': None,
+            "204": None,
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -110,19 +112,22 @@ class DetectionApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     def delete_detection_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -156,7 +161,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._delete_detection_serialize(
             primary_key=primary_key,
@@ -164,15 +169,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '204': None,
+            "204": None,
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -180,19 +184,22 @@ class DetectionApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def delete_detection_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -226,7 +233,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._delete_detection_serialize(
             primary_key=primary_key,
@@ -234,18 +241,16 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '204': None,
+            "204": None,
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _delete_detection_serialize(
         self,
@@ -259,8 +264,7 @@ class DetectionApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -271,33 +275,28 @@ class DetectionApi:
 
         # process the path parameters
         if primary_key is not None:
-            _path_params['primaryKey'] = primary_key
+            _path_params["primaryKey"] = primary_key
         # process the query parameters
         if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
+
+            _query_params.append(("depth", depth))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='DELETE',
-            resource_path='/api/detections/{primaryKey}',
+            method="DELETE",
+            resource_path="/api/detections/{primaryKey}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -307,24 +306,25 @@ class DetectionApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def get_detection(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -358,7 +358,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_detection_serialize(
             primary_key=primary_key,
@@ -366,15 +366,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -382,19 +381,22 @@ class DetectionApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     def get_detection_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -428,7 +430,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_detection_serialize(
             primary_key=primary_key,
@@ -436,15 +438,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -452,19 +453,22 @@ class DetectionApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def get_detection_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -498,7 +502,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_detection_serialize(
             primary_key=primary_key,
@@ -506,18 +510,16 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _get_detection_serialize(
         self,
@@ -531,8 +533,7 @@ class DetectionApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -543,33 +544,28 @@ class DetectionApi:
 
         # process the path parameters
         if primary_key is not None:
-            _path_params['primaryKey'] = primary_key
+            _path_params["primaryKey"] = primary_key
         # process the query parameters
         if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
+
+            _query_params.append(("depth", depth))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/api/detections/{primaryKey}',
+            method="GET",
+            resource_path="/api/detections/{primaryKey}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -579,265 +575,1271 @@ class DetectionApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def get_detections(
         self,
-        limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
-        offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        created_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        updated_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        deleted_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        seen_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        seen_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        seen_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        seen_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        seen_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        seen_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        seen_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        seen_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        seen_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = operator")] = None,
-        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != operator")] = None,
-        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > operator, may not work with all column types")] = None,
-        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= operator, may not work with all column types")] = None,
-        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < operator, may not work with all column types")] = None,
-        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= operator, may not work with all column types")] = None,
-        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        class_id__nin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        class_name__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        class_name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        class_name__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        class_name__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = operator")] = None,
-        score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != operator")] = None,
-        score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > operator, may not work with all column types")] = None,
-        score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= operator, may not work with all column types")] = None,
-        score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < operator, may not work with all column types")] = None,
-        score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= operator, may not work with all column types")] = None,
-        score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        score__nin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        score__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        video_id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        video_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        camera_id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        limit: Annotated[
+            Optional[StrictInt], Field(description="SQL LIMIT operator")
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt], Field(description="SQL OFFSET operator")
+        ] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
+        id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        created_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        created_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        created_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        created_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        created_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        created_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        updated_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        updated_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        updated_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        updated_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        updated_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        updated_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        deleted_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        deleted_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        deleted_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        deleted_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        deleted_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        deleted_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        seen_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        seen_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        seen_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        seen_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        seen_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        seen_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__eq: Annotated[
+            Optional[StrictInt], Field(description="SQL = operator")
+        ] = None,
+        class_id__ne: Annotated[
+            Optional[StrictInt], Field(description="SQL != operator")
+        ] = None,
+        class_id__gt: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        class_id__gte: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        class_id__lt: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        class_id__lte: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        class_id__in: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__nin: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__notin: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        class_name__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        class_name__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        class_name__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        class_name__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        class_name__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        class_name__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__eq: Annotated[
+            Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = operator")
+        ] = None,
+        score__ne: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL != operator"),
+        ] = None,
+        score__gt: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        score__gte: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        score__lt: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        score__lte: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        score__in: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        score__nin: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        score__notin: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        score__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        video_id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        video_id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        video_id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        video_id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        video_id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        video_id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        camera_id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        camera_id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        camera_id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        camera_id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        camera_id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        camera_id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -1353,7 +2355,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_detections_serialize(
             limit=limit,
@@ -1602,15 +2604,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -1618,260 +2619,1268 @@ class DetectionApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     def get_detections_with_http_info(
         self,
-        limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
-        offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        created_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        updated_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        deleted_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        seen_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        seen_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        seen_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        seen_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        seen_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        seen_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        seen_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        seen_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        seen_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = operator")] = None,
-        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != operator")] = None,
-        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > operator, may not work with all column types")] = None,
-        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= operator, may not work with all column types")] = None,
-        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < operator, may not work with all column types")] = None,
-        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= operator, may not work with all column types")] = None,
-        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        class_id__nin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        class_name__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        class_name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        class_name__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        class_name__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = operator")] = None,
-        score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != operator")] = None,
-        score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > operator, may not work with all column types")] = None,
-        score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= operator, may not work with all column types")] = None,
-        score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < operator, may not work with all column types")] = None,
-        score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= operator, may not work with all column types")] = None,
-        score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        score__nin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        score__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        video_id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        video_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        camera_id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        limit: Annotated[
+            Optional[StrictInt], Field(description="SQL LIMIT operator")
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt], Field(description="SQL OFFSET operator")
+        ] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
+        id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        created_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        created_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        created_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        created_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        created_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        created_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        updated_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        updated_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        updated_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        updated_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        updated_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        updated_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        deleted_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        deleted_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        deleted_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        deleted_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        deleted_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        deleted_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        seen_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        seen_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        seen_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        seen_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        seen_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        seen_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__eq: Annotated[
+            Optional[StrictInt], Field(description="SQL = operator")
+        ] = None,
+        class_id__ne: Annotated[
+            Optional[StrictInt], Field(description="SQL != operator")
+        ] = None,
+        class_id__gt: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        class_id__gte: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        class_id__lt: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        class_id__lte: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        class_id__in: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__nin: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__notin: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        class_name__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        class_name__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        class_name__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        class_name__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        class_name__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        class_name__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__eq: Annotated[
+            Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = operator")
+        ] = None,
+        score__ne: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL != operator"),
+        ] = None,
+        score__gt: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        score__gte: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        score__lt: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        score__lte: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        score__in: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        score__nin: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        score__notin: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        score__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        video_id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        video_id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        video_id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        video_id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        video_id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        video_id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        camera_id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        camera_id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        camera_id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        camera_id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        camera_id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        camera_id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -2387,7 +4396,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_detections_serialize(
             limit=limit,
@@ -2636,15 +4645,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -2652,260 +4660,1268 @@ class DetectionApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def get_detections_without_preload_content(
         self,
-        limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
-        offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        created_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        updated_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        deleted_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        seen_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        seen_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        seen_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        seen_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        seen_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        seen_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        seen_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        seen_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        seen_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = operator")] = None,
-        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != operator")] = None,
-        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > operator, may not work with all column types")] = None,
-        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= operator, may not work with all column types")] = None,
-        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < operator, may not work with all column types")] = None,
-        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= operator, may not work with all column types")] = None,
-        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        class_id__nin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        class_name__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        class_name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        class_name__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        class_name__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        class_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = operator")] = None,
-        score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != operator")] = None,
-        score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > operator, may not work with all column types")] = None,
-        score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= operator, may not work with all column types")] = None,
-        score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < operator, may not work with all column types")] = None,
-        score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= operator, may not work with all column types")] = None,
-        score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        score__nin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        score__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        score__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        video_id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        video_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        camera_id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        limit: Annotated[
+            Optional[StrictInt], Field(description="SQL LIMIT operator")
+        ] = None,
+        offset: Annotated[
+            Optional[StrictInt], Field(description="SQL OFFSET operator")
+        ] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
+        id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        created_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        created_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        created_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        created_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        created_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        created_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        created_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        created_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        created_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        updated_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        updated_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        updated_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        updated_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        updated_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        updated_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        updated_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        updated_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        updated_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        deleted_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        deleted_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        deleted_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        deleted_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        deleted_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        deleted_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        deleted_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        deleted_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        deleted_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__eq: Annotated[
+            Optional[datetime], Field(description="SQL = operator")
+        ] = None,
+        seen_at__ne: Annotated[
+            Optional[datetime], Field(description="SQL != operator")
+        ] = None,
+        seen_at__gt: Annotated[
+            Optional[datetime],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        seen_at__gte: Annotated[
+            Optional[datetime],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        seen_at__lt: Annotated[
+            Optional[datetime],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        seen_at__lte: Annotated[
+            Optional[datetime],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        seen_at__in: Annotated[
+            Optional[datetime],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__nin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__notin: Annotated[
+            Optional[datetime],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        seen_at__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        seen_at__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        seen_at__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__eq: Annotated[
+            Optional[StrictInt], Field(description="SQL = operator")
+        ] = None,
+        class_id__ne: Annotated[
+            Optional[StrictInt], Field(description="SQL != operator")
+        ] = None,
+        class_id__gt: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        class_id__gte: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        class_id__lt: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        class_id__lte: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        class_id__in: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__nin: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__notin: Annotated[
+            Optional[StrictInt],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        class_name__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        class_name__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        class_name__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        class_name__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        class_name__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        class_name__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        class_name__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        class_name__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        class_name__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__eq: Annotated[
+            Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = operator")
+        ] = None,
+        score__ne: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL != operator"),
+        ] = None,
+        score__gt: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        score__gte: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        score__lt: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        score__lte: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        score__in: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        score__nin: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        score__notin: Annotated[
+            Optional[Union[StrictFloat, StrictInt]],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        score__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        score__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        score__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        video_id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        video_id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        video_id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        video_id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        video_id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        video_id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        video_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        video_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        video_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__eq: Annotated[
+            Optional[StrictStr], Field(description="SQL = operator")
+        ] = None,
+        camera_id__ne: Annotated[
+            Optional[StrictStr], Field(description="SQL != operator")
+        ] = None,
+        camera_id__gt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL > operator, may not work with all column types"),
+        ] = None,
+        camera_id__gte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL >= operator, may not work with all column types"),
+        ] = None,
+        camera_id__lt: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL < operator, may not work with all column types"),
+        ] = None,
+        camera_id__lte: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL <= operator, may not work with all column types"),
+        ] = None,
+        camera_id__in: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__nin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__notin: Annotated[
+            Optional[StrictStr],
+            Field(description="SQL NOT IN operator, permits comma-separated values"),
+        ] = None,
+        camera_id__isnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__nisnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__isnotnull: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__l: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__like: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nl: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__notlike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__il: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__ilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nil: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__nilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__notilike: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+            ),
+        ] = None,
+        camera_id__desc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
+        camera_id__asc: Annotated[
+            Optional[StrictStr],
+            Field(
+                description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -3421,7 +6437,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._get_detections_serialize(
             limit=limit,
@@ -3670,18 +6686,16 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _get_detections_serialize(
         self,
@@ -3936,8 +6950,7 @@ class DetectionApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -3949,1322 +6962,1317 @@ class DetectionApi:
         # process the path parameters
         # process the query parameters
         if limit is not None:
-            
-            _query_params.append(('limit', limit))
-            
+
+            _query_params.append(("limit", limit))
+
         if offset is not None:
-            
-            _query_params.append(('offset', offset))
-            
+
+            _query_params.append(("offset", offset))
+
         if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
+
+            _query_params.append(("depth", depth))
+
         if id__eq is not None:
-            
-            _query_params.append(('id__eq', id__eq))
-            
+
+            _query_params.append(("id__eq", id__eq))
+
         if id__ne is not None:
-            
-            _query_params.append(('id__ne', id__ne))
-            
+
+            _query_params.append(("id__ne", id__ne))
+
         if id__gt is not None:
-            
-            _query_params.append(('id__gt', id__gt))
-            
+
+            _query_params.append(("id__gt", id__gt))
+
         if id__gte is not None:
-            
-            _query_params.append(('id__gte', id__gte))
-            
+
+            _query_params.append(("id__gte", id__gte))
+
         if id__lt is not None:
-            
-            _query_params.append(('id__lt', id__lt))
-            
+
+            _query_params.append(("id__lt", id__lt))
+
         if id__lte is not None:
-            
-            _query_params.append(('id__lte', id__lte))
-            
+
+            _query_params.append(("id__lte", id__lte))
+
         if id__in is not None:
-            
-            _query_params.append(('id__in', id__in))
-            
+
+            _query_params.append(("id__in", id__in))
+
         if id__nin is not None:
-            
-            _query_params.append(('id__nin', id__nin))
-            
+
+            _query_params.append(("id__nin", id__nin))
+
         if id__notin is not None:
-            
-            _query_params.append(('id__notin', id__notin))
-            
+
+            _query_params.append(("id__notin", id__notin))
+
         if id__isnull is not None:
-            
-            _query_params.append(('id__isnull', id__isnull))
-            
+
+            _query_params.append(("id__isnull", id__isnull))
+
         if id__nisnull is not None:
-            
-            _query_params.append(('id__nisnull', id__nisnull))
-            
+
+            _query_params.append(("id__nisnull", id__nisnull))
+
         if id__isnotnull is not None:
-            
-            _query_params.append(('id__isnotnull', id__isnotnull))
-            
+
+            _query_params.append(("id__isnotnull", id__isnotnull))
+
         if id__l is not None:
-            
-            _query_params.append(('id__l', id__l))
-            
+
+            _query_params.append(("id__l", id__l))
+
         if id__like is not None:
-            
-            _query_params.append(('id__like', id__like))
-            
+
+            _query_params.append(("id__like", id__like))
+
         if id__nl is not None:
-            
-            _query_params.append(('id__nl', id__nl))
-            
+
+            _query_params.append(("id__nl", id__nl))
+
         if id__nlike is not None:
-            
-            _query_params.append(('id__nlike', id__nlike))
-            
+
+            _query_params.append(("id__nlike", id__nlike))
+
         if id__notlike is not None:
-            
-            _query_params.append(('id__notlike', id__notlike))
-            
+
+            _query_params.append(("id__notlike", id__notlike))
+
         if id__il is not None:
-            
-            _query_params.append(('id__il', id__il))
-            
+
+            _query_params.append(("id__il", id__il))
+
         if id__ilike is not None:
-            
-            _query_params.append(('id__ilike', id__ilike))
-            
+
+            _query_params.append(("id__ilike", id__ilike))
+
         if id__nil is not None:
-            
-            _query_params.append(('id__nil', id__nil))
-            
+
+            _query_params.append(("id__nil", id__nil))
+
         if id__nilike is not None:
-            
-            _query_params.append(('id__nilike', id__nilike))
-            
+
+            _query_params.append(("id__nilike", id__nilike))
+
         if id__notilike is not None:
-            
-            _query_params.append(('id__notilike', id__notilike))
-            
+
+            _query_params.append(("id__notilike", id__notilike))
+
         if id__desc is not None:
-            
-            _query_params.append(('id__desc', id__desc))
-            
+
+            _query_params.append(("id__desc", id__desc))
+
         if id__asc is not None:
-            
-            _query_params.append(('id__asc', id__asc))
-            
+
+            _query_params.append(("id__asc", id__asc))
+
         if created_at__eq is not None:
             if isinstance(created_at__eq, datetime):
                 _query_params.append(
                     (
-                        'created_at__eq',
+                        "created_at__eq",
                         created_at__eq.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__eq', created_at__eq))
-            
+                _query_params.append(("created_at__eq", created_at__eq))
+
         if created_at__ne is not None:
             if isinstance(created_at__ne, datetime):
                 _query_params.append(
                     (
-                        'created_at__ne',
+                        "created_at__ne",
                         created_at__ne.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__ne', created_at__ne))
-            
+                _query_params.append(("created_at__ne", created_at__ne))
+
         if created_at__gt is not None:
             if isinstance(created_at__gt, datetime):
                 _query_params.append(
                     (
-                        'created_at__gt',
+                        "created_at__gt",
                         created_at__gt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__gt', created_at__gt))
-            
+                _query_params.append(("created_at__gt", created_at__gt))
+
         if created_at__gte is not None:
             if isinstance(created_at__gte, datetime):
                 _query_params.append(
                     (
-                        'created_at__gte',
+                        "created_at__gte",
                         created_at__gte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__gte', created_at__gte))
-            
+                _query_params.append(("created_at__gte", created_at__gte))
+
         if created_at__lt is not None:
             if isinstance(created_at__lt, datetime):
                 _query_params.append(
                     (
-                        'created_at__lt',
+                        "created_at__lt",
                         created_at__lt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__lt', created_at__lt))
-            
+                _query_params.append(("created_at__lt", created_at__lt))
+
         if created_at__lte is not None:
             if isinstance(created_at__lte, datetime):
                 _query_params.append(
                     (
-                        'created_at__lte',
+                        "created_at__lte",
                         created_at__lte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__lte', created_at__lte))
-            
+                _query_params.append(("created_at__lte", created_at__lte))
+
         if created_at__in is not None:
             if isinstance(created_at__in, datetime):
                 _query_params.append(
                     (
-                        'created_at__in',
+                        "created_at__in",
                         created_at__in.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__in', created_at__in))
-            
+                _query_params.append(("created_at__in", created_at__in))
+
         if created_at__nin is not None:
             if isinstance(created_at__nin, datetime):
                 _query_params.append(
                     (
-                        'created_at__nin',
+                        "created_at__nin",
                         created_at__nin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__nin', created_at__nin))
-            
+                _query_params.append(("created_at__nin", created_at__nin))
+
         if created_at__notin is not None:
             if isinstance(created_at__notin, datetime):
                 _query_params.append(
                     (
-                        'created_at__notin',
+                        "created_at__notin",
                         created_at__notin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('created_at__notin', created_at__notin))
-            
+                _query_params.append(("created_at__notin", created_at__notin))
+
         if created_at__isnull is not None:
-            
-            _query_params.append(('created_at__isnull', created_at__isnull))
-            
+
+            _query_params.append(("created_at__isnull", created_at__isnull))
+
         if created_at__nisnull is not None:
-            
-            _query_params.append(('created_at__nisnull', created_at__nisnull))
-            
+
+            _query_params.append(("created_at__nisnull", created_at__nisnull))
+
         if created_at__isnotnull is not None:
-            
-            _query_params.append(('created_at__isnotnull', created_at__isnotnull))
-            
+
+            _query_params.append(("created_at__isnotnull", created_at__isnotnull))
+
         if created_at__l is not None:
-            
-            _query_params.append(('created_at__l', created_at__l))
-            
+
+            _query_params.append(("created_at__l", created_at__l))
+
         if created_at__like is not None:
-            
-            _query_params.append(('created_at__like', created_at__like))
-            
+
+            _query_params.append(("created_at__like", created_at__like))
+
         if created_at__nl is not None:
-            
-            _query_params.append(('created_at__nl', created_at__nl))
-            
+
+            _query_params.append(("created_at__nl", created_at__nl))
+
         if created_at__nlike is not None:
-            
-            _query_params.append(('created_at__nlike', created_at__nlike))
-            
+
+            _query_params.append(("created_at__nlike", created_at__nlike))
+
         if created_at__notlike is not None:
-            
-            _query_params.append(('created_at__notlike', created_at__notlike))
-            
+
+            _query_params.append(("created_at__notlike", created_at__notlike))
+
         if created_at__il is not None:
-            
-            _query_params.append(('created_at__il', created_at__il))
-            
+
+            _query_params.append(("created_at__il", created_at__il))
+
         if created_at__ilike is not None:
-            
-            _query_params.append(('created_at__ilike', created_at__ilike))
-            
+
+            _query_params.append(("created_at__ilike", created_at__ilike))
+
         if created_at__nil is not None:
-            
-            _query_params.append(('created_at__nil', created_at__nil))
-            
+
+            _query_params.append(("created_at__nil", created_at__nil))
+
         if created_at__nilike is not None:
-            
-            _query_params.append(('created_at__nilike', created_at__nilike))
-            
+
+            _query_params.append(("created_at__nilike", created_at__nilike))
+
         if created_at__notilike is not None:
-            
-            _query_params.append(('created_at__notilike', created_at__notilike))
-            
+
+            _query_params.append(("created_at__notilike", created_at__notilike))
+
         if created_at__desc is not None:
-            
-            _query_params.append(('created_at__desc', created_at__desc))
-            
+
+            _query_params.append(("created_at__desc", created_at__desc))
+
         if created_at__asc is not None:
-            
-            _query_params.append(('created_at__asc', created_at__asc))
-            
+
+            _query_params.append(("created_at__asc", created_at__asc))
+
         if updated_at__eq is not None:
             if isinstance(updated_at__eq, datetime):
                 _query_params.append(
                     (
-                        'updated_at__eq',
+                        "updated_at__eq",
                         updated_at__eq.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__eq', updated_at__eq))
-            
+                _query_params.append(("updated_at__eq", updated_at__eq))
+
         if updated_at__ne is not None:
             if isinstance(updated_at__ne, datetime):
                 _query_params.append(
                     (
-                        'updated_at__ne',
+                        "updated_at__ne",
                         updated_at__ne.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__ne', updated_at__ne))
-            
+                _query_params.append(("updated_at__ne", updated_at__ne))
+
         if updated_at__gt is not None:
             if isinstance(updated_at__gt, datetime):
                 _query_params.append(
                     (
-                        'updated_at__gt',
+                        "updated_at__gt",
                         updated_at__gt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__gt', updated_at__gt))
-            
+                _query_params.append(("updated_at__gt", updated_at__gt))
+
         if updated_at__gte is not None:
             if isinstance(updated_at__gte, datetime):
                 _query_params.append(
                     (
-                        'updated_at__gte',
+                        "updated_at__gte",
                         updated_at__gte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__gte', updated_at__gte))
-            
+                _query_params.append(("updated_at__gte", updated_at__gte))
+
         if updated_at__lt is not None:
             if isinstance(updated_at__lt, datetime):
                 _query_params.append(
                     (
-                        'updated_at__lt',
+                        "updated_at__lt",
                         updated_at__lt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__lt', updated_at__lt))
-            
+                _query_params.append(("updated_at__lt", updated_at__lt))
+
         if updated_at__lte is not None:
             if isinstance(updated_at__lte, datetime):
                 _query_params.append(
                     (
-                        'updated_at__lte',
+                        "updated_at__lte",
                         updated_at__lte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__lte', updated_at__lte))
-            
+                _query_params.append(("updated_at__lte", updated_at__lte))
+
         if updated_at__in is not None:
             if isinstance(updated_at__in, datetime):
                 _query_params.append(
                     (
-                        'updated_at__in',
+                        "updated_at__in",
                         updated_at__in.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__in', updated_at__in))
-            
+                _query_params.append(("updated_at__in", updated_at__in))
+
         if updated_at__nin is not None:
             if isinstance(updated_at__nin, datetime):
                 _query_params.append(
                     (
-                        'updated_at__nin',
+                        "updated_at__nin",
                         updated_at__nin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__nin', updated_at__nin))
-            
+                _query_params.append(("updated_at__nin", updated_at__nin))
+
         if updated_at__notin is not None:
             if isinstance(updated_at__notin, datetime):
                 _query_params.append(
                     (
-                        'updated_at__notin',
+                        "updated_at__notin",
                         updated_at__notin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('updated_at__notin', updated_at__notin))
-            
+                _query_params.append(("updated_at__notin", updated_at__notin))
+
         if updated_at__isnull is not None:
-            
-            _query_params.append(('updated_at__isnull', updated_at__isnull))
-            
+
+            _query_params.append(("updated_at__isnull", updated_at__isnull))
+
         if updated_at__nisnull is not None:
-            
-            _query_params.append(('updated_at__nisnull', updated_at__nisnull))
-            
+
+            _query_params.append(("updated_at__nisnull", updated_at__nisnull))
+
         if updated_at__isnotnull is not None:
-            
-            _query_params.append(('updated_at__isnotnull', updated_at__isnotnull))
-            
+
+            _query_params.append(("updated_at__isnotnull", updated_at__isnotnull))
+
         if updated_at__l is not None:
-            
-            _query_params.append(('updated_at__l', updated_at__l))
-            
+
+            _query_params.append(("updated_at__l", updated_at__l))
+
         if updated_at__like is not None:
-            
-            _query_params.append(('updated_at__like', updated_at__like))
-            
+
+            _query_params.append(("updated_at__like", updated_at__like))
+
         if updated_at__nl is not None:
-            
-            _query_params.append(('updated_at__nl', updated_at__nl))
-            
+
+            _query_params.append(("updated_at__nl", updated_at__nl))
+
         if updated_at__nlike is not None:
-            
-            _query_params.append(('updated_at__nlike', updated_at__nlike))
-            
+
+            _query_params.append(("updated_at__nlike", updated_at__nlike))
+
         if updated_at__notlike is not None:
-            
-            _query_params.append(('updated_at__notlike', updated_at__notlike))
-            
+
+            _query_params.append(("updated_at__notlike", updated_at__notlike))
+
         if updated_at__il is not None:
-            
-            _query_params.append(('updated_at__il', updated_at__il))
-            
+
+            _query_params.append(("updated_at__il", updated_at__il))
+
         if updated_at__ilike is not None:
-            
-            _query_params.append(('updated_at__ilike', updated_at__ilike))
-            
+
+            _query_params.append(("updated_at__ilike", updated_at__ilike))
+
         if updated_at__nil is not None:
-            
-            _query_params.append(('updated_at__nil', updated_at__nil))
-            
+
+            _query_params.append(("updated_at__nil", updated_at__nil))
+
         if updated_at__nilike is not None:
-            
-            _query_params.append(('updated_at__nilike', updated_at__nilike))
-            
+
+            _query_params.append(("updated_at__nilike", updated_at__nilike))
+
         if updated_at__notilike is not None:
-            
-            _query_params.append(('updated_at__notilike', updated_at__notilike))
-            
+
+            _query_params.append(("updated_at__notilike", updated_at__notilike))
+
         if updated_at__desc is not None:
-            
-            _query_params.append(('updated_at__desc', updated_at__desc))
-            
+
+            _query_params.append(("updated_at__desc", updated_at__desc))
+
         if updated_at__asc is not None:
-            
-            _query_params.append(('updated_at__asc', updated_at__asc))
-            
+
+            _query_params.append(("updated_at__asc", updated_at__asc))
+
         if deleted_at__eq is not None:
             if isinstance(deleted_at__eq, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__eq',
+                        "deleted_at__eq",
                         deleted_at__eq.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__eq', deleted_at__eq))
-            
+                _query_params.append(("deleted_at__eq", deleted_at__eq))
+
         if deleted_at__ne is not None:
             if isinstance(deleted_at__ne, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__ne',
+                        "deleted_at__ne",
                         deleted_at__ne.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__ne', deleted_at__ne))
-            
+                _query_params.append(("deleted_at__ne", deleted_at__ne))
+
         if deleted_at__gt is not None:
             if isinstance(deleted_at__gt, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__gt',
+                        "deleted_at__gt",
                         deleted_at__gt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__gt', deleted_at__gt))
-            
+                _query_params.append(("deleted_at__gt", deleted_at__gt))
+
         if deleted_at__gte is not None:
             if isinstance(deleted_at__gte, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__gte',
+                        "deleted_at__gte",
                         deleted_at__gte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__gte', deleted_at__gte))
-            
+                _query_params.append(("deleted_at__gte", deleted_at__gte))
+
         if deleted_at__lt is not None:
             if isinstance(deleted_at__lt, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__lt',
+                        "deleted_at__lt",
                         deleted_at__lt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__lt', deleted_at__lt))
-            
+                _query_params.append(("deleted_at__lt", deleted_at__lt))
+
         if deleted_at__lte is not None:
             if isinstance(deleted_at__lte, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__lte',
+                        "deleted_at__lte",
                         deleted_at__lte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__lte', deleted_at__lte))
-            
+                _query_params.append(("deleted_at__lte", deleted_at__lte))
+
         if deleted_at__in is not None:
             if isinstance(deleted_at__in, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__in',
+                        "deleted_at__in",
                         deleted_at__in.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__in', deleted_at__in))
-            
+                _query_params.append(("deleted_at__in", deleted_at__in))
+
         if deleted_at__nin is not None:
             if isinstance(deleted_at__nin, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__nin',
+                        "deleted_at__nin",
                         deleted_at__nin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__nin', deleted_at__nin))
-            
+                _query_params.append(("deleted_at__nin", deleted_at__nin))
+
         if deleted_at__notin is not None:
             if isinstance(deleted_at__notin, datetime):
                 _query_params.append(
                     (
-                        'deleted_at__notin',
+                        "deleted_at__notin",
                         deleted_at__notin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('deleted_at__notin', deleted_at__notin))
-            
+                _query_params.append(("deleted_at__notin", deleted_at__notin))
+
         if deleted_at__isnull is not None:
-            
-            _query_params.append(('deleted_at__isnull', deleted_at__isnull))
-            
+
+            _query_params.append(("deleted_at__isnull", deleted_at__isnull))
+
         if deleted_at__nisnull is not None:
-            
-            _query_params.append(('deleted_at__nisnull', deleted_at__nisnull))
-            
+
+            _query_params.append(("deleted_at__nisnull", deleted_at__nisnull))
+
         if deleted_at__isnotnull is not None:
-            
-            _query_params.append(('deleted_at__isnotnull', deleted_at__isnotnull))
-            
+
+            _query_params.append(("deleted_at__isnotnull", deleted_at__isnotnull))
+
         if deleted_at__l is not None:
-            
-            _query_params.append(('deleted_at__l', deleted_at__l))
-            
+
+            _query_params.append(("deleted_at__l", deleted_at__l))
+
         if deleted_at__like is not None:
-            
-            _query_params.append(('deleted_at__like', deleted_at__like))
-            
+
+            _query_params.append(("deleted_at__like", deleted_at__like))
+
         if deleted_at__nl is not None:
-            
-            _query_params.append(('deleted_at__nl', deleted_at__nl))
-            
+
+            _query_params.append(("deleted_at__nl", deleted_at__nl))
+
         if deleted_at__nlike is not None:
-            
-            _query_params.append(('deleted_at__nlike', deleted_at__nlike))
-            
+
+            _query_params.append(("deleted_at__nlike", deleted_at__nlike))
+
         if deleted_at__notlike is not None:
-            
-            _query_params.append(('deleted_at__notlike', deleted_at__notlike))
-            
+
+            _query_params.append(("deleted_at__notlike", deleted_at__notlike))
+
         if deleted_at__il is not None:
-            
-            _query_params.append(('deleted_at__il', deleted_at__il))
-            
+
+            _query_params.append(("deleted_at__il", deleted_at__il))
+
         if deleted_at__ilike is not None:
-            
-            _query_params.append(('deleted_at__ilike', deleted_at__ilike))
-            
+
+            _query_params.append(("deleted_at__ilike", deleted_at__ilike))
+
         if deleted_at__nil is not None:
-            
-            _query_params.append(('deleted_at__nil', deleted_at__nil))
-            
+
+            _query_params.append(("deleted_at__nil", deleted_at__nil))
+
         if deleted_at__nilike is not None:
-            
-            _query_params.append(('deleted_at__nilike', deleted_at__nilike))
-            
+
+            _query_params.append(("deleted_at__nilike", deleted_at__nilike))
+
         if deleted_at__notilike is not None:
-            
-            _query_params.append(('deleted_at__notilike', deleted_at__notilike))
-            
+
+            _query_params.append(("deleted_at__notilike", deleted_at__notilike))
+
         if deleted_at__desc is not None:
-            
-            _query_params.append(('deleted_at__desc', deleted_at__desc))
-            
+
+            _query_params.append(("deleted_at__desc", deleted_at__desc))
+
         if deleted_at__asc is not None:
-            
-            _query_params.append(('deleted_at__asc', deleted_at__asc))
-            
+
+            _query_params.append(("deleted_at__asc", deleted_at__asc))
+
         if seen_at__eq is not None:
             if isinstance(seen_at__eq, datetime):
                 _query_params.append(
                     (
-                        'seen_at__eq',
+                        "seen_at__eq",
                         seen_at__eq.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__eq', seen_at__eq))
-            
+                _query_params.append(("seen_at__eq", seen_at__eq))
+
         if seen_at__ne is not None:
             if isinstance(seen_at__ne, datetime):
                 _query_params.append(
                     (
-                        'seen_at__ne',
+                        "seen_at__ne",
                         seen_at__ne.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__ne', seen_at__ne))
-            
+                _query_params.append(("seen_at__ne", seen_at__ne))
+
         if seen_at__gt is not None:
             if isinstance(seen_at__gt, datetime):
                 _query_params.append(
                     (
-                        'seen_at__gt',
+                        "seen_at__gt",
                         seen_at__gt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__gt', seen_at__gt))
-            
+                _query_params.append(("seen_at__gt", seen_at__gt))
+
         if seen_at__gte is not None:
             if isinstance(seen_at__gte, datetime):
                 _query_params.append(
                     (
-                        'seen_at__gte',
+                        "seen_at__gte",
                         seen_at__gte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__gte', seen_at__gte))
-            
+                _query_params.append(("seen_at__gte", seen_at__gte))
+
         if seen_at__lt is not None:
             if isinstance(seen_at__lt, datetime):
                 _query_params.append(
                     (
-                        'seen_at__lt',
+                        "seen_at__lt",
                         seen_at__lt.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__lt', seen_at__lt))
-            
+                _query_params.append(("seen_at__lt", seen_at__lt))
+
         if seen_at__lte is not None:
             if isinstance(seen_at__lte, datetime):
                 _query_params.append(
                     (
-                        'seen_at__lte',
+                        "seen_at__lte",
                         seen_at__lte.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__lte', seen_at__lte))
-            
+                _query_params.append(("seen_at__lte", seen_at__lte))
+
         if seen_at__in is not None:
             if isinstance(seen_at__in, datetime):
                 _query_params.append(
                     (
-                        'seen_at__in',
+                        "seen_at__in",
                         seen_at__in.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__in', seen_at__in))
-            
+                _query_params.append(("seen_at__in", seen_at__in))
+
         if seen_at__nin is not None:
             if isinstance(seen_at__nin, datetime):
                 _query_params.append(
                     (
-                        'seen_at__nin',
+                        "seen_at__nin",
                         seen_at__nin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__nin', seen_at__nin))
-            
+                _query_params.append(("seen_at__nin", seen_at__nin))
+
         if seen_at__notin is not None:
             if isinstance(seen_at__notin, datetime):
                 _query_params.append(
                     (
-                        'seen_at__notin',
+                        "seen_at__notin",
                         seen_at__notin.strftime(
                             self.api_client.configuration.datetime_format
-                        )
+                        ),
                     )
                 )
             else:
-                _query_params.append(('seen_at__notin', seen_at__notin))
-            
+                _query_params.append(("seen_at__notin", seen_at__notin))
+
         if seen_at__isnull is not None:
-            
-            _query_params.append(('seen_at__isnull', seen_at__isnull))
-            
+
+            _query_params.append(("seen_at__isnull", seen_at__isnull))
+
         if seen_at__nisnull is not None:
-            
-            _query_params.append(('seen_at__nisnull', seen_at__nisnull))
-            
+
+            _query_params.append(("seen_at__nisnull", seen_at__nisnull))
+
         if seen_at__isnotnull is not None:
-            
-            _query_params.append(('seen_at__isnotnull', seen_at__isnotnull))
-            
+
+            _query_params.append(("seen_at__isnotnull", seen_at__isnotnull))
+
         if seen_at__l is not None:
-            
-            _query_params.append(('seen_at__l', seen_at__l))
-            
+
+            _query_params.append(("seen_at__l", seen_at__l))
+
         if seen_at__like is not None:
-            
-            _query_params.append(('seen_at__like', seen_at__like))
-            
+
+            _query_params.append(("seen_at__like", seen_at__like))
+
         if seen_at__nl is not None:
-            
-            _query_params.append(('seen_at__nl', seen_at__nl))
-            
+
+            _query_params.append(("seen_at__nl", seen_at__nl))
+
         if seen_at__nlike is not None:
-            
-            _query_params.append(('seen_at__nlike', seen_at__nlike))
-            
+
+            _query_params.append(("seen_at__nlike", seen_at__nlike))
+
         if seen_at__notlike is not None:
-            
-            _query_params.append(('seen_at__notlike', seen_at__notlike))
-            
+
+            _query_params.append(("seen_at__notlike", seen_at__notlike))
+
         if seen_at__il is not None:
-            
-            _query_params.append(('seen_at__il', seen_at__il))
-            
+
+            _query_params.append(("seen_at__il", seen_at__il))
+
         if seen_at__ilike is not None:
-            
-            _query_params.append(('seen_at__ilike', seen_at__ilike))
-            
+
+            _query_params.append(("seen_at__ilike", seen_at__ilike))
+
         if seen_at__nil is not None:
-            
-            _query_params.append(('seen_at__nil', seen_at__nil))
-            
+
+            _query_params.append(("seen_at__nil", seen_at__nil))
+
         if seen_at__nilike is not None:
-            
-            _query_params.append(('seen_at__nilike', seen_at__nilike))
-            
+
+            _query_params.append(("seen_at__nilike", seen_at__nilike))
+
         if seen_at__notilike is not None:
-            
-            _query_params.append(('seen_at__notilike', seen_at__notilike))
-            
+
+            _query_params.append(("seen_at__notilike", seen_at__notilike))
+
         if seen_at__desc is not None:
-            
-            _query_params.append(('seen_at__desc', seen_at__desc))
-            
+
+            _query_params.append(("seen_at__desc", seen_at__desc))
+
         if seen_at__asc is not None:
-            
-            _query_params.append(('seen_at__asc', seen_at__asc))
-            
+
+            _query_params.append(("seen_at__asc", seen_at__asc))
+
         if class_id__eq is not None:
-            
-            _query_params.append(('class_id__eq', class_id__eq))
-            
+
+            _query_params.append(("class_id__eq", class_id__eq))
+
         if class_id__ne is not None:
-            
-            _query_params.append(('class_id__ne', class_id__ne))
-            
+
+            _query_params.append(("class_id__ne", class_id__ne))
+
         if class_id__gt is not None:
-            
-            _query_params.append(('class_id__gt', class_id__gt))
-            
+
+            _query_params.append(("class_id__gt", class_id__gt))
+
         if class_id__gte is not None:
-            
-            _query_params.append(('class_id__gte', class_id__gte))
-            
+
+            _query_params.append(("class_id__gte", class_id__gte))
+
         if class_id__lt is not None:
-            
-            _query_params.append(('class_id__lt', class_id__lt))
-            
+
+            _query_params.append(("class_id__lt", class_id__lt))
+
         if class_id__lte is not None:
-            
-            _query_params.append(('class_id__lte', class_id__lte))
-            
+
+            _query_params.append(("class_id__lte", class_id__lte))
+
         if class_id__in is not None:
-            
-            _query_params.append(('class_id__in', class_id__in))
-            
+
+            _query_params.append(("class_id__in", class_id__in))
+
         if class_id__nin is not None:
-            
-            _query_params.append(('class_id__nin', class_id__nin))
-            
+
+            _query_params.append(("class_id__nin", class_id__nin))
+
         if class_id__notin is not None:
-            
-            _query_params.append(('class_id__notin', class_id__notin))
-            
+
+            _query_params.append(("class_id__notin", class_id__notin))
+
         if class_id__isnull is not None:
-            
-            _query_params.append(('class_id__isnull', class_id__isnull))
-            
+
+            _query_params.append(("class_id__isnull", class_id__isnull))
+
         if class_id__nisnull is not None:
-            
-            _query_params.append(('class_id__nisnull', class_id__nisnull))
-            
+
+            _query_params.append(("class_id__nisnull", class_id__nisnull))
+
         if class_id__isnotnull is not None:
-            
-            _query_params.append(('class_id__isnotnull', class_id__isnotnull))
-            
+
+            _query_params.append(("class_id__isnotnull", class_id__isnotnull))
+
         if class_id__l is not None:
-            
-            _query_params.append(('class_id__l', class_id__l))
-            
+
+            _query_params.append(("class_id__l", class_id__l))
+
         if class_id__like is not None:
-            
-            _query_params.append(('class_id__like', class_id__like))
-            
+
+            _query_params.append(("class_id__like", class_id__like))
+
         if class_id__nl is not None:
-            
-            _query_params.append(('class_id__nl', class_id__nl))
-            
+
+            _query_params.append(("class_id__nl", class_id__nl))
+
         if class_id__nlike is not None:
-            
-            _query_params.append(('class_id__nlike', class_id__nlike))
-            
+
+            _query_params.append(("class_id__nlike", class_id__nlike))
+
         if class_id__notlike is not None:
-            
-            _query_params.append(('class_id__notlike', class_id__notlike))
-            
+
+            _query_params.append(("class_id__notlike", class_id__notlike))
+
         if class_id__il is not None:
-            
-            _query_params.append(('class_id__il', class_id__il))
-            
+
+            _query_params.append(("class_id__il", class_id__il))
+
         if class_id__ilike is not None:
-            
-            _query_params.append(('class_id__ilike', class_id__ilike))
-            
+
+            _query_params.append(("class_id__ilike", class_id__ilike))
+
         if class_id__nil is not None:
-            
-            _query_params.append(('class_id__nil', class_id__nil))
-            
+
+            _query_params.append(("class_id__nil", class_id__nil))
+
         if class_id__nilike is not None:
-            
-            _query_params.append(('class_id__nilike', class_id__nilike))
-            
+
+            _query_params.append(("class_id__nilike", class_id__nilike))
+
         if class_id__notilike is not None:
-            
-            _query_params.append(('class_id__notilike', class_id__notilike))
-            
+
+            _query_params.append(("class_id__notilike", class_id__notilike))
+
         if class_id__desc is not None:
-            
-            _query_params.append(('class_id__desc', class_id__desc))
-            
+
+            _query_params.append(("class_id__desc", class_id__desc))
+
         if class_id__asc is not None:
-            
-            _query_params.append(('class_id__asc', class_id__asc))
-            
+
+            _query_params.append(("class_id__asc", class_id__asc))
+
         if class_name__eq is not None:
-            
-            _query_params.append(('class_name__eq', class_name__eq))
-            
+
+            _query_params.append(("class_name__eq", class_name__eq))
+
         if class_name__ne is not None:
-            
-            _query_params.append(('class_name__ne', class_name__ne))
-            
+
+            _query_params.append(("class_name__ne", class_name__ne))
+
         if class_name__gt is not None:
-            
-            _query_params.append(('class_name__gt', class_name__gt))
-            
+
+            _query_params.append(("class_name__gt", class_name__gt))
+
         if class_name__gte is not None:
-            
-            _query_params.append(('class_name__gte', class_name__gte))
-            
+
+            _query_params.append(("class_name__gte", class_name__gte))
+
         if class_name__lt is not None:
-            
-            _query_params.append(('class_name__lt', class_name__lt))
-            
+
+            _query_params.append(("class_name__lt", class_name__lt))
+
         if class_name__lte is not None:
-            
-            _query_params.append(('class_name__lte', class_name__lte))
-            
+
+            _query_params.append(("class_name__lte", class_name__lte))
+
         if class_name__in is not None:
-            
-            _query_params.append(('class_name__in', class_name__in))
-            
+
+            _query_params.append(("class_name__in", class_name__in))
+
         if class_name__nin is not None:
-            
-            _query_params.append(('class_name__nin', class_name__nin))
-            
+
+            _query_params.append(("class_name__nin", class_name__nin))
+
         if class_name__notin is not None:
-            
-            _query_params.append(('class_name__notin', class_name__notin))
-            
+
+            _query_params.append(("class_name__notin", class_name__notin))
+
         if class_name__isnull is not None:
-            
-            _query_params.append(('class_name__isnull', class_name__isnull))
-            
+
+            _query_params.append(("class_name__isnull", class_name__isnull))
+
         if class_name__nisnull is not None:
-            
-            _query_params.append(('class_name__nisnull', class_name__nisnull))
-            
+
+            _query_params.append(("class_name__nisnull", class_name__nisnull))
+
         if class_name__isnotnull is not None:
-            
-            _query_params.append(('class_name__isnotnull', class_name__isnotnull))
-            
+
+            _query_params.append(("class_name__isnotnull", class_name__isnotnull))
+
         if class_name__l is not None:
-            
-            _query_params.append(('class_name__l', class_name__l))
-            
+
+            _query_params.append(("class_name__l", class_name__l))
+
         if class_name__like is not None:
-            
-            _query_params.append(('class_name__like', class_name__like))
-            
+
+            _query_params.append(("class_name__like", class_name__like))
+
         if class_name__nl is not None:
-            
-            _query_params.append(('class_name__nl', class_name__nl))
-            
+
+            _query_params.append(("class_name__nl", class_name__nl))
+
         if class_name__nlike is not None:
-            
-            _query_params.append(('class_name__nlike', class_name__nlike))
-            
+
+            _query_params.append(("class_name__nlike", class_name__nlike))
+
         if class_name__notlike is not None:
-            
-            _query_params.append(('class_name__notlike', class_name__notlike))
-            
+
+            _query_params.append(("class_name__notlike", class_name__notlike))
+
         if class_name__il is not None:
-            
-            _query_params.append(('class_name__il', class_name__il))
-            
+
+            _query_params.append(("class_name__il", class_name__il))
+
         if class_name__ilike is not None:
-            
-            _query_params.append(('class_name__ilike', class_name__ilike))
-            
+
+            _query_params.append(("class_name__ilike", class_name__ilike))
+
         if class_name__nil is not None:
-            
-            _query_params.append(('class_name__nil', class_name__nil))
-            
+
+            _query_params.append(("class_name__nil", class_name__nil))
+
         if class_name__nilike is not None:
-            
-            _query_params.append(('class_name__nilike', class_name__nilike))
-            
+
+            _query_params.append(("class_name__nilike", class_name__nilike))
+
         if class_name__notilike is not None:
-            
-            _query_params.append(('class_name__notilike', class_name__notilike))
-            
+
+            _query_params.append(("class_name__notilike", class_name__notilike))
+
         if class_name__desc is not None:
-            
-            _query_params.append(('class_name__desc', class_name__desc))
-            
+
+            _query_params.append(("class_name__desc", class_name__desc))
+
         if class_name__asc is not None:
-            
-            _query_params.append(('class_name__asc', class_name__asc))
-            
+
+            _query_params.append(("class_name__asc", class_name__asc))
+
         if score__eq is not None:
-            
-            _query_params.append(('score__eq', score__eq))
-            
+
+            _query_params.append(("score__eq", score__eq))
+
         if score__ne is not None:
-            
-            _query_params.append(('score__ne', score__ne))
-            
+
+            _query_params.append(("score__ne", score__ne))
+
         if score__gt is not None:
-            
-            _query_params.append(('score__gt', score__gt))
-            
+
+            _query_params.append(("score__gt", score__gt))
+
         if score__gte is not None:
-            
-            _query_params.append(('score__gte', score__gte))
-            
+
+            _query_params.append(("score__gte", score__gte))
+
         if score__lt is not None:
-            
-            _query_params.append(('score__lt', score__lt))
-            
+
+            _query_params.append(("score__lt", score__lt))
+
         if score__lte is not None:
-            
-            _query_params.append(('score__lte', score__lte))
-            
+
+            _query_params.append(("score__lte", score__lte))
+
         if score__in is not None:
-            
-            _query_params.append(('score__in', score__in))
-            
+
+            _query_params.append(("score__in", score__in))
+
         if score__nin is not None:
-            
-            _query_params.append(('score__nin', score__nin))
-            
+
+            _query_params.append(("score__nin", score__nin))
+
         if score__notin is not None:
-            
-            _query_params.append(('score__notin', score__notin))
-            
+
+            _query_params.append(("score__notin", score__notin))
+
         if score__isnull is not None:
-            
-            _query_params.append(('score__isnull', score__isnull))
-            
+
+            _query_params.append(("score__isnull", score__isnull))
+
         if score__nisnull is not None:
-            
-            _query_params.append(('score__nisnull', score__nisnull))
-            
+
+            _query_params.append(("score__nisnull", score__nisnull))
+
         if score__isnotnull is not None:
-            
-            _query_params.append(('score__isnotnull', score__isnotnull))
-            
+
+            _query_params.append(("score__isnotnull", score__isnotnull))
+
         if score__l is not None:
-            
-            _query_params.append(('score__l', score__l))
-            
+
+            _query_params.append(("score__l", score__l))
+
         if score__like is not None:
-            
-            _query_params.append(('score__like', score__like))
-            
+
+            _query_params.append(("score__like", score__like))
+
         if score__nl is not None:
-            
-            _query_params.append(('score__nl', score__nl))
-            
+
+            _query_params.append(("score__nl", score__nl))
+
         if score__nlike is not None:
-            
-            _query_params.append(('score__nlike', score__nlike))
-            
+
+            _query_params.append(("score__nlike", score__nlike))
+
         if score__notlike is not None:
-            
-            _query_params.append(('score__notlike', score__notlike))
-            
+
+            _query_params.append(("score__notlike", score__notlike))
+
         if score__il is not None:
-            
-            _query_params.append(('score__il', score__il))
-            
+
+            _query_params.append(("score__il", score__il))
+
         if score__ilike is not None:
-            
-            _query_params.append(('score__ilike', score__ilike))
-            
+
+            _query_params.append(("score__ilike", score__ilike))
+
         if score__nil is not None:
-            
-            _query_params.append(('score__nil', score__nil))
-            
+
+            _query_params.append(("score__nil", score__nil))
+
         if score__nilike is not None:
-            
-            _query_params.append(('score__nilike', score__nilike))
-            
+
+            _query_params.append(("score__nilike", score__nilike))
+
         if score__notilike is not None:
-            
-            _query_params.append(('score__notilike', score__notilike))
-            
+
+            _query_params.append(("score__notilike", score__notilike))
+
         if score__desc is not None:
-            
-            _query_params.append(('score__desc', score__desc))
-            
+
+            _query_params.append(("score__desc", score__desc))
+
         if score__asc is not None:
-            
-            _query_params.append(('score__asc', score__asc))
-            
+
+            _query_params.append(("score__asc", score__asc))
+
         if video_id__eq is not None:
-            
-            _query_params.append(('video_id__eq', video_id__eq))
-            
+
+            _query_params.append(("video_id__eq", video_id__eq))
+
         if video_id__ne is not None:
-            
-            _query_params.append(('video_id__ne', video_id__ne))
-            
+
+            _query_params.append(("video_id__ne", video_id__ne))
+
         if video_id__gt is not None:
-            
-            _query_params.append(('video_id__gt', video_id__gt))
-            
+
+            _query_params.append(("video_id__gt", video_id__gt))
+
         if video_id__gte is not None:
-            
-            _query_params.append(('video_id__gte', video_id__gte))
-            
+
+            _query_params.append(("video_id__gte", video_id__gte))
+
         if video_id__lt is not None:
-            
-            _query_params.append(('video_id__lt', video_id__lt))
-            
+
+            _query_params.append(("video_id__lt", video_id__lt))
+
         if video_id__lte is not None:
-            
-            _query_params.append(('video_id__lte', video_id__lte))
-            
+
+            _query_params.append(("video_id__lte", video_id__lte))
+
         if video_id__in is not None:
-            
-            _query_params.append(('video_id__in', video_id__in))
-            
+
+            _query_params.append(("video_id__in", video_id__in))
+
         if video_id__nin is not None:
-            
-            _query_params.append(('video_id__nin', video_id__nin))
-            
+
+            _query_params.append(("video_id__nin", video_id__nin))
+
         if video_id__notin is not None:
-            
-            _query_params.append(('video_id__notin', video_id__notin))
-            
+
+            _query_params.append(("video_id__notin", video_id__notin))
+
         if video_id__isnull is not None:
-            
-            _query_params.append(('video_id__isnull', video_id__isnull))
-            
+
+            _query_params.append(("video_id__isnull", video_id__isnull))
+
         if video_id__nisnull is not None:
-            
-            _query_params.append(('video_id__nisnull', video_id__nisnull))
-            
+
+            _query_params.append(("video_id__nisnull", video_id__nisnull))
+
         if video_id__isnotnull is not None:
-            
-            _query_params.append(('video_id__isnotnull', video_id__isnotnull))
-            
+
+            _query_params.append(("video_id__isnotnull", video_id__isnotnull))
+
         if video_id__l is not None:
-            
-            _query_params.append(('video_id__l', video_id__l))
-            
+
+            _query_params.append(("video_id__l", video_id__l))
+
         if video_id__like is not None:
-            
-            _query_params.append(('video_id__like', video_id__like))
-            
+
+            _query_params.append(("video_id__like", video_id__like))
+
         if video_id__nl is not None:
-            
-            _query_params.append(('video_id__nl', video_id__nl))
-            
+
+            _query_params.append(("video_id__nl", video_id__nl))
+
         if video_id__nlike is not None:
-            
-            _query_params.append(('video_id__nlike', video_id__nlike))
-            
+
+            _query_params.append(("video_id__nlike", video_id__nlike))
+
         if video_id__notlike is not None:
-            
-            _query_params.append(('video_id__notlike', video_id__notlike))
-            
+
+            _query_params.append(("video_id__notlike", video_id__notlike))
+
         if video_id__il is not None:
-            
-            _query_params.append(('video_id__il', video_id__il))
-            
+
+            _query_params.append(("video_id__il", video_id__il))
+
         if video_id__ilike is not None:
-            
-            _query_params.append(('video_id__ilike', video_id__ilike))
-            
+
+            _query_params.append(("video_id__ilike", video_id__ilike))
+
         if video_id__nil is not None:
-            
-            _query_params.append(('video_id__nil', video_id__nil))
-            
+
+            _query_params.append(("video_id__nil", video_id__nil))
+
         if video_id__nilike is not None:
-            
-            _query_params.append(('video_id__nilike', video_id__nilike))
-            
+
+            _query_params.append(("video_id__nilike", video_id__nilike))
+
         if video_id__notilike is not None:
-            
-            _query_params.append(('video_id__notilike', video_id__notilike))
-            
+
+            _query_params.append(("video_id__notilike", video_id__notilike))
+
         if video_id__desc is not None:
-            
-            _query_params.append(('video_id__desc', video_id__desc))
-            
+
+            _query_params.append(("video_id__desc", video_id__desc))
+
         if video_id__asc is not None:
-            
-            _query_params.append(('video_id__asc', video_id__asc))
-            
+
+            _query_params.append(("video_id__asc", video_id__asc))
+
         if camera_id__eq is not None:
-            
-            _query_params.append(('camera_id__eq', camera_id__eq))
-            
+
+            _query_params.append(("camera_id__eq", camera_id__eq))
+
         if camera_id__ne is not None:
-            
-            _query_params.append(('camera_id__ne', camera_id__ne))
-            
+
+            _query_params.append(("camera_id__ne", camera_id__ne))
+
         if camera_id__gt is not None:
-            
-            _query_params.append(('camera_id__gt', camera_id__gt))
-            
+
+            _query_params.append(("camera_id__gt", camera_id__gt))
+
         if camera_id__gte is not None:
-            
-            _query_params.append(('camera_id__gte', camera_id__gte))
-            
+
+            _query_params.append(("camera_id__gte", camera_id__gte))
+
         if camera_id__lt is not None:
-            
-            _query_params.append(('camera_id__lt', camera_id__lt))
-            
+
+            _query_params.append(("camera_id__lt", camera_id__lt))
+
         if camera_id__lte is not None:
-            
-            _query_params.append(('camera_id__lte', camera_id__lte))
-            
+
+            _query_params.append(("camera_id__lte", camera_id__lte))
+
         if camera_id__in is not None:
-            
-            _query_params.append(('camera_id__in', camera_id__in))
-            
+
+            _query_params.append(("camera_id__in", camera_id__in))
+
         if camera_id__nin is not None:
-            
-            _query_params.append(('camera_id__nin', camera_id__nin))
-            
+
+            _query_params.append(("camera_id__nin", camera_id__nin))
+
         if camera_id__notin is not None:
-            
-            _query_params.append(('camera_id__notin', camera_id__notin))
-            
+
+            _query_params.append(("camera_id__notin", camera_id__notin))
+
         if camera_id__isnull is not None:
-            
-            _query_params.append(('camera_id__isnull', camera_id__isnull))
-            
+
+            _query_params.append(("camera_id__isnull", camera_id__isnull))
+
         if camera_id__nisnull is not None:
-            
-            _query_params.append(('camera_id__nisnull', camera_id__nisnull))
-            
+
+            _query_params.append(("camera_id__nisnull", camera_id__nisnull))
+
         if camera_id__isnotnull is not None:
-            
-            _query_params.append(('camera_id__isnotnull', camera_id__isnotnull))
-            
+
+            _query_params.append(("camera_id__isnotnull", camera_id__isnotnull))
+
         if camera_id__l is not None:
-            
-            _query_params.append(('camera_id__l', camera_id__l))
-            
+
+            _query_params.append(("camera_id__l", camera_id__l))
+
         if camera_id__like is not None:
-            
-            _query_params.append(('camera_id__like', camera_id__like))
-            
+
+            _query_params.append(("camera_id__like", camera_id__like))
+
         if camera_id__nl is not None:
-            
-            _query_params.append(('camera_id__nl', camera_id__nl))
-            
+
+            _query_params.append(("camera_id__nl", camera_id__nl))
+
         if camera_id__nlike is not None:
-            
-            _query_params.append(('camera_id__nlike', camera_id__nlike))
-            
+
+            _query_params.append(("camera_id__nlike", camera_id__nlike))
+
         if camera_id__notlike is not None:
-            
-            _query_params.append(('camera_id__notlike', camera_id__notlike))
-            
+
+            _query_params.append(("camera_id__notlike", camera_id__notlike))
+
         if camera_id__il is not None:
-            
-            _query_params.append(('camera_id__il', camera_id__il))
-            
+
+            _query_params.append(("camera_id__il", camera_id__il))
+
         if camera_id__ilike is not None:
-            
-            _query_params.append(('camera_id__ilike', camera_id__ilike))
-            
+
+            _query_params.append(("camera_id__ilike", camera_id__ilike))
+
         if camera_id__nil is not None:
-            
-            _query_params.append(('camera_id__nil', camera_id__nil))
-            
+
+            _query_params.append(("camera_id__nil", camera_id__nil))
+
         if camera_id__nilike is not None:
-            
-            _query_params.append(('camera_id__nilike', camera_id__nilike))
-            
+
+            _query_params.append(("camera_id__nilike", camera_id__nilike))
+
         if camera_id__notilike is not None:
-            
-            _query_params.append(('camera_id__notilike', camera_id__notilike))
-            
+
+            _query_params.append(("camera_id__notilike", camera_id__notilike))
+
         if camera_id__desc is not None:
-            
-            _query_params.append(('camera_id__desc', camera_id__desc))
-            
+
+            _query_params.append(("camera_id__desc", camera_id__desc))
+
         if camera_id__asc is not None:
-            
-            _query_params.append(('camera_id__asc', camera_id__asc))
-            
+
+            _query_params.append(("camera_id__asc", camera_id__asc))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
-
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='GET',
-            resource_path='/api/detections',
+            method="GET",
+            resource_path="/api/detections",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5274,25 +8282,26 @@ class DetectionApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def patch_detection(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5328,7 +8337,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._patch_detection_serialize(
             primary_key=primary_key,
@@ -5337,15 +8346,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5353,20 +8361,23 @@ class DetectionApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     def patch_detection_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5402,7 +8413,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._patch_detection_serialize(
             primary_key=primary_key,
@@ -5411,15 +8422,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5427,20 +8437,23 @@ class DetectionApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def patch_detection_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5476,7 +8489,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._patch_detection_serialize(
             primary_key=primary_key,
@@ -5485,18 +8498,16 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _patch_detection_serialize(
         self,
@@ -5511,8 +8522,7 @@ class DetectionApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -5523,48 +8533,40 @@ class DetectionApi:
 
         # process the path parameters
         if primary_key is not None:
-            _path_params['primaryKey'] = primary_key
+            _path_params["primaryKey"] = primary_key
         # process the query parameters
         if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
+
+            _query_params.append(("depth", depth))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
         if detection is not None:
             _body_params = detection
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
             )
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='PATCH',
-            resource_path='/api/detections/{primaryKey}',
+            method="PATCH",
+            resource_path="/api/detections/{primaryKey}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5574,24 +8576,25 @@ class DetectionApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def post_detections(
         self,
         detection: List[Detection],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5625,7 +8628,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._post_detections_serialize(
             detection=detection,
@@ -5633,15 +8636,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5649,19 +8651,22 @@ class DetectionApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     def post_detections_with_http_info(
         self,
         detection: List[Detection],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5695,7 +8700,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._post_detections_serialize(
             detection=detection,
@@ -5703,15 +8708,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5719,19 +8723,22 @@ class DetectionApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def post_detections_without_preload_content(
         self,
         detection: List[Detection],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5765,7 +8772,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._post_detections_serialize(
             detection=detection,
@@ -5773,18 +8780,16 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _post_detections_serialize(
         self,
@@ -5799,7 +8804,7 @@ class DetectionApi:
         _host = None
 
         _collection_formats: Dict[str, str] = {
-            'Detection': '',
+            "Detection": "",
         }
 
         _path_params: Dict[str, str] = {}
@@ -5812,45 +8817,37 @@ class DetectionApi:
         # process the path parameters
         # process the query parameters
         if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
+
+            _query_params.append(("depth", depth))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
         if detection is not None:
             _body_params = detection
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
             )
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='POST',
-            resource_path='/api/detections',
+            method="POST",
+            resource_path="/api/detections",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -5860,25 +8857,26 @@ class DetectionApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-
-
 
     @validate_call
     def put_detection(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5914,7 +8912,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._put_detection_serialize(
             primary_key=primary_key,
@@ -5923,15 +8921,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -5939,20 +8936,23 @@ class DetectionApi:
             response_types_map=_response_types_map,
         ).data
 
-
     @validate_call
     def put_detection_with_http_info(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -5988,7 +8988,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._put_detection_serialize(
             primary_key=primary_key,
@@ -5997,15 +8997,14 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         response_data.read()
         return self.api_client.response_deserialize(
@@ -6013,20 +9012,23 @@ class DetectionApi:
             response_types_map=_response_types_map,
         )
 
-
     @validate_call
     def put_detection_without_preload_content(
         self,
         primary_key: Annotated[Any, Field(description="Primary key for Detection")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[
+            Optional[StrictInt],
+            Field(
+                description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            ),
+        ] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
             Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
+                Annotated[StrictFloat, Field(gt=0)], Annotated[StrictFloat, Field(gt=0)]
+            ],
         ] = None,
         _request_auth: Optional[Dict[StrictStr, Any]] = None,
         _content_type: Optional[StrictStr] = None,
@@ -6062,7 +9064,7 @@ class DetectionApi:
                             in the spec for a single request.
         :type _host_index: int, optional
         :return: Returns the result object.
-        """ # noqa: E501
+        """  # noqa: E501
 
         _param = self._put_detection_serialize(
             primary_key=primary_key,
@@ -6071,18 +9073,16 @@ class DetectionApi:
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
-            _host_index=_host_index
+            _host_index=_host_index,
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            "200": "GetDetections200Response",
         }
         response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
+            *_param, _request_timeout=_request_timeout
         )
         return response_data.response
-
 
     def _put_detection_serialize(
         self,
@@ -6097,8 +9097,7 @@ class DetectionApi:
 
         _host = None
 
-        _collection_formats: Dict[str, str] = {
-        }
+        _collection_formats: Dict[str, str] = {}
 
         _path_params: Dict[str, str] = {}
         _query_params: List[Tuple[str, str]] = []
@@ -6109,48 +9108,40 @@ class DetectionApi:
 
         # process the path parameters
         if primary_key is not None:
-            _path_params['primaryKey'] = primary_key
+            _path_params["primaryKey"] = primary_key
         # process the query parameters
         if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
+
+            _query_params.append(("depth", depth))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
         if detection is not None:
             _body_params = detection
 
-
         # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
+        if "Accept" not in _header_params:
+            _header_params["Accept"] = self.api_client.select_header_accept(
+                ["application/json"]
             )
 
         # set the HTTP header `Content-Type`
         if _content_type:
-            _header_params['Content-Type'] = _content_type
+            _header_params["Content-Type"] = _content_type
         else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
+            _default_content_type = self.api_client.select_header_content_type(
+                ["application/json"]
             )
             if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
+                _header_params["Content-Type"] = _default_content_type
 
         # authentication setting
-        _auth_settings: List[str] = [
-        ]
+        _auth_settings: List[str] = []
 
         return self.api_client.param_serialize(
-            method='PUT',
-            resource_path='/api/detections/{primaryKey}',
+            method="PUT",
+            resource_path="/api/detections/{primaryKey}",
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,
@@ -6160,7 +9151,5 @@ class DetectionApi:
             auth_settings=_auth_settings,
             collection_formats=_collection_formats,
             _host=_host,
-            _request_auth=_request_auth
+            _request_auth=_request_auth,
         )
-
-

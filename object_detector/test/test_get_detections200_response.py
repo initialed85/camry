@@ -16,6 +16,7 @@ import unittest
 
 from openapi_client.models.get_detections200_response import GetDetections200Response
 
+
 class TestGetDetections200Response(unittest.TestCase):
     """GetDetections200Response unit test stubs"""
 
@@ -27,9 +28,9 @@ class TestGetDetections200Response(unittest.TestCase):
 
     def make_instance(self, include_optional) -> GetDetections200Response:
         """Test GetDetections200Response
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
+        include_optional is a boolean, when False only required
+        params are included, when True both required and
+        optional params are included"""
         # uncomment below to create an instance of `GetDetections200Response`
         """
         model = GetDetections200Response()
@@ -140,5 +141,6 @@ class TestGetDetections200Response(unittest.TestCase):
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()

@@ -23,10 +23,12 @@ from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class Video(BaseModel):
     """
     Video
-    """ # noqa: E501
+    """  # noqa: E501
+
     camera_id: Optional[StrictStr] = None
     camera_id_object: Optional[Camera] = None
     created_at: Optional[datetime] = None
@@ -41,14 +43,28 @@ class Video(BaseModel):
     status: Optional[StrictStr] = None
     thumbnail_name: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "duration", "ended_at", "file_name", "file_size", "id", "referenced_by_detection_video_id_objects", "started_at", "status", "thumbnail_name", "updated_at"]
+    __properties: ClassVar[List[str]] = [
+        "camera_id",
+        "camera_id_object",
+        "created_at",
+        "deleted_at",
+        "duration",
+        "ended_at",
+        "file_name",
+        "file_size",
+        "id",
+        "referenced_by_detection_video_id_objects",
+        "started_at",
+        "status",
+        "thumbnail_name",
+        "updated_at",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -74,8 +90,7 @@ class Video(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -84,38 +99,41 @@ class Video(BaseModel):
         )
         # override the default output from pydantic by calling `to_dict()` of camera_id_object
         if self.camera_id_object:
-            _dict['camera_id_object'] = self.camera_id_object.to_dict()
+            _dict["camera_id_object"] = self.camera_id_object.to_dict()
         # override the default output from pydantic by calling `to_dict()` of each item in referenced_by_detection_video_id_objects (list)
         _items = []
         if self.referenced_by_detection_video_id_objects:
             for _item in self.referenced_by_detection_video_id_objects:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['referenced_by_detection_video_id_objects'] = _items
+            _dict["referenced_by_detection_video_id_objects"] = _items
         # set to None if deleted_at (nullable) is None
         # and model_fields_set contains the field
         if self.deleted_at is None and "deleted_at" in self.model_fields_set:
-            _dict['deleted_at'] = None
+            _dict["deleted_at"] = None
 
         # set to None if duration (nullable) is None
         # and model_fields_set contains the field
         if self.duration is None and "duration" in self.model_fields_set:
-            _dict['duration'] = None
+            _dict["duration"] = None
 
         # set to None if ended_at (nullable) is None
         # and model_fields_set contains the field
         if self.ended_at is None and "ended_at" in self.model_fields_set:
-            _dict['ended_at'] = None
+            _dict["ended_at"] = None
 
         # set to None if file_size (nullable) is None
         # and model_fields_set contains the field
         if self.file_size is None and "file_size" in self.model_fields_set:
-            _dict['file_size'] = None
+            _dict["file_size"] = None
 
         # set to None if referenced_by_detection_video_id_objects (nullable) is None
         # and model_fields_set contains the field
-        if self.referenced_by_detection_video_id_objects is None and "referenced_by_detection_video_id_objects" in self.model_fields_set:
-            _dict['referenced_by_detection_video_id_objects'] = None
+        if (
+            self.referenced_by_detection_video_id_objects is None
+            and "referenced_by_detection_video_id_objects" in self.model_fields_set
+        ):
+            _dict["referenced_by_detection_video_id_objects"] = None
 
         return _dict
 
@@ -128,26 +146,36 @@ class Video(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "camera_id": obj.get("camera_id"),
-            "camera_id_object": Camera.from_dict(obj["camera_id_object"]) if obj.get("camera_id_object") is not None else None,
-            "created_at": obj.get("created_at"),
-            "deleted_at": obj.get("deleted_at"),
-            "duration": obj.get("duration"),
-            "ended_at": obj.get("ended_at"),
-            "file_name": obj.get("file_name"),
-            "file_size": obj.get("file_size"),
-            "id": obj.get("id"),
-            "referenced_by_detection_video_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_video_id_objects"]] if obj.get("referenced_by_detection_video_id_objects") is not None else None,
-            "started_at": obj.get("started_at"),
-            "status": obj.get("status"),
-            "thumbnail_name": obj.get("thumbnail_name"),
-            "updated_at": obj.get("updated_at")
-        })
+        _obj = cls.model_validate(
+            {
+                "camera_id": obj.get("camera_id"),
+                "camera_id_object": Camera.from_dict(obj["camera_id_object"])
+                if obj.get("camera_id_object") is not None
+                else None,
+                "created_at": obj.get("created_at"),
+                "deleted_at": obj.get("deleted_at"),
+                "duration": obj.get("duration"),
+                "ended_at": obj.get("ended_at"),
+                "file_name": obj.get("file_name"),
+                "file_size": obj.get("file_size"),
+                "id": obj.get("id"),
+                "referenced_by_detection_video_id_objects": [
+                    Detection.from_dict(_item)
+                    for _item in obj["referenced_by_detection_video_id_objects"]
+                ]
+                if obj.get("referenced_by_detection_video_id_objects") is not None
+                else None,
+                "started_at": obj.get("started_at"),
+                "status": obj.get("status"),
+                "thumbnail_name": obj.get("thumbnail_name"),
+                "updated_at": obj.get("updated_at"),
+            }
+        )
         return _obj
+
 
 from openapi_client.models.camera import Camera
 from openapi_client.models.detection import Detection
+
 # TODO: Rewrite to not use raise_errors
 Video.model_rebuild(raise_errors=False)
-

@@ -24,10 +24,12 @@ from openapi_client.models.detection_bounding_box_inner import DetectionBounding
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class Detection(BaseModel):
     """
     Detection
-    """ # noqa: E501
+    """  # noqa: E501
+
     bounding_box: Optional[List[DetectionBoundingBoxInner]] = None
     camera_id: Optional[StrictStr] = None
     camera_id_object: Optional[Camera] = None
@@ -42,14 +44,28 @@ class Detection(BaseModel):
     updated_at: Optional[datetime] = None
     video_id: Optional[StrictStr] = None
     video_id_object: Optional[Video] = None
-    __properties: ClassVar[List[str]] = ["bounding_box", "camera_id", "camera_id_object", "centroid", "class_id", "class_name", "created_at", "deleted_at", "id", "score", "seen_at", "updated_at", "video_id", "video_id_object"]
+    __properties: ClassVar[List[str]] = [
+        "bounding_box",
+        "camera_id",
+        "camera_id_object",
+        "centroid",
+        "class_id",
+        "class_name",
+        "created_at",
+        "deleted_at",
+        "id",
+        "score",
+        "seen_at",
+        "updated_at",
+        "video_id",
+        "video_id_object",
+    ]
 
     model_config = ConfigDict(
         populate_by_name=True,
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -75,8 +91,7 @@ class Detection(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -89,25 +104,25 @@ class Detection(BaseModel):
             for _item in self.bounding_box:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['bounding_box'] = _items
+            _dict["bounding_box"] = _items
         # override the default output from pydantic by calling `to_dict()` of camera_id_object
         if self.camera_id_object:
-            _dict['camera_id_object'] = self.camera_id_object.to_dict()
+            _dict["camera_id_object"] = self.camera_id_object.to_dict()
         # override the default output from pydantic by calling `to_dict()` of centroid
         if self.centroid:
-            _dict['centroid'] = self.centroid.to_dict()
+            _dict["centroid"] = self.centroid.to_dict()
         # override the default output from pydantic by calling `to_dict()` of video_id_object
         if self.video_id_object:
-            _dict['video_id_object'] = self.video_id_object.to_dict()
+            _dict["video_id_object"] = self.video_id_object.to_dict()
         # set to None if bounding_box (nullable) is None
         # and model_fields_set contains the field
         if self.bounding_box is None and "bounding_box" in self.model_fields_set:
-            _dict['bounding_box'] = None
+            _dict["bounding_box"] = None
 
         # set to None if deleted_at (nullable) is None
         # and model_fields_set contains the field
         if self.deleted_at is None and "deleted_at" in self.model_fields_set:
-            _dict['deleted_at'] = None
+            _dict["deleted_at"] = None
 
         return _dict
 
@@ -120,26 +135,40 @@ class Detection(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "bounding_box": [DetectionBoundingBoxInner.from_dict(_item) for _item in obj["bounding_box"]] if obj.get("bounding_box") is not None else None,
-            "camera_id": obj.get("camera_id"),
-            "camera_id_object": Camera.from_dict(obj["camera_id_object"]) if obj.get("camera_id_object") is not None else None,
-            "centroid": DetectionBoundingBoxInner.from_dict(obj["centroid"]) if obj.get("centroid") is not None else None,
-            "class_id": obj.get("class_id"),
-            "class_name": obj.get("class_name"),
-            "created_at": obj.get("created_at"),
-            "deleted_at": obj.get("deleted_at"),
-            "id": obj.get("id"),
-            "score": obj.get("score"),
-            "seen_at": obj.get("seen_at"),
-            "updated_at": obj.get("updated_at"),
-            "video_id": obj.get("video_id"),
-            "video_id_object": Video.from_dict(obj["video_id_object"]) if obj.get("video_id_object") is not None else None
-        })
+        _obj = cls.model_validate(
+            {
+                "bounding_box": [
+                    DetectionBoundingBoxInner.from_dict(_item)
+                    for _item in obj["bounding_box"]
+                ]
+                if obj.get("bounding_box") is not None
+                else None,
+                "camera_id": obj.get("camera_id"),
+                "camera_id_object": Camera.from_dict(obj["camera_id_object"])
+                if obj.get("camera_id_object") is not None
+                else None,
+                "centroid": DetectionBoundingBoxInner.from_dict(obj["centroid"])
+                if obj.get("centroid") is not None
+                else None,
+                "class_id": obj.get("class_id"),
+                "class_name": obj.get("class_name"),
+                "created_at": obj.get("created_at"),
+                "deleted_at": obj.get("deleted_at"),
+                "id": obj.get("id"),
+                "score": obj.get("score"),
+                "seen_at": obj.get("seen_at"),
+                "updated_at": obj.get("updated_at"),
+                "video_id": obj.get("video_id"),
+                "video_id_object": Video.from_dict(obj["video_id_object"])
+                if obj.get("video_id_object") is not None
+                else None,
+            }
+        )
         return _obj
+
 
 from openapi_client.models.camera import Camera
 from openapi_client.models.video import Video
+
 # TODO: Rewrite to not use raise_errors
 Detection.model_rebuild(raise_errors=False)
-

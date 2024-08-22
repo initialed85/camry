@@ -57,13 +57,13 @@ var (
 )
 
 var (
-	CameraTableIDColumnWithTypeCast        = fmt.Sprintf(`"id" AS id`)
-	CameraTableCreatedAtColumnWithTypeCast = fmt.Sprintf(`"created_at" AS created_at`)
-	CameraTableUpdatedAtColumnWithTypeCast = fmt.Sprintf(`"updated_at" AS updated_at`)
-	CameraTableDeletedAtColumnWithTypeCast = fmt.Sprintf(`"deleted_at" AS deleted_at`)
-	CameraTableNameColumnWithTypeCast      = fmt.Sprintf(`"name" AS name`)
-	CameraTableStreamURLColumnWithTypeCast = fmt.Sprintf(`"stream_url" AS stream_url`)
-	CameraTableLastSeenColumnWithTypeCast  = fmt.Sprintf(`"last_seen" AS last_seen`)
+	CameraTableIDColumnWithTypeCast        = `"id" AS id`
+	CameraTableCreatedAtColumnWithTypeCast = `"created_at" AS created_at`
+	CameraTableUpdatedAtColumnWithTypeCast = `"updated_at" AS updated_at`
+	CameraTableDeletedAtColumnWithTypeCast = `"deleted_at" AS deleted_at`
+	CameraTableNameColumnWithTypeCast      = `"name" AS name`
+	CameraTableStreamURLColumnWithTypeCast = `"stream_url" AS stream_url`
+	CameraTableLastSeenColumnWithTypeCast  = `"last_seen" AS last_seen`
 )
 
 var CameraTableColumns = []string{
@@ -189,7 +189,7 @@ func (m *Camera) FromItem(item map[string]any) error {
 			temp2, ok := temp1.(time.Time)
 			if !ok {
 				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to time.Time", temp1))
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uucreated_at.UUID", temp1))
 				}
 			}
 
@@ -208,7 +208,7 @@ func (m *Camera) FromItem(item map[string]any) error {
 			temp2, ok := temp1.(time.Time)
 			if !ok {
 				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to time.Time", temp1))
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuupdated_at.UUID", temp1))
 				}
 			}
 
@@ -227,7 +227,7 @@ func (m *Camera) FromItem(item map[string]any) error {
 			temp2, ok := temp1.(time.Time)
 			if !ok {
 				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to time.Time", temp1))
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uudeleted_at.UUID", temp1))
 				}
 			}
 
@@ -246,7 +246,7 @@ func (m *Camera) FromItem(item map[string]any) error {
 			temp2, ok := temp1.(string)
 			if !ok {
 				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to string", temp1))
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuname.UUID", temp1))
 				}
 			}
 
@@ -265,7 +265,7 @@ func (m *Camera) FromItem(item map[string]any) error {
 			temp2, ok := temp1.(string)
 			if !ok {
 				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to string", temp1))
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uustream_url.UUID", temp1))
 				}
 			}
 
@@ -284,7 +284,7 @@ func (m *Camera) FromItem(item map[string]any) error {
 			temp2, ok := temp1.(time.Time)
 			if !ok {
 				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to time.Time", temp1))
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uulast_seen.UUID", temp1))
 				}
 			}
 
@@ -646,8 +646,8 @@ func SelectCameras(ctx context.Context, tx *sqlx.Tx, where string, orderBy *stri
 
 		thatCtx := ctx
 
-		thatCtx, ok1 := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.ID))
-		thatCtx, ok2 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.ID))
+		thatCtx, ok1 := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
+		thatCtx, ok2 := query.HandleQueryPathGraphCycles(thatCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
 		if !(ok1 && ok2) {
 			continue
 		}
@@ -656,8 +656,8 @@ func SelectCameras(ctx context.Context, tx *sqlx.Tx, where string, orderBy *stri
 
 		err = func() error {
 			thisCtx := thatCtx
-			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("%s{%v}", CameraTable, object.ID))
-			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.ID))
+			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
+			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
 
 			if ok1 && ok2 {
 				object.ReferencedByDetectionCameraIDObjects, err = SelectDetections(
@@ -667,7 +667,7 @@ func SelectCameras(ctx context.Context, tx *sqlx.Tx, where string, orderBy *stri
 					nil,
 					nil,
 					nil,
-					object.ID,
+					object.GetPrimaryKeyValue(),
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
@@ -684,8 +684,8 @@ func SelectCameras(ctx context.Context, tx *sqlx.Tx, where string, orderBy *stri
 
 		err = func() error {
 			thisCtx := thatCtx
-			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("%s{%v}", CameraTable, object.ID))
-			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.ID))
+			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
+			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
 
 			if ok1 && ok2 {
 				object.ReferencedByVideoCameraIDObjects, err = SelectVideos(
@@ -695,7 +695,7 @@ func SelectCameras(ctx context.Context, tx *sqlx.Tx, where string, orderBy *stri
 					nil,
 					nil,
 					nil,
-					object.ID,
+					object.GetPrimaryKeyValue(),
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {

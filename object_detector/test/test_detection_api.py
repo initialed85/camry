@@ -27,41 +27,29 @@ class TestDetectionApi(unittest.TestCase):
         pass
 
     def test_delete_detection(self) -> None:
-        """Test case for delete_detection
-
-        """
+        """Test case for delete_detection"""
         pass
 
     def test_get_detection(self) -> None:
-        """Test case for get_detection
-
-        """
+        """Test case for get_detection"""
         pass
 
     def test_get_detections(self) -> None:
-        """Test case for get_detections
-
-        """
+        """Test case for get_detections"""
         pass
 
     def test_patch_detection(self) -> None:
-        """Test case for patch_detection
-
-        """
+        """Test case for patch_detection"""
         pass
 
     def test_post_detections(self) -> None:
-        """Test case for post_detections
-
-        """
+        """Test case for post_detections"""
         pass
 
     def test_put_detection(self) -> None:
-        """Test case for put_detection
-
-        """
+        """Test case for put_detection"""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

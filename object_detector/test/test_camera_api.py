@@ -27,41 +27,29 @@ class TestCameraApi(unittest.TestCase):
         pass
 
     def test_delete_camera(self) -> None:
-        """Test case for delete_camera
-
-        """
+        """Test case for delete_camera"""
         pass
 
     def test_get_camera(self) -> None:
-        """Test case for get_camera
-
-        """
+        """Test case for get_camera"""
         pass
 
     def test_get_cameras(self) -> None:
-        """Test case for get_cameras
-
-        """
+        """Test case for get_cameras"""
         pass
 
     def test_patch_camera(self) -> None:
-        """Test case for patch_camera
-
-        """
+        """Test case for patch_camera"""
         pass
 
     def test_post_cameras(self) -> None:
-        """Test case for post_cameras
-
-        """
+        """Test case for post_cameras"""
         pass
 
     def test_put_camera(self) -> None:
-        """Test case for put_camera
-
-        """
+        """Test case for put_camera"""
         pass
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     unittest.main()

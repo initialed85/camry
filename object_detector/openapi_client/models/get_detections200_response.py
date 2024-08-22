@@ -23,10 +23,12 @@ from openapi_client.models.detection import Detection
 from typing import Optional, Set
 from typing_extensions import Self
 
+
 class GetDetections200Response(BaseModel):
     """
     GetDetections200Response
-    """ # noqa: E501
+    """  # noqa: E501
+
     error: Optional[StrictStr] = None
     objects: Optional[List[Detection]] = None
     status: StrictInt
@@ -38,7 +40,6 @@ class GetDetections200Response(BaseModel):
         validate_assignment=True,
         protected_namespaces=(),
     )
-
 
     def to_str(self) -> str:
         """Returns the string representation of the model using alias"""
@@ -64,8 +65,7 @@ class GetDetections200Response(BaseModel):
           were set at model initialization. Other fields with value `None`
           are ignored.
         """
-        excluded_fields: Set[str] = set([
-        ])
+        excluded_fields: Set[str] = set([])
 
         _dict = self.model_dump(
             by_alias=True,
@@ -78,7 +78,7 @@ class GetDetections200Response(BaseModel):
             for _item in self.objects:
                 if _item:
                     _items.append(_item.to_dict())
-            _dict['objects'] = _items
+            _dict["objects"] = _items
         return _dict
 
     @classmethod
@@ -90,12 +90,14 @@ class GetDetections200Response(BaseModel):
         if not isinstance(obj, dict):
             return cls.model_validate(obj)
 
-        _obj = cls.model_validate({
-            "error": obj.get("error"),
-            "objects": [Detection.from_dict(_item) for _item in obj["objects"]] if obj.get("objects") is not None else None,
-            "status": obj.get("status"),
-            "success": obj.get("success")
-        })
+        _obj = cls.model_validate(
+            {
+                "error": obj.get("error"),
+                "objects": [Detection.from_dict(_item) for _item in obj["objects"]]
+                if obj.get("objects") is not None
+                else None,
+                "status": obj.get("status"),
+                "success": obj.get("success"),
+            }
+        )
         return _obj
-
-

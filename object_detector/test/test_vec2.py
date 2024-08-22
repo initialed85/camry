@@ -16,6 +16,7 @@ import unittest
 
 from openapi_client.models.vec2 import Vec2
 
+
 class TestVec2(unittest.TestCase):
     """Vec2 unit test stubs"""
 
@@ -27,9 +28,9 @@ class TestVec2(unittest.TestCase):
 
     def make_instance(self, include_optional) -> Vec2:
         """Test Vec2
-            include_optional is a boolean, when False only required
-            params are included, when True both required and
-            optional params are included """
+        include_optional is a boolean, when False only required
+        params are included, when True both required and
+        optional params are included"""
         # uncomment below to create an instance of `Vec2`
         """
         model = Vec2()
@@ -48,5 +49,6 @@ class TestVec2(unittest.TestCase):
         # inst_req_only = self.make_instance(include_optional=False)
         # inst_req_and_optional = self.make_instance(include_optional=True)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
