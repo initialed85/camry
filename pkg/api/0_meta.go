@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"net/http"
 	"sync"
+	"time"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/gomodule/redigo/redis"
@@ -16,6 +17,8 @@ import (
 	"github.com/initialed85/djangolang/pkg/types"
 	"github.com/jmoiron/sqlx"
 	"gopkg.in/yaml.v2"
+
+	"net/http/pprof"
 )
 
 var mu = new(sync.Mutex)
@@ -23,6 +26,7 @@ var newFromItemFnByTableName = make(map[string]func(map[string]any) (any, error)
 var getRouterFnByPattern = make(map[string]server.GetRouterFn)
 var allObjects = make([]any, 0)
 var openApi *types.OpenAPI
+var profile = helpers.GetEnvironmentVariable("DJANGOLANG_PROFILE") == "1"
 
 func isRequired(columns map[string]*introspect.Column, columnName string) bool {
 	column := columns[columnName]
@@ -90,6 +94,75 @@ func GetRouter(db *sqlx.DB, redisPool *redis.Pool, httpMiddlewares []server.HTTP
 		r.Mount(pattern, getRouterFn(db, redisPool, httpMiddlewares, objectMiddlewares, waitForChange))
 	}
 	mu.Unlock()
+
+	healthzMu := new(sync.Mutex)
+	healthzExpiresAt := time.Now().Add(-time.Second * 5)
+	var lastHealthz error
+
+	healthz := func(ctx context.Context) error {
+		healthzMu.Lock()
+		defer healthzMu.Unlock()
+
+		if time.Now().Before(healthzExpiresAt) {
+			return lastHealthz
+		}
+
+		lastHealthz = func() error {
+			err := db.PingContext(ctx)
+			if err != nil {
+				return fmt.Errorf("db ping failed: %v", err)
+			}
+
+			redisConn, err := redisPool.GetContext(ctx)
+			if err != nil {
+				return fmt.Errorf("redis pool get failed: %v", err)
+			}
+
+			defer func() {
+				_ = redisConn.Close()
+			}()
+
+			_, err = redisConn.Do("PING")
+			if err != nil {
+				return fmt.Errorf("redis ping failed: %v", err)
+			}
+
+			return nil
+		}()
+
+		healthzExpiresAt = time.Now().Add(time.Second * 5)
+
+		return lastHealthz
+	}
+
+	if profile {
+		r.HandleFunc("/debug/pprof/cmdline", pprof.Cmdline)
+		r.HandleFunc("/debug/pprof/profile", pprof.Profile)
+		r.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+		r.HandleFunc("/debug/pprof/trace", pprof.Trace)
+
+		r.Handle("/debug/pprof/goroutine", pprof.Handler("goroutine"))
+		r.Handle("/debug/pprof/heap", pprof.Handler("heap"))
+		r.Handle("/debug/pprof/allocs", pprof.Handler("allocs"))
+		r.Handle("/debug/pprof/threadcreate", pprof.Handler("threadcreate"))
+		r.Handle("/debug/pprof/block", pprof.Handler("block"))
+		r.Handle("/debug/pprof/mutex", pprof.Handler("mutex"))
+
+		r.HandleFunc("/debug/pprof/", pprof.Index)
+	}
+
+	r.Get("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		ctx, cancel := context.WithTimeout(r.Context(), time.Second*5)
+		defer cancel()
+
+		err := healthz(ctx)
+		if err != nil {
+			helpers.HandleErrorResponse(w, http.StatusInternalServerError, err)
+			return
+		}
+
+		helpers.HandleObjectsResponse(w, http.StatusOK, nil)
+	})
 
 	r.Get("/openapi.json", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-type", "application/json")

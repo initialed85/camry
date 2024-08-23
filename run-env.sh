@@ -2,28 +2,39 @@
 
 set -e
 
+profile=""
+if [[ "${1}" == "full" ]]; then
+    profile="--profile full"
+fi
+
 function teardown() {
-    docker compose down --remove-orphans --volumes
+    # shellcheck disable=SC2086
+    docker compose ${profile} down --remove-orphans --volumes
 }
 
 trap teardown exit
 
+# shellcheck disable=SC2086
 docker compose pull
 
-docker compose build
+# shellcheck disable=SC2086
+docker compose ${profile} build
 
 if ! docker compose up -d; then
-    docker compose logs -t
+    # shellcheck disable=SC2086
+    docker compose ${profile} logs -t
     echo "error: docker compose up failed; scroll up for logs"
     exit 1
 fi
 
 docker compose exec -it postgres psql -U postgres -c 'ALTER SYSTEM SET wal_level = logical;'
 
-docker compose exec -it postgres psql -U postgres -c "ALTER DATABASE camry SET log_statement = 'all';"
+# docker compose exec -it postgres psql -U postgres -c "ALTER DATABASE camry SET log_statement = 'all';"
 
 docker compose restart postgres
 
-docker compose up -d
+# shellcheck disable=SC2086
+DJANGOLANG_PROFILE="${DJANGOLANG_PROFILE:-0}" docker compose ${profile} up -d
 
-docker compose logs -f -t
+# shellcheck disable=SC2086
+docker compose ${profile} logs -f -t

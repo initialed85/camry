@@ -7,7 +7,7 @@ from typing import List, cast
 from ultralytics import YOLO
 from ultralytics.models.yolo.detect.predict import Results
 
-from .openapi_client import (
+from .api.openapi_client import (
     ApiClient,
     Configuration,
     CameraApi,
@@ -26,6 +26,7 @@ def do(
     camera: Camera,
     video_api: VideoApi,
     detection_api: DetectionApi,
+    source_path: str,
     one_shot_video_file_name: str | None = None,
 ):
     videos_response = None
@@ -48,9 +49,7 @@ def do(
         return
 
     for video in videos:
-        print(
-            f"{video.file_name} - {video.status} - {video.started_at} - {video.duration}"
-        )
+        print(f"{video.file_name} - {video.status} - {video.started_at} - {video.duration}")
 
         before = datetime.datetime.now()
 
@@ -64,11 +63,14 @@ def do(
                 print(f"deleting old detection {detection.id}")
                 detection_api.delete_detection(detection.id)
 
+        if video.file_name is None:
+            continue
+
         video_api.patch_video(video.id, Video(status="detecting"))
 
         model = YOLO("yolov8n.pt")
         results = model(
-            f"media/{video.file_name}",
+            os.path.join(source_path, video.file_name),
             stream=True,  # this causes the results variable to be a generator
             vid_stride=4,
             verbose=debug,
@@ -78,9 +80,7 @@ def do(
 
         for result in cast(Results, results):
 
-            for box in (
-                result.boxes or []
-            ):  # should be one box per result (because stream=True)
+            for box in result.boxes or []:  # should be one box per result (because stream=True)
                 class_id = [int(v) for v in box.cls][0]
                 class_name = result.names[class_id]
                 confidence = [float(v) for v in box.conf][0]
@@ -114,9 +114,7 @@ def do(
                         Y=cy,
                     )
 
-                    print(
-                        f"{class_name} ({class_id}) @ {confidence} {[(ltx, lty), (rbx, rby)]} {(cx, cy)}"
-                    )
+                    print(f"{class_name} ({class_id}) @ {confidence} {[(ltx, lty), (rbx, rby)]} {(cx, cy)}")
 
                     detection = Detection(
                         class_id=class_id,
@@ -148,9 +146,7 @@ def do(
 
         after = datetime.datetime.now()
 
-        print(
-            f"{video.file_name} handled in {after - before} (request took {after - before_request})"
-        )
+        print(f"{video.file_name} handled in {after - before} (request took {after - before_request})")
 
         if one_shot_video_file_name:
             break
@@ -168,6 +164,10 @@ def run():
     api_url = os.getenv("API_URL")
     if not api_url:
         raise ValueError("API_URL env var empty or unset")
+
+    source_path = os.getenv("SOURCE_PATH")
+    if not source_path:
+        raise ValueError("SOURCE_PATH env var empty or unset")
 
     one_shot_file_name = os.getenv("ONE_SHOT_FILE_NAME", "").strip() or None
 
@@ -195,7 +195,7 @@ def run():
 
     while 1:
         try:
-            do(camera, video_api, detection_api, one_shot_file_name)
+            do(camera, video_api, detection_api, source_path, one_shot_file_name)
 
             if one_shot_file_name:
                 break

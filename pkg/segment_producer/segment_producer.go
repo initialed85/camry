@@ -254,28 +254,43 @@ func runCommand(
 				return
 			}
 
-			// log.Printf("watchdog okay at %v", watchdogAge)
 			time.Sleep(time.Second * 1)
 		}
 	}()
 
-	err := cmd.Run()
-	if err != nil {
-		return fmt.Errorf(
-			"command %v %v failed; err: %v",
-			executable,
-			strings.Join(arguments, " "),
-			err,
-		)
-	}
+	errs := make(chan error, 1)
 
-	if readErr != nil {
-		return fmt.Errorf(
-			"command %v %v failed during read; err: %v",
-			executable,
-			strings.Join(arguments, " "),
-			readErr,
-		)
+	go func() {
+		errs <- func() error {
+			err := cmd.Run()
+			if err != nil {
+				return fmt.Errorf(
+					"command %v %v failed; err: %v",
+					executable,
+					strings.Join(arguments, " "),
+					err,
+				)
+			}
+
+			if readErr != nil {
+				return fmt.Errorf(
+					"command %v %v failed during read; err: %v",
+					executable,
+					strings.Join(arguments, " "),
+					readErr,
+				)
+			}
+			return nil
+		}()
+	}()
+
+	select {
+	case <-ctx.Done():
+		break
+	case err := <-errs:
+		if err != nil {
+			return err
+		}
 	}
 
 	return nil

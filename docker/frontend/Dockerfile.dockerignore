@@ -1,0 +1,6 @@
+**
+
+!docker/frontend/default.conf
+!frontend
+
+frontend/node_modules

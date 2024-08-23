@@ -13,20 +13,42 @@ export interface VideoTableProps {
 }
 
 export function VideoTable(props: VideoTableProps) {
-  const { data, error, isLoading } = useQuery("get", "/api/videos", {
+  const { data: videosData } = useQuery("get", "/api/videos", {
     params: {
       query: {
-        started_at__desc: "",
         camera_id__eq: props.cameraId || undefined,
-        started_at__gte: props.date
-          ? `${props.date}T00:00:00+08:00`
-          : undefined,
-        started_at__lte: props.date
-          ? `${props.date}T23:59:59+08:00`
-          : undefined,
+        started_at__gte: props.date ? `${props.date}T00:00:00+08:00` : undefined,
+        started_at__lte: props.date ? `${props.date}T23:59:59+08:00` : undefined,
+        started_at__desc: "",
       },
     },
   });
+
+  // const { data: detectionsData } = useQuery("get", "/api/detections", {
+  //   params: {
+  //     query: {
+  //       camera_id__eq: props.cameraId || undefined,
+  //       seen_at__gte: props.date ? `${props.date}T00:00:00+08:00` : undefined,
+  //       seen_at__lte: props.date ? `${props.date}T23:59:59+08:00` : undefined,
+  //       seen_at__desc: "",
+  //     },
+  //   },
+  // });
+
+  const classNamesByVideoId = new Map<string, Set<string>>();
+  // detectionsData?.objects?.forEach((detection) => {
+  //   if (!detection?.video_id || !detection.class_name) {
+  //     return;
+  //   }
+
+  //   let classNames = classNamesByVideoId.get(detection?.video_id);
+  //   if (!classNames) {
+  //     classNames = new Set<string>();
+  //   }
+
+  //   classNames.add(detection?.class_name);
+  //   classNamesByVideoId.set(detection?.video_id, classNames);
+  // });
 
   const truncateStyleProps = props.responsive
     ? {
@@ -66,8 +88,8 @@ export function VideoTable(props: VideoTableProps) {
         </tr>
       </thead>
       <tbody>
-        {data?.objects?.length ? (
-          data?.objects?.map((video) => {
+        {videosData?.objects?.length ? (
+          videosData?.objects?.map((video) => {
             if (!video.started_at) {
               return undefined;
             }
@@ -77,29 +99,19 @@ export function VideoTable(props: VideoTableProps) {
 
             const available = video?.status !== "recording";
 
-            const minutes = Math.floor(
-              (video?.duration || 0) / (1_000_000_000 * 60),
-            );
-            const seconds = Math.floor(
-              (video?.duration || 0) / 1_000_000_000 - minutes * 60,
-            );
+            const minutes = Math.floor((video?.duration || 0) / (1_000_000_000 * 60));
+            const seconds = Math.floor((video?.duration || 0) / 1_000_000_000 - minutes * 60);
 
             const fileSize = (video?.file_size || 0.0).toFixed(2);
 
             var cameraName =
-              video?.camera_id_object && video?.camera_id_object?.name
-                ? video.camera_id_object.name
-                : "-";
+              video?.camera_id_object && video?.camera_id_object?.name ? video.camera_id_object.name : "-";
 
             if (props.responsive) {
               cameraName = cameraName[0];
             }
 
-            const statusText = (
-              video?.status
-                ? video.status[0].toUpperCase() + video.status.slice(1)
-                : "-"
-            ).trim();
+            const statusText = (video?.status ? video.status[0].toUpperCase() + video.status.slice(1) : "-").trim();
 
             const status =
               statusText === "Recording" ? (
@@ -126,11 +138,7 @@ export function VideoTable(props: VideoTableProps) {
 
             if (video?.thumbnail_name) {
               thumbnail = (
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`/media/${video?.thumbnail_name}`}
-                >
+                <a target="_blank" rel="noreferrer" href={`/media/${video?.thumbnail_name}`}>
                   <img
                     style={{ width: props.responsive ? 160 : 320 }}
                     alt={`still from ${video?.camera_id_object?.name} @ ${props.date} ${startedAt}`}
@@ -144,14 +152,16 @@ export function VideoTable(props: VideoTableProps) {
               thumbnail = <ErrorOutlineOutlinedIcon />;
             }
 
+            const rawClassNames = video.id && classNamesByVideoId.get(video.id)?.keys();
+            const classNames = (rawClassNames ? Array.from(rawClassNames).sort() : []).join(", ");
+
             return (
               <tr key={video.id}>
                 <td>{cameraName}</td>
                 <td>
                   <Typography>
                     {startedAt.toTimeString().split(" ")[0]} <br />
-                    {endedAt ? endedAt.toTimeString().split(" ")[0] : "-"}{" "}
-                    <br />
+                    {endedAt ? endedAt.toTimeString().split(" ")[0] : "-"} <br />
                   </Typography>
                   <Typography color="neutral">
                     {minutes}m{seconds}s
@@ -159,7 +169,7 @@ export function VideoTable(props: VideoTableProps) {
                   <Typography color="neutral">{fileSize} MB</Typography>
                 </td>
                 <td>{status}</td>
-                <td>-</td>
+                <td>{classNames}</td>
                 <td
                   style={{
                     height: props.responsive ? 90 : 180,
@@ -173,11 +183,7 @@ export function VideoTable(props: VideoTableProps) {
                 </td>
                 <td>
                   {available ? (
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`/media/${video?.file_name}`}
-                    >
+                    <a target="_blank" rel="noreferrer" href={`/media/${video?.file_name}`}>
                       <CloudDownloadOutlinedIcon color={"success"} />
                     </a>
                   ) : (
@@ -190,9 +196,7 @@ export function VideoTable(props: VideoTableProps) {
         ) : (
           <tr>
             <td colSpan={6}>
-              <Typography color={"neutral"}>
-                (No videos for the selected camera / date)
-              </Typography>
+              <Typography color={"neutral"}>(No videos for the selected camera / date)</Typography>
             </td>
           </tr>
         )}

@@ -37,6 +37,11 @@ done
 echo -e "\ngenerating the api..."
 DJANGOLANG_API_ROOT=/api DJANGOLANG_PACKAGE_NAME=api POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR!11 djangolang template
 
+if test -e ./cmd/api; then
+    rm -frv ./cmd/api
+fi
+cp -frv ./pkg/api/cmd ./cmd/api
+
 # dump out the OpenAPI v3 schema for the Djangolang API
 mkdir -p ./schema
 DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
@@ -53,7 +58,12 @@ cd ..
 
 # generate the client for use by Python code
 mkdir -p object_detector/
-openapi-generator-cli generate -i schema/openapi.json -g python -o object_detector/
+
+if test -e object_detector/api; then
+    rm -frv object_detector/api
+fi
+
+openapi-generator-cli generate -i schema/openapi.json -g python -o object_detector/api --strict-spec true
 
 # TODO: disabled for now- some bug in the 3rd party generator doesn't like $ref or something
 # # generate the client for use by Go code
