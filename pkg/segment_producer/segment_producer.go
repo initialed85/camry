@@ -386,19 +386,19 @@ func Run() error {
 		log.Fatalf("err: %v", err)
 	}
 	defer func() {
-		_ = db.Close()
+		db.Close()
 	}()
 
 	var camera *api.Camera
 
 	err = func() error {
-		tx, err := db.BeginTxx(ctx, nil)
+		tx, err := db.Begin(ctx)
 		if err != nil {
 			return err
 		}
 
 		defer func() {
-			_ = tx.Rollback()
+			_ = tx.Rollback(ctx)
 		}()
 
 		camera, err = api.SelectCamera(
@@ -416,7 +416,7 @@ func Run() error {
 			return err
 		}
 
-		err = tx.Commit()
+		err = tx.Commit(ctx)
 		if err != nil {
 			return err
 		}
@@ -427,67 +427,68 @@ func Run() error {
 		return err
 	}
 
-	err = func() error {
-		tx, err := db.BeginTxx(ctx, nil)
-		if err != nil {
-			return err
-		}
+	// TODO: I think this is too memory hungry, at least until I work out what's going on
+	// err = func() error {
+	// 	tx, err := db.Begin(ctx)
+	// 	if err != nil {
+	// 		return err
+	// 	}
 
-		defer func() {
-			_ = tx.Rollback()
-		}()
+	// 	defer func() {
+	// 		_ = tx.Rollback(ctx)
+	// 	}()
 
-		orphanedVideos, err := api.SelectVideos(
-			ctx,
-			tx,
-			fmt.Sprintf(
-				"%v = $$?? AND %v = $$??",
-				api.VideoTableCameraIDColumn,
-				api.VideoTableStatusColumn,
-			),
-			nil,
-			nil,
-			nil,
-			camera.ID,
-			"recording",
-		)
-		if err != nil {
-			return err
-		}
+	// 	orphanedVideos, err := api.SelectVideos(
+	// 		ctx,
+	// 		tx,
+	// 		fmt.Sprintf(
+	// 			"%v = $$?? AND %v = $$??",
+	// 			api.VideoTableCameraIDColumn,
+	// 			api.VideoTableStatusColumn,
+	// 		),
+	// 		nil,
+	// 		nil,
+	// 		nil,
+	// 		camera.ID,
+	// 		"recording",
+	// 	)
+	// 	if err != nil {
+	// 		return err
+	// 	}
 
-		for _, video := range orphanedVideos {
-			log.Printf("marking orphaned video %s as failed", video.ID)
+	// 	for _, video := range orphanedVideos {
+	// 		log.Printf("marking orphaned video %s as failed", video.ID)
 
-			filePath := filepath.Join(destinationPath, video.FileName)
+	// 		filePath := filepath.Join(destinationPath, video.FileName)
 
-			_, fileName := filepath.Split(filePath)
-			video.FileName = fileName
+	// 		_, fileName := filepath.Split(filePath)
+	// 		video.FileName = fileName
 
-			ext := filepath.Ext(fileName)
-			thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
-			err = GenerateThumbnail(filePath, thumbnailPath)
-			if err == nil {
-				_, thumbnailName := filepath.Split(thumbnailPath)
-				video.ThumbnailName = &thumbnailName
-			}
+	// 		ext := filepath.Ext(fileName)
+	// 		thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
+	// 		err = GenerateThumbnail(filePath, thumbnailPath)
+	// 		if err == nil {
+	// 			_, thumbnailName := filepath.Split(thumbnailPath)
+	// 			video.ThumbnailName = &thumbnailName
+	// 		}
 
-			video.Status = helpers.Ptr("failed")
-			err = video.Update(ctx, tx, false)
-			if err != nil {
-				return err
-			}
-		}
+	// 		video.Status = helpers.Ptr("failed")
+	// 		err = video.Update(ctx, tx, false)
+	// 		if err != nil {
+	// 			return err
+	// 		}
+	// 	}
 
-		err = tx.Commit()
-		if err != nil {
-			return err
-		}
+	// 	err = tx.Commit(ctx)
+	// 	if err != nil {
+	// 		return err
+	// 	}
 
-		return nil
-	}()
-	if err != nil {
-		return fmt.Errorf("failed to handle orphaned videos: %v", err)
-	}
+	// 	return nil
+	// }()
+	// if err != nil {
+	// 	return fmt.Errorf("failed to handle orphaned videos: %v", err)
+	// }
 
 	log.Printf("api confirmed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
 
@@ -498,13 +499,13 @@ func Run() error {
 		mu.Lock()
 		defer mu.Unlock()
 
-		tx, err := db.BeginTxx(ctx, nil)
+		tx, err := db.Begin(ctx)
 		if err != nil {
 			return err
 		}
 
 		defer func() {
-			_ = tx.Rollback()
+			_ = tx.Rollback(ctx)
 		}()
 
 		if video != nil {
@@ -552,7 +553,7 @@ func Run() error {
 			return err
 		}
 
-		err = tx.Commit()
+		err = tx.Commit(ctx)
 		if err != nil {
 			return err
 		}
@@ -568,13 +569,13 @@ func Run() error {
 			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can update in the database")
 		}
 
-		tx, err := db.BeginTxx(ctx, nil)
+		tx, err := db.Begin(ctx)
 		if err != nil {
 			return err
 		}
 
 		defer func() {
-			_ = tx.Rollback()
+			_ = tx.Rollback(ctx)
 		}()
 
 		video.FileSize = helpers.Ptr(fileSize)
@@ -593,7 +594,7 @@ func Run() error {
 			return err
 		}
 
-		err = tx.Commit()
+		err = tx.Commit(ctx)
 		if err != nil {
 			return err
 		}
@@ -609,13 +610,13 @@ func Run() error {
 			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can update in the database")
 		}
 
-		tx, err := db.BeginTxx(ctx, nil)
+		tx, err := db.Begin(ctx)
 		if err != nil {
 			return err
 		}
 
 		defer func() {
-			_ = tx.Rollback()
+			_ = tx.Rollback(ctx)
 		}()
 
 		_, fileName := filepath.Split(filePath)
@@ -652,7 +653,7 @@ func Run() error {
 			return err
 		}
 
-		err = tx.Commit()
+		err = tx.Commit(ctx)
 		if err != nil {
 			return err
 		}

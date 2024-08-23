@@ -7,10 +7,8 @@ require (
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/uuid v1.6.0
-	github.com/initialed85/djangolang v0.0.64
+	github.com/initialed85/djangolang v0.0.67
 	github.com/jackc/pgx/v5 v5.6.0
-	github.com/jmoiron/sqlx v1.4.0
-	github.com/lib/pq v1.10.9
 	golang.org/x/exp v0.0.0-20240823005443-9b4947da3948
 	gopkg.in/yaml.v2 v2.4.0
 )
@@ -18,8 +16,10 @@ require (
 require (
 	github.com/go-test/deep v1.0.8 // indirect
 	github.com/jackc/pgtype v1.14.3 // indirect
+	github.com/jackc/puddle/v2 v2.2.1 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/paulmach/orb v0.11.1 // indirect
+	golang.org/x/sync v0.8.0 // indirect
 )
 
 require (
