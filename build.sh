@@ -20,6 +20,11 @@ if ! command -v npm >/dev/null 2>&1; then
     exit 1
 fi
 
+# we don't need natscli for tooling, but it's a handy debug tool
+if ! command -v nats >/dev/null 2>&1; then
+    go install github.com/nats-io/natscli/nats@latest
+fi
+
 # ensure we've got a djangolang executable available (required for templating)
 if [[ "${FORCE_UPDATE_DJANGOLANG}" == "1" ]] || ! command -v djangolang >/dev/null 2>&1; then
     GOPRIVATE="${GOPRIVATE:-}" go install github.com/initialed85/djangolang@latest

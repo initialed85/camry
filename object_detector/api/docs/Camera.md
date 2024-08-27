@@ -5,6 +5,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**claim_duration** | **int** |  | [optional] 
+**claim_expires_at** | **datetime** |  | [optional] 
+**claimed_at** | **datetime** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **deleted_at** | **datetime** |  | [optional] 
 **id** | **str** |  | [optional] 

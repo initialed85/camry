@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,6 +27,9 @@ class Camera(BaseModel):
     """
     Camera
     """ # noqa: E501
+    claim_duration: Optional[StrictInt] = None
+    claim_expires_at: Optional[datetime] = None
+    claimed_at: Optional[datetime] = None
     created_at: Optional[datetime] = None
     deleted_at: Optional[datetime] = None
     id: Optional[StrictStr] = None
@@ -36,7 +39,7 @@ class Camera(BaseModel):
     referenced_by_video_camera_id_objects: Optional[List[Video]] = None
     stream_url: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "name", "referenced_by_detection_camera_id_objects", "referenced_by_video_camera_id_objects", "stream_url", "updated_at"]
+    __properties: ClassVar[List[str]] = ["claim_duration", "claim_expires_at", "claimed_at", "created_at", "deleted_at", "id", "last_seen", "name", "referenced_by_detection_camera_id_objects", "referenced_by_video_camera_id_objects", "stream_url", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,11 +99,6 @@ class Camera(BaseModel):
         if self.deleted_at is None and "deleted_at" in self.model_fields_set:
             _dict['deleted_at'] = None
 
-        # set to None if last_seen (nullable) is None
-        # and model_fields_set contains the field
-        if self.last_seen is None and "last_seen" in self.model_fields_set:
-            _dict['last_seen'] = None
-
         # set to None if referenced_by_detection_camera_id_objects (nullable) is None
         # and model_fields_set contains the field
         if self.referenced_by_detection_camera_id_objects is None and "referenced_by_detection_camera_id_objects" in self.model_fields_set:
@@ -123,6 +121,9 @@ class Camera(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "claim_duration": obj.get("claim_duration"),
+            "claim_expires_at": obj.get("claim_expires_at"),
+            "claimed_at": obj.get("claimed_at"),
             "created_at": obj.get("created_at"),
             "deleted_at": obj.get("deleted_at"),
             "id": obj.get("id"),

@@ -22,7 +22,7 @@ docker compose ${profile} build
 
 if ! docker compose up -d; then
     # shellcheck disable=SC2086
-    docker compose ${profile} logs -t
+    docker compose ${profile} logs -t migrate
     echo "error: docker compose up failed; scroll up for logs"
     exit 1
 fi

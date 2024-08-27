@@ -37,6 +37,9 @@ class TestVideo(unittest.TestCase):
             return Video(
                 camera_id = '',
                 camera_id_object = openapi_client.models.camera.Camera(
+                    claim_duration = 56, 
+                    claim_expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                    claimed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                     id = '', 
@@ -51,6 +54,9 @@ class TestVideo(unittest.TestCase):
                                 ], 
                             camera_id = '', 
                             camera_id_object = openapi_client.models.camera.Camera(
+                                claim_duration = 56, 
+                                claim_expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                claimed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                 deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                 id = '', 
@@ -136,6 +142,9 @@ class TestVideo(unittest.TestCase):
                             ], 
                         camera_id = '', 
                         camera_id_object = openapi_client.models.camera.Camera(
+                            claim_duration = 56, 
+                            claim_expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                            claimed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                             created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                             deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                             id = '', 
@@ -145,6 +154,9 @@ class TestVideo(unittest.TestCase):
                                 openapi_client.models.video.Video(
                                     camera_id = '', 
                                     camera_id_object = openapi_client.models.camera.Camera(
+                                        claim_duration = 56, 
+                                        claim_expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                        claimed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                         deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                         id = '', 

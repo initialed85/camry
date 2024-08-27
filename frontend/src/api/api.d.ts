@@ -105,6 +105,12 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     Camera: {
+      /** Format: int64 */
+      claim_duration?: number;
+      /** Format: date-time */
+      claim_expires_at?: string;
+      /** Format: date-time */
+      claimed_at?: string;
       /** Format: date-time */
       created_at?: string;
       /** Format: date-time */
@@ -112,7 +118,7 @@ export interface components {
       /** Format: uuid */
       id?: string;
       /** Format: date-time */
-      last_seen?: string | null;
+      last_seen?: string;
       name?: string;
       referenced_by_detection_camera_id_objects?: components["schemas"]["NullableArrayOfDetection"];
       referenced_by_video_camera_id_objects?: components["schemas"]["NullableArrayOfVideo"];
@@ -550,6 +556,150 @@ export interface operations {
         last_seen__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
         last_seen__asc?: string;
+        /** @description SQL = operator */
+        claimed_at__eq?: string;
+        /** @description SQL != operator */
+        claimed_at__ne?: string;
+        /** @description SQL > operator, may not work with all column types */
+        claimed_at__gt?: string;
+        /** @description SQL >= operator, may not work with all column types */
+        claimed_at__gte?: string;
+        /** @description SQL < operator, may not work with all column types */
+        claimed_at__lt?: string;
+        /** @description SQL <= operator, may not work with all column types */
+        claimed_at__lte?: string;
+        /** @description SQL IN operator, permits comma-separated values */
+        claimed_at__in?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        claimed_at__nin?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        claimed_at__notin?: string;
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
+        claimed_at__isnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        claimed_at__nisnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        claimed_at__isnotnull?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__l?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__like?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__nl?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__nlike?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__notlike?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__il?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__ilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__nil?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__nilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claimed_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        claimed_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        claimed_at__asc?: string;
+        /** @description SQL = operator */
+        claim_duration__eq?: number;
+        /** @description SQL != operator */
+        claim_duration__ne?: number;
+        /** @description SQL > operator, may not work with all column types */
+        claim_duration__gt?: number;
+        /** @description SQL >= operator, may not work with all column types */
+        claim_duration__gte?: number;
+        /** @description SQL < operator, may not work with all column types */
+        claim_duration__lt?: number;
+        /** @description SQL <= operator, may not work with all column types */
+        claim_duration__lte?: number;
+        /** @description SQL IN operator, permits comma-separated values */
+        claim_duration__in?: number;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        claim_duration__nin?: number;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        claim_duration__notin?: number;
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
+        claim_duration__isnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        claim_duration__nisnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        claim_duration__isnotnull?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__l?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__like?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__nl?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__nlike?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__notlike?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__il?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__ilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__nil?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__nilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_duration__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        claim_duration__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        claim_duration__asc?: string;
+        /** @description SQL = operator */
+        claim_expires_at__eq?: string;
+        /** @description SQL != operator */
+        claim_expires_at__ne?: string;
+        /** @description SQL > operator, may not work with all column types */
+        claim_expires_at__gt?: string;
+        /** @description SQL >= operator, may not work with all column types */
+        claim_expires_at__gte?: string;
+        /** @description SQL < operator, may not work with all column types */
+        claim_expires_at__lt?: string;
+        /** @description SQL <= operator, may not work with all column types */
+        claim_expires_at__lte?: string;
+        /** @description SQL IN operator, permits comma-separated values */
+        claim_expires_at__in?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        claim_expires_at__nin?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        claim_expires_at__notin?: string;
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
+        claim_expires_at__isnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        claim_expires_at__nisnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        claim_expires_at__isnotnull?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__l?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__like?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__nl?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__nlike?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__notlike?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__il?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__ilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__nil?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__nilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        claim_expires_at__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        claim_expires_at__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        claim_expires_at__asc?: string;
       };
       header?: never;
       path?: never;

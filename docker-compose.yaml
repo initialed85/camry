@@ -1,4 +1,5 @@
 volumes:
+  postgres:
   media:
 
 services:
@@ -12,6 +13,8 @@ services:
       timeout: 4s
       start_period: 10s
       test: ["CMD", "pg_isready", "-h", "localhost", "-U", "postgres"]
+    volumes:
+      - postgres:/home/postgres/pgdata/data
     environment:
       - "POSTGRES_DB=camry"
       - "POSTGRES_PASSWORD=NoNVR!11"
@@ -23,7 +26,7 @@ services:
       postgres:
         condition: service_healthy
     image: migrate/migrate:v4.17.1
-    restart: on-failure
+    restart: no
     stop_grace_period: 0s
     volumes:
       - ./database/migrations:/migrations
@@ -38,7 +41,7 @@ services:
         condition: service_completed_successfully
     # this obscure image is chosen because it has x86_64 and arm64 support
     image: duvel/postgis:15-3.3
-    restart: on-failure
+    restart: no
     stop_grace_period: 0s
     entrypoint: ["/bin/bash", "-c"]
     command: "PAGER=cat PGPASSWORD=NoNVR!11 psql -h postgres -p 5432 -U postgres -a camry -c 'VACUUM FULL; VACUUM ANALYZE;'"
@@ -58,7 +61,15 @@ services:
       - "BASE_URL=/"
       - "SWAGGER_JSON_URL=http://host.docker.internal:7070/api/openapi.json"
     ports:
-      - "7071:8080"
+      - "7071:8080/tcp"
+
+  nats:
+    restart: unless-stopped
+    stop_grace_period: 0s
+    image: nats:2.10.18
+    ports:
+      - "4222:4222/tcp"
+    command: ["-js"]
 
   api:
     profiles:

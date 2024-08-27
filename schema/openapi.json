@@ -1597,6 +1597,681 @@
               "type": "string"
             },
             "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claimed_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = operator"
+          },
+          {
+            "name": "claimed_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != operator"
+          },
+          {
+            "name": "claimed_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e operator, may not work with all column types"
+          },
+          {
+            "name": "claimed_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= operator, may not work with all column types"
+          },
+          {
+            "name": "claimed_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c operator, may not work with all column types"
+          },
+          {
+            "name": "claimed_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= operator, may not work with all column types"
+          },
+          {
+            "name": "claimed_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claimed_at__nin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claimed_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claimed_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claimed_at__nisnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claimed_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claimed_at__l",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__nl",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__nlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__il",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__nil",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__nilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claimed_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claimed_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_duration__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL = operator"
+          },
+          {
+            "name": "claim_duration__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL != operator"
+          },
+          {
+            "name": "claim_duration__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL \u003e operator, may not work with all column types"
+          },
+          {
+            "name": "claim_duration__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL \u003e= operator, may not work with all column types"
+          },
+          {
+            "name": "claim_duration__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL \u003c operator, may not work with all column types"
+          },
+          {
+            "name": "claim_duration__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL \u003c= operator, may not work with all column types"
+          },
+          {
+            "name": "claim_duration__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claim_duration__nin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claim_duration__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claim_duration__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_duration__nisnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_duration__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_duration__l",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__nl",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__nlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__il",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__nil",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__nilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_duration__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_duration__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_expires_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = operator"
+          },
+          {
+            "name": "claim_expires_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != operator"
+          },
+          {
+            "name": "claim_expires_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e operator, may not work with all column types"
+          },
+          {
+            "name": "claim_expires_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= operator, may not work with all column types"
+          },
+          {
+            "name": "claim_expires_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c operator, may not work with all column types"
+          },
+          {
+            "name": "claim_expires_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= operator, may not work with all column types"
+          },
+          {
+            "name": "claim_expires_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claim_expires_at__nin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claim_expires_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN operator, permits comma-separated values"
+          },
+          {
+            "name": "claim_expires_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_expires_at__nisnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_expires_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_expires_at__l",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__nl",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__nlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__il",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__nil",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__nilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "claim_expires_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "claim_expires_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -8036,6 +8711,18 @@
       "Camera": {
         "type": "object",
         "properties": {
+          "claim_duration": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "claim_expires_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "claimed_at": {
+            "type": "string",
+            "format": "date-time"
+          },
           "created_at": {
             "type": "string",
             "format": "date-time"
@@ -8051,8 +8738,7 @@
           },
           "last_seen": {
             "type": "string",
-            "format": "date-time",
-            "nullable": true
+            "format": "date-time"
           },
           "name": {
             "type": "string"

@@ -32,37 +32,46 @@ import (
 )
 
 type Camera struct {
-	ID                                   uuid.UUID    `json:"id"`
-	CreatedAt                            time.Time    `json:"created_at"`
-	UpdatedAt                            time.Time    `json:"updated_at"`
-	DeletedAt                            *time.Time   `json:"deleted_at"`
-	Name                                 string       `json:"name"`
-	StreamURL                            string       `json:"stream_url"`
-	LastSeen                             *time.Time   `json:"last_seen"`
-	ReferencedByVideoCameraIDObjects     []*Video     `json:"referenced_by_video_camera_id_objects"`
-	ReferencedByDetectionCameraIDObjects []*Detection `json:"referenced_by_detection_camera_id_objects"`
+	ID                                   uuid.UUID     `json:"id"`
+	CreatedAt                            time.Time     `json:"created_at"`
+	UpdatedAt                            time.Time     `json:"updated_at"`
+	DeletedAt                            *time.Time    `json:"deleted_at"`
+	Name                                 string        `json:"name"`
+	StreamURL                            string        `json:"stream_url"`
+	LastSeen                             time.Time     `json:"last_seen"`
+	ClaimedAt                            time.Time     `json:"claimed_at"`
+	ClaimDuration                        time.Duration `json:"claim_duration"`
+	ClaimExpiresAt                       time.Time     `json:"claim_expires_at"`
+	ReferencedByDetectionCameraIDObjects []*Detection  `json:"referenced_by_detection_camera_id_objects"`
+	ReferencedByVideoCameraIDObjects     []*Video      `json:"referenced_by_video_camera_id_objects"`
 }
 
 var CameraTable = "camera"
 
 var (
-	CameraTableIDColumn        = "id"
-	CameraTableCreatedAtColumn = "created_at"
-	CameraTableUpdatedAtColumn = "updated_at"
-	CameraTableDeletedAtColumn = "deleted_at"
-	CameraTableNameColumn      = "name"
-	CameraTableStreamURLColumn = "stream_url"
-	CameraTableLastSeenColumn  = "last_seen"
+	CameraTableIDColumn             = "id"
+	CameraTableCreatedAtColumn      = "created_at"
+	CameraTableUpdatedAtColumn      = "updated_at"
+	CameraTableDeletedAtColumn      = "deleted_at"
+	CameraTableNameColumn           = "name"
+	CameraTableStreamURLColumn      = "stream_url"
+	CameraTableLastSeenColumn       = "last_seen"
+	CameraTableClaimedAtColumn      = "claimed_at"
+	CameraTableClaimDurationColumn  = "claim_duration"
+	CameraTableClaimExpiresAtColumn = "claim_expires_at"
 )
 
 var (
-	CameraTableIDColumnWithTypeCast        = `"id" AS id`
-	CameraTableCreatedAtColumnWithTypeCast = `"created_at" AS created_at`
-	CameraTableUpdatedAtColumnWithTypeCast = `"updated_at" AS updated_at`
-	CameraTableDeletedAtColumnWithTypeCast = `"deleted_at" AS deleted_at`
-	CameraTableNameColumnWithTypeCast      = `"name" AS name`
-	CameraTableStreamURLColumnWithTypeCast = `"stream_url" AS stream_url`
-	CameraTableLastSeenColumnWithTypeCast  = `"last_seen" AS last_seen`
+	CameraTableIDColumnWithTypeCast             = `"id" AS id`
+	CameraTableCreatedAtColumnWithTypeCast      = `"created_at" AS created_at`
+	CameraTableUpdatedAtColumnWithTypeCast      = `"updated_at" AS updated_at`
+	CameraTableDeletedAtColumnWithTypeCast      = `"deleted_at" AS deleted_at`
+	CameraTableNameColumnWithTypeCast           = `"name" AS name`
+	CameraTableStreamURLColumnWithTypeCast      = `"stream_url" AS stream_url`
+	CameraTableLastSeenColumnWithTypeCast       = `"last_seen" AS last_seen`
+	CameraTableClaimedAtColumnWithTypeCast      = `"claimed_at" AS claimed_at`
+	CameraTableClaimDurationColumnWithTypeCast  = `"claim_duration" AS claim_duration`
+	CameraTableClaimExpiresAtColumnWithTypeCast = `"claim_expires_at" AS claim_expires_at`
 )
 
 var CameraTableColumns = []string{
@@ -73,6 +82,9 @@ var CameraTableColumns = []string{
 	CameraTableNameColumn,
 	CameraTableStreamURLColumn,
 	CameraTableLastSeenColumn,
+	CameraTableClaimedAtColumn,
+	CameraTableClaimDurationColumn,
+	CameraTableClaimExpiresAtColumn,
 }
 
 var CameraTableColumnsWithTypeCasts = []string{
@@ -83,16 +95,22 @@ var CameraTableColumnsWithTypeCasts = []string{
 	CameraTableNameColumnWithTypeCast,
 	CameraTableStreamURLColumnWithTypeCast,
 	CameraTableLastSeenColumnWithTypeCast,
+	CameraTableClaimedAtColumnWithTypeCast,
+	CameraTableClaimDurationColumnWithTypeCast,
+	CameraTableClaimExpiresAtColumnWithTypeCast,
 }
 
 var CameraTableColumnLookup = map[string]*introspect.Column{
-	CameraTableIDColumn:        {Name: CameraTableIDColumn, NotNull: true, HasDefault: true},
-	CameraTableCreatedAtColumn: {Name: CameraTableCreatedAtColumn, NotNull: true, HasDefault: true},
-	CameraTableUpdatedAtColumn: {Name: CameraTableUpdatedAtColumn, NotNull: true, HasDefault: true},
-	CameraTableDeletedAtColumn: {Name: CameraTableDeletedAtColumn, NotNull: false, HasDefault: false},
-	CameraTableNameColumn:      {Name: CameraTableNameColumn, NotNull: true, HasDefault: false},
-	CameraTableStreamURLColumn: {Name: CameraTableStreamURLColumn, NotNull: true, HasDefault: false},
-	CameraTableLastSeenColumn:  {Name: CameraTableLastSeenColumn, NotNull: false, HasDefault: false},
+	CameraTableIDColumn:             {Name: CameraTableIDColumn, NotNull: true, HasDefault: true},
+	CameraTableCreatedAtColumn:      {Name: CameraTableCreatedAtColumn, NotNull: true, HasDefault: true},
+	CameraTableUpdatedAtColumn:      {Name: CameraTableUpdatedAtColumn, NotNull: true, HasDefault: true},
+	CameraTableDeletedAtColumn:      {Name: CameraTableDeletedAtColumn, NotNull: false, HasDefault: false},
+	CameraTableNameColumn:           {Name: CameraTableNameColumn, NotNull: true, HasDefault: false},
+	CameraTableStreamURLColumn:      {Name: CameraTableStreamURLColumn, NotNull: true, HasDefault: false},
+	CameraTableLastSeenColumn:       {Name: CameraTableLastSeenColumn, NotNull: true, HasDefault: true},
+	CameraTableClaimedAtColumn:      {Name: CameraTableClaimedAtColumn, NotNull: true, HasDefault: true},
+	CameraTableClaimDurationColumn:  {Name: CameraTableClaimDurationColumn, NotNull: true, HasDefault: true},
+	CameraTableClaimExpiresAtColumn: {Name: CameraTableClaimExpiresAtColumn, NotNull: true, HasDefault: true},
 }
 
 var (
@@ -277,7 +295,64 @@ func (m *Camera) FromItem(item map[string]any) error {
 				}
 			}
 
-			m.LastSeen = &temp2
+			m.LastSeen = temp2
+
+		case "claimed_at":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseTime(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Time)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuclaimed_at.UUID", temp1))
+				}
+			}
+
+			m.ClaimedAt = temp2
+
+		case "claim_duration":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseDuration(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Duration)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuclaim_duration.UUID", temp1))
+				}
+			}
+
+			m.ClaimDuration = temp2
+
+		case "claim_expires_at":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseTime(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Time)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuclaim_expires_at.UUID", temp1))
+				}
+			}
+
+			m.ClaimExpiresAt = temp2
 
 		}
 	}
@@ -313,8 +388,11 @@ func (m *Camera) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool)
 	m.Name = t.Name
 	m.StreamURL = t.StreamURL
 	m.LastSeen = t.LastSeen
-	m.ReferencedByVideoCameraIDObjects = t.ReferencedByVideoCameraIDObjects
+	m.ClaimedAt = t.ClaimedAt
+	m.ClaimDuration = t.ClaimDuration
+	m.ClaimExpiresAt = t.ClaimExpiresAt
 	m.ReferencedByDetectionCameraIDObjects = t.ReferencedByDetectionCameraIDObjects
+	m.ReferencedByVideoCameraIDObjects = t.ReferencedByVideoCameraIDObjects
 
 	return nil
 }
@@ -395,6 +473,39 @@ func (m *Camera) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZ
 		v, err := types.FormatTime(m.LastSeen)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.LastSeen: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ClaimedAt) || slices.Contains(forceSetValuesForFields, CameraTableClaimedAtColumn) || isRequired(CameraTableColumnLookup, CameraTableClaimedAtColumn) {
+		columns = append(columns, CameraTableClaimedAtColumn)
+
+		v, err := types.FormatTime(m.ClaimedAt)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimedAt: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroDuration(m.ClaimDuration) || slices.Contains(forceSetValuesForFields, CameraTableClaimDurationColumn) || isRequired(CameraTableColumnLookup, CameraTableClaimDurationColumn) {
+		columns = append(columns, CameraTableClaimDurationColumn)
+
+		v, err := types.FormatDuration(m.ClaimDuration)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimDuration: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ClaimExpiresAt) || slices.Contains(forceSetValuesForFields, CameraTableClaimExpiresAtColumn) || isRequired(CameraTableColumnLookup, CameraTableClaimExpiresAtColumn) {
+		columns = append(columns, CameraTableClaimExpiresAtColumn)
+
+		v, err := types.FormatTime(m.ClaimExpiresAt)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimExpiresAt: %v", err)
 		}
 
 		values = append(values, v)
@@ -522,6 +633,39 @@ func (m *Camera) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, forc
 		values = append(values, v)
 	}
 
+	if setZeroValues || !types.IsZeroTime(m.ClaimedAt) || slices.Contains(forceSetValuesForFields, CameraTableClaimedAtColumn) {
+		columns = append(columns, CameraTableClaimedAtColumn)
+
+		v, err := types.FormatTime(m.ClaimedAt)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimedAt: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroDuration(m.ClaimDuration) || slices.Contains(forceSetValuesForFields, CameraTableClaimDurationColumn) {
+		columns = append(columns, CameraTableClaimDurationColumn)
+
+		v, err := types.FormatDuration(m.ClaimDuration)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimDuration: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ClaimExpiresAt) || slices.Contains(forceSetValuesForFields, CameraTableClaimExpiresAtColumn) {
+		columns = append(columns, CameraTableClaimExpiresAtColumn)
+
+		v, err := types.FormatTime(m.ClaimExpiresAt)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimExpiresAt: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
 	v, err := types.FormatUUID(m.ID)
 	if err != nil {
 		return fmt.Errorf("failed to handle m.ID: %v", err)
@@ -594,6 +738,10 @@ func (m *Camera) Delete(ctx context.Context, tx pgx.Tx, hardDeletes ...bool) err
 	return nil
 }
 
+func (m *Camera) LockTable(ctx context.Context, tx pgx.Tx, noWait bool) error {
+	return query.LockTable(ctx, tx, CameraTable, noWait)
+}
+
 func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string, limit *int, offset *int, values ...any) ([]*Camera, error) {
 	if slices.Contains(CameraTableColumns, "deleted_at") {
 		if !strings.Contains(where, "deleted_at") {
@@ -649,10 +797,10 @@ func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string
 			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
 
 			if ok1 && ok2 {
-				object.ReferencedByVideoCameraIDObjects, err = SelectVideos(
+				object.ReferencedByDetectionCameraIDObjects, err = SelectDetections(
 					thisCtx,
 					tx,
-					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
+					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
 					nil,
 					nil,
 					nil,
@@ -677,10 +825,10 @@ func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string
 			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.GetPrimaryKeyValue()))
 
 			if ok1 && ok2 {
-				object.ReferencedByDetectionCameraIDObjects, err = SelectDetections(
+				object.ReferencedByVideoCameraIDObjects, err = SelectVideos(
 					thisCtx,
 					tx,
-					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
+					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
 					nil,
 					nil,
 					nil,
@@ -945,7 +1093,7 @@ func handleGetCameras(w http.ResponseWriter, r *http.Request, db *pgxpool.Pool, 
 		return
 	}
 
-	limit := 2000
+	limit := 50
 	rawLimit := r.URL.Query().Get("limit")
 	if rawLimit != "" {
 		possibleLimit, err := strconv.ParseInt(rawLimit, 10, 64)

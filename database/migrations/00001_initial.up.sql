@@ -46,7 +46,13 @@ CREATE TABLE
         deleted_at timestamptz NULL DEFAULT NULL,
         name text NOT NULL CHECK (trim(name) != ''),
         stream_url text NOT NULL CHECK (trim(stream_url) != ''),
-        last_seen timestamptz NULL DEFAULT NULL
+        last_seen timestamptz NOT NULL DEFAULT to_timestamp(0),
+        -- claimed_at timestamptz NOT NULL DEFAULT to_timestamp(0) CHECK (claimed_at <= now()),
+        claimed_at timestamptz NOT NULL DEFAULT to_timestamp(0),
+        -- claim_duration interval NOT NULL DEFAULT interval '1 minute' CHECK (claim_duration > interval '0 seconds'),
+        claim_duration interval NOT NULL DEFAULT interval '1 minute',
+        -- claim_expires_at timestamptz NOT NULL DEFAULT to_timestamp(1) CHECK (claim_expires_at > claimed_at)
+        claim_expires_at timestamptz NOT NULL DEFAULT to_timestamp(1)
     );
 
 ALTER TABLE public.camera OWNER TO postgres;

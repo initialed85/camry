@@ -834,6 +834,10 @@ func (m *Detection) Delete(ctx context.Context, tx pgx.Tx, hardDeletes ...bool) 
 	return nil
 }
 
+func (m *Detection) LockTable(ctx context.Context, tx pgx.Tx, noWait bool) error {
+	return query.LockTable(ctx, tx, DetectionTable, noWait)
+}
+
 func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *string, limit *int, offset *int, values ...any) ([]*Detection, error) {
 	if slices.Contains(DetectionTableColumns, "deleted_at") {
 		if !strings.Contains(where, "deleted_at") {
@@ -1167,7 +1171,7 @@ func handleGetDetections(w http.ResponseWriter, r *http.Request, db *pgxpool.Poo
 		return
 	}
 
-	limit := 2000
+	limit := 50
 	rawLimit := r.URL.Query().Get("limit")
 	if rawLimit != "" {
 		possibleLimit, err := strconv.ParseInt(rawLimit, 10, 64)

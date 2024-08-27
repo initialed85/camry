@@ -38,6 +38,9 @@ class TestGetCameras200Response(unittest.TestCase):
                 error = '',
                 objects = [
                     openapi_client.models.camera.Camera(
+                        claim_duration = 56, 
+                        claim_expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                        claimed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                         id = '', 
@@ -52,6 +55,9 @@ class TestGetCameras200Response(unittest.TestCase):
                                     ], 
                                 camera_id = '', 
                                 camera_id_object = openapi_client.models.camera.Camera(
+                                    claim_duration = 56, 
+                                    claim_expires_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                    claimed_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                     created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                     deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                     id = '', 

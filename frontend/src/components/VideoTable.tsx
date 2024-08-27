@@ -1,10 +1,12 @@
-import Text from "@carefully-coded/react-text-gradient";
 import CloudDownloadOutlinedIcon from "@mui/icons-material/CloudDownloadOutlined";
 import ErrorOutlineOutlinedIcon from "@mui/icons-material/ErrorOutlineOutlined";
+import HourglassEmptyOutlinedIcon from "@mui/icons-material/HourglassEmptyOutlined";
 import CircularProgress from "@mui/joy/CircularProgress";
 import Table from "@mui/joy/Table";
+import Tooltip from "@mui/joy/Tooltip";
 import Typography from "@mui/joy/Typography";
 import { useQuery } from "../api";
+import { components } from "../api/api";
 
 export interface VideoTableProps {
   responsive: boolean;
@@ -17,15 +19,32 @@ export function VideoTable(props: VideoTableProps) {
     params: {
       query: {
         camera_id__eq: props.cameraId || undefined,
-        started_at__gte: props.date
-          ? `${props.date}T00:00:00+08:00`
-          : undefined,
-        started_at__lte: props.date
-          ? `${props.date}T23:59:59+08:00`
-          : undefined,
+        started_at__gte: props.date ? `${props.date}T00:00:00+08:00` : undefined,
+        started_at__lte: props.date ? `${props.date}T23:59:59+08:00` : undefined,
         started_at__desc: "",
       },
     },
+  });
+
+  // useInfiniteQuery({
+  //   queryKey: ["videos"],
+  //   queryFn: async ({ pageParam = 0 }) => {
+  //     const res = await clientForReactQuery.GET("/api/cameras", { params: { query: {} } });
+  //     return res.data;
+  //   },
+  //   initialPageParam: 0,
+  //   getNextPageParam: (lastPage, pages) => 1,
+  // });
+
+  const { data: camerasData } = useQuery("get", "/api/cameras", {});
+
+  const cameraById = new Map<string, components["schemas"]["Camera"]>();
+  camerasData?.objects?.forEach((camera) => {
+    if (!camera?.id) {
+      return;
+    }
+
+    cameraById.set(camera?.id, camera);
   });
 
   // const { data: detectionsData } = useQuery("get", "/api/detections", {
@@ -75,11 +94,10 @@ export function VideoTable(props: VideoTableProps) {
     >
       <thead>
         <tr>
-          <th style={{ width: "5%" }}>{props.responsive ? "C" : "Camera"}</th>
-          <th>Details</th>
-          <th>Status</th>
+          <th style={{ width: 67, ...truncateStyleProps }}>{props.responsive ? "T" : "Time"}</th>
+          <th style={{ width: 67, ...truncateStyleProps }}>{props.responsive ? "S" : "Summary"}</th>
           <th style={{ ...truncateStyleProps }}>
-            Detections
+            {props.responsive ? "D" : "Detections"}
             {!props.responsive && (
               <>
                 <br />
@@ -87,8 +105,15 @@ export function VideoTable(props: VideoTableProps) {
               </>
             )}
           </th>
-          <th style={{ width: props.responsive ? 160 : 320 }}>Preview</th>
-          <th style={{ width: "5%" }}>Media</th>
+          <th
+            style={{
+              width: props.responsive ? 160 : 320,
+              ...truncateStyleProps,
+            }}
+          >
+            Preview
+          </th>
+          <th style={{ width: "5%", ...truncateStyleProps }}>{props.responsive ? "M" : "Media"}</th>
         </tr>
       </thead>
       <tbody>
@@ -98,65 +123,25 @@ export function VideoTable(props: VideoTableProps) {
               return undefined;
             }
 
+            const camera = cameraById.get(video?.camera_id || "");
+
             const startedAt = new Date(video.started_at);
             const endedAt = video.ended_at && new Date(video.ended_at);
 
             const available = video?.status !== "recording";
 
-            const minutes = Math.floor(
-              (video?.duration || 0) / (1_000_000_000 * 60),
-            );
-            const seconds = Math.floor(
-              (video?.duration || 0) / 1_000_000_000 - minutes * 60,
-            );
+            const minutes = Math.floor((video?.duration || 0) / (1_000_000_000 * 60));
+            const seconds = Math.floor((video?.duration || 0) / 1_000_000_000 - minutes * 60);
 
             const fileSize = (video?.file_size || 0.0).toFixed(2);
 
-            var cameraName =
-              video?.camera_id_object && video?.camera_id_object?.name
-                ? video.camera_id_object.name
-                : "-";
-
-            if (props.responsive) {
-              cameraName = cameraName[0];
-            }
-
-            const statusText = (
-              video?.status
-                ? video.status[0].toUpperCase() + video.status.slice(1)
-                : "-"
-            ).trim();
-
-            const status =
-              statusText === "Recording" ? (
-                <span>
-                  <Text
-                    gradient={{
-                      from: "#ff5555",
-                      to: "#5555ff",
-                      type: "linear",
-                      degree: 90,
-                    }}
-                    animate
-                    animateDuration={1_000}
-                    style={{ ...truncateStyleProps }}
-                  >
-                    {statusText}
-                  </Text>
-                </span>
-              ) : (
-                statusText
-              );
+            var cameraName = camera?.name || "-";
 
             var thumbnail;
 
             if (video?.thumbnail_name) {
               thumbnail = (
-                <a
-                  target="_blank"
-                  rel="noreferrer"
-                  href={`/media/${video?.thumbnail_name}`}
-                >
+                <a target="_blank" rel="noreferrer" href={`/media/${video?.thumbnail_name}`}>
                   <img
                     style={{ width: props.responsive ? 160 : 320 }}
                     alt={`still from ${video?.camera_id_object?.name} @ ${props.date} ${startedAt}`}
@@ -164,33 +149,62 @@ export function VideoTable(props: VideoTableProps) {
                   />
                 </a>
               );
-            } else if (video?.status !== "failed") {
-              thumbnail = <CircularProgress variant="soft" size="sm" />;
+            } else if (video?.status === "failed") {
+              thumbnail = (
+                <Tooltip title="Failed">
+                  <ErrorOutlineOutlinedIcon />
+                </Tooltip>
+              );
             } else {
-              thumbnail = <ErrorOutlineOutlinedIcon />;
+              thumbnail = (
+                <Tooltip title="Recording">
+                  <CircularProgress variant="soft" size="sm" />
+                </Tooltip>
+              );
             }
 
-            const rawClassNames =
-              video.id && classNamesByVideoId.get(video.id)?.keys();
-            const classNames = (
-              rawClassNames ? Array.from(rawClassNames).sort() : []
-            ).join(", ");
+            const rawClassNames = video.id && classNamesByVideoId.get(video.id)?.keys();
+
+            let classNames;
+            if (video?.status === "failed") {
+              classNames = (
+                <Tooltip title="Failed">
+                  <ErrorOutlineOutlinedIcon />
+                </Tooltip>
+              );
+            } else if (video?.status === "needs detection") {
+              classNames = (
+                <Tooltip title="Needs detection">
+                  <HourglassEmptyOutlinedIcon />
+                </Tooltip>
+              );
+            } else if (video?.status === "detecting") {
+              classNames = (
+                <Tooltip title="Detecting">
+                  <CircularProgress variant="soft" size="sm" />
+                </Tooltip>
+              );
+            } else {
+              classNames = (rawClassNames ? Array.from(rawClassNames).sort() : []).join(", ");
+            }
 
             return (
               <tr key={video.id}>
-                <td>{cameraName}</td>
                 <td>
                   <Typography>
                     {startedAt.toTimeString().split(" ")[0]} <br />
-                    {endedAt ? endedAt.toTimeString().split(" ")[0] : "-"}{" "}
-                    <br />
                   </Typography>
+                  <Typography color="neutral">
+                    {endedAt ? endedAt.toTimeString().split(" ")[0] : "-"} <br />
+                  </Typography>
+                </td>
+                <td>
+                  <Typography>{cameraName}</Typography>
                   <Typography color="neutral">
                     {minutes}m{seconds}s
                   </Typography>
                   <Typography color="neutral">{fileSize} MB</Typography>
                 </td>
-                <td>{status}</td>
                 <td>{classNames}</td>
                 <td
                   style={{
@@ -205,11 +219,7 @@ export function VideoTable(props: VideoTableProps) {
                 </td>
                 <td>
                   {available ? (
-                    <a
-                      target="_blank"
-                      rel="noreferrer"
-                      href={`/media/${video?.file_name}`}
-                    >
+                    <a target="_blank" rel="noreferrer" href={`/media/${video?.file_name}`}>
                       <CloudDownloadOutlinedIcon color={"success"} />
                     </a>
                   ) : (
@@ -222,9 +232,7 @@ export function VideoTable(props: VideoTableProps) {
         ) : (
           <tr>
             <td colSpan={6}>
-              <Typography color={"neutral"}>
-                (No videos for the selected camera / date)
-              </Typography>
+              <Typography color={"neutral"}>(No videos for the selected camera / date)</Typography>
             </td>
           </tr>
         )}
