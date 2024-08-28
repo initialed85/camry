@@ -43,6 +43,8 @@ type Video struct {
 	FileSize                            *float64       `json:"file_size"`
 	ThumbnailName                       *string        `json:"thumbnail_name"`
 	Status                              *string        `json:"status"`
+	ObjectDetectorClaimedUntil          time.Time      `json:"object_detector_claimed_until"`
+	ObjectTrackerClaimedUntil           time.Time      `json:"object_tracker_claimed_until"`
 	CameraID                            uuid.UUID      `json:"camera_id"`
 	CameraIDObject                      *Camera        `json:"camera_id_object"`
 	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
@@ -51,33 +53,37 @@ type Video struct {
 var VideoTable = "video"
 
 var (
-	VideoTableIDColumn            = "id"
-	VideoTableCreatedAtColumn     = "created_at"
-	VideoTableUpdatedAtColumn     = "updated_at"
-	VideoTableDeletedAtColumn     = "deleted_at"
-	VideoTableFileNameColumn      = "file_name"
-	VideoTableStartedAtColumn     = "started_at"
-	VideoTableEndedAtColumn       = "ended_at"
-	VideoTableDurationColumn      = "duration"
-	VideoTableFileSizeColumn      = "file_size"
-	VideoTableThumbnailNameColumn = "thumbnail_name"
-	VideoTableStatusColumn        = "status"
-	VideoTableCameraIDColumn      = "camera_id"
+	VideoTableIDColumn                         = "id"
+	VideoTableCreatedAtColumn                  = "created_at"
+	VideoTableUpdatedAtColumn                  = "updated_at"
+	VideoTableDeletedAtColumn                  = "deleted_at"
+	VideoTableFileNameColumn                   = "file_name"
+	VideoTableStartedAtColumn                  = "started_at"
+	VideoTableEndedAtColumn                    = "ended_at"
+	VideoTableDurationColumn                   = "duration"
+	VideoTableFileSizeColumn                   = "file_size"
+	VideoTableThumbnailNameColumn              = "thumbnail_name"
+	VideoTableStatusColumn                     = "status"
+	VideoTableObjectDetectorClaimedUntilColumn = "object_detector_claimed_until"
+	VideoTableObjectTrackerClaimedUntilColumn  = "object_tracker_claimed_until"
+	VideoTableCameraIDColumn                   = "camera_id"
 )
 
 var (
-	VideoTableIDColumnWithTypeCast            = `"id" AS id`
-	VideoTableCreatedAtColumnWithTypeCast     = `"created_at" AS created_at`
-	VideoTableUpdatedAtColumnWithTypeCast     = `"updated_at" AS updated_at`
-	VideoTableDeletedAtColumnWithTypeCast     = `"deleted_at" AS deleted_at`
-	VideoTableFileNameColumnWithTypeCast      = `"file_name" AS file_name`
-	VideoTableStartedAtColumnWithTypeCast     = `"started_at" AS started_at`
-	VideoTableEndedAtColumnWithTypeCast       = `"ended_at" AS ended_at`
-	VideoTableDurationColumnWithTypeCast      = `"duration" AS duration`
-	VideoTableFileSizeColumnWithTypeCast      = `"file_size" AS file_size`
-	VideoTableThumbnailNameColumnWithTypeCast = `"thumbnail_name" AS thumbnail_name`
-	VideoTableStatusColumnWithTypeCast        = `"status" AS status`
-	VideoTableCameraIDColumnWithTypeCast      = `"camera_id" AS camera_id`
+	VideoTableIDColumnWithTypeCast                         = `"id" AS id`
+	VideoTableCreatedAtColumnWithTypeCast                  = `"created_at" AS created_at`
+	VideoTableUpdatedAtColumnWithTypeCast                  = `"updated_at" AS updated_at`
+	VideoTableDeletedAtColumnWithTypeCast                  = `"deleted_at" AS deleted_at`
+	VideoTableFileNameColumnWithTypeCast                   = `"file_name" AS file_name`
+	VideoTableStartedAtColumnWithTypeCast                  = `"started_at" AS started_at`
+	VideoTableEndedAtColumnWithTypeCast                    = `"ended_at" AS ended_at`
+	VideoTableDurationColumnWithTypeCast                   = `"duration" AS duration`
+	VideoTableFileSizeColumnWithTypeCast                   = `"file_size" AS file_size`
+	VideoTableThumbnailNameColumnWithTypeCast              = `"thumbnail_name" AS thumbnail_name`
+	VideoTableStatusColumnWithTypeCast                     = `"status" AS status`
+	VideoTableObjectDetectorClaimedUntilColumnWithTypeCast = `"object_detector_claimed_until" AS object_detector_claimed_until`
+	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast  = `"object_tracker_claimed_until" AS object_tracker_claimed_until`
+	VideoTableCameraIDColumnWithTypeCast                   = `"camera_id" AS camera_id`
 )
 
 var VideoTableColumns = []string{
@@ -92,6 +98,8 @@ var VideoTableColumns = []string{
 	VideoTableFileSizeColumn,
 	VideoTableThumbnailNameColumn,
 	VideoTableStatusColumn,
+	VideoTableObjectDetectorClaimedUntilColumn,
+	VideoTableObjectTrackerClaimedUntilColumn,
 	VideoTableCameraIDColumn,
 }
 
@@ -107,22 +115,26 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableFileSizeColumnWithTypeCast,
 	VideoTableThumbnailNameColumnWithTypeCast,
 	VideoTableStatusColumnWithTypeCast,
+	VideoTableObjectDetectorClaimedUntilColumnWithTypeCast,
+	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast,
 	VideoTableCameraIDColumnWithTypeCast,
 }
 
 var VideoTableColumnLookup = map[string]*introspect.Column{
-	VideoTableIDColumn:            {Name: VideoTableIDColumn, NotNull: true, HasDefault: true},
-	VideoTableCreatedAtColumn:     {Name: VideoTableCreatedAtColumn, NotNull: true, HasDefault: true},
-	VideoTableUpdatedAtColumn:     {Name: VideoTableUpdatedAtColumn, NotNull: true, HasDefault: true},
-	VideoTableDeletedAtColumn:     {Name: VideoTableDeletedAtColumn, NotNull: false, HasDefault: false},
-	VideoTableFileNameColumn:      {Name: VideoTableFileNameColumn, NotNull: true, HasDefault: false},
-	VideoTableStartedAtColumn:     {Name: VideoTableStartedAtColumn, NotNull: true, HasDefault: false},
-	VideoTableEndedAtColumn:       {Name: VideoTableEndedAtColumn, NotNull: false, HasDefault: false},
-	VideoTableDurationColumn:      {Name: VideoTableDurationColumn, NotNull: false, HasDefault: false},
-	VideoTableFileSizeColumn:      {Name: VideoTableFileSizeColumn, NotNull: false, HasDefault: false},
-	VideoTableThumbnailNameColumn: {Name: VideoTableThumbnailNameColumn, NotNull: false, HasDefault: false},
-	VideoTableStatusColumn:        {Name: VideoTableStatusColumn, NotNull: false, HasDefault: false},
-	VideoTableCameraIDColumn:      {Name: VideoTableCameraIDColumn, NotNull: true, HasDefault: false},
+	VideoTableIDColumn:                         {Name: VideoTableIDColumn, NotNull: true, HasDefault: true},
+	VideoTableCreatedAtColumn:                  {Name: VideoTableCreatedAtColumn, NotNull: true, HasDefault: true},
+	VideoTableUpdatedAtColumn:                  {Name: VideoTableUpdatedAtColumn, NotNull: true, HasDefault: true},
+	VideoTableDeletedAtColumn:                  {Name: VideoTableDeletedAtColumn, NotNull: false, HasDefault: false},
+	VideoTableFileNameColumn:                   {Name: VideoTableFileNameColumn, NotNull: true, HasDefault: false},
+	VideoTableStartedAtColumn:                  {Name: VideoTableStartedAtColumn, NotNull: true, HasDefault: false},
+	VideoTableEndedAtColumn:                    {Name: VideoTableEndedAtColumn, NotNull: false, HasDefault: false},
+	VideoTableDurationColumn:                   {Name: VideoTableDurationColumn, NotNull: false, HasDefault: false},
+	VideoTableFileSizeColumn:                   {Name: VideoTableFileSizeColumn, NotNull: false, HasDefault: false},
+	VideoTableThumbnailNameColumn:              {Name: VideoTableThumbnailNameColumn, NotNull: false, HasDefault: false},
+	VideoTableStatusColumn:                     {Name: VideoTableStatusColumn, NotNull: false, HasDefault: false},
+	VideoTableObjectDetectorClaimedUntilColumn: {Name: VideoTableObjectDetectorClaimedUntilColumn, NotNull: true, HasDefault: true},
+	VideoTableObjectTrackerClaimedUntilColumn:  {Name: VideoTableObjectTrackerClaimedUntilColumn, NotNull: true, HasDefault: true},
+	VideoTableCameraIDColumn:                   {Name: VideoTableCameraIDColumn, NotNull: true, HasDefault: false},
 }
 
 var (
@@ -385,6 +397,44 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.Status = &temp2
 
+		case "object_detector_claimed_until":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseTime(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Time)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuobject_detector_claimed_until.UUID", temp1))
+				}
+			}
+
+			m.ObjectDetectorClaimedUntil = temp2
+
+		case "object_tracker_claimed_until":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseTime(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Time)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuobject_tracker_claimed_until.UUID", temp1))
+				}
+			}
+
+			m.ObjectTrackerClaimedUntil = temp2
+
 		case "camera_id":
 			if v == nil {
 				continue
@@ -442,6 +492,8 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	m.FileSize = t.FileSize
 	m.ThumbnailName = t.ThumbnailName
 	m.Status = t.Status
+	m.ObjectDetectorClaimedUntil = t.ObjectDetectorClaimedUntil
+	m.ObjectTrackerClaimedUntil = t.ObjectTrackerClaimedUntil
 	m.CameraID = t.CameraID
 	m.CameraIDObject = t.CameraIDObject
 	m.ReferencedByDetectionVideoIDObjects = t.ReferencedByDetectionVideoIDObjects
@@ -569,6 +621,28 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 		v, err := types.FormatString(m.Status)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.Status: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ObjectDetectorClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectDetectorClaimedUntilColumn) || isRequired(VideoTableColumnLookup, VideoTableObjectDetectorClaimedUntilColumn) {
+		columns = append(columns, VideoTableObjectDetectorClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.ObjectDetectorClaimedUntil)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ObjectTrackerClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectTrackerClaimedUntilColumn) || isRequired(VideoTableColumnLookup, VideoTableObjectTrackerClaimedUntilColumn) {
+		columns = append(columns, VideoTableObjectTrackerClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.ObjectTrackerClaimedUntil)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil: %v", err)
 		}
 
 		values = append(values, v)
@@ -746,6 +820,28 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		v, err := types.FormatString(m.Status)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.Status: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ObjectDetectorClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectDetectorClaimedUntilColumn) {
+		columns = append(columns, VideoTableObjectDetectorClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.ObjectDetectorClaimedUntil)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil: %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ObjectTrackerClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectTrackerClaimedUntilColumn) {
+		columns = append(columns, VideoTableObjectTrackerClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.ObjectTrackerClaimedUntil)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil: %v", err)
 		}
 
 		values = append(values, v)

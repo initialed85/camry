@@ -759,78 +759,54 @@ class CameraApi:
         last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
         last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
         last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        claimed_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        claimed_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        claimed_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claimed_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        claimed_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claimed_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claimed_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claimed_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claimed_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__eq: Annotated[Optional[StrictInt], Field(description="SQL = operator")] = None,
-        claim_duration__ne: Annotated[Optional[StrictInt], Field(description="SQL != operator")] = None,
-        claim_duration__gt: Annotated[Optional[StrictInt], Field(description="SQL > operator, may not work with all column types")] = None,
-        claim_duration__gte: Annotated[Optional[StrictInt], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claim_duration__lt: Annotated[Optional[StrictInt], Field(description="SQL < operator, may not work with all column types")] = None,
-        claim_duration__lte: Annotated[Optional[StrictInt], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claim_duration__in: Annotated[Optional[StrictInt], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claim_duration__nin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_duration__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_duration__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        claim_expires_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        claim_expires_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        claim_expires_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claim_expires_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        claim_expires_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claim_expires_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claim_expires_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_expires_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_expires_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1189,150 +1165,102 @@ class CameraApi:
         :type last_seen__desc: str
         :param last_seen__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
         :type last_seen__asc: str
-        :param claimed_at__eq: SQL = operator
-        :type claimed_at__eq: datetime
-        :param claimed_at__ne: SQL != operator
-        :type claimed_at__ne: datetime
-        :param claimed_at__gt: SQL > operator, may not work with all column types
-        :type claimed_at__gt: datetime
-        :param claimed_at__gte: SQL >= operator, may not work with all column types
-        :type claimed_at__gte: datetime
-        :param claimed_at__lt: SQL < operator, may not work with all column types
-        :type claimed_at__lt: datetime
-        :param claimed_at__lte: SQL <= operator, may not work with all column types
-        :type claimed_at__lte: datetime
-        :param claimed_at__in: SQL IN operator, permits comma-separated values
-        :type claimed_at__in: datetime
-        :param claimed_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type claimed_at__nin: datetime
-        :param claimed_at__notin: SQL NOT IN operator, permits comma-separated values
-        :type claimed_at__notin: datetime
-        :param claimed_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__isnull: str
-        :param claimed_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__nisnull: str
-        :param claimed_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__isnotnull: str
-        :param claimed_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__l: str
-        :param claimed_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__like: str
-        :param claimed_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nl: str
-        :param claimed_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nlike: str
-        :param claimed_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__notlike: str
-        :param claimed_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__il: str
-        :param claimed_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__ilike: str
-        :param claimed_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nil: str
-        :param claimed_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nilike: str
-        :param claimed_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__notilike: str
-        :param claimed_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__desc: str
-        :param claimed_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__asc: str
-        :param claim_duration__eq: SQL = operator
-        :type claim_duration__eq: int
-        :param claim_duration__ne: SQL != operator
-        :type claim_duration__ne: int
-        :param claim_duration__gt: SQL > operator, may not work with all column types
-        :type claim_duration__gt: int
-        :param claim_duration__gte: SQL >= operator, may not work with all column types
-        :type claim_duration__gte: int
-        :param claim_duration__lt: SQL < operator, may not work with all column types
-        :type claim_duration__lt: int
-        :param claim_duration__lte: SQL <= operator, may not work with all column types
-        :type claim_duration__lte: int
-        :param claim_duration__in: SQL IN operator, permits comma-separated values
-        :type claim_duration__in: int
-        :param claim_duration__nin: SQL NOT IN operator, permits comma-separated values
-        :type claim_duration__nin: int
-        :param claim_duration__notin: SQL NOT IN operator, permits comma-separated values
-        :type claim_duration__notin: int
-        :param claim_duration__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__isnull: str
-        :param claim_duration__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__nisnull: str
-        :param claim_duration__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__isnotnull: str
-        :param claim_duration__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__l: str
-        :param claim_duration__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__like: str
-        :param claim_duration__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nl: str
-        :param claim_duration__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nlike: str
-        :param claim_duration__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__notlike: str
-        :param claim_duration__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__il: str
-        :param claim_duration__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__ilike: str
-        :param claim_duration__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nil: str
-        :param claim_duration__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nilike: str
-        :param claim_duration__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__notilike: str
-        :param claim_duration__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__desc: str
-        :param claim_duration__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__asc: str
-        :param claim_expires_at__eq: SQL = operator
-        :type claim_expires_at__eq: datetime
-        :param claim_expires_at__ne: SQL != operator
-        :type claim_expires_at__ne: datetime
-        :param claim_expires_at__gt: SQL > operator, may not work with all column types
-        :type claim_expires_at__gt: datetime
-        :param claim_expires_at__gte: SQL >= operator, may not work with all column types
-        :type claim_expires_at__gte: datetime
-        :param claim_expires_at__lt: SQL < operator, may not work with all column types
-        :type claim_expires_at__lt: datetime
-        :param claim_expires_at__lte: SQL <= operator, may not work with all column types
-        :type claim_expires_at__lte: datetime
-        :param claim_expires_at__in: SQL IN operator, permits comma-separated values
-        :type claim_expires_at__in: datetime
-        :param claim_expires_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type claim_expires_at__nin: datetime
-        :param claim_expires_at__notin: SQL NOT IN operator, permits comma-separated values
-        :type claim_expires_at__notin: datetime
-        :param claim_expires_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__isnull: str
-        :param claim_expires_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__nisnull: str
-        :param claim_expires_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__isnotnull: str
-        :param claim_expires_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__l: str
-        :param claim_expires_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__like: str
-        :param claim_expires_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nl: str
-        :param claim_expires_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nlike: str
-        :param claim_expires_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__notlike: str
-        :param claim_expires_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__il: str
-        :param claim_expires_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__ilike: str
-        :param claim_expires_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nil: str
-        :param claim_expires_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nilike: str
-        :param claim_expires_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__notilike: str
-        :param claim_expires_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__desc: str
-        :param claim_expires_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__asc: str
+        :param segment_producer_claimed_until__eq: SQL = operator
+        :type segment_producer_claimed_until__eq: datetime
+        :param segment_producer_claimed_until__ne: SQL != operator
+        :type segment_producer_claimed_until__ne: datetime
+        :param segment_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :type segment_producer_claimed_until__gt: datetime
+        :param segment_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type segment_producer_claimed_until__gte: datetime
+        :param segment_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :type segment_producer_claimed_until__lt: datetime
+        :param segment_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type segment_producer_claimed_until__lte: datetime
+        :param segment_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__in: datetime
+        :param segment_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__nin: datetime
+        :param segment_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__notin: datetime
+        :param segment_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isnull: str
+        :param segment_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__nisnull: str
+        :param segment_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isnotnull: str
+        :param segment_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__l: str
+        :param segment_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__like: str
+        :param segment_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nl: str
+        :param segment_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nlike: str
+        :param segment_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__notlike: str
+        :param segment_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__il: str
+        :param segment_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__ilike: str
+        :param segment_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nil: str
+        :param segment_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nilike: str
+        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__notilike: str
+        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__desc: str
+        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__asc: str
+        :param stream_producer_claimed_until__eq: SQL = operator
+        :type stream_producer_claimed_until__eq: datetime
+        :param stream_producer_claimed_until__ne: SQL != operator
+        :type stream_producer_claimed_until__ne: datetime
+        :param stream_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :type stream_producer_claimed_until__gt: datetime
+        :param stream_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type stream_producer_claimed_until__gte: datetime
+        :param stream_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :type stream_producer_claimed_until__lt: datetime
+        :param stream_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type stream_producer_claimed_until__lte: datetime
+        :param stream_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__in: datetime
+        :param stream_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__nin: datetime
+        :param stream_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__notin: datetime
+        :param stream_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isnull: str
+        :param stream_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__nisnull: str
+        :param stream_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isnotnull: str
+        :param stream_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__l: str
+        :param stream_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__like: str
+        :param stream_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nl: str
+        :param stream_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nlike: str
+        :param stream_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__notlike: str
+        :param stream_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__il: str
+        :param stream_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__ilike: str
+        :param stream_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nil: str
+        :param stream_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nilike: str
+        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__notilike: str
+        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__desc: str
+        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1527,78 +1455,54 @@ class CameraApi:
             last_seen__notilike=last_seen__notilike,
             last_seen__desc=last_seen__desc,
             last_seen__asc=last_seen__asc,
-            claimed_at__eq=claimed_at__eq,
-            claimed_at__ne=claimed_at__ne,
-            claimed_at__gt=claimed_at__gt,
-            claimed_at__gte=claimed_at__gte,
-            claimed_at__lt=claimed_at__lt,
-            claimed_at__lte=claimed_at__lte,
-            claimed_at__in=claimed_at__in,
-            claimed_at__nin=claimed_at__nin,
-            claimed_at__notin=claimed_at__notin,
-            claimed_at__isnull=claimed_at__isnull,
-            claimed_at__nisnull=claimed_at__nisnull,
-            claimed_at__isnotnull=claimed_at__isnotnull,
-            claimed_at__l=claimed_at__l,
-            claimed_at__like=claimed_at__like,
-            claimed_at__nl=claimed_at__nl,
-            claimed_at__nlike=claimed_at__nlike,
-            claimed_at__notlike=claimed_at__notlike,
-            claimed_at__il=claimed_at__il,
-            claimed_at__ilike=claimed_at__ilike,
-            claimed_at__nil=claimed_at__nil,
-            claimed_at__nilike=claimed_at__nilike,
-            claimed_at__notilike=claimed_at__notilike,
-            claimed_at__desc=claimed_at__desc,
-            claimed_at__asc=claimed_at__asc,
-            claim_duration__eq=claim_duration__eq,
-            claim_duration__ne=claim_duration__ne,
-            claim_duration__gt=claim_duration__gt,
-            claim_duration__gte=claim_duration__gte,
-            claim_duration__lt=claim_duration__lt,
-            claim_duration__lte=claim_duration__lte,
-            claim_duration__in=claim_duration__in,
-            claim_duration__nin=claim_duration__nin,
-            claim_duration__notin=claim_duration__notin,
-            claim_duration__isnull=claim_duration__isnull,
-            claim_duration__nisnull=claim_duration__nisnull,
-            claim_duration__isnotnull=claim_duration__isnotnull,
-            claim_duration__l=claim_duration__l,
-            claim_duration__like=claim_duration__like,
-            claim_duration__nl=claim_duration__nl,
-            claim_duration__nlike=claim_duration__nlike,
-            claim_duration__notlike=claim_duration__notlike,
-            claim_duration__il=claim_duration__il,
-            claim_duration__ilike=claim_duration__ilike,
-            claim_duration__nil=claim_duration__nil,
-            claim_duration__nilike=claim_duration__nilike,
-            claim_duration__notilike=claim_duration__notilike,
-            claim_duration__desc=claim_duration__desc,
-            claim_duration__asc=claim_duration__asc,
-            claim_expires_at__eq=claim_expires_at__eq,
-            claim_expires_at__ne=claim_expires_at__ne,
-            claim_expires_at__gt=claim_expires_at__gt,
-            claim_expires_at__gte=claim_expires_at__gte,
-            claim_expires_at__lt=claim_expires_at__lt,
-            claim_expires_at__lte=claim_expires_at__lte,
-            claim_expires_at__in=claim_expires_at__in,
-            claim_expires_at__nin=claim_expires_at__nin,
-            claim_expires_at__notin=claim_expires_at__notin,
-            claim_expires_at__isnull=claim_expires_at__isnull,
-            claim_expires_at__nisnull=claim_expires_at__nisnull,
-            claim_expires_at__isnotnull=claim_expires_at__isnotnull,
-            claim_expires_at__l=claim_expires_at__l,
-            claim_expires_at__like=claim_expires_at__like,
-            claim_expires_at__nl=claim_expires_at__nl,
-            claim_expires_at__nlike=claim_expires_at__nlike,
-            claim_expires_at__notlike=claim_expires_at__notlike,
-            claim_expires_at__il=claim_expires_at__il,
-            claim_expires_at__ilike=claim_expires_at__ilike,
-            claim_expires_at__nil=claim_expires_at__nil,
-            claim_expires_at__nilike=claim_expires_at__nilike,
-            claim_expires_at__notilike=claim_expires_at__notilike,
-            claim_expires_at__desc=claim_expires_at__desc,
-            claim_expires_at__asc=claim_expires_at__asc,
+            segment_producer_claimed_until__eq=segment_producer_claimed_until__eq,
+            segment_producer_claimed_until__ne=segment_producer_claimed_until__ne,
+            segment_producer_claimed_until__gt=segment_producer_claimed_until__gt,
+            segment_producer_claimed_until__gte=segment_producer_claimed_until__gte,
+            segment_producer_claimed_until__lt=segment_producer_claimed_until__lt,
+            segment_producer_claimed_until__lte=segment_producer_claimed_until__lte,
+            segment_producer_claimed_until__in=segment_producer_claimed_until__in,
+            segment_producer_claimed_until__nin=segment_producer_claimed_until__nin,
+            segment_producer_claimed_until__notin=segment_producer_claimed_until__notin,
+            segment_producer_claimed_until__isnull=segment_producer_claimed_until__isnull,
+            segment_producer_claimed_until__nisnull=segment_producer_claimed_until__nisnull,
+            segment_producer_claimed_until__isnotnull=segment_producer_claimed_until__isnotnull,
+            segment_producer_claimed_until__l=segment_producer_claimed_until__l,
+            segment_producer_claimed_until__like=segment_producer_claimed_until__like,
+            segment_producer_claimed_until__nl=segment_producer_claimed_until__nl,
+            segment_producer_claimed_until__nlike=segment_producer_claimed_until__nlike,
+            segment_producer_claimed_until__notlike=segment_producer_claimed_until__notlike,
+            segment_producer_claimed_until__il=segment_producer_claimed_until__il,
+            segment_producer_claimed_until__ilike=segment_producer_claimed_until__ilike,
+            segment_producer_claimed_until__nil=segment_producer_claimed_until__nil,
+            segment_producer_claimed_until__nilike=segment_producer_claimed_until__nilike,
+            segment_producer_claimed_until__notilike=segment_producer_claimed_until__notilike,
+            segment_producer_claimed_until__desc=segment_producer_claimed_until__desc,
+            segment_producer_claimed_until__asc=segment_producer_claimed_until__asc,
+            stream_producer_claimed_until__eq=stream_producer_claimed_until__eq,
+            stream_producer_claimed_until__ne=stream_producer_claimed_until__ne,
+            stream_producer_claimed_until__gt=stream_producer_claimed_until__gt,
+            stream_producer_claimed_until__gte=stream_producer_claimed_until__gte,
+            stream_producer_claimed_until__lt=stream_producer_claimed_until__lt,
+            stream_producer_claimed_until__lte=stream_producer_claimed_until__lte,
+            stream_producer_claimed_until__in=stream_producer_claimed_until__in,
+            stream_producer_claimed_until__nin=stream_producer_claimed_until__nin,
+            stream_producer_claimed_until__notin=stream_producer_claimed_until__notin,
+            stream_producer_claimed_until__isnull=stream_producer_claimed_until__isnull,
+            stream_producer_claimed_until__nisnull=stream_producer_claimed_until__nisnull,
+            stream_producer_claimed_until__isnotnull=stream_producer_claimed_until__isnotnull,
+            stream_producer_claimed_until__l=stream_producer_claimed_until__l,
+            stream_producer_claimed_until__like=stream_producer_claimed_until__like,
+            stream_producer_claimed_until__nl=stream_producer_claimed_until__nl,
+            stream_producer_claimed_until__nlike=stream_producer_claimed_until__nlike,
+            stream_producer_claimed_until__notlike=stream_producer_claimed_until__notlike,
+            stream_producer_claimed_until__il=stream_producer_claimed_until__il,
+            stream_producer_claimed_until__ilike=stream_producer_claimed_until__ilike,
+            stream_producer_claimed_until__nil=stream_producer_claimed_until__nil,
+            stream_producer_claimed_until__nilike=stream_producer_claimed_until__nilike,
+            stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
+            stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
+            stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1793,78 +1697,54 @@ class CameraApi:
         last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
         last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
         last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        claimed_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        claimed_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        claimed_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claimed_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        claimed_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claimed_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claimed_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claimed_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claimed_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__eq: Annotated[Optional[StrictInt], Field(description="SQL = operator")] = None,
-        claim_duration__ne: Annotated[Optional[StrictInt], Field(description="SQL != operator")] = None,
-        claim_duration__gt: Annotated[Optional[StrictInt], Field(description="SQL > operator, may not work with all column types")] = None,
-        claim_duration__gte: Annotated[Optional[StrictInt], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claim_duration__lt: Annotated[Optional[StrictInt], Field(description="SQL < operator, may not work with all column types")] = None,
-        claim_duration__lte: Annotated[Optional[StrictInt], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claim_duration__in: Annotated[Optional[StrictInt], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claim_duration__nin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_duration__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_duration__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        claim_expires_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        claim_expires_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        claim_expires_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claim_expires_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        claim_expires_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claim_expires_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claim_expires_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_expires_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_expires_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2223,150 +2103,102 @@ class CameraApi:
         :type last_seen__desc: str
         :param last_seen__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
         :type last_seen__asc: str
-        :param claimed_at__eq: SQL = operator
-        :type claimed_at__eq: datetime
-        :param claimed_at__ne: SQL != operator
-        :type claimed_at__ne: datetime
-        :param claimed_at__gt: SQL > operator, may not work with all column types
-        :type claimed_at__gt: datetime
-        :param claimed_at__gte: SQL >= operator, may not work with all column types
-        :type claimed_at__gte: datetime
-        :param claimed_at__lt: SQL < operator, may not work with all column types
-        :type claimed_at__lt: datetime
-        :param claimed_at__lte: SQL <= operator, may not work with all column types
-        :type claimed_at__lte: datetime
-        :param claimed_at__in: SQL IN operator, permits comma-separated values
-        :type claimed_at__in: datetime
-        :param claimed_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type claimed_at__nin: datetime
-        :param claimed_at__notin: SQL NOT IN operator, permits comma-separated values
-        :type claimed_at__notin: datetime
-        :param claimed_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__isnull: str
-        :param claimed_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__nisnull: str
-        :param claimed_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__isnotnull: str
-        :param claimed_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__l: str
-        :param claimed_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__like: str
-        :param claimed_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nl: str
-        :param claimed_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nlike: str
-        :param claimed_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__notlike: str
-        :param claimed_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__il: str
-        :param claimed_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__ilike: str
-        :param claimed_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nil: str
-        :param claimed_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nilike: str
-        :param claimed_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__notilike: str
-        :param claimed_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__desc: str
-        :param claimed_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__asc: str
-        :param claim_duration__eq: SQL = operator
-        :type claim_duration__eq: int
-        :param claim_duration__ne: SQL != operator
-        :type claim_duration__ne: int
-        :param claim_duration__gt: SQL > operator, may not work with all column types
-        :type claim_duration__gt: int
-        :param claim_duration__gte: SQL >= operator, may not work with all column types
-        :type claim_duration__gte: int
-        :param claim_duration__lt: SQL < operator, may not work with all column types
-        :type claim_duration__lt: int
-        :param claim_duration__lte: SQL <= operator, may not work with all column types
-        :type claim_duration__lte: int
-        :param claim_duration__in: SQL IN operator, permits comma-separated values
-        :type claim_duration__in: int
-        :param claim_duration__nin: SQL NOT IN operator, permits comma-separated values
-        :type claim_duration__nin: int
-        :param claim_duration__notin: SQL NOT IN operator, permits comma-separated values
-        :type claim_duration__notin: int
-        :param claim_duration__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__isnull: str
-        :param claim_duration__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__nisnull: str
-        :param claim_duration__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__isnotnull: str
-        :param claim_duration__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__l: str
-        :param claim_duration__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__like: str
-        :param claim_duration__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nl: str
-        :param claim_duration__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nlike: str
-        :param claim_duration__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__notlike: str
-        :param claim_duration__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__il: str
-        :param claim_duration__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__ilike: str
-        :param claim_duration__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nil: str
-        :param claim_duration__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nilike: str
-        :param claim_duration__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__notilike: str
-        :param claim_duration__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__desc: str
-        :param claim_duration__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__asc: str
-        :param claim_expires_at__eq: SQL = operator
-        :type claim_expires_at__eq: datetime
-        :param claim_expires_at__ne: SQL != operator
-        :type claim_expires_at__ne: datetime
-        :param claim_expires_at__gt: SQL > operator, may not work with all column types
-        :type claim_expires_at__gt: datetime
-        :param claim_expires_at__gte: SQL >= operator, may not work with all column types
-        :type claim_expires_at__gte: datetime
-        :param claim_expires_at__lt: SQL < operator, may not work with all column types
-        :type claim_expires_at__lt: datetime
-        :param claim_expires_at__lte: SQL <= operator, may not work with all column types
-        :type claim_expires_at__lte: datetime
-        :param claim_expires_at__in: SQL IN operator, permits comma-separated values
-        :type claim_expires_at__in: datetime
-        :param claim_expires_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type claim_expires_at__nin: datetime
-        :param claim_expires_at__notin: SQL NOT IN operator, permits comma-separated values
-        :type claim_expires_at__notin: datetime
-        :param claim_expires_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__isnull: str
-        :param claim_expires_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__nisnull: str
-        :param claim_expires_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__isnotnull: str
-        :param claim_expires_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__l: str
-        :param claim_expires_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__like: str
-        :param claim_expires_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nl: str
-        :param claim_expires_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nlike: str
-        :param claim_expires_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__notlike: str
-        :param claim_expires_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__il: str
-        :param claim_expires_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__ilike: str
-        :param claim_expires_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nil: str
-        :param claim_expires_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nilike: str
-        :param claim_expires_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__notilike: str
-        :param claim_expires_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__desc: str
-        :param claim_expires_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__asc: str
+        :param segment_producer_claimed_until__eq: SQL = operator
+        :type segment_producer_claimed_until__eq: datetime
+        :param segment_producer_claimed_until__ne: SQL != operator
+        :type segment_producer_claimed_until__ne: datetime
+        :param segment_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :type segment_producer_claimed_until__gt: datetime
+        :param segment_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type segment_producer_claimed_until__gte: datetime
+        :param segment_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :type segment_producer_claimed_until__lt: datetime
+        :param segment_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type segment_producer_claimed_until__lte: datetime
+        :param segment_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__in: datetime
+        :param segment_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__nin: datetime
+        :param segment_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__notin: datetime
+        :param segment_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isnull: str
+        :param segment_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__nisnull: str
+        :param segment_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isnotnull: str
+        :param segment_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__l: str
+        :param segment_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__like: str
+        :param segment_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nl: str
+        :param segment_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nlike: str
+        :param segment_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__notlike: str
+        :param segment_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__il: str
+        :param segment_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__ilike: str
+        :param segment_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nil: str
+        :param segment_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nilike: str
+        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__notilike: str
+        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__desc: str
+        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__asc: str
+        :param stream_producer_claimed_until__eq: SQL = operator
+        :type stream_producer_claimed_until__eq: datetime
+        :param stream_producer_claimed_until__ne: SQL != operator
+        :type stream_producer_claimed_until__ne: datetime
+        :param stream_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :type stream_producer_claimed_until__gt: datetime
+        :param stream_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type stream_producer_claimed_until__gte: datetime
+        :param stream_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :type stream_producer_claimed_until__lt: datetime
+        :param stream_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type stream_producer_claimed_until__lte: datetime
+        :param stream_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__in: datetime
+        :param stream_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__nin: datetime
+        :param stream_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__notin: datetime
+        :param stream_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isnull: str
+        :param stream_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__nisnull: str
+        :param stream_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isnotnull: str
+        :param stream_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__l: str
+        :param stream_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__like: str
+        :param stream_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nl: str
+        :param stream_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nlike: str
+        :param stream_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__notlike: str
+        :param stream_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__il: str
+        :param stream_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__ilike: str
+        :param stream_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nil: str
+        :param stream_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nilike: str
+        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__notilike: str
+        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__desc: str
+        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2561,78 +2393,54 @@ class CameraApi:
             last_seen__notilike=last_seen__notilike,
             last_seen__desc=last_seen__desc,
             last_seen__asc=last_seen__asc,
-            claimed_at__eq=claimed_at__eq,
-            claimed_at__ne=claimed_at__ne,
-            claimed_at__gt=claimed_at__gt,
-            claimed_at__gte=claimed_at__gte,
-            claimed_at__lt=claimed_at__lt,
-            claimed_at__lte=claimed_at__lte,
-            claimed_at__in=claimed_at__in,
-            claimed_at__nin=claimed_at__nin,
-            claimed_at__notin=claimed_at__notin,
-            claimed_at__isnull=claimed_at__isnull,
-            claimed_at__nisnull=claimed_at__nisnull,
-            claimed_at__isnotnull=claimed_at__isnotnull,
-            claimed_at__l=claimed_at__l,
-            claimed_at__like=claimed_at__like,
-            claimed_at__nl=claimed_at__nl,
-            claimed_at__nlike=claimed_at__nlike,
-            claimed_at__notlike=claimed_at__notlike,
-            claimed_at__il=claimed_at__il,
-            claimed_at__ilike=claimed_at__ilike,
-            claimed_at__nil=claimed_at__nil,
-            claimed_at__nilike=claimed_at__nilike,
-            claimed_at__notilike=claimed_at__notilike,
-            claimed_at__desc=claimed_at__desc,
-            claimed_at__asc=claimed_at__asc,
-            claim_duration__eq=claim_duration__eq,
-            claim_duration__ne=claim_duration__ne,
-            claim_duration__gt=claim_duration__gt,
-            claim_duration__gte=claim_duration__gte,
-            claim_duration__lt=claim_duration__lt,
-            claim_duration__lte=claim_duration__lte,
-            claim_duration__in=claim_duration__in,
-            claim_duration__nin=claim_duration__nin,
-            claim_duration__notin=claim_duration__notin,
-            claim_duration__isnull=claim_duration__isnull,
-            claim_duration__nisnull=claim_duration__nisnull,
-            claim_duration__isnotnull=claim_duration__isnotnull,
-            claim_duration__l=claim_duration__l,
-            claim_duration__like=claim_duration__like,
-            claim_duration__nl=claim_duration__nl,
-            claim_duration__nlike=claim_duration__nlike,
-            claim_duration__notlike=claim_duration__notlike,
-            claim_duration__il=claim_duration__il,
-            claim_duration__ilike=claim_duration__ilike,
-            claim_duration__nil=claim_duration__nil,
-            claim_duration__nilike=claim_duration__nilike,
-            claim_duration__notilike=claim_duration__notilike,
-            claim_duration__desc=claim_duration__desc,
-            claim_duration__asc=claim_duration__asc,
-            claim_expires_at__eq=claim_expires_at__eq,
-            claim_expires_at__ne=claim_expires_at__ne,
-            claim_expires_at__gt=claim_expires_at__gt,
-            claim_expires_at__gte=claim_expires_at__gte,
-            claim_expires_at__lt=claim_expires_at__lt,
-            claim_expires_at__lte=claim_expires_at__lte,
-            claim_expires_at__in=claim_expires_at__in,
-            claim_expires_at__nin=claim_expires_at__nin,
-            claim_expires_at__notin=claim_expires_at__notin,
-            claim_expires_at__isnull=claim_expires_at__isnull,
-            claim_expires_at__nisnull=claim_expires_at__nisnull,
-            claim_expires_at__isnotnull=claim_expires_at__isnotnull,
-            claim_expires_at__l=claim_expires_at__l,
-            claim_expires_at__like=claim_expires_at__like,
-            claim_expires_at__nl=claim_expires_at__nl,
-            claim_expires_at__nlike=claim_expires_at__nlike,
-            claim_expires_at__notlike=claim_expires_at__notlike,
-            claim_expires_at__il=claim_expires_at__il,
-            claim_expires_at__ilike=claim_expires_at__ilike,
-            claim_expires_at__nil=claim_expires_at__nil,
-            claim_expires_at__nilike=claim_expires_at__nilike,
-            claim_expires_at__notilike=claim_expires_at__notilike,
-            claim_expires_at__desc=claim_expires_at__desc,
-            claim_expires_at__asc=claim_expires_at__asc,
+            segment_producer_claimed_until__eq=segment_producer_claimed_until__eq,
+            segment_producer_claimed_until__ne=segment_producer_claimed_until__ne,
+            segment_producer_claimed_until__gt=segment_producer_claimed_until__gt,
+            segment_producer_claimed_until__gte=segment_producer_claimed_until__gte,
+            segment_producer_claimed_until__lt=segment_producer_claimed_until__lt,
+            segment_producer_claimed_until__lte=segment_producer_claimed_until__lte,
+            segment_producer_claimed_until__in=segment_producer_claimed_until__in,
+            segment_producer_claimed_until__nin=segment_producer_claimed_until__nin,
+            segment_producer_claimed_until__notin=segment_producer_claimed_until__notin,
+            segment_producer_claimed_until__isnull=segment_producer_claimed_until__isnull,
+            segment_producer_claimed_until__nisnull=segment_producer_claimed_until__nisnull,
+            segment_producer_claimed_until__isnotnull=segment_producer_claimed_until__isnotnull,
+            segment_producer_claimed_until__l=segment_producer_claimed_until__l,
+            segment_producer_claimed_until__like=segment_producer_claimed_until__like,
+            segment_producer_claimed_until__nl=segment_producer_claimed_until__nl,
+            segment_producer_claimed_until__nlike=segment_producer_claimed_until__nlike,
+            segment_producer_claimed_until__notlike=segment_producer_claimed_until__notlike,
+            segment_producer_claimed_until__il=segment_producer_claimed_until__il,
+            segment_producer_claimed_until__ilike=segment_producer_claimed_until__ilike,
+            segment_producer_claimed_until__nil=segment_producer_claimed_until__nil,
+            segment_producer_claimed_until__nilike=segment_producer_claimed_until__nilike,
+            segment_producer_claimed_until__notilike=segment_producer_claimed_until__notilike,
+            segment_producer_claimed_until__desc=segment_producer_claimed_until__desc,
+            segment_producer_claimed_until__asc=segment_producer_claimed_until__asc,
+            stream_producer_claimed_until__eq=stream_producer_claimed_until__eq,
+            stream_producer_claimed_until__ne=stream_producer_claimed_until__ne,
+            stream_producer_claimed_until__gt=stream_producer_claimed_until__gt,
+            stream_producer_claimed_until__gte=stream_producer_claimed_until__gte,
+            stream_producer_claimed_until__lt=stream_producer_claimed_until__lt,
+            stream_producer_claimed_until__lte=stream_producer_claimed_until__lte,
+            stream_producer_claimed_until__in=stream_producer_claimed_until__in,
+            stream_producer_claimed_until__nin=stream_producer_claimed_until__nin,
+            stream_producer_claimed_until__notin=stream_producer_claimed_until__notin,
+            stream_producer_claimed_until__isnull=stream_producer_claimed_until__isnull,
+            stream_producer_claimed_until__nisnull=stream_producer_claimed_until__nisnull,
+            stream_producer_claimed_until__isnotnull=stream_producer_claimed_until__isnotnull,
+            stream_producer_claimed_until__l=stream_producer_claimed_until__l,
+            stream_producer_claimed_until__like=stream_producer_claimed_until__like,
+            stream_producer_claimed_until__nl=stream_producer_claimed_until__nl,
+            stream_producer_claimed_until__nlike=stream_producer_claimed_until__nlike,
+            stream_producer_claimed_until__notlike=stream_producer_claimed_until__notlike,
+            stream_producer_claimed_until__il=stream_producer_claimed_until__il,
+            stream_producer_claimed_until__ilike=stream_producer_claimed_until__ilike,
+            stream_producer_claimed_until__nil=stream_producer_claimed_until__nil,
+            stream_producer_claimed_until__nilike=stream_producer_claimed_until__nilike,
+            stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
+            stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
+            stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2827,78 +2635,54 @@ class CameraApi:
         last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
         last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
         last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        claimed_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        claimed_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        claimed_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claimed_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        claimed_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claimed_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claimed_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claimed_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claimed_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claimed_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claimed_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__eq: Annotated[Optional[StrictInt], Field(description="SQL = operator")] = None,
-        claim_duration__ne: Annotated[Optional[StrictInt], Field(description="SQL != operator")] = None,
-        claim_duration__gt: Annotated[Optional[StrictInt], Field(description="SQL > operator, may not work with all column types")] = None,
-        claim_duration__gte: Annotated[Optional[StrictInt], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claim_duration__lt: Annotated[Optional[StrictInt], Field(description="SQL < operator, may not work with all column types")] = None,
-        claim_duration__lte: Annotated[Optional[StrictInt], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claim_duration__in: Annotated[Optional[StrictInt], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claim_duration__nin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_duration__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_duration__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_duration__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_duration__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        claim_expires_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        claim_expires_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        claim_expires_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        claim_expires_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        claim_expires_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        claim_expires_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        claim_expires_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_expires_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        claim_expires_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        claim_expires_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        claim_expires_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3257,150 +3041,102 @@ class CameraApi:
         :type last_seen__desc: str
         :param last_seen__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
         :type last_seen__asc: str
-        :param claimed_at__eq: SQL = operator
-        :type claimed_at__eq: datetime
-        :param claimed_at__ne: SQL != operator
-        :type claimed_at__ne: datetime
-        :param claimed_at__gt: SQL > operator, may not work with all column types
-        :type claimed_at__gt: datetime
-        :param claimed_at__gte: SQL >= operator, may not work with all column types
-        :type claimed_at__gte: datetime
-        :param claimed_at__lt: SQL < operator, may not work with all column types
-        :type claimed_at__lt: datetime
-        :param claimed_at__lte: SQL <= operator, may not work with all column types
-        :type claimed_at__lte: datetime
-        :param claimed_at__in: SQL IN operator, permits comma-separated values
-        :type claimed_at__in: datetime
-        :param claimed_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type claimed_at__nin: datetime
-        :param claimed_at__notin: SQL NOT IN operator, permits comma-separated values
-        :type claimed_at__notin: datetime
-        :param claimed_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__isnull: str
-        :param claimed_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__nisnull: str
-        :param claimed_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__isnotnull: str
-        :param claimed_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__l: str
-        :param claimed_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__like: str
-        :param claimed_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nl: str
-        :param claimed_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nlike: str
-        :param claimed_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__notlike: str
-        :param claimed_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__il: str
-        :param claimed_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__ilike: str
-        :param claimed_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nil: str
-        :param claimed_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__nilike: str
-        :param claimed_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claimed_at__notilike: str
-        :param claimed_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__desc: str
-        :param claimed_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claimed_at__asc: str
-        :param claim_duration__eq: SQL = operator
-        :type claim_duration__eq: int
-        :param claim_duration__ne: SQL != operator
-        :type claim_duration__ne: int
-        :param claim_duration__gt: SQL > operator, may not work with all column types
-        :type claim_duration__gt: int
-        :param claim_duration__gte: SQL >= operator, may not work with all column types
-        :type claim_duration__gte: int
-        :param claim_duration__lt: SQL < operator, may not work with all column types
-        :type claim_duration__lt: int
-        :param claim_duration__lte: SQL <= operator, may not work with all column types
-        :type claim_duration__lte: int
-        :param claim_duration__in: SQL IN operator, permits comma-separated values
-        :type claim_duration__in: int
-        :param claim_duration__nin: SQL NOT IN operator, permits comma-separated values
-        :type claim_duration__nin: int
-        :param claim_duration__notin: SQL NOT IN operator, permits comma-separated values
-        :type claim_duration__notin: int
-        :param claim_duration__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__isnull: str
-        :param claim_duration__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__nisnull: str
-        :param claim_duration__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__isnotnull: str
-        :param claim_duration__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__l: str
-        :param claim_duration__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__like: str
-        :param claim_duration__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nl: str
-        :param claim_duration__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nlike: str
-        :param claim_duration__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__notlike: str
-        :param claim_duration__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__il: str
-        :param claim_duration__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__ilike: str
-        :param claim_duration__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nil: str
-        :param claim_duration__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__nilike: str
-        :param claim_duration__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_duration__notilike: str
-        :param claim_duration__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__desc: str
-        :param claim_duration__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claim_duration__asc: str
-        :param claim_expires_at__eq: SQL = operator
-        :type claim_expires_at__eq: datetime
-        :param claim_expires_at__ne: SQL != operator
-        :type claim_expires_at__ne: datetime
-        :param claim_expires_at__gt: SQL > operator, may not work with all column types
-        :type claim_expires_at__gt: datetime
-        :param claim_expires_at__gte: SQL >= operator, may not work with all column types
-        :type claim_expires_at__gte: datetime
-        :param claim_expires_at__lt: SQL < operator, may not work with all column types
-        :type claim_expires_at__lt: datetime
-        :param claim_expires_at__lte: SQL <= operator, may not work with all column types
-        :type claim_expires_at__lte: datetime
-        :param claim_expires_at__in: SQL IN operator, permits comma-separated values
-        :type claim_expires_at__in: datetime
-        :param claim_expires_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type claim_expires_at__nin: datetime
-        :param claim_expires_at__notin: SQL NOT IN operator, permits comma-separated values
-        :type claim_expires_at__notin: datetime
-        :param claim_expires_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__isnull: str
-        :param claim_expires_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__nisnull: str
-        :param claim_expires_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__isnotnull: str
-        :param claim_expires_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__l: str
-        :param claim_expires_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__like: str
-        :param claim_expires_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nl: str
-        :param claim_expires_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nlike: str
-        :param claim_expires_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__notlike: str
-        :param claim_expires_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__il: str
-        :param claim_expires_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__ilike: str
-        :param claim_expires_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nil: str
-        :param claim_expires_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__nilike: str
-        :param claim_expires_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type claim_expires_at__notilike: str
-        :param claim_expires_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__desc: str
-        :param claim_expires_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
-        :type claim_expires_at__asc: str
+        :param segment_producer_claimed_until__eq: SQL = operator
+        :type segment_producer_claimed_until__eq: datetime
+        :param segment_producer_claimed_until__ne: SQL != operator
+        :type segment_producer_claimed_until__ne: datetime
+        :param segment_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :type segment_producer_claimed_until__gt: datetime
+        :param segment_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type segment_producer_claimed_until__gte: datetime
+        :param segment_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :type segment_producer_claimed_until__lt: datetime
+        :param segment_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type segment_producer_claimed_until__lte: datetime
+        :param segment_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__in: datetime
+        :param segment_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__nin: datetime
+        :param segment_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type segment_producer_claimed_until__notin: datetime
+        :param segment_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isnull: str
+        :param segment_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__nisnull: str
+        :param segment_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isnotnull: str
+        :param segment_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__l: str
+        :param segment_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__like: str
+        :param segment_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nl: str
+        :param segment_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nlike: str
+        :param segment_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__notlike: str
+        :param segment_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__il: str
+        :param segment_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__ilike: str
+        :param segment_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nil: str
+        :param segment_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__nilike: str
+        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type segment_producer_claimed_until__notilike: str
+        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__desc: str
+        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__asc: str
+        :param stream_producer_claimed_until__eq: SQL = operator
+        :type stream_producer_claimed_until__eq: datetime
+        :param stream_producer_claimed_until__ne: SQL != operator
+        :type stream_producer_claimed_until__ne: datetime
+        :param stream_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :type stream_producer_claimed_until__gt: datetime
+        :param stream_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type stream_producer_claimed_until__gte: datetime
+        :param stream_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :type stream_producer_claimed_until__lt: datetime
+        :param stream_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type stream_producer_claimed_until__lte: datetime
+        :param stream_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__in: datetime
+        :param stream_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__nin: datetime
+        :param stream_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type stream_producer_claimed_until__notin: datetime
+        :param stream_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isnull: str
+        :param stream_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__nisnull: str
+        :param stream_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isnotnull: str
+        :param stream_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__l: str
+        :param stream_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__like: str
+        :param stream_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nl: str
+        :param stream_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nlike: str
+        :param stream_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__notlike: str
+        :param stream_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__il: str
+        :param stream_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__ilike: str
+        :param stream_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nil: str
+        :param stream_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__nilike: str
+        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type stream_producer_claimed_until__notilike: str
+        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__desc: str
+        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3595,78 +3331,54 @@ class CameraApi:
             last_seen__notilike=last_seen__notilike,
             last_seen__desc=last_seen__desc,
             last_seen__asc=last_seen__asc,
-            claimed_at__eq=claimed_at__eq,
-            claimed_at__ne=claimed_at__ne,
-            claimed_at__gt=claimed_at__gt,
-            claimed_at__gte=claimed_at__gte,
-            claimed_at__lt=claimed_at__lt,
-            claimed_at__lte=claimed_at__lte,
-            claimed_at__in=claimed_at__in,
-            claimed_at__nin=claimed_at__nin,
-            claimed_at__notin=claimed_at__notin,
-            claimed_at__isnull=claimed_at__isnull,
-            claimed_at__nisnull=claimed_at__nisnull,
-            claimed_at__isnotnull=claimed_at__isnotnull,
-            claimed_at__l=claimed_at__l,
-            claimed_at__like=claimed_at__like,
-            claimed_at__nl=claimed_at__nl,
-            claimed_at__nlike=claimed_at__nlike,
-            claimed_at__notlike=claimed_at__notlike,
-            claimed_at__il=claimed_at__il,
-            claimed_at__ilike=claimed_at__ilike,
-            claimed_at__nil=claimed_at__nil,
-            claimed_at__nilike=claimed_at__nilike,
-            claimed_at__notilike=claimed_at__notilike,
-            claimed_at__desc=claimed_at__desc,
-            claimed_at__asc=claimed_at__asc,
-            claim_duration__eq=claim_duration__eq,
-            claim_duration__ne=claim_duration__ne,
-            claim_duration__gt=claim_duration__gt,
-            claim_duration__gte=claim_duration__gte,
-            claim_duration__lt=claim_duration__lt,
-            claim_duration__lte=claim_duration__lte,
-            claim_duration__in=claim_duration__in,
-            claim_duration__nin=claim_duration__nin,
-            claim_duration__notin=claim_duration__notin,
-            claim_duration__isnull=claim_duration__isnull,
-            claim_duration__nisnull=claim_duration__nisnull,
-            claim_duration__isnotnull=claim_duration__isnotnull,
-            claim_duration__l=claim_duration__l,
-            claim_duration__like=claim_duration__like,
-            claim_duration__nl=claim_duration__nl,
-            claim_duration__nlike=claim_duration__nlike,
-            claim_duration__notlike=claim_duration__notlike,
-            claim_duration__il=claim_duration__il,
-            claim_duration__ilike=claim_duration__ilike,
-            claim_duration__nil=claim_duration__nil,
-            claim_duration__nilike=claim_duration__nilike,
-            claim_duration__notilike=claim_duration__notilike,
-            claim_duration__desc=claim_duration__desc,
-            claim_duration__asc=claim_duration__asc,
-            claim_expires_at__eq=claim_expires_at__eq,
-            claim_expires_at__ne=claim_expires_at__ne,
-            claim_expires_at__gt=claim_expires_at__gt,
-            claim_expires_at__gte=claim_expires_at__gte,
-            claim_expires_at__lt=claim_expires_at__lt,
-            claim_expires_at__lte=claim_expires_at__lte,
-            claim_expires_at__in=claim_expires_at__in,
-            claim_expires_at__nin=claim_expires_at__nin,
-            claim_expires_at__notin=claim_expires_at__notin,
-            claim_expires_at__isnull=claim_expires_at__isnull,
-            claim_expires_at__nisnull=claim_expires_at__nisnull,
-            claim_expires_at__isnotnull=claim_expires_at__isnotnull,
-            claim_expires_at__l=claim_expires_at__l,
-            claim_expires_at__like=claim_expires_at__like,
-            claim_expires_at__nl=claim_expires_at__nl,
-            claim_expires_at__nlike=claim_expires_at__nlike,
-            claim_expires_at__notlike=claim_expires_at__notlike,
-            claim_expires_at__il=claim_expires_at__il,
-            claim_expires_at__ilike=claim_expires_at__ilike,
-            claim_expires_at__nil=claim_expires_at__nil,
-            claim_expires_at__nilike=claim_expires_at__nilike,
-            claim_expires_at__notilike=claim_expires_at__notilike,
-            claim_expires_at__desc=claim_expires_at__desc,
-            claim_expires_at__asc=claim_expires_at__asc,
+            segment_producer_claimed_until__eq=segment_producer_claimed_until__eq,
+            segment_producer_claimed_until__ne=segment_producer_claimed_until__ne,
+            segment_producer_claimed_until__gt=segment_producer_claimed_until__gt,
+            segment_producer_claimed_until__gte=segment_producer_claimed_until__gte,
+            segment_producer_claimed_until__lt=segment_producer_claimed_until__lt,
+            segment_producer_claimed_until__lte=segment_producer_claimed_until__lte,
+            segment_producer_claimed_until__in=segment_producer_claimed_until__in,
+            segment_producer_claimed_until__nin=segment_producer_claimed_until__nin,
+            segment_producer_claimed_until__notin=segment_producer_claimed_until__notin,
+            segment_producer_claimed_until__isnull=segment_producer_claimed_until__isnull,
+            segment_producer_claimed_until__nisnull=segment_producer_claimed_until__nisnull,
+            segment_producer_claimed_until__isnotnull=segment_producer_claimed_until__isnotnull,
+            segment_producer_claimed_until__l=segment_producer_claimed_until__l,
+            segment_producer_claimed_until__like=segment_producer_claimed_until__like,
+            segment_producer_claimed_until__nl=segment_producer_claimed_until__nl,
+            segment_producer_claimed_until__nlike=segment_producer_claimed_until__nlike,
+            segment_producer_claimed_until__notlike=segment_producer_claimed_until__notlike,
+            segment_producer_claimed_until__il=segment_producer_claimed_until__il,
+            segment_producer_claimed_until__ilike=segment_producer_claimed_until__ilike,
+            segment_producer_claimed_until__nil=segment_producer_claimed_until__nil,
+            segment_producer_claimed_until__nilike=segment_producer_claimed_until__nilike,
+            segment_producer_claimed_until__notilike=segment_producer_claimed_until__notilike,
+            segment_producer_claimed_until__desc=segment_producer_claimed_until__desc,
+            segment_producer_claimed_until__asc=segment_producer_claimed_until__asc,
+            stream_producer_claimed_until__eq=stream_producer_claimed_until__eq,
+            stream_producer_claimed_until__ne=stream_producer_claimed_until__ne,
+            stream_producer_claimed_until__gt=stream_producer_claimed_until__gt,
+            stream_producer_claimed_until__gte=stream_producer_claimed_until__gte,
+            stream_producer_claimed_until__lt=stream_producer_claimed_until__lt,
+            stream_producer_claimed_until__lte=stream_producer_claimed_until__lte,
+            stream_producer_claimed_until__in=stream_producer_claimed_until__in,
+            stream_producer_claimed_until__nin=stream_producer_claimed_until__nin,
+            stream_producer_claimed_until__notin=stream_producer_claimed_until__notin,
+            stream_producer_claimed_until__isnull=stream_producer_claimed_until__isnull,
+            stream_producer_claimed_until__nisnull=stream_producer_claimed_until__nisnull,
+            stream_producer_claimed_until__isnotnull=stream_producer_claimed_until__isnotnull,
+            stream_producer_claimed_until__l=stream_producer_claimed_until__l,
+            stream_producer_claimed_until__like=stream_producer_claimed_until__like,
+            stream_producer_claimed_until__nl=stream_producer_claimed_until__nl,
+            stream_producer_claimed_until__nlike=stream_producer_claimed_until__nlike,
+            stream_producer_claimed_until__notlike=stream_producer_claimed_until__notlike,
+            stream_producer_claimed_until__il=stream_producer_claimed_until__il,
+            stream_producer_claimed_until__ilike=stream_producer_claimed_until__ilike,
+            stream_producer_claimed_until__nil=stream_producer_claimed_until__nil,
+            stream_producer_claimed_until__nilike=stream_producer_claimed_until__nilike,
+            stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
+            stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
+            stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3856,78 +3568,54 @@ class CameraApi:
         last_seen__notilike,
         last_seen__desc,
         last_seen__asc,
-        claimed_at__eq,
-        claimed_at__ne,
-        claimed_at__gt,
-        claimed_at__gte,
-        claimed_at__lt,
-        claimed_at__lte,
-        claimed_at__in,
-        claimed_at__nin,
-        claimed_at__notin,
-        claimed_at__isnull,
-        claimed_at__nisnull,
-        claimed_at__isnotnull,
-        claimed_at__l,
-        claimed_at__like,
-        claimed_at__nl,
-        claimed_at__nlike,
-        claimed_at__notlike,
-        claimed_at__il,
-        claimed_at__ilike,
-        claimed_at__nil,
-        claimed_at__nilike,
-        claimed_at__notilike,
-        claimed_at__desc,
-        claimed_at__asc,
-        claim_duration__eq,
-        claim_duration__ne,
-        claim_duration__gt,
-        claim_duration__gte,
-        claim_duration__lt,
-        claim_duration__lte,
-        claim_duration__in,
-        claim_duration__nin,
-        claim_duration__notin,
-        claim_duration__isnull,
-        claim_duration__nisnull,
-        claim_duration__isnotnull,
-        claim_duration__l,
-        claim_duration__like,
-        claim_duration__nl,
-        claim_duration__nlike,
-        claim_duration__notlike,
-        claim_duration__il,
-        claim_duration__ilike,
-        claim_duration__nil,
-        claim_duration__nilike,
-        claim_duration__notilike,
-        claim_duration__desc,
-        claim_duration__asc,
-        claim_expires_at__eq,
-        claim_expires_at__ne,
-        claim_expires_at__gt,
-        claim_expires_at__gte,
-        claim_expires_at__lt,
-        claim_expires_at__lte,
-        claim_expires_at__in,
-        claim_expires_at__nin,
-        claim_expires_at__notin,
-        claim_expires_at__isnull,
-        claim_expires_at__nisnull,
-        claim_expires_at__isnotnull,
-        claim_expires_at__l,
-        claim_expires_at__like,
-        claim_expires_at__nl,
-        claim_expires_at__nlike,
-        claim_expires_at__notlike,
-        claim_expires_at__il,
-        claim_expires_at__ilike,
-        claim_expires_at__nil,
-        claim_expires_at__nilike,
-        claim_expires_at__notilike,
-        claim_expires_at__desc,
-        claim_expires_at__asc,
+        segment_producer_claimed_until__eq,
+        segment_producer_claimed_until__ne,
+        segment_producer_claimed_until__gt,
+        segment_producer_claimed_until__gte,
+        segment_producer_claimed_until__lt,
+        segment_producer_claimed_until__lte,
+        segment_producer_claimed_until__in,
+        segment_producer_claimed_until__nin,
+        segment_producer_claimed_until__notin,
+        segment_producer_claimed_until__isnull,
+        segment_producer_claimed_until__nisnull,
+        segment_producer_claimed_until__isnotnull,
+        segment_producer_claimed_until__l,
+        segment_producer_claimed_until__like,
+        segment_producer_claimed_until__nl,
+        segment_producer_claimed_until__nlike,
+        segment_producer_claimed_until__notlike,
+        segment_producer_claimed_until__il,
+        segment_producer_claimed_until__ilike,
+        segment_producer_claimed_until__nil,
+        segment_producer_claimed_until__nilike,
+        segment_producer_claimed_until__notilike,
+        segment_producer_claimed_until__desc,
+        segment_producer_claimed_until__asc,
+        stream_producer_claimed_until__eq,
+        stream_producer_claimed_until__ne,
+        stream_producer_claimed_until__gt,
+        stream_producer_claimed_until__gte,
+        stream_producer_claimed_until__lt,
+        stream_producer_claimed_until__lte,
+        stream_producer_claimed_until__in,
+        stream_producer_claimed_until__nin,
+        stream_producer_claimed_until__notin,
+        stream_producer_claimed_until__isnull,
+        stream_producer_claimed_until__nisnull,
+        stream_producer_claimed_until__isnotnull,
+        stream_producer_claimed_until__l,
+        stream_producer_claimed_until__like,
+        stream_producer_claimed_until__nl,
+        stream_producer_claimed_until__nlike,
+        stream_producer_claimed_until__notlike,
+        stream_producer_claimed_until__il,
+        stream_producer_claimed_until__ilike,
+        stream_producer_claimed_until__nil,
+        stream_producer_claimed_until__nilike,
+        stream_producer_claimed_until__notilike,
+        stream_producer_claimed_until__desc,
+        stream_producer_claimed_until__asc,
         _request_auth,
         _content_type,
         _headers,
@@ -4956,455 +4644,359 @@ class CameraApi:
             
             _query_params.append(('last_seen__asc', last_seen__asc))
             
-        if claimed_at__eq is not None:
-            if isinstance(claimed_at__eq, datetime):
+        if segment_producer_claimed_until__eq is not None:
+            if isinstance(segment_producer_claimed_until__eq, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__eq',
-                        claimed_at__eq.strftime(
+                        'segment_producer_claimed_until__eq',
+                        segment_producer_claimed_until__eq.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__eq', claimed_at__eq))
+                _query_params.append(('segment_producer_claimed_until__eq', segment_producer_claimed_until__eq))
             
-        if claimed_at__ne is not None:
-            if isinstance(claimed_at__ne, datetime):
+        if segment_producer_claimed_until__ne is not None:
+            if isinstance(segment_producer_claimed_until__ne, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__ne',
-                        claimed_at__ne.strftime(
+                        'segment_producer_claimed_until__ne',
+                        segment_producer_claimed_until__ne.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__ne', claimed_at__ne))
+                _query_params.append(('segment_producer_claimed_until__ne', segment_producer_claimed_until__ne))
             
-        if claimed_at__gt is not None:
-            if isinstance(claimed_at__gt, datetime):
+        if segment_producer_claimed_until__gt is not None:
+            if isinstance(segment_producer_claimed_until__gt, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__gt',
-                        claimed_at__gt.strftime(
+                        'segment_producer_claimed_until__gt',
+                        segment_producer_claimed_until__gt.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__gt', claimed_at__gt))
+                _query_params.append(('segment_producer_claimed_until__gt', segment_producer_claimed_until__gt))
             
-        if claimed_at__gte is not None:
-            if isinstance(claimed_at__gte, datetime):
+        if segment_producer_claimed_until__gte is not None:
+            if isinstance(segment_producer_claimed_until__gte, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__gte',
-                        claimed_at__gte.strftime(
+                        'segment_producer_claimed_until__gte',
+                        segment_producer_claimed_until__gte.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__gte', claimed_at__gte))
+                _query_params.append(('segment_producer_claimed_until__gte', segment_producer_claimed_until__gte))
             
-        if claimed_at__lt is not None:
-            if isinstance(claimed_at__lt, datetime):
+        if segment_producer_claimed_until__lt is not None:
+            if isinstance(segment_producer_claimed_until__lt, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__lt',
-                        claimed_at__lt.strftime(
+                        'segment_producer_claimed_until__lt',
+                        segment_producer_claimed_until__lt.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__lt', claimed_at__lt))
+                _query_params.append(('segment_producer_claimed_until__lt', segment_producer_claimed_until__lt))
             
-        if claimed_at__lte is not None:
-            if isinstance(claimed_at__lte, datetime):
+        if segment_producer_claimed_until__lte is not None:
+            if isinstance(segment_producer_claimed_until__lte, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__lte',
-                        claimed_at__lte.strftime(
+                        'segment_producer_claimed_until__lte',
+                        segment_producer_claimed_until__lte.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__lte', claimed_at__lte))
+                _query_params.append(('segment_producer_claimed_until__lte', segment_producer_claimed_until__lte))
             
-        if claimed_at__in is not None:
-            if isinstance(claimed_at__in, datetime):
+        if segment_producer_claimed_until__in is not None:
+            if isinstance(segment_producer_claimed_until__in, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__in',
-                        claimed_at__in.strftime(
+                        'segment_producer_claimed_until__in',
+                        segment_producer_claimed_until__in.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__in', claimed_at__in))
+                _query_params.append(('segment_producer_claimed_until__in', segment_producer_claimed_until__in))
             
-        if claimed_at__nin is not None:
-            if isinstance(claimed_at__nin, datetime):
+        if segment_producer_claimed_until__nin is not None:
+            if isinstance(segment_producer_claimed_until__nin, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__nin',
-                        claimed_at__nin.strftime(
+                        'segment_producer_claimed_until__nin',
+                        segment_producer_claimed_until__nin.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__nin', claimed_at__nin))
+                _query_params.append(('segment_producer_claimed_until__nin', segment_producer_claimed_until__nin))
             
-        if claimed_at__notin is not None:
-            if isinstance(claimed_at__notin, datetime):
+        if segment_producer_claimed_until__notin is not None:
+            if isinstance(segment_producer_claimed_until__notin, datetime):
                 _query_params.append(
                     (
-                        'claimed_at__notin',
-                        claimed_at__notin.strftime(
+                        'segment_producer_claimed_until__notin',
+                        segment_producer_claimed_until__notin.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claimed_at__notin', claimed_at__notin))
+                _query_params.append(('segment_producer_claimed_until__notin', segment_producer_claimed_until__notin))
             
-        if claimed_at__isnull is not None:
+        if segment_producer_claimed_until__isnull is not None:
             
-            _query_params.append(('claimed_at__isnull', claimed_at__isnull))
+            _query_params.append(('segment_producer_claimed_until__isnull', segment_producer_claimed_until__isnull))
             
-        if claimed_at__nisnull is not None:
+        if segment_producer_claimed_until__nisnull is not None:
             
-            _query_params.append(('claimed_at__nisnull', claimed_at__nisnull))
+            _query_params.append(('segment_producer_claimed_until__nisnull', segment_producer_claimed_until__nisnull))
             
-        if claimed_at__isnotnull is not None:
+        if segment_producer_claimed_until__isnotnull is not None:
             
-            _query_params.append(('claimed_at__isnotnull', claimed_at__isnotnull))
+            _query_params.append(('segment_producer_claimed_until__isnotnull', segment_producer_claimed_until__isnotnull))
             
-        if claimed_at__l is not None:
+        if segment_producer_claimed_until__l is not None:
             
-            _query_params.append(('claimed_at__l', claimed_at__l))
+            _query_params.append(('segment_producer_claimed_until__l', segment_producer_claimed_until__l))
             
-        if claimed_at__like is not None:
+        if segment_producer_claimed_until__like is not None:
             
-            _query_params.append(('claimed_at__like', claimed_at__like))
+            _query_params.append(('segment_producer_claimed_until__like', segment_producer_claimed_until__like))
             
-        if claimed_at__nl is not None:
+        if segment_producer_claimed_until__nl is not None:
             
-            _query_params.append(('claimed_at__nl', claimed_at__nl))
+            _query_params.append(('segment_producer_claimed_until__nl', segment_producer_claimed_until__nl))
             
-        if claimed_at__nlike is not None:
+        if segment_producer_claimed_until__nlike is not None:
             
-            _query_params.append(('claimed_at__nlike', claimed_at__nlike))
+            _query_params.append(('segment_producer_claimed_until__nlike', segment_producer_claimed_until__nlike))
             
-        if claimed_at__notlike is not None:
+        if segment_producer_claimed_until__notlike is not None:
             
-            _query_params.append(('claimed_at__notlike', claimed_at__notlike))
+            _query_params.append(('segment_producer_claimed_until__notlike', segment_producer_claimed_until__notlike))
             
-        if claimed_at__il is not None:
+        if segment_producer_claimed_until__il is not None:
             
-            _query_params.append(('claimed_at__il', claimed_at__il))
+            _query_params.append(('segment_producer_claimed_until__il', segment_producer_claimed_until__il))
             
-        if claimed_at__ilike is not None:
+        if segment_producer_claimed_until__ilike is not None:
             
-            _query_params.append(('claimed_at__ilike', claimed_at__ilike))
+            _query_params.append(('segment_producer_claimed_until__ilike', segment_producer_claimed_until__ilike))
             
-        if claimed_at__nil is not None:
+        if segment_producer_claimed_until__nil is not None:
             
-            _query_params.append(('claimed_at__nil', claimed_at__nil))
+            _query_params.append(('segment_producer_claimed_until__nil', segment_producer_claimed_until__nil))
             
-        if claimed_at__nilike is not None:
+        if segment_producer_claimed_until__nilike is not None:
             
-            _query_params.append(('claimed_at__nilike', claimed_at__nilike))
+            _query_params.append(('segment_producer_claimed_until__nilike', segment_producer_claimed_until__nilike))
             
-        if claimed_at__notilike is not None:
+        if segment_producer_claimed_until__notilike is not None:
             
-            _query_params.append(('claimed_at__notilike', claimed_at__notilike))
+            _query_params.append(('segment_producer_claimed_until__notilike', segment_producer_claimed_until__notilike))
             
-        if claimed_at__desc is not None:
+        if segment_producer_claimed_until__desc is not None:
             
-            _query_params.append(('claimed_at__desc', claimed_at__desc))
+            _query_params.append(('segment_producer_claimed_until__desc', segment_producer_claimed_until__desc))
             
-        if claimed_at__asc is not None:
+        if segment_producer_claimed_until__asc is not None:
             
-            _query_params.append(('claimed_at__asc', claimed_at__asc))
+            _query_params.append(('segment_producer_claimed_until__asc', segment_producer_claimed_until__asc))
             
-        if claim_duration__eq is not None:
-            
-            _query_params.append(('claim_duration__eq', claim_duration__eq))
-            
-        if claim_duration__ne is not None:
-            
-            _query_params.append(('claim_duration__ne', claim_duration__ne))
-            
-        if claim_duration__gt is not None:
-            
-            _query_params.append(('claim_duration__gt', claim_duration__gt))
-            
-        if claim_duration__gte is not None:
-            
-            _query_params.append(('claim_duration__gte', claim_duration__gte))
-            
-        if claim_duration__lt is not None:
-            
-            _query_params.append(('claim_duration__lt', claim_duration__lt))
-            
-        if claim_duration__lte is not None:
-            
-            _query_params.append(('claim_duration__lte', claim_duration__lte))
-            
-        if claim_duration__in is not None:
-            
-            _query_params.append(('claim_duration__in', claim_duration__in))
-            
-        if claim_duration__nin is not None:
-            
-            _query_params.append(('claim_duration__nin', claim_duration__nin))
-            
-        if claim_duration__notin is not None:
-            
-            _query_params.append(('claim_duration__notin', claim_duration__notin))
-            
-        if claim_duration__isnull is not None:
-            
-            _query_params.append(('claim_duration__isnull', claim_duration__isnull))
-            
-        if claim_duration__nisnull is not None:
-            
-            _query_params.append(('claim_duration__nisnull', claim_duration__nisnull))
-            
-        if claim_duration__isnotnull is not None:
-            
-            _query_params.append(('claim_duration__isnotnull', claim_duration__isnotnull))
-            
-        if claim_duration__l is not None:
-            
-            _query_params.append(('claim_duration__l', claim_duration__l))
-            
-        if claim_duration__like is not None:
-            
-            _query_params.append(('claim_duration__like', claim_duration__like))
-            
-        if claim_duration__nl is not None:
-            
-            _query_params.append(('claim_duration__nl', claim_duration__nl))
-            
-        if claim_duration__nlike is not None:
-            
-            _query_params.append(('claim_duration__nlike', claim_duration__nlike))
-            
-        if claim_duration__notlike is not None:
-            
-            _query_params.append(('claim_duration__notlike', claim_duration__notlike))
-            
-        if claim_duration__il is not None:
-            
-            _query_params.append(('claim_duration__il', claim_duration__il))
-            
-        if claim_duration__ilike is not None:
-            
-            _query_params.append(('claim_duration__ilike', claim_duration__ilike))
-            
-        if claim_duration__nil is not None:
-            
-            _query_params.append(('claim_duration__nil', claim_duration__nil))
-            
-        if claim_duration__nilike is not None:
-            
-            _query_params.append(('claim_duration__nilike', claim_duration__nilike))
-            
-        if claim_duration__notilike is not None:
-            
-            _query_params.append(('claim_duration__notilike', claim_duration__notilike))
-            
-        if claim_duration__desc is not None:
-            
-            _query_params.append(('claim_duration__desc', claim_duration__desc))
-            
-        if claim_duration__asc is not None:
-            
-            _query_params.append(('claim_duration__asc', claim_duration__asc))
-            
-        if claim_expires_at__eq is not None:
-            if isinstance(claim_expires_at__eq, datetime):
+        if stream_producer_claimed_until__eq is not None:
+            if isinstance(stream_producer_claimed_until__eq, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__eq',
-                        claim_expires_at__eq.strftime(
+                        'stream_producer_claimed_until__eq',
+                        stream_producer_claimed_until__eq.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__eq', claim_expires_at__eq))
+                _query_params.append(('stream_producer_claimed_until__eq', stream_producer_claimed_until__eq))
             
-        if claim_expires_at__ne is not None:
-            if isinstance(claim_expires_at__ne, datetime):
+        if stream_producer_claimed_until__ne is not None:
+            if isinstance(stream_producer_claimed_until__ne, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__ne',
-                        claim_expires_at__ne.strftime(
+                        'stream_producer_claimed_until__ne',
+                        stream_producer_claimed_until__ne.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__ne', claim_expires_at__ne))
+                _query_params.append(('stream_producer_claimed_until__ne', stream_producer_claimed_until__ne))
             
-        if claim_expires_at__gt is not None:
-            if isinstance(claim_expires_at__gt, datetime):
+        if stream_producer_claimed_until__gt is not None:
+            if isinstance(stream_producer_claimed_until__gt, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__gt',
-                        claim_expires_at__gt.strftime(
+                        'stream_producer_claimed_until__gt',
+                        stream_producer_claimed_until__gt.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__gt', claim_expires_at__gt))
+                _query_params.append(('stream_producer_claimed_until__gt', stream_producer_claimed_until__gt))
             
-        if claim_expires_at__gte is not None:
-            if isinstance(claim_expires_at__gte, datetime):
+        if stream_producer_claimed_until__gte is not None:
+            if isinstance(stream_producer_claimed_until__gte, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__gte',
-                        claim_expires_at__gte.strftime(
+                        'stream_producer_claimed_until__gte',
+                        stream_producer_claimed_until__gte.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__gte', claim_expires_at__gte))
+                _query_params.append(('stream_producer_claimed_until__gte', stream_producer_claimed_until__gte))
             
-        if claim_expires_at__lt is not None:
-            if isinstance(claim_expires_at__lt, datetime):
+        if stream_producer_claimed_until__lt is not None:
+            if isinstance(stream_producer_claimed_until__lt, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__lt',
-                        claim_expires_at__lt.strftime(
+                        'stream_producer_claimed_until__lt',
+                        stream_producer_claimed_until__lt.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__lt', claim_expires_at__lt))
+                _query_params.append(('stream_producer_claimed_until__lt', stream_producer_claimed_until__lt))
             
-        if claim_expires_at__lte is not None:
-            if isinstance(claim_expires_at__lte, datetime):
+        if stream_producer_claimed_until__lte is not None:
+            if isinstance(stream_producer_claimed_until__lte, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__lte',
-                        claim_expires_at__lte.strftime(
+                        'stream_producer_claimed_until__lte',
+                        stream_producer_claimed_until__lte.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__lte', claim_expires_at__lte))
+                _query_params.append(('stream_producer_claimed_until__lte', stream_producer_claimed_until__lte))
             
-        if claim_expires_at__in is not None:
-            if isinstance(claim_expires_at__in, datetime):
+        if stream_producer_claimed_until__in is not None:
+            if isinstance(stream_producer_claimed_until__in, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__in',
-                        claim_expires_at__in.strftime(
+                        'stream_producer_claimed_until__in',
+                        stream_producer_claimed_until__in.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__in', claim_expires_at__in))
+                _query_params.append(('stream_producer_claimed_until__in', stream_producer_claimed_until__in))
             
-        if claim_expires_at__nin is not None:
-            if isinstance(claim_expires_at__nin, datetime):
+        if stream_producer_claimed_until__nin is not None:
+            if isinstance(stream_producer_claimed_until__nin, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__nin',
-                        claim_expires_at__nin.strftime(
+                        'stream_producer_claimed_until__nin',
+                        stream_producer_claimed_until__nin.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__nin', claim_expires_at__nin))
+                _query_params.append(('stream_producer_claimed_until__nin', stream_producer_claimed_until__nin))
             
-        if claim_expires_at__notin is not None:
-            if isinstance(claim_expires_at__notin, datetime):
+        if stream_producer_claimed_until__notin is not None:
+            if isinstance(stream_producer_claimed_until__notin, datetime):
                 _query_params.append(
                     (
-                        'claim_expires_at__notin',
-                        claim_expires_at__notin.strftime(
+                        'stream_producer_claimed_until__notin',
+                        stream_producer_claimed_until__notin.strftime(
                             self.api_client.configuration.datetime_format
                         )
                     )
                 )
             else:
-                _query_params.append(('claim_expires_at__notin', claim_expires_at__notin))
+                _query_params.append(('stream_producer_claimed_until__notin', stream_producer_claimed_until__notin))
             
-        if claim_expires_at__isnull is not None:
+        if stream_producer_claimed_until__isnull is not None:
             
-            _query_params.append(('claim_expires_at__isnull', claim_expires_at__isnull))
+            _query_params.append(('stream_producer_claimed_until__isnull', stream_producer_claimed_until__isnull))
             
-        if claim_expires_at__nisnull is not None:
+        if stream_producer_claimed_until__nisnull is not None:
             
-            _query_params.append(('claim_expires_at__nisnull', claim_expires_at__nisnull))
+            _query_params.append(('stream_producer_claimed_until__nisnull', stream_producer_claimed_until__nisnull))
             
-        if claim_expires_at__isnotnull is not None:
+        if stream_producer_claimed_until__isnotnull is not None:
             
-            _query_params.append(('claim_expires_at__isnotnull', claim_expires_at__isnotnull))
+            _query_params.append(('stream_producer_claimed_until__isnotnull', stream_producer_claimed_until__isnotnull))
             
-        if claim_expires_at__l is not None:
+        if stream_producer_claimed_until__l is not None:
             
-            _query_params.append(('claim_expires_at__l', claim_expires_at__l))
+            _query_params.append(('stream_producer_claimed_until__l', stream_producer_claimed_until__l))
             
-        if claim_expires_at__like is not None:
+        if stream_producer_claimed_until__like is not None:
             
-            _query_params.append(('claim_expires_at__like', claim_expires_at__like))
+            _query_params.append(('stream_producer_claimed_until__like', stream_producer_claimed_until__like))
             
-        if claim_expires_at__nl is not None:
+        if stream_producer_claimed_until__nl is not None:
             
-            _query_params.append(('claim_expires_at__nl', claim_expires_at__nl))
+            _query_params.append(('stream_producer_claimed_until__nl', stream_producer_claimed_until__nl))
             
-        if claim_expires_at__nlike is not None:
+        if stream_producer_claimed_until__nlike is not None:
             
-            _query_params.append(('claim_expires_at__nlike', claim_expires_at__nlike))
+            _query_params.append(('stream_producer_claimed_until__nlike', stream_producer_claimed_until__nlike))
             
-        if claim_expires_at__notlike is not None:
+        if stream_producer_claimed_until__notlike is not None:
             
-            _query_params.append(('claim_expires_at__notlike', claim_expires_at__notlike))
+            _query_params.append(('stream_producer_claimed_until__notlike', stream_producer_claimed_until__notlike))
             
-        if claim_expires_at__il is not None:
+        if stream_producer_claimed_until__il is not None:
             
-            _query_params.append(('claim_expires_at__il', claim_expires_at__il))
+            _query_params.append(('stream_producer_claimed_until__il', stream_producer_claimed_until__il))
             
-        if claim_expires_at__ilike is not None:
+        if stream_producer_claimed_until__ilike is not None:
             
-            _query_params.append(('claim_expires_at__ilike', claim_expires_at__ilike))
+            _query_params.append(('stream_producer_claimed_until__ilike', stream_producer_claimed_until__ilike))
             
-        if claim_expires_at__nil is not None:
+        if stream_producer_claimed_until__nil is not None:
             
-            _query_params.append(('claim_expires_at__nil', claim_expires_at__nil))
+            _query_params.append(('stream_producer_claimed_until__nil', stream_producer_claimed_until__nil))
             
-        if claim_expires_at__nilike is not None:
+        if stream_producer_claimed_until__nilike is not None:
             
-            _query_params.append(('claim_expires_at__nilike', claim_expires_at__nilike))
+            _query_params.append(('stream_producer_claimed_until__nilike', stream_producer_claimed_until__nilike))
             
-        if claim_expires_at__notilike is not None:
+        if stream_producer_claimed_until__notilike is not None:
             
-            _query_params.append(('claim_expires_at__notilike', claim_expires_at__notilike))
+            _query_params.append(('stream_producer_claimed_until__notilike', stream_producer_claimed_until__notilike))
             
-        if claim_expires_at__desc is not None:
+        if stream_producer_claimed_until__desc is not None:
             
-            _query_params.append(('claim_expires_at__desc', claim_expires_at__desc))
+            _query_params.append(('stream_producer_claimed_until__desc', stream_producer_claimed_until__desc))
             
-        if claim_expires_at__asc is not None:
+        if stream_producer_claimed_until__asc is not None:
             
-            _query_params.append(('claim_expires_at__asc', claim_expires_at__asc))
+            _query_params.append(('stream_producer_claimed_until__asc', stream_producer_claimed_until__asc))
             
         # process the header parameters
         # process the form parameters

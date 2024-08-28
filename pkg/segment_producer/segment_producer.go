@@ -16,9 +16,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/google/uuid"
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/pkg/api"
-	"github.com/initialed85/djangolang/pkg/helpers"
+	"github.com/initialed85/camry/pkg/helpers"
+	djangolang_helpers "github.com/initialed85/djangolang/pkg/helpers"
 )
 
 const (
@@ -33,10 +35,10 @@ var (
 func getCommandLine(
 	enablePassthrough bool,
 	enableNvidia bool,
-	netCamURL string,
+	streamURL string,
 	durationSeconds int,
 	destinationPath string,
-	cameraName string,
+	cameraID uuid.UUID,
 ) []string {
 	arguments := make([]string, 0)
 
@@ -63,7 +65,7 @@ func getCommandLine(
 		"-rtsp_transport",
 		"tcp",
 		"-i",
-		netCamURL,
+		streamURL,
 		"-c",
 		"copy",
 		"-map",
@@ -108,7 +110,7 @@ func getCommandLine(
 
 	arguments = append(
 		arguments,
-		filepath.Join(destinationPath, "Segment_%Y-%m-%dT%H:%M:%S_"+cameraName+".mp4"),
+		filepath.Join(destinationPath, "Segment_%Y-%m-%dT%H:%M:%S_"+cameraID.String()+".mp4"),
 	)
 
 	return arguments
@@ -188,11 +190,11 @@ func runCommand(
 
 			if thisFilePath != "" {
 				if time.Since(lastUpdate) > time.Second*1 {
-					fileSize, _ := GetFileSize(thisFilePath)
+					fileSize, _ := helpers.GetFileSize(thisFilePath)
 					log.Printf("invoking onUpdate(%s, %f, %s)", thisFilePath, fileSize, lastLine)
 					err = onUpdate(thisFilePath, fileSize, lastLine)
 					if err != nil {
-						readErr = fmt.Errorf("failed to invoke onUpdate(%#+v, %#+v): %v", thisFilePath, fileSize, err)
+						readErr = fmt.Errorf("failed to invoke onUpdate(%s, %f, %s): %v", thisFilePath, fileSize, lastLine, err)
 						return
 					}
 
@@ -214,20 +216,20 @@ func runCommand(
 			// log.Printf("found path: %#+v", thisFilePath)
 
 			if lastFilePath != "" {
-				fileSize, _ := GetFileSize(lastFilePath)
+				fileSize, _ := helpers.GetFileSize(lastFilePath)
 				log.Printf("invoking onSave(%s, %f, %s)", lastFilePath, fileSize, lastLine)
 				err = onSave(lastFilePath, fileSize, lastLine)
 				if err != nil {
-					readErr = fmt.Errorf("failed to invoke onSave(%#+v, %#+v): %v", lastFilePath, fileSize, err)
+					readErr = fmt.Errorf("failed to invoke onSave(%s, %f, %s): %v", lastFilePath, fileSize, lastLine, err)
 					return
 				}
 			}
 
-			fileSize, _ := GetFileSize(thisFilePath)
+			fileSize, _ := helpers.GetFileSize(thisFilePath)
 			log.Printf("invoking onOpen(%s, %f, %s)", thisFilePath, fileSize, lastLine)
 			err = onOpen(thisFilePath, fileSize, lastLine)
 			if err != nil {
-				readErr = fmt.Errorf("failed to invoke onOpen(%#+v, %#+v): %v", lastFilePath, fileSize, err)
+				readErr = fmt.Errorf("failed to invoke onOpen(%s, %f, %s): %v", lastFilePath, fileSize, lastLine, err)
 				return
 			}
 
@@ -301,10 +303,10 @@ func run(
 	cancel context.CancelFunc,
 	enablePassthrough bool,
 	enableNvidia bool,
-	netCamURL string,
+	streamURL string,
 	durationSeconds int,
 	destinationPath string,
-	cameraName string,
+	cameraID uuid.UUID,
 	onOpen func(string, float64, time.Time) error,
 	onUpdate func(string, float64, time.Time) error,
 	onSave func(string, float64, time.Time) error,
@@ -312,10 +314,10 @@ func run(
 	arguments := getCommandLine(
 		enablePassthrough,
 		enableNvidia,
-		netCamURL,
+		streamURL,
 		durationSeconds,
 		destinationPath,
-		cameraName,
+		cameraID,
 	)
 
 	signals := make(chan os.Signal, 16)
@@ -358,8 +360,6 @@ func Run() error {
 		return err
 	}
 
-	netCamURL, err := internal.GetEnvironment[string]("NET_CAM_URL", false, internal.Ptr(""))
-
 	durationSeconds, err := internal.GetEnvironment("DURATION_SECONDS", false, internal.Ptr(60))
 	if err != nil {
 		return err
@@ -370,12 +370,10 @@ func Run() error {
 		return err
 	}
 
-	cameraName, err := internal.GetEnvironment[string]("CAMERA_NAME", false, internal.Ptr(""))
-
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	db, err := helpers.GetDBFromEnvironment(ctx)
+	db, err := djangolang_helpers.GetDBFromEnvironment(ctx)
 	if err != nil {
 		return err
 	}
@@ -402,63 +400,36 @@ func Run() error {
 			return err
 		}
 
-		if netCamURL != "" || cameraName != "" {
-			if netCamURL == "" {
-				return fmt.Errorf("NET_CAM_URL env var empty or unset; if CAMERA_NAME is set, NET_CAM_URL must also be set")
-			}
-
-			if cameraName == "" {
-				return fmt.Errorf("CAMERA_NAME env var empty or unset; if NET_CAM_URL is set, CAMERA_NAME must also be set")
-			}
-
-			camera, err = api.SelectCamera(
-				ctx,
-				tx,
-				fmt.Sprintf(
-					"%v = $$?? AND %v = $$??",
-					api.CameraTableNameColumn,
-					api.CameraTableStreamURLColumn,
-				),
-				cameraName,
-				netCamURL,
-			)
-			if err != nil {
-				return err
-			}
-
-			log.Printf("found user-selected camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
-		} else {
-			cameras, err := api.SelectCameras(
-				ctx,
-				tx,
-				fmt.Sprintf(
-					"%v < now()",
-					api.CameraTableClaimExpiresAtColumn,
-				),
-				internal.Ptr(fmt.Sprintf(
-					"%v DESC",
-					api.CameraTableClaimExpiresAtColumn,
-				)),
-				internal.Ptr(1),
-				nil,
-			)
-			if err != nil {
-				return err
-			}
-
-			if len(cameras) != 1 {
-				return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
-			}
-
-			camera = cameras[0]
-
-			log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
+		cameras, err := api.SelectCameras(
+			ctx,
+			tx,
+			fmt.Sprintf(
+				"%v < now()",
+				api.CameraTableSegmentProducerClaimedUntilColumn,
+			),
+			internal.Ptr(fmt.Sprintf(
+				"%v DESC",
+				api.CameraTableSegmentProducerClaimedUntilColumn,
+			)),
+			internal.Ptr(1),
+			nil,
+		)
+		if err != nil {
+			return err
 		}
+
+		if len(cameras) != 1 {
+			return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
+		}
+
+		camera = cameras[0]
+
+		log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
 
 		now := time.Now().UTC()
 		camera.LastSeen = now
-		camera.ClaimedAt = now
-		camera.ClaimExpiresAt = now.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.SegmentProducerClaimedUntil = now.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.StreamProducerClaimedUntil = time.Time{}
 
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
@@ -516,13 +487,13 @@ func Run() error {
 
 			ext := filepath.Ext(fileName)
 			thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
-			err = GenerateThumbnail(filePath, thumbnailPath)
+			err = helpers.GenerateThumbnail(filePath, thumbnailPath)
 			if err == nil {
 				_, thumbnailName := filepath.Split(thumbnailPath)
 				video.ThumbnailName = &thumbnailName
 			}
 
-			video.Status = helpers.Ptr("failed")
+			video.Status = djangolang_helpers.Ptr("failed")
 			err = video.Update(ctx, tx, false)
 			if err != nil {
 				return err
@@ -566,13 +537,13 @@ func Run() error {
 
 			ext := filepath.Ext(fileName)
 			thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
-			err = GenerateThumbnail(filePath, thumbnailPath)
+			err = helpers.GenerateThumbnail(filePath, thumbnailPath)
 			if err == nil {
 				_, thumbnailName := filepath.Split(thumbnailPath)
 				video.ThumbnailName = &thumbnailName
 			}
 
-			video.Status = helpers.Ptr("failed")
+			video.Status = djangolang_helpers.Ptr("failed")
 			err = video.Update(ctx, tx, false)
 			if err != nil {
 				return err
@@ -586,7 +557,7 @@ func Run() error {
 		video = &api.Video{
 			FileName:  fileName,
 			StartedAt: internal.GetNow(),
-			Status:    helpers.Ptr("recording"),
+			Status:    djangolang_helpers.Ptr("recording"),
 			CameraID:  camera.ID,
 		}
 
@@ -596,8 +567,8 @@ func Run() error {
 		}
 
 		camera.LastSeen = timestamp
-		camera.ClaimedAt = timestamp
-		camera.ClaimExpiresAt = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.SegmentProducerClaimedUntil = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.StreamProducerClaimedUntil = time.Time{}
 
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
@@ -629,7 +600,7 @@ func Run() error {
 			_ = tx.Rollback(ctx)
 		}()
 
-		video.FileSize = helpers.Ptr(fileSize)
+		video.FileSize = djangolang_helpers.Ptr(fileSize)
 
 		duration := timestamp.Sub(video.StartedAt)
 		video.Duration = &duration
@@ -640,8 +611,8 @@ func Run() error {
 		}
 
 		camera.LastSeen = timestamp
-		camera.ClaimedAt = timestamp
-		camera.ClaimExpiresAt = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.SegmentProducerClaimedUntil = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.StreamProducerClaimedUntil = time.Time{}
 
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
@@ -678,23 +649,23 @@ func Run() error {
 
 		ext := filepath.Ext(fileName)
 		thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
-		err = GenerateThumbnail(filePath, thumbnailPath)
+		err = helpers.GenerateThumbnail(filePath, thumbnailPath)
 		if err == nil {
 			_, thumbnailName := filepath.Split(thumbnailPath)
 			video.ThumbnailName = &thumbnailName
 		}
 
-		video.FileSize = helpers.Ptr(fileSize)
+		video.FileSize = djangolang_helpers.Ptr(fileSize)
 
-		video.Duration = helpers.Ptr(timestamp.Sub(video.StartedAt))
+		video.Duration = djangolang_helpers.Ptr(timestamp.Sub(video.StartedAt))
 
-		duration, err := GetVideoDuration(filePath)
+		duration, err := helpers.GetVideoDuration(filePath)
 		if err == nil {
 			video.Duration = &duration
 		}
 
-		video.EndedAt = helpers.Ptr(timestamp)
-		video.Status = helpers.Ptr("needs detection")
+		video.EndedAt = djangolang_helpers.Ptr(timestamp)
+		video.Status = djangolang_helpers.Ptr("needs detection")
 
 		err = video.Update(ctx, tx, false)
 		if err != nil {
@@ -702,8 +673,8 @@ func Run() error {
 		}
 
 		camera.LastSeen = timestamp
-		camera.ClaimedAt = timestamp
-		camera.ClaimExpiresAt = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.SegmentProducerClaimedUntil = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.StreamProducerClaimedUntil = time.Time{}
 
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
@@ -743,7 +714,9 @@ func Run() error {
 			}
 
 			if camera != nil {
-				camera.ClaimExpiresAt = time.Now().UTC().Add(time.Second * 1)
+				camera.SegmentProducerClaimedUntil = time.Now().UTC().Add(time.Second * 1)
+				camera.StreamProducerClaimedUntil = time.Time{}
+
 				err = camera.Update(ctx, tx, false)
 				if err != nil {
 					return err
@@ -772,7 +745,7 @@ func Run() error {
 		camera.StreamURL,
 		durationSeconds,
 		destinationPath,
-		camera.Name,
+		camera.ID,
 		onOpen,
 		onUpdate,
 		onSave,

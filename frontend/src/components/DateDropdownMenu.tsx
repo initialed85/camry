@@ -11,23 +11,23 @@ export interface DateDropdownMenuProps {
   setDate: Dispatch<SetStateAction<string | null | undefined>>;
 }
 
-export default function DateDropdownMenu(props: DateDropdownMenuProps) {
-  const formatDate = (date: Date): string => {
-    const pad = (s: string): string => {
-      if (s.length < 2) {
-        return `0${s}`;
-      }
+export const formatDate = (date: Date): string => {
+  const pad = (s: string): string => {
+    if (s.length < 2) {
+      return `0${s}`;
+    }
 
-      return s;
-    };
-
-    const year = date.getFullYear().toString();
-    const month = pad((date.getMonth() + 1).toString());
-    const day = pad(date.getDate().toString());
-
-    return `${year}-${month}-${day}`;
+    return s;
   };
 
+  const year = date.getFullYear().toString();
+  const month = pad((date.getMonth() + 1).toString());
+  const day = pad(date.getDate().toString());
+
+  return `${year}-${month}-${day}`;
+};
+
+export default function DateDropdownMenu(props: DateDropdownMenuProps) {
   var cursor = new Date();
   const dates = [];
   for (var i = 0; i < 14; i++) {
@@ -53,7 +53,7 @@ export default function DateDropdownMenu(props: DateDropdownMenuProps) {
               key={date}
               selected={props.date === date}
               onClick={(event) => {
-                props.setDate(date);
+                props.setDate(props.date !== date ? date : undefined);
               }}
             >
               {date}

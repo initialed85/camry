@@ -1,11 +1,11 @@
 import Grid from "@mui/joy/Grid";
+import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
-
-import Input from "@mui/joy/Input";
 import { useEffect, useState } from "react";
+import useLocalStorageState from "use-local-storage-state";
 import CameraToggleButtonGroup from "./components/CameraToggleButtonGroup";
-import DateDropdownMenu from "./components/DateDropdownMenu";
+import DateDropdownMenu, { formatDate } from "./components/DateDropdownMenu";
 import ModeToggle from "./components/ModeToggle";
 import { VideoTable } from "./components/VideoTable";
 
@@ -24,8 +24,17 @@ function App() {
   // };
 
   const [responsive, setResponsive] = useState(window.innerWidth < 992);
-  const [cameraId, setCameraId] = useState<string | null>();
-  const [date, setDate] = useState<string | null>();
+  const [cameraId, setCameraId] = useLocalStorageState<
+    string | null | undefined
+  >("cameraId", {
+    defaultValue: undefined,
+  });
+  const [date, setDate] = useLocalStorageState<string | null | undefined>(
+    "date",
+    {
+      defaultValue: formatDate(new Date()),
+    },
+  );
 
   useEffect(() => {
     const handleResize = () => {
@@ -73,6 +82,7 @@ function App() {
         >
           <CameraToggleButtonGroup
             responsive={responsive}
+            cameraId={cameraId}
             setCameraId={setCameraId}
           />
           <DateDropdownMenu

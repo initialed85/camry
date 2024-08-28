@@ -1,5 +1,8 @@
 import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import { persistQueryClient, removeOldestQuery } from "@tanstack/react-query-persist-client";
+import {
+  persistQueryClient,
+  removeOldestQuery,
+} from "@tanstack/react-query-persist-client";
 
 import { default as createFetchClient } from "openapi-fetch";
 import createClientForReactQuery from "openapi-react-query";
@@ -35,4 +38,5 @@ export const clientForReactQuery = createFetchClient<paths>({
   baseUrl: "/",
 });
 
-export const { useQuery, useMutation, useSuspenseQuery } = createClientForReactQuery(clientForReactQuery);
+export const { useQuery, useMutation, useSuspenseQuery } =
+  createClientForReactQuery(clientForReactQuery);

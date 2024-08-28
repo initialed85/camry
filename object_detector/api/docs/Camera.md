@@ -5,9 +5,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**claim_duration** | **int** |  | [optional] 
-**claim_expires_at** | **datetime** |  | [optional] 
-**claimed_at** | **datetime** |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **deleted_at** | **datetime** |  | [optional] 
 **id** | **str** |  | [optional] 
@@ -15,6 +12,8 @@ Name | Type | Description | Notes
 **name** | **str** |  | [optional] 
 **referenced_by_detection_camera_id_objects** | [**List[Detection]**](Detection.md) |  | [optional] 
 **referenced_by_video_camera_id_objects** | [**List[Video]**](Video.md) |  | [optional] 
+**segment_producer_claimed_until** | **datetime** |  | [optional] 
+**stream_producer_claimed_until** | **datetime** |  | [optional] 
 **stream_url** | **str** |  | [optional] 
 **updated_at** | **datetime** |  | [optional] 
 

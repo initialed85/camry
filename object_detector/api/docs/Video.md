@@ -14,6 +14,8 @@ Name | Type | Description | Notes
 **file_name** | **str** |  | [optional] 
 **file_size** | **float** |  | [optional] 
 **id** | **str** |  | [optional] 
+**object_detector_claimed_until** | **datetime** |  | [optional] 
+**object_tracker_claimed_until** | **datetime** |  | [optional] 
 **referenced_by_detection_video_id_objects** | [**List[Detection]**](Detection.md) |  | [optional] 
 **started_at** | **datetime** |  | [optional] 
 **status** | **str** |  | [optional] 

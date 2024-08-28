@@ -7,6 +7,7 @@ import Tooltip from "@mui/joy/Tooltip";
 import Typography from "@mui/joy/Typography";
 import { useQuery } from "../api";
 import { components } from "../api/api";
+import { formatDate } from "./DateDropdownMenu";
 
 export interface VideoTableProps {
   responsive: boolean;
@@ -19,8 +20,12 @@ export function VideoTable(props: VideoTableProps) {
     params: {
       query: {
         camera_id__eq: props.cameraId || undefined,
-        started_at__gte: props.date ? `${props.date}T00:00:00+08:00` : undefined,
-        started_at__lte: props.date ? `${props.date}T23:59:59+08:00` : undefined,
+        started_at__gte: props.date
+          ? `${props.date}T00:00:00+08:00`
+          : undefined,
+        started_at__lte: props.date
+          ? `${props.date}T23:59:59+08:00`
+          : undefined,
         started_at__desc: "",
       },
     },
@@ -94,10 +99,19 @@ export function VideoTable(props: VideoTableProps) {
     >
       <thead>
         <tr>
-          <th style={{ width: 67, ...truncateStyleProps }}>{props.responsive ? "T" : "Time"}</th>
-          <th style={{ width: 67, ...truncateStyleProps }}>{props.responsive ? "S" : "Summary"}</th>
+          <th
+            style={{
+              width: props.responsive ? 75 : 250,
+              ...truncateStyleProps,
+            }}
+          >
+            {props.responsive ? "T" : "Time"}
+          </th>
+          <th style={{ width: 67, ...truncateStyleProps }}>
+            {props.responsive ? "S" : "Summary"}
+          </th>
           <th style={{ ...truncateStyleProps }}>
-            {props.responsive ? "D" : "Detections"}
+            {props.responsive ? "D" : "Detected"}
             {!props.responsive && (
               <>
                 <br />
@@ -113,7 +127,9 @@ export function VideoTable(props: VideoTableProps) {
           >
             Preview
           </th>
-          <th style={{ width: "5%", ...truncateStyleProps }}>{props.responsive ? "M" : "Media"}</th>
+          <th style={{ width: "5%", ...truncateStyleProps }}>
+            {props.responsive ? "M" : "Media"}
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -130,8 +146,12 @@ export function VideoTable(props: VideoTableProps) {
 
             const available = video?.status !== "recording";
 
-            const minutes = Math.floor((video?.duration || 0) / (1_000_000_000 * 60));
-            const seconds = Math.floor((video?.duration || 0) / 1_000_000_000 - minutes * 60);
+            const minutes = Math.floor(
+              (video?.duration || 0) / (1_000_000_000 * 60),
+            );
+            const seconds = Math.floor(
+              (video?.duration || 0) / 1_000_000_000 - minutes * 60,
+            );
 
             const fileSize = (video?.file_size || 0.0).toFixed(2);
 
@@ -141,7 +161,11 @@ export function VideoTable(props: VideoTableProps) {
 
             if (video?.thumbnail_name) {
               thumbnail = (
-                <a target="_blank" rel="noreferrer" href={`/media/${video?.thumbnail_name}`}>
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`/media/${video?.thumbnail_name}`}
+                >
                   <img
                     style={{ width: props.responsive ? 160 : 320 }}
                     alt={`still from ${video?.camera_id_object?.name} @ ${props.date} ${startedAt}`}
@@ -163,7 +187,8 @@ export function VideoTable(props: VideoTableProps) {
               );
             }
 
-            const rawClassNames = video.id && classNamesByVideoId.get(video.id)?.keys();
+            const rawClassNames =
+              video.id && classNamesByVideoId.get(video.id)?.keys();
 
             let classNames;
             if (video?.status === "failed") {
@@ -185,17 +210,22 @@ export function VideoTable(props: VideoTableProps) {
                 </Tooltip>
               );
             } else {
-              classNames = (rawClassNames ? Array.from(rawClassNames).sort() : []).join(", ");
+              classNames = (
+                rawClassNames ? Array.from(rawClassNames).sort() : []
+              ).join(", ");
             }
 
             return (
               <tr key={video.id}>
                 <td>
-                  <Typography>
-                    {startedAt.toTimeString().split(" ")[0]} <br />
+                  <Typography style={{ display: "inline" }}>
+                    {formatDate(startedAt)}{" "}
+                    {startedAt.toTimeString().split(" ")[0]}
                   </Typography>
-                  <Typography color="neutral">
-                    {endedAt ? endedAt.toTimeString().split(" ")[0] : "-"} <br />
+                  {props.responsive ? <br /> : " -> "}
+                  <Typography color="neutral" style={{ display: "inline" }}>
+                    {endedAt ? endedAt.toTimeString().split(" ")[0] : "..."}{" "}
+                    <br />
                   </Typography>
                 </td>
                 <td>
@@ -219,7 +249,11 @@ export function VideoTable(props: VideoTableProps) {
                 </td>
                 <td>
                   {available ? (
-                    <a target="_blank" rel="noreferrer" href={`/media/${video?.file_name}`}>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`/media/${video?.file_name}`}
+                    >
                       <CloudDownloadOutlinedIcon color={"success"} />
                     </a>
                   ) : (
@@ -232,7 +266,9 @@ export function VideoTable(props: VideoTableProps) {
         ) : (
           <tr>
             <td colSpan={6}>
-              <Typography color={"neutral"}>(No videos for the selected camera / date)</Typography>
+              <Typography color={"neutral"}>
+                (No videos for the selected camera / date)
+              </Typography>
             </td>
           </tr>
         )}

@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -27,9 +27,6 @@ class Camera(BaseModel):
     """
     Camera
     """ # noqa: E501
-    claim_duration: Optional[StrictInt] = None
-    claim_expires_at: Optional[datetime] = None
-    claimed_at: Optional[datetime] = None
     created_at: Optional[datetime] = None
     deleted_at: Optional[datetime] = None
     id: Optional[StrictStr] = None
@@ -37,9 +34,11 @@ class Camera(BaseModel):
     name: Optional[StrictStr] = None
     referenced_by_detection_camera_id_objects: Optional[List[Detection]] = None
     referenced_by_video_camera_id_objects: Optional[List[Video]] = None
+    segment_producer_claimed_until: Optional[datetime] = None
+    stream_producer_claimed_until: Optional[datetime] = None
     stream_url: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["claim_duration", "claim_expires_at", "claimed_at", "created_at", "deleted_at", "id", "last_seen", "name", "referenced_by_detection_camera_id_objects", "referenced_by_video_camera_id_objects", "stream_url", "updated_at"]
+    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "name", "referenced_by_detection_camera_id_objects", "referenced_by_video_camera_id_objects", "segment_producer_claimed_until", "stream_producer_claimed_until", "stream_url", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -121,9 +120,6 @@ class Camera(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "claim_duration": obj.get("claim_duration"),
-            "claim_expires_at": obj.get("claim_expires_at"),
-            "claimed_at": obj.get("claimed_at"),
             "created_at": obj.get("created_at"),
             "deleted_at": obj.get("deleted_at"),
             "id": obj.get("id"),
@@ -131,6 +127,8 @@ class Camera(BaseModel):
             "name": obj.get("name"),
             "referenced_by_detection_camera_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_camera_id_objects"]] if obj.get("referenced_by_detection_camera_id_objects") is not None else None,
             "referenced_by_video_camera_id_objects": [Video.from_dict(_item) for _item in obj["referenced_by_video_camera_id_objects"]] if obj.get("referenced_by_video_camera_id_objects") is not None else None,
+            "segment_producer_claimed_until": obj.get("segment_producer_claimed_until"),
+            "stream_producer_claimed_until": obj.get("stream_producer_claimed_until"),
             "stream_url": obj.get("stream_url"),
             "updated_at": obj.get("updated_at")
         })

@@ -855,6 +855,54 @@ class VideoApi:
         status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
         status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
         status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        object_detector_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        object_detector_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        object_detector_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        object_detector_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        object_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        object_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        object_tracker_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        object_tracker_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -1429,6 +1477,102 @@ class VideoApi:
         :type status__desc: str
         :param status__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
         :type status__asc: str
+        :param object_detector_claimed_until__eq: SQL = operator
+        :type object_detector_claimed_until__eq: datetime
+        :param object_detector_claimed_until__ne: SQL != operator
+        :type object_detector_claimed_until__ne: datetime
+        :param object_detector_claimed_until__gt: SQL > operator, may not work with all column types
+        :type object_detector_claimed_until__gt: datetime
+        :param object_detector_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type object_detector_claimed_until__gte: datetime
+        :param object_detector_claimed_until__lt: SQL < operator, may not work with all column types
+        :type object_detector_claimed_until__lt: datetime
+        :param object_detector_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type object_detector_claimed_until__lte: datetime
+        :param object_detector_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type object_detector_claimed_until__in: datetime
+        :param object_detector_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type object_detector_claimed_until__nin: datetime
+        :param object_detector_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type object_detector_claimed_until__notin: datetime
+        :param object_detector_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__isnull: str
+        :param object_detector_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__nisnull: str
+        :param object_detector_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__isnotnull: str
+        :param object_detector_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__l: str
+        :param object_detector_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__like: str
+        :param object_detector_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nl: str
+        :param object_detector_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nlike: str
+        :param object_detector_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__notlike: str
+        :param object_detector_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__il: str
+        :param object_detector_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__ilike: str
+        :param object_detector_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nil: str
+        :param object_detector_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nilike: str
+        :param object_detector_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__notilike: str
+        :param object_detector_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__desc: str
+        :param object_detector_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__asc: str
+        :param object_tracker_claimed_until__eq: SQL = operator
+        :type object_tracker_claimed_until__eq: datetime
+        :param object_tracker_claimed_until__ne: SQL != operator
+        :type object_tracker_claimed_until__ne: datetime
+        :param object_tracker_claimed_until__gt: SQL > operator, may not work with all column types
+        :type object_tracker_claimed_until__gt: datetime
+        :param object_tracker_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type object_tracker_claimed_until__gte: datetime
+        :param object_tracker_claimed_until__lt: SQL < operator, may not work with all column types
+        :type object_tracker_claimed_until__lt: datetime
+        :param object_tracker_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type object_tracker_claimed_until__lte: datetime
+        :param object_tracker_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__in: datetime
+        :param object_tracker_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__nin: datetime
+        :param object_tracker_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__notin: datetime
+        :param object_tracker_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__isnull: str
+        :param object_tracker_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__nisnull: str
+        :param object_tracker_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__isnotnull: str
+        :param object_tracker_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__l: str
+        :param object_tracker_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__like: str
+        :param object_tracker_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nl: str
+        :param object_tracker_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nlike: str
+        :param object_tracker_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__notlike: str
+        :param object_tracker_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__il: str
+        :param object_tracker_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__ilike: str
+        :param object_tracker_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nil: str
+        :param object_tracker_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nilike: str
+        :param object_tracker_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__notilike: str
+        :param object_tracker_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__desc: str
+        :param object_tracker_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__asc: str
         :param camera_id__eq: SQL = operator
         :type camera_id__eq: str
         :param camera_id__ne: SQL != operator
@@ -1767,6 +1911,54 @@ class VideoApi:
             status__notilike=status__notilike,
             status__desc=status__desc,
             status__asc=status__asc,
+            object_detector_claimed_until__eq=object_detector_claimed_until__eq,
+            object_detector_claimed_until__ne=object_detector_claimed_until__ne,
+            object_detector_claimed_until__gt=object_detector_claimed_until__gt,
+            object_detector_claimed_until__gte=object_detector_claimed_until__gte,
+            object_detector_claimed_until__lt=object_detector_claimed_until__lt,
+            object_detector_claimed_until__lte=object_detector_claimed_until__lte,
+            object_detector_claimed_until__in=object_detector_claimed_until__in,
+            object_detector_claimed_until__nin=object_detector_claimed_until__nin,
+            object_detector_claimed_until__notin=object_detector_claimed_until__notin,
+            object_detector_claimed_until__isnull=object_detector_claimed_until__isnull,
+            object_detector_claimed_until__nisnull=object_detector_claimed_until__nisnull,
+            object_detector_claimed_until__isnotnull=object_detector_claimed_until__isnotnull,
+            object_detector_claimed_until__l=object_detector_claimed_until__l,
+            object_detector_claimed_until__like=object_detector_claimed_until__like,
+            object_detector_claimed_until__nl=object_detector_claimed_until__nl,
+            object_detector_claimed_until__nlike=object_detector_claimed_until__nlike,
+            object_detector_claimed_until__notlike=object_detector_claimed_until__notlike,
+            object_detector_claimed_until__il=object_detector_claimed_until__il,
+            object_detector_claimed_until__ilike=object_detector_claimed_until__ilike,
+            object_detector_claimed_until__nil=object_detector_claimed_until__nil,
+            object_detector_claimed_until__nilike=object_detector_claimed_until__nilike,
+            object_detector_claimed_until__notilike=object_detector_claimed_until__notilike,
+            object_detector_claimed_until__desc=object_detector_claimed_until__desc,
+            object_detector_claimed_until__asc=object_detector_claimed_until__asc,
+            object_tracker_claimed_until__eq=object_tracker_claimed_until__eq,
+            object_tracker_claimed_until__ne=object_tracker_claimed_until__ne,
+            object_tracker_claimed_until__gt=object_tracker_claimed_until__gt,
+            object_tracker_claimed_until__gte=object_tracker_claimed_until__gte,
+            object_tracker_claimed_until__lt=object_tracker_claimed_until__lt,
+            object_tracker_claimed_until__lte=object_tracker_claimed_until__lte,
+            object_tracker_claimed_until__in=object_tracker_claimed_until__in,
+            object_tracker_claimed_until__nin=object_tracker_claimed_until__nin,
+            object_tracker_claimed_until__notin=object_tracker_claimed_until__notin,
+            object_tracker_claimed_until__isnull=object_tracker_claimed_until__isnull,
+            object_tracker_claimed_until__nisnull=object_tracker_claimed_until__nisnull,
+            object_tracker_claimed_until__isnotnull=object_tracker_claimed_until__isnotnull,
+            object_tracker_claimed_until__l=object_tracker_claimed_until__l,
+            object_tracker_claimed_until__like=object_tracker_claimed_until__like,
+            object_tracker_claimed_until__nl=object_tracker_claimed_until__nl,
+            object_tracker_claimed_until__nlike=object_tracker_claimed_until__nlike,
+            object_tracker_claimed_until__notlike=object_tracker_claimed_until__notlike,
+            object_tracker_claimed_until__il=object_tracker_claimed_until__il,
+            object_tracker_claimed_until__ilike=object_tracker_claimed_until__ilike,
+            object_tracker_claimed_until__nil=object_tracker_claimed_until__nil,
+            object_tracker_claimed_until__nilike=object_tracker_claimed_until__nilike,
+            object_tracker_claimed_until__notilike=object_tracker_claimed_until__notilike,
+            object_tracker_claimed_until__desc=object_tracker_claimed_until__desc,
+            object_tracker_claimed_until__asc=object_tracker_claimed_until__asc,
             camera_id__eq=camera_id__eq,
             camera_id__ne=camera_id__ne,
             camera_id__gt=camera_id__gt,
@@ -2081,6 +2273,54 @@ class VideoApi:
         status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
         status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
         status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        object_detector_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        object_detector_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        object_detector_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        object_detector_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        object_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        object_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        object_tracker_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        object_tracker_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -2655,6 +2895,102 @@ class VideoApi:
         :type status__desc: str
         :param status__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
         :type status__asc: str
+        :param object_detector_claimed_until__eq: SQL = operator
+        :type object_detector_claimed_until__eq: datetime
+        :param object_detector_claimed_until__ne: SQL != operator
+        :type object_detector_claimed_until__ne: datetime
+        :param object_detector_claimed_until__gt: SQL > operator, may not work with all column types
+        :type object_detector_claimed_until__gt: datetime
+        :param object_detector_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type object_detector_claimed_until__gte: datetime
+        :param object_detector_claimed_until__lt: SQL < operator, may not work with all column types
+        :type object_detector_claimed_until__lt: datetime
+        :param object_detector_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type object_detector_claimed_until__lte: datetime
+        :param object_detector_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type object_detector_claimed_until__in: datetime
+        :param object_detector_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type object_detector_claimed_until__nin: datetime
+        :param object_detector_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type object_detector_claimed_until__notin: datetime
+        :param object_detector_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__isnull: str
+        :param object_detector_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__nisnull: str
+        :param object_detector_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__isnotnull: str
+        :param object_detector_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__l: str
+        :param object_detector_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__like: str
+        :param object_detector_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nl: str
+        :param object_detector_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nlike: str
+        :param object_detector_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__notlike: str
+        :param object_detector_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__il: str
+        :param object_detector_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__ilike: str
+        :param object_detector_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nil: str
+        :param object_detector_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nilike: str
+        :param object_detector_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__notilike: str
+        :param object_detector_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__desc: str
+        :param object_detector_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__asc: str
+        :param object_tracker_claimed_until__eq: SQL = operator
+        :type object_tracker_claimed_until__eq: datetime
+        :param object_tracker_claimed_until__ne: SQL != operator
+        :type object_tracker_claimed_until__ne: datetime
+        :param object_tracker_claimed_until__gt: SQL > operator, may not work with all column types
+        :type object_tracker_claimed_until__gt: datetime
+        :param object_tracker_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type object_tracker_claimed_until__gte: datetime
+        :param object_tracker_claimed_until__lt: SQL < operator, may not work with all column types
+        :type object_tracker_claimed_until__lt: datetime
+        :param object_tracker_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type object_tracker_claimed_until__lte: datetime
+        :param object_tracker_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__in: datetime
+        :param object_tracker_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__nin: datetime
+        :param object_tracker_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__notin: datetime
+        :param object_tracker_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__isnull: str
+        :param object_tracker_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__nisnull: str
+        :param object_tracker_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__isnotnull: str
+        :param object_tracker_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__l: str
+        :param object_tracker_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__like: str
+        :param object_tracker_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nl: str
+        :param object_tracker_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nlike: str
+        :param object_tracker_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__notlike: str
+        :param object_tracker_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__il: str
+        :param object_tracker_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__ilike: str
+        :param object_tracker_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nil: str
+        :param object_tracker_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nilike: str
+        :param object_tracker_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__notilike: str
+        :param object_tracker_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__desc: str
+        :param object_tracker_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__asc: str
         :param camera_id__eq: SQL = operator
         :type camera_id__eq: str
         :param camera_id__ne: SQL != operator
@@ -2993,6 +3329,54 @@ class VideoApi:
             status__notilike=status__notilike,
             status__desc=status__desc,
             status__asc=status__asc,
+            object_detector_claimed_until__eq=object_detector_claimed_until__eq,
+            object_detector_claimed_until__ne=object_detector_claimed_until__ne,
+            object_detector_claimed_until__gt=object_detector_claimed_until__gt,
+            object_detector_claimed_until__gte=object_detector_claimed_until__gte,
+            object_detector_claimed_until__lt=object_detector_claimed_until__lt,
+            object_detector_claimed_until__lte=object_detector_claimed_until__lte,
+            object_detector_claimed_until__in=object_detector_claimed_until__in,
+            object_detector_claimed_until__nin=object_detector_claimed_until__nin,
+            object_detector_claimed_until__notin=object_detector_claimed_until__notin,
+            object_detector_claimed_until__isnull=object_detector_claimed_until__isnull,
+            object_detector_claimed_until__nisnull=object_detector_claimed_until__nisnull,
+            object_detector_claimed_until__isnotnull=object_detector_claimed_until__isnotnull,
+            object_detector_claimed_until__l=object_detector_claimed_until__l,
+            object_detector_claimed_until__like=object_detector_claimed_until__like,
+            object_detector_claimed_until__nl=object_detector_claimed_until__nl,
+            object_detector_claimed_until__nlike=object_detector_claimed_until__nlike,
+            object_detector_claimed_until__notlike=object_detector_claimed_until__notlike,
+            object_detector_claimed_until__il=object_detector_claimed_until__il,
+            object_detector_claimed_until__ilike=object_detector_claimed_until__ilike,
+            object_detector_claimed_until__nil=object_detector_claimed_until__nil,
+            object_detector_claimed_until__nilike=object_detector_claimed_until__nilike,
+            object_detector_claimed_until__notilike=object_detector_claimed_until__notilike,
+            object_detector_claimed_until__desc=object_detector_claimed_until__desc,
+            object_detector_claimed_until__asc=object_detector_claimed_until__asc,
+            object_tracker_claimed_until__eq=object_tracker_claimed_until__eq,
+            object_tracker_claimed_until__ne=object_tracker_claimed_until__ne,
+            object_tracker_claimed_until__gt=object_tracker_claimed_until__gt,
+            object_tracker_claimed_until__gte=object_tracker_claimed_until__gte,
+            object_tracker_claimed_until__lt=object_tracker_claimed_until__lt,
+            object_tracker_claimed_until__lte=object_tracker_claimed_until__lte,
+            object_tracker_claimed_until__in=object_tracker_claimed_until__in,
+            object_tracker_claimed_until__nin=object_tracker_claimed_until__nin,
+            object_tracker_claimed_until__notin=object_tracker_claimed_until__notin,
+            object_tracker_claimed_until__isnull=object_tracker_claimed_until__isnull,
+            object_tracker_claimed_until__nisnull=object_tracker_claimed_until__nisnull,
+            object_tracker_claimed_until__isnotnull=object_tracker_claimed_until__isnotnull,
+            object_tracker_claimed_until__l=object_tracker_claimed_until__l,
+            object_tracker_claimed_until__like=object_tracker_claimed_until__like,
+            object_tracker_claimed_until__nl=object_tracker_claimed_until__nl,
+            object_tracker_claimed_until__nlike=object_tracker_claimed_until__nlike,
+            object_tracker_claimed_until__notlike=object_tracker_claimed_until__notlike,
+            object_tracker_claimed_until__il=object_tracker_claimed_until__il,
+            object_tracker_claimed_until__ilike=object_tracker_claimed_until__ilike,
+            object_tracker_claimed_until__nil=object_tracker_claimed_until__nil,
+            object_tracker_claimed_until__nilike=object_tracker_claimed_until__nilike,
+            object_tracker_claimed_until__notilike=object_tracker_claimed_until__notilike,
+            object_tracker_claimed_until__desc=object_tracker_claimed_until__desc,
+            object_tracker_claimed_until__asc=object_tracker_claimed_until__asc,
             camera_id__eq=camera_id__eq,
             camera_id__ne=camera_id__ne,
             camera_id__gt=camera_id__gt,
@@ -3307,6 +3691,54 @@ class VideoApi:
         status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
         status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
         status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        object_detector_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        object_detector_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        object_detector_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        object_detector_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        object_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        object_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_detector_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
+        object_tracker_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
+        object_tracker_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
+        object_tracker_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
+        object_tracker_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
+        object_tracker_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
         camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
         camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
@@ -3881,6 +4313,102 @@ class VideoApi:
         :type status__desc: str
         :param status__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
         :type status__asc: str
+        :param object_detector_claimed_until__eq: SQL = operator
+        :type object_detector_claimed_until__eq: datetime
+        :param object_detector_claimed_until__ne: SQL != operator
+        :type object_detector_claimed_until__ne: datetime
+        :param object_detector_claimed_until__gt: SQL > operator, may not work with all column types
+        :type object_detector_claimed_until__gt: datetime
+        :param object_detector_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type object_detector_claimed_until__gte: datetime
+        :param object_detector_claimed_until__lt: SQL < operator, may not work with all column types
+        :type object_detector_claimed_until__lt: datetime
+        :param object_detector_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type object_detector_claimed_until__lte: datetime
+        :param object_detector_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type object_detector_claimed_until__in: datetime
+        :param object_detector_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type object_detector_claimed_until__nin: datetime
+        :param object_detector_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type object_detector_claimed_until__notin: datetime
+        :param object_detector_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__isnull: str
+        :param object_detector_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__nisnull: str
+        :param object_detector_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__isnotnull: str
+        :param object_detector_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__l: str
+        :param object_detector_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__like: str
+        :param object_detector_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nl: str
+        :param object_detector_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nlike: str
+        :param object_detector_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__notlike: str
+        :param object_detector_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__il: str
+        :param object_detector_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__ilike: str
+        :param object_detector_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nil: str
+        :param object_detector_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__nilike: str
+        :param object_detector_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_detector_claimed_until__notilike: str
+        :param object_detector_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__desc: str
+        :param object_detector_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type object_detector_claimed_until__asc: str
+        :param object_tracker_claimed_until__eq: SQL = operator
+        :type object_tracker_claimed_until__eq: datetime
+        :param object_tracker_claimed_until__ne: SQL != operator
+        :type object_tracker_claimed_until__ne: datetime
+        :param object_tracker_claimed_until__gt: SQL > operator, may not work with all column types
+        :type object_tracker_claimed_until__gt: datetime
+        :param object_tracker_claimed_until__gte: SQL >= operator, may not work with all column types
+        :type object_tracker_claimed_until__gte: datetime
+        :param object_tracker_claimed_until__lt: SQL < operator, may not work with all column types
+        :type object_tracker_claimed_until__lt: datetime
+        :param object_tracker_claimed_until__lte: SQL <= operator, may not work with all column types
+        :type object_tracker_claimed_until__lte: datetime
+        :param object_tracker_claimed_until__in: SQL IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__in: datetime
+        :param object_tracker_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__nin: datetime
+        :param object_tracker_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :type object_tracker_claimed_until__notin: datetime
+        :param object_tracker_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__isnull: str
+        :param object_tracker_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__nisnull: str
+        :param object_tracker_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__isnotnull: str
+        :param object_tracker_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__l: str
+        :param object_tracker_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__like: str
+        :param object_tracker_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nl: str
+        :param object_tracker_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nlike: str
+        :param object_tracker_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__notlike: str
+        :param object_tracker_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__il: str
+        :param object_tracker_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__ilike: str
+        :param object_tracker_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nil: str
+        :param object_tracker_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__nilike: str
+        :param object_tracker_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :type object_tracker_claimed_until__notilike: str
+        :param object_tracker_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__desc: str
+        :param object_tracker_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :type object_tracker_claimed_until__asc: str
         :param camera_id__eq: SQL = operator
         :type camera_id__eq: str
         :param camera_id__ne: SQL != operator
@@ -4219,6 +4747,54 @@ class VideoApi:
             status__notilike=status__notilike,
             status__desc=status__desc,
             status__asc=status__asc,
+            object_detector_claimed_until__eq=object_detector_claimed_until__eq,
+            object_detector_claimed_until__ne=object_detector_claimed_until__ne,
+            object_detector_claimed_until__gt=object_detector_claimed_until__gt,
+            object_detector_claimed_until__gte=object_detector_claimed_until__gte,
+            object_detector_claimed_until__lt=object_detector_claimed_until__lt,
+            object_detector_claimed_until__lte=object_detector_claimed_until__lte,
+            object_detector_claimed_until__in=object_detector_claimed_until__in,
+            object_detector_claimed_until__nin=object_detector_claimed_until__nin,
+            object_detector_claimed_until__notin=object_detector_claimed_until__notin,
+            object_detector_claimed_until__isnull=object_detector_claimed_until__isnull,
+            object_detector_claimed_until__nisnull=object_detector_claimed_until__nisnull,
+            object_detector_claimed_until__isnotnull=object_detector_claimed_until__isnotnull,
+            object_detector_claimed_until__l=object_detector_claimed_until__l,
+            object_detector_claimed_until__like=object_detector_claimed_until__like,
+            object_detector_claimed_until__nl=object_detector_claimed_until__nl,
+            object_detector_claimed_until__nlike=object_detector_claimed_until__nlike,
+            object_detector_claimed_until__notlike=object_detector_claimed_until__notlike,
+            object_detector_claimed_until__il=object_detector_claimed_until__il,
+            object_detector_claimed_until__ilike=object_detector_claimed_until__ilike,
+            object_detector_claimed_until__nil=object_detector_claimed_until__nil,
+            object_detector_claimed_until__nilike=object_detector_claimed_until__nilike,
+            object_detector_claimed_until__notilike=object_detector_claimed_until__notilike,
+            object_detector_claimed_until__desc=object_detector_claimed_until__desc,
+            object_detector_claimed_until__asc=object_detector_claimed_until__asc,
+            object_tracker_claimed_until__eq=object_tracker_claimed_until__eq,
+            object_tracker_claimed_until__ne=object_tracker_claimed_until__ne,
+            object_tracker_claimed_until__gt=object_tracker_claimed_until__gt,
+            object_tracker_claimed_until__gte=object_tracker_claimed_until__gte,
+            object_tracker_claimed_until__lt=object_tracker_claimed_until__lt,
+            object_tracker_claimed_until__lte=object_tracker_claimed_until__lte,
+            object_tracker_claimed_until__in=object_tracker_claimed_until__in,
+            object_tracker_claimed_until__nin=object_tracker_claimed_until__nin,
+            object_tracker_claimed_until__notin=object_tracker_claimed_until__notin,
+            object_tracker_claimed_until__isnull=object_tracker_claimed_until__isnull,
+            object_tracker_claimed_until__nisnull=object_tracker_claimed_until__nisnull,
+            object_tracker_claimed_until__isnotnull=object_tracker_claimed_until__isnotnull,
+            object_tracker_claimed_until__l=object_tracker_claimed_until__l,
+            object_tracker_claimed_until__like=object_tracker_claimed_until__like,
+            object_tracker_claimed_until__nl=object_tracker_claimed_until__nl,
+            object_tracker_claimed_until__nlike=object_tracker_claimed_until__nlike,
+            object_tracker_claimed_until__notlike=object_tracker_claimed_until__notlike,
+            object_tracker_claimed_until__il=object_tracker_claimed_until__il,
+            object_tracker_claimed_until__ilike=object_tracker_claimed_until__ilike,
+            object_tracker_claimed_until__nil=object_tracker_claimed_until__nil,
+            object_tracker_claimed_until__nilike=object_tracker_claimed_until__nilike,
+            object_tracker_claimed_until__notilike=object_tracker_claimed_until__notilike,
+            object_tracker_claimed_until__desc=object_tracker_claimed_until__desc,
+            object_tracker_claimed_until__asc=object_tracker_claimed_until__asc,
             camera_id__eq=camera_id__eq,
             camera_id__ne=camera_id__ne,
             camera_id__gt=camera_id__gt,
@@ -4528,6 +5104,54 @@ class VideoApi:
         status__notilike,
         status__desc,
         status__asc,
+        object_detector_claimed_until__eq,
+        object_detector_claimed_until__ne,
+        object_detector_claimed_until__gt,
+        object_detector_claimed_until__gte,
+        object_detector_claimed_until__lt,
+        object_detector_claimed_until__lte,
+        object_detector_claimed_until__in,
+        object_detector_claimed_until__nin,
+        object_detector_claimed_until__notin,
+        object_detector_claimed_until__isnull,
+        object_detector_claimed_until__nisnull,
+        object_detector_claimed_until__isnotnull,
+        object_detector_claimed_until__l,
+        object_detector_claimed_until__like,
+        object_detector_claimed_until__nl,
+        object_detector_claimed_until__nlike,
+        object_detector_claimed_until__notlike,
+        object_detector_claimed_until__il,
+        object_detector_claimed_until__ilike,
+        object_detector_claimed_until__nil,
+        object_detector_claimed_until__nilike,
+        object_detector_claimed_until__notilike,
+        object_detector_claimed_until__desc,
+        object_detector_claimed_until__asc,
+        object_tracker_claimed_until__eq,
+        object_tracker_claimed_until__ne,
+        object_tracker_claimed_until__gt,
+        object_tracker_claimed_until__gte,
+        object_tracker_claimed_until__lt,
+        object_tracker_claimed_until__lte,
+        object_tracker_claimed_until__in,
+        object_tracker_claimed_until__nin,
+        object_tracker_claimed_until__notin,
+        object_tracker_claimed_until__isnull,
+        object_tracker_claimed_until__nisnull,
+        object_tracker_claimed_until__isnotnull,
+        object_tracker_claimed_until__l,
+        object_tracker_claimed_until__like,
+        object_tracker_claimed_until__nl,
+        object_tracker_claimed_until__nlike,
+        object_tracker_claimed_until__notlike,
+        object_tracker_claimed_until__il,
+        object_tracker_claimed_until__ilike,
+        object_tracker_claimed_until__nil,
+        object_tracker_claimed_until__nilike,
+        object_tracker_claimed_until__notilike,
+        object_tracker_claimed_until__desc,
+        object_tracker_claimed_until__asc,
         camera_id__eq,
         camera_id__ne,
         camera_id__gt,
@@ -6044,6 +6668,360 @@ class VideoApi:
         if status__asc is not None:
             
             _query_params.append(('status__asc', status__asc))
+            
+        if object_detector_claimed_until__eq is not None:
+            if isinstance(object_detector_claimed_until__eq, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__eq',
+                        object_detector_claimed_until__eq.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__eq', object_detector_claimed_until__eq))
+            
+        if object_detector_claimed_until__ne is not None:
+            if isinstance(object_detector_claimed_until__ne, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__ne',
+                        object_detector_claimed_until__ne.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__ne', object_detector_claimed_until__ne))
+            
+        if object_detector_claimed_until__gt is not None:
+            if isinstance(object_detector_claimed_until__gt, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__gt',
+                        object_detector_claimed_until__gt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__gt', object_detector_claimed_until__gt))
+            
+        if object_detector_claimed_until__gte is not None:
+            if isinstance(object_detector_claimed_until__gte, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__gte',
+                        object_detector_claimed_until__gte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__gte', object_detector_claimed_until__gte))
+            
+        if object_detector_claimed_until__lt is not None:
+            if isinstance(object_detector_claimed_until__lt, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__lt',
+                        object_detector_claimed_until__lt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__lt', object_detector_claimed_until__lt))
+            
+        if object_detector_claimed_until__lte is not None:
+            if isinstance(object_detector_claimed_until__lte, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__lte',
+                        object_detector_claimed_until__lte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__lte', object_detector_claimed_until__lte))
+            
+        if object_detector_claimed_until__in is not None:
+            if isinstance(object_detector_claimed_until__in, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__in',
+                        object_detector_claimed_until__in.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__in', object_detector_claimed_until__in))
+            
+        if object_detector_claimed_until__nin is not None:
+            if isinstance(object_detector_claimed_until__nin, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__nin',
+                        object_detector_claimed_until__nin.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__nin', object_detector_claimed_until__nin))
+            
+        if object_detector_claimed_until__notin is not None:
+            if isinstance(object_detector_claimed_until__notin, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__notin',
+                        object_detector_claimed_until__notin.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__notin', object_detector_claimed_until__notin))
+            
+        if object_detector_claimed_until__isnull is not None:
+            
+            _query_params.append(('object_detector_claimed_until__isnull', object_detector_claimed_until__isnull))
+            
+        if object_detector_claimed_until__nisnull is not None:
+            
+            _query_params.append(('object_detector_claimed_until__nisnull', object_detector_claimed_until__nisnull))
+            
+        if object_detector_claimed_until__isnotnull is not None:
+            
+            _query_params.append(('object_detector_claimed_until__isnotnull', object_detector_claimed_until__isnotnull))
+            
+        if object_detector_claimed_until__l is not None:
+            
+            _query_params.append(('object_detector_claimed_until__l', object_detector_claimed_until__l))
+            
+        if object_detector_claimed_until__like is not None:
+            
+            _query_params.append(('object_detector_claimed_until__like', object_detector_claimed_until__like))
+            
+        if object_detector_claimed_until__nl is not None:
+            
+            _query_params.append(('object_detector_claimed_until__nl', object_detector_claimed_until__nl))
+            
+        if object_detector_claimed_until__nlike is not None:
+            
+            _query_params.append(('object_detector_claimed_until__nlike', object_detector_claimed_until__nlike))
+            
+        if object_detector_claimed_until__notlike is not None:
+            
+            _query_params.append(('object_detector_claimed_until__notlike', object_detector_claimed_until__notlike))
+            
+        if object_detector_claimed_until__il is not None:
+            
+            _query_params.append(('object_detector_claimed_until__il', object_detector_claimed_until__il))
+            
+        if object_detector_claimed_until__ilike is not None:
+            
+            _query_params.append(('object_detector_claimed_until__ilike', object_detector_claimed_until__ilike))
+            
+        if object_detector_claimed_until__nil is not None:
+            
+            _query_params.append(('object_detector_claimed_until__nil', object_detector_claimed_until__nil))
+            
+        if object_detector_claimed_until__nilike is not None:
+            
+            _query_params.append(('object_detector_claimed_until__nilike', object_detector_claimed_until__nilike))
+            
+        if object_detector_claimed_until__notilike is not None:
+            
+            _query_params.append(('object_detector_claimed_until__notilike', object_detector_claimed_until__notilike))
+            
+        if object_detector_claimed_until__desc is not None:
+            
+            _query_params.append(('object_detector_claimed_until__desc', object_detector_claimed_until__desc))
+            
+        if object_detector_claimed_until__asc is not None:
+            
+            _query_params.append(('object_detector_claimed_until__asc', object_detector_claimed_until__asc))
+            
+        if object_tracker_claimed_until__eq is not None:
+            if isinstance(object_tracker_claimed_until__eq, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__eq',
+                        object_tracker_claimed_until__eq.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__eq', object_tracker_claimed_until__eq))
+            
+        if object_tracker_claimed_until__ne is not None:
+            if isinstance(object_tracker_claimed_until__ne, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__ne',
+                        object_tracker_claimed_until__ne.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__ne', object_tracker_claimed_until__ne))
+            
+        if object_tracker_claimed_until__gt is not None:
+            if isinstance(object_tracker_claimed_until__gt, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__gt',
+                        object_tracker_claimed_until__gt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__gt', object_tracker_claimed_until__gt))
+            
+        if object_tracker_claimed_until__gte is not None:
+            if isinstance(object_tracker_claimed_until__gte, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__gte',
+                        object_tracker_claimed_until__gte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__gte', object_tracker_claimed_until__gte))
+            
+        if object_tracker_claimed_until__lt is not None:
+            if isinstance(object_tracker_claimed_until__lt, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__lt',
+                        object_tracker_claimed_until__lt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__lt', object_tracker_claimed_until__lt))
+            
+        if object_tracker_claimed_until__lte is not None:
+            if isinstance(object_tracker_claimed_until__lte, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__lte',
+                        object_tracker_claimed_until__lte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__lte', object_tracker_claimed_until__lte))
+            
+        if object_tracker_claimed_until__in is not None:
+            if isinstance(object_tracker_claimed_until__in, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__in',
+                        object_tracker_claimed_until__in.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__in', object_tracker_claimed_until__in))
+            
+        if object_tracker_claimed_until__nin is not None:
+            if isinstance(object_tracker_claimed_until__nin, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__nin',
+                        object_tracker_claimed_until__nin.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__nin', object_tracker_claimed_until__nin))
+            
+        if object_tracker_claimed_until__notin is not None:
+            if isinstance(object_tracker_claimed_until__notin, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__notin',
+                        object_tracker_claimed_until__notin.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__notin', object_tracker_claimed_until__notin))
+            
+        if object_tracker_claimed_until__isnull is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__isnull', object_tracker_claimed_until__isnull))
+            
+        if object_tracker_claimed_until__nisnull is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__nisnull', object_tracker_claimed_until__nisnull))
+            
+        if object_tracker_claimed_until__isnotnull is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__isnotnull', object_tracker_claimed_until__isnotnull))
+            
+        if object_tracker_claimed_until__l is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__l', object_tracker_claimed_until__l))
+            
+        if object_tracker_claimed_until__like is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__like', object_tracker_claimed_until__like))
+            
+        if object_tracker_claimed_until__nl is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__nl', object_tracker_claimed_until__nl))
+            
+        if object_tracker_claimed_until__nlike is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__nlike', object_tracker_claimed_until__nlike))
+            
+        if object_tracker_claimed_until__notlike is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__notlike', object_tracker_claimed_until__notlike))
+            
+        if object_tracker_claimed_until__il is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__il', object_tracker_claimed_until__il))
+            
+        if object_tracker_claimed_until__ilike is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__ilike', object_tracker_claimed_until__ilike))
+            
+        if object_tracker_claimed_until__nil is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__nil', object_tracker_claimed_until__nil))
+            
+        if object_tracker_claimed_until__nilike is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__nilike', object_tracker_claimed_until__nilike))
+            
+        if object_tracker_claimed_until__notilike is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__notilike', object_tracker_claimed_until__notilike))
+            
+        if object_tracker_claimed_until__desc is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__desc', object_tracker_claimed_until__desc))
+            
+        if object_tracker_claimed_until__asc is not None:
+            
+            _query_params.append(('object_tracker_claimed_until__asc', object_tracker_claimed_until__asc))
             
         if camera_id__eq is not None:
             

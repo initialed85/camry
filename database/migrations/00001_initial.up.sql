@@ -47,12 +47,8 @@ CREATE TABLE
         name text NOT NULL CHECK (trim(name) != ''),
         stream_url text NOT NULL CHECK (trim(stream_url) != ''),
         last_seen timestamptz NOT NULL DEFAULT to_timestamp(0),
-        -- claimed_at timestamptz NOT NULL DEFAULT to_timestamp(0) CHECK (claimed_at <= now()),
-        claimed_at timestamptz NOT NULL DEFAULT to_timestamp(0),
-        -- claim_duration interval NOT NULL DEFAULT interval '1 minute' CHECK (claim_duration > interval '0 seconds'),
-        claim_duration interval NOT NULL DEFAULT interval '1 minute',
-        -- claim_expires_at timestamptz NOT NULL DEFAULT to_timestamp(1) CHECK (claim_expires_at > claimed_at)
-        claim_expires_at timestamptz NOT NULL DEFAULT to_timestamp(1)
+        segment_producer_claimed_until timestamptz NOT NULL DEFAULT to_timestamp(0),
+        stream_producer_claimed_until timestamptz NOT NULL DEFAULT to_timestamp(0)
     );
 
 ALTER TABLE public.camera OWNER TO postgres;
@@ -83,6 +79,8 @@ CREATE TABLE
         file_size float NULL,
         thumbnail_name text NULL,
         status text NULL,
+        object_detector_claimed_until timestamptz NOT NULL DEFAULT to_timestamp(0),
+        object_tracker_claimed_until timestamptz NOT NULL DEFAULT to_timestamp(0),
         camera_id uuid NOT NULL REFERENCES public.camera (id)
     );
 
@@ -103,6 +101,14 @@ CREATE INDEX video_camera_id_file_name ON public.video (camera_id, file_name);
 CREATE INDEX video_status ON public.video (status);
 
 CREATE INDEX video_camera_id_status ON public.video (camera_id, status);
+
+CREATE INDEX video_object_detector_claimed_until ON public.video (object_detector_claimed_until);
+
+CREATE INDEX video_status_object_detector_claimed_until ON public.video (status, object_detector_claimed_until);
+
+CREATE INDEX video_object_tracker_claimed_until ON public.video (object_tracker_claimed_until);
+
+CREATE INDEX video_status_object_tracker_claimed_until ON public.video (status, object_tracker_claimed_until);
 
 --
 -- detection

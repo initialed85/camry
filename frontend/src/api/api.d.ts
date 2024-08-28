@@ -105,12 +105,6 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     Camera: {
-      /** Format: int64 */
-      claim_duration?: number;
-      /** Format: date-time */
-      claim_expires_at?: string;
-      /** Format: date-time */
-      claimed_at?: string;
       /** Format: date-time */
       created_at?: string;
       /** Format: date-time */
@@ -122,6 +116,10 @@ export interface components {
       name?: string;
       referenced_by_detection_camera_id_objects?: components["schemas"]["NullableArrayOfDetection"];
       referenced_by_video_camera_id_objects?: components["schemas"]["NullableArrayOfVideo"];
+      /** Format: date-time */
+      segment_producer_claimed_until?: string;
+      /** Format: date-time */
+      stream_producer_claimed_until?: string;
       stream_url?: string;
       /** Format: date-time */
       updated_at?: string;
@@ -192,6 +190,10 @@ export interface components {
       file_size?: number | null;
       /** Format: uuid */
       id?: string;
+      /** Format: date-time */
+      object_detector_claimed_until?: string;
+      /** Format: date-time */
+      object_tracker_claimed_until?: string;
       referenced_by_detection_video_id_objects?: components["schemas"]["NullableArrayOfDetection"];
       /** Format: date-time */
       started_at?: string;
@@ -557,149 +559,101 @@ export interface operations {
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
         last_seen__asc?: string;
         /** @description SQL = operator */
-        claimed_at__eq?: string;
+        segment_producer_claimed_until__eq?: string;
         /** @description SQL != operator */
-        claimed_at__ne?: string;
+        segment_producer_claimed_until__ne?: string;
         /** @description SQL > operator, may not work with all column types */
-        claimed_at__gt?: string;
+        segment_producer_claimed_until__gt?: string;
         /** @description SQL >= operator, may not work with all column types */
-        claimed_at__gte?: string;
+        segment_producer_claimed_until__gte?: string;
         /** @description SQL < operator, may not work with all column types */
-        claimed_at__lt?: string;
+        segment_producer_claimed_until__lt?: string;
         /** @description SQL <= operator, may not work with all column types */
-        claimed_at__lte?: string;
+        segment_producer_claimed_until__lte?: string;
         /** @description SQL IN operator, permits comma-separated values */
-        claimed_at__in?: string;
+        segment_producer_claimed_until__in?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        claimed_at__nin?: string;
+        segment_producer_claimed_until__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        claimed_at__notin?: string;
+        segment_producer_claimed_until__notin?: string;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        claimed_at__isnull?: string;
+        segment_producer_claimed_until__isnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        claimed_at__nisnull?: string;
+        segment_producer_claimed_until__nisnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        claimed_at__isnotnull?: string;
+        segment_producer_claimed_until__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__l?: string;
+        segment_producer_claimed_until__l?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__like?: string;
+        segment_producer_claimed_until__like?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__nl?: string;
+        segment_producer_claimed_until__nl?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__nlike?: string;
+        segment_producer_claimed_until__nlike?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__notlike?: string;
+        segment_producer_claimed_until__notlike?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__il?: string;
+        segment_producer_claimed_until__il?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__ilike?: string;
+        segment_producer_claimed_until__ilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__nil?: string;
+        segment_producer_claimed_until__nil?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__nilike?: string;
+        segment_producer_claimed_until__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claimed_at__notilike?: string;
+        segment_producer_claimed_until__notilike?: string;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        claimed_at__desc?: string;
+        segment_producer_claimed_until__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        claimed_at__asc?: string;
+        segment_producer_claimed_until__asc?: string;
         /** @description SQL = operator */
-        claim_duration__eq?: number;
+        stream_producer_claimed_until__eq?: string;
         /** @description SQL != operator */
-        claim_duration__ne?: number;
+        stream_producer_claimed_until__ne?: string;
         /** @description SQL > operator, may not work with all column types */
-        claim_duration__gt?: number;
+        stream_producer_claimed_until__gt?: string;
         /** @description SQL >= operator, may not work with all column types */
-        claim_duration__gte?: number;
+        stream_producer_claimed_until__gte?: string;
         /** @description SQL < operator, may not work with all column types */
-        claim_duration__lt?: number;
+        stream_producer_claimed_until__lt?: string;
         /** @description SQL <= operator, may not work with all column types */
-        claim_duration__lte?: number;
+        stream_producer_claimed_until__lte?: string;
         /** @description SQL IN operator, permits comma-separated values */
-        claim_duration__in?: number;
+        stream_producer_claimed_until__in?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        claim_duration__nin?: number;
+        stream_producer_claimed_until__nin?: string;
         /** @description SQL NOT IN operator, permits comma-separated values */
-        claim_duration__notin?: number;
+        stream_producer_claimed_until__notin?: string;
         /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        claim_duration__isnull?: string;
+        stream_producer_claimed_until__isnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        claim_duration__nisnull?: string;
+        stream_producer_claimed_until__nisnull?: string;
         /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        claim_duration__isnotnull?: string;
+        stream_producer_claimed_until__isnotnull?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__l?: string;
+        stream_producer_claimed_until__l?: string;
         /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__like?: string;
+        stream_producer_claimed_until__like?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__nl?: string;
+        stream_producer_claimed_until__nl?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__nlike?: string;
+        stream_producer_claimed_until__nlike?: string;
         /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__notlike?: string;
+        stream_producer_claimed_until__notlike?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__il?: string;
+        stream_producer_claimed_until__il?: string;
         /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__ilike?: string;
+        stream_producer_claimed_until__ilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__nil?: string;
+        stream_producer_claimed_until__nil?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__nilike?: string;
+        stream_producer_claimed_until__nilike?: string;
         /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_duration__notilike?: string;
+        stream_producer_claimed_until__notilike?: string;
         /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        claim_duration__desc?: string;
+        stream_producer_claimed_until__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        claim_duration__asc?: string;
-        /** @description SQL = operator */
-        claim_expires_at__eq?: string;
-        /** @description SQL != operator */
-        claim_expires_at__ne?: string;
-        /** @description SQL > operator, may not work with all column types */
-        claim_expires_at__gt?: string;
-        /** @description SQL >= operator, may not work with all column types */
-        claim_expires_at__gte?: string;
-        /** @description SQL < operator, may not work with all column types */
-        claim_expires_at__lt?: string;
-        /** @description SQL <= operator, may not work with all column types */
-        claim_expires_at__lte?: string;
-        /** @description SQL IN operator, permits comma-separated values */
-        claim_expires_at__in?: string;
-        /** @description SQL NOT IN operator, permits comma-separated values */
-        claim_expires_at__nin?: string;
-        /** @description SQL NOT IN operator, permits comma-separated values */
-        claim_expires_at__notin?: string;
-        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
-        claim_expires_at__isnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        claim_expires_at__nisnull?: string;
-        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
-        claim_expires_at__isnotnull?: string;
-        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__l?: string;
-        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__like?: string;
-        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__nl?: string;
-        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__nlike?: string;
-        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__notlike?: string;
-        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__il?: string;
-        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__ilike?: string;
-        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__nil?: string;
-        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__nilike?: string;
-        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
-        claim_expires_at__notilike?: string;
-        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
-        claim_expires_at__desc?: string;
-        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
-        claim_expires_at__asc?: string;
+        stream_producer_claimed_until__asc?: string;
       };
       header?: never;
       path?: never;
@@ -2288,6 +2242,102 @@ export interface operations {
         status__desc?: string;
         /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
         status__asc?: string;
+        /** @description SQL = operator */
+        object_detector_claimed_until__eq?: string;
+        /** @description SQL != operator */
+        object_detector_claimed_until__ne?: string;
+        /** @description SQL > operator, may not work with all column types */
+        object_detector_claimed_until__gt?: string;
+        /** @description SQL >= operator, may not work with all column types */
+        object_detector_claimed_until__gte?: string;
+        /** @description SQL < operator, may not work with all column types */
+        object_detector_claimed_until__lt?: string;
+        /** @description SQL <= operator, may not work with all column types */
+        object_detector_claimed_until__lte?: string;
+        /** @description SQL IN operator, permits comma-separated values */
+        object_detector_claimed_until__in?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        object_detector_claimed_until__nin?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        object_detector_claimed_until__notin?: string;
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
+        object_detector_claimed_until__isnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        object_detector_claimed_until__nisnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        object_detector_claimed_until__isnotnull?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__l?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__like?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__nl?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__nlike?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__notlike?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__il?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__ilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__nil?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__nilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_detector_claimed_until__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        object_detector_claimed_until__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        object_detector_claimed_until__asc?: string;
+        /** @description SQL = operator */
+        object_tracker_claimed_until__eq?: string;
+        /** @description SQL != operator */
+        object_tracker_claimed_until__ne?: string;
+        /** @description SQL > operator, may not work with all column types */
+        object_tracker_claimed_until__gt?: string;
+        /** @description SQL >= operator, may not work with all column types */
+        object_tracker_claimed_until__gte?: string;
+        /** @description SQL < operator, may not work with all column types */
+        object_tracker_claimed_until__lt?: string;
+        /** @description SQL <= operator, may not work with all column types */
+        object_tracker_claimed_until__lte?: string;
+        /** @description SQL IN operator, permits comma-separated values */
+        object_tracker_claimed_until__in?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        object_tracker_claimed_until__nin?: string;
+        /** @description SQL NOT IN operator, permits comma-separated values */
+        object_tracker_claimed_until__notin?: string;
+        /** @description SQL IS NULL operator, value is ignored (presence of key is sufficient) */
+        object_tracker_claimed_until__isnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        object_tracker_claimed_until__nisnull?: string;
+        /** @description SQL IS NOT NULL operator, value is ignored (presence of key is sufficient) */
+        object_tracker_claimed_until__isnotnull?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__l?: string;
+        /** @description SQL LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__like?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__nl?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__nlike?: string;
+        /** @description SQL NOT LIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__notlike?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__il?: string;
+        /** @description SQL ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__ilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__nil?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__nilike?: string;
+        /** @description SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with % */
+        object_tracker_claimed_until__notilike?: string;
+        /** @description SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient) */
+        object_tracker_claimed_until__desc?: string;
+        /** @description SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient) */
+        object_tracker_claimed_until__asc?: string;
         /** @description SQL = operator */
         camera_id__eq?: string;
         /** @description SQL != operator */

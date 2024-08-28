@@ -36,12 +36,14 @@ class Video(BaseModel):
     file_name: Optional[StrictStr] = None
     file_size: Optional[Union[StrictFloat, StrictInt]] = None
     id: Optional[StrictStr] = None
+    object_detector_claimed_until: Optional[datetime] = None
+    object_tracker_claimed_until: Optional[datetime] = None
     referenced_by_detection_video_id_objects: Optional[List[Detection]] = None
     started_at: Optional[datetime] = None
     status: Optional[StrictStr] = None
     thumbnail_name: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "duration", "ended_at", "file_name", "file_size", "id", "referenced_by_detection_video_id_objects", "started_at", "status", "thumbnail_name", "updated_at"]
+    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "duration", "ended_at", "file_name", "file_size", "id", "object_detector_claimed_until", "object_tracker_claimed_until", "referenced_by_detection_video_id_objects", "started_at", "status", "thumbnail_name", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -138,6 +140,8 @@ class Video(BaseModel):
             "file_name": obj.get("file_name"),
             "file_size": obj.get("file_size"),
             "id": obj.get("id"),
+            "object_detector_claimed_until": obj.get("object_detector_claimed_until"),
+            "object_tracker_claimed_until": obj.get("object_tracker_claimed_until"),
             "referenced_by_detection_video_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_video_id_objects"]] if obj.get("referenced_by_detection_video_id_objects") is not None else None,
             "started_at": obj.get("started_at"),
             "status": obj.get("status"),
