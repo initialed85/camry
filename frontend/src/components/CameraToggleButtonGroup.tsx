@@ -11,7 +11,9 @@ export interface CameraToggleButtonGroupProps {
   setCameraId: Dispatch<SetStateAction<string | null | undefined>>;
 }
 
-export default function CameraToggleButtonGroup(props: CameraToggleButtonGroupProps) {
+export default function CameraToggleButtonGroup(
+  props: CameraToggleButtonGroupProps,
+) {
   const [value, setValue] = useState<string | null | undefined>(props.cameraId);
 
   const { data, error } = useQuery("get", "/api/cameras", {
@@ -23,7 +25,11 @@ export default function CameraToggleButtonGroup(props: CameraToggleButtonGroupPr
   });
 
   if (error) {
-    return <Typography color="danger">Failed to load cameras: {error?.error || error.toString()}</Typography>;
+    return (
+      <Typography color="danger">
+        Failed to load cameras: {error?.error || error.toString()}
+      </Typography>
+    );
   }
 
   return (
@@ -45,12 +51,26 @@ export default function CameraToggleButtonGroup(props: CameraToggleButtonGroupPr
         }
 
         return (
-          <ButtonGroup variant="soft" color="primary" size={"sm"} sx={{ px: 0.5 }}>
-            <Button key={c.id} value={c.id} sx={{ width: props.responsive ? 33 : 133 }} size={"sm"}>
+          <ButtonGroup
+            variant="soft"
+            color="primary"
+            size={"sm"}
+            sx={{ px: 0.5 }}
+          >
+            <Button
+              key={c.id}
+              value={c.id}
+              sx={{ width: props.responsive ? 33 : 133 }}
+              size={"sm"}
+            >
               {props.responsive ? c.name[0] : c.name}
             </Button>
             <IconButton size={"sm"}>
-              <a target="_blank" rel="noreferrer" href={`https://camry-stream.initialed85.cc/streams/${c.id}`}>
+              <a
+                target="_blank"
+                rel="noreferrer"
+                href={`https://camry-stream.initialed85.cc/streams/${c.id}`}
+              >
                 <LiveTvIcon />
               </a>
             </IconButton>

@@ -591,222 +591,168 @@ class CameraApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        created_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        updated_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        deleted_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        name__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        name__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        name__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        name__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        name__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        name__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        stream_url__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_url__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        last_seen__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        last_seen__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        last_seen__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        last_seen__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        last_seen__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        last_seen__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        last_seen__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        last_seen__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        last_seen__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        name__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        name__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        stream_url__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        last_seen__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        last_seen__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        last_seen__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        last_seen__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        last_seen__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        last_seen__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        last_seen__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        last_seen__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -829,437 +775,329 @@ class CameraApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
-        :param id__eq: SQL = operator
+        :param id__eq: SQL = comparison
         :type id__eq: str
-        :param id__ne: SQL != operator
+        :param id__ne: SQL != comparison
         :type id__ne: str
-        :param id__gt: SQL > operator, may not work with all column types
+        :param id__gt: SQL > comparison, may not work with all column types
         :type id__gt: str
-        :param id__gte: SQL >= operator, may not work with all column types
+        :param id__gte: SQL >= comparison, may not work with all column types
         :type id__gte: str
-        :param id__lt: SQL < operator, may not work with all column types
+        :param id__lt: SQL < comparison, may not work with all column types
         :type id__lt: str
-        :param id__lte: SQL <= operator, may not work with all column types
+        :param id__lte: SQL <= comparison, may not work with all column types
         :type id__lte: str
-        :param id__in: SQL IN operator, permits comma-separated values
+        :param id__in: SQL IN comparison, permits comma-separated values
         :type id__in: str
-        :param id__nin: SQL NOT IN operator, permits comma-separated values
-        :type id__nin: str
-        :param id__notin: SQL NOT IN operator, permits comma-separated values
+        :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type id__isnull: str
-        :param id__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type id__nisnull: str
-        :param id__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type id__isnotnull: str
-        :param id__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__l: str
-        :param id__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type id__isfalse: str
+        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type id__istrue: str
+        :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
-        :param id__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nl: str
-        :param id__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nlike: str
-        :param id__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__notlike: str
-        :param id__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__il: str
-        :param id__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__ilike: str
-        :param id__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nil: str
-        :param id__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nilike: str
-        :param id__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__notilike: str
-        :param id__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type id__desc: str
-        :param id__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type id__asc: str
-        :param created_at__eq: SQL = operator
+        :param created_at__eq: SQL = comparison
         :type created_at__eq: datetime
-        :param created_at__ne: SQL != operator
+        :param created_at__ne: SQL != comparison
         :type created_at__ne: datetime
-        :param created_at__gt: SQL > operator, may not work with all column types
+        :param created_at__gt: SQL > comparison, may not work with all column types
         :type created_at__gt: datetime
-        :param created_at__gte: SQL >= operator, may not work with all column types
+        :param created_at__gte: SQL >= comparison, may not work with all column types
         :type created_at__gte: datetime
-        :param created_at__lt: SQL < operator, may not work with all column types
+        :param created_at__lt: SQL < comparison, may not work with all column types
         :type created_at__lt: datetime
-        :param created_at__lte: SQL <= operator, may not work with all column types
+        :param created_at__lte: SQL <= comparison, may not work with all column types
         :type created_at__lte: datetime
-        :param created_at__in: SQL IN operator, permits comma-separated values
+        :param created_at__in: SQL IN comparison, permits comma-separated values
         :type created_at__in: datetime
-        :param created_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type created_at__nin: datetime
-        :param created_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type created_at__isnull: str
-        :param created_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type created_at__nisnull: str
-        :param created_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type created_at__isnotnull: str
-        :param created_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__l: str
-        :param created_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type created_at__isfalse: str
+        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type created_at__istrue: str
+        :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__like: str
-        :param created_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nl: str
-        :param created_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nlike: str
-        :param created_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__notlike: str
-        :param created_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__il: str
-        :param created_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__ilike: str
-        :param created_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nil: str
-        :param created_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nilike: str
-        :param created_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__notilike: str
-        :param created_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
-        :param created_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type created_at__asc: str
-        :param updated_at__eq: SQL = operator
+        :param updated_at__eq: SQL = comparison
         :type updated_at__eq: datetime
-        :param updated_at__ne: SQL != operator
+        :param updated_at__ne: SQL != comparison
         :type updated_at__ne: datetime
-        :param updated_at__gt: SQL > operator, may not work with all column types
+        :param updated_at__gt: SQL > comparison, may not work with all column types
         :type updated_at__gt: datetime
-        :param updated_at__gte: SQL >= operator, may not work with all column types
+        :param updated_at__gte: SQL >= comparison, may not work with all column types
         :type updated_at__gte: datetime
-        :param updated_at__lt: SQL < operator, may not work with all column types
+        :param updated_at__lt: SQL < comparison, may not work with all column types
         :type updated_at__lt: datetime
-        :param updated_at__lte: SQL <= operator, may not work with all column types
+        :param updated_at__lte: SQL <= comparison, may not work with all column types
         :type updated_at__lte: datetime
-        :param updated_at__in: SQL IN operator, permits comma-separated values
+        :param updated_at__in: SQL IN comparison, permits comma-separated values
         :type updated_at__in: datetime
-        :param updated_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type updated_at__nin: datetime
-        :param updated_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type updated_at__isnull: str
-        :param updated_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type updated_at__nisnull: str
-        :param updated_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type updated_at__isnotnull: str
-        :param updated_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__l: str
-        :param updated_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type updated_at__isfalse: str
+        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type updated_at__istrue: str
+        :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__like: str
-        :param updated_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nl: str
-        :param updated_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nlike: str
-        :param updated_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__notlike: str
-        :param updated_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__il: str
-        :param updated_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__ilike: str
-        :param updated_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nil: str
-        :param updated_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nilike: str
-        :param updated_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__notilike: str
-        :param updated_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
-        :param updated_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type updated_at__asc: str
-        :param deleted_at__eq: SQL = operator
+        :param deleted_at__eq: SQL = comparison
         :type deleted_at__eq: datetime
-        :param deleted_at__ne: SQL != operator
+        :param deleted_at__ne: SQL != comparison
         :type deleted_at__ne: datetime
-        :param deleted_at__gt: SQL > operator, may not work with all column types
+        :param deleted_at__gt: SQL > comparison, may not work with all column types
         :type deleted_at__gt: datetime
-        :param deleted_at__gte: SQL >= operator, may not work with all column types
+        :param deleted_at__gte: SQL >= comparison, may not work with all column types
         :type deleted_at__gte: datetime
-        :param deleted_at__lt: SQL < operator, may not work with all column types
+        :param deleted_at__lt: SQL < comparison, may not work with all column types
         :type deleted_at__lt: datetime
-        :param deleted_at__lte: SQL <= operator, may not work with all column types
+        :param deleted_at__lte: SQL <= comparison, may not work with all column types
         :type deleted_at__lte: datetime
-        :param deleted_at__in: SQL IN operator, permits comma-separated values
+        :param deleted_at__in: SQL IN comparison, permits comma-separated values
         :type deleted_at__in: datetime
-        :param deleted_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type deleted_at__nin: datetime
-        :param deleted_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type deleted_at__isnull: str
-        :param deleted_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type deleted_at__nisnull: str
-        :param deleted_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type deleted_at__isnotnull: str
-        :param deleted_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__l: str
-        :param deleted_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isfalse: str
+        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__istrue: str
+        :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__like: str
-        :param deleted_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nl: str
-        :param deleted_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nlike: str
-        :param deleted_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__notlike: str
-        :param deleted_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__il: str
-        :param deleted_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__ilike: str
-        :param deleted_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nil: str
-        :param deleted_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nilike: str
-        :param deleted_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__notilike: str
-        :param deleted_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
-        :param deleted_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__asc: str
-        :param name__eq: SQL = operator
+        :param name__eq: SQL = comparison
         :type name__eq: str
-        :param name__ne: SQL != operator
+        :param name__ne: SQL != comparison
         :type name__ne: str
-        :param name__gt: SQL > operator, may not work with all column types
+        :param name__gt: SQL > comparison, may not work with all column types
         :type name__gt: str
-        :param name__gte: SQL >= operator, may not work with all column types
+        :param name__gte: SQL >= comparison, may not work with all column types
         :type name__gte: str
-        :param name__lt: SQL < operator, may not work with all column types
+        :param name__lt: SQL < comparison, may not work with all column types
         :type name__lt: str
-        :param name__lte: SQL <= operator, may not work with all column types
+        :param name__lte: SQL <= comparison, may not work with all column types
         :type name__lte: str
-        :param name__in: SQL IN operator, permits comma-separated values
+        :param name__in: SQL IN comparison, permits comma-separated values
         :type name__in: str
-        :param name__nin: SQL NOT IN operator, permits comma-separated values
-        :type name__nin: str
-        :param name__notin: SQL NOT IN operator, permits comma-separated values
+        :param name__notin: SQL NOT IN comparison, permits comma-separated values
         :type name__notin: str
-        :param name__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type name__isnull: str
-        :param name__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type name__nisnull: str
-        :param name__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type name__isnotnull: str
-        :param name__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__l: str
-        :param name__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type name__isfalse: str
+        :param name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type name__istrue: str
+        :param name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__like: str
-        :param name__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nl: str
-        :param name__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nlike: str
-        :param name__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__notlike: str
-        :param name__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__il: str
-        :param name__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__ilike: str
-        :param name__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nil: str
-        :param name__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nilike: str
-        :param name__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__notilike: str
-        :param name__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type name__desc: str
-        :param name__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type name__asc: str
-        :param stream_url__eq: SQL = operator
+        :param stream_url__eq: SQL = comparison
         :type stream_url__eq: str
-        :param stream_url__ne: SQL != operator
+        :param stream_url__ne: SQL != comparison
         :type stream_url__ne: str
-        :param stream_url__gt: SQL > operator, may not work with all column types
+        :param stream_url__gt: SQL > comparison, may not work with all column types
         :type stream_url__gt: str
-        :param stream_url__gte: SQL >= operator, may not work with all column types
+        :param stream_url__gte: SQL >= comparison, may not work with all column types
         :type stream_url__gte: str
-        :param stream_url__lt: SQL < operator, may not work with all column types
+        :param stream_url__lt: SQL < comparison, may not work with all column types
         :type stream_url__lt: str
-        :param stream_url__lte: SQL <= operator, may not work with all column types
+        :param stream_url__lte: SQL <= comparison, may not work with all column types
         :type stream_url__lte: str
-        :param stream_url__in: SQL IN operator, permits comma-separated values
+        :param stream_url__in: SQL IN comparison, permits comma-separated values
         :type stream_url__in: str
-        :param stream_url__nin: SQL NOT IN operator, permits comma-separated values
-        :type stream_url__nin: str
-        :param stream_url__notin: SQL NOT IN operator, permits comma-separated values
+        :param stream_url__notin: SQL NOT IN comparison, permits comma-separated values
         :type stream_url__notin: str
-        :param stream_url__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_url__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type stream_url__isnull: str
-        :param stream_url__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type stream_url__nisnull: str
-        :param stream_url__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_url__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type stream_url__isnotnull: str
-        :param stream_url__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__l: str
-        :param stream_url__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type stream_url__isfalse: str
+        :param stream_url__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type stream_url__istrue: str
+        :param stream_url__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__like: str
-        :param stream_url__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nl: str
-        :param stream_url__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nlike: str
-        :param stream_url__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__notlike: str
-        :param stream_url__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__il: str
-        :param stream_url__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__ilike: str
-        :param stream_url__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nil: str
-        :param stream_url__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nilike: str
-        :param stream_url__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__notilike: str
-        :param stream_url__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param stream_url__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type stream_url__desc: str
-        :param stream_url__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param stream_url__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_url__asc: str
-        :param last_seen__eq: SQL = operator
+        :param last_seen__eq: SQL = comparison
         :type last_seen__eq: datetime
-        :param last_seen__ne: SQL != operator
+        :param last_seen__ne: SQL != comparison
         :type last_seen__ne: datetime
-        :param last_seen__gt: SQL > operator, may not work with all column types
+        :param last_seen__gt: SQL > comparison, may not work with all column types
         :type last_seen__gt: datetime
-        :param last_seen__gte: SQL >= operator, may not work with all column types
+        :param last_seen__gte: SQL >= comparison, may not work with all column types
         :type last_seen__gte: datetime
-        :param last_seen__lt: SQL < operator, may not work with all column types
+        :param last_seen__lt: SQL < comparison, may not work with all column types
         :type last_seen__lt: datetime
-        :param last_seen__lte: SQL <= operator, may not work with all column types
+        :param last_seen__lte: SQL <= comparison, may not work with all column types
         :type last_seen__lte: datetime
-        :param last_seen__in: SQL IN operator, permits comma-separated values
+        :param last_seen__in: SQL IN comparison, permits comma-separated values
         :type last_seen__in: datetime
-        :param last_seen__nin: SQL NOT IN operator, permits comma-separated values
-        :type last_seen__nin: datetime
-        :param last_seen__notin: SQL NOT IN operator, permits comma-separated values
+        :param last_seen__notin: SQL NOT IN comparison, permits comma-separated values
         :type last_seen__notin: datetime
-        :param last_seen__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param last_seen__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type last_seen__isnull: str
-        :param last_seen__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type last_seen__nisnull: str
-        :param last_seen__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param last_seen__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type last_seen__isnotnull: str
-        :param last_seen__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__l: str
-        :param last_seen__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type last_seen__isfalse: str
+        :param last_seen__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type last_seen__istrue: str
+        :param last_seen__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__like: str
-        :param last_seen__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nl: str
-        :param last_seen__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nlike: str
-        :param last_seen__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__notlike: str
-        :param last_seen__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__il: str
-        :param last_seen__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__ilike: str
-        :param last_seen__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nil: str
-        :param last_seen__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nilike: str
-        :param last_seen__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__notilike: str
-        :param last_seen__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param last_seen__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type last_seen__desc: str
-        :param last_seen__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param last_seen__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type last_seen__asc: str
-        :param segment_producer_claimed_until__eq: SQL = operator
+        :param segment_producer_claimed_until__eq: SQL = comparison
         :type segment_producer_claimed_until__eq: datetime
-        :param segment_producer_claimed_until__ne: SQL != operator
+        :param segment_producer_claimed_until__ne: SQL != comparison
         :type segment_producer_claimed_until__ne: datetime
-        :param segment_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :param segment_producer_claimed_until__gt: SQL > comparison, may not work with all column types
         :type segment_producer_claimed_until__gt: datetime
-        :param segment_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :param segment_producer_claimed_until__gte: SQL >= comparison, may not work with all column types
         :type segment_producer_claimed_until__gte: datetime
-        :param segment_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :param segment_producer_claimed_until__lt: SQL < comparison, may not work with all column types
         :type segment_producer_claimed_until__lt: datetime
-        :param segment_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :param segment_producer_claimed_until__lte: SQL <= comparison, may not work with all column types
         :type segment_producer_claimed_until__lte: datetime
-        :param segment_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :param segment_producer_claimed_until__in: SQL IN comparison, permits comma-separated values
         :type segment_producer_claimed_until__in: datetime
-        :param segment_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
-        :type segment_producer_claimed_until__nin: datetime
-        :param segment_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :param segment_producer_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type segment_producer_claimed_until__notin: datetime
-        :param segment_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__isnull: str
-        :param segment_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type segment_producer_claimed_until__nisnull: str
-        :param segment_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__isnotnull: str
-        :param segment_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__l: str
-        :param segment_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isfalse: str
+        :param segment_producer_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__istrue: str
+        :param segment_producer_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__like: str
-        :param segment_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nl: str
-        :param segment_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nlike: str
-        :param segment_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__notlike: str
-        :param segment_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__il: str
-        :param segment_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__ilike: str
-        :param segment_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nil: str
-        :param segment_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nilike: str
-        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__notilike: str
-        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__desc: str
-        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__asc: str
-        :param stream_producer_claimed_until__eq: SQL = operator
+        :param stream_producer_claimed_until__eq: SQL = comparison
         :type stream_producer_claimed_until__eq: datetime
-        :param stream_producer_claimed_until__ne: SQL != operator
+        :param stream_producer_claimed_until__ne: SQL != comparison
         :type stream_producer_claimed_until__ne: datetime
-        :param stream_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :param stream_producer_claimed_until__gt: SQL > comparison, may not work with all column types
         :type stream_producer_claimed_until__gt: datetime
-        :param stream_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :param stream_producer_claimed_until__gte: SQL >= comparison, may not work with all column types
         :type stream_producer_claimed_until__gte: datetime
-        :param stream_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :param stream_producer_claimed_until__lt: SQL < comparison, may not work with all column types
         :type stream_producer_claimed_until__lt: datetime
-        :param stream_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :param stream_producer_claimed_until__lte: SQL <= comparison, may not work with all column types
         :type stream_producer_claimed_until__lte: datetime
-        :param stream_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :param stream_producer_claimed_until__in: SQL IN comparison, permits comma-separated values
         :type stream_producer_claimed_until__in: datetime
-        :param stream_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
-        :type stream_producer_claimed_until__nin: datetime
-        :param stream_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :param stream_producer_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type stream_producer_claimed_until__notin: datetime
-        :param stream_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__isnull: str
-        :param stream_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type stream_producer_claimed_until__nisnull: str
-        :param stream_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__isnotnull: str
-        :param stream_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__l: str
-        :param stream_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isfalse: str
+        :param stream_producer_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__istrue: str
+        :param stream_producer_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__like: str
-        :param stream_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nl: str
-        :param stream_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nlike: str
-        :param stream_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__notlike: str
-        :param stream_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__il: str
-        :param stream_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__ilike: str
-        :param stream_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nil: str
-        :param stream_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nilike: str
-        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__notilike: str
-        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__desc: str
-        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -1294,20 +1132,14 @@ class CameraApi:
             id__lt=id__lt,
             id__lte=id__lte,
             id__in=id__in,
-            id__nin=id__nin,
             id__notin=id__notin,
             id__isnull=id__isnull,
-            id__nisnull=id__nisnull,
             id__isnotnull=id__isnotnull,
-            id__l=id__l,
+            id__isfalse=id__isfalse,
+            id__istrue=id__istrue,
             id__like=id__like,
-            id__nl=id__nl,
-            id__nlike=id__nlike,
             id__notlike=id__notlike,
-            id__il=id__il,
             id__ilike=id__ilike,
-            id__nil=id__nil,
-            id__nilike=id__nilike,
             id__notilike=id__notilike,
             id__desc=id__desc,
             id__asc=id__asc,
@@ -1318,20 +1150,14 @@ class CameraApi:
             created_at__lt=created_at__lt,
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
-            created_at__nin=created_at__nin,
             created_at__notin=created_at__notin,
             created_at__isnull=created_at__isnull,
-            created_at__nisnull=created_at__nisnull,
             created_at__isnotnull=created_at__isnotnull,
-            created_at__l=created_at__l,
+            created_at__isfalse=created_at__isfalse,
+            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
-            created_at__nl=created_at__nl,
-            created_at__nlike=created_at__nlike,
             created_at__notlike=created_at__notlike,
-            created_at__il=created_at__il,
             created_at__ilike=created_at__ilike,
-            created_at__nil=created_at__nil,
-            created_at__nilike=created_at__nilike,
             created_at__notilike=created_at__notilike,
             created_at__desc=created_at__desc,
             created_at__asc=created_at__asc,
@@ -1342,20 +1168,14 @@ class CameraApi:
             updated_at__lt=updated_at__lt,
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
-            updated_at__nin=updated_at__nin,
             updated_at__notin=updated_at__notin,
             updated_at__isnull=updated_at__isnull,
-            updated_at__nisnull=updated_at__nisnull,
             updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__l=updated_at__l,
+            updated_at__isfalse=updated_at__isfalse,
+            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
-            updated_at__nl=updated_at__nl,
-            updated_at__nlike=updated_at__nlike,
             updated_at__notlike=updated_at__notlike,
-            updated_at__il=updated_at__il,
             updated_at__ilike=updated_at__ilike,
-            updated_at__nil=updated_at__nil,
-            updated_at__nilike=updated_at__nilike,
             updated_at__notilike=updated_at__notilike,
             updated_at__desc=updated_at__desc,
             updated_at__asc=updated_at__asc,
@@ -1366,20 +1186,14 @@ class CameraApi:
             deleted_at__lt=deleted_at__lt,
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
-            deleted_at__nin=deleted_at__nin,
             deleted_at__notin=deleted_at__notin,
             deleted_at__isnull=deleted_at__isnull,
-            deleted_at__nisnull=deleted_at__nisnull,
             deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__l=deleted_at__l,
+            deleted_at__isfalse=deleted_at__isfalse,
+            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
-            deleted_at__nl=deleted_at__nl,
-            deleted_at__nlike=deleted_at__nlike,
             deleted_at__notlike=deleted_at__notlike,
-            deleted_at__il=deleted_at__il,
             deleted_at__ilike=deleted_at__ilike,
-            deleted_at__nil=deleted_at__nil,
-            deleted_at__nilike=deleted_at__nilike,
             deleted_at__notilike=deleted_at__notilike,
             deleted_at__desc=deleted_at__desc,
             deleted_at__asc=deleted_at__asc,
@@ -1390,20 +1204,14 @@ class CameraApi:
             name__lt=name__lt,
             name__lte=name__lte,
             name__in=name__in,
-            name__nin=name__nin,
             name__notin=name__notin,
             name__isnull=name__isnull,
-            name__nisnull=name__nisnull,
             name__isnotnull=name__isnotnull,
-            name__l=name__l,
+            name__isfalse=name__isfalse,
+            name__istrue=name__istrue,
             name__like=name__like,
-            name__nl=name__nl,
-            name__nlike=name__nlike,
             name__notlike=name__notlike,
-            name__il=name__il,
             name__ilike=name__ilike,
-            name__nil=name__nil,
-            name__nilike=name__nilike,
             name__notilike=name__notilike,
             name__desc=name__desc,
             name__asc=name__asc,
@@ -1414,20 +1222,14 @@ class CameraApi:
             stream_url__lt=stream_url__lt,
             stream_url__lte=stream_url__lte,
             stream_url__in=stream_url__in,
-            stream_url__nin=stream_url__nin,
             stream_url__notin=stream_url__notin,
             stream_url__isnull=stream_url__isnull,
-            stream_url__nisnull=stream_url__nisnull,
             stream_url__isnotnull=stream_url__isnotnull,
-            stream_url__l=stream_url__l,
+            stream_url__isfalse=stream_url__isfalse,
+            stream_url__istrue=stream_url__istrue,
             stream_url__like=stream_url__like,
-            stream_url__nl=stream_url__nl,
-            stream_url__nlike=stream_url__nlike,
             stream_url__notlike=stream_url__notlike,
-            stream_url__il=stream_url__il,
             stream_url__ilike=stream_url__ilike,
-            stream_url__nil=stream_url__nil,
-            stream_url__nilike=stream_url__nilike,
             stream_url__notilike=stream_url__notilike,
             stream_url__desc=stream_url__desc,
             stream_url__asc=stream_url__asc,
@@ -1438,20 +1240,14 @@ class CameraApi:
             last_seen__lt=last_seen__lt,
             last_seen__lte=last_seen__lte,
             last_seen__in=last_seen__in,
-            last_seen__nin=last_seen__nin,
             last_seen__notin=last_seen__notin,
             last_seen__isnull=last_seen__isnull,
-            last_seen__nisnull=last_seen__nisnull,
             last_seen__isnotnull=last_seen__isnotnull,
-            last_seen__l=last_seen__l,
+            last_seen__isfalse=last_seen__isfalse,
+            last_seen__istrue=last_seen__istrue,
             last_seen__like=last_seen__like,
-            last_seen__nl=last_seen__nl,
-            last_seen__nlike=last_seen__nlike,
             last_seen__notlike=last_seen__notlike,
-            last_seen__il=last_seen__il,
             last_seen__ilike=last_seen__ilike,
-            last_seen__nil=last_seen__nil,
-            last_seen__nilike=last_seen__nilike,
             last_seen__notilike=last_seen__notilike,
             last_seen__desc=last_seen__desc,
             last_seen__asc=last_seen__asc,
@@ -1462,20 +1258,14 @@ class CameraApi:
             segment_producer_claimed_until__lt=segment_producer_claimed_until__lt,
             segment_producer_claimed_until__lte=segment_producer_claimed_until__lte,
             segment_producer_claimed_until__in=segment_producer_claimed_until__in,
-            segment_producer_claimed_until__nin=segment_producer_claimed_until__nin,
             segment_producer_claimed_until__notin=segment_producer_claimed_until__notin,
             segment_producer_claimed_until__isnull=segment_producer_claimed_until__isnull,
-            segment_producer_claimed_until__nisnull=segment_producer_claimed_until__nisnull,
             segment_producer_claimed_until__isnotnull=segment_producer_claimed_until__isnotnull,
-            segment_producer_claimed_until__l=segment_producer_claimed_until__l,
+            segment_producer_claimed_until__isfalse=segment_producer_claimed_until__isfalse,
+            segment_producer_claimed_until__istrue=segment_producer_claimed_until__istrue,
             segment_producer_claimed_until__like=segment_producer_claimed_until__like,
-            segment_producer_claimed_until__nl=segment_producer_claimed_until__nl,
-            segment_producer_claimed_until__nlike=segment_producer_claimed_until__nlike,
             segment_producer_claimed_until__notlike=segment_producer_claimed_until__notlike,
-            segment_producer_claimed_until__il=segment_producer_claimed_until__il,
             segment_producer_claimed_until__ilike=segment_producer_claimed_until__ilike,
-            segment_producer_claimed_until__nil=segment_producer_claimed_until__nil,
-            segment_producer_claimed_until__nilike=segment_producer_claimed_until__nilike,
             segment_producer_claimed_until__notilike=segment_producer_claimed_until__notilike,
             segment_producer_claimed_until__desc=segment_producer_claimed_until__desc,
             segment_producer_claimed_until__asc=segment_producer_claimed_until__asc,
@@ -1486,20 +1276,14 @@ class CameraApi:
             stream_producer_claimed_until__lt=stream_producer_claimed_until__lt,
             stream_producer_claimed_until__lte=stream_producer_claimed_until__lte,
             stream_producer_claimed_until__in=stream_producer_claimed_until__in,
-            stream_producer_claimed_until__nin=stream_producer_claimed_until__nin,
             stream_producer_claimed_until__notin=stream_producer_claimed_until__notin,
             stream_producer_claimed_until__isnull=stream_producer_claimed_until__isnull,
-            stream_producer_claimed_until__nisnull=stream_producer_claimed_until__nisnull,
             stream_producer_claimed_until__isnotnull=stream_producer_claimed_until__isnotnull,
-            stream_producer_claimed_until__l=stream_producer_claimed_until__l,
+            stream_producer_claimed_until__isfalse=stream_producer_claimed_until__isfalse,
+            stream_producer_claimed_until__istrue=stream_producer_claimed_until__istrue,
             stream_producer_claimed_until__like=stream_producer_claimed_until__like,
-            stream_producer_claimed_until__nl=stream_producer_claimed_until__nl,
-            stream_producer_claimed_until__nlike=stream_producer_claimed_until__nlike,
             stream_producer_claimed_until__notlike=stream_producer_claimed_until__notlike,
-            stream_producer_claimed_until__il=stream_producer_claimed_until__il,
             stream_producer_claimed_until__ilike=stream_producer_claimed_until__ilike,
-            stream_producer_claimed_until__nil=stream_producer_claimed_until__nil,
-            stream_producer_claimed_until__nilike=stream_producer_claimed_until__nilike,
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
@@ -1529,222 +1313,168 @@ class CameraApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        created_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        updated_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        deleted_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        name__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        name__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        name__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        name__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        name__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        name__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        stream_url__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_url__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        last_seen__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        last_seen__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        last_seen__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        last_seen__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        last_seen__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        last_seen__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        last_seen__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        last_seen__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        last_seen__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        name__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        name__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        stream_url__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        last_seen__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        last_seen__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        last_seen__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        last_seen__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        last_seen__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        last_seen__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        last_seen__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        last_seen__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1767,437 +1497,329 @@ class CameraApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
-        :param id__eq: SQL = operator
+        :param id__eq: SQL = comparison
         :type id__eq: str
-        :param id__ne: SQL != operator
+        :param id__ne: SQL != comparison
         :type id__ne: str
-        :param id__gt: SQL > operator, may not work with all column types
+        :param id__gt: SQL > comparison, may not work with all column types
         :type id__gt: str
-        :param id__gte: SQL >= operator, may not work with all column types
+        :param id__gte: SQL >= comparison, may not work with all column types
         :type id__gte: str
-        :param id__lt: SQL < operator, may not work with all column types
+        :param id__lt: SQL < comparison, may not work with all column types
         :type id__lt: str
-        :param id__lte: SQL <= operator, may not work with all column types
+        :param id__lte: SQL <= comparison, may not work with all column types
         :type id__lte: str
-        :param id__in: SQL IN operator, permits comma-separated values
+        :param id__in: SQL IN comparison, permits comma-separated values
         :type id__in: str
-        :param id__nin: SQL NOT IN operator, permits comma-separated values
-        :type id__nin: str
-        :param id__notin: SQL NOT IN operator, permits comma-separated values
+        :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type id__isnull: str
-        :param id__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type id__nisnull: str
-        :param id__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type id__isnotnull: str
-        :param id__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__l: str
-        :param id__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type id__isfalse: str
+        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type id__istrue: str
+        :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
-        :param id__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nl: str
-        :param id__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nlike: str
-        :param id__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__notlike: str
-        :param id__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__il: str
-        :param id__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__ilike: str
-        :param id__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nil: str
-        :param id__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nilike: str
-        :param id__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__notilike: str
-        :param id__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type id__desc: str
-        :param id__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type id__asc: str
-        :param created_at__eq: SQL = operator
+        :param created_at__eq: SQL = comparison
         :type created_at__eq: datetime
-        :param created_at__ne: SQL != operator
+        :param created_at__ne: SQL != comparison
         :type created_at__ne: datetime
-        :param created_at__gt: SQL > operator, may not work with all column types
+        :param created_at__gt: SQL > comparison, may not work with all column types
         :type created_at__gt: datetime
-        :param created_at__gte: SQL >= operator, may not work with all column types
+        :param created_at__gte: SQL >= comparison, may not work with all column types
         :type created_at__gte: datetime
-        :param created_at__lt: SQL < operator, may not work with all column types
+        :param created_at__lt: SQL < comparison, may not work with all column types
         :type created_at__lt: datetime
-        :param created_at__lte: SQL <= operator, may not work with all column types
+        :param created_at__lte: SQL <= comparison, may not work with all column types
         :type created_at__lte: datetime
-        :param created_at__in: SQL IN operator, permits comma-separated values
+        :param created_at__in: SQL IN comparison, permits comma-separated values
         :type created_at__in: datetime
-        :param created_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type created_at__nin: datetime
-        :param created_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type created_at__isnull: str
-        :param created_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type created_at__nisnull: str
-        :param created_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type created_at__isnotnull: str
-        :param created_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__l: str
-        :param created_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type created_at__isfalse: str
+        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type created_at__istrue: str
+        :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__like: str
-        :param created_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nl: str
-        :param created_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nlike: str
-        :param created_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__notlike: str
-        :param created_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__il: str
-        :param created_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__ilike: str
-        :param created_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nil: str
-        :param created_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nilike: str
-        :param created_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__notilike: str
-        :param created_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
-        :param created_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type created_at__asc: str
-        :param updated_at__eq: SQL = operator
+        :param updated_at__eq: SQL = comparison
         :type updated_at__eq: datetime
-        :param updated_at__ne: SQL != operator
+        :param updated_at__ne: SQL != comparison
         :type updated_at__ne: datetime
-        :param updated_at__gt: SQL > operator, may not work with all column types
+        :param updated_at__gt: SQL > comparison, may not work with all column types
         :type updated_at__gt: datetime
-        :param updated_at__gte: SQL >= operator, may not work with all column types
+        :param updated_at__gte: SQL >= comparison, may not work with all column types
         :type updated_at__gte: datetime
-        :param updated_at__lt: SQL < operator, may not work with all column types
+        :param updated_at__lt: SQL < comparison, may not work with all column types
         :type updated_at__lt: datetime
-        :param updated_at__lte: SQL <= operator, may not work with all column types
+        :param updated_at__lte: SQL <= comparison, may not work with all column types
         :type updated_at__lte: datetime
-        :param updated_at__in: SQL IN operator, permits comma-separated values
+        :param updated_at__in: SQL IN comparison, permits comma-separated values
         :type updated_at__in: datetime
-        :param updated_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type updated_at__nin: datetime
-        :param updated_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type updated_at__isnull: str
-        :param updated_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type updated_at__nisnull: str
-        :param updated_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type updated_at__isnotnull: str
-        :param updated_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__l: str
-        :param updated_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type updated_at__isfalse: str
+        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type updated_at__istrue: str
+        :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__like: str
-        :param updated_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nl: str
-        :param updated_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nlike: str
-        :param updated_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__notlike: str
-        :param updated_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__il: str
-        :param updated_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__ilike: str
-        :param updated_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nil: str
-        :param updated_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nilike: str
-        :param updated_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__notilike: str
-        :param updated_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
-        :param updated_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type updated_at__asc: str
-        :param deleted_at__eq: SQL = operator
+        :param deleted_at__eq: SQL = comparison
         :type deleted_at__eq: datetime
-        :param deleted_at__ne: SQL != operator
+        :param deleted_at__ne: SQL != comparison
         :type deleted_at__ne: datetime
-        :param deleted_at__gt: SQL > operator, may not work with all column types
+        :param deleted_at__gt: SQL > comparison, may not work with all column types
         :type deleted_at__gt: datetime
-        :param deleted_at__gte: SQL >= operator, may not work with all column types
+        :param deleted_at__gte: SQL >= comparison, may not work with all column types
         :type deleted_at__gte: datetime
-        :param deleted_at__lt: SQL < operator, may not work with all column types
+        :param deleted_at__lt: SQL < comparison, may not work with all column types
         :type deleted_at__lt: datetime
-        :param deleted_at__lte: SQL <= operator, may not work with all column types
+        :param deleted_at__lte: SQL <= comparison, may not work with all column types
         :type deleted_at__lte: datetime
-        :param deleted_at__in: SQL IN operator, permits comma-separated values
+        :param deleted_at__in: SQL IN comparison, permits comma-separated values
         :type deleted_at__in: datetime
-        :param deleted_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type deleted_at__nin: datetime
-        :param deleted_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type deleted_at__isnull: str
-        :param deleted_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type deleted_at__nisnull: str
-        :param deleted_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type deleted_at__isnotnull: str
-        :param deleted_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__l: str
-        :param deleted_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isfalse: str
+        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__istrue: str
+        :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__like: str
-        :param deleted_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nl: str
-        :param deleted_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nlike: str
-        :param deleted_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__notlike: str
-        :param deleted_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__il: str
-        :param deleted_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__ilike: str
-        :param deleted_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nil: str
-        :param deleted_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nilike: str
-        :param deleted_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__notilike: str
-        :param deleted_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
-        :param deleted_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__asc: str
-        :param name__eq: SQL = operator
+        :param name__eq: SQL = comparison
         :type name__eq: str
-        :param name__ne: SQL != operator
+        :param name__ne: SQL != comparison
         :type name__ne: str
-        :param name__gt: SQL > operator, may not work with all column types
+        :param name__gt: SQL > comparison, may not work with all column types
         :type name__gt: str
-        :param name__gte: SQL >= operator, may not work with all column types
+        :param name__gte: SQL >= comparison, may not work with all column types
         :type name__gte: str
-        :param name__lt: SQL < operator, may not work with all column types
+        :param name__lt: SQL < comparison, may not work with all column types
         :type name__lt: str
-        :param name__lte: SQL <= operator, may not work with all column types
+        :param name__lte: SQL <= comparison, may not work with all column types
         :type name__lte: str
-        :param name__in: SQL IN operator, permits comma-separated values
+        :param name__in: SQL IN comparison, permits comma-separated values
         :type name__in: str
-        :param name__nin: SQL NOT IN operator, permits comma-separated values
-        :type name__nin: str
-        :param name__notin: SQL NOT IN operator, permits comma-separated values
+        :param name__notin: SQL NOT IN comparison, permits comma-separated values
         :type name__notin: str
-        :param name__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type name__isnull: str
-        :param name__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type name__nisnull: str
-        :param name__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type name__isnotnull: str
-        :param name__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__l: str
-        :param name__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type name__isfalse: str
+        :param name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type name__istrue: str
+        :param name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__like: str
-        :param name__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nl: str
-        :param name__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nlike: str
-        :param name__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__notlike: str
-        :param name__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__il: str
-        :param name__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__ilike: str
-        :param name__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nil: str
-        :param name__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nilike: str
-        :param name__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__notilike: str
-        :param name__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type name__desc: str
-        :param name__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type name__asc: str
-        :param stream_url__eq: SQL = operator
+        :param stream_url__eq: SQL = comparison
         :type stream_url__eq: str
-        :param stream_url__ne: SQL != operator
+        :param stream_url__ne: SQL != comparison
         :type stream_url__ne: str
-        :param stream_url__gt: SQL > operator, may not work with all column types
+        :param stream_url__gt: SQL > comparison, may not work with all column types
         :type stream_url__gt: str
-        :param stream_url__gte: SQL >= operator, may not work with all column types
+        :param stream_url__gte: SQL >= comparison, may not work with all column types
         :type stream_url__gte: str
-        :param stream_url__lt: SQL < operator, may not work with all column types
+        :param stream_url__lt: SQL < comparison, may not work with all column types
         :type stream_url__lt: str
-        :param stream_url__lte: SQL <= operator, may not work with all column types
+        :param stream_url__lte: SQL <= comparison, may not work with all column types
         :type stream_url__lte: str
-        :param stream_url__in: SQL IN operator, permits comma-separated values
+        :param stream_url__in: SQL IN comparison, permits comma-separated values
         :type stream_url__in: str
-        :param stream_url__nin: SQL NOT IN operator, permits comma-separated values
-        :type stream_url__nin: str
-        :param stream_url__notin: SQL NOT IN operator, permits comma-separated values
+        :param stream_url__notin: SQL NOT IN comparison, permits comma-separated values
         :type stream_url__notin: str
-        :param stream_url__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_url__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type stream_url__isnull: str
-        :param stream_url__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type stream_url__nisnull: str
-        :param stream_url__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_url__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type stream_url__isnotnull: str
-        :param stream_url__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__l: str
-        :param stream_url__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type stream_url__isfalse: str
+        :param stream_url__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type stream_url__istrue: str
+        :param stream_url__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__like: str
-        :param stream_url__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nl: str
-        :param stream_url__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nlike: str
-        :param stream_url__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__notlike: str
-        :param stream_url__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__il: str
-        :param stream_url__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__ilike: str
-        :param stream_url__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nil: str
-        :param stream_url__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nilike: str
-        :param stream_url__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__notilike: str
-        :param stream_url__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param stream_url__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type stream_url__desc: str
-        :param stream_url__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param stream_url__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_url__asc: str
-        :param last_seen__eq: SQL = operator
+        :param last_seen__eq: SQL = comparison
         :type last_seen__eq: datetime
-        :param last_seen__ne: SQL != operator
+        :param last_seen__ne: SQL != comparison
         :type last_seen__ne: datetime
-        :param last_seen__gt: SQL > operator, may not work with all column types
+        :param last_seen__gt: SQL > comparison, may not work with all column types
         :type last_seen__gt: datetime
-        :param last_seen__gte: SQL >= operator, may not work with all column types
+        :param last_seen__gte: SQL >= comparison, may not work with all column types
         :type last_seen__gte: datetime
-        :param last_seen__lt: SQL < operator, may not work with all column types
+        :param last_seen__lt: SQL < comparison, may not work with all column types
         :type last_seen__lt: datetime
-        :param last_seen__lte: SQL <= operator, may not work with all column types
+        :param last_seen__lte: SQL <= comparison, may not work with all column types
         :type last_seen__lte: datetime
-        :param last_seen__in: SQL IN operator, permits comma-separated values
+        :param last_seen__in: SQL IN comparison, permits comma-separated values
         :type last_seen__in: datetime
-        :param last_seen__nin: SQL NOT IN operator, permits comma-separated values
-        :type last_seen__nin: datetime
-        :param last_seen__notin: SQL NOT IN operator, permits comma-separated values
+        :param last_seen__notin: SQL NOT IN comparison, permits comma-separated values
         :type last_seen__notin: datetime
-        :param last_seen__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param last_seen__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type last_seen__isnull: str
-        :param last_seen__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type last_seen__nisnull: str
-        :param last_seen__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param last_seen__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type last_seen__isnotnull: str
-        :param last_seen__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__l: str
-        :param last_seen__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type last_seen__isfalse: str
+        :param last_seen__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type last_seen__istrue: str
+        :param last_seen__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__like: str
-        :param last_seen__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nl: str
-        :param last_seen__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nlike: str
-        :param last_seen__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__notlike: str
-        :param last_seen__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__il: str
-        :param last_seen__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__ilike: str
-        :param last_seen__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nil: str
-        :param last_seen__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nilike: str
-        :param last_seen__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__notilike: str
-        :param last_seen__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param last_seen__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type last_seen__desc: str
-        :param last_seen__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param last_seen__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type last_seen__asc: str
-        :param segment_producer_claimed_until__eq: SQL = operator
+        :param segment_producer_claimed_until__eq: SQL = comparison
         :type segment_producer_claimed_until__eq: datetime
-        :param segment_producer_claimed_until__ne: SQL != operator
+        :param segment_producer_claimed_until__ne: SQL != comparison
         :type segment_producer_claimed_until__ne: datetime
-        :param segment_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :param segment_producer_claimed_until__gt: SQL > comparison, may not work with all column types
         :type segment_producer_claimed_until__gt: datetime
-        :param segment_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :param segment_producer_claimed_until__gte: SQL >= comparison, may not work with all column types
         :type segment_producer_claimed_until__gte: datetime
-        :param segment_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :param segment_producer_claimed_until__lt: SQL < comparison, may not work with all column types
         :type segment_producer_claimed_until__lt: datetime
-        :param segment_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :param segment_producer_claimed_until__lte: SQL <= comparison, may not work with all column types
         :type segment_producer_claimed_until__lte: datetime
-        :param segment_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :param segment_producer_claimed_until__in: SQL IN comparison, permits comma-separated values
         :type segment_producer_claimed_until__in: datetime
-        :param segment_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
-        :type segment_producer_claimed_until__nin: datetime
-        :param segment_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :param segment_producer_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type segment_producer_claimed_until__notin: datetime
-        :param segment_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__isnull: str
-        :param segment_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type segment_producer_claimed_until__nisnull: str
-        :param segment_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__isnotnull: str
-        :param segment_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__l: str
-        :param segment_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isfalse: str
+        :param segment_producer_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__istrue: str
+        :param segment_producer_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__like: str
-        :param segment_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nl: str
-        :param segment_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nlike: str
-        :param segment_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__notlike: str
-        :param segment_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__il: str
-        :param segment_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__ilike: str
-        :param segment_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nil: str
-        :param segment_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nilike: str
-        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__notilike: str
-        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__desc: str
-        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__asc: str
-        :param stream_producer_claimed_until__eq: SQL = operator
+        :param stream_producer_claimed_until__eq: SQL = comparison
         :type stream_producer_claimed_until__eq: datetime
-        :param stream_producer_claimed_until__ne: SQL != operator
+        :param stream_producer_claimed_until__ne: SQL != comparison
         :type stream_producer_claimed_until__ne: datetime
-        :param stream_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :param stream_producer_claimed_until__gt: SQL > comparison, may not work with all column types
         :type stream_producer_claimed_until__gt: datetime
-        :param stream_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :param stream_producer_claimed_until__gte: SQL >= comparison, may not work with all column types
         :type stream_producer_claimed_until__gte: datetime
-        :param stream_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :param stream_producer_claimed_until__lt: SQL < comparison, may not work with all column types
         :type stream_producer_claimed_until__lt: datetime
-        :param stream_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :param stream_producer_claimed_until__lte: SQL <= comparison, may not work with all column types
         :type stream_producer_claimed_until__lte: datetime
-        :param stream_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :param stream_producer_claimed_until__in: SQL IN comparison, permits comma-separated values
         :type stream_producer_claimed_until__in: datetime
-        :param stream_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
-        :type stream_producer_claimed_until__nin: datetime
-        :param stream_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :param stream_producer_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type stream_producer_claimed_until__notin: datetime
-        :param stream_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__isnull: str
-        :param stream_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type stream_producer_claimed_until__nisnull: str
-        :param stream_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__isnotnull: str
-        :param stream_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__l: str
-        :param stream_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isfalse: str
+        :param stream_producer_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__istrue: str
+        :param stream_producer_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__like: str
-        :param stream_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nl: str
-        :param stream_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nlike: str
-        :param stream_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__notlike: str
-        :param stream_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__il: str
-        :param stream_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__ilike: str
-        :param stream_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nil: str
-        :param stream_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nilike: str
-        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__notilike: str
-        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__desc: str
-        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -2232,20 +1854,14 @@ class CameraApi:
             id__lt=id__lt,
             id__lte=id__lte,
             id__in=id__in,
-            id__nin=id__nin,
             id__notin=id__notin,
             id__isnull=id__isnull,
-            id__nisnull=id__nisnull,
             id__isnotnull=id__isnotnull,
-            id__l=id__l,
+            id__isfalse=id__isfalse,
+            id__istrue=id__istrue,
             id__like=id__like,
-            id__nl=id__nl,
-            id__nlike=id__nlike,
             id__notlike=id__notlike,
-            id__il=id__il,
             id__ilike=id__ilike,
-            id__nil=id__nil,
-            id__nilike=id__nilike,
             id__notilike=id__notilike,
             id__desc=id__desc,
             id__asc=id__asc,
@@ -2256,20 +1872,14 @@ class CameraApi:
             created_at__lt=created_at__lt,
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
-            created_at__nin=created_at__nin,
             created_at__notin=created_at__notin,
             created_at__isnull=created_at__isnull,
-            created_at__nisnull=created_at__nisnull,
             created_at__isnotnull=created_at__isnotnull,
-            created_at__l=created_at__l,
+            created_at__isfalse=created_at__isfalse,
+            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
-            created_at__nl=created_at__nl,
-            created_at__nlike=created_at__nlike,
             created_at__notlike=created_at__notlike,
-            created_at__il=created_at__il,
             created_at__ilike=created_at__ilike,
-            created_at__nil=created_at__nil,
-            created_at__nilike=created_at__nilike,
             created_at__notilike=created_at__notilike,
             created_at__desc=created_at__desc,
             created_at__asc=created_at__asc,
@@ -2280,20 +1890,14 @@ class CameraApi:
             updated_at__lt=updated_at__lt,
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
-            updated_at__nin=updated_at__nin,
             updated_at__notin=updated_at__notin,
             updated_at__isnull=updated_at__isnull,
-            updated_at__nisnull=updated_at__nisnull,
             updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__l=updated_at__l,
+            updated_at__isfalse=updated_at__isfalse,
+            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
-            updated_at__nl=updated_at__nl,
-            updated_at__nlike=updated_at__nlike,
             updated_at__notlike=updated_at__notlike,
-            updated_at__il=updated_at__il,
             updated_at__ilike=updated_at__ilike,
-            updated_at__nil=updated_at__nil,
-            updated_at__nilike=updated_at__nilike,
             updated_at__notilike=updated_at__notilike,
             updated_at__desc=updated_at__desc,
             updated_at__asc=updated_at__asc,
@@ -2304,20 +1908,14 @@ class CameraApi:
             deleted_at__lt=deleted_at__lt,
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
-            deleted_at__nin=deleted_at__nin,
             deleted_at__notin=deleted_at__notin,
             deleted_at__isnull=deleted_at__isnull,
-            deleted_at__nisnull=deleted_at__nisnull,
             deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__l=deleted_at__l,
+            deleted_at__isfalse=deleted_at__isfalse,
+            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
-            deleted_at__nl=deleted_at__nl,
-            deleted_at__nlike=deleted_at__nlike,
             deleted_at__notlike=deleted_at__notlike,
-            deleted_at__il=deleted_at__il,
             deleted_at__ilike=deleted_at__ilike,
-            deleted_at__nil=deleted_at__nil,
-            deleted_at__nilike=deleted_at__nilike,
             deleted_at__notilike=deleted_at__notilike,
             deleted_at__desc=deleted_at__desc,
             deleted_at__asc=deleted_at__asc,
@@ -2328,20 +1926,14 @@ class CameraApi:
             name__lt=name__lt,
             name__lte=name__lte,
             name__in=name__in,
-            name__nin=name__nin,
             name__notin=name__notin,
             name__isnull=name__isnull,
-            name__nisnull=name__nisnull,
             name__isnotnull=name__isnotnull,
-            name__l=name__l,
+            name__isfalse=name__isfalse,
+            name__istrue=name__istrue,
             name__like=name__like,
-            name__nl=name__nl,
-            name__nlike=name__nlike,
             name__notlike=name__notlike,
-            name__il=name__il,
             name__ilike=name__ilike,
-            name__nil=name__nil,
-            name__nilike=name__nilike,
             name__notilike=name__notilike,
             name__desc=name__desc,
             name__asc=name__asc,
@@ -2352,20 +1944,14 @@ class CameraApi:
             stream_url__lt=stream_url__lt,
             stream_url__lte=stream_url__lte,
             stream_url__in=stream_url__in,
-            stream_url__nin=stream_url__nin,
             stream_url__notin=stream_url__notin,
             stream_url__isnull=stream_url__isnull,
-            stream_url__nisnull=stream_url__nisnull,
             stream_url__isnotnull=stream_url__isnotnull,
-            stream_url__l=stream_url__l,
+            stream_url__isfalse=stream_url__isfalse,
+            stream_url__istrue=stream_url__istrue,
             stream_url__like=stream_url__like,
-            stream_url__nl=stream_url__nl,
-            stream_url__nlike=stream_url__nlike,
             stream_url__notlike=stream_url__notlike,
-            stream_url__il=stream_url__il,
             stream_url__ilike=stream_url__ilike,
-            stream_url__nil=stream_url__nil,
-            stream_url__nilike=stream_url__nilike,
             stream_url__notilike=stream_url__notilike,
             stream_url__desc=stream_url__desc,
             stream_url__asc=stream_url__asc,
@@ -2376,20 +1962,14 @@ class CameraApi:
             last_seen__lt=last_seen__lt,
             last_seen__lte=last_seen__lte,
             last_seen__in=last_seen__in,
-            last_seen__nin=last_seen__nin,
             last_seen__notin=last_seen__notin,
             last_seen__isnull=last_seen__isnull,
-            last_seen__nisnull=last_seen__nisnull,
             last_seen__isnotnull=last_seen__isnotnull,
-            last_seen__l=last_seen__l,
+            last_seen__isfalse=last_seen__isfalse,
+            last_seen__istrue=last_seen__istrue,
             last_seen__like=last_seen__like,
-            last_seen__nl=last_seen__nl,
-            last_seen__nlike=last_seen__nlike,
             last_seen__notlike=last_seen__notlike,
-            last_seen__il=last_seen__il,
             last_seen__ilike=last_seen__ilike,
-            last_seen__nil=last_seen__nil,
-            last_seen__nilike=last_seen__nilike,
             last_seen__notilike=last_seen__notilike,
             last_seen__desc=last_seen__desc,
             last_seen__asc=last_seen__asc,
@@ -2400,20 +1980,14 @@ class CameraApi:
             segment_producer_claimed_until__lt=segment_producer_claimed_until__lt,
             segment_producer_claimed_until__lte=segment_producer_claimed_until__lte,
             segment_producer_claimed_until__in=segment_producer_claimed_until__in,
-            segment_producer_claimed_until__nin=segment_producer_claimed_until__nin,
             segment_producer_claimed_until__notin=segment_producer_claimed_until__notin,
             segment_producer_claimed_until__isnull=segment_producer_claimed_until__isnull,
-            segment_producer_claimed_until__nisnull=segment_producer_claimed_until__nisnull,
             segment_producer_claimed_until__isnotnull=segment_producer_claimed_until__isnotnull,
-            segment_producer_claimed_until__l=segment_producer_claimed_until__l,
+            segment_producer_claimed_until__isfalse=segment_producer_claimed_until__isfalse,
+            segment_producer_claimed_until__istrue=segment_producer_claimed_until__istrue,
             segment_producer_claimed_until__like=segment_producer_claimed_until__like,
-            segment_producer_claimed_until__nl=segment_producer_claimed_until__nl,
-            segment_producer_claimed_until__nlike=segment_producer_claimed_until__nlike,
             segment_producer_claimed_until__notlike=segment_producer_claimed_until__notlike,
-            segment_producer_claimed_until__il=segment_producer_claimed_until__il,
             segment_producer_claimed_until__ilike=segment_producer_claimed_until__ilike,
-            segment_producer_claimed_until__nil=segment_producer_claimed_until__nil,
-            segment_producer_claimed_until__nilike=segment_producer_claimed_until__nilike,
             segment_producer_claimed_until__notilike=segment_producer_claimed_until__notilike,
             segment_producer_claimed_until__desc=segment_producer_claimed_until__desc,
             segment_producer_claimed_until__asc=segment_producer_claimed_until__asc,
@@ -2424,20 +1998,14 @@ class CameraApi:
             stream_producer_claimed_until__lt=stream_producer_claimed_until__lt,
             stream_producer_claimed_until__lte=stream_producer_claimed_until__lte,
             stream_producer_claimed_until__in=stream_producer_claimed_until__in,
-            stream_producer_claimed_until__nin=stream_producer_claimed_until__nin,
             stream_producer_claimed_until__notin=stream_producer_claimed_until__notin,
             stream_producer_claimed_until__isnull=stream_producer_claimed_until__isnull,
-            stream_producer_claimed_until__nisnull=stream_producer_claimed_until__nisnull,
             stream_producer_claimed_until__isnotnull=stream_producer_claimed_until__isnotnull,
-            stream_producer_claimed_until__l=stream_producer_claimed_until__l,
+            stream_producer_claimed_until__isfalse=stream_producer_claimed_until__isfalse,
+            stream_producer_claimed_until__istrue=stream_producer_claimed_until__istrue,
             stream_producer_claimed_until__like=stream_producer_claimed_until__like,
-            stream_producer_claimed_until__nl=stream_producer_claimed_until__nl,
-            stream_producer_claimed_until__nlike=stream_producer_claimed_until__nlike,
             stream_producer_claimed_until__notlike=stream_producer_claimed_until__notlike,
-            stream_producer_claimed_until__il=stream_producer_claimed_until__il,
             stream_producer_claimed_until__ilike=stream_producer_claimed_until__ilike,
-            stream_producer_claimed_until__nil=stream_producer_claimed_until__nil,
-            stream_producer_claimed_until__nilike=stream_producer_claimed_until__nilike,
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
@@ -2467,222 +2035,168 @@ class CameraApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        id__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        id__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        created_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        updated_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        deleted_at__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        name__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        name__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        name__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        name__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        name__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        name__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        name__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = operator")] = None,
-        stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != operator")] = None,
-        stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > operator, may not work with all column types")] = None,
-        stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= operator, may not work with all column types")] = None,
-        stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < operator, may not work with all column types")] = None,
-        stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= operator, may not work with all column types")] = None,
-        stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        stream_url__nin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_url__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        last_seen__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        last_seen__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        last_seen__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        last_seen__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        last_seen__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        last_seen__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        last_seen__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        last_seen__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        last_seen__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = operator")] = None,
-        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != operator")] = None,
-        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= operator, may not work with all column types")] = None,
-        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__nin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN operator, permits comma-separated values")] = None,
-        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__nisnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__l: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nl: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__il: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nil: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__nilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %")] = None,
-        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)")] = None,
-        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)")] = None,
+        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        name__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        name__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        stream_url__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        last_seen__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        last_seen__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        last_seen__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        last_seen__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        last_seen__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        last_seen__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        last_seen__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        last_seen__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        last_seen__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        last_seen__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        segment_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        segment_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        segment_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        segment_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        segment_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        segment_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        segment_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        stream_producer_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        stream_producer_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        stream_producer_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        stream_producer_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        stream_producer_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2705,437 +2219,329 @@ class CameraApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
-        :param id__eq: SQL = operator
+        :param id__eq: SQL = comparison
         :type id__eq: str
-        :param id__ne: SQL != operator
+        :param id__ne: SQL != comparison
         :type id__ne: str
-        :param id__gt: SQL > operator, may not work with all column types
+        :param id__gt: SQL > comparison, may not work with all column types
         :type id__gt: str
-        :param id__gte: SQL >= operator, may not work with all column types
+        :param id__gte: SQL >= comparison, may not work with all column types
         :type id__gte: str
-        :param id__lt: SQL < operator, may not work with all column types
+        :param id__lt: SQL < comparison, may not work with all column types
         :type id__lt: str
-        :param id__lte: SQL <= operator, may not work with all column types
+        :param id__lte: SQL <= comparison, may not work with all column types
         :type id__lte: str
-        :param id__in: SQL IN operator, permits comma-separated values
+        :param id__in: SQL IN comparison, permits comma-separated values
         :type id__in: str
-        :param id__nin: SQL NOT IN operator, permits comma-separated values
-        :type id__nin: str
-        :param id__notin: SQL NOT IN operator, permits comma-separated values
+        :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type id__isnull: str
-        :param id__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type id__nisnull: str
-        :param id__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type id__isnotnull: str
-        :param id__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__l: str
-        :param id__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type id__isfalse: str
+        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type id__istrue: str
+        :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
-        :param id__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nl: str
-        :param id__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nlike: str
-        :param id__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__notlike: str
-        :param id__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__il: str
-        :param id__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__ilike: str
-        :param id__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nil: str
-        :param id__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type id__nilike: str
-        :param id__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__notilike: str
-        :param id__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type id__desc: str
-        :param id__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type id__asc: str
-        :param created_at__eq: SQL = operator
+        :param created_at__eq: SQL = comparison
         :type created_at__eq: datetime
-        :param created_at__ne: SQL != operator
+        :param created_at__ne: SQL != comparison
         :type created_at__ne: datetime
-        :param created_at__gt: SQL > operator, may not work with all column types
+        :param created_at__gt: SQL > comparison, may not work with all column types
         :type created_at__gt: datetime
-        :param created_at__gte: SQL >= operator, may not work with all column types
+        :param created_at__gte: SQL >= comparison, may not work with all column types
         :type created_at__gte: datetime
-        :param created_at__lt: SQL < operator, may not work with all column types
+        :param created_at__lt: SQL < comparison, may not work with all column types
         :type created_at__lt: datetime
-        :param created_at__lte: SQL <= operator, may not work with all column types
+        :param created_at__lte: SQL <= comparison, may not work with all column types
         :type created_at__lte: datetime
-        :param created_at__in: SQL IN operator, permits comma-separated values
+        :param created_at__in: SQL IN comparison, permits comma-separated values
         :type created_at__in: datetime
-        :param created_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type created_at__nin: datetime
-        :param created_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type created_at__isnull: str
-        :param created_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type created_at__nisnull: str
-        :param created_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type created_at__isnotnull: str
-        :param created_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__l: str
-        :param created_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type created_at__isfalse: str
+        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type created_at__istrue: str
+        :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__like: str
-        :param created_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nl: str
-        :param created_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nlike: str
-        :param created_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__notlike: str
-        :param created_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__il: str
-        :param created_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__ilike: str
-        :param created_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nil: str
-        :param created_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type created_at__nilike: str
-        :param created_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type created_at__notilike: str
-        :param created_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
-        :param created_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type created_at__asc: str
-        :param updated_at__eq: SQL = operator
+        :param updated_at__eq: SQL = comparison
         :type updated_at__eq: datetime
-        :param updated_at__ne: SQL != operator
+        :param updated_at__ne: SQL != comparison
         :type updated_at__ne: datetime
-        :param updated_at__gt: SQL > operator, may not work with all column types
+        :param updated_at__gt: SQL > comparison, may not work with all column types
         :type updated_at__gt: datetime
-        :param updated_at__gte: SQL >= operator, may not work with all column types
+        :param updated_at__gte: SQL >= comparison, may not work with all column types
         :type updated_at__gte: datetime
-        :param updated_at__lt: SQL < operator, may not work with all column types
+        :param updated_at__lt: SQL < comparison, may not work with all column types
         :type updated_at__lt: datetime
-        :param updated_at__lte: SQL <= operator, may not work with all column types
+        :param updated_at__lte: SQL <= comparison, may not work with all column types
         :type updated_at__lte: datetime
-        :param updated_at__in: SQL IN operator, permits comma-separated values
+        :param updated_at__in: SQL IN comparison, permits comma-separated values
         :type updated_at__in: datetime
-        :param updated_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type updated_at__nin: datetime
-        :param updated_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type updated_at__isnull: str
-        :param updated_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type updated_at__nisnull: str
-        :param updated_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type updated_at__isnotnull: str
-        :param updated_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__l: str
-        :param updated_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type updated_at__isfalse: str
+        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type updated_at__istrue: str
+        :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__like: str
-        :param updated_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nl: str
-        :param updated_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nlike: str
-        :param updated_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__notlike: str
-        :param updated_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__il: str
-        :param updated_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__ilike: str
-        :param updated_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nil: str
-        :param updated_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type updated_at__nilike: str
-        :param updated_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type updated_at__notilike: str
-        :param updated_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
-        :param updated_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type updated_at__asc: str
-        :param deleted_at__eq: SQL = operator
+        :param deleted_at__eq: SQL = comparison
         :type deleted_at__eq: datetime
-        :param deleted_at__ne: SQL != operator
+        :param deleted_at__ne: SQL != comparison
         :type deleted_at__ne: datetime
-        :param deleted_at__gt: SQL > operator, may not work with all column types
+        :param deleted_at__gt: SQL > comparison, may not work with all column types
         :type deleted_at__gt: datetime
-        :param deleted_at__gte: SQL >= operator, may not work with all column types
+        :param deleted_at__gte: SQL >= comparison, may not work with all column types
         :type deleted_at__gte: datetime
-        :param deleted_at__lt: SQL < operator, may not work with all column types
+        :param deleted_at__lt: SQL < comparison, may not work with all column types
         :type deleted_at__lt: datetime
-        :param deleted_at__lte: SQL <= operator, may not work with all column types
+        :param deleted_at__lte: SQL <= comparison, may not work with all column types
         :type deleted_at__lte: datetime
-        :param deleted_at__in: SQL IN operator, permits comma-separated values
+        :param deleted_at__in: SQL IN comparison, permits comma-separated values
         :type deleted_at__in: datetime
-        :param deleted_at__nin: SQL NOT IN operator, permits comma-separated values
-        :type deleted_at__nin: datetime
-        :param deleted_at__notin: SQL NOT IN operator, permits comma-separated values
+        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type deleted_at__isnull: str
-        :param deleted_at__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type deleted_at__nisnull: str
-        :param deleted_at__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type deleted_at__isnotnull: str
-        :param deleted_at__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__l: str
-        :param deleted_at__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isfalse: str
+        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__istrue: str
+        :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__like: str
-        :param deleted_at__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nl: str
-        :param deleted_at__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nlike: str
-        :param deleted_at__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__notlike: str
-        :param deleted_at__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__il: str
-        :param deleted_at__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__ilike: str
-        :param deleted_at__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nil: str
-        :param deleted_at__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type deleted_at__nilike: str
-        :param deleted_at__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type deleted_at__notilike: str
-        :param deleted_at__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
-        :param deleted_at__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__asc: str
-        :param name__eq: SQL = operator
+        :param name__eq: SQL = comparison
         :type name__eq: str
-        :param name__ne: SQL != operator
+        :param name__ne: SQL != comparison
         :type name__ne: str
-        :param name__gt: SQL > operator, may not work with all column types
+        :param name__gt: SQL > comparison, may not work with all column types
         :type name__gt: str
-        :param name__gte: SQL >= operator, may not work with all column types
+        :param name__gte: SQL >= comparison, may not work with all column types
         :type name__gte: str
-        :param name__lt: SQL < operator, may not work with all column types
+        :param name__lt: SQL < comparison, may not work with all column types
         :type name__lt: str
-        :param name__lte: SQL <= operator, may not work with all column types
+        :param name__lte: SQL <= comparison, may not work with all column types
         :type name__lte: str
-        :param name__in: SQL IN operator, permits comma-separated values
+        :param name__in: SQL IN comparison, permits comma-separated values
         :type name__in: str
-        :param name__nin: SQL NOT IN operator, permits comma-separated values
-        :type name__nin: str
-        :param name__notin: SQL NOT IN operator, permits comma-separated values
+        :param name__notin: SQL NOT IN comparison, permits comma-separated values
         :type name__notin: str
-        :param name__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type name__isnull: str
-        :param name__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type name__nisnull: str
-        :param name__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type name__isnotnull: str
-        :param name__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__l: str
-        :param name__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type name__isfalse: str
+        :param name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type name__istrue: str
+        :param name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__like: str
-        :param name__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nl: str
-        :param name__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nlike: str
-        :param name__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__notlike: str
-        :param name__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__il: str
-        :param name__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__ilike: str
-        :param name__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nil: str
-        :param name__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type name__nilike: str
-        :param name__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type name__notilike: str
-        :param name__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type name__desc: str
-        :param name__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type name__asc: str
-        :param stream_url__eq: SQL = operator
+        :param stream_url__eq: SQL = comparison
         :type stream_url__eq: str
-        :param stream_url__ne: SQL != operator
+        :param stream_url__ne: SQL != comparison
         :type stream_url__ne: str
-        :param stream_url__gt: SQL > operator, may not work with all column types
+        :param stream_url__gt: SQL > comparison, may not work with all column types
         :type stream_url__gt: str
-        :param stream_url__gte: SQL >= operator, may not work with all column types
+        :param stream_url__gte: SQL >= comparison, may not work with all column types
         :type stream_url__gte: str
-        :param stream_url__lt: SQL < operator, may not work with all column types
+        :param stream_url__lt: SQL < comparison, may not work with all column types
         :type stream_url__lt: str
-        :param stream_url__lte: SQL <= operator, may not work with all column types
+        :param stream_url__lte: SQL <= comparison, may not work with all column types
         :type stream_url__lte: str
-        :param stream_url__in: SQL IN operator, permits comma-separated values
+        :param stream_url__in: SQL IN comparison, permits comma-separated values
         :type stream_url__in: str
-        :param stream_url__nin: SQL NOT IN operator, permits comma-separated values
-        :type stream_url__nin: str
-        :param stream_url__notin: SQL NOT IN operator, permits comma-separated values
+        :param stream_url__notin: SQL NOT IN comparison, permits comma-separated values
         :type stream_url__notin: str
-        :param stream_url__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_url__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type stream_url__isnull: str
-        :param stream_url__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type stream_url__nisnull: str
-        :param stream_url__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_url__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type stream_url__isnotnull: str
-        :param stream_url__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__l: str
-        :param stream_url__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type stream_url__isfalse: str
+        :param stream_url__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type stream_url__istrue: str
+        :param stream_url__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__like: str
-        :param stream_url__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nl: str
-        :param stream_url__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nlike: str
-        :param stream_url__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__notlike: str
-        :param stream_url__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__il: str
-        :param stream_url__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__ilike: str
-        :param stream_url__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nil: str
-        :param stream_url__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_url__nilike: str
-        :param stream_url__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_url__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_url__notilike: str
-        :param stream_url__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param stream_url__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type stream_url__desc: str
-        :param stream_url__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param stream_url__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_url__asc: str
-        :param last_seen__eq: SQL = operator
+        :param last_seen__eq: SQL = comparison
         :type last_seen__eq: datetime
-        :param last_seen__ne: SQL != operator
+        :param last_seen__ne: SQL != comparison
         :type last_seen__ne: datetime
-        :param last_seen__gt: SQL > operator, may not work with all column types
+        :param last_seen__gt: SQL > comparison, may not work with all column types
         :type last_seen__gt: datetime
-        :param last_seen__gte: SQL >= operator, may not work with all column types
+        :param last_seen__gte: SQL >= comparison, may not work with all column types
         :type last_seen__gte: datetime
-        :param last_seen__lt: SQL < operator, may not work with all column types
+        :param last_seen__lt: SQL < comparison, may not work with all column types
         :type last_seen__lt: datetime
-        :param last_seen__lte: SQL <= operator, may not work with all column types
+        :param last_seen__lte: SQL <= comparison, may not work with all column types
         :type last_seen__lte: datetime
-        :param last_seen__in: SQL IN operator, permits comma-separated values
+        :param last_seen__in: SQL IN comparison, permits comma-separated values
         :type last_seen__in: datetime
-        :param last_seen__nin: SQL NOT IN operator, permits comma-separated values
-        :type last_seen__nin: datetime
-        :param last_seen__notin: SQL NOT IN operator, permits comma-separated values
+        :param last_seen__notin: SQL NOT IN comparison, permits comma-separated values
         :type last_seen__notin: datetime
-        :param last_seen__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param last_seen__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type last_seen__isnull: str
-        :param last_seen__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type last_seen__nisnull: str
-        :param last_seen__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param last_seen__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type last_seen__isnotnull: str
-        :param last_seen__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__l: str
-        :param last_seen__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type last_seen__isfalse: str
+        :param last_seen__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type last_seen__istrue: str
+        :param last_seen__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__like: str
-        :param last_seen__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nl: str
-        :param last_seen__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nlike: str
-        :param last_seen__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__notlike: str
-        :param last_seen__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__il: str
-        :param last_seen__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__ilike: str
-        :param last_seen__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nil: str
-        :param last_seen__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type last_seen__nilike: str
-        :param last_seen__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param last_seen__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type last_seen__notilike: str
-        :param last_seen__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param last_seen__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type last_seen__desc: str
-        :param last_seen__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param last_seen__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type last_seen__asc: str
-        :param segment_producer_claimed_until__eq: SQL = operator
+        :param segment_producer_claimed_until__eq: SQL = comparison
         :type segment_producer_claimed_until__eq: datetime
-        :param segment_producer_claimed_until__ne: SQL != operator
+        :param segment_producer_claimed_until__ne: SQL != comparison
         :type segment_producer_claimed_until__ne: datetime
-        :param segment_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :param segment_producer_claimed_until__gt: SQL > comparison, may not work with all column types
         :type segment_producer_claimed_until__gt: datetime
-        :param segment_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :param segment_producer_claimed_until__gte: SQL >= comparison, may not work with all column types
         :type segment_producer_claimed_until__gte: datetime
-        :param segment_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :param segment_producer_claimed_until__lt: SQL < comparison, may not work with all column types
         :type segment_producer_claimed_until__lt: datetime
-        :param segment_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :param segment_producer_claimed_until__lte: SQL <= comparison, may not work with all column types
         :type segment_producer_claimed_until__lte: datetime
-        :param segment_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :param segment_producer_claimed_until__in: SQL IN comparison, permits comma-separated values
         :type segment_producer_claimed_until__in: datetime
-        :param segment_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
-        :type segment_producer_claimed_until__nin: datetime
-        :param segment_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :param segment_producer_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type segment_producer_claimed_until__notin: datetime
-        :param segment_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__isnull: str
-        :param segment_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type segment_producer_claimed_until__nisnull: str
-        :param segment_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__isnotnull: str
-        :param segment_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__l: str
-        :param segment_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__isfalse: str
+        :param segment_producer_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type segment_producer_claimed_until__istrue: str
+        :param segment_producer_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__like: str
-        :param segment_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nl: str
-        :param segment_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nlike: str
-        :param segment_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__notlike: str
-        :param segment_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__il: str
-        :param segment_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__ilike: str
-        :param segment_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nil: str
-        :param segment_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type segment_producer_claimed_until__nilike: str
-        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param segment_producer_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type segment_producer_claimed_until__notilike: str
-        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__desc: str
-        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param segment_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type segment_producer_claimed_until__asc: str
-        :param stream_producer_claimed_until__eq: SQL = operator
+        :param stream_producer_claimed_until__eq: SQL = comparison
         :type stream_producer_claimed_until__eq: datetime
-        :param stream_producer_claimed_until__ne: SQL != operator
+        :param stream_producer_claimed_until__ne: SQL != comparison
         :type stream_producer_claimed_until__ne: datetime
-        :param stream_producer_claimed_until__gt: SQL > operator, may not work with all column types
+        :param stream_producer_claimed_until__gt: SQL > comparison, may not work with all column types
         :type stream_producer_claimed_until__gt: datetime
-        :param stream_producer_claimed_until__gte: SQL >= operator, may not work with all column types
+        :param stream_producer_claimed_until__gte: SQL >= comparison, may not work with all column types
         :type stream_producer_claimed_until__gte: datetime
-        :param stream_producer_claimed_until__lt: SQL < operator, may not work with all column types
+        :param stream_producer_claimed_until__lt: SQL < comparison, may not work with all column types
         :type stream_producer_claimed_until__lt: datetime
-        :param stream_producer_claimed_until__lte: SQL <= operator, may not work with all column types
+        :param stream_producer_claimed_until__lte: SQL <= comparison, may not work with all column types
         :type stream_producer_claimed_until__lte: datetime
-        :param stream_producer_claimed_until__in: SQL IN operator, permits comma-separated values
+        :param stream_producer_claimed_until__in: SQL IN comparison, permits comma-separated values
         :type stream_producer_claimed_until__in: datetime
-        :param stream_producer_claimed_until__nin: SQL NOT IN operator, permits comma-separated values
-        :type stream_producer_claimed_until__nin: datetime
-        :param stream_producer_claimed_until__notin: SQL NOT IN operator, permits comma-separated values
+        :param stream_producer_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type stream_producer_claimed_until__notin: datetime
-        :param stream_producer_claimed_until__isnull: SQL IS NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__isnull: str
-        :param stream_producer_claimed_until__nisnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
-        :type stream_producer_claimed_until__nisnull: str
-        :param stream_producer_claimed_until__isnotnull: SQL IS NOT NULL operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__isnotnull: str
-        :param stream_producer_claimed_until__l: SQL LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__l: str
-        :param stream_producer_claimed_until__like: SQL LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__isfalse: str
+        :param stream_producer_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type stream_producer_claimed_until__istrue: str
+        :param stream_producer_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__like: str
-        :param stream_producer_claimed_until__nl: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nl: str
-        :param stream_producer_claimed_until__nlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nlike: str
-        :param stream_producer_claimed_until__notlike: SQL NOT LIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__notlike: str
-        :param stream_producer_claimed_until__il: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__il: str
-        :param stream_producer_claimed_until__ilike: SQL ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__ilike: str
-        :param stream_producer_claimed_until__nil: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nil: str
-        :param stream_producer_claimed_until__nilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
-        :type stream_producer_claimed_until__nilike: str
-        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE operator, value is implicitly prefixed and suffixed with %
+        :param stream_producer_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
         :type stream_producer_claimed_until__notilike: str
-        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__desc: str
-        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC operator, value is ignored (presence of key is sufficient)
+        :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -3170,20 +2576,14 @@ class CameraApi:
             id__lt=id__lt,
             id__lte=id__lte,
             id__in=id__in,
-            id__nin=id__nin,
             id__notin=id__notin,
             id__isnull=id__isnull,
-            id__nisnull=id__nisnull,
             id__isnotnull=id__isnotnull,
-            id__l=id__l,
+            id__isfalse=id__isfalse,
+            id__istrue=id__istrue,
             id__like=id__like,
-            id__nl=id__nl,
-            id__nlike=id__nlike,
             id__notlike=id__notlike,
-            id__il=id__il,
             id__ilike=id__ilike,
-            id__nil=id__nil,
-            id__nilike=id__nilike,
             id__notilike=id__notilike,
             id__desc=id__desc,
             id__asc=id__asc,
@@ -3194,20 +2594,14 @@ class CameraApi:
             created_at__lt=created_at__lt,
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
-            created_at__nin=created_at__nin,
             created_at__notin=created_at__notin,
             created_at__isnull=created_at__isnull,
-            created_at__nisnull=created_at__nisnull,
             created_at__isnotnull=created_at__isnotnull,
-            created_at__l=created_at__l,
+            created_at__isfalse=created_at__isfalse,
+            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
-            created_at__nl=created_at__nl,
-            created_at__nlike=created_at__nlike,
             created_at__notlike=created_at__notlike,
-            created_at__il=created_at__il,
             created_at__ilike=created_at__ilike,
-            created_at__nil=created_at__nil,
-            created_at__nilike=created_at__nilike,
             created_at__notilike=created_at__notilike,
             created_at__desc=created_at__desc,
             created_at__asc=created_at__asc,
@@ -3218,20 +2612,14 @@ class CameraApi:
             updated_at__lt=updated_at__lt,
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
-            updated_at__nin=updated_at__nin,
             updated_at__notin=updated_at__notin,
             updated_at__isnull=updated_at__isnull,
-            updated_at__nisnull=updated_at__nisnull,
             updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__l=updated_at__l,
+            updated_at__isfalse=updated_at__isfalse,
+            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
-            updated_at__nl=updated_at__nl,
-            updated_at__nlike=updated_at__nlike,
             updated_at__notlike=updated_at__notlike,
-            updated_at__il=updated_at__il,
             updated_at__ilike=updated_at__ilike,
-            updated_at__nil=updated_at__nil,
-            updated_at__nilike=updated_at__nilike,
             updated_at__notilike=updated_at__notilike,
             updated_at__desc=updated_at__desc,
             updated_at__asc=updated_at__asc,
@@ -3242,20 +2630,14 @@ class CameraApi:
             deleted_at__lt=deleted_at__lt,
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
-            deleted_at__nin=deleted_at__nin,
             deleted_at__notin=deleted_at__notin,
             deleted_at__isnull=deleted_at__isnull,
-            deleted_at__nisnull=deleted_at__nisnull,
             deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__l=deleted_at__l,
+            deleted_at__isfalse=deleted_at__isfalse,
+            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
-            deleted_at__nl=deleted_at__nl,
-            deleted_at__nlike=deleted_at__nlike,
             deleted_at__notlike=deleted_at__notlike,
-            deleted_at__il=deleted_at__il,
             deleted_at__ilike=deleted_at__ilike,
-            deleted_at__nil=deleted_at__nil,
-            deleted_at__nilike=deleted_at__nilike,
             deleted_at__notilike=deleted_at__notilike,
             deleted_at__desc=deleted_at__desc,
             deleted_at__asc=deleted_at__asc,
@@ -3266,20 +2648,14 @@ class CameraApi:
             name__lt=name__lt,
             name__lte=name__lte,
             name__in=name__in,
-            name__nin=name__nin,
             name__notin=name__notin,
             name__isnull=name__isnull,
-            name__nisnull=name__nisnull,
             name__isnotnull=name__isnotnull,
-            name__l=name__l,
+            name__isfalse=name__isfalse,
+            name__istrue=name__istrue,
             name__like=name__like,
-            name__nl=name__nl,
-            name__nlike=name__nlike,
             name__notlike=name__notlike,
-            name__il=name__il,
             name__ilike=name__ilike,
-            name__nil=name__nil,
-            name__nilike=name__nilike,
             name__notilike=name__notilike,
             name__desc=name__desc,
             name__asc=name__asc,
@@ -3290,20 +2666,14 @@ class CameraApi:
             stream_url__lt=stream_url__lt,
             stream_url__lte=stream_url__lte,
             stream_url__in=stream_url__in,
-            stream_url__nin=stream_url__nin,
             stream_url__notin=stream_url__notin,
             stream_url__isnull=stream_url__isnull,
-            stream_url__nisnull=stream_url__nisnull,
             stream_url__isnotnull=stream_url__isnotnull,
-            stream_url__l=stream_url__l,
+            stream_url__isfalse=stream_url__isfalse,
+            stream_url__istrue=stream_url__istrue,
             stream_url__like=stream_url__like,
-            stream_url__nl=stream_url__nl,
-            stream_url__nlike=stream_url__nlike,
             stream_url__notlike=stream_url__notlike,
-            stream_url__il=stream_url__il,
             stream_url__ilike=stream_url__ilike,
-            stream_url__nil=stream_url__nil,
-            stream_url__nilike=stream_url__nilike,
             stream_url__notilike=stream_url__notilike,
             stream_url__desc=stream_url__desc,
             stream_url__asc=stream_url__asc,
@@ -3314,20 +2684,14 @@ class CameraApi:
             last_seen__lt=last_seen__lt,
             last_seen__lte=last_seen__lte,
             last_seen__in=last_seen__in,
-            last_seen__nin=last_seen__nin,
             last_seen__notin=last_seen__notin,
             last_seen__isnull=last_seen__isnull,
-            last_seen__nisnull=last_seen__nisnull,
             last_seen__isnotnull=last_seen__isnotnull,
-            last_seen__l=last_seen__l,
+            last_seen__isfalse=last_seen__isfalse,
+            last_seen__istrue=last_seen__istrue,
             last_seen__like=last_seen__like,
-            last_seen__nl=last_seen__nl,
-            last_seen__nlike=last_seen__nlike,
             last_seen__notlike=last_seen__notlike,
-            last_seen__il=last_seen__il,
             last_seen__ilike=last_seen__ilike,
-            last_seen__nil=last_seen__nil,
-            last_seen__nilike=last_seen__nilike,
             last_seen__notilike=last_seen__notilike,
             last_seen__desc=last_seen__desc,
             last_seen__asc=last_seen__asc,
@@ -3338,20 +2702,14 @@ class CameraApi:
             segment_producer_claimed_until__lt=segment_producer_claimed_until__lt,
             segment_producer_claimed_until__lte=segment_producer_claimed_until__lte,
             segment_producer_claimed_until__in=segment_producer_claimed_until__in,
-            segment_producer_claimed_until__nin=segment_producer_claimed_until__nin,
             segment_producer_claimed_until__notin=segment_producer_claimed_until__notin,
             segment_producer_claimed_until__isnull=segment_producer_claimed_until__isnull,
-            segment_producer_claimed_until__nisnull=segment_producer_claimed_until__nisnull,
             segment_producer_claimed_until__isnotnull=segment_producer_claimed_until__isnotnull,
-            segment_producer_claimed_until__l=segment_producer_claimed_until__l,
+            segment_producer_claimed_until__isfalse=segment_producer_claimed_until__isfalse,
+            segment_producer_claimed_until__istrue=segment_producer_claimed_until__istrue,
             segment_producer_claimed_until__like=segment_producer_claimed_until__like,
-            segment_producer_claimed_until__nl=segment_producer_claimed_until__nl,
-            segment_producer_claimed_until__nlike=segment_producer_claimed_until__nlike,
             segment_producer_claimed_until__notlike=segment_producer_claimed_until__notlike,
-            segment_producer_claimed_until__il=segment_producer_claimed_until__il,
             segment_producer_claimed_until__ilike=segment_producer_claimed_until__ilike,
-            segment_producer_claimed_until__nil=segment_producer_claimed_until__nil,
-            segment_producer_claimed_until__nilike=segment_producer_claimed_until__nilike,
             segment_producer_claimed_until__notilike=segment_producer_claimed_until__notilike,
             segment_producer_claimed_until__desc=segment_producer_claimed_until__desc,
             segment_producer_claimed_until__asc=segment_producer_claimed_until__asc,
@@ -3362,20 +2720,14 @@ class CameraApi:
             stream_producer_claimed_until__lt=stream_producer_claimed_until__lt,
             stream_producer_claimed_until__lte=stream_producer_claimed_until__lte,
             stream_producer_claimed_until__in=stream_producer_claimed_until__in,
-            stream_producer_claimed_until__nin=stream_producer_claimed_until__nin,
             stream_producer_claimed_until__notin=stream_producer_claimed_until__notin,
             stream_producer_claimed_until__isnull=stream_producer_claimed_until__isnull,
-            stream_producer_claimed_until__nisnull=stream_producer_claimed_until__nisnull,
             stream_producer_claimed_until__isnotnull=stream_producer_claimed_until__isnotnull,
-            stream_producer_claimed_until__l=stream_producer_claimed_until__l,
+            stream_producer_claimed_until__isfalse=stream_producer_claimed_until__isfalse,
+            stream_producer_claimed_until__istrue=stream_producer_claimed_until__istrue,
             stream_producer_claimed_until__like=stream_producer_claimed_until__like,
-            stream_producer_claimed_until__nl=stream_producer_claimed_until__nl,
-            stream_producer_claimed_until__nlike=stream_producer_claimed_until__nlike,
             stream_producer_claimed_until__notlike=stream_producer_claimed_until__notlike,
-            stream_producer_claimed_until__il=stream_producer_claimed_until__il,
             stream_producer_claimed_until__ilike=stream_producer_claimed_until__ilike,
-            stream_producer_claimed_until__nil=stream_producer_claimed_until__nil,
-            stream_producer_claimed_until__nilike=stream_producer_claimed_until__nilike,
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
@@ -3407,20 +2759,14 @@ class CameraApi:
         id__lt,
         id__lte,
         id__in,
-        id__nin,
         id__notin,
         id__isnull,
-        id__nisnull,
         id__isnotnull,
-        id__l,
+        id__isfalse,
+        id__istrue,
         id__like,
-        id__nl,
-        id__nlike,
         id__notlike,
-        id__il,
         id__ilike,
-        id__nil,
-        id__nilike,
         id__notilike,
         id__desc,
         id__asc,
@@ -3431,20 +2777,14 @@ class CameraApi:
         created_at__lt,
         created_at__lte,
         created_at__in,
-        created_at__nin,
         created_at__notin,
         created_at__isnull,
-        created_at__nisnull,
         created_at__isnotnull,
-        created_at__l,
+        created_at__isfalse,
+        created_at__istrue,
         created_at__like,
-        created_at__nl,
-        created_at__nlike,
         created_at__notlike,
-        created_at__il,
         created_at__ilike,
-        created_at__nil,
-        created_at__nilike,
         created_at__notilike,
         created_at__desc,
         created_at__asc,
@@ -3455,20 +2795,14 @@ class CameraApi:
         updated_at__lt,
         updated_at__lte,
         updated_at__in,
-        updated_at__nin,
         updated_at__notin,
         updated_at__isnull,
-        updated_at__nisnull,
         updated_at__isnotnull,
-        updated_at__l,
+        updated_at__isfalse,
+        updated_at__istrue,
         updated_at__like,
-        updated_at__nl,
-        updated_at__nlike,
         updated_at__notlike,
-        updated_at__il,
         updated_at__ilike,
-        updated_at__nil,
-        updated_at__nilike,
         updated_at__notilike,
         updated_at__desc,
         updated_at__asc,
@@ -3479,20 +2813,14 @@ class CameraApi:
         deleted_at__lt,
         deleted_at__lte,
         deleted_at__in,
-        deleted_at__nin,
         deleted_at__notin,
         deleted_at__isnull,
-        deleted_at__nisnull,
         deleted_at__isnotnull,
-        deleted_at__l,
+        deleted_at__isfalse,
+        deleted_at__istrue,
         deleted_at__like,
-        deleted_at__nl,
-        deleted_at__nlike,
         deleted_at__notlike,
-        deleted_at__il,
         deleted_at__ilike,
-        deleted_at__nil,
-        deleted_at__nilike,
         deleted_at__notilike,
         deleted_at__desc,
         deleted_at__asc,
@@ -3503,20 +2831,14 @@ class CameraApi:
         name__lt,
         name__lte,
         name__in,
-        name__nin,
         name__notin,
         name__isnull,
-        name__nisnull,
         name__isnotnull,
-        name__l,
+        name__isfalse,
+        name__istrue,
         name__like,
-        name__nl,
-        name__nlike,
         name__notlike,
-        name__il,
         name__ilike,
-        name__nil,
-        name__nilike,
         name__notilike,
         name__desc,
         name__asc,
@@ -3527,20 +2849,14 @@ class CameraApi:
         stream_url__lt,
         stream_url__lte,
         stream_url__in,
-        stream_url__nin,
         stream_url__notin,
         stream_url__isnull,
-        stream_url__nisnull,
         stream_url__isnotnull,
-        stream_url__l,
+        stream_url__isfalse,
+        stream_url__istrue,
         stream_url__like,
-        stream_url__nl,
-        stream_url__nlike,
         stream_url__notlike,
-        stream_url__il,
         stream_url__ilike,
-        stream_url__nil,
-        stream_url__nilike,
         stream_url__notilike,
         stream_url__desc,
         stream_url__asc,
@@ -3551,20 +2867,14 @@ class CameraApi:
         last_seen__lt,
         last_seen__lte,
         last_seen__in,
-        last_seen__nin,
         last_seen__notin,
         last_seen__isnull,
-        last_seen__nisnull,
         last_seen__isnotnull,
-        last_seen__l,
+        last_seen__isfalse,
+        last_seen__istrue,
         last_seen__like,
-        last_seen__nl,
-        last_seen__nlike,
         last_seen__notlike,
-        last_seen__il,
         last_seen__ilike,
-        last_seen__nil,
-        last_seen__nilike,
         last_seen__notilike,
         last_seen__desc,
         last_seen__asc,
@@ -3575,20 +2885,14 @@ class CameraApi:
         segment_producer_claimed_until__lt,
         segment_producer_claimed_until__lte,
         segment_producer_claimed_until__in,
-        segment_producer_claimed_until__nin,
         segment_producer_claimed_until__notin,
         segment_producer_claimed_until__isnull,
-        segment_producer_claimed_until__nisnull,
         segment_producer_claimed_until__isnotnull,
-        segment_producer_claimed_until__l,
+        segment_producer_claimed_until__isfalse,
+        segment_producer_claimed_until__istrue,
         segment_producer_claimed_until__like,
-        segment_producer_claimed_until__nl,
-        segment_producer_claimed_until__nlike,
         segment_producer_claimed_until__notlike,
-        segment_producer_claimed_until__il,
         segment_producer_claimed_until__ilike,
-        segment_producer_claimed_until__nil,
-        segment_producer_claimed_until__nilike,
         segment_producer_claimed_until__notilike,
         segment_producer_claimed_until__desc,
         segment_producer_claimed_until__asc,
@@ -3599,20 +2903,14 @@ class CameraApi:
         stream_producer_claimed_until__lt,
         stream_producer_claimed_until__lte,
         stream_producer_claimed_until__in,
-        stream_producer_claimed_until__nin,
         stream_producer_claimed_until__notin,
         stream_producer_claimed_until__isnull,
-        stream_producer_claimed_until__nisnull,
         stream_producer_claimed_until__isnotnull,
-        stream_producer_claimed_until__l,
+        stream_producer_claimed_until__isfalse,
+        stream_producer_claimed_until__istrue,
         stream_producer_claimed_until__like,
-        stream_producer_claimed_until__nl,
-        stream_producer_claimed_until__nlike,
         stream_producer_claimed_until__notlike,
-        stream_producer_claimed_until__il,
         stream_producer_claimed_until__ilike,
-        stream_producer_claimed_until__nil,
-        stream_producer_claimed_until__nilike,
         stream_producer_claimed_until__notilike,
         stream_producer_claimed_until__desc,
         stream_producer_claimed_until__asc,
@@ -3676,10 +2974,6 @@ class CameraApi:
             
             _query_params.append(('id__in', id__in))
             
-        if id__nin is not None:
-            
-            _query_params.append(('id__nin', id__nin))
-            
         if id__notin is not None:
             
             _query_params.append(('id__notin', id__notin))
@@ -3688,49 +2982,29 @@ class CameraApi:
             
             _query_params.append(('id__isnull', id__isnull))
             
-        if id__nisnull is not None:
-            
-            _query_params.append(('id__nisnull', id__nisnull))
-            
         if id__isnotnull is not None:
             
             _query_params.append(('id__isnotnull', id__isnotnull))
             
-        if id__l is not None:
+        if id__isfalse is not None:
             
-            _query_params.append(('id__l', id__l))
+            _query_params.append(('id__isfalse', id__isfalse))
+            
+        if id__istrue is not None:
+            
+            _query_params.append(('id__istrue', id__istrue))
             
         if id__like is not None:
             
             _query_params.append(('id__like', id__like))
             
-        if id__nl is not None:
-            
-            _query_params.append(('id__nl', id__nl))
-            
-        if id__nlike is not None:
-            
-            _query_params.append(('id__nlike', id__nlike))
-            
         if id__notlike is not None:
             
             _query_params.append(('id__notlike', id__notlike))
             
-        if id__il is not None:
-            
-            _query_params.append(('id__il', id__il))
-            
         if id__ilike is not None:
             
             _query_params.append(('id__ilike', id__ilike))
-            
-        if id__nil is not None:
-            
-            _query_params.append(('id__nil', id__nil))
-            
-        if id__nilike is not None:
-            
-            _query_params.append(('id__nilike', id__nilike))
             
         if id__notilike is not None:
             
@@ -3835,19 +3109,6 @@ class CameraApi:
             else:
                 _query_params.append(('created_at__in', created_at__in))
             
-        if created_at__nin is not None:
-            if isinstance(created_at__nin, datetime):
-                _query_params.append(
-                    (
-                        'created_at__nin',
-                        created_at__nin.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('created_at__nin', created_at__nin))
-            
         if created_at__notin is not None:
             if isinstance(created_at__notin, datetime):
                 _query_params.append(
@@ -3865,49 +3126,29 @@ class CameraApi:
             
             _query_params.append(('created_at__isnull', created_at__isnull))
             
-        if created_at__nisnull is not None:
-            
-            _query_params.append(('created_at__nisnull', created_at__nisnull))
-            
         if created_at__isnotnull is not None:
             
             _query_params.append(('created_at__isnotnull', created_at__isnotnull))
             
-        if created_at__l is not None:
+        if created_at__isfalse is not None:
             
-            _query_params.append(('created_at__l', created_at__l))
+            _query_params.append(('created_at__isfalse', created_at__isfalse))
+            
+        if created_at__istrue is not None:
+            
+            _query_params.append(('created_at__istrue', created_at__istrue))
             
         if created_at__like is not None:
             
             _query_params.append(('created_at__like', created_at__like))
             
-        if created_at__nl is not None:
-            
-            _query_params.append(('created_at__nl', created_at__nl))
-            
-        if created_at__nlike is not None:
-            
-            _query_params.append(('created_at__nlike', created_at__nlike))
-            
         if created_at__notlike is not None:
             
             _query_params.append(('created_at__notlike', created_at__notlike))
             
-        if created_at__il is not None:
-            
-            _query_params.append(('created_at__il', created_at__il))
-            
         if created_at__ilike is not None:
             
             _query_params.append(('created_at__ilike', created_at__ilike))
-            
-        if created_at__nil is not None:
-            
-            _query_params.append(('created_at__nil', created_at__nil))
-            
-        if created_at__nilike is not None:
-            
-            _query_params.append(('created_at__nilike', created_at__nilike))
             
         if created_at__notilike is not None:
             
@@ -4012,19 +3253,6 @@ class CameraApi:
             else:
                 _query_params.append(('updated_at__in', updated_at__in))
             
-        if updated_at__nin is not None:
-            if isinstance(updated_at__nin, datetime):
-                _query_params.append(
-                    (
-                        'updated_at__nin',
-                        updated_at__nin.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_at__nin', updated_at__nin))
-            
         if updated_at__notin is not None:
             if isinstance(updated_at__notin, datetime):
                 _query_params.append(
@@ -4042,49 +3270,29 @@ class CameraApi:
             
             _query_params.append(('updated_at__isnull', updated_at__isnull))
             
-        if updated_at__nisnull is not None:
-            
-            _query_params.append(('updated_at__nisnull', updated_at__nisnull))
-            
         if updated_at__isnotnull is not None:
             
             _query_params.append(('updated_at__isnotnull', updated_at__isnotnull))
             
-        if updated_at__l is not None:
+        if updated_at__isfalse is not None:
             
-            _query_params.append(('updated_at__l', updated_at__l))
+            _query_params.append(('updated_at__isfalse', updated_at__isfalse))
+            
+        if updated_at__istrue is not None:
+            
+            _query_params.append(('updated_at__istrue', updated_at__istrue))
             
         if updated_at__like is not None:
             
             _query_params.append(('updated_at__like', updated_at__like))
             
-        if updated_at__nl is not None:
-            
-            _query_params.append(('updated_at__nl', updated_at__nl))
-            
-        if updated_at__nlike is not None:
-            
-            _query_params.append(('updated_at__nlike', updated_at__nlike))
-            
         if updated_at__notlike is not None:
             
             _query_params.append(('updated_at__notlike', updated_at__notlike))
             
-        if updated_at__il is not None:
-            
-            _query_params.append(('updated_at__il', updated_at__il))
-            
         if updated_at__ilike is not None:
             
             _query_params.append(('updated_at__ilike', updated_at__ilike))
-            
-        if updated_at__nil is not None:
-            
-            _query_params.append(('updated_at__nil', updated_at__nil))
-            
-        if updated_at__nilike is not None:
-            
-            _query_params.append(('updated_at__nilike', updated_at__nilike))
             
         if updated_at__notilike is not None:
             
@@ -4189,19 +3397,6 @@ class CameraApi:
             else:
                 _query_params.append(('deleted_at__in', deleted_at__in))
             
-        if deleted_at__nin is not None:
-            if isinstance(deleted_at__nin, datetime):
-                _query_params.append(
-                    (
-                        'deleted_at__nin',
-                        deleted_at__nin.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('deleted_at__nin', deleted_at__nin))
-            
         if deleted_at__notin is not None:
             if isinstance(deleted_at__notin, datetime):
                 _query_params.append(
@@ -4219,49 +3414,29 @@ class CameraApi:
             
             _query_params.append(('deleted_at__isnull', deleted_at__isnull))
             
-        if deleted_at__nisnull is not None:
-            
-            _query_params.append(('deleted_at__nisnull', deleted_at__nisnull))
-            
         if deleted_at__isnotnull is not None:
             
             _query_params.append(('deleted_at__isnotnull', deleted_at__isnotnull))
             
-        if deleted_at__l is not None:
+        if deleted_at__isfalse is not None:
             
-            _query_params.append(('deleted_at__l', deleted_at__l))
+            _query_params.append(('deleted_at__isfalse', deleted_at__isfalse))
+            
+        if deleted_at__istrue is not None:
+            
+            _query_params.append(('deleted_at__istrue', deleted_at__istrue))
             
         if deleted_at__like is not None:
             
             _query_params.append(('deleted_at__like', deleted_at__like))
             
-        if deleted_at__nl is not None:
-            
-            _query_params.append(('deleted_at__nl', deleted_at__nl))
-            
-        if deleted_at__nlike is not None:
-            
-            _query_params.append(('deleted_at__nlike', deleted_at__nlike))
-            
         if deleted_at__notlike is not None:
             
             _query_params.append(('deleted_at__notlike', deleted_at__notlike))
             
-        if deleted_at__il is not None:
-            
-            _query_params.append(('deleted_at__il', deleted_at__il))
-            
         if deleted_at__ilike is not None:
             
             _query_params.append(('deleted_at__ilike', deleted_at__ilike))
-            
-        if deleted_at__nil is not None:
-            
-            _query_params.append(('deleted_at__nil', deleted_at__nil))
-            
-        if deleted_at__nilike is not None:
-            
-            _query_params.append(('deleted_at__nilike', deleted_at__nilike))
             
         if deleted_at__notilike is not None:
             
@@ -4303,10 +3478,6 @@ class CameraApi:
             
             _query_params.append(('name__in', name__in))
             
-        if name__nin is not None:
-            
-            _query_params.append(('name__nin', name__nin))
-            
         if name__notin is not None:
             
             _query_params.append(('name__notin', name__notin))
@@ -4315,49 +3486,29 @@ class CameraApi:
             
             _query_params.append(('name__isnull', name__isnull))
             
-        if name__nisnull is not None:
-            
-            _query_params.append(('name__nisnull', name__nisnull))
-            
         if name__isnotnull is not None:
             
             _query_params.append(('name__isnotnull', name__isnotnull))
             
-        if name__l is not None:
+        if name__isfalse is not None:
             
-            _query_params.append(('name__l', name__l))
+            _query_params.append(('name__isfalse', name__isfalse))
+            
+        if name__istrue is not None:
+            
+            _query_params.append(('name__istrue', name__istrue))
             
         if name__like is not None:
             
             _query_params.append(('name__like', name__like))
             
-        if name__nl is not None:
-            
-            _query_params.append(('name__nl', name__nl))
-            
-        if name__nlike is not None:
-            
-            _query_params.append(('name__nlike', name__nlike))
-            
         if name__notlike is not None:
             
             _query_params.append(('name__notlike', name__notlike))
             
-        if name__il is not None:
-            
-            _query_params.append(('name__il', name__il))
-            
         if name__ilike is not None:
             
             _query_params.append(('name__ilike', name__ilike))
-            
-        if name__nil is not None:
-            
-            _query_params.append(('name__nil', name__nil))
-            
-        if name__nilike is not None:
-            
-            _query_params.append(('name__nilike', name__nilike))
             
         if name__notilike is not None:
             
@@ -4399,10 +3550,6 @@ class CameraApi:
             
             _query_params.append(('stream_url__in', stream_url__in))
             
-        if stream_url__nin is not None:
-            
-            _query_params.append(('stream_url__nin', stream_url__nin))
-            
         if stream_url__notin is not None:
             
             _query_params.append(('stream_url__notin', stream_url__notin))
@@ -4411,49 +3558,29 @@ class CameraApi:
             
             _query_params.append(('stream_url__isnull', stream_url__isnull))
             
-        if stream_url__nisnull is not None:
-            
-            _query_params.append(('stream_url__nisnull', stream_url__nisnull))
-            
         if stream_url__isnotnull is not None:
             
             _query_params.append(('stream_url__isnotnull', stream_url__isnotnull))
             
-        if stream_url__l is not None:
+        if stream_url__isfalse is not None:
             
-            _query_params.append(('stream_url__l', stream_url__l))
+            _query_params.append(('stream_url__isfalse', stream_url__isfalse))
+            
+        if stream_url__istrue is not None:
+            
+            _query_params.append(('stream_url__istrue', stream_url__istrue))
             
         if stream_url__like is not None:
             
             _query_params.append(('stream_url__like', stream_url__like))
             
-        if stream_url__nl is not None:
-            
-            _query_params.append(('stream_url__nl', stream_url__nl))
-            
-        if stream_url__nlike is not None:
-            
-            _query_params.append(('stream_url__nlike', stream_url__nlike))
-            
         if stream_url__notlike is not None:
             
             _query_params.append(('stream_url__notlike', stream_url__notlike))
             
-        if stream_url__il is not None:
-            
-            _query_params.append(('stream_url__il', stream_url__il))
-            
         if stream_url__ilike is not None:
             
             _query_params.append(('stream_url__ilike', stream_url__ilike))
-            
-        if stream_url__nil is not None:
-            
-            _query_params.append(('stream_url__nil', stream_url__nil))
-            
-        if stream_url__nilike is not None:
-            
-            _query_params.append(('stream_url__nilike', stream_url__nilike))
             
         if stream_url__notilike is not None:
             
@@ -4558,19 +3685,6 @@ class CameraApi:
             else:
                 _query_params.append(('last_seen__in', last_seen__in))
             
-        if last_seen__nin is not None:
-            if isinstance(last_seen__nin, datetime):
-                _query_params.append(
-                    (
-                        'last_seen__nin',
-                        last_seen__nin.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('last_seen__nin', last_seen__nin))
-            
         if last_seen__notin is not None:
             if isinstance(last_seen__notin, datetime):
                 _query_params.append(
@@ -4588,49 +3702,29 @@ class CameraApi:
             
             _query_params.append(('last_seen__isnull', last_seen__isnull))
             
-        if last_seen__nisnull is not None:
-            
-            _query_params.append(('last_seen__nisnull', last_seen__nisnull))
-            
         if last_seen__isnotnull is not None:
             
             _query_params.append(('last_seen__isnotnull', last_seen__isnotnull))
             
-        if last_seen__l is not None:
+        if last_seen__isfalse is not None:
             
-            _query_params.append(('last_seen__l', last_seen__l))
+            _query_params.append(('last_seen__isfalse', last_seen__isfalse))
+            
+        if last_seen__istrue is not None:
+            
+            _query_params.append(('last_seen__istrue', last_seen__istrue))
             
         if last_seen__like is not None:
             
             _query_params.append(('last_seen__like', last_seen__like))
             
-        if last_seen__nl is not None:
-            
-            _query_params.append(('last_seen__nl', last_seen__nl))
-            
-        if last_seen__nlike is not None:
-            
-            _query_params.append(('last_seen__nlike', last_seen__nlike))
-            
         if last_seen__notlike is not None:
             
             _query_params.append(('last_seen__notlike', last_seen__notlike))
             
-        if last_seen__il is not None:
-            
-            _query_params.append(('last_seen__il', last_seen__il))
-            
         if last_seen__ilike is not None:
             
             _query_params.append(('last_seen__ilike', last_seen__ilike))
-            
-        if last_seen__nil is not None:
-            
-            _query_params.append(('last_seen__nil', last_seen__nil))
-            
-        if last_seen__nilike is not None:
-            
-            _query_params.append(('last_seen__nilike', last_seen__nilike))
             
         if last_seen__notilike is not None:
             
@@ -4735,19 +3829,6 @@ class CameraApi:
             else:
                 _query_params.append(('segment_producer_claimed_until__in', segment_producer_claimed_until__in))
             
-        if segment_producer_claimed_until__nin is not None:
-            if isinstance(segment_producer_claimed_until__nin, datetime):
-                _query_params.append(
-                    (
-                        'segment_producer_claimed_until__nin',
-                        segment_producer_claimed_until__nin.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('segment_producer_claimed_until__nin', segment_producer_claimed_until__nin))
-            
         if segment_producer_claimed_until__notin is not None:
             if isinstance(segment_producer_claimed_until__notin, datetime):
                 _query_params.append(
@@ -4765,49 +3846,29 @@ class CameraApi:
             
             _query_params.append(('segment_producer_claimed_until__isnull', segment_producer_claimed_until__isnull))
             
-        if segment_producer_claimed_until__nisnull is not None:
-            
-            _query_params.append(('segment_producer_claimed_until__nisnull', segment_producer_claimed_until__nisnull))
-            
         if segment_producer_claimed_until__isnotnull is not None:
             
             _query_params.append(('segment_producer_claimed_until__isnotnull', segment_producer_claimed_until__isnotnull))
             
-        if segment_producer_claimed_until__l is not None:
+        if segment_producer_claimed_until__isfalse is not None:
             
-            _query_params.append(('segment_producer_claimed_until__l', segment_producer_claimed_until__l))
+            _query_params.append(('segment_producer_claimed_until__isfalse', segment_producer_claimed_until__isfalse))
+            
+        if segment_producer_claimed_until__istrue is not None:
+            
+            _query_params.append(('segment_producer_claimed_until__istrue', segment_producer_claimed_until__istrue))
             
         if segment_producer_claimed_until__like is not None:
             
             _query_params.append(('segment_producer_claimed_until__like', segment_producer_claimed_until__like))
             
-        if segment_producer_claimed_until__nl is not None:
-            
-            _query_params.append(('segment_producer_claimed_until__nl', segment_producer_claimed_until__nl))
-            
-        if segment_producer_claimed_until__nlike is not None:
-            
-            _query_params.append(('segment_producer_claimed_until__nlike', segment_producer_claimed_until__nlike))
-            
         if segment_producer_claimed_until__notlike is not None:
             
             _query_params.append(('segment_producer_claimed_until__notlike', segment_producer_claimed_until__notlike))
             
-        if segment_producer_claimed_until__il is not None:
-            
-            _query_params.append(('segment_producer_claimed_until__il', segment_producer_claimed_until__il))
-            
         if segment_producer_claimed_until__ilike is not None:
             
             _query_params.append(('segment_producer_claimed_until__ilike', segment_producer_claimed_until__ilike))
-            
-        if segment_producer_claimed_until__nil is not None:
-            
-            _query_params.append(('segment_producer_claimed_until__nil', segment_producer_claimed_until__nil))
-            
-        if segment_producer_claimed_until__nilike is not None:
-            
-            _query_params.append(('segment_producer_claimed_until__nilike', segment_producer_claimed_until__nilike))
             
         if segment_producer_claimed_until__notilike is not None:
             
@@ -4912,19 +3973,6 @@ class CameraApi:
             else:
                 _query_params.append(('stream_producer_claimed_until__in', stream_producer_claimed_until__in))
             
-        if stream_producer_claimed_until__nin is not None:
-            if isinstance(stream_producer_claimed_until__nin, datetime):
-                _query_params.append(
-                    (
-                        'stream_producer_claimed_until__nin',
-                        stream_producer_claimed_until__nin.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('stream_producer_claimed_until__nin', stream_producer_claimed_until__nin))
-            
         if stream_producer_claimed_until__notin is not None:
             if isinstance(stream_producer_claimed_until__notin, datetime):
                 _query_params.append(
@@ -4942,49 +3990,29 @@ class CameraApi:
             
             _query_params.append(('stream_producer_claimed_until__isnull', stream_producer_claimed_until__isnull))
             
-        if stream_producer_claimed_until__nisnull is not None:
-            
-            _query_params.append(('stream_producer_claimed_until__nisnull', stream_producer_claimed_until__nisnull))
-            
         if stream_producer_claimed_until__isnotnull is not None:
             
             _query_params.append(('stream_producer_claimed_until__isnotnull', stream_producer_claimed_until__isnotnull))
             
-        if stream_producer_claimed_until__l is not None:
+        if stream_producer_claimed_until__isfalse is not None:
             
-            _query_params.append(('stream_producer_claimed_until__l', stream_producer_claimed_until__l))
+            _query_params.append(('stream_producer_claimed_until__isfalse', stream_producer_claimed_until__isfalse))
+            
+        if stream_producer_claimed_until__istrue is not None:
+            
+            _query_params.append(('stream_producer_claimed_until__istrue', stream_producer_claimed_until__istrue))
             
         if stream_producer_claimed_until__like is not None:
             
             _query_params.append(('stream_producer_claimed_until__like', stream_producer_claimed_until__like))
             
-        if stream_producer_claimed_until__nl is not None:
-            
-            _query_params.append(('stream_producer_claimed_until__nl', stream_producer_claimed_until__nl))
-            
-        if stream_producer_claimed_until__nlike is not None:
-            
-            _query_params.append(('stream_producer_claimed_until__nlike', stream_producer_claimed_until__nlike))
-            
         if stream_producer_claimed_until__notlike is not None:
             
             _query_params.append(('stream_producer_claimed_until__notlike', stream_producer_claimed_until__notlike))
             
-        if stream_producer_claimed_until__il is not None:
-            
-            _query_params.append(('stream_producer_claimed_until__il', stream_producer_claimed_until__il))
-            
         if stream_producer_claimed_until__ilike is not None:
             
             _query_params.append(('stream_producer_claimed_until__ilike', stream_producer_claimed_until__ilike))
-            
-        if stream_producer_claimed_until__nil is not None:
-            
-            _query_params.append(('stream_producer_claimed_until__nil', stream_producer_claimed_until__nil))
-            
-        if stream_producer_claimed_until__nilike is not None:
-            
-            _query_params.append(('stream_producer_claimed_until__nilike', stream_producer_claimed_until__nilike))
             
         if stream_producer_claimed_until__notilike is not None:
             
