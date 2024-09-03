@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **camera_id_object** | [**Camera**](Camera.md) |  | [optional] 
 **created_at** | **datetime** |  | [optional] 
 **deleted_at** | **datetime** |  | [optional] 
+**detection_summary** | **object** |  | [optional] 
 **duration** | **int** |  | [optional] 
 **ended_at** | **datetime** |  | [optional] 
 **file_name** | **str** |  | [optional] 

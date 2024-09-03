@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+set -e -m
 
 # this block ensures we can invoke this script from anywhere and have it automatically change to this folder first
 pushd "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1
@@ -42,14 +42,21 @@ done
 echo -e "\ngenerating the api..."
 DJANGOLANG_API_ROOT=/api DJANGOLANG_PACKAGE_NAME=api POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR!11 djangolang template
 
-if test -e ./cmd/api; then
-    rm -frv ./cmd/api
-fi
-cp -frv ./pkg/api/cmd ./cmd/api
+# TODO: you don't want to do this once you put some custom stuff in your api entrypoint
+# if test -e ./cmd/api; then
+#     rm -frv ./cmd/api
+# fi
+# cp -frv ./pkg/api/cmd ./cmd/api
 
 # dump out the OpenAPI v3 schema for the Djangolang API
 mkdir -p ./schema
-DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
+# DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
+go build -o ./cmd/api/api ./cmd/api
+REDIS_URL=redis://localhost:6379 DJANGOLANG_API_ROOT=/api POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 ./cmd/api/api serve &
+pid=$!
+sleep 5
+curl http://localhost:7070/api/openapi.json >./schema/openapi.json
+kill -15 ${pid}
 
 # generate the client for use by the frontend
 echo -e "\ngenerating typescript client..."

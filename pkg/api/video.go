@@ -45,6 +45,7 @@ type Video struct {
 	ObjectTrackerClaimedUntil           time.Time      `json:"object_tracker_claimed_until"`
 	CameraID                            uuid.UUID      `json:"camera_id"`
 	CameraIDObject                      *Camera        `json:"camera_id_object"`
+	DetectionSummary                    any            `json:"detection_summary"`
 	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
 }
 
@@ -65,6 +66,7 @@ var (
 	VideoTableObjectDetectorClaimedUntilColumn = "object_detector_claimed_until"
 	VideoTableObjectTrackerClaimedUntilColumn  = "object_tracker_claimed_until"
 	VideoTableCameraIDColumn                   = "camera_id"
+	VideoTableDetectionSummaryColumn           = "detection_summary"
 )
 
 var (
@@ -82,6 +84,7 @@ var (
 	VideoTableObjectDetectorClaimedUntilColumnWithTypeCast = `"object_detector_claimed_until" AS object_detector_claimed_until`
 	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast  = `"object_tracker_claimed_until" AS object_tracker_claimed_until`
 	VideoTableCameraIDColumnWithTypeCast                   = `"camera_id" AS camera_id`
+	VideoTableDetectionSummaryColumnWithTypeCast           = `"detection_summary" AS detection_summary`
 )
 
 var VideoTableColumns = []string{
@@ -99,6 +102,7 @@ var VideoTableColumns = []string{
 	VideoTableObjectDetectorClaimedUntilColumn,
 	VideoTableObjectTrackerClaimedUntilColumn,
 	VideoTableCameraIDColumn,
+	VideoTableDetectionSummaryColumn,
 }
 
 var VideoTableColumnsWithTypeCasts = []string{
@@ -116,6 +120,7 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableObjectDetectorClaimedUntilColumnWithTypeCast,
 	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast,
 	VideoTableCameraIDColumnWithTypeCast,
+	VideoTableDetectionSummaryColumnWithTypeCast,
 }
 
 var VideoIntrospectedTable *introspect.Table
@@ -462,6 +467,25 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.CameraID = temp2
 
+		case "detection_summary":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseJSON(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1, true
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uudetection_summary.UUID", temp1))
+				}
+			}
+
+			m.DetectionSummary = temp2
+
 		}
 	}
 
@@ -479,7 +503,7 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	ctx, cleanup := query.WithQueryID(ctx)
 	defer cleanup()
 
-	t, err := SelectVideo(
+	o, _, _, _, _, err := SelectVideo(
 		ctx,
 		tx,
 		fmt.Sprintf("%v = $1%v", m.GetPrimaryKeyColumn(), extraWhere),
@@ -489,22 +513,23 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 		return err
 	}
 
-	m.ID = t.ID
-	m.CreatedAt = t.CreatedAt
-	m.UpdatedAt = t.UpdatedAt
-	m.DeletedAt = t.DeletedAt
-	m.FileName = t.FileName
-	m.StartedAt = t.StartedAt
-	m.EndedAt = t.EndedAt
-	m.Duration = t.Duration
-	m.FileSize = t.FileSize
-	m.ThumbnailName = t.ThumbnailName
-	m.Status = t.Status
-	m.ObjectDetectorClaimedUntil = t.ObjectDetectorClaimedUntil
-	m.ObjectTrackerClaimedUntil = t.ObjectTrackerClaimedUntil
-	m.CameraID = t.CameraID
-	m.CameraIDObject = t.CameraIDObject
-	m.ReferencedByDetectionVideoIDObjects = t.ReferencedByDetectionVideoIDObjects
+	m.ID = o.ID
+	m.CreatedAt = o.CreatedAt
+	m.UpdatedAt = o.UpdatedAt
+	m.DeletedAt = o.DeletedAt
+	m.FileName = o.FileName
+	m.StartedAt = o.StartedAt
+	m.EndedAt = o.EndedAt
+	m.Duration = o.Duration
+	m.FileSize = o.FileSize
+	m.ThumbnailName = o.ThumbnailName
+	m.Status = o.Status
+	m.ObjectDetectorClaimedUntil = o.ObjectDetectorClaimedUntil
+	m.ObjectTrackerClaimedUntil = o.ObjectTrackerClaimedUntil
+	m.CameraID = o.CameraID
+	m.CameraIDObject = o.CameraIDObject
+	m.DetectionSummary = o.DetectionSummary
+	m.ReferencedByDetectionVideoIDObjects = o.ReferencedByDetectionVideoIDObjects
 
 	return nil
 }
@@ -518,7 +543,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatUUID(m.ID)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ID: %v", err)
+			return fmt.Errorf("failed to handle m.ID; %v", err)
 		}
 
 		values = append(values, v)
@@ -529,7 +554,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatTime(m.CreatedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.CreatedAt: %v", err)
+			return fmt.Errorf("failed to handle m.CreatedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -540,7 +565,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatTime(m.UpdatedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.UpdatedAt: %v", err)
+			return fmt.Errorf("failed to handle m.UpdatedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -551,7 +576,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatTime(m.DeletedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.DeletedAt: %v", err)
+			return fmt.Errorf("failed to handle m.DeletedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -562,7 +587,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatString(m.FileName)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.FileName: %v", err)
+			return fmt.Errorf("failed to handle m.FileName; %v", err)
 		}
 
 		values = append(values, v)
@@ -573,7 +598,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatTime(m.StartedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.StartedAt: %v", err)
+			return fmt.Errorf("failed to handle m.StartedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -584,7 +609,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatTime(m.EndedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.EndedAt: %v", err)
+			return fmt.Errorf("failed to handle m.EndedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -595,7 +620,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatDuration(m.Duration)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.Duration: %v", err)
+			return fmt.Errorf("failed to handle m.Duration; %v", err)
 		}
 
 		values = append(values, v)
@@ -606,7 +631,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatFloat(m.FileSize)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.FileSize: %v", err)
+			return fmt.Errorf("failed to handle m.FileSize; %v", err)
 		}
 
 		values = append(values, v)
@@ -617,7 +642,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatString(m.ThumbnailName)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ThumbnailName: %v", err)
+			return fmt.Errorf("failed to handle m.ThumbnailName; %v", err)
 		}
 
 		values = append(values, v)
@@ -628,7 +653,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatString(m.Status)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.Status: %v", err)
+			return fmt.Errorf("failed to handle m.Status; %v", err)
 		}
 
 		values = append(values, v)
@@ -639,7 +664,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatTime(m.ObjectDetectorClaimedUntil)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil: %v", err)
+			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil; %v", err)
 		}
 
 		values = append(values, v)
@@ -650,7 +675,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatTime(m.ObjectTrackerClaimedUntil)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil: %v", err)
+			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil; %v", err)
 		}
 
 		values = append(values, v)
@@ -661,7 +686,18 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 		v, err := types.FormatUUID(m.CameraID)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.CameraID: %v", err)
+			return fmt.Errorf("failed to handle m.CameraID; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.DetectionSummary) || slices.Contains(forceSetValuesForFields, VideoTableDetectionSummaryColumn) || isRequired(VideoTableColumnLookup, VideoTableDetectionSummaryColumn) {
+		columns = append(columns, VideoTableDetectionSummaryColumn)
+
+		v, err := types.FormatJSON(m.DetectionSummary)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.DetectionSummary; %v", err)
 		}
 
 		values = append(values, v)
@@ -713,7 +749,7 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 
 	err = m.Reload(ctx, tx, slices.Contains(forceSetValuesForFields, "deleted_at"))
 	if err != nil {
-		return fmt.Errorf("failed to reload after insert: %v", err)
+		return fmt.Errorf("failed to reload after insert; %v", err)
 	}
 
 	return nil
@@ -728,7 +764,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatTime(m.CreatedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.CreatedAt: %v", err)
+			return fmt.Errorf("failed to handle m.CreatedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -739,7 +775,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatTime(m.UpdatedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.UpdatedAt: %v", err)
+			return fmt.Errorf("failed to handle m.UpdatedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -750,7 +786,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatTime(m.DeletedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.DeletedAt: %v", err)
+			return fmt.Errorf("failed to handle m.DeletedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -761,7 +797,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatString(m.FileName)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.FileName: %v", err)
+			return fmt.Errorf("failed to handle m.FileName; %v", err)
 		}
 
 		values = append(values, v)
@@ -772,7 +808,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatTime(m.StartedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.StartedAt: %v", err)
+			return fmt.Errorf("failed to handle m.StartedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -783,7 +819,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatTime(m.EndedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.EndedAt: %v", err)
+			return fmt.Errorf("failed to handle m.EndedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -794,7 +830,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatDuration(m.Duration)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.Duration: %v", err)
+			return fmt.Errorf("failed to handle m.Duration; %v", err)
 		}
 
 		values = append(values, v)
@@ -805,7 +841,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatFloat(m.FileSize)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.FileSize: %v", err)
+			return fmt.Errorf("failed to handle m.FileSize; %v", err)
 		}
 
 		values = append(values, v)
@@ -816,7 +852,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatString(m.ThumbnailName)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ThumbnailName: %v", err)
+			return fmt.Errorf("failed to handle m.ThumbnailName; %v", err)
 		}
 
 		values = append(values, v)
@@ -827,7 +863,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatString(m.Status)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.Status: %v", err)
+			return fmt.Errorf("failed to handle m.Status; %v", err)
 		}
 
 		values = append(values, v)
@@ -838,7 +874,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatTime(m.ObjectDetectorClaimedUntil)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil: %v", err)
+			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil; %v", err)
 		}
 
 		values = append(values, v)
@@ -849,7 +885,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatTime(m.ObjectTrackerClaimedUntil)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil: %v", err)
+			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil; %v", err)
 		}
 
 		values = append(values, v)
@@ -860,7 +896,18 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 		v, err := types.FormatUUID(m.CameraID)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.CameraID: %v", err)
+			return fmt.Errorf("failed to handle m.CameraID; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.DetectionSummary) || slices.Contains(forceSetValuesForFields, VideoTableDetectionSummaryColumn) {
+		columns = append(columns, VideoTableDetectionSummaryColumn)
+
+		v, err := types.FormatJSON(m.DetectionSummary)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.DetectionSummary; %v", err)
 		}
 
 		values = append(values, v)
@@ -868,7 +915,7 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 
 	v, err := types.FormatUUID(m.ID)
 	if err != nil {
-		return fmt.Errorf("failed to handle m.ID: %v", err)
+		return fmt.Errorf("failed to handle m.ID; %v", err)
 	}
 
 	values = append(values, v)
@@ -914,7 +961,7 @@ func (m *Video) Delete(ctx context.Context, tx pgx.Tx, hardDeletes ...bool) erro
 	values := make([]any, 0)
 	v, err := types.FormatUUID(m.ID)
 	if err != nil {
-		return fmt.Errorf("failed to handle m.ID: %v", err)
+		return fmt.Errorf("failed to handle m.ID; %v", err)
 	}
 
 	values = append(values, v)
@@ -942,7 +989,7 @@ func (m *Video) LockTable(ctx context.Context, tx pgx.Tx, noWait bool) error {
 	return query.LockTable(ctx, tx, VideoTable, noWait)
 }
 
-func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string, limit *int, offset *int, values ...any) ([]*Video, error) {
+func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string, limit *int, offset *int, values ...any) ([]*Video, int64, int64, int64, int64, error) {
 	if slices.Contains(VideoTableColumns, "deleted_at") {
 		if !strings.Contains(where, "deleted_at") {
 			if where != "" {
@@ -956,7 +1003,7 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 	ctx, cleanup := query.WithQueryID(ctx)
 	defer cleanup()
 
-	items, err := query.Select(
+	items, count, totalCount, page, totalPages, err := query.Select(
 		ctx,
 		tx,
 		VideoTableColumnsWithTypeCasts,
@@ -968,7 +1015,7 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 		values...,
 	)
 	if err != nil {
-		return nil, fmt.Errorf("failed to call SelectVideos; err: %v", err)
+		return nil, 0, 0, 0, 0, fmt.Errorf("failed to call SelectVideos; %v", err)
 	}
 
 	objects := make([]*Video, 0)
@@ -978,7 +1025,7 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 
 		err = object.FromItem(item)
 		if err != nil {
-			return nil, err
+			return nil, 0, 0, 0, 0, err
 		}
 
 		thatCtx := ctx
@@ -996,7 +1043,7 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 			thisCtx, ok1 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID))
 			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", CameraTable, object.CameraID))
 			if ok1 && ok2 {
-				object.CameraIDObject, err = SelectCamera(
+				object.CameraIDObject, _, _, _, _, err = SelectCamera(
 					thisCtx,
 					tx,
 					fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
@@ -1004,7 +1051,7 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
-						return nil, err
+						return nil, 0, 0, 0, 0, err
 					}
 				}
 			}
@@ -1016,7 +1063,7 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 			thisCtx, ok2 := query.HandleQueryPathGraphCycles(thisCtx, fmt.Sprintf("__ReferencedBy__%s{%v}", VideoTable, object.GetPrimaryKeyValue()))
 
 			if ok1 && ok2 {
-				object.ReferencedByDetectionVideoIDObjects, err = SelectDetections(
+				object.ReferencedByDetectionVideoIDObjects, _, _, _, _, err = SelectDetections(
 					thisCtx,
 					tx,
 					fmt.Sprintf("%v = $1", DetectionTableVideoIDColumn),
@@ -1035,20 +1082,20 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 			return nil
 		}()
 		if err != nil {
-			return nil, err
+			return nil, 0, 0, 0, 0, err
 		}
 
 		objects = append(objects, object)
 	}
 
-	return objects, nil
+	return objects, count, totalCount, page, totalPages, nil
 }
 
-func SelectVideo(ctx context.Context, tx pgx.Tx, where string, values ...any) (*Video, error) {
+func SelectVideo(ctx context.Context, tx pgx.Tx, where string, values ...any) (*Video, int64, int64, int64, int64, error) {
 	ctx, cleanup := query.WithQueryID(ctx)
 	defer cleanup()
 
-	objects, err := SelectVideos(
+	objects, _, _, _, _, err := SelectVideos(
 		ctx,
 		tx,
 		where,
@@ -1058,73 +1105,78 @@ func SelectVideo(ctx context.Context, tx pgx.Tx, where string, values ...any) (*
 		values...,
 	)
 	if err != nil {
-		return nil, fmt.Errorf("failed to call SelectVideo; err: %v", err)
+		return nil, 0, 0, 0, 0, fmt.Errorf("failed to call SelectVideo; %v", err)
 	}
 
 	if len(objects) > 1 {
-		return nil, fmt.Errorf("attempt to call SelectVideo returned more than 1 row")
+		return nil, 0, 0, 0, 0, fmt.Errorf("attempt to call SelectVideo returned more than 1 row")
 	}
 
 	if len(objects) < 1 {
-		return nil, sql.ErrNoRows
+		return nil, 0, 0, 0, 0, sql.ErrNoRows
 	}
 
 	object := objects[0]
 
-	return object, nil
+	count := int64(1)
+	totalCount := count
+	page := int64(1)
+	totalPages := page
+
+	return object, count, totalCount, page, totalPages, nil
 }
 
-func handleGetVideos(arguments *server.SelectManyArguments, db *pgxpool.Pool) ([]*Video, error) {
+func handleGetVideos(arguments *server.SelectManyArguments, db *pgxpool.Pool) ([]*Video, int64, int64, int64, int64, error) {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
 	defer func() {
 		_ = tx.Rollback(arguments.Ctx)
 	}()
 
-	objects, err := SelectVideos(arguments.Ctx, tx, arguments.Where, arguments.OrderBy, arguments.Limit, arguments.Offset, arguments.Values...)
+	objects, count, totalCount, page, totalPages, err := SelectVideos(arguments.Ctx, tx, arguments.Where, arguments.OrderBy, arguments.Limit, arguments.Offset, arguments.Values...)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
 	err = tx.Commit(arguments.Ctx)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
-	return objects, nil
+	return objects, count, totalCount, page, totalPages, nil
 }
 
-func handleGetVideo(arguments *server.SelectOneArguments, db *pgxpool.Pool, primaryKey uuid.UUID) ([]*Video, error) {
+func handleGetVideo(arguments *server.SelectOneArguments, db *pgxpool.Pool, primaryKey uuid.UUID) ([]*Video, int64, int64, int64, int64, error) {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
 	defer func() {
 		_ = tx.Rollback(arguments.Ctx)
 	}()
 
-	object, err := SelectVideo(arguments.Ctx, tx, arguments.Where, arguments.Values...)
+	object, count, totalCount, page, totalPages, err := SelectVideo(arguments.Ctx, tx, arguments.Where, arguments.Values...)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
 	err = tx.Commit(arguments.Ctx)
 	if err != nil {
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
-	return []*Video{object}, nil
+	return []*Video{object}, count, totalCount, page, totalPages, nil
 }
 
-func handlePostVideos(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, objects []*Video, forceSetValuesForFieldsByObjectIndex [][]string) ([]*Video, error) {
+func handlePostVideos(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, objects []*Video, forceSetValuesForFieldsByObjectIndex [][]string) ([]*Video, int64, int64, int64, int64, error) {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to begin DB transaction: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to begin DB transaction; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 
 	defer func() {
@@ -1133,8 +1185,8 @@ func handlePostVideos(arguments *server.LoadArguments, db *pgxpool.Pool, waitFor
 
 	xid, err := query.GetXid(arguments.Ctx, tx)
 	if err != nil {
-		err = fmt.Errorf("failed to get xid: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to get xid; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 	_ = xid
 
@@ -1142,7 +1194,7 @@ func handlePostVideos(arguments *server.LoadArguments, db *pgxpool.Pool, waitFor
 		err = object.Insert(arguments.Ctx, tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
 		if err != nil {
 			err = fmt.Errorf("failed to insert %#+v; %v", object, err)
-			return nil, err
+			return nil, 0, 0, 0, 0, err
 		}
 
 		objects[i] = object
@@ -1152,7 +1204,7 @@ func handlePostVideos(arguments *server.LoadArguments, db *pgxpool.Pool, waitFor
 	go func() {
 		_, err = waitForChange(arguments.Ctx, []stream.Action{stream.INSERT}, VideoTable, xid)
 		if err != nil {
-			err = fmt.Errorf("failed to wait for change: %v", err)
+			err = fmt.Errorf("failed to wait for change; %v", err)
 			errs <- err
 			return
 		}
@@ -1162,28 +1214,33 @@ func handlePostVideos(arguments *server.LoadArguments, db *pgxpool.Pool, waitFor
 
 	err = tx.Commit(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to commit DB transaction: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to commit DB transaction; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 
 	select {
 	case <-arguments.Ctx.Done():
 		err = fmt.Errorf("context canceled")
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	case err = <-errs:
 		if err != nil {
-			return nil, err
+			return nil, 0, 0, 0, 0, err
 		}
 	}
 
-	return objects, nil
+	count := int64(len(objects))
+	totalCount := count
+	page := int64(1)
+	totalPages := page
+
+	return objects, count, totalCount, page, totalPages, nil
 }
 
-func handlePutVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, object *Video) ([]*Video, error) {
+func handlePutVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, object *Video) ([]*Video, int64, int64, int64, int64, error) {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to begin DB transaction: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to begin DB transaction; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 
 	defer func() {
@@ -1192,22 +1249,22 @@ func handlePutVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitForCh
 
 	xid, err := query.GetXid(arguments.Ctx, tx)
 	if err != nil {
-		err = fmt.Errorf("failed to get xid: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to get xid; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 	_ = xid
 
 	err = object.Update(arguments.Ctx, tx, true)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v; %v", object, err)
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
 	errs := make(chan error, 1)
 	go func() {
 		_, err = waitForChange(arguments.Ctx, []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
 		if err != nil {
-			err = fmt.Errorf("failed to wait for change: %v", err)
+			err = fmt.Errorf("failed to wait for change; %v", err)
 			errs <- err
 			return
 		}
@@ -1217,28 +1274,33 @@ func handlePutVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitForCh
 
 	err = tx.Commit(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to commit DB transaction: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to commit DB transaction; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 
 	select {
 	case <-arguments.Ctx.Done():
 		err = fmt.Errorf("context canceled")
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	case err = <-errs:
 		if err != nil {
-			return nil, err
+			return nil, 0, 0, 0, 0, err
 		}
 	}
 
-	return []*Video{object}, nil
+	count := int64(1)
+	totalCount := count
+	page := int64(1)
+	totalPages := page
+
+	return []*Video{object}, count, totalCount, page, totalPages, nil
 }
 
-func handlePatchVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, object *Video, forceSetValuesForFields []string) ([]*Video, error) {
+func handlePatchVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, object *Video, forceSetValuesForFields []string) ([]*Video, int64, int64, int64, int64, error) {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to begin DB transaction: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to begin DB transaction; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 
 	defer func() {
@@ -1247,22 +1309,22 @@ func handlePatchVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitFor
 
 	xid, err := query.GetXid(arguments.Ctx, tx)
 	if err != nil {
-		err = fmt.Errorf("failed to get xid: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to get xid; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 	_ = xid
 
 	err = object.Update(arguments.Ctx, tx, false, forceSetValuesForFields...)
 	if err != nil {
 		err = fmt.Errorf("failed to update %#+v; %v", object, err)
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	}
 
 	errs := make(chan error, 1)
 	go func() {
 		_, err = waitForChange(arguments.Ctx, []stream.Action{stream.UPDATE, stream.SOFT_DELETE, stream.SOFT_RESTORE, stream.SOFT_UPDATE}, VideoTable, xid)
 		if err != nil {
-			err = fmt.Errorf("failed to wait for change: %v", err)
+			err = fmt.Errorf("failed to wait for change; %v", err)
 			errs <- err
 			return
 		}
@@ -1272,27 +1334,32 @@ func handlePatchVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitFor
 
 	err = tx.Commit(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to commit DB transaction: %v", err)
-		return nil, err
+		err = fmt.Errorf("failed to commit DB transaction; %v", err)
+		return nil, 0, 0, 0, 0, err
 	}
 
 	select {
 	case <-arguments.Ctx.Done():
 		err = fmt.Errorf("context canceled")
-		return nil, err
+		return nil, 0, 0, 0, 0, err
 	case err = <-errs:
 		if err != nil {
-			return nil, err
+			return nil, 0, 0, 0, 0, err
 		}
 	}
 
-	return []*Video{object}, nil
+	count := int64(1)
+	totalCount := count
+	page := int64(1)
+	totalPages := page
+
+	return []*Video{object}, count, totalCount, page, totalPages, nil
 }
 
 func handleDeleteVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, object *Video) error {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to begin DB transaction: %v", err)
+		err = fmt.Errorf("failed to begin DB transaction; %v", err)
 		return err
 	}
 
@@ -1302,7 +1369,7 @@ func handleDeleteVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitFo
 
 	xid, err := query.GetXid(arguments.Ctx, tx)
 	if err != nil {
-		err = fmt.Errorf("failed to get xid: %v", err)
+		err = fmt.Errorf("failed to get xid; %v", err)
 		return err
 	}
 	_ = xid
@@ -1317,7 +1384,7 @@ func handleDeleteVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitFo
 	go func() {
 		_, err = waitForChange(arguments.Ctx, []stream.Action{stream.DELETE, stream.SOFT_DELETE}, VideoTable, xid)
 		if err != nil {
-			err = fmt.Errorf("failed to wait for change: %v", err)
+			err = fmt.Errorf("failed to wait for change; %v", err)
 			errs <- err
 			return
 		}
@@ -1327,7 +1394,7 @@ func handleDeleteVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitFo
 
 	err = tx.Commit(arguments.Ctx)
 	if err != nil {
-		err = fmt.Errorf("failed to commit DB transaction: %v", err)
+		err = fmt.Errorf("failed to commit DB transaction; %v", err)
 		return err
 	}
 
@@ -1361,7 +1428,7 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			queryParams map[string]any,
 			req server.EmptyRequest,
 			rawReq any,
-		) (*helpers.TypedResponse[Video], error) {
+		) (*server.Response[Video], error) {
 			redisConn := redisPool.Get()
 			defer func() {
 				_ = redisConn.Close()
@@ -1372,47 +1439,61 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				return nil, err
 			}
 
-			cachedObjectsAsJSON, cacheHit, err := helpers.GetCachedObjectsAsJSON(arguments.RequestHash, redisConn)
+			cachedResponseAsJSON, cacheHit, err := server.GetCachedResponseAsJSON(arguments.RequestHash, redisConn)
 			if err != nil {
 				return nil, err
 			}
 
 			if cacheHit {
-				var cachedObjects []*Video
-				err = json.Unmarshal(cachedObjectsAsJSON, &cachedObjects)
+				var cachedResponse server.Response[Video]
+
+				/* TODO: it'd be nice to be able to avoid this (i.e. just pass straight through) */
+				err = json.Unmarshal(cachedResponseAsJSON, &cachedResponse)
 				if err != nil {
 					return nil, err
 				}
 
-				return &helpers.TypedResponse[Video]{
-					Status:  http.StatusOK,
-					Success: true,
-					Error:   nil,
-					Objects: cachedObjects,
-				}, nil
+				return &cachedResponse, nil
 			}
 
-			objects, err := handleGetVideos(arguments, db)
+			objects, count, totalCount, _, _, err := handleGetVideos(arguments, db)
 			if err != nil {
 				return nil, err
 			}
 
-			objectsAsJSON, err := json.Marshal(objects)
+			limit := int64(0)
+			if arguments.Limit != nil {
+				limit = int64(*arguments.Limit)
+			}
+
+			offset := int64(0)
+			if arguments.Offset != nil {
+				offset = int64(*arguments.Offset)
+			}
+
+			response := server.Response[Video]{
+				Status:     http.StatusOK,
+				Success:    true,
+				Error:      nil,
+				Objects:    objects,
+				Count:      count,
+				TotalCount: totalCount,
+				Limit:      limit,
+				Offset:     offset,
+			}
+
+			/* TODO: it'd be nice to be able to avoid this (i.e. just marshal once, further out) */
+			responseAsJSON, err := json.Marshal(response)
 			if err != nil {
 				return nil, err
 			}
 
-			err = helpers.StoreCachedResponse(arguments.RequestHash, redisConn, string(objectsAsJSON))
+			err = server.StoreCachedResponse(arguments.RequestHash, redisConn, responseAsJSON)
 			if err != nil {
-				log.Printf("warning: %v", err)
+				log.Printf("warning; %v", err)
 			}
 
-			return &helpers.TypedResponse[Video]{
-				Status:  http.StatusOK,
-				Success: true,
-				Error:   nil,
-				Objects: objects,
-			}, nil
+			return &response, nil
 		},
 	)
 	if err != nil {
@@ -1430,7 +1511,7 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			queryParams VideoLoadQueryParams,
 			req server.EmptyRequest,
 			rawReq any,
-		) (*helpers.TypedResponse[Video], error) {
+		) (*server.Response[Video], error) {
 			redisConn := redisPool.Get()
 			defer func() {
 				_ = redisConn.Close()
@@ -1441,47 +1522,55 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				return nil, err
 			}
 
-			cachedObjectsAsJSON, cacheHit, err := helpers.GetCachedObjectsAsJSON(arguments.RequestHash, redisConn)
+			cachedResponseAsJSON, cacheHit, err := server.GetCachedResponseAsJSON(arguments.RequestHash, redisConn)
 			if err != nil {
 				return nil, err
 			}
 
 			if cacheHit {
-				var cachedObjects []*Video
-				err = json.Unmarshal(cachedObjectsAsJSON, &cachedObjects)
+				var cachedResponse server.Response[Video]
+
+				/* TODO: it'd be nice to be able to avoid this (i.e. just pass straight through) */
+				err = json.Unmarshal(cachedResponseAsJSON, &cachedResponse)
 				if err != nil {
 					return nil, err
 				}
 
-				return &helpers.TypedResponse[Video]{
-					Status:  http.StatusOK,
-					Success: true,
-					Error:   nil,
-					Objects: cachedObjects,
-				}, nil
+				return &cachedResponse, nil
 			}
 
-			objects, err := handleGetVideo(arguments, db, pathParams.PrimaryKey)
+			objects, count, totalCount, _, _, err := handleGetVideo(arguments, db, pathParams.PrimaryKey)
 			if err != nil {
 				return nil, err
 			}
 
-			objectsAsJSON, err := json.Marshal(objects)
+			limit := int64(0)
+
+			offset := int64(0)
+
+			response := server.Response[Video]{
+				Status:     http.StatusOK,
+				Success:    true,
+				Error:      nil,
+				Objects:    objects,
+				Count:      count,
+				TotalCount: totalCount,
+				Limit:      limit,
+				Offset:     offset,
+			}
+
+			/* TODO: it'd be nice to be able to avoid this (i.e. just marshal once, further out) */
+			responseAsJSON, err := json.Marshal(response)
 			if err != nil {
 				return nil, err
 			}
 
-			err = helpers.StoreCachedResponse(arguments.RequestHash, redisConn, string(objectsAsJSON))
+			err = server.StoreCachedResponse(arguments.RequestHash, redisConn, responseAsJSON)
 			if err != nil {
-				log.Printf("warning: %v", err)
+				log.Printf("warning; %v", err)
 			}
 
-			return &helpers.TypedResponse[Video]{
-				Status:  http.StatusOK,
-				Success: true,
-				Error:   nil,
-				Objects: objects,
-			}, nil
+			return &response, nil
 		},
 	)
 	if err != nil {
@@ -1499,7 +1588,7 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			queryParams VideoLoadQueryParams,
 			req []*Video,
 			rawReq any,
-		) (*helpers.TypedResponse[Video], error) {
+		) (*server.Response[Video], error) {
 			allRawItems, ok := rawReq.([]any)
 			if !ok {
 				return nil, fmt.Errorf("failed to cast %#+v to []map[string]any", rawReq)
@@ -1533,16 +1622,24 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				return nil, err
 			}
 
-			objects, err := handlePostVideos(arguments, db, waitForChange, req, forceSetValuesForFieldsByObjectIndex)
+			objects, count, totalCount, _, _, err := handlePostVideos(arguments, db, waitForChange, req, forceSetValuesForFieldsByObjectIndex)
 			if err != nil {
 				return nil, err
 			}
 
-			return &helpers.TypedResponse[Video]{
-				Status:  http.StatusCreated,
-				Success: true,
-				Error:   nil,
-				Objects: objects,
+			limit := int64(0)
+
+			offset := int64(0)
+
+			return &server.Response[Video]{
+				Status:     http.StatusOK,
+				Success:    true,
+				Error:      nil,
+				Objects:    objects,
+				Count:      count,
+				TotalCount: totalCount,
+				Limit:      limit,
+				Offset:     offset,
 			}, nil
 		},
 	)
@@ -1561,7 +1658,7 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			queryParams VideoLoadQueryParams,
 			req Video,
 			rawReq any,
-		) (*helpers.TypedResponse[Video], error) {
+		) (*server.Response[Video], error) {
 			item, ok := rawReq.(map[string]any)
 			if !ok {
 				return nil, fmt.Errorf("failed to cast %#+v to map[string]any", item)
@@ -1575,16 +1672,24 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			object := &req
 			object.ID = pathParams.PrimaryKey
 
-			objects, err := handlePutVideo(arguments, db, waitForChange, object)
+			objects, count, totalCount, _, _, err := handlePutVideo(arguments, db, waitForChange, object)
 			if err != nil {
 				return nil, err
 			}
 
-			return &helpers.TypedResponse[Video]{
-				Status:  http.StatusOK,
-				Success: true,
-				Error:   nil,
-				Objects: objects,
+			limit := int64(0)
+
+			offset := int64(0)
+
+			return &server.Response[Video]{
+				Status:     http.StatusOK,
+				Success:    true,
+				Error:      nil,
+				Objects:    objects,
+				Count:      count,
+				TotalCount: totalCount,
+				Limit:      limit,
+				Offset:     offset,
 			}, nil
 		},
 	)
@@ -1603,7 +1708,7 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			queryParams VideoLoadQueryParams,
 			req Video,
 			rawReq any,
-		) (*helpers.TypedResponse[Video], error) {
+		) (*server.Response[Video], error) {
 			item, ok := rawReq.(map[string]any)
 			if !ok {
 				return nil, fmt.Errorf("failed to cast %#+v to map[string]any", item)
@@ -1626,16 +1731,24 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			object := &req
 			object.ID = pathParams.PrimaryKey
 
-			objects, err := handlePatchVideo(arguments, db, waitForChange, object, forceSetValuesForFields)
+			objects, count, totalCount, _, _, err := handlePatchVideo(arguments, db, waitForChange, object, forceSetValuesForFields)
 			if err != nil {
 				return nil, err
 			}
 
-			return &helpers.TypedResponse[Video]{
-				Status:  http.StatusOK,
-				Success: true,
-				Error:   nil,
-				Objects: objects,
+			limit := int64(0)
+
+			offset := int64(0)
+
+			return &server.Response[Video]{
+				Status:     http.StatusOK,
+				Success:    true,
+				Error:      nil,
+				Objects:    objects,
+				Count:      count,
+				TotalCount: totalCount,
+				Limit:      limit,
+				Offset:     offset,
 			}, nil
 		},
 	)
@@ -1655,14 +1768,15 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 			req server.EmptyRequest,
 			rawReq any,
 		) (*server.EmptyResponse, error) {
-			arguments := &server.LoadArguments{
-				Ctx: ctx,
+			arguments, err := server.GetLoadArguments(ctx, queryParams.Depth)
+			if err != nil {
+				return nil, err
 			}
 
 			object := &Video{}
 			object.ID = pathParams.PrimaryKey
 
-			err := handleDeleteVideo(arguments, db, waitForChange, object)
+			err = handleDeleteVideo(arguments, db, waitForChange, object)
 			if err != nil {
 				return nil, err
 			}

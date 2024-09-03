@@ -4,8 +4,10 @@ module.exports = function (app) {
   app.use(
     "/media",
     createProxyMiddleware({
-      target: "http://localhost:6060",
-      // target: "https://camry.initialed85.cc/media",
+      target:
+        process.env.REMOTE === "1"
+          ? "https://camry.initialed85.cc/media"
+          : "http://localhost:6060",
       changeOrigin: true,
     }),
   );
@@ -13,8 +15,10 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "http://localhost:7070/api",
-      // target: "https://camry.initialed85.cc/api",
+      target:
+        process.env.REMOTE === "1"
+          ? "https://camry.initialed85.cc/api"
+          : "http://localhost:7070/api",
       changeOrigin: true,
     }),
   );

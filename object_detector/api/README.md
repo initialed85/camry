@@ -89,6 +89,7 @@ Class | Method | HTTP request | Description
 *CameraApi* | [**patch_camera**](docs/CameraApi.md#patch_camera) | **PATCH** /api/cameras/{primaryKey} | 
 *CameraApi* | [**post_cameras**](docs/CameraApi.md#post_cameras) | **POST** /api/cameras | 
 *CameraApi* | [**put_camera**](docs/CameraApi.md#put_camera) | **PUT** /api/cameras/{primaryKey} | 
+*Custom0Api* | [**patch_custom0**](docs/Custom0Api.md#patch_custom0) | **PATCH** /api/custom/claim-video-for-object-detector | 
 *DetectionApi* | [**delete_detection**](docs/DetectionApi.md#delete_detection) | **DELETE** /api/detections/{primaryKey} | 
 *DetectionApi* | [**get_detection**](docs/DetectionApi.md#get_detection) | **GET** /api/detections/{primaryKey} | 
 *DetectionApi* | [**get_detections**](docs/DetectionApi.md#get_detections) | **GET** /api/detections | 
@@ -112,6 +113,8 @@ Class | Method | HTTP request | Description
  - [GetCamerasDefaultResponse](docs/GetCamerasDefaultResponse.md)
  - [GetDetections200Response](docs/GetDetections200Response.md)
  - [GetVideos200Response](docs/GetVideos200Response.md)
+ - [PatchCustom0200Response](docs/PatchCustom0200Response.md)
+ - [PatchCustom0Request](docs/PatchCustom0Request.md)
  - [Vec2](docs/Vec2.md)
  - [Video](docs/Video.md)
 

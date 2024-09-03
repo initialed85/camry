@@ -35,7 +35,11 @@ class TestGetDetections200Response(unittest.TestCase):
         model = GetDetections200Response()
         if include_optional:
             return GetDetections200Response(
-                error = '',
+                count = 56,
+                error = [
+                    ''
+                    ],
+                limit = 56,
                 objects = [
                     openapi_client.models.detection.Detection(
                         bounding_box = [
@@ -65,6 +69,7 @@ class TestGetDetections200Response(unittest.TestCase):
                                                 camera_id_object = , 
                                                 created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                                 deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                                detection_summary = openapi_client.models.detection_summary.detection_summary(), 
                                                 duration = 56, 
                                                 ended_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                                 file_name = '', 
@@ -101,6 +106,7 @@ class TestGetDetections200Response(unittest.TestCase):
                                         camera_id_object = , 
                                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                         deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                        detection_summary = openapi_client.models.detection_summary.detection_summary(), 
                                         duration = 56, 
                                         ended_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                         file_name = '', 
@@ -133,8 +139,10 @@ class TestGetDetections200Response(unittest.TestCase):
                         video_id = '', 
                         video_id_object = , )
                     ],
+                offset = 56,
                 status = 56,
-                success = True
+                success = True,
+                total_count = 56
             )
         else:
             return GetDetections200Response(

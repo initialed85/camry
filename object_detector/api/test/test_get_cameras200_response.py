@@ -35,7 +35,11 @@ class TestGetCameras200Response(unittest.TestCase):
         model = GetCameras200Response()
         if include_optional:
             return GetCameras200Response(
-                error = '',
+                count = 56,
+                error = [
+                    ''
+                    ],
+                limit = 56,
                 objects = [
                     openapi_client.models.camera.Camera(
                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
@@ -63,6 +67,7 @@ class TestGetCameras200Response(unittest.TestCase):
                                             camera_id_object = , 
                                             created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                             deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                            detection_summary = openapi_client.models.detection_summary.detection_summary(), 
                                             duration = 56, 
                                             ended_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                             file_name = '', 
@@ -91,6 +96,7 @@ class TestGetCameras200Response(unittest.TestCase):
                                                         camera_id_object = , 
                                                         created_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                                         deleted_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
+                                                        detection_summary = openapi_client.models.detection_summary.detection_summary(), 
                                                         duration = 56, 
                                                         ended_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), 
                                                         file_name = '', 
@@ -133,8 +139,10 @@ class TestGetCameras200Response(unittest.TestCase):
                         stream_url = '', 
                         updated_at = datetime.datetime.strptime('2013-10-20 19:20:30.00', '%Y-%m-%d %H:%M:%S.%f'), )
                     ],
+                offset = 56,
                 status = 56,
-                success = True
+                success = True,
+                total_count = 56
             )
         else:
             return GetCameras200Response(

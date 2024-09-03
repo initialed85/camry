@@ -26,7 +26,7 @@ class GetCamerasDefaultResponse(BaseModel):
     """
     GetCamerasDefaultResponse
     """ # noqa: E501
-    error: Optional[StrictStr] = None
+    error: Optional[List[StrictStr]] = None
     status: StrictInt
     success: StrictBool
     __properties: ClassVar[List[str]] = ["error", "status", "success"]

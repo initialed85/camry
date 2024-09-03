@@ -7,6 +7,8 @@ from typing import List, cast
 from ultralytics import YOLO
 from ultralytics.models.yolo.detect.predict import Results
 
+from object_detector.api.openapi_client.models.patch_custom0_request import PatchCustom0Request
+
 from .api.openapi_client import (
     ApiClient,
     Configuration,
@@ -17,33 +19,38 @@ from .api.openapi_client import (
     DetectionApi,
     Detection,
     DetectionBoundingBoxInner,
+    Custom0Api,
+    PatchCustom0Request,
 )
 
 debug = os.getenv("DEBUG", "") == "1"
 
 
 def do(
-    camera: Camera,
+    camera_api: CameraApi,
     video_api: VideoApi,
     detection_api: DetectionApi,
+    custom0_api: Custom0Api,
     source_path: str,
     one_shot_video_file_name: str | None = None,
 ):
-    videos_response = None
+    videos = []
 
     if one_shot_video_file_name:
         videos_response = video_api.get_videos(
             file_name__eq=one_shot_video_file_name,
             started_at__desc="",
         )
+
+        videos = videos_response.objects
     else:
-        videos_response = video_api.get_videos(
-            camera_id__eq=camera.id,
-            status__eq="needs detection",
-            started_at__desc="",
+        video = custom0_api.patch_custom0(
+            PatchCustom0Request(
+                claim_duration_seconds=300,
+            )
         )
 
-    videos = videos_response.objects or []
+        videos = [video]
 
     if not videos:
         return
@@ -55,7 +62,7 @@ def do(
 
         if one_shot_video_file_name:
             detections_response = detection_api.get_detections(
-                camera_id__eq=camera.id,
+                camera_id__eq=video.camera_id,
                 video_id__eq=video.id,
             )
 
@@ -153,14 +160,6 @@ def do(
 
 
 def run():
-    net_cam_url = os.getenv("NET_CAM_URL")
-    if not net_cam_url:
-        raise ValueError("NET_CAM_URL env var empty or unset")
-
-    camera_name = os.getenv("CAMERA_NAME")
-    if not camera_name:
-        raise ValueError("CAMERA_NAME env var empty or unset")
-
     api_url = os.getenv("API_URL")
     if not api_url:
         raise ValueError("API_URL env var empty or unset")
@@ -176,26 +175,11 @@ def run():
     camera_api = CameraApi(api_client)
     video_api = VideoApi(api_client)
     detection_api = DetectionApi(api_client)
-
-    cameras_response = camera_api.get_cameras(
-        stream_url__eq=net_cam_url,
-        name__eq=camera_name,
-    )
-
-    cameras = cameras_response.objects or []
-
-    if not cameras or len(cameras) != 1:
-        raise ValueError(
-            f"failed to find exactly 1 camera for NET_CAM_URL={repr(net_cam_url)} CAMERA_NAME={repr(camera_name)}"
-        )
-
-    camera = cameras[0]
-
-    print(f"camera: {camera.id}, {camera.name}, {camera.stream_url}")
+    custom0_api = Custom0Api(api_client)
 
     while 1:
         try:
-            do(camera, video_api, detection_api, source_path, one_shot_file_name)
+            do(camera_api, video_api, detection_api, custom0_api, source_path, one_shot_file_name)
 
             if one_shot_file_name:
                 break

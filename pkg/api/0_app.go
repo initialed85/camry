@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/gomodule/redigo/redis"
 	"github.com/initialed85/djangolang/pkg/helpers"
 	"github.com/initialed85/djangolang/pkg/server"
@@ -16,12 +17,12 @@ import (
 func RunDumpOpenAPIJSON() {
 	openApi, err := GetOpenAPI()
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 
 	b, err := json.MarshalIndent(openApi, "", "  ")
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 
 	fmt.Printf("%v", string(b))
@@ -30,12 +31,12 @@ func RunDumpOpenAPIJSON() {
 func RunDumpOpenAPIYAML() {
 	openApi, err := GetOpenAPI()
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 
 	b, err := yaml.Marshal(openApi)
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 
 	fmt.Printf("%v", string(b))
@@ -49,7 +50,7 @@ func RunServeWithArguments(
 	redisPool *redis.Pool,
 	httpMiddlewares []server.HTTPMiddleware,
 	objectMiddlewares []server.ObjectMiddleware,
-	customHandlers []server.CustomHTTPHandler[any, any, any, any],
+	addCustomHandlers func(chi.Router) error,
 ) {
 	defer cancel()
 
@@ -58,24 +59,28 @@ func RunServeWithArguments(
 		cancel()
 	}()
 
-	err := RunServer(ctx, nil, fmt.Sprintf("0.0.0.0:%v", port), db, redisPool, nil, nil, nil)
+	err := RunServer(ctx, nil, fmt.Sprintf("0.0.0.0:%v", port), db, redisPool, httpMiddlewares, objectMiddlewares, addCustomHandlers)
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 }
 
-func RunServeWithEnvironment() {
+func RunServeWithEnvironment(
+	httpMiddlewares []server.HTTPMiddleware,
+	objectMiddlewares []server.ObjectMiddleware,
+	addCustomHandlers func(chi.Router) error,
+) {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
 	port, err := helpers.GetPort()
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 
 	db, err := helpers.GetDBFromEnvironment(ctx)
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 	defer func() {
 		db.Close()
@@ -88,7 +93,7 @@ func RunServeWithEnvironment() {
 
 	redisURL, err := helpers.GetRedisURL()
 	if err != nil {
-		log.Fatalf("err: %v", err)
+		log.Fatalf("%v", err)
 	}
 
 	redisPool := &redis.Pool{

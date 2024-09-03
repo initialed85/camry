@@ -31,6 +31,7 @@ class Video(BaseModel):
     camera_id_object: Optional[Camera] = None
     created_at: Optional[datetime] = None
     deleted_at: Optional[datetime] = None
+    detection_summary: Optional[Dict[str, Any]] = None
     duration: Optional[StrictInt] = None
     ended_at: Optional[datetime] = None
     file_name: Optional[StrictStr] = None
@@ -43,7 +44,7 @@ class Video(BaseModel):
     status: Optional[StrictStr] = None
     thumbnail_name: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "duration", "ended_at", "file_name", "file_size", "id", "object_detector_claimed_until", "object_tracker_claimed_until", "referenced_by_detection_video_id_objects", "started_at", "status", "thumbnail_name", "updated_at"]
+    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "detection_summary", "duration", "ended_at", "file_name", "file_size", "id", "object_detector_claimed_until", "object_tracker_claimed_until", "referenced_by_detection_video_id_objects", "started_at", "status", "thumbnail_name", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -99,6 +100,11 @@ class Video(BaseModel):
         if self.deleted_at is None and "deleted_at" in self.model_fields_set:
             _dict['deleted_at'] = None
 
+        # set to None if detection_summary (nullable) is None
+        # and model_fields_set contains the field
+        if self.detection_summary is None and "detection_summary" in self.model_fields_set:
+            _dict['detection_summary'] = None
+
         # set to None if duration (nullable) is None
         # and model_fields_set contains the field
         if self.duration is None and "duration" in self.model_fields_set:
@@ -135,6 +141,7 @@ class Video(BaseModel):
             "camera_id_object": Camera.from_dict(obj["camera_id_object"]) if obj.get("camera_id_object") is not None else None,
             "created_at": obj.get("created_at"),
             "deleted_at": obj.get("deleted_at"),
+            "detection_summary": obj.get("detection_summary"),
             "duration": obj.get("duration"),
             "ended_at": obj.get("ended_at"),
             "file_name": obj.get("file_name"),

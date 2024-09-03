@@ -36,6 +36,22 @@ export interface paths {
     patch: operations["PatchCamera"];
     trace?: never;
   };
+  "/api/custom/claim-video-for-object-detector": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch: operations["PatchCustom0"];
+    trace?: never;
+  };
   "/api/detections": {
     parameters: {
       query?: never;
@@ -104,6 +120,7 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    Any: Record<string, never>;
     Camera: {
       /** Format: date-time */
       created_at?: string;
@@ -181,6 +198,7 @@ export interface components {
       created_at?: string;
       /** Format: date-time */
       deleted_at?: string | null;
+      detection_summary?: Record<string, never>;
       /** Format: int64 */
       duration?: number | null;
       /** Format: date-time */
@@ -560,11 +578,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Camera"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -575,7 +601,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -609,11 +635,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Camera"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -624,7 +658,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -657,11 +691,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Camera"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -672,7 +714,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -709,11 +751,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Camera"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -724,7 +774,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -764,7 +814,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -801,11 +851,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Camera"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -816,7 +874,77 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PatchCustom0: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": {
+          /** Format: double */
+          claim_duration_seconds: number;
+        };
+      };
+    };
+    responses: {
+      /** @description Custom0 success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            /** Format: uuid */
+            camera_id?: string;
+            camera_id_object?: components["schemas"]["NullableCamera"];
+            /** Format: date-time */
+            created_at?: string;
+            /** Format: date-time */
+            deleted_at?: string | null;
+            detection_summary?: Record<string, never>;
+            /** Format: int64 */
+            duration?: number | null;
+            /** Format: date-time */
+            ended_at?: string | null;
+            file_name?: string;
+            /** Format: double */
+            file_size?: number | null;
+            /** Format: uuid */
+            id?: string;
+            /** Format: date-time */
+            object_detector_claimed_until?: string;
+            /** Format: date-time */
+            object_tracker_claimed_until?: string;
+            referenced_by_detection_video_id_objects?: components["schemas"]["NullableArrayOfDetection"];
+            /** Format: date-time */
+            started_at?: string;
+            status?: string;
+            thumbnail_name?: string;
+            /** Format: date-time */
+            updated_at?: string;
+          };
+        };
+      };
+      /** @description Custom0 failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1210,11 +1338,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Detection"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -1225,7 +1361,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1259,11 +1395,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Detection"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -1274,7 +1418,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1307,11 +1451,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Detection"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -1322,7 +1474,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1359,11 +1511,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Detection"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -1374,7 +1534,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1414,7 +1574,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1451,11 +1611,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Detection"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -1466,7 +1634,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2004,11 +2172,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Video"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -2019,7 +2195,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2053,11 +2229,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Video"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -2068,7 +2252,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2101,11 +2285,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Video"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -2116,7 +2308,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2153,11 +2345,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Video"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -2168,7 +2368,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2208,7 +2408,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2245,11 +2445,19 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            /** Format: int64 */
+            count?: number;
+            error?: string[];
+            /** Format: int64 */
+            limit?: number;
             objects?: components["schemas"]["Video"][];
+            /** Format: int64 */
+            offset?: number;
             /** Format: int32 */
             status: number;
             success: boolean;
+            /** Format: int64 */
+            total_count?: number;
           };
         };
       };
@@ -2260,7 +2468,7 @@ export interface operations {
         };
         content: {
           "application/json": {
-            error?: string;
+            error?: string[];
             /** Format: int32 */
             status: number;
             success: boolean;

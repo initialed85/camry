@@ -4,36 +4,30 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import { Dispatch, SetStateAction } from "react";
+import { formatDate, truncateDate } from "../helpers";
 
 export interface DateDropdownMenuProps {
   responsive: boolean;
-  date: string | null | undefined;
-  setDate: Dispatch<SetStateAction<string | null | undefined>>;
+  startedAtGt: string | undefined;
+  setStartedAtGt: Dispatch<SetStateAction<string | undefined>>;
+  startedAtLte: string | undefined;
+  setStartedAtLte: Dispatch<SetStateAction<string | undefined>>;
 }
-
-export const formatDate = (date: Date): string => {
-  const pad = (s: string): string => {
-    if (s.length < 2) {
-      return `0${s}`;
-    }
-
-    return s;
-  };
-
-  const year = date.getFullYear().toString();
-  const month = pad((date.getMonth() + 1).toString());
-  const day = pad(date.getDate().toString());
-
-  return `${year}-${month}-${day}`;
-};
 
 export default function DateDropdownMenu(props: DateDropdownMenuProps) {
   var cursor = new Date();
+
   const dates = [];
   for (var i = 0; i < 14; i++) {
-    dates.push(formatDate(cursor));
+    dates.push(truncateDate(cursor));
+    cursor = new Date(cursor.getTime() - 24 * 60 * 60 * 1000);
+  }
 
-    cursor.setMilliseconds(cursor.getMilliseconds() - 24 * 60 * 60 * 1000);
+  if (!props.startedAtGt) {
+    props.setStartedAtGt(cursor.toISOString());
+    props.setStartedAtLte(
+      new Date(cursor.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+    );
   }
 
   return (
@@ -50,13 +44,20 @@ export default function DateDropdownMenu(props: DateDropdownMenuProps) {
         {dates.map((date) => {
           return (
             <MenuItem
-              key={date}
-              selected={props.date === date}
+              key={`date-dropdown-menu-item-${date}`}
+              selected={
+                !!(
+                  props.startedAtGt && props.startedAtGt === date.toISOString()
+                )
+              }
               onClick={(event) => {
-                props.setDate(props.date !== date ? date : undefined);
+                props.setStartedAtGt(date.toISOString());
+                props.setStartedAtLte(
+                  new Date(date.getTime() + 24 * 60 * 60 * 1000).toISOString(),
+                );
               }}
             >
-              {date}
+              {formatDate(date)}
             </MenuItem>
           );
         })}

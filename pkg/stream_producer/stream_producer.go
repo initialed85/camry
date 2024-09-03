@@ -331,7 +331,7 @@ func Run() error {
 			return err
 		}
 
-		cameras, err := api.SelectCameras(
+		cameras, _, _, _, _, err := api.SelectCameras(
 			ctx,
 			tx,
 			fmt.Sprintf(
@@ -422,7 +422,7 @@ func Run() error {
 			}()
 
 			if camera != nil {
-				camera.StreamProducerClaimedUntil = time.Time{}
+				camera.SegmentProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
 				camera.StreamProducerClaimedUntil = time.Now().UTC().Add(time.Second * 1)
 
 				err = camera.Update(ctx, tx, false)

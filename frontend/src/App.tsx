@@ -4,8 +4,8 @@ import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useState } from "react";
 import useLocalStorageState from "use-local-storage-state";
-import CameraToggleButtonGroup from "./components/CameraToggleButtonGroup";
-import DateDropdownMenu, { formatDate } from "./components/DateDropdownMenu";
+import CameraDropdownMenu from "./components/CameraDropdownMenu";
+import DateDropdownMenu from "./components/DateDropdownMenu";
 import ModeToggle from "./components/ModeToggle";
 import { VideoTable } from "./components/VideoTable";
 
@@ -24,16 +24,38 @@ function App() {
   // };
 
   const [responsive, setResponsive] = useState(window.innerWidth < 992);
-  const [cameraId, setCameraId] = useLocalStorageState<
-    string | null | undefined
-  >("cameraId", {
+
+  const [cameraId, setCameraId] = useLocalStorageState<string | undefined>(
+    "cameraId",
+    {
+      defaultValue: undefined,
+    },
+  );
+
+  const [startedAtGt, setStartedAtGt] = useLocalStorageState<
+    string | undefined
+  >("startedAtGt", {
     defaultValue: undefined,
   });
-  const [date, setDate] = useLocalStorageState<string | null | undefined>(
-    "date",
-    {
-      defaultValue: formatDate(new Date()),
-    },
+
+  const [startedAtLte, setStartedAtLte] = useLocalStorageState<
+    string | undefined
+  >("startedAtLte", {
+    defaultValue: undefined,
+  });
+
+  console.log(
+    "state: ",
+    JSON.stringify(
+      {
+        responsive: responsive,
+        cameraId: cameraId,
+        startedAtGt: startedAtGt,
+        startedAtLte: startedAtLte,
+      },
+      null,
+      2,
+    ),
   );
 
   useEffect(() => {
@@ -62,42 +84,47 @@ function App() {
       }}
     >
       <Grid container sx={{ pb: 1 }}>
-        <Grid xs={1}>
-          <Typography
-            level="h4"
-            component="h4"
-            sx={{ pt: 0.1, textAlign: "center" }}
-            color="neutral"
-          >
-            {responsive ? "C" : "Camry"}
-          </Typography>
-        </Grid>
         <Grid
-          xs={10}
+          xs={11}
           sx={{
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
           }}
         >
-          <CameraToggleButtonGroup
+          <Typography
+            level="h4"
+            component="h4"
+            sx={{ pt: 0.1, pl: 0.75, pr: 1, textAlign: "center" }}
+            color="neutral"
+          >
+            {responsive ? "C" : "Camry"}
+          </Typography>
+          <CameraDropdownMenu
             responsive={responsive}
             cameraId={cameraId}
             setCameraId={setCameraId}
           />
           <DateDropdownMenu
             responsive={responsive}
-            date={date}
-            setDate={setDate}
+            startedAtGt={startedAtGt}
+            setStartedAtGt={setStartedAtGt}
+            startedAtLte={startedAtLte}
+            setStartedAtLte={setStartedAtLte}
           />
-          <Input size="sm" sx={{ mr: 1.5 }} />
+          <Input size="sm" sx={{ mr: 1.5, width: "100%", maxWidth: 300 }} />
         </Grid>
         <Grid xs={1} sx={{ display: "flex", justifyContent: "end", pr: 0.5 }}>
           <ModeToggle responsive={responsive} />
         </Grid>
       </Grid>
 
-      <VideoTable responsive={responsive} cameraId={cameraId} date={date} />
+      <VideoTable
+        responsive={responsive}
+        cameraId={cameraId}
+        startedAtGt={startedAtGt}
+        startedAtLte={startedAtLte}
+      />
     </Sheet>
   );
 }

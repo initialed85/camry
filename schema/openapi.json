@@ -1564,8 +1564,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -1573,12 +1584,20 @@
                         "$ref": "#/components/schemas/Camera"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -1597,7 +1616,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -1654,8 +1676,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -1663,12 +1696,20 @@
                         "$ref": "#/components/schemas/Camera"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -1687,7 +1728,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -1740,8 +1784,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -1749,12 +1804,20 @@
                         "$ref": "#/components/schemas/Camera"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -1773,7 +1836,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -1834,8 +1900,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -1843,12 +1920,20 @@
                         "$ref": "#/components/schemas/Camera"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -1867,7 +1952,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -1928,8 +2016,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -1937,12 +2036,20 @@
                         "$ref": "#/components/schemas/Camera"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -1961,7 +2068,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -2016,7 +2126,147 @@
                   "type": "object",
                   "properties": {
                     "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/custom/claim-video-for-object-detector": {
+      "patch": {
+        "tags": [
+          "Custom0"
+        ],
+        "operationId": "PatchCustom0",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "claim_duration_seconds": {
+                    "type": "number",
+                    "format": "double"
+                  }
+                },
+                "required": [
+                  "claim_duration_seconds"
+                ]
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Custom0 success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "camera_id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "camera_id_object": {
+                      "$ref": "#/components/schemas/NullableCamera"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "deleted_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "detection_summary": {
+                      "type": "object",
+                      "nullable": true
+                    },
+                    "duration": {
+                      "type": "integer",
+                      "format": "int64",
+                      "nullable": true
+                    },
+                    "ended_at": {
+                      "type": "string",
+                      "format": "date-time",
+                      "nullable": true
+                    },
+                    "file_name": {
                       "type": "string"
+                    },
+                    "file_size": {
+                      "type": "number",
+                      "format": "double",
+                      "nullable": true
+                    },
+                    "id": {
+                      "type": "string",
+                      "format": "uuid"
+                    },
+                    "object_detector_claimed_until": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "object_tracker_claimed_until": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "referenced_by_detection_video_id_objects": {
+                      "$ref": "#/components/schemas/NullableArrayOfDetection"
+                    },
+                    "started_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "status": {
+                      "type": "string"
+                    },
+                    "thumbnail_name": {
+                      "type": "string"
+                    },
+                    "updated_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Custom0 failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -3774,8 +4024,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -3783,12 +4044,20 @@
                         "$ref": "#/components/schemas/Detection"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -3807,7 +4076,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -3864,8 +4136,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -3873,12 +4156,20 @@
                         "$ref": "#/components/schemas/Detection"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -3897,7 +4188,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -3950,8 +4244,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -3959,12 +4264,20 @@
                         "$ref": "#/components/schemas/Detection"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -3983,7 +4296,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -4044,8 +4360,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -4053,12 +4380,20 @@
                         "$ref": "#/components/schemas/Detection"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -4077,7 +4412,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -4138,8 +4476,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -4147,12 +4496,20 @@
                         "$ref": "#/components/schemas/Detection"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -4171,7 +4528,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -4226,7 +4586,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -6648,8 +7011,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -6657,12 +7031,20 @@
                         "$ref": "#/components/schemas/Video"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -6681,7 +7063,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -6738,8 +7123,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -6747,12 +7143,20 @@
                         "$ref": "#/components/schemas/Video"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -6771,7 +7175,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -6824,8 +7231,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -6833,12 +7251,20 @@
                         "$ref": "#/components/schemas/Video"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -6857,7 +7283,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -6918,8 +7347,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -6927,12 +7367,20 @@
                         "$ref": "#/components/schemas/Video"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -6951,7 +7399,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -7012,8 +7463,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
+                    "count": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "limit": {
+                      "type": "integer",
+                      "format": "int64"
                     },
                     "objects": {
                       "type": "array",
@@ -7021,12 +7483,20 @@
                         "$ref": "#/components/schemas/Video"
                       }
                     },
+                    "offset": {
+                      "type": "integer",
+                      "format": "int64"
+                    },
                     "status": {
                       "type": "integer",
                       "format": "int32"
                     },
                     "success": {
                       "type": "boolean"
+                    },
+                    "total_count": {
+                      "type": "integer",
+                      "format": "int64"
                     }
                   },
                   "required": [
@@ -7045,7 +7515,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -7100,7 +7573,10 @@
                   "type": "object",
                   "properties": {
                     "error": {
-                      "type": "string"
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
                     },
                     "status": {
                       "type": "integer",
@@ -7124,6 +7600,10 @@
   },
   "components": {
     "schemas": {
+      "Any": {
+        "type": "object",
+        "nullable": true
+      },
       "Camera": {
         "type": "object",
         "properties": {
@@ -7314,6 +7794,10 @@
           "deleted_at": {
             "type": "string",
             "format": "date-time",
+            "nullable": true
+          },
+          "detection_summary": {
+            "type": "object",
             "nullable": true
           },
           "duration": {

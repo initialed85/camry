@@ -5,10 +5,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**error** | **str** |  | [optional] 
+**count** | **int** |  | [optional] 
+**error** | **List[str]** |  | [optional] 
+**limit** | **int** |  | [optional] 
 **objects** | [**List[Camera]**](Camera.md) |  | [optional] 
+**offset** | **int** |  | [optional] 
 **status** | **int** |  | 
 **success** | **bool** |  | 
+**total_count** | **int** |  | [optional] 
 
 ## Example
 

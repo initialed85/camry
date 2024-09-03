@@ -5,41 +5,93 @@ import CircularProgress from "@mui/joy/CircularProgress";
 import Table from "@mui/joy/Table";
 import Tooltip from "@mui/joy/Tooltip";
 import Typography from "@mui/joy/Typography";
-import { useQuery } from "../api";
+import Container from "@mui/material/Container";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useInView } from "react-intersection-observer";
+import { clientForReactQuery, useQuery } from "../api";
 import { components } from "../api/api";
-import { formatDate } from "./DateDropdownMenu";
+import { formatDate } from "../helpers";
+
+const defaultLimit = 60;
 
 export interface VideoTableProps {
   responsive: boolean;
-  cameraId: string | null | undefined;
-  date: string | null | undefined;
+  cameraId: string | undefined;
+  startedAtGt: string | undefined;
+  startedAtLte: string | undefined;
 }
 
 export function VideoTable(props: VideoTableProps) {
-  const { data: videosData } = useQuery("get", "/api/videos", {
+  const [ref, inView] = useInView();
+
+  const { data: allCamerasData } = useQuery("get", "/api/cameras", {
     params: {
       query: {
-        camera_id__eq: props.cameraId || undefined,
-        started_at__gte: props.date
-          ? `${props.date}T00:00:00+08:00`
-          : undefined,
-        started_at__lte: props.date
-          ? `${props.date}T23:59:59+08:00`
-          : undefined,
-        started_at__desc: "",
+        name__asc: "",
       },
     },
   });
 
-  // useInfiniteQuery({
-  //   queryKey: ["videos"],
-  //   queryFn: async ({ pageParam = 0 }) => {
-  //     const res = await clientForReactQuery.GET("/api/cameras", { params: { query: {} } });
-  //     return res.data;
-  //   },
-  //   initialPageParam: 0,
-  //   getNextPageParam: (lastPage, pages) => 1,
-  // });
+  const visibleCameraCount = props.cameraId
+    ? 1
+    : allCamerasData?.objects?.length || 1;
+
+  const relevantLimit = defaultLimit * visibleCameraCount;
+
+  const {
+    data: infiniteVideosData,
+    hasNextPage,
+    fetchNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["videos"],
+    queryHash: JSON.stringify(props),
+    queryFn: async ({ pageParam = 0 }) => {
+      const res = await clientForReactQuery.GET("/api/videos", {
+        params: {
+          query: {
+            camera_id__eq: props.cameraId || undefined,
+            started_at__gt: props.startedAtGt && props.startedAtGt,
+            started_at__lte: props.startedAtLte && props.startedAtLte,
+            started_at__desc: "",
+            limit: relevantLimit,
+            offset: pageParam,
+          },
+        },
+      });
+      return res.data;
+    },
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, pages) => {
+      /*
+      TODO: this doesn't cater for the fact that we have new data coming in- really we should
+      use something like timestamp for the cursor, and even then we should probably split out
+      finished videos from processing videos
+      */
+
+      if (lastPage?.count === 0) {
+        return lastPage?.offset;
+      }
+
+      return (lastPage?.offset || 0) + relevantLimit;
+    },
+  });
+
+  const videosData: {
+    objects: components["schemas"]["Video"][];
+  } = {
+    objects: [],
+  };
+
+  infiniteVideosData?.pages.forEach((page) => {
+    page?.objects?.forEach((object) => {
+      if (!object) {
+        return;
+      }
+
+      videosData?.objects.push(object);
+    });
+  });
 
   const { data: camerasData } = useQuery("get", "/api/cameras", {});
 
@@ -86,12 +138,28 @@ export function VideoTable(props: VideoTableProps) {
       }
     : {};
 
+  useEffect(() => {
+    if (inView && hasNextPage) {
+      void fetchNextPage();
+    }
+  }, [fetchNextPage, hasNextPage, inView]);
+
   return (
     <Table
       size="sm"
       sx={{
-        th: { textAlign: "center" },
-        td: { textAlign: "center", ...truncateStyleProps },
+        th: {
+          textAlign: "center",
+          p: 0,
+          m: 0,
+        },
+        td: {
+          textAlign: "center",
+          p: 0,
+          m: 0,
+          pt: 0.66,
+          ...truncateStyleProps,
+        },
       }}
       stickyHeader={true}
       stripe={"odd"}
@@ -167,9 +235,12 @@ export function VideoTable(props: VideoTableProps) {
                   href={`/media/${video?.thumbnail_name}`}
                 >
                   <img
-                    style={{ width: props.responsive ? 160 : 320 }}
-                    alt={`still from ${video?.camera_id_object?.name} @ ${props.date} ${startedAt}`}
+                    alt={`still from ${video?.camera_id_object?.name} @ ${startedAt}`}
                     src={`/media/${video?.thumbnail_name}`}
+                    style={{
+                      width: props.responsive ? 160 : 320,
+                      height: props.responsive ? 90 : 180,
+                    }}
                   />
                 </a>
               );
@@ -216,7 +287,7 @@ export function VideoTable(props: VideoTableProps) {
             }
 
             return (
-              <tr key={video.id}>
+              <tr key={`vidoe-table-row-${video.id}`}>
                 <td>
                   <Typography style={{ display: "inline" }}>
                     {formatDate(startedAt)}{" "}
@@ -236,16 +307,19 @@ export function VideoTable(props: VideoTableProps) {
                   <Typography color="neutral">{fileSize} MB</Typography>
                 </td>
                 <td>{classNames}</td>
-                <td
-                  style={{
-                    height: props.responsive ? 90 : 180,
-                    paddingTop: 4,
-                    paddingBottom: 0,
-                    paddingLeft: 4,
-                    paddingRight: 4,
-                  }}
-                >
-                  {thumbnail}
+                <td>
+                  <Container
+                    sx={{
+                      width: props.responsive ? 160 : 320,
+                      height: props.responsive ? 90 : 180,
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    {thumbnail}
+                  </Container>
                 </td>
                 <td>
                   {available ? (
@@ -265,13 +339,18 @@ export function VideoTable(props: VideoTableProps) {
           })
         ) : (
           <tr>
-            <td colSpan={6}>
+            <td colSpan={5}>
               <Typography color={"neutral"}>
                 (No videos for the selected camera / date)
               </Typography>
             </td>
           </tr>
         )}
+        <tr>
+          <td colSpan={5} ref={ref}>
+            <Typography color={"neutral"}> </Typography>
+          </td>
+        </tr>
       </tbody>
     </Table>
   );

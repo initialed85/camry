@@ -27,11 +27,15 @@ class GetCameras200Response(BaseModel):
     """
     GetCameras200Response
     """ # noqa: E501
-    error: Optional[StrictStr] = None
+    count: Optional[StrictInt] = None
+    error: Optional[List[StrictStr]] = None
+    limit: Optional[StrictInt] = None
     objects: Optional[List[Camera]] = None
+    offset: Optional[StrictInt] = None
     status: StrictInt
     success: StrictBool
-    __properties: ClassVar[List[str]] = ["error", "objects", "status", "success"]
+    total_count: Optional[StrictInt] = None
+    __properties: ClassVar[List[str]] = ["count", "error", "limit", "objects", "offset", "status", "success", "total_count"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -91,10 +95,14 @@ class GetCameras200Response(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "count": obj.get("count"),
             "error": obj.get("error"),
+            "limit": obj.get("limit"),
             "objects": [Camera.from_dict(_item) for _item in obj["objects"]] if obj.get("objects") is not None else None,
+            "offset": obj.get("offset"),
             "status": obj.get("status"),
-            "success": obj.get("success")
+            "success": obj.get("success"),
+            "total_count": obj.get("total_count")
         })
         return _obj
 

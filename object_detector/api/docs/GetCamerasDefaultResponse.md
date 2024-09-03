@@ -5,7 +5,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**error** | **str** |  | [optional] 
+**error** | **List[str]** |  | [optional] 
 **status** | **int** |  | 
 **success** | **bool** |  | 
 

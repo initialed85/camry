@@ -28,7 +28,7 @@ func main() {
 		api.RunDumpOpenAPIYAML()
 
 	case "serve":
-		api.RunServeWithEnvironment()
+		api.RunServeWithEnvironment(nil, nil, nil)
 
 	case "segment_producer":
 		err = segment_producer.Run()

@@ -400,7 +400,7 @@ func Run() error {
 			return err
 		}
 
-		cameras, err := api.SelectCameras(
+		cameras, _, _, _, _, err := api.SelectCameras(
 			ctx,
 			tx,
 			fmt.Sprintf(
@@ -429,7 +429,7 @@ func Run() error {
 		now := time.Now().UTC()
 		camera.LastSeen = now
 		camera.SegmentProducerClaimedUntil = now.Add(time.Second * time.Duration(durationSeconds) * 2)
-		camera.StreamProducerClaimedUntil = time.Time{}
+		camera.StreamProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
 
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
@@ -459,7 +459,7 @@ func Run() error {
 			_ = tx.Rollback(ctx)
 		}()
 
-		orphanedVideos, err := api.SelectVideos(
+		orphanedVideos, _, _, _, _, err := api.SelectVideos(
 			ctx,
 			tx,
 			fmt.Sprintf(

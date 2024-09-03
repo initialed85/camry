@@ -35,7 +35,9 @@ class TestGetCamerasDefaultResponse(unittest.TestCase):
         model = GetCamerasDefaultResponse()
         if include_optional:
             return GetCamerasDefaultResponse(
-                error = '',
+                error = [
+                    ''
+                    ],
                 status = 56,
                 success = True
             )
