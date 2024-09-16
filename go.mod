@@ -1,16 +1,20 @@
 module github.com/initialed85/camry
 
-go 1.21.7
+go 1.23
+
+toolchain go1.23.1
+
+// replace github.com/initialed85/djangolang => ../djangolang
 
 require (
 	github.com/cridenour/go-postgis v1.0.0
 	github.com/go-chi/chi/v5 v5.1.0
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/uuid v1.6.0
-	github.com/initialed85/djangolang v0.0.77
-	github.com/jackc/pgx/v5 v5.6.0
+	github.com/initialed85/djangolang v0.0.99
+	github.com/jackc/pgx/v5 v5.7.1
 	github.com/stretchr/testify v1.9.0
-	golang.org/x/exp v0.0.0-20240823005443-9b4947da3948
+	golang.org/x/exp v0.0.0-20240909161429-701f63a606c0
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -18,7 +22,7 @@ require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/go-test/deep v1.0.8 // indirect
 	github.com/jackc/pgtype v1.14.3 // indirect
-	github.com/jackc/puddle/v2 v2.2.1 // indirect
+	github.com/jackc/puddle/v2 v2.2.2 // indirect
 	github.com/klauspost/compress v1.17.7 // indirect
 	github.com/kr/pretty v0.3.1 // indirect
 	github.com/nats-io/nkeys v0.4.7 // indirect
@@ -26,7 +30,7 @@ require (
 	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/sync v0.8.0 // indirect
-	golang.org/x/sys v0.23.0 // indirect
+	golang.org/x/sys v0.25.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
@@ -49,7 +53,7 @@ require (
 	github.com/nats-io/nats.go v1.37.0
 	github.com/twpayne/go-geom v1.5.7 // indirect
 	go.mongodb.org/mongo-driver v1.16.1 // indirect
-	golang.org/x/crypto v0.26.0 // indirect
-	golang.org/x/text v0.17.0 // indirect
-	gorm.io/gorm v1.25.11 // indirect
+	golang.org/x/crypto v0.27.0 // indirect
+	golang.org/x/text v0.18.0 // indirect
+	gorm.io/gorm v1.25.12 // indirect
 )

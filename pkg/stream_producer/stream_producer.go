@@ -17,13 +17,13 @@ import (
 	"github.com/google/uuid"
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/pkg/api"
-	djangolang_helpers "github.com/initialed85/djangolang/pkg/helpers"
+	"github.com/initialed85/djangolang/pkg/config"
 )
 
 const (
 	executable           = "ffmpeg"
-	watchdogTimeout      = time.Second * 10
-	claimRefreshDuration = time.Minute * 1
+	watchdogTimeout      = time.Second * 30
+	claimRefreshDuration = time.Second * 90 // TODO: should probably be configurable
 )
 
 func getCommandLine(
@@ -304,7 +304,7 @@ func Run() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	db, err := djangolang_helpers.GetDBFromEnvironment(ctx)
+	db, err := config.GetDBFromEnvironment(ctx)
 	if err != nil {
 		return err
 	}
@@ -314,70 +314,76 @@ func Run() error {
 
 	camera := &api.Camera{}
 
-	err = func() error {
-		tx, err := db.Begin(ctx)
-		if err != nil {
-			return err
-		}
+	for {
+		err = func() error {
+			tx, err := db.Begin(ctx)
+			if err != nil {
+				return err
+			}
 
-		defer func() {
-			_ = tx.Rollback(ctx)
+			defer func() {
+				_ = tx.Rollback(ctx)
+			}()
+
+			log.Printf("waiting to lock for claiming a camera...")
+
+			err = camera.AdvisoryLockWithRetries(ctx, tx, 2, claimRefreshDuration+(time.Second*2), time.Second*1)
+			if err != nil {
+				return err
+			}
+
+			cameras, _, _, _, _, err := api.SelectCameras(
+				ctx,
+				tx,
+				fmt.Sprintf(
+					"%v < now()",
+					api.CameraTableStreamProducerClaimedUntilColumn,
+				),
+				internal.Ptr(fmt.Sprintf(
+					"%v DESC",
+					api.CameraTableStreamProducerClaimedUntilColumn,
+				)),
+				internal.Ptr(1),
+				nil,
+			)
+			if err != nil {
+				return err
+			}
+
+			if len(cameras) != 1 {
+				return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
+			}
+
+			camera = cameras[0]
+
+			log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
+
+			now := internal.GetNow()
+			camera.LastSeen = now
+			camera.SegmentProducerClaimedUntil = time.Time{}
+			camera.StreamProducerClaimedUntil = now.Add(claimRefreshDuration)
+
+			err = camera.Update(ctx, tx, false)
+			if err != nil {
+				return err
+			}
+
+			log.Printf("acquired claim on camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
+
+			err = tx.Commit(ctx)
+			if err != nil {
+				return err
+			}
+
+			return nil
 		}()
-
-		log.Printf("waiting to lock camera table for claiming a camera...")
-
-		err = camera.LockTable(ctx, tx, false)
 		if err != nil {
-			return err
+			log.Printf("warning: %v", err)
+			time.Sleep(time.Second * 1)
+			continue
 		}
 
-		cameras, _, _, _, _, err := api.SelectCameras(
-			ctx,
-			tx,
-			fmt.Sprintf(
-				"%v < now()",
-				api.CameraTableStreamProducerClaimedUntilColumn,
-			),
-			internal.Ptr(fmt.Sprintf(
-				"%v DESC",
-				api.CameraTableStreamProducerClaimedUntilColumn,
-			)),
-			internal.Ptr(1),
-			nil,
-		)
-		if err != nil {
-			return err
-		}
-
-		if len(cameras) != 1 {
-			return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
-		}
-
-		camera = cameras[0]
-
-		log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
-
-		now := time.Now().UTC()
-		camera.LastSeen = now
-		camera.SegmentProducerClaimedUntil = time.Time{}
-		camera.StreamProducerClaimedUntil = now.Add(claimRefreshDuration * 2)
-
-		err = camera.Update(ctx, tx, false)
-		if err != nil {
-			return err
-		}
-
-		log.Printf("acquired claim on camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
-
-		err = tx.Commit(ctx)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	}()
-	if err != nil {
-		return err
+		break
 	}
 
 	onUpdate := func(timestamp time.Time) error {
@@ -392,7 +398,7 @@ func Run() error {
 
 		camera.LastSeen = timestamp
 		camera.SegmentProducerClaimedUntil = time.Time{}
-		camera.StreamProducerClaimedUntil = timestamp.Add(claimRefreshDuration * 2)
+		camera.StreamProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
 
 		err = camera.Update(ctx, tx, false)
 		if err != nil {
@@ -423,7 +429,7 @@ func Run() error {
 
 			if camera != nil {
 				camera.SegmentProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
-				camera.StreamProducerClaimedUntil = time.Now().UTC().Add(time.Second * 1)
+				camera.StreamProducerClaimedUntil = internal.GetNow()
 
 				err = camera.Update(ctx, tx, false)
 				if err != nil {

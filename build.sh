@@ -32,10 +32,12 @@ if [[ "${FORCE_UPDATE_DJANGOLANG}" == "1" ]] || ! command -v djangolang >/dev/nu
 fi
 
 # ensure the docker compose environment is already running
-echo -e "\nwaiting for healthy docker compose environment..."
-while ! docker compose ps -a | grep post-migrate | grep 'Exited (0)' >/dev/null 2>&1; do
-    sleep 0.1
-done
+if [[ "${SKIP_DOCKER_COMPOSE_CHECK}" != "1" ]]; then
+    echo -e "\nwaiting for healthy docker compose environment..."
+    while ! docker compose ps -a | grep post-migrate | grep 'Exited (0)' >/dev/null 2>&1; do
+        sleep 0.1
+    done
+fi
 
 # introspect the database and generate the Djangolang API
 # note: the environment variables are coupled to the environment described in docker-compose.yaml
@@ -56,7 +58,7 @@ REDIS_URL=redis://localhost:6379 DJANGOLANG_API_ROOT=/api POSTGRES_DB=camry POST
 pid=$!
 sleep 5
 curl http://localhost:7070/api/openapi.json >./schema/openapi.json
-kill -15 ${pid}
+kill -15 ${pid} || true
 
 # generate the client for use by the frontend
 echo -e "\ngenerating typescript client..."

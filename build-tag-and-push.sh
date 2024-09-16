@@ -15,6 +15,12 @@ if ! command -v docker >/dev/null 2>&1; then
     exit 1
 fi
 
+# TODO: hack workaround for intermittent builds on darwin aarch64
+mkdir -p ./tmp
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/api -trimpath ./cmd/api
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/segment-producer -trimpath ./cmd/segment_producer
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/stream-producer -trimpath ./cmd/stream_producer
+
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-api:latest -f ./docker/api/Dockerfile .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-segment-producer:latest -f ./docker/segment-producer/Dockerfile .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-stream-producer:latest -f ./docker/stream-producer/Dockerfile .

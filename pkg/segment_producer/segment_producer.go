@@ -20,12 +20,13 @@ import (
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/camry/pkg/helpers"
+	"github.com/initialed85/djangolang/pkg/config"
 	djangolang_helpers "github.com/initialed85/djangolang/pkg/helpers"
 )
 
 const (
 	executable      = "ffmpeg"
-	watchdogTimeout = time.Second * 10
+	watchdogTimeout = time.Second * 30
 )
 
 var (
@@ -373,7 +374,7 @@ func Run() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	db, err := djangolang_helpers.GetDBFromEnvironment(ctx)
+	db, err := config.GetDBFromEnvironment(ctx)
 	if err != nil {
 		return err
 	}
@@ -381,72 +382,80 @@ func Run() error {
 		db.Close()
 	}()
 
+	claimRefreshDuration := (time.Duration(durationSeconds) * time.Second) + (time.Second * 2)
+
 	camera := &api.Camera{}
 
-	err = func() error {
-		tx, err := db.Begin(ctx)
-		if err != nil {
-			return err
-		}
+	for {
+		err = func() error {
+			tx, err := db.Begin(ctx)
+			if err != nil {
+				return err
+			}
 
-		defer func() {
-			_ = tx.Rollback(ctx)
+			defer func() {
+				_ = tx.Rollback(ctx)
+			}()
+
+			log.Printf("waiting to lock for claiming a camera...")
+
+			err = camera.AdvisoryLockWithRetries(ctx, tx, 1, claimRefreshDuration+(time.Second*2), time.Second*1)
+			if err != nil {
+				return err
+			}
+
+			cameras, _, _, _, _, err := api.SelectCameras(
+				ctx,
+				tx,
+				fmt.Sprintf(
+					"%v < now()",
+					api.CameraTableSegmentProducerClaimedUntilColumn,
+				),
+				internal.Ptr(fmt.Sprintf(
+					"%v DESC",
+					api.CameraTableSegmentProducerClaimedUntilColumn,
+				)),
+				internal.Ptr(1),
+				nil,
+			)
+			if err != nil {
+				return err
+			}
+
+			if len(cameras) != 1 {
+				return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
+			}
+
+			camera = cameras[0]
+
+			log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
+
+			now := internal.GetNow()
+			camera.LastSeen = now
+			camera.SegmentProducerClaimedUntil = now.Add(claimRefreshDuration)
+			camera.StreamProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
+
+			err = camera.Update(ctx, tx, false)
+			if err != nil {
+				return err
+			}
+
+			log.Printf("acquired claim on camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
+
+			err = tx.Commit(ctx)
+			if err != nil {
+				return err
+			}
+
+			return nil
 		}()
-
-		log.Printf("waiting to lock camera table for claiming a camera...")
-
-		err = camera.LockTable(ctx, tx, false)
 		if err != nil {
-			return err
+			log.Printf("warning: %v", err)
+			time.Sleep(time.Second * 1)
+			continue
 		}
 
-		cameras, _, _, _, _, err := api.SelectCameras(
-			ctx,
-			tx,
-			fmt.Sprintf(
-				"%v < now()",
-				api.CameraTableSegmentProducerClaimedUntilColumn,
-			),
-			internal.Ptr(fmt.Sprintf(
-				"%v DESC",
-				api.CameraTableSegmentProducerClaimedUntilColumn,
-			)),
-			internal.Ptr(1),
-			nil,
-		)
-		if err != nil {
-			return err
-		}
-
-		if len(cameras) != 1 {
-			return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
-		}
-
-		camera = cameras[0]
-
-		log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
-
-		now := time.Now().UTC()
-		camera.LastSeen = now
-		camera.SegmentProducerClaimedUntil = now.Add(time.Second * time.Duration(durationSeconds) * 2)
-		camera.StreamProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
-
-		err = camera.Update(ctx, tx, false)
-		if err != nil {
-			return err
-		}
-
-		log.Printf("acquired claim on camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
-
-		err = tx.Commit(ctx)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	}()
-	if err != nil {
-		return err
+		break
 	}
 
 	err = func() error {
@@ -567,7 +576,7 @@ func Run() error {
 		}
 
 		camera.LastSeen = timestamp
-		camera.SegmentProducerClaimedUntil = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.SegmentProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
 		camera.StreamProducerClaimedUntil = time.Time{}
 
 		err = camera.Update(ctx, tx, false)
@@ -611,7 +620,7 @@ func Run() error {
 		}
 
 		camera.LastSeen = timestamp
-		camera.SegmentProducerClaimedUntil = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.SegmentProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
 		camera.StreamProducerClaimedUntil = time.Time{}
 
 		err = camera.Update(ctx, tx, false)
@@ -673,7 +682,7 @@ func Run() error {
 		}
 
 		camera.LastSeen = timestamp
-		camera.SegmentProducerClaimedUntil = timestamp.Add(time.Second * time.Duration(durationSeconds) * 2)
+		camera.SegmentProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
 		camera.StreamProducerClaimedUntil = time.Time{}
 
 		err = camera.Update(ctx, tx, false)
@@ -714,7 +723,7 @@ func Run() error {
 			}
 
 			if camera != nil {
-				camera.SegmentProducerClaimedUntil = time.Now().UTC().Add(time.Second * 1)
+				camera.SegmentProducerClaimedUntil = internal.GetNow()
 				camera.StreamProducerClaimedUntil = time.Time{}
 
 				err = camera.Update(ctx, tx, false)

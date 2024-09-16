@@ -7,6 +7,7 @@ import useLocalStorageState from "use-local-storage-state";
 import CameraDropdownMenu from "./components/CameraDropdownMenu";
 import DateDropdownMenu from "./components/DateDropdownMenu";
 import ModeToggle from "./components/ModeToggle";
+import StreamDropdownMenu from "./components/StreamDropdownMenu";
 import { VideoTable } from "./components/VideoTable";
 
 function App() {
@@ -44,8 +45,18 @@ function App() {
     defaultValue: undefined,
   });
 
+  useEffect(() => {
+    const handleResize = () => {
+      setResponsive(window.innerWidth < 992);
+    };
+
+    window.addEventListener("resize", () => {
+      handleResize();
+    });
+  }, []);
+
   console.log(
-    "state: ",
+    "state = ",
     JSON.stringify(
       {
         responsive: responsive,
@@ -57,16 +68,6 @@ function App() {
       2,
     ),
   );
-
-  useEffect(() => {
-    const handleResize = () => {
-      setResponsive(window.innerWidth < 992);
-    };
-
-    window.addEventListener("resize", () => {
-      handleResize();
-    });
-  }, []);
 
   return (
     <Sheet
@@ -112,6 +113,7 @@ function App() {
             startedAtLte={startedAtLte}
             setStartedAtLte={setStartedAtLte}
           />
+          <StreamDropdownMenu responsive={responsive} />
           <Input size="sm" sx={{ mr: 1.5, width: "100%", maxWidth: 300 }} />
         </Grid>
         <Grid xs={1} sx={{ display: "flex", justifyContent: "end", pr: 0.5 }}>

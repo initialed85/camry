@@ -2,7 +2,7 @@
 
 # import apis into api package
 from openapi_client.api.camera_api import CameraApi
-from openapi_client.api.custom0_api import Custom0Api
+from openapi_client.api.custom_api import CustomApi
 from openapi_client.api.detection_api import DetectionApi
 from openapi_client.api.video_api import VideoApi
 

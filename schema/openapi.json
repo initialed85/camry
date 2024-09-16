@@ -2153,23 +2153,14 @@
     "/api/custom/claim-video-for-object-detector": {
       "patch": {
         "tags": [
-          "Custom0"
+          "Custom"
         ],
-        "operationId": "PatchCustom0",
+        "operationId": "PatchClaimVideoForObjectDetector",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "object",
-                "properties": {
-                  "claim_duration_seconds": {
-                    "type": "number",
-                    "format": "double"
-                  }
-                },
-                "required": [
-                  "claim_duration_seconds"
-                ]
+                "$ref": "#/components/schemas/ClaimRequest"
               }
             }
           },
@@ -2177,86 +2168,17 @@
         },
         "responses": {
           "200": {
-            "description": "Custom0 success",
+            "description": "PatchClaimVideoForObjectDetector success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "camera_id": {
-                      "type": "string",
-                      "format": "uuid"
-                    },
-                    "camera_id_object": {
-                      "$ref": "#/components/schemas/NullableCamera"
-                    },
-                    "created_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "deleted_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "detection_summary": {
-                      "type": "object",
-                      "nullable": true
-                    },
-                    "duration": {
-                      "type": "integer",
-                      "format": "int64",
-                      "nullable": true
-                    },
-                    "ended_at": {
-                      "type": "string",
-                      "format": "date-time",
-                      "nullable": true
-                    },
-                    "file_name": {
-                      "type": "string"
-                    },
-                    "file_size": {
-                      "type": "number",
-                      "format": "double",
-                      "nullable": true
-                    },
-                    "id": {
-                      "type": "string",
-                      "format": "uuid"
-                    },
-                    "object_detector_claimed_until": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "object_tracker_claimed_until": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "referenced_by_detection_video_id_objects": {
-                      "$ref": "#/components/schemas/NullableArrayOfDetection"
-                    },
-                    "started_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    },
-                    "status": {
-                      "type": "string"
-                    },
-                    "thumbnail_name": {
-                      "type": "string"
-                    },
-                    "updated_at": {
-                      "type": "string",
-                      "format": "date-time"
-                    }
-                  }
+                  "$ref": "#/components/schemas/Video"
                 }
               }
             }
           },
           "default": {
-            "description": "Custom0 failure",
+            "description": "PatchClaimVideoForObjectDetector failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -2278,7 +2200,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -7600,10 +7523,6 @@
   },
   "components": {
     "schemas": {
-      "Any": {
-        "type": "object",
-        "nullable": true
-      },
       "Camera": {
         "type": "object",
         "properties": {
@@ -7649,6 +7568,17 @@
             "format": "date-time"
           }
         }
+      },
+      "ClaimRequest": {
+        "type": "object",
+        "properties": {
+          "claim_duration_seconds": {
+            "$ref": "#/components/schemas/Float64"
+          }
+        },
+        "required": [
+          "claim_duration_seconds"
+        ]
       },
       "Detection": {
         "type": "object",
@@ -7731,6 +7661,10 @@
           }
         }
       },
+      "Float64": {
+        "type": "number",
+        "format": "double"
+      },
       "NullableArrayOfCamera": {
         "type": "array",
         "nullable": true,
@@ -7797,7 +7731,6 @@
             "nullable": true
           },
           "detection_summary": {
-            "type": "object",
             "nullable": true
           },
           "duration": {

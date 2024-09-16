@@ -10,10 +10,9 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/gomodule/redigo/redis"
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/pkg/api"
-	"github.com/initialed85/djangolang/pkg/helpers"
+	"github.com/initialed85/djangolang/pkg/config"
 	"github.com/initialed85/djangolang/pkg/server"
 )
 
@@ -29,12 +28,9 @@ func RunServeWithEnvironment(
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	port, err := helpers.GetPort()
-	if err != nil {
-		log.Fatalf("%v", err)
-	}
+	port := config.Port()
 
-	db, err := helpers.GetDBFromEnvironment(ctx)
+	db, err := config.GetDBFromEnvironment(ctx)
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
@@ -42,27 +38,10 @@ func RunServeWithEnvironment(
 		db.Close()
 	}()
 
-	go func() {
-		helpers.WaitForCtrlC(ctx)
-		cancel()
-	}()
-
-	redisURL, err := helpers.GetRedisURL()
+	redisPool, err := config.GetRedisFromEnvironment()
 	if err != nil {
 		log.Fatalf("%v", err)
 	}
-
-	redisPool := &redis.Pool{
-		DialContext: func(ctx context.Context) (redis.Conn, error) {
-			return redis.DialURLContext(ctx, redisURL)
-		},
-		MaxIdle:         2,
-		MaxActive:       100,
-		IdleTimeout:     300,
-		Wait:            false,
-		MaxConnLifetime: 86400,
-	}
-
 	defer func() {
 		_ = redisPool.Close()
 	}()
@@ -98,7 +77,8 @@ func RunServeWithEnvironment(
 
 				video := &api.Video{}
 
-				err = video.LockTable(ctx, tx, false)
+				// TODO: this is hacky; wait for as long as other processes are _probably_ claiming for plus some fudge (but not a certainty of course)
+				err = video.AdvisoryLockWithRetries(ctx, tx, 3, time.Duration(req.ClaimDurationSeconds)+(time.Second*2), time.Second*1)
 				if err != nil {
 					return nil, err
 				}
@@ -107,12 +87,13 @@ func RunServeWithEnvironment(
 					ctx,
 					tx,
 					fmt.Sprintf(
-						"%v < now()",
+						"%v = 'needs detection' AND %v < now()",
+						api.VideoTableStatusColumn,
 						api.VideoTableObjectDetectorClaimedUntilColumn,
 					),
 					internal.Ptr(fmt.Sprintf(
 						"%v DESC",
-						api.VideoTableObjectDetectorClaimedUntilColumn,
+						api.VideoTableStartedAtColumn,
 					)),
 					internal.Ptr(1),
 					nil,

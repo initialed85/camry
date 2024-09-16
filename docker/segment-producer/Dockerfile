@@ -1,14 +1,14 @@
-FROM golang:1.21-bookworm AS builder
+# FROM golang:1.23-bookworm AS builder
 
-WORKDIR /srv/
+# WORKDIR /srv/
 
-COPY go.mod /srv/
-COPY go.sum /srv/
-RUN go get ./...
+# COPY go.mod /srv/
+# COPY go.sum /srv/
+# RUN go get ./...
 
-COPY . /srv/
-RUN mkdir -p ./bin
-RUN CGO_ENABLED=0 go build -o ./bin/segment-producer ./cmd/segment_producer
+# COPY . /srv/
+# RUN mkdir -p ./bin
+# RUN CGO_ENABLED=0 go build -o ./bin/segment-producer ./cmd/segment_producer
 
 FROM ubuntu:22.04
 
@@ -20,7 +20,9 @@ RUN apt-get update && apt-get install -y \
 
 RUN dpkg-reconfigure -f noninteractive tzdata
 
-COPY --from=builder /srv/bin/segment-producer /srv/bin/segment-producer
+# COPY --from=builder /srv/bin/segment-producer /srv/bin/segment-producer
+
+COPY ./tmp/segment-producer /srv/bin/segment-producer
 
 RUN mkdir /srv/media
 

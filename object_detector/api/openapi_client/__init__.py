@@ -18,7 +18,7 @@ __version__ = "1.0.0"
 
 # import apis into sdk package
 from openapi_client.api.camera_api import CameraApi
-from openapi_client.api.custom0_api import Custom0Api
+from openapi_client.api.custom_api import CustomApi
 from openapi_client.api.detection_api import DetectionApi
 from openapi_client.api.video_api import VideoApi
 
@@ -35,13 +35,13 @@ from openapi_client.exceptions import ApiException
 
 # import models into sdk package
 from openapi_client.models.camera import Camera
+from openapi_client.models.claim_request import ClaimRequest
 from openapi_client.models.detection import Detection
 from openapi_client.models.detection_bounding_box_inner import DetectionBoundingBoxInner
 from openapi_client.models.get_cameras200_response import GetCameras200Response
 from openapi_client.models.get_cameras_default_response import GetCamerasDefaultResponse
 from openapi_client.models.get_detections200_response import GetDetections200Response
 from openapi_client.models.get_videos200_response import GetVideos200Response
-from openapi_client.models.patch_custom0200_response import PatchCustom0200Response
-from openapi_client.models.patch_custom0_request import PatchCustom0Request
+from openapi_client.models.patch_claim_video_for_object_detector_default_response import PatchClaimVideoForObjectDetectorDefaultResponse
 from openapi_client.models.vec2 import Vec2
 from openapi_client.models.video import Video

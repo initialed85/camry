@@ -4,7 +4,7 @@ import Menu from "@mui/joy/Menu";
 import MenuButton from "@mui/joy/MenuButton";
 import MenuItem from "@mui/joy/MenuItem";
 import { Dispatch, SetStateAction } from "react";
-import { formatDate, truncateDate } from "../helpers";
+import { getDateString, truncateDate } from "../helpers";
 
 export interface DateDropdownMenuProps {
   responsive: boolean;
@@ -17,17 +17,17 @@ export interface DateDropdownMenuProps {
 export default function DateDropdownMenu(props: DateDropdownMenuProps) {
   var cursor = new Date();
 
-  const dates = [];
-  for (var i = 0; i < 14; i++) {
-    dates.push(truncateDate(cursor));
-    cursor = new Date(cursor.getTime() - 24 * 60 * 60 * 1000);
-  }
-
   if (!props.startedAtGt) {
     props.setStartedAtGt(cursor.toISOString());
     props.setStartedAtLte(
       new Date(cursor.getTime() + 24 * 60 * 60 * 1000).toISOString(),
     );
+  }
+
+  const dates = [];
+  for (var i = 0; i < 14; i++) {
+    dates.push(truncateDate(cursor));
+    cursor = new Date(cursor.getTime() - 24 * 60 * 60 * 1000);
   }
 
   return (
@@ -57,7 +57,7 @@ export default function DateDropdownMenu(props: DateDropdownMenuProps) {
                 );
               }}
             >
-              {formatDate(date)}
+              {getDateString(date)}
             </MenuItem>
           );
         })}

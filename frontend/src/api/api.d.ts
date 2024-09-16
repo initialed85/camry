@@ -49,7 +49,7 @@ export interface paths {
     delete?: never;
     options?: never;
     head?: never;
-    patch: operations["PatchCustom0"];
+    patch: operations["PatchClaimVideoForObjectDetector"];
     trace?: never;
   };
   "/api/detections": {
@@ -120,7 +120,6 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
-    Any: Record<string, never>;
     Camera: {
       /** Format: date-time */
       created_at?: string;
@@ -140,6 +139,9 @@ export interface components {
       stream_url?: string;
       /** Format: date-time */
       updated_at?: string;
+    };
+    ClaimRequest: {
+      claim_duration_seconds: components["schemas"]["Float64"];
     };
     Detection: {
       bounding_box?:
@@ -178,6 +180,8 @@ export interface components {
       video_id?: string;
       video_id_object?: components["schemas"]["NullableVideo"];
     };
+    /** Format: double */
+    Float64: number;
     NullableArrayOfCamera: components["schemas"]["Camera"][] | null;
     NullableArrayOfDetection: components["schemas"]["Detection"][] | null;
     NullableArrayOfVideo: components["schemas"]["Video"][] | null;
@@ -198,7 +202,7 @@ export interface components {
       created_at?: string;
       /** Format: date-time */
       deleted_at?: string | null;
-      detection_summary?: Record<string, never>;
+      detection_summary?: unknown;
       /** Format: int64 */
       duration?: number | null;
       /** Format: date-time */
@@ -883,7 +887,7 @@ export interface operations {
       };
     };
   };
-  PatchCustom0: {
+  PatchClaimVideoForObjectDetector: {
     parameters: {
       query?: never;
       header?: never;
@@ -892,59 +896,27 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": {
-          /** Format: double */
-          claim_duration_seconds: number;
-        };
+        "application/json": components["schemas"]["ClaimRequest"];
       };
     };
     responses: {
-      /** @description Custom0 success */
+      /** @description PatchClaimVideoForObjectDetector success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: uuid */
-            camera_id?: string;
-            camera_id_object?: components["schemas"]["NullableCamera"];
-            /** Format: date-time */
-            created_at?: string;
-            /** Format: date-time */
-            deleted_at?: string | null;
-            detection_summary?: Record<string, never>;
-            /** Format: int64 */
-            duration?: number | null;
-            /** Format: date-time */
-            ended_at?: string | null;
-            file_name?: string;
-            /** Format: double */
-            file_size?: number | null;
-            /** Format: uuid */
-            id?: string;
-            /** Format: date-time */
-            object_detector_claimed_until?: string;
-            /** Format: date-time */
-            object_tracker_claimed_until?: string;
-            referenced_by_detection_video_id_objects?: components["schemas"]["NullableArrayOfDetection"];
-            /** Format: date-time */
-            started_at?: string;
-            status?: string;
-            thumbnail_name?: string;
-            /** Format: date-time */
-            updated_at?: string;
-          };
+          "application/json": components["schemas"]["Video"];
         };
       };
-      /** @description Custom0 failure */
+      /** @description PatchClaimVideoForObjectDetector failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;

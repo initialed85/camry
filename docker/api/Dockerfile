@@ -1,14 +1,14 @@
-FROM golang:1.21-bookworm AS builder
+# FROM golang:1.23-bookworm AS builder
 
-WORKDIR /srv/
+# WORKDIR /srv/
 
-COPY go.mod /srv/
-COPY go.sum /srv/
-RUN go get ./...
+# COPY go.mod /srv/
+# COPY go.sum /srv/
+# RUN go get ./...
 
-COPY . /srv/
-RUN mkdir -p ./bin
-RUN CGO_ENABLED=0 go build -o ./bin/api ./cmd/api
+# COPY . /srv/
+# RUN mkdir -p ./bin
+# RUN CGO_ENABLED=0 go build -o ./bin/api ./cmd/api
 
 FROM ubuntu:22.04
 
@@ -22,7 +22,9 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 
 WORKDIR /srv/
 
-COPY --from=builder /srv/bin/api /srv/bin/api
+# COPY --from=builder /srv/bin/api /srv/bin/api
+
+COPY ./tmp/api /srv/bin/api
 
 ENV DJANGOLANG_API_ROOT=/api
 

@@ -1,29 +1,36 @@
+const ref = new Date();
+const offset = -ref.getTimezoneOffset();
+
 export const parseDate = (date: string): Date => {
   return new Date(date);
 };
 
+const getOffsetSuffix = (): string => {
+  const h = Math.round(offset / 60);
+  const m = offset - h * 60;
+
+  const formattedH =
+    (h >= 0 ? "+" : "-") + Math.abs(h).toString().padStart(2, "0");
+  const formattedM = m.toString().padStart(2, "0");
+
+  return `${formattedH}:${formattedM}`;
+};
+
 export const formatDate = (date: Date): string => {
-  const pad = (s: string): string => {
-    if (s.length < 2) {
-      return `0${s}`;
-    }
+  const d = new Date(date.getTime() + offset * 60 * 1000);
 
-    return s;
-  };
+  let s = d.toISOString();
+  s = s.slice(0, s.length - 1);
 
-  if (typeof date !== typeof new Date()) {
-    throw new Error(
-      `wanted ${new Date()} (${typeof new Date()}), got ${date} (${typeof date})`,
-    );
-  }
+  return `${s}${getOffsetSuffix()}`;
+};
 
-  const year = date.getFullYear().toString();
-  const month = pad((date.getMonth() + 1).toString());
-  const day = pad(date.getDate().toString());
-
-  return `${year}-${month}-${day}`;
+export const getDateString = (date: Date): string => {
+  return formatDate(date).split("T")[0];
 };
 
 export const truncateDate = (date: Date): Date => {
-  return parseDate(formatDate(date));
+  const s = getDateString(date);
+
+  return parseDate(`${s}T00:00:00${getOffsetSuffix()}`);
 };

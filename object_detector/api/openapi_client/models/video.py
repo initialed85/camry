@@ -31,7 +31,7 @@ class Video(BaseModel):
     camera_id_object: Optional[Camera] = None
     created_at: Optional[datetime] = None
     deleted_at: Optional[datetime] = None
-    detection_summary: Optional[Dict[str, Any]] = None
+    detection_summary: Optional[Any] = None
     duration: Optional[StrictInt] = None
     ended_at: Optional[datetime] = None
     file_name: Optional[StrictStr] = None

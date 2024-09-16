@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/gomodule/redigo/redis"
-	"github.com/initialed85/djangolang/pkg/helpers"
+	"github.com/initialed85/djangolang/pkg/config"
 	"github.com/initialed85/djangolang/pkg/introspect"
 	"github.com/initialed85/djangolang/pkg/openapi"
 	"github.com/initialed85/djangolang/pkg/server"
@@ -26,7 +26,7 @@ var newFromItemFnByTableName = make(map[string]func(map[string]any) (any, error)
 var getRouterFnByPattern = make(map[string]server.GetRouterFn)
 var allObjects = make([]any, 0)
 var openApi *types.OpenAPI
-var profile = helpers.GetEnvironmentVariable("DJANGOLANG_PROFILE") == "1"
+var profile = config.Profile()
 
 var customHTTPHandlerSummaries []openapi.CustomHTTPHandlerSummary = make([]openapi.CustomHTTPHandlerSummary, 0)
 
@@ -86,10 +86,6 @@ func NewFromItem(tableName string, item map[string]any) (any, error) {
 
 func GetRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []server.HTTPMiddleware, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) chi.Router {
 	r := chi.NewRouter()
-
-	for _, m := range httpMiddlewares {
-		r.Use(m)
-	}
 
 	mu.Lock()
 	for pattern, getRouterFn := range getRouterFnByPattern {
@@ -222,19 +218,6 @@ func GetCustomHTTPHandler[T any, S any, Q any, R any](method string, path string
 	})
 
 	return customHTTPHandler, nil
-}
-
-func RunServer(
-	ctx context.Context,
-	changes chan server.Change,
-	addr string,
-	db *pgxpool.Pool,
-	redisPool *redis.Pool,
-	httpMiddlewares []server.HTTPMiddleware,
-	objectMiddlewares []server.ObjectMiddleware,
-	addCustomHandlers func(chi.Router) error,
-) error {
-	return server.RunServer(ctx, changes, addr, NewFromItem, GetRouter, db, redisPool, httpMiddlewares, objectMiddlewares, addCustomHandlers)
 }
 
 var tableByNameAsJSON = []byte(`{
@@ -1058,12 +1041,31 @@ var tableByNameAsJSON = []byte(`{
     ]
   }
 }`)
-
 var tableByName introspect.TableByName
 
 func init() {
+	mu.Lock()
+	defer mu.Unlock()
+
 	err := json.Unmarshal(tableByNameAsJSON, &tableByName)
 	if err != nil {
 		panic(fmt.Errorf("failed to unmarshal tableByNameAsJSON into introspect.TableByName; %v", err))
 	}
+}
+
+func RunServer(
+	ctx context.Context,
+	changes chan server.Change,
+	addr string,
+	db *pgxpool.Pool,
+	redisPool *redis.Pool,
+	httpMiddlewares []server.HTTPMiddleware,
+	objectMiddlewares []server.ObjectMiddleware,
+	addCustomHandlers func(chi.Router) error,
+) error {
+	mu.Lock()
+	thisTableByName := tableByName
+	mu.Unlock()
+
+	return server.RunServer(ctx, changes, addr, NewFromItem, GetRouter, db, redisPool, httpMiddlewares, objectMiddlewares, addCustomHandlers, thisTableByName)
 }

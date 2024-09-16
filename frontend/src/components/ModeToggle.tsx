@@ -16,12 +16,12 @@ export default function ModeToggle(props: ModeToggleProps) {
     setMode("system");
   }, [setMode]);
 
-  // necessary for server-side rendering
-  // because mode is undefined on the server
   const [mounted, setMounted] = React.useState(false);
+
   React.useEffect(() => {
     setMounted(true);
   }, []);
+
   if (!mounted) {
     return null;
   }

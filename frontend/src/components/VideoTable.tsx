@@ -11,9 +11,9 @@ import { useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { clientForReactQuery, useQuery } from "../api";
 import { components } from "../api/api";
-import { formatDate } from "../helpers";
+import { getDateString } from "../helpers";
 
-const defaultLimit = 60;
+const defaultLimit = 10;
 
 export interface VideoTableProps {
   responsive: boolean;
@@ -104,32 +104,6 @@ export function VideoTable(props: VideoTableProps) {
     cameraById.set(camera?.id, camera);
   });
 
-  // const { data: detectionsData } = useQuery("get", "/api/detections", {
-  //   params: {
-  //     query: {
-  //       camera_id__eq: props.cameraId || undefined,
-  //       seen_at__gte: props.date ? `${props.date}T00:00:00+08:00` : undefined,
-  //       seen_at__lte: props.date ? `${props.date}T23:59:59+08:00` : undefined,
-  //       seen_at__desc: "",
-  //     },
-  //   },
-  // });
-
-  const classNamesByVideoId = new Map<string, Set<string>>();
-  // detectionsData?.objects?.forEach((detection) => {
-  //   if (!detection?.video_id || !detection.class_name) {
-  //     return;
-  //   }
-
-  //   let classNames = classNamesByVideoId.get(detection?.video_id);
-  //   if (!classNames) {
-  //     classNames = new Set<string>();
-  //   }
-
-  //   classNames.add(detection?.class_name);
-  //   classNamesByVideoId.set(detection?.video_id, classNames);
-  // });
-
   const truncateStyleProps = props.responsive
     ? {
         maxWidth: "100%",
@@ -175,7 +149,7 @@ export function VideoTable(props: VideoTableProps) {
           >
             {props.responsive ? "T" : "Time"}
           </th>
-          <th style={{ width: 67, ...truncateStyleProps }}>
+          <th style={{ width: 88, ...truncateStyleProps }}>
             {props.responsive ? "S" : "Summary"}
           </th>
           <th style={{ ...truncateStyleProps }}>
@@ -258,10 +232,8 @@ export function VideoTable(props: VideoTableProps) {
               );
             }
 
-            const rawClassNames =
-              video.id && classNamesByVideoId.get(video.id)?.keys();
-
             let classNames;
+
             if (video?.status === "failed") {
               classNames = (
                 <Tooltip title="Failed">
@@ -280,22 +252,29 @@ export function VideoTable(props: VideoTableProps) {
                   <CircularProgress variant="soft" size="sm" />
                 </Tooltip>
               );
-            } else {
-              classNames = (
-                rawClassNames ? Array.from(rawClassNames).sort() : []
-              ).join(", ");
+            } else if (video?.status === "needs tracking") {
+              classNames = (video?.detection_summary as []).map((x: any) => {
+                return (
+                  <>
+                    {x.class_name} ({x.detected_frame_count} @ {x.average_score}
+                    ) <br />
+                  </>
+                );
+              });
             }
 
             return (
               <tr key={`vidoe-table-row-${video.id}`}>
                 <td>
                   <Typography style={{ display: "inline" }}>
-                    {formatDate(startedAt)}{" "}
+                    {getDateString(startedAt)}{" "}
                     {startedAt.toTimeString().split(" ")[0]}
                   </Typography>
                   {props.responsive ? <br /> : " -> "}
                   <Typography color="neutral" style={{ display: "inline" }}>
-                    {endedAt ? endedAt.toTimeString().split(" ")[0] : "..."}{" "}
+                    {endedAt
+                      ? endedAt.toTimeString().split(" ")[0]
+                      : new Date().toTimeString().split(" ")[0]}{" "}
                     <br />
                   </Typography>
                 </td>
