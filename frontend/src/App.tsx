@@ -3,12 +3,13 @@ import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useState } from "react";
-import useLocalStorageState from "use-local-storage-state";
 import CameraDropdownMenu from "./components/CameraDropdownMenu";
-import DateDropdownMenu from "./components/DateDropdownMenu";
+import DateSlider from "./components/DateSlider";
 import ModeToggle from "./components/ModeToggle";
 import StreamDropdownMenu from "./components/StreamDropdownMenu";
 import { VideoTable } from "./components/VideoTable";
+import { dateSliderStepMillis, responsiveWidth } from "./config";
+import { parseDate } from "./helpers";
 
 function App() {
   // TODO: for future reference
@@ -24,36 +25,41 @@ function App() {
   //   }
   // };
 
-  const [responsive, setResponsive] = useState(window.innerWidth < 992);
+  const [responsive, setResponsive] = useState(window.innerWidth < responsiveWidth);
 
-  const [cameraId, setCameraId] = useLocalStorageState<string | undefined>(
-    "cameraId",
-    {
-      defaultValue: undefined,
-    },
-  );
+  const [cameraId, setCameraId] = useState<string | undefined>(undefined);
 
-  const [startedAtGt, setStartedAtGt] = useLocalStorageState<
-    string | undefined
-  >("startedAtGt", {
-    defaultValue: undefined,
-  });
+  const [startedAtGt, setStartedAtGt] = useState<string | undefined>(undefined);
 
-  const [startedAtLte, setStartedAtLte] = useLocalStorageState<
-    string | undefined
-  >("startedAtLte", {
-    defaultValue: undefined,
-  });
+  const [startedAtLte, setStartedAtLte] = useState<string | undefined>(undefined);
+
+  const [classNameFilter, setClassNameFilter] = useState<string>("");
 
   useEffect(() => {
+    if (startedAtLte) {
+      const possibleStartedAtGt = new Date(parseDate(startedAtLte).getTime() - dateSliderStepMillis).toISOString();
+      if (possibleStartedAtGt !== startedAtGt) {
+        setStartedAtGt(possibleStartedAtGt);
+      }
+    }
+
     const handleResize = () => {
-      setResponsive(window.innerWidth < 992);
+      const desiredResponsive = window.innerWidth < responsiveWidth;
+      if (desiredResponsive !== responsive) {
+        setResponsive(window.innerWidth < responsiveWidth);
+      }
     };
 
-    window.addEventListener("resize", () => {
+    const eventListener = () => {
       handleResize();
-    });
-  }, []);
+    };
+
+    window.addEventListener("resize", eventListener);
+
+    return () => {
+      window.removeEventListener("reisze", eventListener);
+    };
+  }, [responsive, startedAtGt, startedAtLte]);
 
   console.log(
     "state = ",
@@ -65,8 +71,8 @@ function App() {
         startedAtLte: startedAtLte,
       },
       null,
-      2,
-    ),
+      2
+    )
   );
 
   return (
@@ -93,32 +99,25 @@ function App() {
             justifyContent: "flex-start",
           }}
         >
-          <Typography
-            level="h4"
-            component="h4"
-            sx={{ pt: 0.1, pl: 0.75, pr: 1, textAlign: "center" }}
-            color="neutral"
-          >
+          <Typography level="h4" component="h4" sx={{ pt: 0.1, pl: 0.75, pr: 1, textAlign: "center" }} color="neutral">
             {responsive ? "C" : "Camry"}
           </Typography>
-          <CameraDropdownMenu
-            responsive={responsive}
-            cameraId={cameraId}
-            setCameraId={setCameraId}
-          />
-          <DateDropdownMenu
-            responsive={responsive}
-            startedAtGt={startedAtGt}
-            setStartedAtGt={setStartedAtGt}
-            startedAtLte={startedAtLte}
-            setStartedAtLte={setStartedAtLte}
-          />
+          <CameraDropdownMenu responsive={responsive} cameraId={cameraId} setCameraId={setCameraId} />
           <StreamDropdownMenu responsive={responsive} />
-          <Input size="sm" sx={{ mr: 1.5, width: "100%", maxWidth: 300 }} />
+          <Input
+            size="sm"
+            sx={{ mr: 1.5, width: "100%", maxWidth: 300 }}
+            onChange={(e) => {
+              setClassNameFilter(e.target.value);
+            }}
+          />
         </Grid>
         <Grid xs={1} sx={{ display: "flex", justifyContent: "end", pr: 0.5 }}>
           <ModeToggle responsive={responsive} />
         </Grid>
+      </Grid>
+      <Grid container sx={{ pb: 1, display: "flex", justifyContent: "center" }}>
+        <DateSlider responsive={responsive} date={startedAtGt} setDate={setStartedAtLte} />
       </Grid>
 
       <VideoTable
@@ -126,6 +125,7 @@ function App() {
         cameraId={cameraId}
         startedAtGt={startedAtGt}
         startedAtLte={startedAtLte}
+        classNameFilter={classNameFilter}
       />
     </Sheet>
   );

@@ -25,6 +25,16 @@ export const formatDate = (date: Date): string => {
   return `${s}${getOffsetSuffix()}`;
 };
 
+export const formatDateWithoutMillis = (date: Date): string => {
+  const d = new Date(date.getTime() + offset * 60 * 1000);
+
+  let s = d.toISOString();
+  s = s.slice(0, s.length - 1);
+  s = s.split(".")[0]
+
+  return `${s}`;
+};
+
 export const getDateString = (date: Date): string => {
   return formatDate(date).split("T")[0];
 };

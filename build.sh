@@ -54,11 +54,14 @@ DJANGOLANG_API_ROOT=/api DJANGOLANG_PACKAGE_NAME=api POSTGRES_DB=camry POSTGRES_
 mkdir -p ./schema
 # DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
 go build -o ./cmd/api/api ./cmd/api
+
+# TODO: we need this because custom endpoints don't come out in a plain old dump-openapi-json call
 REDIS_URL=redis://localhost:6379 DJANGOLANG_API_ROOT=/api POSTGRES_DB=camry POSTGRES_PASSWORD=NoNVR\!11 ./cmd/api/api serve &
 pid=$!
-sleep 5
-curl http://localhost:7070/api/openapi.json >./schema/openapi.json
-kill -15 ${pid} || true
+while ! curl http://localhost:7070/api/openapi.json >./schema/openapi.json; do
+    sleep 0.1
+done
+kill -15 ${pid} || true >/dev/null 2>&1
 
 # generate the client for use by the frontend
 echo -e "\ngenerating typescript client..."
@@ -78,6 +81,25 @@ if test -e object_detector/api; then
 fi
 
 openapi-generator-cli generate -i schema/openapi.json -g python -o object_detector/api --strict-spec true
+
+rm -fr object_detector/__pycache__
+rm -fr object_detector/api/.github
+rm -fr object_detector/api/.gitignore
+rm -fr object_detector/api/.gitlab-ci.yml
+rm -fr object_detector/api/.openapi-generator
+rm -fr object_detector/api/.openapi-generator-ignore
+rm -fr object_detector/api/.travis.yml
+rm -fr object_detector/api/docs
+rm -fr object_detector/api/git_push.sh
+rm -fr object_detector/api/pyproject.toml
+rm -fr object_detector/api/README.md
+rm -fr object_detector/api/setup.cfg
+rm -fr object_detector/api/setup.py
+rm -fr object_detector/api/test
+rm -fr object_detector/api/test-requirements.txt
+rm -fr object_detector/api/tox.ini
+
+touch object_detector/api/__init__.py
 
 # TODO: disabled for now- some bug in the 3rd party generator doesn't like $ref or something
 # # generate the client for use by Go code

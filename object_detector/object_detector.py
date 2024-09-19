@@ -52,10 +52,10 @@ def do(
         print("waiting to claim a video... ", end="")
 
         try:
+            # TODO: inject this as an env var
             video = custom_api.patch_claim_video_for_object_detector(
-                claim_request=ClaimRequest(
-                    claim_duration_seconds=60,  # TODO: inject this as an env var
-                )
+                claim_request=ClaimRequest(claim_duration_seconds=60),
+                _request_timeout=70,
             )
             videos = [video]
         except Exception as e:
