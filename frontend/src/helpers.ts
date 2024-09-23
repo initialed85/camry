@@ -30,7 +30,7 @@ export const formatDateWithoutMillis = (date: Date): string => {
 
   let s = d.toISOString();
   s = s.slice(0, s.length - 1);
-  s = s.split(".")[0]
+  s = s.split(".")[0];
 
   return `${s}`;
 };

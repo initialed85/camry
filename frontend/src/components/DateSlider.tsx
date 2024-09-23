@@ -21,7 +21,9 @@ export default function DateSlider(props: DateSliderProps) {
 
   const [maxDateMillis, setMaxDateMillis] = useState(maxDateMillisLive);
   const [minDateMillis, setMinDateMillis] = useState(minDateMillisLive);
-  const [currentMillis, setCurrentMillis] = useState(maxDateMillis + dateSliderStepMillis * 1);
+  const [currentMillis, setCurrentMillis] = useState(
+    maxDateMillis + dateSliderStepMillis * 1,
+  );
 
   const [slidByUser, setSlidByUser] = useState(false);
 
@@ -44,7 +46,14 @@ export default function DateSlider(props: DateSliderProps) {
     return () => {
       clearInterval(intervalId);
     };
-  }, [currentMillis, maxDateMillis, maxDateMillisLive, minDateMillis, props, slidByUser]);
+  }, [
+    currentMillis,
+    maxDateMillis,
+    maxDateMillisLive,
+    minDateMillis,
+    props,
+    slidByUser,
+  ]);
 
   return (
     <Slider

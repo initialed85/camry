@@ -38,7 +38,7 @@ class CustomApi:
 
 
     @validate_call
-    def patch_claim_video_for_object_detector(
+    def patch_custom_claim_video_for_object_detector(
         self,
         claim_request: ClaimRequest,
         _request_timeout: Union[
@@ -54,7 +54,7 @@ class CustomApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> Video:
-        """patch_claim_video_for_object_detector
+        """patch_custom_claim_video_for_object_detector
 
 
         :param claim_request: (required)
@@ -81,7 +81,7 @@ class CustomApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._patch_claim_video_for_object_detector_serialize(
+        _param = self._patch_custom_claim_video_for_object_detector_serialize(
             claim_request=claim_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -104,7 +104,7 @@ class CustomApi:
 
 
     @validate_call
-    def patch_claim_video_for_object_detector_with_http_info(
+    def patch_custom_claim_video_for_object_detector_with_http_info(
         self,
         claim_request: ClaimRequest,
         _request_timeout: Union[
@@ -120,7 +120,7 @@ class CustomApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> ApiResponse[Video]:
-        """patch_claim_video_for_object_detector
+        """patch_custom_claim_video_for_object_detector
 
 
         :param claim_request: (required)
@@ -147,7 +147,7 @@ class CustomApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._patch_claim_video_for_object_detector_serialize(
+        _param = self._patch_custom_claim_video_for_object_detector_serialize(
             claim_request=claim_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -170,7 +170,7 @@ class CustomApi:
 
 
     @validate_call
-    def patch_claim_video_for_object_detector_without_preload_content(
+    def patch_custom_claim_video_for_object_detector_without_preload_content(
         self,
         claim_request: ClaimRequest,
         _request_timeout: Union[
@@ -186,7 +186,7 @@ class CustomApi:
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
     ) -> RESTResponseType:
-        """patch_claim_video_for_object_detector
+        """patch_custom_claim_video_for_object_detector
 
 
         :param claim_request: (required)
@@ -213,7 +213,7 @@ class CustomApi:
         :return: Returns the result object.
         """ # noqa: E501
 
-        _param = self._patch_claim_video_for_object_detector_serialize(
+        _param = self._patch_custom_claim_video_for_object_detector_serialize(
             claim_request=claim_request,
             _request_auth=_request_auth,
             _content_type=_content_type,
@@ -231,7 +231,7 @@ class CustomApi:
         return response_data.response
 
 
-    def _patch_claim_video_for_object_detector_serialize(
+    def _patch_custom_claim_video_for_object_detector_serialize(
         self,
         claim_request,
         _request_auth,

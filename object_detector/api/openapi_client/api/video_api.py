@@ -18,9 +18,9 @@ from typing_extensions import Annotated
 
 from datetime import datetime
 from pydantic import Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, List, Optional, Union
+from typing import List, Optional, Union
 from typing_extensions import Annotated
-from openapi_client.models.get_videos200_response import GetVideos200Response
+from openapi_client.models.response_with_generic_of_video import ResponseWithGenericOfVideo
 from openapi_client.models.video import Video
 
 from openapi_client.api_client import ApiClient, RequestSerialized
@@ -44,8 +44,8 @@ class VideoApi:
     @validate_call
     def delete_video(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,9 +62,9 @@ class VideoApi:
         """delete_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -114,8 +114,8 @@ class VideoApi:
     @validate_call
     def delete_video_with_http_info(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -132,9 +132,9 @@ class VideoApi:
         """delete_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -184,8 +184,8 @@ class VideoApi:
     @validate_call
     def delete_video_without_preload_content(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -202,9 +202,9 @@ class VideoApi:
         """delete_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -282,13 +282,6 @@ class VideoApi:
         # process the body parameter
 
 
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
 
 
         # authentication setting
@@ -316,8 +309,8 @@ class VideoApi:
     @validate_call
     def get_video(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -330,13 +323,13 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetVideos200Response:
+    ) -> ResponseWithGenericOfVideo:
         """get_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -370,7 +363,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -386,8 +379,8 @@ class VideoApi:
     @validate_call
     def get_video_with_http_info(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -400,13 +393,13 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetVideos200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfVideo]:
         """get_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -440,7 +433,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -456,8 +449,8 @@ class VideoApi:
     @validate_call
     def get_video_without_preload_content(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -474,9 +467,9 @@ class VideoApi:
         """get_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -510,7 +503,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -599,10 +592,6 @@ class VideoApi:
         id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -617,14 +606,10 @@ class VideoApi:
         created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -635,14 +620,10 @@ class VideoApi:
         updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -653,14 +634,10 @@ class VideoApi:
         deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         file_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -671,10 +648,6 @@ class VideoApi:
         file_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         file_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         file_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        file_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         file_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -689,14 +662,10 @@ class VideoApi:
         started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        started_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -707,14 +676,10 @@ class VideoApi:
         ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        ended_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         duration__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
@@ -725,14 +690,6 @@ class VideoApi:
         duration__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
         duration__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         duration__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        duration__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         duration__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         duration__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         file_size__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
@@ -743,14 +700,6 @@ class VideoApi:
         file_size__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
         file_size__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         file_size__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        file_size__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_size__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         file_size__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         thumbnail_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -761,10 +710,6 @@ class VideoApi:
         thumbnail_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         thumbnail_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         thumbnail_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        thumbnail_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         thumbnail_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         thumbnail_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         thumbnail_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -779,10 +724,6 @@ class VideoApi:
         status__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        status__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -797,14 +738,10 @@ class VideoApi:
         object_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         object_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         object_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        object_detector_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         object_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         object_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         object_tracker_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -815,14 +752,10 @@ class VideoApi:
         object_tracker_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         object_tracker_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         object_tracker_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        object_tracker_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         object_tracker_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         object_tracker_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -833,16 +766,18 @@ class VideoApi:
         camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        detection_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        detection_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -855,7 +790,7 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetVideos200Response:
+    ) -> ResponseWithGenericOfVideo:
         """get_videos
 
 
@@ -881,14 +816,6 @@ class VideoApi:
         :type id__in: str
         :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnull: str
-        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnotnull: str
-        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type id__isfalse: str
-        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type id__istrue: str
         :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
         :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -917,22 +844,14 @@ class VideoApi:
         :type created_at__in: datetime
         :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnull: str
-        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnotnull: str
-        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isfalse: str
-        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type created_at__istrue: str
         :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: str
+        :type created_at__like: datetime
         :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: str
+        :type created_at__notlike: datetime
         :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: str
+        :type created_at__ilike: datetime
         :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: str
+        :type created_at__notilike: datetime
         :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
         :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -953,22 +872,14 @@ class VideoApi:
         :type updated_at__in: datetime
         :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnull: str
-        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnotnull: str
-        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isfalse: str
-        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__istrue: str
         :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: str
+        :type updated_at__like: datetime
         :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: str
+        :type updated_at__notlike: datetime
         :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: str
+        :type updated_at__ilike: datetime
         :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: str
+        :type updated_at__notilike: datetime
         :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
         :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -989,22 +900,14 @@ class VideoApi:
         :type deleted_at__in: datetime
         :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnull: str
-        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnotnull: str
-        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isfalse: str
-        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__istrue: str
         :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: str
+        :type deleted_at__like: datetime
         :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: str
+        :type deleted_at__notlike: datetime
         :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: str
+        :type deleted_at__ilike: datetime
         :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: str
+        :type deleted_at__notilike: datetime
         :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
         :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1025,14 +928,6 @@ class VideoApi:
         :type file_name__in: str
         :param file_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type file_name__notin: str
-        :param file_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isnull: str
-        :param file_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isnotnull: str
-        :param file_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isfalse: str
-        :param file_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type file_name__istrue: str
         :param file_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type file_name__like: str
         :param file_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1061,22 +956,14 @@ class VideoApi:
         :type started_at__in: datetime
         :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type started_at__notin: datetime
-        :param started_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isnull: str
-        :param started_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isnotnull: str
-        :param started_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isfalse: str
-        :param started_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type started_at__istrue: str
         :param started_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__like: str
+        :type started_at__like: datetime
         :param started_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notlike: str
+        :type started_at__notlike: datetime
         :param started_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__ilike: str
+        :type started_at__ilike: datetime
         :param started_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notilike: str
+        :type started_at__notilike: datetime
         :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type started_at__desc: str
         :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1097,22 +984,14 @@ class VideoApi:
         :type ended_at__in: datetime
         :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type ended_at__notin: datetime
-        :param ended_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isnull: str
-        :param ended_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isnotnull: str
-        :param ended_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isfalse: str
-        :param ended_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__istrue: str
         :param ended_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__like: str
+        :type ended_at__like: datetime
         :param ended_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notlike: str
+        :type ended_at__notlike: datetime
         :param ended_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__ilike: str
+        :type ended_at__ilike: datetime
         :param ended_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notilike: str
+        :type ended_at__notilike: datetime
         :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type ended_at__desc: str
         :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1133,22 +1012,6 @@ class VideoApi:
         :type duration__in: int
         :param duration__notin: SQL NOT IN comparison, permits comma-separated values
         :type duration__notin: int
-        :param duration__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type duration__isnull: str
-        :param duration__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type duration__isnotnull: str
-        :param duration__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type duration__isfalse: str
-        :param duration__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type duration__istrue: str
-        :param duration__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__like: str
-        :param duration__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__notlike: str
-        :param duration__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__ilike: str
-        :param duration__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__notilike: str
         :param duration__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type duration__desc: str
         :param duration__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1169,22 +1032,6 @@ class VideoApi:
         :type file_size__in: float
         :param file_size__notin: SQL NOT IN comparison, permits comma-separated values
         :type file_size__notin: float
-        :param file_size__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isnull: str
-        :param file_size__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isnotnull: str
-        :param file_size__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isfalse: str
-        :param file_size__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type file_size__istrue: str
-        :param file_size__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__like: str
-        :param file_size__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__notlike: str
-        :param file_size__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__ilike: str
-        :param file_size__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__notilike: str
         :param file_size__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type file_size__desc: str
         :param file_size__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1205,14 +1052,6 @@ class VideoApi:
         :type thumbnail_name__in: str
         :param thumbnail_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type thumbnail_name__notin: str
-        :param thumbnail_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isnull: str
-        :param thumbnail_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isnotnull: str
-        :param thumbnail_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isfalse: str
-        :param thumbnail_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__istrue: str
         :param thumbnail_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type thumbnail_name__like: str
         :param thumbnail_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1241,14 +1080,6 @@ class VideoApi:
         :type status__in: str
         :param status__notin: SQL NOT IN comparison, permits comma-separated values
         :type status__notin: str
-        :param status__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type status__isnull: str
-        :param status__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type status__isnotnull: str
-        :param status__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type status__isfalse: str
-        :param status__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type status__istrue: str
         :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type status__like: str
         :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1277,22 +1108,14 @@ class VideoApi:
         :type object_detector_claimed_until__in: datetime
         :param object_detector_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type object_detector_claimed_until__notin: datetime
-        :param object_detector_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isnull: str
-        :param object_detector_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isnotnull: str
-        :param object_detector_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isfalse: str
-        :param object_detector_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__istrue: str
         :param object_detector_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__like: str
+        :type object_detector_claimed_until__like: datetime
         :param object_detector_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__notlike: str
+        :type object_detector_claimed_until__notlike: datetime
         :param object_detector_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__ilike: str
+        :type object_detector_claimed_until__ilike: datetime
         :param object_detector_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__notilike: str
+        :type object_detector_claimed_until__notilike: datetime
         :param object_detector_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type object_detector_claimed_until__desc: str
         :param object_detector_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1313,22 +1136,14 @@ class VideoApi:
         :type object_tracker_claimed_until__in: datetime
         :param object_tracker_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type object_tracker_claimed_until__notin: datetime
-        :param object_tracker_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isnull: str
-        :param object_tracker_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isnotnull: str
-        :param object_tracker_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isfalse: str
-        :param object_tracker_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__istrue: str
         :param object_tracker_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__like: str
+        :type object_tracker_claimed_until__like: datetime
         :param object_tracker_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__notlike: str
+        :type object_tracker_claimed_until__notlike: datetime
         :param object_tracker_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__ilike: str
+        :type object_tracker_claimed_until__ilike: datetime
         :param object_tracker_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__notilike: str
+        :type object_tracker_claimed_until__notilike: datetime
         :param object_tracker_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type object_tracker_claimed_until__desc: str
         :param object_tracker_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1349,14 +1164,6 @@ class VideoApi:
         :type camera_id__in: str
         :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type camera_id__notin: str
-        :param camera_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnull: str
-        :param camera_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnotnull: str
-        :param camera_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isfalse: str
-        :param camera_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__istrue: str
         :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type camera_id__like: str
         :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1369,6 +1176,18 @@ class VideoApi:
         :type camera_id__desc: str
         :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id__asc: str
+        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__desc: str
+        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__asc: str
+        :param detection_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type detection_summary__desc: str
+        :param detection_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type detection_summary__asc: str
+        :param referenced_by_detection_video_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_video_id_objects__desc: str
+        :param referenced_by_detection_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_video_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1403,10 +1222,6 @@ class VideoApi:
             id__lte=id__lte,
             id__in=id__in,
             id__notin=id__notin,
-            id__isnull=id__isnull,
-            id__isnotnull=id__isnotnull,
-            id__isfalse=id__isfalse,
-            id__istrue=id__istrue,
             id__like=id__like,
             id__notlike=id__notlike,
             id__ilike=id__ilike,
@@ -1421,10 +1236,6 @@ class VideoApi:
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
             created_at__notin=created_at__notin,
-            created_at__isnull=created_at__isnull,
-            created_at__isnotnull=created_at__isnotnull,
-            created_at__isfalse=created_at__isfalse,
-            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
             created_at__notlike=created_at__notlike,
             created_at__ilike=created_at__ilike,
@@ -1439,10 +1250,6 @@ class VideoApi:
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
             updated_at__notin=updated_at__notin,
-            updated_at__isnull=updated_at__isnull,
-            updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__isfalse=updated_at__isfalse,
-            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
             updated_at__notlike=updated_at__notlike,
             updated_at__ilike=updated_at__ilike,
@@ -1457,10 +1264,6 @@ class VideoApi:
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
             deleted_at__notin=deleted_at__notin,
-            deleted_at__isnull=deleted_at__isnull,
-            deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__isfalse=deleted_at__isfalse,
-            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
             deleted_at__notlike=deleted_at__notlike,
             deleted_at__ilike=deleted_at__ilike,
@@ -1475,10 +1278,6 @@ class VideoApi:
             file_name__lte=file_name__lte,
             file_name__in=file_name__in,
             file_name__notin=file_name__notin,
-            file_name__isnull=file_name__isnull,
-            file_name__isnotnull=file_name__isnotnull,
-            file_name__isfalse=file_name__isfalse,
-            file_name__istrue=file_name__istrue,
             file_name__like=file_name__like,
             file_name__notlike=file_name__notlike,
             file_name__ilike=file_name__ilike,
@@ -1493,10 +1292,6 @@ class VideoApi:
             started_at__lte=started_at__lte,
             started_at__in=started_at__in,
             started_at__notin=started_at__notin,
-            started_at__isnull=started_at__isnull,
-            started_at__isnotnull=started_at__isnotnull,
-            started_at__isfalse=started_at__isfalse,
-            started_at__istrue=started_at__istrue,
             started_at__like=started_at__like,
             started_at__notlike=started_at__notlike,
             started_at__ilike=started_at__ilike,
@@ -1511,10 +1306,6 @@ class VideoApi:
             ended_at__lte=ended_at__lte,
             ended_at__in=ended_at__in,
             ended_at__notin=ended_at__notin,
-            ended_at__isnull=ended_at__isnull,
-            ended_at__isnotnull=ended_at__isnotnull,
-            ended_at__isfalse=ended_at__isfalse,
-            ended_at__istrue=ended_at__istrue,
             ended_at__like=ended_at__like,
             ended_at__notlike=ended_at__notlike,
             ended_at__ilike=ended_at__ilike,
@@ -1529,14 +1320,6 @@ class VideoApi:
             duration__lte=duration__lte,
             duration__in=duration__in,
             duration__notin=duration__notin,
-            duration__isnull=duration__isnull,
-            duration__isnotnull=duration__isnotnull,
-            duration__isfalse=duration__isfalse,
-            duration__istrue=duration__istrue,
-            duration__like=duration__like,
-            duration__notlike=duration__notlike,
-            duration__ilike=duration__ilike,
-            duration__notilike=duration__notilike,
             duration__desc=duration__desc,
             duration__asc=duration__asc,
             file_size__eq=file_size__eq,
@@ -1547,14 +1330,6 @@ class VideoApi:
             file_size__lte=file_size__lte,
             file_size__in=file_size__in,
             file_size__notin=file_size__notin,
-            file_size__isnull=file_size__isnull,
-            file_size__isnotnull=file_size__isnotnull,
-            file_size__isfalse=file_size__isfalse,
-            file_size__istrue=file_size__istrue,
-            file_size__like=file_size__like,
-            file_size__notlike=file_size__notlike,
-            file_size__ilike=file_size__ilike,
-            file_size__notilike=file_size__notilike,
             file_size__desc=file_size__desc,
             file_size__asc=file_size__asc,
             thumbnail_name__eq=thumbnail_name__eq,
@@ -1565,10 +1340,6 @@ class VideoApi:
             thumbnail_name__lte=thumbnail_name__lte,
             thumbnail_name__in=thumbnail_name__in,
             thumbnail_name__notin=thumbnail_name__notin,
-            thumbnail_name__isnull=thumbnail_name__isnull,
-            thumbnail_name__isnotnull=thumbnail_name__isnotnull,
-            thumbnail_name__isfalse=thumbnail_name__isfalse,
-            thumbnail_name__istrue=thumbnail_name__istrue,
             thumbnail_name__like=thumbnail_name__like,
             thumbnail_name__notlike=thumbnail_name__notlike,
             thumbnail_name__ilike=thumbnail_name__ilike,
@@ -1583,10 +1354,6 @@ class VideoApi:
             status__lte=status__lte,
             status__in=status__in,
             status__notin=status__notin,
-            status__isnull=status__isnull,
-            status__isnotnull=status__isnotnull,
-            status__isfalse=status__isfalse,
-            status__istrue=status__istrue,
             status__like=status__like,
             status__notlike=status__notlike,
             status__ilike=status__ilike,
@@ -1601,10 +1368,6 @@ class VideoApi:
             object_detector_claimed_until__lte=object_detector_claimed_until__lte,
             object_detector_claimed_until__in=object_detector_claimed_until__in,
             object_detector_claimed_until__notin=object_detector_claimed_until__notin,
-            object_detector_claimed_until__isnull=object_detector_claimed_until__isnull,
-            object_detector_claimed_until__isnotnull=object_detector_claimed_until__isnotnull,
-            object_detector_claimed_until__isfalse=object_detector_claimed_until__isfalse,
-            object_detector_claimed_until__istrue=object_detector_claimed_until__istrue,
             object_detector_claimed_until__like=object_detector_claimed_until__like,
             object_detector_claimed_until__notlike=object_detector_claimed_until__notlike,
             object_detector_claimed_until__ilike=object_detector_claimed_until__ilike,
@@ -1619,10 +1382,6 @@ class VideoApi:
             object_tracker_claimed_until__lte=object_tracker_claimed_until__lte,
             object_tracker_claimed_until__in=object_tracker_claimed_until__in,
             object_tracker_claimed_until__notin=object_tracker_claimed_until__notin,
-            object_tracker_claimed_until__isnull=object_tracker_claimed_until__isnull,
-            object_tracker_claimed_until__isnotnull=object_tracker_claimed_until__isnotnull,
-            object_tracker_claimed_until__isfalse=object_tracker_claimed_until__isfalse,
-            object_tracker_claimed_until__istrue=object_tracker_claimed_until__istrue,
             object_tracker_claimed_until__like=object_tracker_claimed_until__like,
             object_tracker_claimed_until__notlike=object_tracker_claimed_until__notlike,
             object_tracker_claimed_until__ilike=object_tracker_claimed_until__ilike,
@@ -1637,16 +1396,18 @@ class VideoApi:
             camera_id__lte=camera_id__lte,
             camera_id__in=camera_id__in,
             camera_id__notin=camera_id__notin,
-            camera_id__isnull=camera_id__isnull,
-            camera_id__isnotnull=camera_id__isnotnull,
-            camera_id__isfalse=camera_id__isfalse,
-            camera_id__istrue=camera_id__istrue,
             camera_id__like=camera_id__like,
             camera_id__notlike=camera_id__notlike,
             camera_id__ilike=camera_id__ilike,
             camera_id__notilike=camera_id__notilike,
             camera_id__desc=camera_id__desc,
             camera_id__asc=camera_id__asc,
+            camera_id_object__desc=camera_id_object__desc,
+            camera_id_object__asc=camera_id_object__asc,
+            detection_summary__desc=detection_summary__desc,
+            detection_summary__asc=detection_summary__asc,
+            referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
+            referenced_by_detection_video_id_objects__asc=referenced_by_detection_video_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1654,7 +1415,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1681,10 +1442,6 @@ class VideoApi:
         id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -1699,14 +1456,10 @@ class VideoApi:
         created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1717,14 +1470,10 @@ class VideoApi:
         updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1735,14 +1484,10 @@ class VideoApi:
         deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         file_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -1753,10 +1498,6 @@ class VideoApi:
         file_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         file_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         file_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        file_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         file_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -1771,14 +1512,10 @@ class VideoApi:
         started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        started_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1789,14 +1526,10 @@ class VideoApi:
         ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        ended_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         duration__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
@@ -1807,14 +1540,6 @@ class VideoApi:
         duration__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
         duration__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         duration__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        duration__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         duration__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         duration__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         file_size__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
@@ -1825,14 +1550,6 @@ class VideoApi:
         file_size__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
         file_size__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         file_size__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        file_size__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_size__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         file_size__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         thumbnail_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -1843,10 +1560,6 @@ class VideoApi:
         thumbnail_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         thumbnail_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         thumbnail_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        thumbnail_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         thumbnail_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         thumbnail_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         thumbnail_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -1861,10 +1574,6 @@ class VideoApi:
         status__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        status__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -1879,14 +1588,10 @@ class VideoApi:
         object_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         object_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         object_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        object_detector_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         object_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         object_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         object_tracker_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1897,14 +1602,10 @@ class VideoApi:
         object_tracker_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         object_tracker_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         object_tracker_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        object_tracker_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         object_tracker_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         object_tracker_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -1915,16 +1616,18 @@ class VideoApi:
         camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        detection_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        detection_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1937,7 +1640,7 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetVideos200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfVideo]:
         """get_videos
 
 
@@ -1963,14 +1666,6 @@ class VideoApi:
         :type id__in: str
         :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnull: str
-        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnotnull: str
-        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type id__isfalse: str
-        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type id__istrue: str
         :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
         :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1999,22 +1694,14 @@ class VideoApi:
         :type created_at__in: datetime
         :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnull: str
-        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnotnull: str
-        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isfalse: str
-        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type created_at__istrue: str
         :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: str
+        :type created_at__like: datetime
         :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: str
+        :type created_at__notlike: datetime
         :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: str
+        :type created_at__ilike: datetime
         :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: str
+        :type created_at__notilike: datetime
         :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
         :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2035,22 +1722,14 @@ class VideoApi:
         :type updated_at__in: datetime
         :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnull: str
-        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnotnull: str
-        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isfalse: str
-        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__istrue: str
         :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: str
+        :type updated_at__like: datetime
         :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: str
+        :type updated_at__notlike: datetime
         :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: str
+        :type updated_at__ilike: datetime
         :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: str
+        :type updated_at__notilike: datetime
         :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
         :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2071,22 +1750,14 @@ class VideoApi:
         :type deleted_at__in: datetime
         :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnull: str
-        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnotnull: str
-        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isfalse: str
-        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__istrue: str
         :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: str
+        :type deleted_at__like: datetime
         :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: str
+        :type deleted_at__notlike: datetime
         :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: str
+        :type deleted_at__ilike: datetime
         :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: str
+        :type deleted_at__notilike: datetime
         :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
         :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2107,14 +1778,6 @@ class VideoApi:
         :type file_name__in: str
         :param file_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type file_name__notin: str
-        :param file_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isnull: str
-        :param file_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isnotnull: str
-        :param file_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isfalse: str
-        :param file_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type file_name__istrue: str
         :param file_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type file_name__like: str
         :param file_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2143,22 +1806,14 @@ class VideoApi:
         :type started_at__in: datetime
         :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type started_at__notin: datetime
-        :param started_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isnull: str
-        :param started_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isnotnull: str
-        :param started_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isfalse: str
-        :param started_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type started_at__istrue: str
         :param started_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__like: str
+        :type started_at__like: datetime
         :param started_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notlike: str
+        :type started_at__notlike: datetime
         :param started_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__ilike: str
+        :type started_at__ilike: datetime
         :param started_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notilike: str
+        :type started_at__notilike: datetime
         :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type started_at__desc: str
         :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2179,22 +1834,14 @@ class VideoApi:
         :type ended_at__in: datetime
         :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type ended_at__notin: datetime
-        :param ended_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isnull: str
-        :param ended_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isnotnull: str
-        :param ended_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isfalse: str
-        :param ended_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__istrue: str
         :param ended_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__like: str
+        :type ended_at__like: datetime
         :param ended_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notlike: str
+        :type ended_at__notlike: datetime
         :param ended_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__ilike: str
+        :type ended_at__ilike: datetime
         :param ended_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notilike: str
+        :type ended_at__notilike: datetime
         :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type ended_at__desc: str
         :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2215,22 +1862,6 @@ class VideoApi:
         :type duration__in: int
         :param duration__notin: SQL NOT IN comparison, permits comma-separated values
         :type duration__notin: int
-        :param duration__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type duration__isnull: str
-        :param duration__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type duration__isnotnull: str
-        :param duration__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type duration__isfalse: str
-        :param duration__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type duration__istrue: str
-        :param duration__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__like: str
-        :param duration__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__notlike: str
-        :param duration__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__ilike: str
-        :param duration__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__notilike: str
         :param duration__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type duration__desc: str
         :param duration__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2251,22 +1882,6 @@ class VideoApi:
         :type file_size__in: float
         :param file_size__notin: SQL NOT IN comparison, permits comma-separated values
         :type file_size__notin: float
-        :param file_size__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isnull: str
-        :param file_size__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isnotnull: str
-        :param file_size__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isfalse: str
-        :param file_size__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type file_size__istrue: str
-        :param file_size__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__like: str
-        :param file_size__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__notlike: str
-        :param file_size__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__ilike: str
-        :param file_size__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__notilike: str
         :param file_size__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type file_size__desc: str
         :param file_size__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2287,14 +1902,6 @@ class VideoApi:
         :type thumbnail_name__in: str
         :param thumbnail_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type thumbnail_name__notin: str
-        :param thumbnail_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isnull: str
-        :param thumbnail_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isnotnull: str
-        :param thumbnail_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isfalse: str
-        :param thumbnail_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__istrue: str
         :param thumbnail_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type thumbnail_name__like: str
         :param thumbnail_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2323,14 +1930,6 @@ class VideoApi:
         :type status__in: str
         :param status__notin: SQL NOT IN comparison, permits comma-separated values
         :type status__notin: str
-        :param status__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type status__isnull: str
-        :param status__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type status__isnotnull: str
-        :param status__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type status__isfalse: str
-        :param status__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type status__istrue: str
         :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type status__like: str
         :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2359,22 +1958,14 @@ class VideoApi:
         :type object_detector_claimed_until__in: datetime
         :param object_detector_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type object_detector_claimed_until__notin: datetime
-        :param object_detector_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isnull: str
-        :param object_detector_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isnotnull: str
-        :param object_detector_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isfalse: str
-        :param object_detector_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__istrue: str
         :param object_detector_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__like: str
+        :type object_detector_claimed_until__like: datetime
         :param object_detector_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__notlike: str
+        :type object_detector_claimed_until__notlike: datetime
         :param object_detector_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__ilike: str
+        :type object_detector_claimed_until__ilike: datetime
         :param object_detector_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__notilike: str
+        :type object_detector_claimed_until__notilike: datetime
         :param object_detector_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type object_detector_claimed_until__desc: str
         :param object_detector_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2395,22 +1986,14 @@ class VideoApi:
         :type object_tracker_claimed_until__in: datetime
         :param object_tracker_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type object_tracker_claimed_until__notin: datetime
-        :param object_tracker_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isnull: str
-        :param object_tracker_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isnotnull: str
-        :param object_tracker_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isfalse: str
-        :param object_tracker_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__istrue: str
         :param object_tracker_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__like: str
+        :type object_tracker_claimed_until__like: datetime
         :param object_tracker_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__notlike: str
+        :type object_tracker_claimed_until__notlike: datetime
         :param object_tracker_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__ilike: str
+        :type object_tracker_claimed_until__ilike: datetime
         :param object_tracker_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__notilike: str
+        :type object_tracker_claimed_until__notilike: datetime
         :param object_tracker_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type object_tracker_claimed_until__desc: str
         :param object_tracker_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2431,14 +2014,6 @@ class VideoApi:
         :type camera_id__in: str
         :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type camera_id__notin: str
-        :param camera_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnull: str
-        :param camera_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnotnull: str
-        :param camera_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isfalse: str
-        :param camera_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__istrue: str
         :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type camera_id__like: str
         :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2451,6 +2026,18 @@ class VideoApi:
         :type camera_id__desc: str
         :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id__asc: str
+        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__desc: str
+        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__asc: str
+        :param detection_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type detection_summary__desc: str
+        :param detection_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type detection_summary__asc: str
+        :param referenced_by_detection_video_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_video_id_objects__desc: str
+        :param referenced_by_detection_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_video_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2485,10 +2072,6 @@ class VideoApi:
             id__lte=id__lte,
             id__in=id__in,
             id__notin=id__notin,
-            id__isnull=id__isnull,
-            id__isnotnull=id__isnotnull,
-            id__isfalse=id__isfalse,
-            id__istrue=id__istrue,
             id__like=id__like,
             id__notlike=id__notlike,
             id__ilike=id__ilike,
@@ -2503,10 +2086,6 @@ class VideoApi:
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
             created_at__notin=created_at__notin,
-            created_at__isnull=created_at__isnull,
-            created_at__isnotnull=created_at__isnotnull,
-            created_at__isfalse=created_at__isfalse,
-            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
             created_at__notlike=created_at__notlike,
             created_at__ilike=created_at__ilike,
@@ -2521,10 +2100,6 @@ class VideoApi:
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
             updated_at__notin=updated_at__notin,
-            updated_at__isnull=updated_at__isnull,
-            updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__isfalse=updated_at__isfalse,
-            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
             updated_at__notlike=updated_at__notlike,
             updated_at__ilike=updated_at__ilike,
@@ -2539,10 +2114,6 @@ class VideoApi:
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
             deleted_at__notin=deleted_at__notin,
-            deleted_at__isnull=deleted_at__isnull,
-            deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__isfalse=deleted_at__isfalse,
-            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
             deleted_at__notlike=deleted_at__notlike,
             deleted_at__ilike=deleted_at__ilike,
@@ -2557,10 +2128,6 @@ class VideoApi:
             file_name__lte=file_name__lte,
             file_name__in=file_name__in,
             file_name__notin=file_name__notin,
-            file_name__isnull=file_name__isnull,
-            file_name__isnotnull=file_name__isnotnull,
-            file_name__isfalse=file_name__isfalse,
-            file_name__istrue=file_name__istrue,
             file_name__like=file_name__like,
             file_name__notlike=file_name__notlike,
             file_name__ilike=file_name__ilike,
@@ -2575,10 +2142,6 @@ class VideoApi:
             started_at__lte=started_at__lte,
             started_at__in=started_at__in,
             started_at__notin=started_at__notin,
-            started_at__isnull=started_at__isnull,
-            started_at__isnotnull=started_at__isnotnull,
-            started_at__isfalse=started_at__isfalse,
-            started_at__istrue=started_at__istrue,
             started_at__like=started_at__like,
             started_at__notlike=started_at__notlike,
             started_at__ilike=started_at__ilike,
@@ -2593,10 +2156,6 @@ class VideoApi:
             ended_at__lte=ended_at__lte,
             ended_at__in=ended_at__in,
             ended_at__notin=ended_at__notin,
-            ended_at__isnull=ended_at__isnull,
-            ended_at__isnotnull=ended_at__isnotnull,
-            ended_at__isfalse=ended_at__isfalse,
-            ended_at__istrue=ended_at__istrue,
             ended_at__like=ended_at__like,
             ended_at__notlike=ended_at__notlike,
             ended_at__ilike=ended_at__ilike,
@@ -2611,14 +2170,6 @@ class VideoApi:
             duration__lte=duration__lte,
             duration__in=duration__in,
             duration__notin=duration__notin,
-            duration__isnull=duration__isnull,
-            duration__isnotnull=duration__isnotnull,
-            duration__isfalse=duration__isfalse,
-            duration__istrue=duration__istrue,
-            duration__like=duration__like,
-            duration__notlike=duration__notlike,
-            duration__ilike=duration__ilike,
-            duration__notilike=duration__notilike,
             duration__desc=duration__desc,
             duration__asc=duration__asc,
             file_size__eq=file_size__eq,
@@ -2629,14 +2180,6 @@ class VideoApi:
             file_size__lte=file_size__lte,
             file_size__in=file_size__in,
             file_size__notin=file_size__notin,
-            file_size__isnull=file_size__isnull,
-            file_size__isnotnull=file_size__isnotnull,
-            file_size__isfalse=file_size__isfalse,
-            file_size__istrue=file_size__istrue,
-            file_size__like=file_size__like,
-            file_size__notlike=file_size__notlike,
-            file_size__ilike=file_size__ilike,
-            file_size__notilike=file_size__notilike,
             file_size__desc=file_size__desc,
             file_size__asc=file_size__asc,
             thumbnail_name__eq=thumbnail_name__eq,
@@ -2647,10 +2190,6 @@ class VideoApi:
             thumbnail_name__lte=thumbnail_name__lte,
             thumbnail_name__in=thumbnail_name__in,
             thumbnail_name__notin=thumbnail_name__notin,
-            thumbnail_name__isnull=thumbnail_name__isnull,
-            thumbnail_name__isnotnull=thumbnail_name__isnotnull,
-            thumbnail_name__isfalse=thumbnail_name__isfalse,
-            thumbnail_name__istrue=thumbnail_name__istrue,
             thumbnail_name__like=thumbnail_name__like,
             thumbnail_name__notlike=thumbnail_name__notlike,
             thumbnail_name__ilike=thumbnail_name__ilike,
@@ -2665,10 +2204,6 @@ class VideoApi:
             status__lte=status__lte,
             status__in=status__in,
             status__notin=status__notin,
-            status__isnull=status__isnull,
-            status__isnotnull=status__isnotnull,
-            status__isfalse=status__isfalse,
-            status__istrue=status__istrue,
             status__like=status__like,
             status__notlike=status__notlike,
             status__ilike=status__ilike,
@@ -2683,10 +2218,6 @@ class VideoApi:
             object_detector_claimed_until__lte=object_detector_claimed_until__lte,
             object_detector_claimed_until__in=object_detector_claimed_until__in,
             object_detector_claimed_until__notin=object_detector_claimed_until__notin,
-            object_detector_claimed_until__isnull=object_detector_claimed_until__isnull,
-            object_detector_claimed_until__isnotnull=object_detector_claimed_until__isnotnull,
-            object_detector_claimed_until__isfalse=object_detector_claimed_until__isfalse,
-            object_detector_claimed_until__istrue=object_detector_claimed_until__istrue,
             object_detector_claimed_until__like=object_detector_claimed_until__like,
             object_detector_claimed_until__notlike=object_detector_claimed_until__notlike,
             object_detector_claimed_until__ilike=object_detector_claimed_until__ilike,
@@ -2701,10 +2232,6 @@ class VideoApi:
             object_tracker_claimed_until__lte=object_tracker_claimed_until__lte,
             object_tracker_claimed_until__in=object_tracker_claimed_until__in,
             object_tracker_claimed_until__notin=object_tracker_claimed_until__notin,
-            object_tracker_claimed_until__isnull=object_tracker_claimed_until__isnull,
-            object_tracker_claimed_until__isnotnull=object_tracker_claimed_until__isnotnull,
-            object_tracker_claimed_until__isfalse=object_tracker_claimed_until__isfalse,
-            object_tracker_claimed_until__istrue=object_tracker_claimed_until__istrue,
             object_tracker_claimed_until__like=object_tracker_claimed_until__like,
             object_tracker_claimed_until__notlike=object_tracker_claimed_until__notlike,
             object_tracker_claimed_until__ilike=object_tracker_claimed_until__ilike,
@@ -2719,16 +2246,18 @@ class VideoApi:
             camera_id__lte=camera_id__lte,
             camera_id__in=camera_id__in,
             camera_id__notin=camera_id__notin,
-            camera_id__isnull=camera_id__isnull,
-            camera_id__isnotnull=camera_id__isnotnull,
-            camera_id__isfalse=camera_id__isfalse,
-            camera_id__istrue=camera_id__istrue,
             camera_id__like=camera_id__like,
             camera_id__notlike=camera_id__notlike,
             camera_id__ilike=camera_id__ilike,
             camera_id__notilike=camera_id__notilike,
             camera_id__desc=camera_id__desc,
             camera_id__asc=camera_id__asc,
+            camera_id_object__desc=camera_id_object__desc,
+            camera_id_object__asc=camera_id_object__asc,
+            detection_summary__desc=detection_summary__desc,
+            detection_summary__asc=detection_summary__asc,
+            referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
+            referenced_by_detection_video_id_objects__asc=referenced_by_detection_video_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2736,7 +2265,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2763,10 +2292,6 @@ class VideoApi:
         id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -2781,14 +2306,10 @@ class VideoApi:
         created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2799,14 +2320,10 @@ class VideoApi:
         updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2817,14 +2334,10 @@ class VideoApi:
         deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         file_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -2835,10 +2348,6 @@ class VideoApi:
         file_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         file_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         file_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        file_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         file_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -2853,14 +2362,10 @@ class VideoApi:
         started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        started_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        started_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        started_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2871,14 +2376,10 @@ class VideoApi:
         ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        ended_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        ended_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         duration__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
@@ -2889,14 +2390,6 @@ class VideoApi:
         duration__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
         duration__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         duration__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        duration__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        duration__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        duration__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         duration__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         duration__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         file_size__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
@@ -2907,14 +2400,6 @@ class VideoApi:
         file_size__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
         file_size__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         file_size__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        file_size__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        file_size__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        file_size__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         file_size__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         file_size__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         thumbnail_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -2925,10 +2410,6 @@ class VideoApi:
         thumbnail_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         thumbnail_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         thumbnail_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        thumbnail_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        thumbnail_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         thumbnail_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         thumbnail_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         thumbnail_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -2943,10 +2424,6 @@ class VideoApi:
         status__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        status__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        status__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -2961,14 +2438,10 @@ class VideoApi:
         object_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         object_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         object_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        object_detector_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_detector_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_detector_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_detector_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         object_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         object_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         object_tracker_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2979,14 +2452,10 @@ class VideoApi:
         object_tracker_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         object_tracker_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         object_tracker_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        object_tracker_claimed_until__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        object_tracker_claimed_until__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        object_tracker_claimed_until__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        object_tracker_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         object_tracker_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         object_tracker_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -2997,16 +2466,18 @@ class VideoApi:
         camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        detection_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        detection_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3045,14 +2516,6 @@ class VideoApi:
         :type id__in: str
         :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnull: str
-        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnotnull: str
-        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type id__isfalse: str
-        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type id__istrue: str
         :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
         :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -3081,22 +2544,14 @@ class VideoApi:
         :type created_at__in: datetime
         :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnull: str
-        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnotnull: str
-        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isfalse: str
-        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type created_at__istrue: str
         :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: str
+        :type created_at__like: datetime
         :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: str
+        :type created_at__notlike: datetime
         :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: str
+        :type created_at__ilike: datetime
         :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: str
+        :type created_at__notilike: datetime
         :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
         :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3117,22 +2572,14 @@ class VideoApi:
         :type updated_at__in: datetime
         :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnull: str
-        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnotnull: str
-        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isfalse: str
-        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__istrue: str
         :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: str
+        :type updated_at__like: datetime
         :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: str
+        :type updated_at__notlike: datetime
         :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: str
+        :type updated_at__ilike: datetime
         :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: str
+        :type updated_at__notilike: datetime
         :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
         :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3153,22 +2600,14 @@ class VideoApi:
         :type deleted_at__in: datetime
         :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnull: str
-        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnotnull: str
-        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isfalse: str
-        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__istrue: str
         :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: str
+        :type deleted_at__like: datetime
         :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: str
+        :type deleted_at__notlike: datetime
         :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: str
+        :type deleted_at__ilike: datetime
         :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: str
+        :type deleted_at__notilike: datetime
         :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
         :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3189,14 +2628,6 @@ class VideoApi:
         :type file_name__in: str
         :param file_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type file_name__notin: str
-        :param file_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isnull: str
-        :param file_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isnotnull: str
-        :param file_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type file_name__isfalse: str
-        :param file_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type file_name__istrue: str
         :param file_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type file_name__like: str
         :param file_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -3225,22 +2656,14 @@ class VideoApi:
         :type started_at__in: datetime
         :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type started_at__notin: datetime
-        :param started_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isnull: str
-        :param started_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isnotnull: str
-        :param started_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type started_at__isfalse: str
-        :param started_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type started_at__istrue: str
         :param started_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__like: str
+        :type started_at__like: datetime
         :param started_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notlike: str
+        :type started_at__notlike: datetime
         :param started_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__ilike: str
+        :type started_at__ilike: datetime
         :param started_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notilike: str
+        :type started_at__notilike: datetime
         :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type started_at__desc: str
         :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3261,22 +2684,14 @@ class VideoApi:
         :type ended_at__in: datetime
         :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type ended_at__notin: datetime
-        :param ended_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isnull: str
-        :param ended_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isnotnull: str
-        :param ended_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__isfalse: str
-        :param ended_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type ended_at__istrue: str
         :param ended_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__like: str
+        :type ended_at__like: datetime
         :param ended_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notlike: str
+        :type ended_at__notlike: datetime
         :param ended_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__ilike: str
+        :type ended_at__ilike: datetime
         :param ended_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notilike: str
+        :type ended_at__notilike: datetime
         :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type ended_at__desc: str
         :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3297,22 +2712,6 @@ class VideoApi:
         :type duration__in: int
         :param duration__notin: SQL NOT IN comparison, permits comma-separated values
         :type duration__notin: int
-        :param duration__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type duration__isnull: str
-        :param duration__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type duration__isnotnull: str
-        :param duration__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type duration__isfalse: str
-        :param duration__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type duration__istrue: str
-        :param duration__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__like: str
-        :param duration__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__notlike: str
-        :param duration__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__ilike: str
-        :param duration__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type duration__notilike: str
         :param duration__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type duration__desc: str
         :param duration__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3333,22 +2732,6 @@ class VideoApi:
         :type file_size__in: float
         :param file_size__notin: SQL NOT IN comparison, permits comma-separated values
         :type file_size__notin: float
-        :param file_size__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isnull: str
-        :param file_size__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isnotnull: str
-        :param file_size__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type file_size__isfalse: str
-        :param file_size__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type file_size__istrue: str
-        :param file_size__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__like: str
-        :param file_size__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__notlike: str
-        :param file_size__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__ilike: str
-        :param file_size__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type file_size__notilike: str
         :param file_size__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type file_size__desc: str
         :param file_size__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3369,14 +2752,6 @@ class VideoApi:
         :type thumbnail_name__in: str
         :param thumbnail_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type thumbnail_name__notin: str
-        :param thumbnail_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isnull: str
-        :param thumbnail_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isnotnull: str
-        :param thumbnail_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__isfalse: str
-        :param thumbnail_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type thumbnail_name__istrue: str
         :param thumbnail_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type thumbnail_name__like: str
         :param thumbnail_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -3405,14 +2780,6 @@ class VideoApi:
         :type status__in: str
         :param status__notin: SQL NOT IN comparison, permits comma-separated values
         :type status__notin: str
-        :param status__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type status__isnull: str
-        :param status__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type status__isnotnull: str
-        :param status__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type status__isfalse: str
-        :param status__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type status__istrue: str
         :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type status__like: str
         :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -3441,22 +2808,14 @@ class VideoApi:
         :type object_detector_claimed_until__in: datetime
         :param object_detector_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type object_detector_claimed_until__notin: datetime
-        :param object_detector_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isnull: str
-        :param object_detector_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isnotnull: str
-        :param object_detector_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__isfalse: str
-        :param object_detector_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type object_detector_claimed_until__istrue: str
         :param object_detector_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__like: str
+        :type object_detector_claimed_until__like: datetime
         :param object_detector_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__notlike: str
+        :type object_detector_claimed_until__notlike: datetime
         :param object_detector_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__ilike: str
+        :type object_detector_claimed_until__ilike: datetime
         :param object_detector_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_detector_claimed_until__notilike: str
+        :type object_detector_claimed_until__notilike: datetime
         :param object_detector_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type object_detector_claimed_until__desc: str
         :param object_detector_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3477,22 +2836,14 @@ class VideoApi:
         :type object_tracker_claimed_until__in: datetime
         :param object_tracker_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
         :type object_tracker_claimed_until__notin: datetime
-        :param object_tracker_claimed_until__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isnull: str
-        :param object_tracker_claimed_until__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isnotnull: str
-        :param object_tracker_claimed_until__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__isfalse: str
-        :param object_tracker_claimed_until__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type object_tracker_claimed_until__istrue: str
         :param object_tracker_claimed_until__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__like: str
+        :type object_tracker_claimed_until__like: datetime
         :param object_tracker_claimed_until__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__notlike: str
+        :type object_tracker_claimed_until__notlike: datetime
         :param object_tracker_claimed_until__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__ilike: str
+        :type object_tracker_claimed_until__ilike: datetime
         :param object_tracker_claimed_until__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type object_tracker_claimed_until__notilike: str
+        :type object_tracker_claimed_until__notilike: datetime
         :param object_tracker_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type object_tracker_claimed_until__desc: str
         :param object_tracker_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -3513,14 +2864,6 @@ class VideoApi:
         :type camera_id__in: str
         :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type camera_id__notin: str
-        :param camera_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnull: str
-        :param camera_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnotnull: str
-        :param camera_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isfalse: str
-        :param camera_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__istrue: str
         :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type camera_id__like: str
         :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -3533,6 +2876,18 @@ class VideoApi:
         :type camera_id__desc: str
         :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id__asc: str
+        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__desc: str
+        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__asc: str
+        :param detection_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type detection_summary__desc: str
+        :param detection_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type detection_summary__asc: str
+        :param referenced_by_detection_video_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_video_id_objects__desc: str
+        :param referenced_by_detection_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_video_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3567,10 +2922,6 @@ class VideoApi:
             id__lte=id__lte,
             id__in=id__in,
             id__notin=id__notin,
-            id__isnull=id__isnull,
-            id__isnotnull=id__isnotnull,
-            id__isfalse=id__isfalse,
-            id__istrue=id__istrue,
             id__like=id__like,
             id__notlike=id__notlike,
             id__ilike=id__ilike,
@@ -3585,10 +2936,6 @@ class VideoApi:
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
             created_at__notin=created_at__notin,
-            created_at__isnull=created_at__isnull,
-            created_at__isnotnull=created_at__isnotnull,
-            created_at__isfalse=created_at__isfalse,
-            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
             created_at__notlike=created_at__notlike,
             created_at__ilike=created_at__ilike,
@@ -3603,10 +2950,6 @@ class VideoApi:
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
             updated_at__notin=updated_at__notin,
-            updated_at__isnull=updated_at__isnull,
-            updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__isfalse=updated_at__isfalse,
-            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
             updated_at__notlike=updated_at__notlike,
             updated_at__ilike=updated_at__ilike,
@@ -3621,10 +2964,6 @@ class VideoApi:
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
             deleted_at__notin=deleted_at__notin,
-            deleted_at__isnull=deleted_at__isnull,
-            deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__isfalse=deleted_at__isfalse,
-            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
             deleted_at__notlike=deleted_at__notlike,
             deleted_at__ilike=deleted_at__ilike,
@@ -3639,10 +2978,6 @@ class VideoApi:
             file_name__lte=file_name__lte,
             file_name__in=file_name__in,
             file_name__notin=file_name__notin,
-            file_name__isnull=file_name__isnull,
-            file_name__isnotnull=file_name__isnotnull,
-            file_name__isfalse=file_name__isfalse,
-            file_name__istrue=file_name__istrue,
             file_name__like=file_name__like,
             file_name__notlike=file_name__notlike,
             file_name__ilike=file_name__ilike,
@@ -3657,10 +2992,6 @@ class VideoApi:
             started_at__lte=started_at__lte,
             started_at__in=started_at__in,
             started_at__notin=started_at__notin,
-            started_at__isnull=started_at__isnull,
-            started_at__isnotnull=started_at__isnotnull,
-            started_at__isfalse=started_at__isfalse,
-            started_at__istrue=started_at__istrue,
             started_at__like=started_at__like,
             started_at__notlike=started_at__notlike,
             started_at__ilike=started_at__ilike,
@@ -3675,10 +3006,6 @@ class VideoApi:
             ended_at__lte=ended_at__lte,
             ended_at__in=ended_at__in,
             ended_at__notin=ended_at__notin,
-            ended_at__isnull=ended_at__isnull,
-            ended_at__isnotnull=ended_at__isnotnull,
-            ended_at__isfalse=ended_at__isfalse,
-            ended_at__istrue=ended_at__istrue,
             ended_at__like=ended_at__like,
             ended_at__notlike=ended_at__notlike,
             ended_at__ilike=ended_at__ilike,
@@ -3693,14 +3020,6 @@ class VideoApi:
             duration__lte=duration__lte,
             duration__in=duration__in,
             duration__notin=duration__notin,
-            duration__isnull=duration__isnull,
-            duration__isnotnull=duration__isnotnull,
-            duration__isfalse=duration__isfalse,
-            duration__istrue=duration__istrue,
-            duration__like=duration__like,
-            duration__notlike=duration__notlike,
-            duration__ilike=duration__ilike,
-            duration__notilike=duration__notilike,
             duration__desc=duration__desc,
             duration__asc=duration__asc,
             file_size__eq=file_size__eq,
@@ -3711,14 +3030,6 @@ class VideoApi:
             file_size__lte=file_size__lte,
             file_size__in=file_size__in,
             file_size__notin=file_size__notin,
-            file_size__isnull=file_size__isnull,
-            file_size__isnotnull=file_size__isnotnull,
-            file_size__isfalse=file_size__isfalse,
-            file_size__istrue=file_size__istrue,
-            file_size__like=file_size__like,
-            file_size__notlike=file_size__notlike,
-            file_size__ilike=file_size__ilike,
-            file_size__notilike=file_size__notilike,
             file_size__desc=file_size__desc,
             file_size__asc=file_size__asc,
             thumbnail_name__eq=thumbnail_name__eq,
@@ -3729,10 +3040,6 @@ class VideoApi:
             thumbnail_name__lte=thumbnail_name__lte,
             thumbnail_name__in=thumbnail_name__in,
             thumbnail_name__notin=thumbnail_name__notin,
-            thumbnail_name__isnull=thumbnail_name__isnull,
-            thumbnail_name__isnotnull=thumbnail_name__isnotnull,
-            thumbnail_name__isfalse=thumbnail_name__isfalse,
-            thumbnail_name__istrue=thumbnail_name__istrue,
             thumbnail_name__like=thumbnail_name__like,
             thumbnail_name__notlike=thumbnail_name__notlike,
             thumbnail_name__ilike=thumbnail_name__ilike,
@@ -3747,10 +3054,6 @@ class VideoApi:
             status__lte=status__lte,
             status__in=status__in,
             status__notin=status__notin,
-            status__isnull=status__isnull,
-            status__isnotnull=status__isnotnull,
-            status__isfalse=status__isfalse,
-            status__istrue=status__istrue,
             status__like=status__like,
             status__notlike=status__notlike,
             status__ilike=status__ilike,
@@ -3765,10 +3068,6 @@ class VideoApi:
             object_detector_claimed_until__lte=object_detector_claimed_until__lte,
             object_detector_claimed_until__in=object_detector_claimed_until__in,
             object_detector_claimed_until__notin=object_detector_claimed_until__notin,
-            object_detector_claimed_until__isnull=object_detector_claimed_until__isnull,
-            object_detector_claimed_until__isnotnull=object_detector_claimed_until__isnotnull,
-            object_detector_claimed_until__isfalse=object_detector_claimed_until__isfalse,
-            object_detector_claimed_until__istrue=object_detector_claimed_until__istrue,
             object_detector_claimed_until__like=object_detector_claimed_until__like,
             object_detector_claimed_until__notlike=object_detector_claimed_until__notlike,
             object_detector_claimed_until__ilike=object_detector_claimed_until__ilike,
@@ -3783,10 +3082,6 @@ class VideoApi:
             object_tracker_claimed_until__lte=object_tracker_claimed_until__lte,
             object_tracker_claimed_until__in=object_tracker_claimed_until__in,
             object_tracker_claimed_until__notin=object_tracker_claimed_until__notin,
-            object_tracker_claimed_until__isnull=object_tracker_claimed_until__isnull,
-            object_tracker_claimed_until__isnotnull=object_tracker_claimed_until__isnotnull,
-            object_tracker_claimed_until__isfalse=object_tracker_claimed_until__isfalse,
-            object_tracker_claimed_until__istrue=object_tracker_claimed_until__istrue,
             object_tracker_claimed_until__like=object_tracker_claimed_until__like,
             object_tracker_claimed_until__notlike=object_tracker_claimed_until__notlike,
             object_tracker_claimed_until__ilike=object_tracker_claimed_until__ilike,
@@ -3801,16 +3096,18 @@ class VideoApi:
             camera_id__lte=camera_id__lte,
             camera_id__in=camera_id__in,
             camera_id__notin=camera_id__notin,
-            camera_id__isnull=camera_id__isnull,
-            camera_id__isnotnull=camera_id__isnotnull,
-            camera_id__isfalse=camera_id__isfalse,
-            camera_id__istrue=camera_id__istrue,
             camera_id__like=camera_id__like,
             camera_id__notlike=camera_id__notlike,
             camera_id__ilike=camera_id__ilike,
             camera_id__notilike=camera_id__notilike,
             camera_id__desc=camera_id__desc,
             camera_id__asc=camera_id__asc,
+            camera_id_object__desc=camera_id_object__desc,
+            camera_id_object__asc=camera_id_object__asc,
+            detection_summary__desc=detection_summary__desc,
+            detection_summary__asc=detection_summary__asc,
+            referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
+            referenced_by_detection_video_id_objects__asc=referenced_by_detection_video_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3818,7 +3115,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -3840,10 +3137,6 @@ class VideoApi:
         id__lte,
         id__in,
         id__notin,
-        id__isnull,
-        id__isnotnull,
-        id__isfalse,
-        id__istrue,
         id__like,
         id__notlike,
         id__ilike,
@@ -3858,10 +3151,6 @@ class VideoApi:
         created_at__lte,
         created_at__in,
         created_at__notin,
-        created_at__isnull,
-        created_at__isnotnull,
-        created_at__isfalse,
-        created_at__istrue,
         created_at__like,
         created_at__notlike,
         created_at__ilike,
@@ -3876,10 +3165,6 @@ class VideoApi:
         updated_at__lte,
         updated_at__in,
         updated_at__notin,
-        updated_at__isnull,
-        updated_at__isnotnull,
-        updated_at__isfalse,
-        updated_at__istrue,
         updated_at__like,
         updated_at__notlike,
         updated_at__ilike,
@@ -3894,10 +3179,6 @@ class VideoApi:
         deleted_at__lte,
         deleted_at__in,
         deleted_at__notin,
-        deleted_at__isnull,
-        deleted_at__isnotnull,
-        deleted_at__isfalse,
-        deleted_at__istrue,
         deleted_at__like,
         deleted_at__notlike,
         deleted_at__ilike,
@@ -3912,10 +3193,6 @@ class VideoApi:
         file_name__lte,
         file_name__in,
         file_name__notin,
-        file_name__isnull,
-        file_name__isnotnull,
-        file_name__isfalse,
-        file_name__istrue,
         file_name__like,
         file_name__notlike,
         file_name__ilike,
@@ -3930,10 +3207,6 @@ class VideoApi:
         started_at__lte,
         started_at__in,
         started_at__notin,
-        started_at__isnull,
-        started_at__isnotnull,
-        started_at__isfalse,
-        started_at__istrue,
         started_at__like,
         started_at__notlike,
         started_at__ilike,
@@ -3948,10 +3221,6 @@ class VideoApi:
         ended_at__lte,
         ended_at__in,
         ended_at__notin,
-        ended_at__isnull,
-        ended_at__isnotnull,
-        ended_at__isfalse,
-        ended_at__istrue,
         ended_at__like,
         ended_at__notlike,
         ended_at__ilike,
@@ -3966,14 +3235,6 @@ class VideoApi:
         duration__lte,
         duration__in,
         duration__notin,
-        duration__isnull,
-        duration__isnotnull,
-        duration__isfalse,
-        duration__istrue,
-        duration__like,
-        duration__notlike,
-        duration__ilike,
-        duration__notilike,
         duration__desc,
         duration__asc,
         file_size__eq,
@@ -3984,14 +3245,6 @@ class VideoApi:
         file_size__lte,
         file_size__in,
         file_size__notin,
-        file_size__isnull,
-        file_size__isnotnull,
-        file_size__isfalse,
-        file_size__istrue,
-        file_size__like,
-        file_size__notlike,
-        file_size__ilike,
-        file_size__notilike,
         file_size__desc,
         file_size__asc,
         thumbnail_name__eq,
@@ -4002,10 +3255,6 @@ class VideoApi:
         thumbnail_name__lte,
         thumbnail_name__in,
         thumbnail_name__notin,
-        thumbnail_name__isnull,
-        thumbnail_name__isnotnull,
-        thumbnail_name__isfalse,
-        thumbnail_name__istrue,
         thumbnail_name__like,
         thumbnail_name__notlike,
         thumbnail_name__ilike,
@@ -4020,10 +3269,6 @@ class VideoApi:
         status__lte,
         status__in,
         status__notin,
-        status__isnull,
-        status__isnotnull,
-        status__isfalse,
-        status__istrue,
         status__like,
         status__notlike,
         status__ilike,
@@ -4038,10 +3283,6 @@ class VideoApi:
         object_detector_claimed_until__lte,
         object_detector_claimed_until__in,
         object_detector_claimed_until__notin,
-        object_detector_claimed_until__isnull,
-        object_detector_claimed_until__isnotnull,
-        object_detector_claimed_until__isfalse,
-        object_detector_claimed_until__istrue,
         object_detector_claimed_until__like,
         object_detector_claimed_until__notlike,
         object_detector_claimed_until__ilike,
@@ -4056,10 +3297,6 @@ class VideoApi:
         object_tracker_claimed_until__lte,
         object_tracker_claimed_until__in,
         object_tracker_claimed_until__notin,
-        object_tracker_claimed_until__isnull,
-        object_tracker_claimed_until__isnotnull,
-        object_tracker_claimed_until__isfalse,
-        object_tracker_claimed_until__istrue,
         object_tracker_claimed_until__like,
         object_tracker_claimed_until__notlike,
         object_tracker_claimed_until__ilike,
@@ -4074,16 +3311,18 @@ class VideoApi:
         camera_id__lte,
         camera_id__in,
         camera_id__notin,
-        camera_id__isnull,
-        camera_id__isnotnull,
-        camera_id__isfalse,
-        camera_id__istrue,
         camera_id__like,
         camera_id__notlike,
         camera_id__ilike,
         camera_id__notilike,
         camera_id__desc,
         camera_id__asc,
+        camera_id_object__desc,
+        camera_id_object__asc,
+        detection_summary__desc,
+        detection_summary__asc,
+        referenced_by_detection_video_id_objects__desc,
+        referenced_by_detection_video_id_objects__asc,
         _request_auth,
         _content_type,
         _headers,
@@ -4147,22 +3386,6 @@ class VideoApi:
         if id__notin is not None:
             
             _query_params.append(('id__notin', id__notin))
-            
-        if id__isnull is not None:
-            
-            _query_params.append(('id__isnull', id__isnull))
-            
-        if id__isnotnull is not None:
-            
-            _query_params.append(('id__isnotnull', id__isnotnull))
-            
-        if id__isfalse is not None:
-            
-            _query_params.append(('id__isfalse', id__isfalse))
-            
-        if id__istrue is not None:
-            
-            _query_params.append(('id__istrue', id__istrue))
             
         if id__like is not None:
             
@@ -4292,37 +3515,57 @@ class VideoApi:
             else:
                 _query_params.append(('created_at__notin', created_at__notin))
             
-        if created_at__isnull is not None:
-            
-            _query_params.append(('created_at__isnull', created_at__isnull))
-            
-        if created_at__isnotnull is not None:
-            
-            _query_params.append(('created_at__isnotnull', created_at__isnotnull))
-            
-        if created_at__isfalse is not None:
-            
-            _query_params.append(('created_at__isfalse', created_at__isfalse))
-            
-        if created_at__istrue is not None:
-            
-            _query_params.append(('created_at__istrue', created_at__istrue))
-            
         if created_at__like is not None:
-            
-            _query_params.append(('created_at__like', created_at__like))
+            if isinstance(created_at__like, datetime):
+                _query_params.append(
+                    (
+                        'created_at__like',
+                        created_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__like', created_at__like))
             
         if created_at__notlike is not None:
-            
-            _query_params.append(('created_at__notlike', created_at__notlike))
+            if isinstance(created_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'created_at__notlike',
+                        created_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__notlike', created_at__notlike))
             
         if created_at__ilike is not None:
-            
-            _query_params.append(('created_at__ilike', created_at__ilike))
+            if isinstance(created_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'created_at__ilike',
+                        created_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__ilike', created_at__ilike))
             
         if created_at__notilike is not None:
-            
-            _query_params.append(('created_at__notilike', created_at__notilike))
+            if isinstance(created_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'created_at__notilike',
+                        created_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__notilike', created_at__notilike))
             
         if created_at__desc is not None:
             
@@ -4436,37 +3679,57 @@ class VideoApi:
             else:
                 _query_params.append(('updated_at__notin', updated_at__notin))
             
-        if updated_at__isnull is not None:
-            
-            _query_params.append(('updated_at__isnull', updated_at__isnull))
-            
-        if updated_at__isnotnull is not None:
-            
-            _query_params.append(('updated_at__isnotnull', updated_at__isnotnull))
-            
-        if updated_at__isfalse is not None:
-            
-            _query_params.append(('updated_at__isfalse', updated_at__isfalse))
-            
-        if updated_at__istrue is not None:
-            
-            _query_params.append(('updated_at__istrue', updated_at__istrue))
-            
         if updated_at__like is not None:
-            
-            _query_params.append(('updated_at__like', updated_at__like))
+            if isinstance(updated_at__like, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__like',
+                        updated_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__like', updated_at__like))
             
         if updated_at__notlike is not None:
-            
-            _query_params.append(('updated_at__notlike', updated_at__notlike))
+            if isinstance(updated_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__notlike',
+                        updated_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__notlike', updated_at__notlike))
             
         if updated_at__ilike is not None:
-            
-            _query_params.append(('updated_at__ilike', updated_at__ilike))
+            if isinstance(updated_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__ilike',
+                        updated_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__ilike', updated_at__ilike))
             
         if updated_at__notilike is not None:
-            
-            _query_params.append(('updated_at__notilike', updated_at__notilike))
+            if isinstance(updated_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__notilike',
+                        updated_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__notilike', updated_at__notilike))
             
         if updated_at__desc is not None:
             
@@ -4580,37 +3843,57 @@ class VideoApi:
             else:
                 _query_params.append(('deleted_at__notin', deleted_at__notin))
             
-        if deleted_at__isnull is not None:
-            
-            _query_params.append(('deleted_at__isnull', deleted_at__isnull))
-            
-        if deleted_at__isnotnull is not None:
-            
-            _query_params.append(('deleted_at__isnotnull', deleted_at__isnotnull))
-            
-        if deleted_at__isfalse is not None:
-            
-            _query_params.append(('deleted_at__isfalse', deleted_at__isfalse))
-            
-        if deleted_at__istrue is not None:
-            
-            _query_params.append(('deleted_at__istrue', deleted_at__istrue))
-            
         if deleted_at__like is not None:
-            
-            _query_params.append(('deleted_at__like', deleted_at__like))
+            if isinstance(deleted_at__like, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__like',
+                        deleted_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__like', deleted_at__like))
             
         if deleted_at__notlike is not None:
-            
-            _query_params.append(('deleted_at__notlike', deleted_at__notlike))
+            if isinstance(deleted_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__notlike',
+                        deleted_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__notlike', deleted_at__notlike))
             
         if deleted_at__ilike is not None:
-            
-            _query_params.append(('deleted_at__ilike', deleted_at__ilike))
+            if isinstance(deleted_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__ilike',
+                        deleted_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__ilike', deleted_at__ilike))
             
         if deleted_at__notilike is not None:
-            
-            _query_params.append(('deleted_at__notilike', deleted_at__notilike))
+            if isinstance(deleted_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__notilike',
+                        deleted_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__notilike', deleted_at__notilike))
             
         if deleted_at__desc is not None:
             
@@ -4651,22 +3934,6 @@ class VideoApi:
         if file_name__notin is not None:
             
             _query_params.append(('file_name__notin', file_name__notin))
-            
-        if file_name__isnull is not None:
-            
-            _query_params.append(('file_name__isnull', file_name__isnull))
-            
-        if file_name__isnotnull is not None:
-            
-            _query_params.append(('file_name__isnotnull', file_name__isnotnull))
-            
-        if file_name__isfalse is not None:
-            
-            _query_params.append(('file_name__isfalse', file_name__isfalse))
-            
-        if file_name__istrue is not None:
-            
-            _query_params.append(('file_name__istrue', file_name__istrue))
             
         if file_name__like is not None:
             
@@ -4796,37 +4063,57 @@ class VideoApi:
             else:
                 _query_params.append(('started_at__notin', started_at__notin))
             
-        if started_at__isnull is not None:
-            
-            _query_params.append(('started_at__isnull', started_at__isnull))
-            
-        if started_at__isnotnull is not None:
-            
-            _query_params.append(('started_at__isnotnull', started_at__isnotnull))
-            
-        if started_at__isfalse is not None:
-            
-            _query_params.append(('started_at__isfalse', started_at__isfalse))
-            
-        if started_at__istrue is not None:
-            
-            _query_params.append(('started_at__istrue', started_at__istrue))
-            
         if started_at__like is not None:
-            
-            _query_params.append(('started_at__like', started_at__like))
+            if isinstance(started_at__like, datetime):
+                _query_params.append(
+                    (
+                        'started_at__like',
+                        started_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('started_at__like', started_at__like))
             
         if started_at__notlike is not None:
-            
-            _query_params.append(('started_at__notlike', started_at__notlike))
+            if isinstance(started_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'started_at__notlike',
+                        started_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('started_at__notlike', started_at__notlike))
             
         if started_at__ilike is not None:
-            
-            _query_params.append(('started_at__ilike', started_at__ilike))
+            if isinstance(started_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'started_at__ilike',
+                        started_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('started_at__ilike', started_at__ilike))
             
         if started_at__notilike is not None:
-            
-            _query_params.append(('started_at__notilike', started_at__notilike))
+            if isinstance(started_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'started_at__notilike',
+                        started_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('started_at__notilike', started_at__notilike))
             
         if started_at__desc is not None:
             
@@ -4940,37 +4227,57 @@ class VideoApi:
             else:
                 _query_params.append(('ended_at__notin', ended_at__notin))
             
-        if ended_at__isnull is not None:
-            
-            _query_params.append(('ended_at__isnull', ended_at__isnull))
-            
-        if ended_at__isnotnull is not None:
-            
-            _query_params.append(('ended_at__isnotnull', ended_at__isnotnull))
-            
-        if ended_at__isfalse is not None:
-            
-            _query_params.append(('ended_at__isfalse', ended_at__isfalse))
-            
-        if ended_at__istrue is not None:
-            
-            _query_params.append(('ended_at__istrue', ended_at__istrue))
-            
         if ended_at__like is not None:
-            
-            _query_params.append(('ended_at__like', ended_at__like))
+            if isinstance(ended_at__like, datetime):
+                _query_params.append(
+                    (
+                        'ended_at__like',
+                        ended_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('ended_at__like', ended_at__like))
             
         if ended_at__notlike is not None:
-            
-            _query_params.append(('ended_at__notlike', ended_at__notlike))
+            if isinstance(ended_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'ended_at__notlike',
+                        ended_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('ended_at__notlike', ended_at__notlike))
             
         if ended_at__ilike is not None:
-            
-            _query_params.append(('ended_at__ilike', ended_at__ilike))
+            if isinstance(ended_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'ended_at__ilike',
+                        ended_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('ended_at__ilike', ended_at__ilike))
             
         if ended_at__notilike is not None:
-            
-            _query_params.append(('ended_at__notilike', ended_at__notilike))
+            if isinstance(ended_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'ended_at__notilike',
+                        ended_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('ended_at__notilike', ended_at__notilike))
             
         if ended_at__desc is not None:
             
@@ -5012,38 +4319,6 @@ class VideoApi:
             
             _query_params.append(('duration__notin', duration__notin))
             
-        if duration__isnull is not None:
-            
-            _query_params.append(('duration__isnull', duration__isnull))
-            
-        if duration__isnotnull is not None:
-            
-            _query_params.append(('duration__isnotnull', duration__isnotnull))
-            
-        if duration__isfalse is not None:
-            
-            _query_params.append(('duration__isfalse', duration__isfalse))
-            
-        if duration__istrue is not None:
-            
-            _query_params.append(('duration__istrue', duration__istrue))
-            
-        if duration__like is not None:
-            
-            _query_params.append(('duration__like', duration__like))
-            
-        if duration__notlike is not None:
-            
-            _query_params.append(('duration__notlike', duration__notlike))
-            
-        if duration__ilike is not None:
-            
-            _query_params.append(('duration__ilike', duration__ilike))
-            
-        if duration__notilike is not None:
-            
-            _query_params.append(('duration__notilike', duration__notilike))
-            
         if duration__desc is not None:
             
             _query_params.append(('duration__desc', duration__desc))
@@ -5084,38 +4359,6 @@ class VideoApi:
             
             _query_params.append(('file_size__notin', file_size__notin))
             
-        if file_size__isnull is not None:
-            
-            _query_params.append(('file_size__isnull', file_size__isnull))
-            
-        if file_size__isnotnull is not None:
-            
-            _query_params.append(('file_size__isnotnull', file_size__isnotnull))
-            
-        if file_size__isfalse is not None:
-            
-            _query_params.append(('file_size__isfalse', file_size__isfalse))
-            
-        if file_size__istrue is not None:
-            
-            _query_params.append(('file_size__istrue', file_size__istrue))
-            
-        if file_size__like is not None:
-            
-            _query_params.append(('file_size__like', file_size__like))
-            
-        if file_size__notlike is not None:
-            
-            _query_params.append(('file_size__notlike', file_size__notlike))
-            
-        if file_size__ilike is not None:
-            
-            _query_params.append(('file_size__ilike', file_size__ilike))
-            
-        if file_size__notilike is not None:
-            
-            _query_params.append(('file_size__notilike', file_size__notilike))
-            
         if file_size__desc is not None:
             
             _query_params.append(('file_size__desc', file_size__desc))
@@ -5155,22 +4398,6 @@ class VideoApi:
         if thumbnail_name__notin is not None:
             
             _query_params.append(('thumbnail_name__notin', thumbnail_name__notin))
-            
-        if thumbnail_name__isnull is not None:
-            
-            _query_params.append(('thumbnail_name__isnull', thumbnail_name__isnull))
-            
-        if thumbnail_name__isnotnull is not None:
-            
-            _query_params.append(('thumbnail_name__isnotnull', thumbnail_name__isnotnull))
-            
-        if thumbnail_name__isfalse is not None:
-            
-            _query_params.append(('thumbnail_name__isfalse', thumbnail_name__isfalse))
-            
-        if thumbnail_name__istrue is not None:
-            
-            _query_params.append(('thumbnail_name__istrue', thumbnail_name__istrue))
             
         if thumbnail_name__like is not None:
             
@@ -5227,22 +4454,6 @@ class VideoApi:
         if status__notin is not None:
             
             _query_params.append(('status__notin', status__notin))
-            
-        if status__isnull is not None:
-            
-            _query_params.append(('status__isnull', status__isnull))
-            
-        if status__isnotnull is not None:
-            
-            _query_params.append(('status__isnotnull', status__isnotnull))
-            
-        if status__isfalse is not None:
-            
-            _query_params.append(('status__isfalse', status__isfalse))
-            
-        if status__istrue is not None:
-            
-            _query_params.append(('status__istrue', status__istrue))
             
         if status__like is not None:
             
@@ -5372,37 +4583,57 @@ class VideoApi:
             else:
                 _query_params.append(('object_detector_claimed_until__notin', object_detector_claimed_until__notin))
             
-        if object_detector_claimed_until__isnull is not None:
-            
-            _query_params.append(('object_detector_claimed_until__isnull', object_detector_claimed_until__isnull))
-            
-        if object_detector_claimed_until__isnotnull is not None:
-            
-            _query_params.append(('object_detector_claimed_until__isnotnull', object_detector_claimed_until__isnotnull))
-            
-        if object_detector_claimed_until__isfalse is not None:
-            
-            _query_params.append(('object_detector_claimed_until__isfalse', object_detector_claimed_until__isfalse))
-            
-        if object_detector_claimed_until__istrue is not None:
-            
-            _query_params.append(('object_detector_claimed_until__istrue', object_detector_claimed_until__istrue))
-            
         if object_detector_claimed_until__like is not None:
-            
-            _query_params.append(('object_detector_claimed_until__like', object_detector_claimed_until__like))
+            if isinstance(object_detector_claimed_until__like, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__like',
+                        object_detector_claimed_until__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__like', object_detector_claimed_until__like))
             
         if object_detector_claimed_until__notlike is not None:
-            
-            _query_params.append(('object_detector_claimed_until__notlike', object_detector_claimed_until__notlike))
+            if isinstance(object_detector_claimed_until__notlike, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__notlike',
+                        object_detector_claimed_until__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__notlike', object_detector_claimed_until__notlike))
             
         if object_detector_claimed_until__ilike is not None:
-            
-            _query_params.append(('object_detector_claimed_until__ilike', object_detector_claimed_until__ilike))
+            if isinstance(object_detector_claimed_until__ilike, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__ilike',
+                        object_detector_claimed_until__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__ilike', object_detector_claimed_until__ilike))
             
         if object_detector_claimed_until__notilike is not None:
-            
-            _query_params.append(('object_detector_claimed_until__notilike', object_detector_claimed_until__notilike))
+            if isinstance(object_detector_claimed_until__notilike, datetime):
+                _query_params.append(
+                    (
+                        'object_detector_claimed_until__notilike',
+                        object_detector_claimed_until__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_detector_claimed_until__notilike', object_detector_claimed_until__notilike))
             
         if object_detector_claimed_until__desc is not None:
             
@@ -5516,37 +4747,57 @@ class VideoApi:
             else:
                 _query_params.append(('object_tracker_claimed_until__notin', object_tracker_claimed_until__notin))
             
-        if object_tracker_claimed_until__isnull is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__isnull', object_tracker_claimed_until__isnull))
-            
-        if object_tracker_claimed_until__isnotnull is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__isnotnull', object_tracker_claimed_until__isnotnull))
-            
-        if object_tracker_claimed_until__isfalse is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__isfalse', object_tracker_claimed_until__isfalse))
-            
-        if object_tracker_claimed_until__istrue is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__istrue', object_tracker_claimed_until__istrue))
-            
         if object_tracker_claimed_until__like is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__like', object_tracker_claimed_until__like))
+            if isinstance(object_tracker_claimed_until__like, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__like',
+                        object_tracker_claimed_until__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__like', object_tracker_claimed_until__like))
             
         if object_tracker_claimed_until__notlike is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__notlike', object_tracker_claimed_until__notlike))
+            if isinstance(object_tracker_claimed_until__notlike, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__notlike',
+                        object_tracker_claimed_until__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__notlike', object_tracker_claimed_until__notlike))
             
         if object_tracker_claimed_until__ilike is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__ilike', object_tracker_claimed_until__ilike))
+            if isinstance(object_tracker_claimed_until__ilike, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__ilike',
+                        object_tracker_claimed_until__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__ilike', object_tracker_claimed_until__ilike))
             
         if object_tracker_claimed_until__notilike is not None:
-            
-            _query_params.append(('object_tracker_claimed_until__notilike', object_tracker_claimed_until__notilike))
+            if isinstance(object_tracker_claimed_until__notilike, datetime):
+                _query_params.append(
+                    (
+                        'object_tracker_claimed_until__notilike',
+                        object_tracker_claimed_until__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('object_tracker_claimed_until__notilike', object_tracker_claimed_until__notilike))
             
         if object_tracker_claimed_until__desc is not None:
             
@@ -5588,22 +4839,6 @@ class VideoApi:
             
             _query_params.append(('camera_id__notin', camera_id__notin))
             
-        if camera_id__isnull is not None:
-            
-            _query_params.append(('camera_id__isnull', camera_id__isnull))
-            
-        if camera_id__isnotnull is not None:
-            
-            _query_params.append(('camera_id__isnotnull', camera_id__isnotnull))
-            
-        if camera_id__isfalse is not None:
-            
-            _query_params.append(('camera_id__isfalse', camera_id__isfalse))
-            
-        if camera_id__istrue is not None:
-            
-            _query_params.append(('camera_id__istrue', camera_id__istrue))
-            
         if camera_id__like is not None:
             
             _query_params.append(('camera_id__like', camera_id__like))
@@ -5627,6 +4862,30 @@ class VideoApi:
         if camera_id__asc is not None:
             
             _query_params.append(('camera_id__asc', camera_id__asc))
+            
+        if camera_id_object__desc is not None:
+            
+            _query_params.append(('camera_id_object__desc', camera_id_object__desc))
+            
+        if camera_id_object__asc is not None:
+            
+            _query_params.append(('camera_id_object__asc', camera_id_object__asc))
+            
+        if detection_summary__desc is not None:
+            
+            _query_params.append(('detection_summary__desc', detection_summary__desc))
+            
+        if detection_summary__asc is not None:
+            
+            _query_params.append(('detection_summary__asc', detection_summary__asc))
+            
+        if referenced_by_detection_video_id_objects__desc is not None:
+            
+            _query_params.append(('referenced_by_detection_video_id_objects__desc', referenced_by_detection_video_id_objects__desc))
+            
+        if referenced_by_detection_video_id_objects__asc is not None:
+            
+            _query_params.append(('referenced_by_detection_video_id_objects__asc', referenced_by_detection_video_id_objects__asc))
             
         # process the header parameters
         # process the form parameters
@@ -5667,9 +4926,9 @@ class VideoApi:
     @validate_call
     def patch_video(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
         video: Video,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5682,15 +4941,15 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetVideos200Response:
+    ) -> ResponseWithGenericOfVideo:
         """patch_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
         :param video: (required)
         :type video: Video
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5725,7 +4984,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5741,9 +5000,9 @@ class VideoApi:
     @validate_call
     def patch_video_with_http_info(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
         video: Video,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5756,15 +5015,15 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetVideos200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfVideo]:
         """patch_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
         :param video: (required)
         :type video: Video
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5799,7 +5058,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5815,9 +5074,9 @@ class VideoApi:
     @validate_call
     def patch_video_without_preload_content(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
         video: Video,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5834,11 +5093,11 @@ class VideoApi:
         """patch_video
 
 
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
         :param video: (required)
         :type video: Video
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -5873,7 +5132,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '200': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -5967,8 +5226,8 @@ class VideoApi:
     @validate_call
     def post_videos(
         self,
-        video: List[Video],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        video: Optional[List[Video]],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -5981,13 +5240,13 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetVideos200Response:
+    ) -> ResponseWithGenericOfVideo:
         """post_videos
 
 
         :param video: (required)
         :type video: List[Video]
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -6021,7 +5280,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '201': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6037,8 +5296,8 @@ class VideoApi:
     @validate_call
     def post_videos_with_http_info(
         self,
-        video: List[Video],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        video: Optional[List[Video]],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6051,13 +5310,13 @@ class VideoApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetVideos200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfVideo]:
         """post_videos
 
 
         :param video: (required)
         :type video: List[Video]
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -6091,7 +5350,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '201': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6107,8 +5366,8 @@ class VideoApi:
     @validate_call
     def post_videos_without_preload_content(
         self,
-        video: List[Video],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        video: Optional[List[Video]],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -6127,7 +5386,7 @@ class VideoApi:
 
         :param video: (required)
         :type video: List[Video]
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -6161,7 +5420,7 @@ class VideoApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
+            '201': "ResponseWithGenericOfVideo",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -6235,306 +5494,6 @@ class VideoApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/api/videos',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def put_video(
-        self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        video: Video,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetVideos200Response:
-        """put_video
-
-
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param video: (required)
-        :type video: Video
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
-        :type depth: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._put_video_serialize(
-            primary_key=primary_key,
-            video=video,
-            depth=depth,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def put_video_with_http_info(
-        self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        video: Video,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetVideos200Response]:
-        """put_video
-
-
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param video: (required)
-        :type video: Video
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
-        :type depth: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._put_video_serialize(
-            primary_key=primary_key,
-            video=video,
-            depth=depth,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def put_video_without_preload_content(
-        self,
-        primary_key: Annotated[Any, Field(description="Primary key for Video")],
-        video: Video,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """put_video
-
-
-        :param primary_key: Primary key for Video (required)
-        :type primary_key: object
-        :param video: (required)
-        :type video: Video
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
-        :type depth: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._put_video_serialize(
-            primary_key=primary_key,
-            video=video,
-            depth=depth,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetVideos200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _put_video_serialize(
-        self,
-        primary_key,
-        video,
-        depth,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if primary_key is not None:
-            _path_params['primaryKey'] = primary_key
-        # process the query parameters
-        if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if video is not None:
-            _body_params = video
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-        ]
-
-        return self.api_client.param_serialize(
-            method='PUT',
-            resource_path='/api/videos/{primaryKey}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

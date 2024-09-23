@@ -34,14 +34,13 @@ from openapi_client.exceptions import ApiAttributeError
 from openapi_client.exceptions import ApiException
 
 # import models into sdk package
+from openapi_client.models.array_of_vec2_inner import ArrayOfVec2Inner
 from openapi_client.models.camera import Camera
 from openapi_client.models.claim_request import ClaimRequest
 from openapi_client.models.detection import Detection
-from openapi_client.models.detection_bounding_box_inner import DetectionBoundingBoxInner
-from openapi_client.models.get_cameras200_response import GetCameras200Response
 from openapi_client.models.get_cameras_default_response import GetCamerasDefaultResponse
-from openapi_client.models.get_detections200_response import GetDetections200Response
-from openapi_client.models.get_videos200_response import GetVideos200Response
-from openapi_client.models.patch_claim_video_for_object_detector_default_response import PatchClaimVideoForObjectDetectorDefaultResponse
+from openapi_client.models.response_with_generic_of_camera import ResponseWithGenericOfCamera
+from openapi_client.models.response_with_generic_of_detection import ResponseWithGenericOfDetection
+from openapi_client.models.response_with_generic_of_video import ResponseWithGenericOfVideo
 from openapi_client.models.vec2 import Vec2
 from openapi_client.models.video import Video

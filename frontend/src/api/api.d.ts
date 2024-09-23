@@ -28,7 +28,7 @@ export interface paths {
       cookie?: never;
     };
     get: operations["GetCamera"];
-    put: operations["PutCamera"];
+    put?: never;
     post?: never;
     delete: operations["DeleteCamera"];
     options?: never;
@@ -49,7 +49,7 @@ export interface paths {
     delete?: never;
     options?: never;
     head?: never;
-    patch: operations["PatchClaimVideoForObjectDetector"];
+    patch: operations["PatchCustomClaimVideoForObjectDetector"];
     trace?: never;
   };
   "/api/detections": {
@@ -76,7 +76,7 @@ export interface paths {
       cookie?: never;
     };
     get: operations["GetDetection"];
-    put: operations["PutDetection"];
+    put?: never;
     post?: never;
     delete: operations["DeleteDetection"];
     options?: never;
@@ -108,7 +108,7 @@ export interface paths {
       cookie?: never;
     };
     get: operations["GetVideo"];
-    put: operations["PutVideo"];
+    put?: never;
     post?: never;
     delete: operations["DeleteVideo"];
     options?: never;
@@ -120,18 +120,35 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
+    Any: unknown;
+    ArrayOfNullableCamera: components["schemas"]["Camera"][] | null;
+    ArrayOfNullableDetection: components["schemas"]["Detection"][] | null;
+    ArrayOfNullableVideo: components["schemas"]["Video"][] | null;
+    ArrayOfString: string[] | null;
+    ArrayOfVec2:
+      | {
+          /** Format: double */
+          X?: number;
+          /** Format: double */
+          Y?: number;
+        }[]
+      | null;
     Camera: {
       /** Format: date-time */
       created_at?: string;
       /** Format: date-time */
-      deleted_at?: string | null;
+      deleted_at?: string;
       /** Format: uuid */
       id?: string;
       /** Format: date-time */
       last_seen?: string;
       name?: string;
-      referenced_by_detection_camera_id_objects?: components["schemas"]["NullableArrayOfDetection"];
-      referenced_by_video_camera_id_objects?: components["schemas"]["NullableArrayOfVideo"];
+      referenced_by_detection_camera_id_objects?:
+        | components["schemas"]["Detection"][]
+        | null;
+      referenced_by_video_camera_id_objects?:
+        | components["schemas"]["Video"][]
+        | null;
       /** Format: date-time */
       segment_producer_claimed_until?: string;
       /** Format: date-time */
@@ -141,7 +158,8 @@ export interface components {
       updated_at?: string;
     };
     ClaimRequest: {
-      claim_duration_seconds: components["schemas"]["Float64"];
+      /** Format: double */
+      claim_duration_seconds?: number;
     };
     Detection: {
       bounding_box?:
@@ -154,7 +172,7 @@ export interface components {
         | null;
       /** Format: uuid */
       camera_id?: string;
-      camera_id_object?: components["schemas"]["NullableCamera"];
+      camera_id_object?: components["schemas"]["Camera"];
       centroid?: {
         /** Format: double */
         X?: number;
@@ -167,7 +185,7 @@ export interface components {
       /** Format: date-time */
       created_at?: string;
       /** Format: date-time */
-      deleted_at?: string | null;
+      deleted_at?: string;
       /** Format: uuid */
       id?: string;
       /** Format: double */
@@ -178,16 +196,56 @@ export interface components {
       updated_at?: string;
       /** Format: uuid */
       video_id?: string;
-      video_id_object?: components["schemas"]["NullableVideo"];
+      video_id_object?: components["schemas"]["Video"];
     };
-    /** Format: double */
-    Float64: number;
-    NullableArrayOfCamera: components["schemas"]["Camera"][] | null;
-    NullableArrayOfDetection: components["schemas"]["Detection"][] | null;
-    NullableArrayOfVideo: components["schemas"]["Video"][] | null;
     NullableCamera: components["schemas"]["Camera"];
     NullableDetection: components["schemas"]["Detection"];
     NullableVideo: components["schemas"]["Video"];
+    ResponseWithGenericOfCamera: {
+      /** Format: int64 */
+      count?: number;
+      error?: string[] | null;
+      /** Format: int64 */
+      limit?: number;
+      objects?: components["schemas"]["Camera"][] | null;
+      /** Format: int64 */
+      offset?: number;
+      /** Format: int64 */
+      status?: number;
+      success?: boolean;
+      /** Format: int64 */
+      total_count?: number;
+    };
+    ResponseWithGenericOfDetection: {
+      /** Format: int64 */
+      count?: number;
+      error?: string[] | null;
+      /** Format: int64 */
+      limit?: number;
+      objects?: components["schemas"]["Detection"][] | null;
+      /** Format: int64 */
+      offset?: number;
+      /** Format: int64 */
+      status?: number;
+      success?: boolean;
+      /** Format: int64 */
+      total_count?: number;
+    };
+    ResponseWithGenericOfVideo: {
+      /** Format: int64 */
+      count?: number;
+      error?: string[] | null;
+      /** Format: int64 */
+      limit?: number;
+      objects?: components["schemas"]["Video"][] | null;
+      /** Format: int64 */
+      offset?: number;
+      /** Format: int64 */
+      status?: number;
+      success?: boolean;
+      /** Format: int64 */
+      total_count?: number;
+    };
     Vec2: {
       /** Format: double */
       X?: number;
@@ -197,26 +255,28 @@ export interface components {
     Video: {
       /** Format: uuid */
       camera_id?: string;
-      camera_id_object?: components["schemas"]["NullableCamera"];
+      camera_id_object?: components["schemas"]["Camera"];
       /** Format: date-time */
       created_at?: string;
       /** Format: date-time */
-      deleted_at?: string | null;
+      deleted_at?: string;
       detection_summary?: unknown;
       /** Format: int64 */
-      duration?: number | null;
+      duration?: number;
       /** Format: date-time */
-      ended_at?: string | null;
+      ended_at?: string;
       file_name?: string;
       /** Format: double */
-      file_size?: number | null;
+      file_size?: number;
       /** Format: uuid */
       id?: string;
       /** Format: date-time */
       object_detector_claimed_until?: string;
       /** Format: date-time */
       object_tracker_claimed_until?: string;
-      referenced_by_detection_video_id_objects?: components["schemas"]["NullableArrayOfDetection"];
+      referenced_by_detection_video_id_objects?:
+        | components["schemas"]["Detection"][]
+        | null;
       /** Format: date-time */
       started_at?: string;
       status?: string;
@@ -260,14 +320,6 @@ export interface operations {
         id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         id__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        id__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        id__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        id__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        id__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -296,14 +348,6 @@ export interface operations {
         created_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         created_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        created_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        created_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        created_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        created_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         created_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -332,14 +376,6 @@ export interface operations {
         updated_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         updated_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        updated_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         updated_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -368,14 +404,6 @@ export interface operations {
         deleted_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         deleted_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         deleted_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -404,14 +432,6 @@ export interface operations {
         name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         name__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        name__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        name__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        name__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        name__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -440,14 +460,6 @@ export interface operations {
         stream_url__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         stream_url__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        stream_url__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        stream_url__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        stream_url__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        stream_url__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         stream_url__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -476,14 +488,6 @@ export interface operations {
         last_seen__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         last_seen__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        last_seen__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        last_seen__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        last_seen__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        last_seen__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         last_seen__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -512,14 +516,6 @@ export interface operations {
         segment_producer_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         segment_producer_claimed_until__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        segment_producer_claimed_until__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        segment_producer_claimed_until__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        segment_producer_claimed_until__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        segment_producer_claimed_until__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         segment_producer_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -548,14 +544,6 @@ export interface operations {
         stream_producer_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         stream_producer_claimed_until__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        stream_producer_claimed_until__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        stream_producer_claimed_until__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        stream_producer_claimed_until__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        stream_producer_claimed_until__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         stream_producer_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -568,6 +556,14 @@ export interface operations {
         stream_producer_claimed_until__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         stream_producer_claimed_until__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_video_camera_id_objects__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_video_camera_id_objects__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_detection_camera_id_objects__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_detection_camera_id_objects__asc?: string;
       };
       header?: never;
       path?: never;
@@ -575,37 +571,23 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Successful List Fetch for Cameras */
+      /** @description GetCameras success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Camera"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
         };
       };
-      /** @description Failed List Fetch for Cameras */
+      /** @description GetCameras failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -617,9 +599,7 @@ export interface operations {
   PostCameras: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
@@ -628,41 +608,27 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Camera"][];
+        "application/json": components["schemas"]["ArrayOfNullableCamera"];
       };
     };
     responses: {
-      /** @description Successful List Create for Cameras */
-      200: {
+      /** @description PostCameras success */
+      201: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Camera"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
         };
       };
-      /** @description Failed List Create for Cameras */
+      /** @description PostCameras failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -674,111 +640,35 @@ export interface operations {
   GetCamera: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Camera */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Successful Item Fetch for Cameras */
+      /** @description GetCamera success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Camera"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
         };
       };
-      /** @description Failed Item Fetch for Cameras */
+      /** @description GetCamera failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-          };
-        };
-      };
-    };
-  };
-  PutCamera: {
-    parameters: {
-      query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
-        depth?: number;
-      };
-      header?: never;
-      path: {
-        /** @description Primary key for Camera */
-        primaryKey: unknown;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Camera"];
-      };
-    };
-    responses: {
-      /** @description Successful Item Replace for Cameras */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Camera"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
-        };
-      };
-      /** @description Failed Item Replace for Cameras */
-      default: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -790,55 +680,44 @@ export interface operations {
   DeleteCamera: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Camera */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Successful Item Delete for Cameras */
+      /** @description DeleteCamera success */
       204: {
         headers: {
           [name: string]: unknown;
         };
         content?: never;
       };
-      /** @description Failed Item Delete for Cameras */
+      /** @description DeleteCamera failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
-        content: {
-          "application/json": {
-            error?: string[];
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-          };
-        };
+        content?: never;
       };
     };
   };
   PatchCamera: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Camera */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
@@ -848,37 +727,23 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Successful Item Update for Cameras */
+      /** @description PatchCamera success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Camera"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
         };
       };
-      /** @description Failed Item Update for Cameras */
+      /** @description PatchCamera failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -887,7 +752,7 @@ export interface operations {
       };
     };
   };
-  PatchClaimVideoForObjectDetector: {
+  PatchCustomClaimVideoForObjectDetector: {
     parameters: {
       query?: never;
       header?: never;
@@ -900,16 +765,16 @@ export interface operations {
       };
     };
     responses: {
-      /** @description PatchClaimVideoForObjectDetector success */
+      /** @description PatchCustomClaimVideoForObjectDetector success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["Video"];
+          "application/json": components["schemas"]["NullableVideo"];
         };
       };
-      /** @description PatchClaimVideoForObjectDetector failure */
+      /** @description PatchCustomClaimVideoForObjectDetector failure */
       default: {
         headers: {
           [name: string]: unknown;
@@ -952,14 +817,6 @@ export interface operations {
         id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         id__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        id__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        id__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        id__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        id__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -988,14 +845,6 @@ export interface operations {
         created_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         created_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        created_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        created_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        created_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        created_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         created_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1024,14 +873,6 @@ export interface operations {
         updated_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         updated_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        updated_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         updated_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1060,14 +901,6 @@ export interface operations {
         deleted_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         deleted_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         deleted_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1096,14 +929,6 @@ export interface operations {
         seen_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         seen_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        seen_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        seen_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        seen_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        seen_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         seen_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1132,22 +957,6 @@ export interface operations {
         class_id__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         class_id__notin?: number;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        class_id__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        class_id__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        class_id__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        class_id__istrue?: string;
-        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
-        class_id__like?: string;
-        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
-        class_id__notlike?: string;
-        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        class_id__ilike?: string;
-        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        class_id__notilike?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         class_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1168,14 +977,6 @@ export interface operations {
         class_name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         class_name__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        class_name__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        class_name__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        class_name__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        class_name__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         class_name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1204,26 +1005,18 @@ export interface operations {
         score__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         score__notin?: number;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        score__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        score__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        score__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        score__istrue?: string;
-        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
-        score__like?: string;
-        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
-        score__notlike?: string;
-        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        score__ilike?: string;
-        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        score__notilike?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         score__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         score__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        centroid__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        centroid__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        bounding_box__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        bounding_box__asc?: string;
         /** @description SQL = comparison */
         video_id__eq?: string;
         /** @description SQL != comparison */
@@ -1240,14 +1033,6 @@ export interface operations {
         video_id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         video_id__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        video_id__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        video_id__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        video_id__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        video_id__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         video_id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1260,6 +1045,10 @@ export interface operations {
         video_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         video_id__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        video_id_object__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        video_id_object__asc?: string;
         /** @description SQL = comparison */
         camera_id__eq?: string;
         /** @description SQL != comparison */
@@ -1276,14 +1065,6 @@ export interface operations {
         camera_id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         camera_id__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        camera_id__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        camera_id__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        camera_id__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        camera_id__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         camera_id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1296,6 +1077,10 @@ export interface operations {
         camera_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         camera_id__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        camera_id_object__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        camera_id_object__asc?: string;
       };
       header?: never;
       path?: never;
@@ -1303,37 +1088,23 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Successful List Fetch for Detections */
+      /** @description GetDetections success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Detection"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfDetection"];
         };
       };
-      /** @description Failed List Fetch for Detections */
+      /** @description GetDetections failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1345,9 +1116,7 @@ export interface operations {
   PostDetections: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
@@ -1356,41 +1125,27 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Detection"][];
+        "application/json": components["schemas"]["ArrayOfNullableDetection"];
       };
     };
     responses: {
-      /** @description Successful List Create for Detections */
-      200: {
+      /** @description PostDetections success */
+      201: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Detection"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfDetection"];
         };
       };
-      /** @description Failed List Create for Detections */
+      /** @description PostDetections failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1402,111 +1157,35 @@ export interface operations {
   GetDetection: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Detection */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Successful Item Fetch for Detections */
+      /** @description GetDetection success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Detection"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfDetection"];
         };
       };
-      /** @description Failed Item Fetch for Detections */
+      /** @description GetDetection failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-          };
-        };
-      };
-    };
-  };
-  PutDetection: {
-    parameters: {
-      query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
-        depth?: number;
-      };
-      header?: never;
-      path: {
-        /** @description Primary key for Detection */
-        primaryKey: unknown;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Detection"];
-      };
-    };
-    responses: {
-      /** @description Successful Item Replace for Detections */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Detection"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
-        };
-      };
-      /** @description Failed Item Replace for Detections */
-      default: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1518,55 +1197,44 @@ export interface operations {
   DeleteDetection: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Detection */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Successful Item Delete for Detections */
+      /** @description DeleteDetection success */
       204: {
         headers: {
           [name: string]: unknown;
         };
         content?: never;
       };
-      /** @description Failed Item Delete for Detections */
+      /** @description DeleteDetection failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
-        content: {
-          "application/json": {
-            error?: string[];
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-          };
-        };
+        content?: never;
       };
     };
   };
   PatchDetection: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Detection */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
@@ -1576,37 +1244,23 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Successful Item Update for Detections */
+      /** @description PatchDetection success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Detection"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfDetection"];
         };
       };
-      /** @description Failed Item Update for Detections */
+      /** @description PatchDetection failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -1642,14 +1296,6 @@ export interface operations {
         id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         id__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        id__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        id__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        id__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        id__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1678,14 +1324,6 @@ export interface operations {
         created_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         created_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        created_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        created_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        created_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        created_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         created_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1714,14 +1352,6 @@ export interface operations {
         updated_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         updated_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        updated_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        updated_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         updated_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1750,14 +1380,6 @@ export interface operations {
         deleted_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         deleted_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        deleted_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         deleted_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1786,14 +1408,6 @@ export interface operations {
         file_name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         file_name__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        file_name__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        file_name__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        file_name__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        file_name__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         file_name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1822,14 +1436,6 @@ export interface operations {
         started_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         started_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        started_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        started_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        started_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        started_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         started_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1858,14 +1464,6 @@ export interface operations {
         ended_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         ended_at__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        ended_at__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        ended_at__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        ended_at__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        ended_at__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         ended_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1894,22 +1492,6 @@ export interface operations {
         duration__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         duration__notin?: number;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        duration__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        duration__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        duration__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        duration__istrue?: string;
-        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
-        duration__like?: string;
-        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
-        duration__notlike?: string;
-        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        duration__ilike?: string;
-        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        duration__notilike?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         duration__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1930,22 +1512,6 @@ export interface operations {
         file_size__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         file_size__notin?: number;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        file_size__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        file_size__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        file_size__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        file_size__istrue?: string;
-        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
-        file_size__like?: string;
-        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
-        file_size__notlike?: string;
-        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        file_size__ilike?: string;
-        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
-        file_size__notilike?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         file_size__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1966,14 +1532,6 @@ export interface operations {
         thumbnail_name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         thumbnail_name__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        thumbnail_name__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        thumbnail_name__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        thumbnail_name__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        thumbnail_name__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         thumbnail_name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -2002,14 +1560,6 @@ export interface operations {
         status__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         status__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        status__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        status__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        status__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        status__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         status__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -2038,14 +1588,6 @@ export interface operations {
         object_detector_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         object_detector_claimed_until__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        object_detector_claimed_until__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        object_detector_claimed_until__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        object_detector_claimed_until__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        object_detector_claimed_until__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         object_detector_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -2074,14 +1616,6 @@ export interface operations {
         object_tracker_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         object_tracker_claimed_until__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        object_tracker_claimed_until__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        object_tracker_claimed_until__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        object_tracker_claimed_until__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        object_tracker_claimed_until__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         object_tracker_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -2110,14 +1644,6 @@ export interface operations {
         camera_id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         camera_id__notin?: string;
-        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
-        camera_id__isnull?: string;
-        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
-        camera_id__isnotnull?: string;
-        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
-        camera_id__isfalse?: string;
-        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
-        camera_id__istrue?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         camera_id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -2130,6 +1656,18 @@ export interface operations {
         camera_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         camera_id__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        camera_id_object__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        camera_id_object__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        detection_summary__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        detection_summary__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_detection_video_id_objects__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_detection_video_id_objects__asc?: string;
       };
       header?: never;
       path?: never;
@@ -2137,37 +1675,23 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description Successful List Fetch for Videos */
+      /** @description GetVideos success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Video"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
         };
       };
-      /** @description Failed List Fetch for Videos */
+      /** @description GetVideos failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2179,9 +1703,7 @@ export interface operations {
   PostVideos: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
@@ -2190,41 +1712,27 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Video"][];
+        "application/json": components["schemas"]["ArrayOfNullableVideo"];
       };
     };
     responses: {
-      /** @description Successful List Create for Videos */
-      200: {
+      /** @description PostVideos success */
+      201: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Video"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
         };
       };
-      /** @description Failed List Create for Videos */
+      /** @description PostVideos failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2236,111 +1744,35 @@ export interface operations {
   GetVideo: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Video */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Successful Item Fetch for Videos */
+      /** @description GetVideo success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Video"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
         };
       };
-      /** @description Failed Item Fetch for Videos */
+      /** @description GetVideo failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-          };
-        };
-      };
-    };
-  };
-  PutVideo: {
-    parameters: {
-      query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
-        depth?: number;
-      };
-      header?: never;
-      path: {
-        /** @description Primary key for Video */
-        primaryKey: unknown;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Video"];
-      };
-    };
-    responses: {
-      /** @description Successful Item Replace for Videos */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Video"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
-        };
-      };
-      /** @description Failed Item Replace for Videos */
-      default: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;
@@ -2352,55 +1784,44 @@ export interface operations {
   DeleteVideo: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Video */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
     requestBody?: never;
     responses: {
-      /** @description Successful Item Delete for Videos */
+      /** @description DeleteVideo success */
       204: {
         headers: {
           [name: string]: unknown;
         };
         content?: never;
       };
-      /** @description Failed Item Delete for Videos */
+      /** @description DeleteVideo failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
-        content: {
-          "application/json": {
-            error?: string[];
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-          };
-        };
+        content?: never;
       };
     };
   };
   PatchVideo: {
     parameters: {
       query?: {
-        /** @description Max recursion depth for loading foreign objects; default = 1
-         *
-         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        /** @description Query parameter depth */
         depth?: number;
       };
       header?: never;
       path: {
-        /** @description Primary key for Video */
-        primaryKey: unknown;
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
       };
       cookie?: never;
     };
@@ -2410,37 +1831,23 @@ export interface operations {
       };
     };
     responses: {
-      /** @description Successful Item Update for Videos */
+      /** @description PatchVideo success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": {
-            /** Format: int64 */
-            count?: number;
-            error?: string[];
-            /** Format: int64 */
-            limit?: number;
-            objects?: components["schemas"]["Video"][];
-            /** Format: int64 */
-            offset?: number;
-            /** Format: int32 */
-            status: number;
-            success: boolean;
-            /** Format: int64 */
-            total_count?: number;
-          };
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
         };
       };
-      /** @description Failed Item Update for Videos */
+      /** @description PatchVideo failure */
       default: {
         headers: {
           [name: string]: unknown;
         };
         content: {
           "application/json": {
-            error?: string[];
+            error: string[];
             /** Format: int32 */
             status: number;
             success: boolean;

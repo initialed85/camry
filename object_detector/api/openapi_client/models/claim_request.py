@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
-from typing import Any, ClassVar, Dict, List, Union
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +26,7 @@ class ClaimRequest(BaseModel):
     """
     ClaimRequest
     """ # noqa: E501
-    claim_duration_seconds: Union[StrictFloat, StrictInt]
+    claim_duration_seconds: Optional[Union[StrictFloat, StrictInt]] = None
     __properties: ClassVar[List[str]] = ["claim_duration_seconds"]
 
     model_config = ConfigDict(

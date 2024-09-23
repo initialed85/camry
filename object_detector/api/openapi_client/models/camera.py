@@ -93,11 +93,6 @@ class Camera(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['referenced_by_video_camera_id_objects'] = _items
-        # set to None if deleted_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.deleted_at is None and "deleted_at" in self.model_fields_set:
-            _dict['deleted_at'] = None
-
         # set to None if referenced_by_detection_camera_id_objects (nullable) is None
         # and model_fields_set contains the field
         if self.referenced_by_detection_camera_id_objects is None and "referenced_by_detection_camera_id_objects" in self.model_fields_set:

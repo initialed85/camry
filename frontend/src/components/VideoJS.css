@@ -1,0 +1,6 @@
+.vjs-fade-in,
+.vjs-fade-out {
+  visibility: visible !important;
+  opacity: 1 !important;
+  transition-duration: 0s !important;
+}

@@ -25,19 +25,30 @@ function App() {
   //   }
   // };
 
-  const [responsive, setResponsive] = useState(window.innerWidth < responsiveWidth);
+  const [responsive, setResponsive] = useState(
+    window.innerWidth < responsiveWidth,
+  );
+  const [portrait, setPortrait] = useState(
+    window.innerWidth < window.innerHeight,
+  );
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
 
   const [cameraId, setCameraId] = useState<string | undefined>(undefined);
 
   const [startedAtGt, setStartedAtGt] = useState<string | undefined>(undefined);
 
-  const [startedAtLte, setStartedAtLte] = useState<string | undefined>(undefined);
+  const [startedAtLte, setStartedAtLte] = useState<string | undefined>(
+    undefined,
+  );
 
   const [classNameFilter, setClassNameFilter] = useState<string>("");
 
   useEffect(() => {
     if (startedAtLte) {
-      const possibleStartedAtGt = new Date(parseDate(startedAtLte).getTime() - dateSliderStepMillis).toISOString();
+      const possibleStartedAtGt = new Date(
+        parseDate(startedAtLte).getTime() - dateSliderStepMillis,
+      ).toISOString();
       if (possibleStartedAtGt !== startedAtGt) {
         setStartedAtGt(possibleStartedAtGt);
       }
@@ -47,6 +58,21 @@ function App() {
       const desiredResponsive = window.innerWidth < responsiveWidth;
       if (desiredResponsive !== responsive) {
         setResponsive(window.innerWidth < responsiveWidth);
+      }
+
+      const desiredPortrait = window.innerWidth < window.innerHeight;
+      if (desiredPortrait !== portrait) {
+        setPortrait(desiredPortrait);
+      }
+
+      const desiredWindowWidth = window.innerWidth;
+      if (desiredWindowWidth !== windowWidth) {
+        setWindowWidth(desiredWindowWidth);
+      }
+
+      const desiredWindowHeight = window.innerHeight;
+      if (desiredWindowHeight !== windowHeight) {
+        setWindowHeight(desiredWindowHeight);
       }
     };
 
@@ -59,21 +85,14 @@ function App() {
     return () => {
       window.removeEventListener("reisze", eventListener);
     };
-  }, [responsive, startedAtGt, startedAtLte]);
-
-  console.log(
-    "state = ",
-    JSON.stringify(
-      {
-        responsive: responsive,
-        cameraId: cameraId,
-        startedAtGt: startedAtGt,
-        startedAtLte: startedAtLte,
-      },
-      null,
-      2
-    )
-  );
+  }, [
+    portrait,
+    responsive,
+    startedAtGt,
+    startedAtLte,
+    windowHeight,
+    windowWidth,
+  ]);
 
   return (
     <Sheet
@@ -99,16 +118,25 @@ function App() {
             justifyContent: "flex-start",
           }}
         >
-          <Typography level="h4" component="h4" sx={{ pt: 0.1, pl: 0.75, pr: 1, textAlign: "center" }} color="neutral">
+          <Typography
+            level="h4"
+            component="h4"
+            sx={{ pt: 0.1, pl: 0.75, pr: 1, textAlign: "center" }}
+            color="neutral"
+          >
             {responsive ? "C" : "Camry"}
           </Typography>
-          <CameraDropdownMenu responsive={responsive} cameraId={cameraId} setCameraId={setCameraId} />
+          <CameraDropdownMenu
+            responsive={responsive}
+            cameraId={cameraId}
+            setCameraId={setCameraId}
+          />
           <StreamDropdownMenu responsive={responsive} />
           <Input
             size="sm"
             sx={{ mr: 1.5, width: "100%", maxWidth: 300 }}
             onChange={(e) => {
-              setClassNameFilter(e.target.value);
+              setClassNameFilter((e.target.value || "").trim().toLowerCase());
             }}
           />
         </Grid>
@@ -117,11 +145,18 @@ function App() {
         </Grid>
       </Grid>
       <Grid container sx={{ pb: 1, display: "flex", justifyContent: "center" }}>
-        <DateSlider responsive={responsive} date={startedAtGt} setDate={setStartedAtLte} />
+        <DateSlider
+          responsive={responsive}
+          date={startedAtGt}
+          setDate={setStartedAtLte}
+        />
       </Grid>
 
       <VideoTable
         responsive={responsive}
+        portrait={portrait}
+        windowWidth={windowWidth}
+        windowHeight={windowHeight}
         cameraId={cameraId}
         startedAtGt={startedAtGt}
         startedAtLte={startedAtLte}

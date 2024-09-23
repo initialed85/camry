@@ -4,6 +4,434 @@
     "title": "Djangolang",
     "version": "1.0"
   },
+  "components": {
+    "schemas": {
+      "Any": {
+        "nullable": true
+      },
+      "ArrayOfNullableCamera": {
+        "type": "array",
+        "nullable": true,
+        "items": {
+          "$ref": "#/components/schemas/Camera",
+          "nullable": true
+        }
+      },
+      "ArrayOfNullableDetection": {
+        "type": "array",
+        "nullable": true,
+        "items": {
+          "$ref": "#/components/schemas/Detection",
+          "nullable": true
+        }
+      },
+      "ArrayOfNullableVideo": {
+        "type": "array",
+        "nullable": true,
+        "items": {
+          "$ref": "#/components/schemas/Video",
+          "nullable": true
+        }
+      },
+      "ArrayOfString": {
+        "type": "array",
+        "nullable": true,
+        "items": {
+          "type": "string"
+        }
+      },
+      "ArrayOfVec2": {
+        "type": "array",
+        "nullable": true,
+        "items": {
+          "type": "object",
+          "properties": {
+            "X": {
+              "type": "number",
+              "format": "double"
+            },
+            "Y": {
+              "type": "number",
+              "format": "double"
+            }
+          }
+        }
+      },
+      "Camera": {
+        "type": "object",
+        "properties": {
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "last_seen": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "name": {
+            "type": "string"
+          },
+          "referenced_by_detection_camera_id_objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Detection",
+              "nullable": true
+            }
+          },
+          "referenced_by_video_camera_id_objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Video",
+              "nullable": true
+            }
+          },
+          "segment_producer_claimed_until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stream_producer_claimed_until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stream_url": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "ClaimRequest": {
+        "type": "object",
+        "properties": {
+          "claim_duration_seconds": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Detection": {
+        "type": "object",
+        "properties": {
+          "bounding_box": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "X": {
+                  "type": "number",
+                  "format": "double"
+                },
+                "Y": {
+                  "type": "number",
+                  "format": "double"
+                }
+              }
+            }
+          },
+          "camera_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "camera_id_object": {
+            "$ref": "#/components/schemas/Camera",
+            "nullable": true
+          },
+          "centroid": {
+            "type": "object",
+            "properties": {
+              "X": {
+                "type": "number",
+                "format": "double"
+              },
+              "Y": {
+                "type": "number",
+                "format": "double"
+              }
+            }
+          },
+          "class_id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "class_name": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "score": {
+            "type": "number",
+            "format": "double"
+          },
+          "seen_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "video_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "video_id_object": {
+            "$ref": "#/components/schemas/Video",
+            "nullable": true
+          }
+        }
+      },
+      "NullableCamera": {
+        "$ref": "#/components/schemas/Camera",
+        "nullable": true
+      },
+      "NullableDetection": {
+        "$ref": "#/components/schemas/Detection",
+        "nullable": true
+      },
+      "NullableVideo": {
+        "$ref": "#/components/schemas/Video",
+        "nullable": true
+      },
+      "ResponseWithGenericOfCamera": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "error": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Camera",
+              "nullable": true
+            }
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ResponseWithGenericOfDetection": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "error": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Detection",
+              "nullable": true
+            }
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "ResponseWithGenericOfVideo": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "error": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Video",
+              "nullable": true
+            }
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
+      },
+      "Vec2": {
+        "type": "object",
+        "properties": {
+          "X": {
+            "type": "number",
+            "format": "double"
+          },
+          "Y": {
+            "type": "number",
+            "format": "double"
+          }
+        }
+      },
+      "Video": {
+        "type": "object",
+        "properties": {
+          "camera_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "camera_id_object": {
+            "$ref": "#/components/schemas/Camera",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "detection_summary": {
+            "nullable": true
+          },
+          "duration": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "file_name": {
+            "type": "string"
+          },
+          "file_size": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "object_detector_claimed_until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "object_tracker_claimed_until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "referenced_by_detection_video_id_objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Detection",
+              "nullable": true
+            }
+          },
+          "started_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "status": {
+            "type": "string"
+          },
+          "thumbnail_name": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    }
+  },
   "paths": {
     "/api/cameras": {
       "get": {
@@ -122,47 +550,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "id__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "id__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -171,7 +564,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -180,7 +574,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -189,7 +584,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -292,47 +688,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "created_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "created_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -341,7 +702,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -350,7 +712,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -359,7 +722,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -462,47 +826,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "updated_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "updated_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -511,7 +840,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -520,7 +850,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -529,7 +860,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -632,47 +964,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "deleted_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "deleted_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -681,7 +978,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -690,7 +988,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -699,7 +998,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -792,42 +1092,6 @@
               "type": "string"
             },
             "description": "SQL NOT IN comparison, permits comma-separated values"
-          },
-          {
-            "name": "name__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "name__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "name__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "name__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "name__like",
@@ -954,42 +1218,6 @@
               "type": "string"
             },
             "description": "SQL NOT IN comparison, permits comma-separated values"
-          },
-          {
-            "name": "stream_url__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "stream_url__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "stream_url__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "stream_url__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "stream_url__like",
@@ -1126,47 +1354,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "last_seen__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "last_seen__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "last_seen__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "last_seen__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "last_seen__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1175,7 +1368,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1184,7 +1378,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1193,7 +1388,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1296,47 +1492,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "segment_producer_claimed_until__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "segment_producer_claimed_until__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "segment_producer_claimed_until__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "segment_producer_claimed_until__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "segment_producer_claimed_until__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1345,7 +1506,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1354,7 +1516,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1363,7 +1526,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1466,47 +1630,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "stream_producer_claimed_until__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "stream_producer_claimed_until__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "stream_producer_claimed_until__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "stream_producer_claimed_until__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "stream_producer_claimed_until__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1515,7 +1644,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1524,7 +1654,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1533,7 +1664,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -1554,62 +1686,57 @@
               "type": "string"
             },
             "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_video_camera_id_objects__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_video_camera_id_objects__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_detection_camera_id_objects__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_detection_camera_id_objects__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful List Fetch for Cameras",
+            "description": "GetCameras success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Camera"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed List Fetch for Cameras",
+            "description": "GetCameras failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -1631,7 +1758,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -1650,78 +1778,35 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Camera"
-                }
+                "$ref": "#/components/schemas/ArrayOfNullableCamera"
               }
             }
           },
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successful List Create for Cameras",
+          "201": {
+            "description": "PostCameras success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Camera"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed List Create for Cameras",
+            "description": "PostCameras failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -1743,7 +1828,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -1763,73 +1849,36 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Camera"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful Item Fetch for Cameras",
+            "description": "GetCamera success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Camera"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed Item Fetch for Cameras",
+            "description": "GetCamera failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -1851,123 +1900,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Camera"
-        ],
-        "operationId": "PutCamera",
-        "parameters": [
-          {
-            "name": "primaryKey",
-            "in": "path",
-            "required": true,
-            "schema": {},
-            "description": "Primary key for Camera"
-          },
-          {
-            "name": "depth",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Camera"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Item Replace for Cameras",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Camera"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Failed Item Replace for Cameras",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -1985,17 +1919,21 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Camera"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "requestBody": {
@@ -2010,58 +1948,17 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Item Update for Cameras",
+            "description": "PatchCamera success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Camera"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed Item Update for Cameras",
+            "description": "PatchCamera failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -2083,7 +1980,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -2101,51 +1999,29 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Camera"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "responses": {
           "204": {
-            "description": "Successful Item Delete for Cameras"
+            "description": "DeleteCamera success"
           },
           "default": {
-            "description": "Failed Item Delete for Cameras",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
-                }
-              }
-            }
+            "description": "DeleteCamera failure"
           }
         }
       }
@@ -2155,7 +2031,7 @@
         "tags": [
           "Custom"
         ],
-        "operationId": "PatchClaimVideoForObjectDetector",
+        "operationId": "PatchCustomClaimVideoForObjectDetector",
         "requestBody": {
           "content": {
             "application/json": {
@@ -2168,17 +2044,17 @@
         },
         "responses": {
           "200": {
-            "description": "PatchClaimVideoForObjectDetector success",
+            "description": "PatchCustomClaimVideoForObjectDetector success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Video"
+                  "$ref": "#/components/schemas/NullableVideo"
                 }
               }
             }
           },
           "default": {
-            "description": "PatchClaimVideoForObjectDetector failure",
+            "description": "PatchCustomClaimVideoForObjectDetector failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -2327,47 +2203,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "id__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "id__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2376,7 +2217,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2385,7 +2227,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2394,7 +2237,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2497,47 +2341,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "created_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "created_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2546,7 +2355,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2555,7 +2365,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2564,7 +2375,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2667,47 +2479,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "updated_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "updated_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2716,7 +2493,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2725,7 +2503,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2734,7 +2513,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2837,47 +2617,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "deleted_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "deleted_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2886,7 +2631,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2895,7 +2641,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -2904,7 +2651,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3007,47 +2755,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "seen_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "seen_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "seen_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "seen_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "seen_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3056,7 +2769,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3065,7 +2779,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3074,7 +2789,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3177,78 +2893,6 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "class_id__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "class_id__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "class_id__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "class_id__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "class_id__like",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "class_id__notlike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "class_id__ilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "class_id__notilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
             "name": "class_id__desc",
             "in": "query",
             "required": false,
@@ -3337,42 +2981,6 @@
               "type": "string"
             },
             "description": "SQL NOT IN comparison, permits comma-separated values"
-          },
-          {
-            "name": "class_name__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "class_name__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "class_name__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "class_name__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "class_name__like",
@@ -3509,78 +3117,6 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "score__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "score__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "score__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "score__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "score__like",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "score__notlike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "score__ilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "score__notilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
             "name": "score__desc",
             "in": "query",
             "required": false,
@@ -3591,6 +3127,42 @@
           },
           {
             "name": "score__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "centroid__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "centroid__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "bounding_box__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "bounding_box__asc",
             "in": "query",
             "required": false,
             "schema": {
@@ -3679,47 +3251,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "video_id__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "video_id__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "video_id__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "video_id__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "video_id__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3728,7 +3265,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3737,7 +3275,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3746,7 +3285,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3761,6 +3301,24 @@
           },
           {
             "name": "video_id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "video_id_object__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "video_id_object__asc",
             "in": "query",
             "required": false,
             "schema": {
@@ -3849,47 +3407,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "camera_id__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "camera_id__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "camera_id__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "camera_id__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "camera_id__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3898,7 +3421,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3907,7 +3431,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3916,7 +3441,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -3937,62 +3463,39 @@
               "type": "string"
             },
             "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id_object__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id_object__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful List Fetch for Detections",
+            "description": "GetDetections success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Detection"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfDetection"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed List Fetch for Detections",
+            "description": "GetDetections failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -4014,7 +3517,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -4033,78 +3537,35 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Detection"
-                }
+                "$ref": "#/components/schemas/ArrayOfNullableDetection"
               }
             }
           },
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successful List Create for Detections",
+          "201": {
+            "description": "PostDetections success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Detection"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfDetection"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed List Create for Detections",
+            "description": "PostDetections failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -4126,7 +3587,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -4146,73 +3608,36 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Detection"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful Item Fetch for Detections",
+            "description": "GetDetection success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Detection"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfDetection"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed Item Fetch for Detections",
+            "description": "GetDetection failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -4234,123 +3659,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Detection"
-        ],
-        "operationId": "PutDetection",
-        "parameters": [
-          {
-            "name": "primaryKey",
-            "in": "path",
-            "required": true,
-            "schema": {},
-            "description": "Primary key for Detection"
-          },
-          {
-            "name": "depth",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Detection"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Item Replace for Detections",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Detection"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Failed Item Replace for Detections",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -4368,17 +3678,21 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Detection"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "requestBody": {
@@ -4393,58 +3707,17 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Item Update for Detections",
+            "description": "PatchDetection success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Detection"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfDetection"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed Item Update for Detections",
+            "description": "PatchDetection failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -4466,7 +3739,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -4484,51 +3758,29 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Detection"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "responses": {
           "204": {
-            "description": "Successful Item Delete for Detections"
+            "description": "DeleteDetection success"
           },
           "default": {
-            "description": "Failed Item Delete for Detections",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
-                }
-              }
-            }
+            "description": "DeleteDetection failure"
           }
         }
       }
@@ -4650,47 +3902,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "id__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "id__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "id__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4699,7 +3916,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4708,7 +3926,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4717,7 +3936,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4820,47 +4040,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "created_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "created_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "created_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4869,7 +4054,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4878,7 +4064,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4887,7 +4074,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -4990,47 +4178,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "updated_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "updated_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "updated_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5039,7 +4192,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5048,7 +4202,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5057,7 +4212,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5160,47 +4316,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "deleted_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "deleted_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "deleted_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5209,7 +4330,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5218,7 +4340,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5227,7 +4350,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5320,42 +4444,6 @@
               "type": "string"
             },
             "description": "SQL NOT IN comparison, permits comma-separated values"
-          },
-          {
-            "name": "file_name__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "file_name__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "file_name__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "file_name__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "file_name__like",
@@ -5492,47 +4580,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "started_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "started_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "started_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "started_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "started_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5541,7 +4594,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5550,7 +4604,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5559,7 +4614,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5662,47 +4718,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "ended_at__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "ended_at__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "ended_at__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "ended_at__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "ended_at__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5711,7 +4732,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5720,7 +4742,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5729,7 +4752,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -5832,78 +4856,6 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "duration__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "duration__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "duration__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "duration__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "duration__like",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "duration__notlike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "duration__ilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "duration__notilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
             "name": "duration__desc",
             "in": "query",
             "required": false,
@@ -6002,78 +4954,6 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "file_size__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "file_size__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "file_size__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "file_size__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "file_size__like",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "file_size__notlike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "file_size__ilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
-            "name": "file_size__notilike",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
-          },
-          {
             "name": "file_size__desc",
             "in": "query",
             "required": false,
@@ -6162,42 +5042,6 @@
               "type": "string"
             },
             "description": "SQL NOT IN comparison, permits comma-separated values"
-          },
-          {
-            "name": "thumbnail_name__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "thumbnail_name__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "thumbnail_name__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "thumbnail_name__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "thumbnail_name__like",
@@ -6324,42 +5168,6 @@
               "type": "string"
             },
             "description": "SQL NOT IN comparison, permits comma-separated values"
-          },
-          {
-            "name": "status__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "status__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "status__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "status__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "status__like",
@@ -6496,47 +5304,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "object_detector_claimed_until__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "object_detector_claimed_until__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "object_detector_claimed_until__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "object_detector_claimed_until__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "object_detector_claimed_until__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6545,7 +5318,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6554,7 +5328,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6563,7 +5338,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6666,47 +5442,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "object_tracker_claimed_until__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "object_tracker_claimed_until__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "object_tracker_claimed_until__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "object_tracker_claimed_until__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "object_tracker_claimed_until__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6715,7 +5456,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6724,7 +5466,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6733,7 +5476,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "date-time"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6836,47 +5580,12 @@
             "description": "SQL NOT IN comparison, permits comma-separated values"
           },
           {
-            "name": "camera_id__isnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "camera_id__isnotnull",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "camera_id__isfalse",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "camera_id__istrue",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "camera_id__like",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6885,7 +5594,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6894,7 +5604,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6903,7 +5614,8 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "string"
+              "type": "string",
+              "format": "uuid"
             },
             "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
           },
@@ -6924,62 +5636,75 @@
               "type": "string"
             },
             "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id_object__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id_object__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "detection_summary__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "detection_summary__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_detection_video_id_objects__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_detection_video_id_objects__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful List Fetch for Videos",
+            "description": "GetVideos success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Video"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed List Fetch for Videos",
+            "description": "GetVideos failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -7001,7 +5726,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -7020,78 +5746,35 @@
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "type": "array",
-                "items": {
-                  "$ref": "#/components/schemas/Video"
-                }
+                "$ref": "#/components/schemas/ArrayOfNullableVideo"
               }
             }
           },
           "required": true
         },
         "responses": {
-          "200": {
-            "description": "Successful List Create for Videos",
+          "201": {
+            "description": "PostVideos success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Video"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed List Create for Videos",
+            "description": "PostVideos failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -7113,7 +5796,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -7133,73 +5817,36 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Video"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "responses": {
           "200": {
-            "description": "Successful Item Fetch for Videos",
+            "description": "GetVideo success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Video"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed Item Fetch for Videos",
+            "description": "GetVideo failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -7221,123 +5868,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      },
-      "put": {
-        "tags": [
-          "Video"
-        ],
-        "operationId": "PutVideo",
-        "parameters": [
-          {
-            "name": "primaryKey",
-            "in": "path",
-            "required": true,
-            "schema": {},
-            "description": "Primary key for Video"
-          },
-          {
-            "name": "depth",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "integer"
-            },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Video"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "Successful Item Replace for Videos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Video"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Failed Item Replace for Videos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -7355,17 +5887,21 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Video"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "requestBody": {
@@ -7380,58 +5916,17 @@
         },
         "responses": {
           "200": {
-            "description": "Successful Item Update for Videos",
+            "description": "PatchVideo success",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "count": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "limit": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "objects": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/Video"
-                      }
-                    },
-                    "offset": {
-                      "type": "integer",
-                      "format": "int64"
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    },
-                    "total_count": {
-                      "type": "integer",
-                      "format": "int64"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
                 }
               }
             }
           },
           "default": {
-            "description": "Failed Item Update for Videos",
+            "description": "PatchVideo failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -7453,7 +5948,8 @@
                   },
                   "required": [
                     "status",
-                    "success"
+                    "success",
+                    "error"
                   ]
                 }
               }
@@ -7471,314 +5967,29 @@
             "name": "primaryKey",
             "in": "path",
             "required": true,
-            "schema": {},
-            "description": "Primary key for Video"
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
           },
           {
             "name": "depth",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "integer",
+              "format": "int64"
             },
-            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+            "description": "Query parameter depth"
           }
         ],
         "responses": {
           "204": {
-            "description": "Successful Item Delete for Videos"
+            "description": "DeleteVideo success"
           },
           "default": {
-            "description": "Failed Item Delete for Videos",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "error": {
-                      "type": "array",
-                      "items": {
-                        "type": "string"
-                      }
-                    },
-                    "status": {
-                      "type": "integer",
-                      "format": "int32"
-                    },
-                    "success": {
-                      "type": "boolean"
-                    }
-                  },
-                  "required": [
-                    "status",
-                    "success"
-                  ]
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Camera": {
-        "type": "object",
-        "properties": {
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted_at": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "last_seen": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "name": {
-            "type": "string"
-          },
-          "referenced_by_detection_camera_id_objects": {
-            "$ref": "#/components/schemas/NullableArrayOfDetection"
-          },
-          "referenced_by_video_camera_id_objects": {
-            "$ref": "#/components/schemas/NullableArrayOfVideo"
-          },
-          "segment_producer_claimed_until": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "stream_producer_claimed_until": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "stream_url": {
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          }
-        }
-      },
-      "ClaimRequest": {
-        "type": "object",
-        "properties": {
-          "claim_duration_seconds": {
-            "$ref": "#/components/schemas/Float64"
-          }
-        },
-        "required": [
-          "claim_duration_seconds"
-        ]
-      },
-      "Detection": {
-        "type": "object",
-        "properties": {
-          "bounding_box": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "object",
-              "properties": {
-                "X": {
-                  "type": "number",
-                  "format": "double"
-                },
-                "Y": {
-                  "type": "number",
-                  "format": "double"
-                }
-              }
-            }
-          },
-          "camera_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "camera_id_object": {
-            "$ref": "#/components/schemas/NullableCamera"
-          },
-          "centroid": {
-            "type": "object",
-            "properties": {
-              "X": {
-                "type": "number",
-                "format": "double"
-              },
-              "Y": {
-                "type": "number",
-                "format": "double"
-              }
-            }
-          },
-          "class_id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "class_name": {
-            "type": "string"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted_at": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "score": {
-            "type": "number",
-            "format": "double"
-          },
-          "seen_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "video_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "video_id_object": {
-            "$ref": "#/components/schemas/NullableVideo"
-          }
-        }
-      },
-      "Float64": {
-        "type": "number",
-        "format": "double"
-      },
-      "NullableArrayOfCamera": {
-        "type": "array",
-        "nullable": true,
-        "items": {
-          "$ref": "#/components/schemas/Camera"
-        }
-      },
-      "NullableArrayOfDetection": {
-        "type": "array",
-        "nullable": true,
-        "items": {
-          "$ref": "#/components/schemas/Detection"
-        }
-      },
-      "NullableArrayOfVideo": {
-        "type": "array",
-        "nullable": true,
-        "items": {
-          "$ref": "#/components/schemas/Video"
-        }
-      },
-      "NullableCamera": {
-        "$ref": "#/components/schemas/Camera",
-        "nullable": true
-      },
-      "NullableDetection": {
-        "$ref": "#/components/schemas/Detection",
-        "nullable": true
-      },
-      "NullableVideo": {
-        "$ref": "#/components/schemas/Video",
-        "nullable": true
-      },
-      "Vec2": {
-        "type": "object",
-        "properties": {
-          "X": {
-            "type": "number",
-            "format": "double"
-          },
-          "Y": {
-            "type": "number",
-            "format": "double"
-          }
-        }
-      },
-      "Video": {
-        "type": "object",
-        "properties": {
-          "camera_id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "camera_id_object": {
-            "$ref": "#/components/schemas/NullableCamera"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "deleted_at": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "detection_summary": {
-            "nullable": true
-          },
-          "duration": {
-            "type": "integer",
-            "format": "int64",
-            "nullable": true
-          },
-          "ended_at": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "file_name": {
-            "type": "string"
-          },
-          "file_size": {
-            "type": "number",
-            "format": "double",
-            "nullable": true
-          },
-          "id": {
-            "type": "string",
-            "format": "uuid"
-          },
-          "object_detector_claimed_until": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "object_tracker_claimed_until": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "referenced_by_detection_video_id_objects": {
-            "$ref": "#/components/schemas/NullableArrayOfDetection"
-          },
-          "started_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "status": {
-            "type": "string"
-          },
-          "thumbnail_name": {
-            "type": "string"
-          },
-          "updated_at": {
-            "type": "string",
-            "format": "date-time"
+            "description": "DeleteVideo failure"
           }
         }
       }

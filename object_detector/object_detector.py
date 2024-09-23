@@ -17,7 +17,7 @@ from .api.openapi_client import (
     Video,
     DetectionApi,
     Detection,
-    DetectionBoundingBoxInner,
+    ArrayOfVec2Inner as DetectionBoundingBoxInner,
     CustomApi,
     ClaimRequest,
 )
@@ -53,7 +53,7 @@ def do(
 
         try:
             # TODO: inject this as an env var
-            video = custom_api.patch_claim_video_for_object_detector(
+            video = custom_api.patch_custom_claim_video_for_object_detector(
                 claim_request=ClaimRequest(claim_duration_seconds=60),
                 _request_timeout=70,
             )
@@ -71,6 +71,9 @@ def do(
         return
 
     for video in videos:
+        if not video.id:
+            continue
+
         print(f"claimed {video.file_name} - {video.status} - {video.started_at} - {video.duration}")
 
         before = datetime.datetime.now()
@@ -82,6 +85,9 @@ def do(
             )
 
             for detection in detections_response.objects or []:
+                if not detection.id:
+                    continue
+
                 print(f"deleting old detection {detection.id}")
                 detection_api.delete_detection(detection.id)
 
@@ -206,6 +212,9 @@ def do(
                     )
                 else:
                     print("no detections to post")
+
+                if not video.id:
+                    return
 
                 print(f"updating video")
 

@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List, Optional
+from typing import Any, ClassVar, Dict, List
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -26,7 +26,7 @@ class GetCamerasDefaultResponse(BaseModel):
     """
     GetCamerasDefaultResponse
     """ # noqa: E501
-    error: Optional[List[StrictStr]] = None
+    error: List[StrictStr]
     status: StrictInt
     success: StrictBool
     __properties: ClassVar[List[str]] = ["error", "status", "success"]

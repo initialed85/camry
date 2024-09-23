@@ -47,9 +47,9 @@ func RunServeWithEnvironment(
 	}()
 
 	actualAddCustomHandlers := func(r chi.Router) error {
-		claimVideoForObjectDetectorHandler, err := api.GetCustomHTTPHandler(
+		claimVideoForObjectDetectorHandler, err := api.GetHTTPHandler(
 			http.MethodPatch,
-			"/claim-video-for-object-detector",
+			"/custom/claim-video-for-object-detector",
 			http.StatusOK,
 			func(
 				ctx context.Context,
@@ -102,7 +102,11 @@ func RunServeWithEnvironment(
 					return nil, err
 				}
 
-				if len(videos) != 1 {
+				if len(videos) == 0 {
+					return nil, nil
+				}
+
+				if len(videos) > 1 {
 					return nil, fmt.Errorf("wanted exactly 1 unclaimed video, got %d", len(videos))
 				}
 
@@ -128,10 +132,7 @@ func RunServeWithEnvironment(
 			return err
 		}
 
-		r.Patch(
-			claimVideoForObjectDetectorHandler.Path,
-			claimVideoForObjectDetectorHandler.ServeHTTP,
-		)
+		r.Patch(claimVideoForObjectDetectorHandler.PathWithinRouter, claimVideoForObjectDetectorHandler.ServeHTTP)
 
 		if addCustomHandlers != nil {
 			err = addCustomHandlers(r)

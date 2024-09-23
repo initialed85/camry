@@ -9,14 +9,20 @@ type Point = components["schemas"]["Detection"]["centroid"];
 
 export interface VideoProps {
   video: components["schemas"]["Video"];
+  width: number;
+  height: number;
 }
 
 export function Video(props: VideoProps) {
   const { isLoading, error, data } = useQuery("get", "/api/detections", {
-    params: { query: { video_id__eq: props.video?.id || "", limit: 1_000_000 } },
+    params: {
+      query: { video_id__eq: props.video?.id || "", limit: 1_000_000 },
+    },
   });
 
-  const enrichedDetectionsRef = useRef<components["schemas"]["Detection"][]>([]);
+  const enrichedDetectionsRef = useRef<components["schemas"]["Detection"][]>(
+    [],
+  );
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const readyRef = useRef(false);
 
@@ -29,6 +35,14 @@ export function Video(props: VideoProps) {
 
     const detections: Detection[] = data?.objects || [];
     detections.forEach((detection: Detection) => {
+      if (!detection?.score) {
+        return;
+      }
+
+      if (detection.score < 0.33) {
+        return false;
+      }
+
       const boundingBoxPoints: Point[] = [];
       detection?.bounding_box?.forEach((point) => {
         boundingBoxPoints.push(point);
@@ -53,7 +67,11 @@ export function Video(props: VideoProps) {
 
   if (error) {
     console.warn(error);
-    return <div style={{ fontWeight: "bold", color: "red" }}>ERROR: {JSON.stringify(error)}</div>;
+    return (
+      <div style={{ fontWeight: "bold", color: "red" }}>
+        ERROR: {JSON.stringify(error)}
+      </div>
+    );
   }
 
   if (isLoading) {
@@ -65,18 +83,17 @@ export function Video(props: VideoProps) {
       <canvas
         ref={canvasRef}
         style={{
-          position: "fixed",
-          display: "block",
+          position: "absolute",
+          display: "inline",
           zIndex: 500,
-          left: 0,
-          top: 0,
-          width: 0,
-          height: 0,
+          padding: 0,
+          margin: 0,
           cursor: "not-allowed",
           pointerEvents: "none",
+          outline: "1px solid blue",
         }}
-        width={1920}
-        height={1080}
+        width={props.width}
+        height={props.height}
       />
       <VideoJS
         options={{
@@ -99,7 +116,13 @@ export function Video(props: VideoProps) {
         onReady={() => {
           readyRef.current = true;
         }}
-        onTimeUpdate={(left: number, top: number, width: number, height: number, relativeTimeMilliseconds: number) => {
+        onTimeUpdate={(
+          left: number,
+          top: number,
+          width: number,
+          height: number,
+          relativeTimeMilliseconds: number,
+        ) => {
           if (!canvasRef.current) {
             return;
           }
@@ -108,10 +131,8 @@ export function Video(props: VideoProps) {
 
           const firstUpdate = canvas.style.left === "0px";
 
-          canvas.style.left = `${left}px`;
-          canvas.style.top = `${top}px`;
-          canvas.style.width = `${width}px`;
-          canvas.style.height = `${height}px`;
+          canvas.width = width;
+          canvas.height = height;
 
           if (!readyRef?.current) {
             return;
@@ -122,17 +143,23 @@ export function Video(props: VideoProps) {
             return;
           }
 
-          ctx.clearRect(0, 0, 1920, 1080);
+          ctx.clearRect(0, 0, width, height);
 
           if (firstUpdate) {
             return;
           }
 
-          const absoluteTimeMilliseconds = absoluteTimeMillisecondsRef + relativeTimeMilliseconds;
+          const scaleX = width / 1920;
+          const scaleY = height / 1080;
+
+          const absoluteTimeMilliseconds =
+            absoluteTimeMillisecondsRef + relativeTimeMilliseconds;
 
           const enrichedDetections = enrichedDetectionsRef.current || [];
           enrichedDetections.forEach((detection: Detection) => {
-            const deltaMilliseconds = absoluteTimeMilliseconds - new Date(detection.seen_at || "").getTime();
+            const deltaMilliseconds =
+              absoluteTimeMilliseconds -
+              new Date(detection.seen_at || "").getTime();
 
             if (deltaMilliseconds < 0 || deltaMilliseconds > 5_000) {
               return;
@@ -158,21 +185,39 @@ export function Video(props: VideoProps) {
               return;
             }
 
-            ctx.lineWidth = 2;
-            ctx.strokeStyle = `rgba(255, 0, 0, 0.75)`;
+            const lineWidth = 2 * scaleX;
+            const textOffsetX = 3 * scaleX;
+            const textOffsetY = 4 * scaleY;
+            const centroidRadius = 7 * scaleX;
 
-            ctx.fillStyle = `rgba(255, 255, 255, 0.75)`;
-            ctx.font = "18px sans-serif";
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = `rgba(255, 0, 0, 0.95)`;
+
+            ctx.fillStyle = `rgba(255, 255, 255, 0.95)`;
+            ctx.font = `${28 * scaleX}px sans-serif`;
             ctx.textAlign = "left";
 
+            const topLeftX = topLeft.X * scaleX;
+            const topLeftY = topLeft.Y * scaleY;
+
+            const bottomRightX = bottomRight.X * scaleX;
+            const bottomRightY = bottomRight.Y * scaleY;
+
+            const centroidX = centroid.X * scaleX;
+            const centroidY = centroid.Y * scaleY;
+
             if (deltaMilliseconds <= 200) {
-              ctx.fillText(`${detection.class_name} @ ${detection.score.toFixed(3)}`, topLeft.X + 3, bottomRight.Y - 4);
+              ctx.fillText(
+                `${detection.class_name} @ ${detection.score.toFixed(2)}`,
+                topLeftX + textOffsetX,
+                bottomRightY - textOffsetY,
+              );
 
               ctx.strokeRect(
-                topLeft.X,
-                topLeft.Y,
-                Math.abs(bottomRight.X - topLeft.X),
-                Math.abs(bottomRight.Y - topLeft.Y)
+                topLeftX,
+                topLeftY,
+                Math.abs(bottomRightX - topLeftX),
+                Math.abs(bottomRightY - topLeftY),
               );
             }
 
@@ -183,7 +228,7 @@ export function Video(props: VideoProps) {
 
             ctx.beginPath();
 
-            ctx.arc(centroid.X, centroid.Y, 5, 0, Math.PI * 2);
+            ctx.arc(centroidX, centroidY, centroidRadius, 0, Math.PI * 2);
 
             ctx.stroke();
           });

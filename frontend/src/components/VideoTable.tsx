@@ -19,9 +19,14 @@ import { getDateString } from "../helpers";
 import { Video } from "./Video";
 
 const defaultLimit = 10;
+const desiredWidthRatio = 1920 / 1080;
+const desiredHeightRatio = 1080 / 1920;
 
 export interface VideoTableProps {
   responsive: boolean;
+  portrait: boolean;
+  windowWidth: number;
+  windowHeight: number;
   cameraId: string | undefined;
   startedAtGt: string | undefined;
   startedAtLte: string | undefined;
@@ -31,7 +36,9 @@ export interface VideoTableProps {
 export function VideoTable(props: VideoTableProps) {
   const [ref, inView] = useInView();
 
-  const [currentVideo, setCurrentVideo] = useState<components["schemas"]["Video"] | undefined>(undefined);
+  const [currentVideo, setCurrentVideo] = useState<
+    components["schemas"]["Video"] | undefined
+  >(undefined);
   const [showPlayModal, setShowPlayModal] = useState(false);
 
   const { data: allCamerasData } = useQuery("get", "/api/cameras", {
@@ -42,7 +49,9 @@ export function VideoTable(props: VideoTableProps) {
     },
   });
 
-  const visibleCameraCount = props.cameraId ? 1 : allCamerasData?.objects?.length || 1;
+  const visibleCameraCount = props.cameraId
+    ? 1
+    : allCamerasData?.objects?.length || 1;
 
   const relevantLimit = defaultLimit * visibleCameraCount;
 
@@ -135,6 +144,23 @@ export function VideoTable(props: VideoTableProps) {
     }
   }, [fetchNextPage, hasNextPage, inView]);
 
+  let desiredMaxWidth;
+  let desiredMaxHeight;
+  let desiredWidth;
+  let desiredHeight;
+
+  if (props.portrait) {
+    desiredWidth = props.windowWidth * 0.96;
+    desiredMaxWidth = props.windowWidth * 0.96;
+    desiredHeight = desiredWidth * desiredHeightRatio;
+    desiredMaxHeight = desiredWidth * desiredHeightRatio;
+  } else {
+    desiredHeight = props.windowHeight * 0.96;
+    desiredMaxHeight = props.windowHeight * 0.96;
+    desiredWidth = desiredHeight * desiredWidthRatio;
+    desiredMaxWidth = desiredHeight * desiredWidthRatio;
+  }
+
   return (
     <>
       <Table
@@ -167,10 +193,17 @@ export function VideoTable(props: VideoTableProps) {
             >
               {props.responsive ? "T" : "Time"}
             </th>
-            <th style={{ width: props.responsive ? 70 : 140, ...truncateStyleProps }}>
+            <th
+              style={{
+                width: props.responsive ? 70 : 140,
+                ...truncateStyleProps,
+              }}
+            >
               {props.responsive ? "S" : "Summary"}
             </th>
-            <th style={{ ...truncateStyleProps }}>{props.responsive ? "D" : "Detected"}</th>
+            <th style={{ ...truncateStyleProps }}>
+              {props.responsive ? "D" : "Detected"}
+            </th>
             <th
               style={{
                 width: props.responsive ? 80 : 160,
@@ -179,7 +212,9 @@ export function VideoTable(props: VideoTableProps) {
             >
               Preview
             </th>
-            <th style={{ width: "7.5%", ...truncateStyleProps }}>{props.responsive ? "M" : "Media"}</th>
+            <th style={{ width: "7.5%", ...truncateStyleProps }}>
+              {props.responsive ? "M" : "Media"}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -189,13 +224,20 @@ export function VideoTable(props: VideoTableProps) {
                 if (props.classNameFilter) {
                   const detectionSummaries = video?.detection_summary as [];
 
-                  const matchingClassNames = detectionSummaries.filter((detectionSummary: any) => {
-                    // if (detectionSummary.average_score < 0.33 || detectionSummary.detected_frame_count < 4) {
-                    //   return false;
-                    // }
+                  const matchingClassNames = detectionSummaries.filter(
+                    (detectionSummary: any) => {
+                      if (
+                        detectionSummary.average_score < 0.5 ||
+                        detectionSummary.detected_frame_count < 8
+                      ) {
+                        return false;
+                      }
 
-                    return (detectionSummary.class_name as string).includes(props.classNameFilter);
-                  });
+                      return (detectionSummary.class_name as string).includes(
+                        props.classNameFilter,
+                      );
+                    },
+                  );
 
                   return matchingClassNames.length;
                 }
@@ -214,8 +256,12 @@ export function VideoTable(props: VideoTableProps) {
 
                 const available = video?.status !== "recording";
 
-                const minutes = Math.floor((video?.duration || 0) / (1_000_000_000 * 60));
-                const seconds = Math.floor((video?.duration || 0) / 1_000_000_000 - minutes * 60);
+                const minutes = Math.floor(
+                  (video?.duration || 0) / (1_000_000_000 * 60),
+                );
+                const seconds = Math.floor(
+                  (video?.duration || 0) / 1_000_000_000 - minutes * 60,
+                );
 
                 const fileSize = (video?.file_size || 0.0).toFixed(2);
 
@@ -225,7 +271,11 @@ export function VideoTable(props: VideoTableProps) {
 
                 if (video?.thumbnail_name) {
                   thumbnail = (
-                    <a target="_blank" rel="noreferrer" href={`/media/${video?.thumbnail_name}`}>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`/media/${video?.thumbnail_name}`}
+                    >
                       <img
                         alt={`still from ${video?.camera_id_object?.name} @ ${startedAt}`}
                         src={`/media/${video?.thumbnail_name}`}
@@ -273,9 +323,12 @@ export function VideoTable(props: VideoTableProps) {
                 } else if (video?.status === "needs tracking") {
                   classNames = (video?.detection_summary as [])
                     .filter((detectionSummary: any) => {
-                      // if (detectionSummary.average_score < 0.33 || detectionSummary.detected_frame_count < 8) {
-                      //   return false;
-                      // }
+                      if (
+                        detectionSummary.average_score < 0.5 ||
+                        detectionSummary.detected_frame_count < 8
+                      ) {
+                        return false;
+                      }
 
                       return true;
                     })
@@ -286,7 +339,10 @@ export function VideoTable(props: VideoTableProps) {
                             key={x.class_name}
                             style={{
                               color:
-                                props.classNameFilter && (x.class_name as string).includes(props.classNameFilter)
+                                props.classNameFilter &&
+                                (x.class_name as string).includes(
+                                  props.classNameFilter,
+                                )
                                   ? "#ff0000"
                                   : undefined,
                             }}
@@ -301,12 +357,16 @@ export function VideoTable(props: VideoTableProps) {
                           key={x.class_name}
                           style={{
                             color:
-                              props.classNameFilter && (x.class_name as string).includes(props.classNameFilter)
+                              props.classNameFilter &&
+                              (x.class_name as string).includes(
+                                props.classNameFilter,
+                              )
                                 ? "#ff0000"
                                 : undefined,
                           }}
                         >
-                          {x.class_name} @ {x.average_score.toFixed(2)} (over {x.detected_frame_count} frames)
+                          {x.class_name} @ {x.average_score.toFixed(2)} (over{" "}
+                          {x.detected_frame_count} frames)
                           <br />
                         </span>
                       );
@@ -317,11 +377,14 @@ export function VideoTable(props: VideoTableProps) {
                   <tr key={`video-table-row-${video.id}`}>
                     <td>
                       <Typography style={{ display: "inline" }}>
-                        {getDateString(startedAt)} {startedAt.toTimeString().split(" ")[0]}
+                        {getDateString(startedAt)}{" "}
+                        {startedAt.toTimeString().split(" ")[0]}
                       </Typography>
                       {props.responsive ? <br /> : " -> "}
                       <Typography color="neutral" style={{ display: "inline" }}>
-                        {endedAt ? endedAt.toTimeString().split(" ")[0] : new Date().toTimeString().split(" ")[0]}{" "}
+                        {endedAt
+                          ? endedAt.toTimeString().split(" ")[0]
+                          : new Date().toTimeString().split(" ")[0]}{" "}
                         <br />
                       </Typography>
                     </td>
@@ -354,7 +417,10 @@ export function VideoTable(props: VideoTableProps) {
                             variant={"plain"}
                             sx={{ px: 0, mx: 0, py: 0, my: 0 }}
                             onClick={() => {
-                              window.open(`/media/${video?.file_name}`, "_blank");
+                              window.open(
+                                `/media/${video?.file_name}`,
+                                "_blank",
+                              );
                             }}
                           >
                             <CloudDownloadOutlinedIcon color={"success"} />
@@ -381,7 +447,9 @@ export function VideoTable(props: VideoTableProps) {
           ) : (
             <tr>
               <td colSpan={5}>
-                <Typography color={"neutral"}>(No videos for the selected camera / date)</Typography>
+                <Typography color={"neutral"}>
+                  (No videos for the selected camera / date)
+                </Typography>
               </td>
             </tr>
           )}
@@ -393,6 +461,7 @@ export function VideoTable(props: VideoTableProps) {
         </tbody>
       </Table>
       <Modal
+        sx={{ p: 0, m: 0 }}
         open={showPlayModal}
         onClose={() => {
           setShowPlayModal(false);
@@ -402,16 +471,25 @@ export function VideoTable(props: VideoTableProps) {
           variant="plain"
           size="sm"
           sx={{
-            width: "99%",
-            height: "99%",
-            p: "5px",
-            m: "0",
+            width: desiredWidth,
+            maxWidth: desiredMaxWidth,
+            height: desiredHeight,
+            maxHeight: desiredMaxHeight,
+            p: "1px",
+            borderRadius: 0,
+            m: 0,
             display: "flex",
             justifyContent: "center",
             verticalAlign: "center",
           }}
         >
-          {currentVideo && <Video video={currentVideo} />}
+          {currentVideo && (
+            <Video
+              video={currentVideo}
+              width={desiredWidth}
+              height={desiredHeight}
+            />
+          )}
         </ModalDialog>
       </Modal>
     </>

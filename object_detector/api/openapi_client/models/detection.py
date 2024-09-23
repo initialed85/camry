@@ -20,7 +20,7 @@ import json
 from datetime import datetime
 from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional, Union
-from openapi_client.models.detection_bounding_box_inner import DetectionBoundingBoxInner
+from openapi_client.models.array_of_vec2_inner import ArrayOfVec2Inner
 from typing import Optional, Set
 from typing_extensions import Self
 
@@ -28,10 +28,10 @@ class Detection(BaseModel):
     """
     Detection
     """ # noqa: E501
-    bounding_box: Optional[List[DetectionBoundingBoxInner]] = None
+    bounding_box: Optional[List[ArrayOfVec2Inner]] = None
     camera_id: Optional[StrictStr] = None
     camera_id_object: Optional[Camera] = None
-    centroid: Optional[DetectionBoundingBoxInner] = None
+    centroid: Optional[ArrayOfVec2Inner] = None
     class_id: Optional[StrictInt] = None
     class_name: Optional[StrictStr] = None
     created_at: Optional[datetime] = None
@@ -104,11 +104,6 @@ class Detection(BaseModel):
         if self.bounding_box is None and "bounding_box" in self.model_fields_set:
             _dict['bounding_box'] = None
 
-        # set to None if deleted_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.deleted_at is None and "deleted_at" in self.model_fields_set:
-            _dict['deleted_at'] = None
-
         return _dict
 
     @classmethod
@@ -121,10 +116,10 @@ class Detection(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "bounding_box": [DetectionBoundingBoxInner.from_dict(_item) for _item in obj["bounding_box"]] if obj.get("bounding_box") is not None else None,
+            "bounding_box": [ArrayOfVec2Inner.from_dict(_item) for _item in obj["bounding_box"]] if obj.get("bounding_box") is not None else None,
             "camera_id": obj.get("camera_id"),
             "camera_id_object": Camera.from_dict(obj["camera_id_object"]) if obj.get("camera_id_object") is not None else None,
-            "centroid": DetectionBoundingBoxInner.from_dict(obj["centroid"]) if obj.get("centroid") is not None else None,
+            "centroid": ArrayOfVec2Inner.from_dict(obj["centroid"]) if obj.get("centroid") is not None else None,
             "class_id": obj.get("class_id"),
             "class_name": obj.get("class_name"),
             "created_at": obj.get("created_at"),

@@ -18,10 +18,10 @@ from typing_extensions import Annotated
 
 from datetime import datetime
 from pydantic import Field, StrictFloat, StrictInt, StrictStr
-from typing import Any, List, Optional, Union
+from typing import List, Optional, Union
 from typing_extensions import Annotated
 from openapi_client.models.detection import Detection
-from openapi_client.models.get_detections200_response import GetDetections200Response
+from openapi_client.models.response_with_generic_of_detection import ResponseWithGenericOfDetection
 
 from openapi_client.api_client import ApiClient, RequestSerialized
 from openapi_client.api_response import ApiResponse
@@ -44,8 +44,8 @@ class DetectionApi:
     @validate_call
     def delete_detection(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -62,9 +62,9 @@ class DetectionApi:
         """delete_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -114,8 +114,8 @@ class DetectionApi:
     @validate_call
     def delete_detection_with_http_info(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -132,9 +132,9 @@ class DetectionApi:
         """delete_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -184,8 +184,8 @@ class DetectionApi:
     @validate_call
     def delete_detection_without_preload_content(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -202,9 +202,9 @@ class DetectionApi:
         """delete_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -282,13 +282,6 @@ class DetectionApi:
         # process the body parameter
 
 
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
 
 
         # authentication setting
@@ -316,8 +309,8 @@ class DetectionApi:
     @validate_call
     def get_detection(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -330,13 +323,13 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetDetections200Response:
+    ) -> ResponseWithGenericOfDetection:
         """get_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -370,7 +363,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -386,8 +379,8 @@ class DetectionApi:
     @validate_call
     def get_detection_with_http_info(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -400,13 +393,13 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetDetections200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfDetection]:
         """get_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -440,7 +433,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -456,8 +449,8 @@ class DetectionApi:
     @validate_call
     def get_detection_without_preload_content(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -474,9 +467,9 @@ class DetectionApi:
         """get_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -510,7 +503,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -599,10 +592,6 @@ class DetectionApi:
         id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -617,14 +606,10 @@ class DetectionApi:
         created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -635,14 +620,10 @@ class DetectionApi:
         updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -653,14 +634,10 @@ class DetectionApi:
         deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         seen_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -671,14 +648,10 @@ class DetectionApi:
         seen_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         seen_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         seen_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        seen_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         seen_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         seen_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
@@ -689,14 +662,6 @@ class DetectionApi:
         class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
         class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -707,10 +672,6 @@ class DetectionApi:
         class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -725,16 +686,12 @@ class DetectionApi:
         score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
         score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        score__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        centroid__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        centroid__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        bounding_box__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        bounding_box__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -743,16 +700,14 @@ class DetectionApi:
         video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        video_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -761,16 +716,14 @@ class DetectionApi:
         camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -783,7 +736,7 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetDetections200Response:
+    ) -> ResponseWithGenericOfDetection:
         """get_detections
 
 
@@ -809,14 +762,6 @@ class DetectionApi:
         :type id__in: str
         :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnull: str
-        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnotnull: str
-        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type id__isfalse: str
-        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type id__istrue: str
         :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
         :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -845,22 +790,14 @@ class DetectionApi:
         :type created_at__in: datetime
         :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnull: str
-        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnotnull: str
-        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isfalse: str
-        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type created_at__istrue: str
         :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: str
+        :type created_at__like: datetime
         :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: str
+        :type created_at__notlike: datetime
         :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: str
+        :type created_at__ilike: datetime
         :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: str
+        :type created_at__notilike: datetime
         :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
         :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -881,22 +818,14 @@ class DetectionApi:
         :type updated_at__in: datetime
         :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnull: str
-        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnotnull: str
-        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isfalse: str
-        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__istrue: str
         :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: str
+        :type updated_at__like: datetime
         :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: str
+        :type updated_at__notlike: datetime
         :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: str
+        :type updated_at__ilike: datetime
         :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: str
+        :type updated_at__notilike: datetime
         :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
         :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -917,22 +846,14 @@ class DetectionApi:
         :type deleted_at__in: datetime
         :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnull: str
-        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnotnull: str
-        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isfalse: str
-        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__istrue: str
         :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: str
+        :type deleted_at__like: datetime
         :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: str
+        :type deleted_at__notlike: datetime
         :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: str
+        :type deleted_at__ilike: datetime
         :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: str
+        :type deleted_at__notilike: datetime
         :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
         :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -953,22 +874,14 @@ class DetectionApi:
         :type seen_at__in: datetime
         :param seen_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type seen_at__notin: datetime
-        :param seen_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isnull: str
-        :param seen_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isnotnull: str
-        :param seen_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isfalse: str
-        :param seen_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__istrue: str
         :param seen_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__like: str
+        :type seen_at__like: datetime
         :param seen_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__notlike: str
+        :type seen_at__notlike: datetime
         :param seen_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__ilike: str
+        :type seen_at__ilike: datetime
         :param seen_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__notilike: str
+        :type seen_at__notilike: datetime
         :param seen_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type seen_at__desc: str
         :param seen_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -989,22 +902,6 @@ class DetectionApi:
         :type class_id__in: int
         :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type class_id__notin: int
-        :param class_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isnull: str
-        :param class_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isnotnull: str
-        :param class_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isfalse: str
-        :param class_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type class_id__istrue: str
-        :param class_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__like: str
-        :param class_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__notlike: str
-        :param class_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__ilike: str
-        :param class_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__notilike: str
         :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type class_id__desc: str
         :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1025,14 +922,6 @@ class DetectionApi:
         :type class_name__in: str
         :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type class_name__notin: str
-        :param class_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isnull: str
-        :param class_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isnotnull: str
-        :param class_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isfalse: str
-        :param class_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type class_name__istrue: str
         :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type class_name__like: str
         :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1061,26 +950,18 @@ class DetectionApi:
         :type score__in: float
         :param score__notin: SQL NOT IN comparison, permits comma-separated values
         :type score__notin: float
-        :param score__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type score__isnull: str
-        :param score__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type score__isnotnull: str
-        :param score__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type score__isfalse: str
-        :param score__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type score__istrue: str
-        :param score__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__like: str
-        :param score__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__notlike: str
-        :param score__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__ilike: str
-        :param score__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__notilike: str
         :param score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type score__desc: str
         :param score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type score__asc: str
+        :param centroid__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type centroid__desc: str
+        :param centroid__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type centroid__asc: str
+        :param bounding_box__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type bounding_box__desc: str
+        :param bounding_box__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type bounding_box__asc: str
         :param video_id__eq: SQL = comparison
         :type video_id__eq: str
         :param video_id__ne: SQL != comparison
@@ -1097,14 +978,6 @@ class DetectionApi:
         :type video_id__in: str
         :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type video_id__notin: str
-        :param video_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isnull: str
-        :param video_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isnotnull: str
-        :param video_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isfalse: str
-        :param video_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type video_id__istrue: str
         :param video_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type video_id__like: str
         :param video_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1117,6 +990,10 @@ class DetectionApi:
         :type video_id__desc: str
         :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type video_id__asc: str
+        :param video_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type video_id_object__desc: str
+        :param video_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type video_id_object__asc: str
         :param camera_id__eq: SQL = comparison
         :type camera_id__eq: str
         :param camera_id__ne: SQL != comparison
@@ -1133,14 +1010,6 @@ class DetectionApi:
         :type camera_id__in: str
         :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type camera_id__notin: str
-        :param camera_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnull: str
-        :param camera_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnotnull: str
-        :param camera_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isfalse: str
-        :param camera_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__istrue: str
         :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type camera_id__like: str
         :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1153,6 +1022,10 @@ class DetectionApi:
         :type camera_id__desc: str
         :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id__asc: str
+        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__desc: str
+        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1187,10 +1060,6 @@ class DetectionApi:
             id__lte=id__lte,
             id__in=id__in,
             id__notin=id__notin,
-            id__isnull=id__isnull,
-            id__isnotnull=id__isnotnull,
-            id__isfalse=id__isfalse,
-            id__istrue=id__istrue,
             id__like=id__like,
             id__notlike=id__notlike,
             id__ilike=id__ilike,
@@ -1205,10 +1074,6 @@ class DetectionApi:
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
             created_at__notin=created_at__notin,
-            created_at__isnull=created_at__isnull,
-            created_at__isnotnull=created_at__isnotnull,
-            created_at__isfalse=created_at__isfalse,
-            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
             created_at__notlike=created_at__notlike,
             created_at__ilike=created_at__ilike,
@@ -1223,10 +1088,6 @@ class DetectionApi:
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
             updated_at__notin=updated_at__notin,
-            updated_at__isnull=updated_at__isnull,
-            updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__isfalse=updated_at__isfalse,
-            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
             updated_at__notlike=updated_at__notlike,
             updated_at__ilike=updated_at__ilike,
@@ -1241,10 +1102,6 @@ class DetectionApi:
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
             deleted_at__notin=deleted_at__notin,
-            deleted_at__isnull=deleted_at__isnull,
-            deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__isfalse=deleted_at__isfalse,
-            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
             deleted_at__notlike=deleted_at__notlike,
             deleted_at__ilike=deleted_at__ilike,
@@ -1259,10 +1116,6 @@ class DetectionApi:
             seen_at__lte=seen_at__lte,
             seen_at__in=seen_at__in,
             seen_at__notin=seen_at__notin,
-            seen_at__isnull=seen_at__isnull,
-            seen_at__isnotnull=seen_at__isnotnull,
-            seen_at__isfalse=seen_at__isfalse,
-            seen_at__istrue=seen_at__istrue,
             seen_at__like=seen_at__like,
             seen_at__notlike=seen_at__notlike,
             seen_at__ilike=seen_at__ilike,
@@ -1277,14 +1130,6 @@ class DetectionApi:
             class_id__lte=class_id__lte,
             class_id__in=class_id__in,
             class_id__notin=class_id__notin,
-            class_id__isnull=class_id__isnull,
-            class_id__isnotnull=class_id__isnotnull,
-            class_id__isfalse=class_id__isfalse,
-            class_id__istrue=class_id__istrue,
-            class_id__like=class_id__like,
-            class_id__notlike=class_id__notlike,
-            class_id__ilike=class_id__ilike,
-            class_id__notilike=class_id__notilike,
             class_id__desc=class_id__desc,
             class_id__asc=class_id__asc,
             class_name__eq=class_name__eq,
@@ -1295,10 +1140,6 @@ class DetectionApi:
             class_name__lte=class_name__lte,
             class_name__in=class_name__in,
             class_name__notin=class_name__notin,
-            class_name__isnull=class_name__isnull,
-            class_name__isnotnull=class_name__isnotnull,
-            class_name__isfalse=class_name__isfalse,
-            class_name__istrue=class_name__istrue,
             class_name__like=class_name__like,
             class_name__notlike=class_name__notlike,
             class_name__ilike=class_name__ilike,
@@ -1313,16 +1154,12 @@ class DetectionApi:
             score__lte=score__lte,
             score__in=score__in,
             score__notin=score__notin,
-            score__isnull=score__isnull,
-            score__isnotnull=score__isnotnull,
-            score__isfalse=score__isfalse,
-            score__istrue=score__istrue,
-            score__like=score__like,
-            score__notlike=score__notlike,
-            score__ilike=score__ilike,
-            score__notilike=score__notilike,
             score__desc=score__desc,
             score__asc=score__asc,
+            centroid__desc=centroid__desc,
+            centroid__asc=centroid__asc,
+            bounding_box__desc=bounding_box__desc,
+            bounding_box__asc=bounding_box__asc,
             video_id__eq=video_id__eq,
             video_id__ne=video_id__ne,
             video_id__gt=video_id__gt,
@@ -1331,16 +1168,14 @@ class DetectionApi:
             video_id__lte=video_id__lte,
             video_id__in=video_id__in,
             video_id__notin=video_id__notin,
-            video_id__isnull=video_id__isnull,
-            video_id__isnotnull=video_id__isnotnull,
-            video_id__isfalse=video_id__isfalse,
-            video_id__istrue=video_id__istrue,
             video_id__like=video_id__like,
             video_id__notlike=video_id__notlike,
             video_id__ilike=video_id__ilike,
             video_id__notilike=video_id__notilike,
             video_id__desc=video_id__desc,
             video_id__asc=video_id__asc,
+            video_id_object__desc=video_id_object__desc,
+            video_id_object__asc=video_id_object__asc,
             camera_id__eq=camera_id__eq,
             camera_id__ne=camera_id__ne,
             camera_id__gt=camera_id__gt,
@@ -1349,16 +1184,14 @@ class DetectionApi:
             camera_id__lte=camera_id__lte,
             camera_id__in=camera_id__in,
             camera_id__notin=camera_id__notin,
-            camera_id__isnull=camera_id__isnull,
-            camera_id__isnotnull=camera_id__isnotnull,
-            camera_id__isfalse=camera_id__isfalse,
-            camera_id__istrue=camera_id__istrue,
             camera_id__like=camera_id__like,
             camera_id__notlike=camera_id__notlike,
             camera_id__ilike=camera_id__ilike,
             camera_id__notilike=camera_id__notilike,
             camera_id__desc=camera_id__desc,
             camera_id__asc=camera_id__asc,
+            camera_id_object__desc=camera_id_object__desc,
+            camera_id_object__asc=camera_id_object__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1366,7 +1199,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -1393,10 +1226,6 @@ class DetectionApi:
         id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -1411,14 +1240,10 @@ class DetectionApi:
         created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1429,14 +1254,10 @@ class DetectionApi:
         updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1447,14 +1268,10 @@ class DetectionApi:
         deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         seen_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1465,14 +1282,10 @@ class DetectionApi:
         seen_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         seen_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         seen_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        seen_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         seen_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         seen_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
@@ -1483,14 +1296,6 @@ class DetectionApi:
         class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
         class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -1501,10 +1306,6 @@ class DetectionApi:
         class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -1519,16 +1320,12 @@ class DetectionApi:
         score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
         score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        score__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        centroid__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        centroid__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        bounding_box__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        bounding_box__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -1537,16 +1334,14 @@ class DetectionApi:
         video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        video_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -1555,16 +1350,14 @@ class DetectionApi:
         camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1577,7 +1370,7 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetDetections200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfDetection]:
         """get_detections
 
 
@@ -1603,14 +1396,6 @@ class DetectionApi:
         :type id__in: str
         :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnull: str
-        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnotnull: str
-        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type id__isfalse: str
-        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type id__istrue: str
         :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
         :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1639,22 +1424,14 @@ class DetectionApi:
         :type created_at__in: datetime
         :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnull: str
-        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnotnull: str
-        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isfalse: str
-        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type created_at__istrue: str
         :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: str
+        :type created_at__like: datetime
         :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: str
+        :type created_at__notlike: datetime
         :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: str
+        :type created_at__ilike: datetime
         :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: str
+        :type created_at__notilike: datetime
         :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
         :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1675,22 +1452,14 @@ class DetectionApi:
         :type updated_at__in: datetime
         :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnull: str
-        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnotnull: str
-        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isfalse: str
-        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__istrue: str
         :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: str
+        :type updated_at__like: datetime
         :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: str
+        :type updated_at__notlike: datetime
         :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: str
+        :type updated_at__ilike: datetime
         :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: str
+        :type updated_at__notilike: datetime
         :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
         :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1711,22 +1480,14 @@ class DetectionApi:
         :type deleted_at__in: datetime
         :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnull: str
-        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnotnull: str
-        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isfalse: str
-        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__istrue: str
         :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: str
+        :type deleted_at__like: datetime
         :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: str
+        :type deleted_at__notlike: datetime
         :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: str
+        :type deleted_at__ilike: datetime
         :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: str
+        :type deleted_at__notilike: datetime
         :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
         :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1747,22 +1508,14 @@ class DetectionApi:
         :type seen_at__in: datetime
         :param seen_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type seen_at__notin: datetime
-        :param seen_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isnull: str
-        :param seen_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isnotnull: str
-        :param seen_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isfalse: str
-        :param seen_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__istrue: str
         :param seen_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__like: str
+        :type seen_at__like: datetime
         :param seen_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__notlike: str
+        :type seen_at__notlike: datetime
         :param seen_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__ilike: str
+        :type seen_at__ilike: datetime
         :param seen_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__notilike: str
+        :type seen_at__notilike: datetime
         :param seen_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type seen_at__desc: str
         :param seen_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1783,22 +1536,6 @@ class DetectionApi:
         :type class_id__in: int
         :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type class_id__notin: int
-        :param class_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isnull: str
-        :param class_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isnotnull: str
-        :param class_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isfalse: str
-        :param class_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type class_id__istrue: str
-        :param class_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__like: str
-        :param class_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__notlike: str
-        :param class_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__ilike: str
-        :param class_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__notilike: str
         :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type class_id__desc: str
         :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -1819,14 +1556,6 @@ class DetectionApi:
         :type class_name__in: str
         :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type class_name__notin: str
-        :param class_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isnull: str
-        :param class_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isnotnull: str
-        :param class_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isfalse: str
-        :param class_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type class_name__istrue: str
         :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type class_name__like: str
         :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1855,26 +1584,18 @@ class DetectionApi:
         :type score__in: float
         :param score__notin: SQL NOT IN comparison, permits comma-separated values
         :type score__notin: float
-        :param score__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type score__isnull: str
-        :param score__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type score__isnotnull: str
-        :param score__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type score__isfalse: str
-        :param score__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type score__istrue: str
-        :param score__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__like: str
-        :param score__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__notlike: str
-        :param score__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__ilike: str
-        :param score__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__notilike: str
         :param score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type score__desc: str
         :param score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type score__asc: str
+        :param centroid__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type centroid__desc: str
+        :param centroid__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type centroid__asc: str
+        :param bounding_box__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type bounding_box__desc: str
+        :param bounding_box__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type bounding_box__asc: str
         :param video_id__eq: SQL = comparison
         :type video_id__eq: str
         :param video_id__ne: SQL != comparison
@@ -1891,14 +1612,6 @@ class DetectionApi:
         :type video_id__in: str
         :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type video_id__notin: str
-        :param video_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isnull: str
-        :param video_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isnotnull: str
-        :param video_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isfalse: str
-        :param video_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type video_id__istrue: str
         :param video_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type video_id__like: str
         :param video_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1911,6 +1624,10 @@ class DetectionApi:
         :type video_id__desc: str
         :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type video_id__asc: str
+        :param video_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type video_id_object__desc: str
+        :param video_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type video_id_object__asc: str
         :param camera_id__eq: SQL = comparison
         :type camera_id__eq: str
         :param camera_id__ne: SQL != comparison
@@ -1927,14 +1644,6 @@ class DetectionApi:
         :type camera_id__in: str
         :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type camera_id__notin: str
-        :param camera_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnull: str
-        :param camera_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnotnull: str
-        :param camera_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isfalse: str
-        :param camera_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__istrue: str
         :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type camera_id__like: str
         :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -1947,6 +1656,10 @@ class DetectionApi:
         :type camera_id__desc: str
         :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id__asc: str
+        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__desc: str
+        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1981,10 +1694,6 @@ class DetectionApi:
             id__lte=id__lte,
             id__in=id__in,
             id__notin=id__notin,
-            id__isnull=id__isnull,
-            id__isnotnull=id__isnotnull,
-            id__isfalse=id__isfalse,
-            id__istrue=id__istrue,
             id__like=id__like,
             id__notlike=id__notlike,
             id__ilike=id__ilike,
@@ -1999,10 +1708,6 @@ class DetectionApi:
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
             created_at__notin=created_at__notin,
-            created_at__isnull=created_at__isnull,
-            created_at__isnotnull=created_at__isnotnull,
-            created_at__isfalse=created_at__isfalse,
-            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
             created_at__notlike=created_at__notlike,
             created_at__ilike=created_at__ilike,
@@ -2017,10 +1722,6 @@ class DetectionApi:
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
             updated_at__notin=updated_at__notin,
-            updated_at__isnull=updated_at__isnull,
-            updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__isfalse=updated_at__isfalse,
-            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
             updated_at__notlike=updated_at__notlike,
             updated_at__ilike=updated_at__ilike,
@@ -2035,10 +1736,6 @@ class DetectionApi:
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
             deleted_at__notin=deleted_at__notin,
-            deleted_at__isnull=deleted_at__isnull,
-            deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__isfalse=deleted_at__isfalse,
-            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
             deleted_at__notlike=deleted_at__notlike,
             deleted_at__ilike=deleted_at__ilike,
@@ -2053,10 +1750,6 @@ class DetectionApi:
             seen_at__lte=seen_at__lte,
             seen_at__in=seen_at__in,
             seen_at__notin=seen_at__notin,
-            seen_at__isnull=seen_at__isnull,
-            seen_at__isnotnull=seen_at__isnotnull,
-            seen_at__isfalse=seen_at__isfalse,
-            seen_at__istrue=seen_at__istrue,
             seen_at__like=seen_at__like,
             seen_at__notlike=seen_at__notlike,
             seen_at__ilike=seen_at__ilike,
@@ -2071,14 +1764,6 @@ class DetectionApi:
             class_id__lte=class_id__lte,
             class_id__in=class_id__in,
             class_id__notin=class_id__notin,
-            class_id__isnull=class_id__isnull,
-            class_id__isnotnull=class_id__isnotnull,
-            class_id__isfalse=class_id__isfalse,
-            class_id__istrue=class_id__istrue,
-            class_id__like=class_id__like,
-            class_id__notlike=class_id__notlike,
-            class_id__ilike=class_id__ilike,
-            class_id__notilike=class_id__notilike,
             class_id__desc=class_id__desc,
             class_id__asc=class_id__asc,
             class_name__eq=class_name__eq,
@@ -2089,10 +1774,6 @@ class DetectionApi:
             class_name__lte=class_name__lte,
             class_name__in=class_name__in,
             class_name__notin=class_name__notin,
-            class_name__isnull=class_name__isnull,
-            class_name__isnotnull=class_name__isnotnull,
-            class_name__isfalse=class_name__isfalse,
-            class_name__istrue=class_name__istrue,
             class_name__like=class_name__like,
             class_name__notlike=class_name__notlike,
             class_name__ilike=class_name__ilike,
@@ -2107,16 +1788,12 @@ class DetectionApi:
             score__lte=score__lte,
             score__in=score__in,
             score__notin=score__notin,
-            score__isnull=score__isnull,
-            score__isnotnull=score__isnotnull,
-            score__isfalse=score__isfalse,
-            score__istrue=score__istrue,
-            score__like=score__like,
-            score__notlike=score__notlike,
-            score__ilike=score__ilike,
-            score__notilike=score__notilike,
             score__desc=score__desc,
             score__asc=score__asc,
+            centroid__desc=centroid__desc,
+            centroid__asc=centroid__asc,
+            bounding_box__desc=bounding_box__desc,
+            bounding_box__asc=bounding_box__asc,
             video_id__eq=video_id__eq,
             video_id__ne=video_id__ne,
             video_id__gt=video_id__gt,
@@ -2125,16 +1802,14 @@ class DetectionApi:
             video_id__lte=video_id__lte,
             video_id__in=video_id__in,
             video_id__notin=video_id__notin,
-            video_id__isnull=video_id__isnull,
-            video_id__isnotnull=video_id__isnotnull,
-            video_id__isfalse=video_id__isfalse,
-            video_id__istrue=video_id__istrue,
             video_id__like=video_id__like,
             video_id__notlike=video_id__notlike,
             video_id__ilike=video_id__ilike,
             video_id__notilike=video_id__notilike,
             video_id__desc=video_id__desc,
             video_id__asc=video_id__asc,
+            video_id_object__desc=video_id_object__desc,
+            video_id_object__asc=video_id_object__asc,
             camera_id__eq=camera_id__eq,
             camera_id__ne=camera_id__ne,
             camera_id__gt=camera_id__gt,
@@ -2143,16 +1818,14 @@ class DetectionApi:
             camera_id__lte=camera_id__lte,
             camera_id__in=camera_id__in,
             camera_id__notin=camera_id__notin,
-            camera_id__isnull=camera_id__isnull,
-            camera_id__isnotnull=camera_id__isnotnull,
-            camera_id__isfalse=camera_id__isfalse,
-            camera_id__istrue=camera_id__istrue,
             camera_id__like=camera_id__like,
             camera_id__notlike=camera_id__notlike,
             camera_id__ilike=camera_id__ilike,
             camera_id__notilike=camera_id__notilike,
             camera_id__desc=camera_id__desc,
             camera_id__asc=camera_id__asc,
+            camera_id_object__desc=camera_id_object__desc,
+            camera_id_object__asc=camera_id_object__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2160,7 +1833,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2187,10 +1860,6 @@ class DetectionApi:
         id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -2205,14 +1874,10 @@ class DetectionApi:
         created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        created_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2223,14 +1888,10 @@ class DetectionApi:
         updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2241,14 +1902,10 @@ class DetectionApi:
         deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         seen_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2259,14 +1916,10 @@ class DetectionApi:
         seen_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
         seen_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         seen_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        seen_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        seen_at__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        seen_at__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        seen_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         seen_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         seen_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
@@ -2277,14 +1930,6 @@ class DetectionApi:
         class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
         class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
@@ -2295,10 +1940,6 @@ class DetectionApi:
         class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_name__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        class_name__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
@@ -2313,16 +1954,12 @@ class DetectionApi:
         score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
         score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        score__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
-        score__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        score__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        centroid__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        centroid__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        bounding_box__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        bounding_box__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -2331,16 +1968,14 @@ class DetectionApi:
         video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        video_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        video_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -2349,16 +1984,14 @@ class DetectionApi:
         camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
         camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2397,14 +2030,6 @@ class DetectionApi:
         :type id__in: str
         :param id__notin: SQL NOT IN comparison, permits comma-separated values
         :type id__notin: str
-        :param id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnull: str
-        :param id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type id__isnotnull: str
-        :param id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type id__isfalse: str
-        :param id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type id__istrue: str
         :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type id__like: str
         :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2433,22 +2058,14 @@ class DetectionApi:
         :type created_at__in: datetime
         :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type created_at__notin: datetime
-        :param created_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnull: str
-        :param created_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isnotnull: str
-        :param created_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type created_at__isfalse: str
-        :param created_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type created_at__istrue: str
         :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: str
+        :type created_at__like: datetime
         :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: str
+        :type created_at__notlike: datetime
         :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: str
+        :type created_at__ilike: datetime
         :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: str
+        :type created_at__notilike: datetime
         :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type created_at__desc: str
         :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2469,22 +2086,14 @@ class DetectionApi:
         :type updated_at__in: datetime
         :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type updated_at__notin: datetime
-        :param updated_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnull: str
-        :param updated_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isnotnull: str
-        :param updated_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__isfalse: str
-        :param updated_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type updated_at__istrue: str
         :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: str
+        :type updated_at__like: datetime
         :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: str
+        :type updated_at__notlike: datetime
         :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: str
+        :type updated_at__ilike: datetime
         :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: str
+        :type updated_at__notilike: datetime
         :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type updated_at__desc: str
         :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2505,22 +2114,14 @@ class DetectionApi:
         :type deleted_at__in: datetime
         :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type deleted_at__notin: datetime
-        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnull: str
-        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isnotnull: str
-        :param deleted_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__isfalse: str
-        :param deleted_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type deleted_at__istrue: str
         :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: str
+        :type deleted_at__like: datetime
         :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: str
+        :type deleted_at__notlike: datetime
         :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: str
+        :type deleted_at__ilike: datetime
         :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: str
+        :type deleted_at__notilike: datetime
         :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type deleted_at__desc: str
         :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2541,22 +2142,14 @@ class DetectionApi:
         :type seen_at__in: datetime
         :param seen_at__notin: SQL NOT IN comparison, permits comma-separated values
         :type seen_at__notin: datetime
-        :param seen_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isnull: str
-        :param seen_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isnotnull: str
-        :param seen_at__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__isfalse: str
-        :param seen_at__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type seen_at__istrue: str
         :param seen_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__like: str
+        :type seen_at__like: datetime
         :param seen_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__notlike: str
+        :type seen_at__notlike: datetime
         :param seen_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__ilike: str
+        :type seen_at__ilike: datetime
         :param seen_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type seen_at__notilike: str
+        :type seen_at__notilike: datetime
         :param seen_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type seen_at__desc: str
         :param seen_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2577,22 +2170,6 @@ class DetectionApi:
         :type class_id__in: int
         :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type class_id__notin: int
-        :param class_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isnull: str
-        :param class_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isnotnull: str
-        :param class_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type class_id__isfalse: str
-        :param class_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type class_id__istrue: str
-        :param class_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__like: str
-        :param class_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__notlike: str
-        :param class_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__ilike: str
-        :param class_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_id__notilike: str
         :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type class_id__desc: str
         :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
@@ -2613,14 +2190,6 @@ class DetectionApi:
         :type class_name__in: str
         :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
         :type class_name__notin: str
-        :param class_name__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isnull: str
-        :param class_name__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isnotnull: str
-        :param class_name__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type class_name__isfalse: str
-        :param class_name__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type class_name__istrue: str
         :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type class_name__like: str
         :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2649,26 +2218,18 @@ class DetectionApi:
         :type score__in: float
         :param score__notin: SQL NOT IN comparison, permits comma-separated values
         :type score__notin: float
-        :param score__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type score__isnull: str
-        :param score__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type score__isnotnull: str
-        :param score__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type score__isfalse: str
-        :param score__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type score__istrue: str
-        :param score__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__like: str
-        :param score__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__notlike: str
-        :param score__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__ilike: str
-        :param score__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type score__notilike: str
         :param score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type score__desc: str
         :param score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type score__asc: str
+        :param centroid__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type centroid__desc: str
+        :param centroid__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type centroid__asc: str
+        :param bounding_box__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type bounding_box__desc: str
+        :param bounding_box__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type bounding_box__asc: str
         :param video_id__eq: SQL = comparison
         :type video_id__eq: str
         :param video_id__ne: SQL != comparison
@@ -2685,14 +2246,6 @@ class DetectionApi:
         :type video_id__in: str
         :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type video_id__notin: str
-        :param video_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isnull: str
-        :param video_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isnotnull: str
-        :param video_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type video_id__isfalse: str
-        :param video_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type video_id__istrue: str
         :param video_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type video_id__like: str
         :param video_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2705,6 +2258,10 @@ class DetectionApi:
         :type video_id__desc: str
         :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type video_id__asc: str
+        :param video_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type video_id_object__desc: str
+        :param video_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type video_id_object__asc: str
         :param camera_id__eq: SQL = comparison
         :type camera_id__eq: str
         :param camera_id__ne: SQL != comparison
@@ -2721,14 +2278,6 @@ class DetectionApi:
         :type camera_id__in: str
         :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
         :type camera_id__notin: str
-        :param camera_id__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnull: str
-        :param camera_id__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isnotnull: str
-        :param camera_id__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__isfalse: str
-        :param camera_id__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
-        :type camera_id__istrue: str
         :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
         :type camera_id__like: str
         :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
@@ -2741,6 +2290,10 @@ class DetectionApi:
         :type camera_id__desc: str
         :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id__asc: str
+        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__desc: str
+        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id_object__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2775,10 +2328,6 @@ class DetectionApi:
             id__lte=id__lte,
             id__in=id__in,
             id__notin=id__notin,
-            id__isnull=id__isnull,
-            id__isnotnull=id__isnotnull,
-            id__isfalse=id__isfalse,
-            id__istrue=id__istrue,
             id__like=id__like,
             id__notlike=id__notlike,
             id__ilike=id__ilike,
@@ -2793,10 +2342,6 @@ class DetectionApi:
             created_at__lte=created_at__lte,
             created_at__in=created_at__in,
             created_at__notin=created_at__notin,
-            created_at__isnull=created_at__isnull,
-            created_at__isnotnull=created_at__isnotnull,
-            created_at__isfalse=created_at__isfalse,
-            created_at__istrue=created_at__istrue,
             created_at__like=created_at__like,
             created_at__notlike=created_at__notlike,
             created_at__ilike=created_at__ilike,
@@ -2811,10 +2356,6 @@ class DetectionApi:
             updated_at__lte=updated_at__lte,
             updated_at__in=updated_at__in,
             updated_at__notin=updated_at__notin,
-            updated_at__isnull=updated_at__isnull,
-            updated_at__isnotnull=updated_at__isnotnull,
-            updated_at__isfalse=updated_at__isfalse,
-            updated_at__istrue=updated_at__istrue,
             updated_at__like=updated_at__like,
             updated_at__notlike=updated_at__notlike,
             updated_at__ilike=updated_at__ilike,
@@ -2829,10 +2370,6 @@ class DetectionApi:
             deleted_at__lte=deleted_at__lte,
             deleted_at__in=deleted_at__in,
             deleted_at__notin=deleted_at__notin,
-            deleted_at__isnull=deleted_at__isnull,
-            deleted_at__isnotnull=deleted_at__isnotnull,
-            deleted_at__isfalse=deleted_at__isfalse,
-            deleted_at__istrue=deleted_at__istrue,
             deleted_at__like=deleted_at__like,
             deleted_at__notlike=deleted_at__notlike,
             deleted_at__ilike=deleted_at__ilike,
@@ -2847,10 +2384,6 @@ class DetectionApi:
             seen_at__lte=seen_at__lte,
             seen_at__in=seen_at__in,
             seen_at__notin=seen_at__notin,
-            seen_at__isnull=seen_at__isnull,
-            seen_at__isnotnull=seen_at__isnotnull,
-            seen_at__isfalse=seen_at__isfalse,
-            seen_at__istrue=seen_at__istrue,
             seen_at__like=seen_at__like,
             seen_at__notlike=seen_at__notlike,
             seen_at__ilike=seen_at__ilike,
@@ -2865,14 +2398,6 @@ class DetectionApi:
             class_id__lte=class_id__lte,
             class_id__in=class_id__in,
             class_id__notin=class_id__notin,
-            class_id__isnull=class_id__isnull,
-            class_id__isnotnull=class_id__isnotnull,
-            class_id__isfalse=class_id__isfalse,
-            class_id__istrue=class_id__istrue,
-            class_id__like=class_id__like,
-            class_id__notlike=class_id__notlike,
-            class_id__ilike=class_id__ilike,
-            class_id__notilike=class_id__notilike,
             class_id__desc=class_id__desc,
             class_id__asc=class_id__asc,
             class_name__eq=class_name__eq,
@@ -2883,10 +2408,6 @@ class DetectionApi:
             class_name__lte=class_name__lte,
             class_name__in=class_name__in,
             class_name__notin=class_name__notin,
-            class_name__isnull=class_name__isnull,
-            class_name__isnotnull=class_name__isnotnull,
-            class_name__isfalse=class_name__isfalse,
-            class_name__istrue=class_name__istrue,
             class_name__like=class_name__like,
             class_name__notlike=class_name__notlike,
             class_name__ilike=class_name__ilike,
@@ -2901,16 +2422,12 @@ class DetectionApi:
             score__lte=score__lte,
             score__in=score__in,
             score__notin=score__notin,
-            score__isnull=score__isnull,
-            score__isnotnull=score__isnotnull,
-            score__isfalse=score__isfalse,
-            score__istrue=score__istrue,
-            score__like=score__like,
-            score__notlike=score__notlike,
-            score__ilike=score__ilike,
-            score__notilike=score__notilike,
             score__desc=score__desc,
             score__asc=score__asc,
+            centroid__desc=centroid__desc,
+            centroid__asc=centroid__asc,
+            bounding_box__desc=bounding_box__desc,
+            bounding_box__asc=bounding_box__asc,
             video_id__eq=video_id__eq,
             video_id__ne=video_id__ne,
             video_id__gt=video_id__gt,
@@ -2919,16 +2436,14 @@ class DetectionApi:
             video_id__lte=video_id__lte,
             video_id__in=video_id__in,
             video_id__notin=video_id__notin,
-            video_id__isnull=video_id__isnull,
-            video_id__isnotnull=video_id__isnotnull,
-            video_id__isfalse=video_id__isfalse,
-            video_id__istrue=video_id__istrue,
             video_id__like=video_id__like,
             video_id__notlike=video_id__notlike,
             video_id__ilike=video_id__ilike,
             video_id__notilike=video_id__notilike,
             video_id__desc=video_id__desc,
             video_id__asc=video_id__asc,
+            video_id_object__desc=video_id_object__desc,
+            video_id_object__asc=video_id_object__asc,
             camera_id__eq=camera_id__eq,
             camera_id__ne=camera_id__ne,
             camera_id__gt=camera_id__gt,
@@ -2937,16 +2452,14 @@ class DetectionApi:
             camera_id__lte=camera_id__lte,
             camera_id__in=camera_id__in,
             camera_id__notin=camera_id__notin,
-            camera_id__isnull=camera_id__isnull,
-            camera_id__isnotnull=camera_id__isnotnull,
-            camera_id__isfalse=camera_id__isfalse,
-            camera_id__istrue=camera_id__istrue,
             camera_id__like=camera_id__like,
             camera_id__notlike=camera_id__notlike,
             camera_id__ilike=camera_id__ilike,
             camera_id__notilike=camera_id__notilike,
             camera_id__desc=camera_id__desc,
             camera_id__asc=camera_id__asc,
+            camera_id_object__desc=camera_id_object__desc,
+            camera_id_object__asc=camera_id_object__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2954,7 +2467,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -2976,10 +2489,6 @@ class DetectionApi:
         id__lte,
         id__in,
         id__notin,
-        id__isnull,
-        id__isnotnull,
-        id__isfalse,
-        id__istrue,
         id__like,
         id__notlike,
         id__ilike,
@@ -2994,10 +2503,6 @@ class DetectionApi:
         created_at__lte,
         created_at__in,
         created_at__notin,
-        created_at__isnull,
-        created_at__isnotnull,
-        created_at__isfalse,
-        created_at__istrue,
         created_at__like,
         created_at__notlike,
         created_at__ilike,
@@ -3012,10 +2517,6 @@ class DetectionApi:
         updated_at__lte,
         updated_at__in,
         updated_at__notin,
-        updated_at__isnull,
-        updated_at__isnotnull,
-        updated_at__isfalse,
-        updated_at__istrue,
         updated_at__like,
         updated_at__notlike,
         updated_at__ilike,
@@ -3030,10 +2531,6 @@ class DetectionApi:
         deleted_at__lte,
         deleted_at__in,
         deleted_at__notin,
-        deleted_at__isnull,
-        deleted_at__isnotnull,
-        deleted_at__isfalse,
-        deleted_at__istrue,
         deleted_at__like,
         deleted_at__notlike,
         deleted_at__ilike,
@@ -3048,10 +2545,6 @@ class DetectionApi:
         seen_at__lte,
         seen_at__in,
         seen_at__notin,
-        seen_at__isnull,
-        seen_at__isnotnull,
-        seen_at__isfalse,
-        seen_at__istrue,
         seen_at__like,
         seen_at__notlike,
         seen_at__ilike,
@@ -3066,14 +2559,6 @@ class DetectionApi:
         class_id__lte,
         class_id__in,
         class_id__notin,
-        class_id__isnull,
-        class_id__isnotnull,
-        class_id__isfalse,
-        class_id__istrue,
-        class_id__like,
-        class_id__notlike,
-        class_id__ilike,
-        class_id__notilike,
         class_id__desc,
         class_id__asc,
         class_name__eq,
@@ -3084,10 +2569,6 @@ class DetectionApi:
         class_name__lte,
         class_name__in,
         class_name__notin,
-        class_name__isnull,
-        class_name__isnotnull,
-        class_name__isfalse,
-        class_name__istrue,
         class_name__like,
         class_name__notlike,
         class_name__ilike,
@@ -3102,16 +2583,12 @@ class DetectionApi:
         score__lte,
         score__in,
         score__notin,
-        score__isnull,
-        score__isnotnull,
-        score__isfalse,
-        score__istrue,
-        score__like,
-        score__notlike,
-        score__ilike,
-        score__notilike,
         score__desc,
         score__asc,
+        centroid__desc,
+        centroid__asc,
+        bounding_box__desc,
+        bounding_box__asc,
         video_id__eq,
         video_id__ne,
         video_id__gt,
@@ -3120,16 +2597,14 @@ class DetectionApi:
         video_id__lte,
         video_id__in,
         video_id__notin,
-        video_id__isnull,
-        video_id__isnotnull,
-        video_id__isfalse,
-        video_id__istrue,
         video_id__like,
         video_id__notlike,
         video_id__ilike,
         video_id__notilike,
         video_id__desc,
         video_id__asc,
+        video_id_object__desc,
+        video_id_object__asc,
         camera_id__eq,
         camera_id__ne,
         camera_id__gt,
@@ -3138,16 +2613,14 @@ class DetectionApi:
         camera_id__lte,
         camera_id__in,
         camera_id__notin,
-        camera_id__isnull,
-        camera_id__isnotnull,
-        camera_id__isfalse,
-        camera_id__istrue,
         camera_id__like,
         camera_id__notlike,
         camera_id__ilike,
         camera_id__notilike,
         camera_id__desc,
         camera_id__asc,
+        camera_id_object__desc,
+        camera_id_object__asc,
         _request_auth,
         _content_type,
         _headers,
@@ -3211,22 +2684,6 @@ class DetectionApi:
         if id__notin is not None:
             
             _query_params.append(('id__notin', id__notin))
-            
-        if id__isnull is not None:
-            
-            _query_params.append(('id__isnull', id__isnull))
-            
-        if id__isnotnull is not None:
-            
-            _query_params.append(('id__isnotnull', id__isnotnull))
-            
-        if id__isfalse is not None:
-            
-            _query_params.append(('id__isfalse', id__isfalse))
-            
-        if id__istrue is not None:
-            
-            _query_params.append(('id__istrue', id__istrue))
             
         if id__like is not None:
             
@@ -3356,37 +2813,57 @@ class DetectionApi:
             else:
                 _query_params.append(('created_at__notin', created_at__notin))
             
-        if created_at__isnull is not None:
-            
-            _query_params.append(('created_at__isnull', created_at__isnull))
-            
-        if created_at__isnotnull is not None:
-            
-            _query_params.append(('created_at__isnotnull', created_at__isnotnull))
-            
-        if created_at__isfalse is not None:
-            
-            _query_params.append(('created_at__isfalse', created_at__isfalse))
-            
-        if created_at__istrue is not None:
-            
-            _query_params.append(('created_at__istrue', created_at__istrue))
-            
         if created_at__like is not None:
-            
-            _query_params.append(('created_at__like', created_at__like))
+            if isinstance(created_at__like, datetime):
+                _query_params.append(
+                    (
+                        'created_at__like',
+                        created_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__like', created_at__like))
             
         if created_at__notlike is not None:
-            
-            _query_params.append(('created_at__notlike', created_at__notlike))
+            if isinstance(created_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'created_at__notlike',
+                        created_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__notlike', created_at__notlike))
             
         if created_at__ilike is not None:
-            
-            _query_params.append(('created_at__ilike', created_at__ilike))
+            if isinstance(created_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'created_at__ilike',
+                        created_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__ilike', created_at__ilike))
             
         if created_at__notilike is not None:
-            
-            _query_params.append(('created_at__notilike', created_at__notilike))
+            if isinstance(created_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'created_at__notilike',
+                        created_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('created_at__notilike', created_at__notilike))
             
         if created_at__desc is not None:
             
@@ -3500,37 +2977,57 @@ class DetectionApi:
             else:
                 _query_params.append(('updated_at__notin', updated_at__notin))
             
-        if updated_at__isnull is not None:
-            
-            _query_params.append(('updated_at__isnull', updated_at__isnull))
-            
-        if updated_at__isnotnull is not None:
-            
-            _query_params.append(('updated_at__isnotnull', updated_at__isnotnull))
-            
-        if updated_at__isfalse is not None:
-            
-            _query_params.append(('updated_at__isfalse', updated_at__isfalse))
-            
-        if updated_at__istrue is not None:
-            
-            _query_params.append(('updated_at__istrue', updated_at__istrue))
-            
         if updated_at__like is not None:
-            
-            _query_params.append(('updated_at__like', updated_at__like))
+            if isinstance(updated_at__like, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__like',
+                        updated_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__like', updated_at__like))
             
         if updated_at__notlike is not None:
-            
-            _query_params.append(('updated_at__notlike', updated_at__notlike))
+            if isinstance(updated_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__notlike',
+                        updated_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__notlike', updated_at__notlike))
             
         if updated_at__ilike is not None:
-            
-            _query_params.append(('updated_at__ilike', updated_at__ilike))
+            if isinstance(updated_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__ilike',
+                        updated_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__ilike', updated_at__ilike))
             
         if updated_at__notilike is not None:
-            
-            _query_params.append(('updated_at__notilike', updated_at__notilike))
+            if isinstance(updated_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'updated_at__notilike',
+                        updated_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('updated_at__notilike', updated_at__notilike))
             
         if updated_at__desc is not None:
             
@@ -3644,37 +3141,57 @@ class DetectionApi:
             else:
                 _query_params.append(('deleted_at__notin', deleted_at__notin))
             
-        if deleted_at__isnull is not None:
-            
-            _query_params.append(('deleted_at__isnull', deleted_at__isnull))
-            
-        if deleted_at__isnotnull is not None:
-            
-            _query_params.append(('deleted_at__isnotnull', deleted_at__isnotnull))
-            
-        if deleted_at__isfalse is not None:
-            
-            _query_params.append(('deleted_at__isfalse', deleted_at__isfalse))
-            
-        if deleted_at__istrue is not None:
-            
-            _query_params.append(('deleted_at__istrue', deleted_at__istrue))
-            
         if deleted_at__like is not None:
-            
-            _query_params.append(('deleted_at__like', deleted_at__like))
+            if isinstance(deleted_at__like, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__like',
+                        deleted_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__like', deleted_at__like))
             
         if deleted_at__notlike is not None:
-            
-            _query_params.append(('deleted_at__notlike', deleted_at__notlike))
+            if isinstance(deleted_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__notlike',
+                        deleted_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__notlike', deleted_at__notlike))
             
         if deleted_at__ilike is not None:
-            
-            _query_params.append(('deleted_at__ilike', deleted_at__ilike))
+            if isinstance(deleted_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__ilike',
+                        deleted_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__ilike', deleted_at__ilike))
             
         if deleted_at__notilike is not None:
-            
-            _query_params.append(('deleted_at__notilike', deleted_at__notilike))
+            if isinstance(deleted_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'deleted_at__notilike',
+                        deleted_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('deleted_at__notilike', deleted_at__notilike))
             
         if deleted_at__desc is not None:
             
@@ -3788,37 +3305,57 @@ class DetectionApi:
             else:
                 _query_params.append(('seen_at__notin', seen_at__notin))
             
-        if seen_at__isnull is not None:
-            
-            _query_params.append(('seen_at__isnull', seen_at__isnull))
-            
-        if seen_at__isnotnull is not None:
-            
-            _query_params.append(('seen_at__isnotnull', seen_at__isnotnull))
-            
-        if seen_at__isfalse is not None:
-            
-            _query_params.append(('seen_at__isfalse', seen_at__isfalse))
-            
-        if seen_at__istrue is not None:
-            
-            _query_params.append(('seen_at__istrue', seen_at__istrue))
-            
         if seen_at__like is not None:
-            
-            _query_params.append(('seen_at__like', seen_at__like))
+            if isinstance(seen_at__like, datetime):
+                _query_params.append(
+                    (
+                        'seen_at__like',
+                        seen_at__like.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('seen_at__like', seen_at__like))
             
         if seen_at__notlike is not None:
-            
-            _query_params.append(('seen_at__notlike', seen_at__notlike))
+            if isinstance(seen_at__notlike, datetime):
+                _query_params.append(
+                    (
+                        'seen_at__notlike',
+                        seen_at__notlike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('seen_at__notlike', seen_at__notlike))
             
         if seen_at__ilike is not None:
-            
-            _query_params.append(('seen_at__ilike', seen_at__ilike))
+            if isinstance(seen_at__ilike, datetime):
+                _query_params.append(
+                    (
+                        'seen_at__ilike',
+                        seen_at__ilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('seen_at__ilike', seen_at__ilike))
             
         if seen_at__notilike is not None:
-            
-            _query_params.append(('seen_at__notilike', seen_at__notilike))
+            if isinstance(seen_at__notilike, datetime):
+                _query_params.append(
+                    (
+                        'seen_at__notilike',
+                        seen_at__notilike.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('seen_at__notilike', seen_at__notilike))
             
         if seen_at__desc is not None:
             
@@ -3860,38 +3397,6 @@ class DetectionApi:
             
             _query_params.append(('class_id__notin', class_id__notin))
             
-        if class_id__isnull is not None:
-            
-            _query_params.append(('class_id__isnull', class_id__isnull))
-            
-        if class_id__isnotnull is not None:
-            
-            _query_params.append(('class_id__isnotnull', class_id__isnotnull))
-            
-        if class_id__isfalse is not None:
-            
-            _query_params.append(('class_id__isfalse', class_id__isfalse))
-            
-        if class_id__istrue is not None:
-            
-            _query_params.append(('class_id__istrue', class_id__istrue))
-            
-        if class_id__like is not None:
-            
-            _query_params.append(('class_id__like', class_id__like))
-            
-        if class_id__notlike is not None:
-            
-            _query_params.append(('class_id__notlike', class_id__notlike))
-            
-        if class_id__ilike is not None:
-            
-            _query_params.append(('class_id__ilike', class_id__ilike))
-            
-        if class_id__notilike is not None:
-            
-            _query_params.append(('class_id__notilike', class_id__notilike))
-            
         if class_id__desc is not None:
             
             _query_params.append(('class_id__desc', class_id__desc))
@@ -3931,22 +3436,6 @@ class DetectionApi:
         if class_name__notin is not None:
             
             _query_params.append(('class_name__notin', class_name__notin))
-            
-        if class_name__isnull is not None:
-            
-            _query_params.append(('class_name__isnull', class_name__isnull))
-            
-        if class_name__isnotnull is not None:
-            
-            _query_params.append(('class_name__isnotnull', class_name__isnotnull))
-            
-        if class_name__isfalse is not None:
-            
-            _query_params.append(('class_name__isfalse', class_name__isfalse))
-            
-        if class_name__istrue is not None:
-            
-            _query_params.append(('class_name__istrue', class_name__istrue))
             
         if class_name__like is not None:
             
@@ -4004,38 +3493,6 @@ class DetectionApi:
             
             _query_params.append(('score__notin', score__notin))
             
-        if score__isnull is not None:
-            
-            _query_params.append(('score__isnull', score__isnull))
-            
-        if score__isnotnull is not None:
-            
-            _query_params.append(('score__isnotnull', score__isnotnull))
-            
-        if score__isfalse is not None:
-            
-            _query_params.append(('score__isfalse', score__isfalse))
-            
-        if score__istrue is not None:
-            
-            _query_params.append(('score__istrue', score__istrue))
-            
-        if score__like is not None:
-            
-            _query_params.append(('score__like', score__like))
-            
-        if score__notlike is not None:
-            
-            _query_params.append(('score__notlike', score__notlike))
-            
-        if score__ilike is not None:
-            
-            _query_params.append(('score__ilike', score__ilike))
-            
-        if score__notilike is not None:
-            
-            _query_params.append(('score__notilike', score__notilike))
-            
         if score__desc is not None:
             
             _query_params.append(('score__desc', score__desc))
@@ -4043,6 +3500,22 @@ class DetectionApi:
         if score__asc is not None:
             
             _query_params.append(('score__asc', score__asc))
+            
+        if centroid__desc is not None:
+            
+            _query_params.append(('centroid__desc', centroid__desc))
+            
+        if centroid__asc is not None:
+            
+            _query_params.append(('centroid__asc', centroid__asc))
+            
+        if bounding_box__desc is not None:
+            
+            _query_params.append(('bounding_box__desc', bounding_box__desc))
+            
+        if bounding_box__asc is not None:
+            
+            _query_params.append(('bounding_box__asc', bounding_box__asc))
             
         if video_id__eq is not None:
             
@@ -4076,22 +3549,6 @@ class DetectionApi:
             
             _query_params.append(('video_id__notin', video_id__notin))
             
-        if video_id__isnull is not None:
-            
-            _query_params.append(('video_id__isnull', video_id__isnull))
-            
-        if video_id__isnotnull is not None:
-            
-            _query_params.append(('video_id__isnotnull', video_id__isnotnull))
-            
-        if video_id__isfalse is not None:
-            
-            _query_params.append(('video_id__isfalse', video_id__isfalse))
-            
-        if video_id__istrue is not None:
-            
-            _query_params.append(('video_id__istrue', video_id__istrue))
-            
         if video_id__like is not None:
             
             _query_params.append(('video_id__like', video_id__like))
@@ -4115,6 +3572,14 @@ class DetectionApi:
         if video_id__asc is not None:
             
             _query_params.append(('video_id__asc', video_id__asc))
+            
+        if video_id_object__desc is not None:
+            
+            _query_params.append(('video_id_object__desc', video_id_object__desc))
+            
+        if video_id_object__asc is not None:
+            
+            _query_params.append(('video_id_object__asc', video_id_object__asc))
             
         if camera_id__eq is not None:
             
@@ -4148,22 +3613,6 @@ class DetectionApi:
             
             _query_params.append(('camera_id__notin', camera_id__notin))
             
-        if camera_id__isnull is not None:
-            
-            _query_params.append(('camera_id__isnull', camera_id__isnull))
-            
-        if camera_id__isnotnull is not None:
-            
-            _query_params.append(('camera_id__isnotnull', camera_id__isnotnull))
-            
-        if camera_id__isfalse is not None:
-            
-            _query_params.append(('camera_id__isfalse', camera_id__isfalse))
-            
-        if camera_id__istrue is not None:
-            
-            _query_params.append(('camera_id__istrue', camera_id__istrue))
-            
         if camera_id__like is not None:
             
             _query_params.append(('camera_id__like', camera_id__like))
@@ -4187,6 +3636,14 @@ class DetectionApi:
         if camera_id__asc is not None:
             
             _query_params.append(('camera_id__asc', camera_id__asc))
+            
+        if camera_id_object__desc is not None:
+            
+            _query_params.append(('camera_id_object__desc', camera_id_object__desc))
+            
+        if camera_id_object__asc is not None:
+            
+            _query_params.append(('camera_id_object__asc', camera_id_object__asc))
             
         # process the header parameters
         # process the form parameters
@@ -4227,9 +3684,9 @@ class DetectionApi:
     @validate_call
     def patch_detection(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4242,15 +3699,15 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetDetections200Response:
+    ) -> ResponseWithGenericOfDetection:
         """patch_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
         :param detection: (required)
         :type detection: Detection
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4285,7 +3742,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4301,9 +3758,9 @@ class DetectionApi:
     @validate_call
     def patch_detection_with_http_info(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4316,15 +3773,15 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetDetections200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfDetection]:
         """patch_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
         :param detection: (required)
         :type detection: Detection
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4359,7 +3816,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4375,9 +3832,9 @@ class DetectionApi:
     @validate_call
     def patch_detection_without_preload_content(
         self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
         detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4394,11 +3851,11 @@ class DetectionApi:
         """patch_detection
 
 
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
         :param detection: (required)
         :type detection: Detection
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4433,7 +3890,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '200': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4527,8 +3984,8 @@ class DetectionApi:
     @validate_call
     def post_detections(
         self,
-        detection: List[Detection],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        detection: Optional[List[Detection]],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4541,13 +3998,13 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetDetections200Response:
+    ) -> ResponseWithGenericOfDetection:
         """post_detections
 
 
         :param detection: (required)
         :type detection: List[Detection]
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4581,7 +4038,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '201': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4597,8 +4054,8 @@ class DetectionApi:
     @validate_call
     def post_detections_with_http_info(
         self,
-        detection: List[Detection],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        detection: Optional[List[Detection]],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4611,13 +4068,13 @@ class DetectionApi:
         _content_type: Optional[StrictStr] = None,
         _headers: Optional[Dict[StrictStr, Any]] = None,
         _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetDetections200Response]:
+    ) -> ApiResponse[ResponseWithGenericOfDetection]:
         """post_detections
 
 
         :param detection: (required)
         :type detection: List[Detection]
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4651,7 +4108,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '201': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4667,8 +4124,8 @@ class DetectionApi:
     @validate_call
     def post_detections_without_preload_content(
         self,
-        detection: List[Detection],
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        detection: Optional[List[Detection]],
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -4687,7 +4144,7 @@ class DetectionApi:
 
         :param detection: (required)
         :type detection: List[Detection]
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        :param depth: Query parameter depth
         :type depth: int
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
@@ -4721,7 +4178,7 @@ class DetectionApi:
         )
 
         _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
+            '201': "ResponseWithGenericOfDetection",
         }
         response_data = self.api_client.call_api(
             *_param,
@@ -4795,306 +4252,6 @@ class DetectionApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/api/detections',
-            path_params=_path_params,
-            query_params=_query_params,
-            header_params=_header_params,
-            body=_body_params,
-            post_params=_form_params,
-            files=_files,
-            auth_settings=_auth_settings,
-            collection_formats=_collection_formats,
-            _host=_host,
-            _request_auth=_request_auth
-        )
-
-
-
-
-    @validate_call
-    def put_detection(
-        self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> GetDetections200Response:
-        """put_detection
-
-
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param detection: (required)
-        :type detection: Detection
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
-        :type depth: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._put_detection_serialize(
-            primary_key=primary_key,
-            detection=detection,
-            depth=depth,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        ).data
-
-
-    @validate_call
-    def put_detection_with_http_info(
-        self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> ApiResponse[GetDetections200Response]:
-        """put_detection
-
-
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param detection: (required)
-        :type detection: Detection
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
-        :type depth: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._put_detection_serialize(
-            primary_key=primary_key,
-            detection=detection,
-            depth=depth,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        response_data.read()
-        return self.api_client.response_deserialize(
-            response_data=response_data,
-            response_types_map=_response_types_map,
-        )
-
-
-    @validate_call
-    def put_detection_without_preload_content(
-        self,
-        primary_key: Annotated[Any, Field(description="Primary key for Detection")],
-        detection: Detection,
-        depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        _request_timeout: Union[
-            None,
-            Annotated[StrictFloat, Field(gt=0)],
-            Tuple[
-                Annotated[StrictFloat, Field(gt=0)],
-                Annotated[StrictFloat, Field(gt=0)]
-            ]
-        ] = None,
-        _request_auth: Optional[Dict[StrictStr, Any]] = None,
-        _content_type: Optional[StrictStr] = None,
-        _headers: Optional[Dict[StrictStr, Any]] = None,
-        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
-    ) -> RESTResponseType:
-        """put_detection
-
-
-        :param primary_key: Primary key for Detection (required)
-        :type primary_key: object
-        :param detection: (required)
-        :type detection: Detection
-        :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
-        :type depth: int
-        :param _request_timeout: timeout setting for this request. If one
-                                 number provided, it will be total request
-                                 timeout. It can also be a pair (tuple) of
-                                 (connection, read) timeouts.
-        :type _request_timeout: int, tuple(int, int), optional
-        :param _request_auth: set to override the auth_settings for an a single
-                              request; this effectively ignores the
-                              authentication in the spec for a single request.
-        :type _request_auth: dict, optional
-        :param _content_type: force content-type for the request.
-        :type _content_type: str, Optional
-        :param _headers: set to override the headers for a single
-                         request; this effectively ignores the headers
-                         in the spec for a single request.
-        :type _headers: dict, optional
-        :param _host_index: set to override the host_index for a single
-                            request; this effectively ignores the host_index
-                            in the spec for a single request.
-        :type _host_index: int, optional
-        :return: Returns the result object.
-        """ # noqa: E501
-
-        _param = self._put_detection_serialize(
-            primary_key=primary_key,
-            detection=detection,
-            depth=depth,
-            _request_auth=_request_auth,
-            _content_type=_content_type,
-            _headers=_headers,
-            _host_index=_host_index
-        )
-
-        _response_types_map: Dict[str, Optional[str]] = {
-            '200': "GetDetections200Response",
-        }
-        response_data = self.api_client.call_api(
-            *_param,
-            _request_timeout=_request_timeout
-        )
-        return response_data.response
-
-
-    def _put_detection_serialize(
-        self,
-        primary_key,
-        detection,
-        depth,
-        _request_auth,
-        _content_type,
-        _headers,
-        _host_index,
-    ) -> RequestSerialized:
-
-        _host = None
-
-        _collection_formats: Dict[str, str] = {
-        }
-
-        _path_params: Dict[str, str] = {}
-        _query_params: List[Tuple[str, str]] = []
-        _header_params: Dict[str, Optional[str]] = _headers or {}
-        _form_params: List[Tuple[str, str]] = []
-        _files: Dict[str, Union[str, bytes]] = {}
-        _body_params: Optional[bytes] = None
-
-        # process the path parameters
-        if primary_key is not None:
-            _path_params['primaryKey'] = primary_key
-        # process the query parameters
-        if depth is not None:
-            
-            _query_params.append(('depth', depth))
-            
-        # process the header parameters
-        # process the form parameters
-        # process the body parameter
-        if detection is not None:
-            _body_params = detection
-
-
-        # set the HTTP header `Accept`
-        if 'Accept' not in _header_params:
-            _header_params['Accept'] = self.api_client.select_header_accept(
-                [
-                    'application/json'
-                ]
-            )
-
-        # set the HTTP header `Content-Type`
-        if _content_type:
-            _header_params['Content-Type'] = _content_type
-        else:
-            _default_content_type = (
-                self.api_client.select_header_content_type(
-                    [
-                        'application/json'
-                    ]
-                )
-            )
-            if _default_content_type is not None:
-                _header_params['Content-Type'] = _default_content_type
-
-        # authentication setting
-        _auth_settings: List[str] = [
-        ]
-
-        return self.api_client.param_serialize(
-            method='PUT',
-            resource_path='/api/detections/{primaryKey}',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

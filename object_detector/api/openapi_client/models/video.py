@@ -95,30 +95,10 @@ class Video(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['referenced_by_detection_video_id_objects'] = _items
-        # set to None if deleted_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.deleted_at is None and "deleted_at" in self.model_fields_set:
-            _dict['deleted_at'] = None
-
         # set to None if detection_summary (nullable) is None
         # and model_fields_set contains the field
         if self.detection_summary is None and "detection_summary" in self.model_fields_set:
             _dict['detection_summary'] = None
-
-        # set to None if duration (nullable) is None
-        # and model_fields_set contains the field
-        if self.duration is None and "duration" in self.model_fields_set:
-            _dict['duration'] = None
-
-        # set to None if ended_at (nullable) is None
-        # and model_fields_set contains the field
-        if self.ended_at is None and "ended_at" in self.model_fields_set:
-            _dict['ended_at'] = None
-
-        # set to None if file_size (nullable) is None
-        # and model_fields_set contains the field
-        if self.file_size is None and "file_size" in self.model_fields_set:
-            _dict['file_size'] = None
 
         # set to None if referenced_by_detection_video_id_objects (nullable) is None
         # and model_fields_set contains the field
