@@ -71,7 +71,7 @@ def do(
         return
 
     for video in videos:
-        if not video.id:
+        if not video or not video.id:
             continue
 
         print(f"claimed {video.file_name} - {video.status} - {video.started_at} - {video.duration}")
@@ -213,7 +213,7 @@ def do(
                 else:
                     print("no detections to post")
 
-                if not video.id:
+                if not video or not video.id:
                     return
 
                 print(f"updating video")

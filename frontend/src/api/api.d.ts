@@ -557,13 +557,13 @@ export interface operations {
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         stream_producer_claimed_until__asc?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
-        referenced_by_video_camera_id_objects__desc?: string;
-        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
-        referenced_by_video_camera_id_objects__asc?: string;
-        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         referenced_by_detection_camera_id_objects__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         referenced_by_detection_camera_id_objects__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_video_camera_id_objects__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_video_camera_id_objects__asc?: string;
       };
       header?: never;
       path?: never;

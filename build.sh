@@ -101,12 +101,9 @@ rm -fr object_detector/api/tox.ini
 
 touch object_detector/api/__init__.py
 
-# TODO: disabled for now- some bug in the 3rd party generator doesn't like $ref or something
-# # generate the client for use by Go code
-# echo -e "\ngenerating go client..."
-# mkdir -p ./pkg/api_client
-# oapi-codegen --generate 'types,client,spec' -package api_client -o ./pkg/api_client/client.go ./schema/openapi.json
-# go mod tidy
-# goimports -w .
-# go get ./...
-# go fmt ./...
+# generate the client for use by Go code
+if test -e pkg/api_client; then
+    rm -frv pkg/api_client
+fi
+mkdir -p pkg/api_client
+openapi-generator-cli generate -i schema/openapi.json -g go -o pkg/api_client --strict-spec true --package-name api_client

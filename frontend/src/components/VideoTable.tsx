@@ -226,12 +226,12 @@ export function VideoTable(props: VideoTableProps) {
 
                   const matchingClassNames = detectionSummaries.filter(
                     (detectionSummary: any) => {
-                      if (
-                        detectionSummary.average_score < 0.5 ||
-                        detectionSummary.detected_frame_count < 8
-                      ) {
-                        return false;
-                      }
+                      // if (
+                      //   detectionSummary.average_score < 0.5 ||
+                      //   detectionSummary.detected_frame_count < 8
+                      // ) {
+                      //   return false;
+                      // }
 
                       return (detectionSummary.class_name as string).includes(
                         props.classNameFilter,
@@ -323,12 +323,12 @@ export function VideoTable(props: VideoTableProps) {
                 } else if (video?.status === "needs tracking") {
                   classNames = (video?.detection_summary as [])
                     .filter((detectionSummary: any) => {
-                      if (
-                        detectionSummary.average_score < 0.5 ||
-                        detectionSummary.detected_frame_count < 8
-                      ) {
-                        return false;
-                      }
+                      // if (
+                      //   detectionSummary.average_score < 0.5 ||
+                      //   detectionSummary.detected_frame_count < 8
+                      // ) {
+                      //   return false;
+                      // }
 
                       return true;
                     })

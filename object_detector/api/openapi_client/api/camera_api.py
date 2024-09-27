@@ -710,10 +710,10 @@ class CameraApi:
         stream_producer_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_video_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_video_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -988,14 +988,14 @@ class CameraApi:
         :type stream_producer_claimed_until__desc: str
         :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
-        :param referenced_by_video_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_video_camera_id_objects__desc: str
-        :param referenced_by_video_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_video_camera_id_objects__asc: str
         :param referenced_by_detection_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__desc: str
         :param referenced_by_detection_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__asc: str
+        :param referenced_by_video_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_video_camera_id_objects__desc: str
+        :param referenced_by_video_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_video_camera_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1148,10 +1148,10 @@ class CameraApi:
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
-            referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
-            referenced_by_video_camera_id_objects__asc=referenced_by_video_camera_id_objects__asc,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
             referenced_by_detection_camera_id_objects__asc=referenced_by_detection_camera_id_objects__asc,
+            referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
+            referenced_by_video_camera_id_objects__asc=referenced_by_video_camera_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1304,10 +1304,10 @@ class CameraApi:
         stream_producer_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_video_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_video_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1582,14 +1582,14 @@ class CameraApi:
         :type stream_producer_claimed_until__desc: str
         :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
-        :param referenced_by_video_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_video_camera_id_objects__desc: str
-        :param referenced_by_video_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_video_camera_id_objects__asc: str
         :param referenced_by_detection_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__desc: str
         :param referenced_by_detection_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__asc: str
+        :param referenced_by_video_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_video_camera_id_objects__desc: str
+        :param referenced_by_video_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_video_camera_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1742,10 +1742,10 @@ class CameraApi:
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
-            referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
-            referenced_by_video_camera_id_objects__asc=referenced_by_video_camera_id_objects__asc,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
             referenced_by_detection_camera_id_objects__asc=referenced_by_detection_camera_id_objects__asc,
+            referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
+            referenced_by_video_camera_id_objects__asc=referenced_by_video_camera_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1898,10 +1898,10 @@ class CameraApi:
         stream_producer_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_video_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_video_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2176,14 +2176,14 @@ class CameraApi:
         :type stream_producer_claimed_until__desc: str
         :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
-        :param referenced_by_video_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_video_camera_id_objects__desc: str
-        :param referenced_by_video_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_video_camera_id_objects__asc: str
         :param referenced_by_detection_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__desc: str
         :param referenced_by_detection_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__asc: str
+        :param referenced_by_video_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_video_camera_id_objects__desc: str
+        :param referenced_by_video_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_video_camera_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2336,10 +2336,10 @@ class CameraApi:
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
-            referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
-            referenced_by_video_camera_id_objects__asc=referenced_by_video_camera_id_objects__asc,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
             referenced_by_detection_camera_id_objects__asc=referenced_by_detection_camera_id_objects__asc,
+            referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
+            referenced_by_video_camera_id_objects__asc=referenced_by_video_camera_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2487,10 +2487,10 @@ class CameraApi:
         stream_producer_claimed_until__notilike,
         stream_producer_claimed_until__desc,
         stream_producer_claimed_until__asc,
-        referenced_by_video_camera_id_objects__desc,
-        referenced_by_video_camera_id_objects__asc,
         referenced_by_detection_camera_id_objects__desc,
         referenced_by_detection_camera_id_objects__asc,
+        referenced_by_video_camera_id_objects__desc,
+        referenced_by_video_camera_id_objects__asc,
         _request_auth,
         _content_type,
         _headers,
@@ -3675,14 +3675,6 @@ class CameraApi:
             
             _query_params.append(('stream_producer_claimed_until__asc', stream_producer_claimed_until__asc))
             
-        if referenced_by_video_camera_id_objects__desc is not None:
-            
-            _query_params.append(('referenced_by_video_camera_id_objects__desc', referenced_by_video_camera_id_objects__desc))
-            
-        if referenced_by_video_camera_id_objects__asc is not None:
-            
-            _query_params.append(('referenced_by_video_camera_id_objects__asc', referenced_by_video_camera_id_objects__asc))
-            
         if referenced_by_detection_camera_id_objects__desc is not None:
             
             _query_params.append(('referenced_by_detection_camera_id_objects__desc', referenced_by_detection_camera_id_objects__desc))
@@ -3690,6 +3682,14 @@ class CameraApi:
         if referenced_by_detection_camera_id_objects__asc is not None:
             
             _query_params.append(('referenced_by_detection_camera_id_objects__asc', referenced_by_detection_camera_id_objects__asc))
+            
+        if referenced_by_video_camera_id_objects__desc is not None:
+            
+            _query_params.append(('referenced_by_video_camera_id_objects__desc', referenced_by_video_camera_id_objects__desc))
+            
+        if referenced_by_video_camera_id_objects__asc is not None:
+            
+            _query_params.append(('referenced_by_video_camera_id_objects__asc', referenced_by_video_camera_id_objects__asc))
             
         # process the header parameters
         # process the form parameters

@@ -1688,24 +1688,6 @@
             "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "referenced_by_video_camera_id_objects__desc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "referenced_by_video_camera_id_objects__asc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "referenced_by_detection_camera_id_objects__desc",
             "in": "query",
             "required": false,
@@ -1716,6 +1698,24 @@
           },
           {
             "name": "referenced_by_detection_camera_id_objects__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_video_camera_id_objects__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_video_camera_id_objects__asc",
             "in": "query",
             "required": false,
             "schema": {

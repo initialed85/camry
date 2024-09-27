@@ -90,7 +90,6 @@ export function Video(props: VideoProps) {
           margin: 0,
           cursor: "not-allowed",
           pointerEvents: "none",
-          outline: "1px solid blue",
         }}
         width={props.width}
         height={props.height}

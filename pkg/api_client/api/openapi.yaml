@@ -1,0 +1,5714 @@
+openapi: 3.0.0
+info:
+  title: Djangolang
+  version: "1.0"
+servers:
+- url: /
+paths:
+  /api/cameras:
+    get:
+      operationId: GetCameras
+      parameters:
+      - description: SQL LIMIT operator
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: SQL OFFSET operator
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: |-
+          Max recursion depth for loading foreign objects; default = 1
+
+          (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: created_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: created_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: updated_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: updated_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: deleted_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: deleted_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: name__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: name__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: name__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: name__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: name__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: name__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: name__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: name__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: name__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: name__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: name__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: name__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: name__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: name__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: stream_url__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: stream_url__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_url__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_url__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_url__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_url__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: stream_url__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: stream_url__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_url__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_url__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_url__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_url__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: stream_url__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: stream_url__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: last_seen__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: last_seen__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: last_seen__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: last_seen__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: last_seen__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: last_seen__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: last_seen__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: last_seen__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: last_seen__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: last_seen__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: last_seen__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: last_seen__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: last_seen__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: last_seen__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: segment_producer_claimed_until__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: stream_producer_claimed_until__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_camera_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_camera_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_video_camera_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_video_camera_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: GetCameras success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetCameras failure
+      tags:
+      - Camera
+    post:
+      operationId: PostCameras
+      parameters:
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArrayOfNullableCamera'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: PostCameras success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostCameras failure
+      tags:
+      - Camera
+  /api/cameras/{primaryKey}:
+    delete:
+      operationId: DeleteCamera
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "204":
+          description: DeleteCamera success
+        default:
+          description: DeleteCamera failure
+      tags:
+      - Camera
+    get:
+      operationId: GetCamera
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: GetCamera success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetCamera failure
+      tags:
+      - Camera
+    patch:
+      operationId: PatchCamera
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Camera'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: PatchCamera success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PatchCamera failure
+      tags:
+      - Camera
+  /api/custom/claim-video-for-object-detector:
+    patch:
+      operationId: PatchCustomClaimVideoForObjectDetector
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NullableVideo'
+          description: PatchCustomClaimVideoForObjectDetector success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PatchCustomClaimVideoForObjectDetector failure
+      tags:
+      - Custom
+  /api/detections:
+    get:
+      operationId: GetDetections
+      parameters:
+      - description: SQL LIMIT operator
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: SQL OFFSET operator
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: |-
+          Max recursion depth for loading foreign objects; default = 1
+
+          (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: created_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: created_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: updated_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: updated_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: deleted_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: deleted_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: seen_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: seen_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: seen_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: seen_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: seen_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: seen_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: seen_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: seen_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: seen_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: seen_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: seen_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: seen_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: seen_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: seen_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: class_id__eq
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: class_id__ne
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__gt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__gte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__lt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__lte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_id__in
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_id__notin
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: class_name__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: class_name__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_name__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_name__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_name__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_name__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: score__eq
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: score__ne
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: score__gt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: score__gte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: score__lt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: score__lte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: score__in
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: score__notin
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: score__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: score__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: centroid__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: centroid__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: bounding_box__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: bounding_box__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: video_id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: video_id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: video_id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: video_id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id_object__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id_object__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: camera_id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: camera_id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: camera_id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: camera_id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id_object__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id_object__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfDetection'
+          description: GetDetections success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetDetections failure
+      tags:
+      - Detection
+    post:
+      operationId: PostDetections
+      parameters:
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArrayOfNullableDetection'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfDetection'
+          description: PostDetections success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostDetections failure
+      tags:
+      - Detection
+  /api/detections/{primaryKey}:
+    delete:
+      operationId: DeleteDetection
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "204":
+          description: DeleteDetection success
+        default:
+          description: DeleteDetection failure
+      tags:
+      - Detection
+    get:
+      operationId: GetDetection
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfDetection'
+          description: GetDetection success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetDetection failure
+      tags:
+      - Detection
+    patch:
+      operationId: PatchDetection
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Detection'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfDetection'
+          description: PatchDetection success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PatchDetection failure
+      tags:
+      - Detection
+  /api/videos:
+    get:
+      operationId: GetVideos
+      parameters:
+      - description: SQL LIMIT operator
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: SQL OFFSET operator
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: |-
+          Max recursion depth for loading foreign objects; default = 1
+
+          (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: created_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: created_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: updated_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: updated_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: deleted_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: deleted_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: file_name__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: file_name__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_name__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_name__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_name__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_name__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: file_name__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: file_name__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: file_name__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: file_name__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: file_name__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: file_name__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: file_name__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: file_name__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: started_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: started_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: started_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: started_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: started_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: started_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: ended_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: ended_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: ended_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: ended_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: ended_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: ended_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: duration__eq
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: duration__ne
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: duration__gt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: duration__gte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: duration__lt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: duration__lte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: duration__in
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: duration__notin
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: duration__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: duration__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: file_size__eq
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: file_size__ne
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_size__gt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_size__gte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_size__lt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: file_size__lte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: file_size__in
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: file_size__notin
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: file_size__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: file_size__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: thumbnail_name__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: thumbnail_name__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: thumbnail_name__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: thumbnail_name__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: thumbnail_name__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: thumbnail_name__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: thumbnail_name__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: thumbnail_name__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: thumbnail_name__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: thumbnail_name__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: thumbnail_name__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: thumbnail_name__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: thumbnail_name__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: thumbnail_name__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: status__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: status__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: status__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: status__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: status__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: status__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: object_detector_claimed_until__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: object_detector_claimed_until__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: object_detector_claimed_until__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: object_tracker_claimed_until__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: camera_id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: camera_id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: camera_id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: camera_id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id_object__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id_object__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: detection_summary__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: detection_summary__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_video_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_video_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: GetVideos success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetVideos failure
+      tags:
+      - Video
+    post:
+      operationId: PostVideos
+      parameters:
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArrayOfNullableVideo'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: PostVideos success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostVideos failure
+      tags:
+      - Video
+  /api/videos/{primaryKey}:
+    delete:
+      operationId: DeleteVideo
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "204":
+          description: DeleteVideo success
+        default:
+          description: DeleteVideo failure
+      tags:
+      - Video
+    get:
+      operationId: GetVideo
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: GetVideo success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetVideo failure
+      tags:
+      - Video
+    patch:
+      operationId: PatchVideo
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Video'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: PatchVideo success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PatchVideo failure
+      tags:
+      - Video
+components:
+  schemas:
+    Any:
+      nullable: true
+    ArrayOfNullableCamera:
+      items:
+        $ref: '#/components/schemas/Camera'
+      nullable: true
+      type: array
+    ArrayOfNullableDetection:
+      items:
+        $ref: '#/components/schemas/Detection'
+      nullable: true
+      type: array
+    ArrayOfNullableVideo:
+      items:
+        $ref: '#/components/schemas/Video'
+      nullable: true
+      type: array
+    ArrayOfString:
+      items:
+        type: string
+      nullable: true
+      type: array
+    ArrayOfVec2:
+      items:
+        $ref: '#/components/schemas/ArrayOfVec2_inner'
+      nullable: true
+      type: array
+    Camera:
+      example:
+        last_seen: 2000-01-23T04:56:07.000+00:00
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        referenced_by_detection_camera_id_objects:
+        - camera_id_object: null
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 5
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          score: 2.3021358869347655
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class_name: class_name
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          seen_at: 2000-01-23T04:56:07.000+00:00
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - camera_id_object: null
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 5
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          score: 2.3021358869347655
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class_name: class_name
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          seen_at: 2000-01-23T04:56:07.000+00:00
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        referenced_by_video_camera_id_objects:
+        - camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 9.301444243932576
+          duration: 7
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        - camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 9.301444243932576
+          duration: 7
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        deleted_at: 2000-01-23T04:56:07.000+00:00
+        segment_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+        stream_url: stream_url
+      properties:
+        created_at:
+          format: date-time
+          type: string
+        deleted_at:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        last_seen:
+          format: date-time
+          type: string
+        name:
+          type: string
+        referenced_by_detection_camera_id_objects:
+          items:
+            $ref: '#/components/schemas/Detection'
+          nullable: true
+          type: array
+        referenced_by_video_camera_id_objects:
+          items:
+            $ref: '#/components/schemas/Video'
+          nullable: true
+          type: array
+        segment_producer_claimed_until:
+          format: date-time
+          type: string
+        stream_producer_claimed_until:
+          format: date-time
+          type: string
+        stream_url:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    ClaimRequest:
+      example:
+        claim_duration_seconds: 0.8008281904610115
+      properties:
+        claim_duration_seconds:
+          format: double
+          type: number
+      type: object
+    Detection:
+      example:
+        camera_id_object: null
+        bounding_box:
+        - X: 1.4658129805029452
+          "Y": 5.962133916683182
+        - X: 1.4658129805029452
+          "Y": 5.962133916683182
+        class_id: 5
+        camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        created_at: 2000-01-23T04:56:07.000+00:00
+        deleted_at: 2000-01-23T04:56:07.000+00:00
+        score: 2.3021358869347655
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        centroid:
+          X: 1.4658129805029452
+          "Y": 5.962133916683182
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        class_name: class_name
+        video_id_object:
+          camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 9.301444243932576
+          duration: 7
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        seen_at: 2000-01-23T04:56:07.000+00:00
+        video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        bounding_box:
+          items:
+            $ref: '#/components/schemas/ArrayOfVec2_inner'
+          nullable: true
+          type: array
+        camera_id:
+          format: uuid
+          type: string
+        camera_id_object:
+          $ref: '#/components/schemas/Camera'
+        centroid:
+          $ref: '#/components/schemas/ArrayOfVec2_inner'
+        class_id:
+          format: int64
+          type: integer
+        class_name:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        deleted_at:
+          format: date-time
+          type: string
+        id:
+          format: uuid
+          type: string
+        score:
+          format: double
+          type: number
+        seen_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+        video_id:
+          format: uuid
+          type: string
+        video_id_object:
+          $ref: '#/components/schemas/Video'
+      type: object
+    NullableCamera:
+      $ref: '#/components/schemas/Camera'
+    NullableDetection:
+      $ref: '#/components/schemas/Detection'
+    NullableVideo:
+      $ref: '#/components/schemas/Video'
+    ResponseWithGenericOfCamera:
+      example:
+        offset: 3
+        success: true
+        total_count: 4
+        objects:
+        - last_seen: 2000-01-23T04:56:07.000+00:00
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          referenced_by_detection_camera_id_objects:
+          - camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 5
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            score: 2.3021358869347655
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class_name: class_name
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 9.301444243932576
+              duration: 7
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            seen_at: 2000-01-23T04:56:07.000+00:00
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          - camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 5
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            score: 2.3021358869347655
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class_name: class_name
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 9.301444243932576
+              duration: 7
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            seen_at: 2000-01-23T04:56:07.000+00:00
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          referenced_by_video_camera_id_objects:
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          segment_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+          stream_url: stream_url
+        - last_seen: 2000-01-23T04:56:07.000+00:00
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          referenced_by_detection_camera_id_objects:
+          - camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 5
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            score: 2.3021358869347655
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class_name: class_name
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 9.301444243932576
+              duration: 7
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            seen_at: 2000-01-23T04:56:07.000+00:00
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          - camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 5
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            score: 2.3021358869347655
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            class_name: class_name
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 9.301444243932576
+              duration: 7
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            seen_at: 2000-01-23T04:56:07.000+00:00
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          referenced_by_video_camera_id_objects:
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          segment_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+          stream_url: stream_url
+        count: 0
+        limit: 6
+        error:
+        - error
+        - error
+        status: 2
+      properties:
+        count:
+          format: int64
+          type: integer
+        error:
+          items:
+            type: string
+          nullable: true
+          type: array
+        limit:
+          format: int64
+          type: integer
+        objects:
+          items:
+            $ref: '#/components/schemas/Camera'
+          nullable: true
+          type: array
+        offset:
+          format: int64
+          type: integer
+        status:
+          format: int64
+          type: integer
+        success:
+          type: boolean
+        total_count:
+          format: int64
+          type: integer
+      type: object
+    ResponseWithGenericOfDetection:
+      example:
+        offset: 1
+        success: true
+        total_count: 5
+        objects:
+        - camera_id_object: null
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 5
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          score: 2.3021358869347655
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class_name: class_name
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          seen_at: 2000-01-23T04:56:07.000+00:00
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - camera_id_object: null
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 5
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          score: 2.3021358869347655
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          class_name: class_name
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 9.301444243932576
+            duration: 7
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          seen_at: 2000-01-23T04:56:07.000+00:00
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        count: 0
+        limit: 6
+        error:
+        - error
+        - error
+        status: 5
+      properties:
+        count:
+          format: int64
+          type: integer
+        error:
+          items:
+            type: string
+          nullable: true
+          type: array
+        limit:
+          format: int64
+          type: integer
+        objects:
+          items:
+            $ref: '#/components/schemas/Detection'
+          nullable: true
+          type: array
+        offset:
+          format: int64
+          type: integer
+        status:
+          format: int64
+          type: integer
+        success:
+          type: boolean
+        total_count:
+          format: int64
+          type: integer
+      type: object
+    ResponseWithGenericOfVideo:
+      example:
+        offset: 1
+        success: true
+        total_count: 5
+        objects:
+        - camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 9.301444243932576
+          duration: 7
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        - camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 9.301444243932576
+          duration: 7
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        count: 0
+        limit: 6
+        error:
+        - error
+        - error
+        status: 5
+      properties:
+        count:
+          format: int64
+          type: integer
+        error:
+          items:
+            type: string
+          nullable: true
+          type: array
+        limit:
+          format: int64
+          type: integer
+        objects:
+          items:
+            $ref: '#/components/schemas/Video'
+          nullable: true
+          type: array
+        offset:
+          format: int64
+          type: integer
+        status:
+          format: int64
+          type: integer
+        success:
+          type: boolean
+        total_count:
+          format: int64
+          type: integer
+      type: object
+    Vec2:
+      properties:
+        X:
+          format: double
+          type: number
+        "Y":
+          format: double
+          type: number
+      type: object
+    Video:
+      example:
+        camera_id_object: null
+        file_name: file_name
+        camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        created_at: 2000-01-23T04:56:07.000+00:00
+        deleted_at: 2000-01-23T04:56:07.000+00:00
+        detection_summary: ""
+        file_size: 9.301444243932576
+        duration: 7
+        object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+        referenced_by_detection_video_id_objects:
+        - null
+        - null
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        thumbnail_name: thumbnail_name
+        object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+        started_at: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        ended_at: 2000-01-23T04:56:07.000+00:00
+        status: status
+      properties:
+        camera_id:
+          format: uuid
+          type: string
+        camera_id_object:
+          $ref: '#/components/schemas/Camera'
+        created_at:
+          format: date-time
+          type: string
+        deleted_at:
+          format: date-time
+          type: string
+        detection_summary:
+          nullable: true
+        duration:
+          format: int64
+          type: integer
+        ended_at:
+          format: date-time
+          type: string
+        file_name:
+          type: string
+        file_size:
+          format: double
+          type: number
+        id:
+          format: uuid
+          type: string
+        object_detector_claimed_until:
+          format: date-time
+          type: string
+        object_tracker_claimed_until:
+          format: date-time
+          type: string
+        referenced_by_detection_video_id_objects:
+          items:
+            $ref: '#/components/schemas/Detection'
+          nullable: true
+          type: array
+        started_at:
+          format: date-time
+          type: string
+        status:
+          type: string
+        thumbnail_name:
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    GetCameras_default_response:
+      example:
+        success: true
+        error:
+        - error
+        - error
+        status: 7
+      properties:
+        error:
+          items:
+            type: string
+          type: array
+        status:
+          format: int32
+          type: integer
+        success:
+          type: boolean
+      required:
+      - error
+      - status
+      - success
+      type: object
+    ArrayOfVec2_inner:
+      example:
+        X: 1.4658129805029452
+        "Y": 5.962133916683182
+      properties:
+        X:
+          format: double
+          type: number
+        "Y":
+          format: double
+          type: number
+      type: object
