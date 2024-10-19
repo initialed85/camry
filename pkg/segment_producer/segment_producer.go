@@ -384,6 +384,9 @@ func Run() error {
 
 	claimRefreshDuration := (time.Duration(durationSeconds) * time.Second) + (time.Second * 2)
 
+	id := uuid.Must(uuid.NewRandom())
+	log := djangolang_helpers.GetLogger(fmt.Sprintf("%s: ", id.String()))
+
 	camera := &api.Camera{}
 
 	for {
@@ -399,41 +402,20 @@ func Run() error {
 
 			log.Printf("waiting to lock for claiming a camera...")
 
-			err = camera.AdvisoryLockWithRetries(ctx, tx, 1, claimRefreshDuration+(time.Second*2), time.Second*1)
-			if err != nil {
-				return err
-			}
-
-			cameras, _, _, _, _, err := api.SelectCameras(
-				ctx,
-				tx,
-				fmt.Sprintf(
-					"%v < now()",
-					api.CameraTableSegmentProducerClaimedUntilColumn,
-				),
-				internal.Ptr(fmt.Sprintf(
-					"%v DESC",
-					api.CameraTableSegmentProducerClaimedUntilColumn,
-				)),
-				internal.Ptr(1),
-				nil,
-			)
-			if err != nil {
-				return err
-			}
-
-			if len(cameras) != 1 {
-				return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
-			}
-
-			camera = cameras[0]
-
-			log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
-
 			now := internal.GetNow()
+
+			camera, err := api.ClaimCamera(ctx, tx, now.Add(claimRefreshDuration), id, claimRefreshDuration+time.Second*1)
+			if err != nil {
+				return err
+			}
+
+			if camera == nil {
+				return fmt.Errorf("no cameras available to claim")
+			}
+
+			log.Printf("found unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
+
 			camera.LastSeen = now
-			camera.SegmentProducerClaimedUntil = now.Add(claimRefreshDuration)
-			camera.StreamProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
 
 			err = camera.Update(ctx, tx, false)
 			if err != nil {

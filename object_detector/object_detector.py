@@ -165,10 +165,7 @@ def do(
                                     (rbx, lty),  # right top
                                     (rbx, rby),  # right bottom
                                     (ltx, rby),  # left bottom
-                                    (
-                                        ltx,
-                                        lty,
-                                    ),  # left top again (postgres likes its polygons closed off)
+                                    (ltx, lty),  # left top (again, postgis)
                                 ]
 
                                 bounding_box = [

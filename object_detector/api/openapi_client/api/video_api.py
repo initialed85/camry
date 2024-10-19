@@ -584,6 +584,8 @@ class VideoApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -800,6 +802,10 @@ class VideoApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
+        :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :type camera__load: str
+        :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -1214,6 +1220,8 @@ class VideoApi:
             limit=limit,
             offset=offset,
             depth=depth,
+            camera__load=camera__load,
+            referenced_by_detection__load=referenced_by_detection__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -1434,6 +1442,8 @@ class VideoApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -1650,6 +1660,10 @@ class VideoApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
+        :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :type camera__load: str
+        :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -2064,6 +2078,8 @@ class VideoApi:
             limit=limit,
             offset=offset,
             depth=depth,
+            camera__load=camera__load,
+            referenced_by_detection__load=referenced_by_detection__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -2284,6 +2300,8 @@ class VideoApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -2500,6 +2518,10 @@ class VideoApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
+        :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :type camera__load: str
+        :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -2914,6 +2936,8 @@ class VideoApi:
             limit=limit,
             offset=offset,
             depth=depth,
+            camera__load=camera__load,
+            referenced_by_detection__load=referenced_by_detection__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -3129,6 +3153,8 @@ class VideoApi:
         limit,
         offset,
         depth,
+        camera__load,
+        referenced_by_detection__load,
         id__eq,
         id__ne,
         id__gt,
@@ -3354,6 +3380,14 @@ class VideoApi:
         if depth is not None:
             
             _query_params.append(('depth', depth))
+            
+        if camera__load is not None:
+            
+            _query_params.append(('camera__load', camera__load))
+            
+        if referenced_by_detection__load is not None:
+            
+            _query_params.append(('referenced_by_detection__load', referenced_by_detection__load))
             
         if id__eq is not None:
             

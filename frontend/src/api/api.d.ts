@@ -304,6 +304,10 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given indirectly related objects, value is ignored (presence of key is sufficient) */
+        referenced_by_detection__load?: string;
+        /** @description load the given indirectly related objects, value is ignored (presence of key is sufficient) */
+        referenced_by_video__load?: string;
         /** @description SQL = comparison */
         id__eq?: string;
         /** @description SQL != comparison */
@@ -557,13 +561,13 @@ export interface operations {
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         stream_producer_claimed_until__asc?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
-        referenced_by_detection_camera_id_objects__desc?: string;
-        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
-        referenced_by_detection_camera_id_objects__asc?: string;
-        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         referenced_by_video_camera_id_objects__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         referenced_by_video_camera_id_objects__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_detection_camera_id_objects__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        referenced_by_detection_camera_id_objects__asc?: string;
       };
       header?: never;
       path?: never;
@@ -801,6 +805,10 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given directly related object, value is ignored (presence of key is sufficient) */
+        video__load?: string;
+        /** @description load the given directly related object, value is ignored (presence of key is sufficient) */
+        camera__load?: string;
         /** @description SQL = comparison */
         id__eq?: string;
         /** @description SQL != comparison */
@@ -1280,6 +1288,10 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given directly related object, value is ignored (presence of key is sufficient) */
+        camera__load?: string;
+        /** @description load the given indirectly related objects, value is ignored (presence of key is sufficient) */
+        referenced_by_detection__load?: string;
         /** @description SQL = comparison */
         id__eq?: string;
         /** @description SQL != comparison */

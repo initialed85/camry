@@ -38,6 +38,24 @@ paths:
         schema:
           type: integer
         style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_video__load
+        required: false
+        schema:
+          type: string
+        style: form
       - description: SQL = comparison
         explode: true
         in: query
@@ -1188,24 +1206,6 @@ paths:
           \ is sufficient)"
         explode: true
         in: query
-        name: referenced_by_detection_camera_id_objects__desc
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
-          \ is sufficient)"
-        explode: true
-        in: query
-        name: referenced_by_detection_camera_id_objects__asc
-        required: false
-        schema:
-          type: string
-        style: form
-      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
-          \ is sufficient)"
-        explode: true
-        in: query
         name: referenced_by_video_camera_id_objects__desc
         required: false
         schema:
@@ -1216,6 +1216,24 @@ paths:
         explode: true
         in: query
         name: referenced_by_video_camera_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_camera_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_camera_id_objects__asc
         required: false
         schema:
           type: string
@@ -1431,6 +1449,24 @@ paths:
         required: false
         schema:
           type: integer
+        style: form
+      - description: "load the given directly related object, value is ignored (presence\
+          \ of key is sufficient)"
+        explode: true
+        in: query
+        name: video__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given directly related object, value is ignored (presence\
+          \ of key is sufficient)"
+        explode: true
+        in: query
+        name: camera__load
+        required: false
+        schema:
+          type: string
         style: form
       - description: SQL = comparison
         explode: true
@@ -2899,6 +2935,24 @@ paths:
         required: false
         schema:
           type: integer
+        style: form
+      - description: "load the given directly related object, value is ignored (presence\
+          \ of key is sufficient)"
+        explode: true
+        in: query
+        name: camera__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection__load
+        required: false
+        schema:
+          type: string
         style: form
       - description: SQL = comparison
         explode: true

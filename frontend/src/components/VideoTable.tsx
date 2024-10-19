@@ -226,15 +226,28 @@ export function VideoTable(props: VideoTableProps) {
 
                   const matchingClassNames = detectionSummaries.filter(
                     (detectionSummary: any) => {
-                      // if (
-                      //   detectionSummary.average_score < 0.5 ||
-                      //   detectionSummary.detected_frame_count < 8
-                      // ) {
-                      //   return false;
-                      // }
+                      if (
+                        detectionSummary.average_score < 0.33 ||
+                        detectionSummary.detected_frame_count < 10
+                      ) {
+                        return (
+                          props.classNameFilter.endsWith("?") &&
+                          (detectionSummary.class_name as string).includes(
+                            props.classNameFilter.slice(
+                              0,
+                              props.classNameFilter.length - 1,
+                            ),
+                          )
+                        );
+                      }
 
                       return (detectionSummary.class_name as string).includes(
-                        props.classNameFilter,
+                        props.classNameFilter.endsWith("?")
+                          ? props.classNameFilter.slice(
+                              0,
+                              props.classNameFilter.length - 1,
+                            )
+                          : props.classNameFilter,
                       );
                     },
                   );
@@ -321,56 +334,78 @@ export function VideoTable(props: VideoTableProps) {
                     </Tooltip>
                   );
                 } else if (video?.status === "needs tracking") {
-                  classNames = (video?.detection_summary as [])
-                    .filter((detectionSummary: any) => {
-                      // if (
-                      //   detectionSummary.average_score < 0.5 ||
-                      //   detectionSummary.detected_frame_count < 8
-                      // ) {
-                      //   return false;
-                      // }
+                  classNames = (video?.detection_summary as []).map(
+                    (detectionSummary: any) => {
+                      let color = undefined;
 
-                      return true;
-                    })
-                    .map((x: any) => {
+                      if (
+                        detectionSummary.average_score < 0.33 ||
+                        detectionSummary.detected_frame_count < 10
+                      ) {
+                        if (
+                          props.classNameFilter &&
+                          props.classNameFilter.endsWith("?") &&
+                          (detectionSummary.class_name as string).includes(
+                            props.classNameFilter.slice(
+                              0,
+                              props.classNameFilter.length - 1,
+                            ),
+                          )
+                        ) {
+                          color = "#ff0000";
+                        } else {
+                          if (
+                            detectionSummary.average_score < 0.33 ||
+                            detectionSummary.detected_frame_count < 10
+                          ) {
+                            color = "#aaaaaa";
+                          }
+                        }
+                      } else {
+                        if (
+                          props.classNameFilter &&
+                          (detectionSummary.class_name as string).includes(
+                            props.classNameFilter.endsWith("?")
+                              ? props.classNameFilter.slice(
+                                  0,
+                                  props.classNameFilter.length - 1,
+                                )
+                              : props.classNameFilter,
+                          )
+                        ) {
+                          color = "#ff0000";
+                        }
+                      }
+
                       if (props.responsive) {
                         return (
                           <span
-                            key={x.class_name}
+                            key={detectionSummary.class_name}
                             style={{
-                              color:
-                                props.classNameFilter &&
-                                (x.class_name as string).includes(
-                                  props.classNameFilter,
-                                )
-                                  ? "#ff0000"
-                                  : undefined,
+                              color: color,
                             }}
                           >
-                            {x.class_name} @ {x.average_score.toFixed(2)} <br />
+                            {detectionSummary.class_name} @{" "}
+                            {detectionSummary.average_score.toFixed(2)} <br />
                           </span>
                         );
                       }
 
                       return (
                         <span
-                          key={x.class_name}
+                          key={detectionSummary.class_name}
                           style={{
-                            color:
-                              props.classNameFilter &&
-                              (x.class_name as string).includes(
-                                props.classNameFilter,
-                              )
-                                ? "#ff0000"
-                                : undefined,
+                            color: color,
                           }}
                         >
-                          {x.class_name} @ {x.average_score.toFixed(2)} (over{" "}
-                          {x.detected_frame_count} frames)
+                          {detectionSummary.class_name} @{" "}
+                          {detectionSummary.average_score.toFixed(2)} (over{" "}
+                          {detectionSummary.detected_frame_count} frames)
                           <br />
                         </span>
                       );
-                    });
+                    },
+                  );
                 }
 
                 return (

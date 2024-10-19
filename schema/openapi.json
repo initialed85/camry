@@ -470,6 +470,24 @@
             "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
           },
           {
+            "name": "referenced_by_detection__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given indirectly related objects, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_video__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given indirectly related objects, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "id__eq",
             "in": "query",
             "required": false,
@@ -1688,24 +1706,6 @@
             "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
           },
           {
-            "name": "referenced_by_detection_camera_id_objects__desc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
-          },
-          {
-            "name": "referenced_by_detection_camera_id_objects__asc",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "type": "string"
-            },
-            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
-          },
-          {
             "name": "referenced_by_video_camera_id_objects__desc",
             "in": "query",
             "required": false,
@@ -1716,6 +1716,24 @@
           },
           {
             "name": "referenced_by_video_camera_id_objects__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_detection_camera_id_objects__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_detection_camera_id_objects__asc",
             "in": "query",
             "required": false,
             "schema": {
@@ -2121,6 +2139,24 @@
               "type": "integer"
             },
             "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+          },
+          {
+            "name": "video__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given directly related object, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given directly related object, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__eq",
@@ -3820,6 +3856,24 @@
               "type": "integer"
             },
             "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+          },
+          {
+            "name": "camera__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given directly related object, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_detection__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given indirectly related objects, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "id__eq",

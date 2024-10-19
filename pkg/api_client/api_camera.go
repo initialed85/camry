@@ -249,6 +249,8 @@ type ApiGetCamerasRequest struct {
 	limit *int32
 	offset *int32
 	depth *int32
+	referencedByDetectionLoad *string
+	referencedByVideoLoad *string
 	idEq *string
 	idNe *string
 	idGt *string
@@ -375,10 +377,10 @@ type ApiGetCamerasRequest struct {
 	streamProducerClaimedUntilNotilike *time.Time
 	streamProducerClaimedUntilDesc *string
 	streamProducerClaimedUntilAsc *string
-	referencedByDetectionCameraIdObjectsDesc *string
-	referencedByDetectionCameraIdObjectsAsc *string
 	referencedByVideoCameraIdObjectsDesc *string
 	referencedByVideoCameraIdObjectsAsc *string
+	referencedByDetectionCameraIdObjectsDesc *string
+	referencedByDetectionCameraIdObjectsAsc *string
 }
 
 // SQL LIMIT operator
@@ -396,6 +398,18 @@ func (r ApiGetCamerasRequest) Offset(offset int32) ApiGetCamerasRequest {
 // Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc)
 func (r ApiGetCamerasRequest) Depth(depth int32) ApiGetCamerasRequest {
 	r.depth = &depth
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) ReferencedByDetectionLoad(referencedByDetectionLoad string) ApiGetCamerasRequest {
+	r.referencedByDetectionLoad = &referencedByDetectionLoad
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) ReferencedByVideoLoad(referencedByVideoLoad string) ApiGetCamerasRequest {
+	r.referencedByVideoLoad = &referencedByVideoLoad
 	return r
 }
 
@@ -1156,18 +1170,6 @@ func (r ApiGetCamerasRequest) StreamProducerClaimedUntilAsc(streamProducerClaime
 }
 
 // SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc string) ApiGetCamerasRequest {
-	r.referencedByDetectionCameraIdObjectsDesc = &referencedByDetectionCameraIdObjectsDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc string) ApiGetCamerasRequest {
-	r.referencedByDetectionCameraIdObjectsAsc = &referencedByDetectionCameraIdObjectsAsc
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetCamerasRequest) ReferencedByVideoCameraIdObjectsDesc(referencedByVideoCameraIdObjectsDesc string) ApiGetCamerasRequest {
 	r.referencedByVideoCameraIdObjectsDesc = &referencedByVideoCameraIdObjectsDesc
 	return r
@@ -1176,6 +1178,18 @@ func (r ApiGetCamerasRequest) ReferencedByVideoCameraIdObjectsDesc(referencedByV
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetCamerasRequest) ReferencedByVideoCameraIdObjectsAsc(referencedByVideoCameraIdObjectsAsc string) ApiGetCamerasRequest {
 	r.referencedByVideoCameraIdObjectsAsc = &referencedByVideoCameraIdObjectsAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc string) ApiGetCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsDesc = &referencedByDetectionCameraIdObjectsDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc string) ApiGetCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsAsc = &referencedByDetectionCameraIdObjectsAsc
 	return r
 }
 
@@ -1225,6 +1239,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	}
 	if r.depth != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	if r.referencedByDetectionLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection__load", r.referencedByDetectionLoad, "")
+	}
+	if r.referencedByVideoLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video__load", r.referencedByVideoLoad, "")
 	}
 	if r.idEq != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")
@@ -1604,17 +1624,17 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.streamProducerClaimedUntilAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__asc", r.streamProducerClaimedUntilAsc, "")
 	}
-	if r.referencedByDetectionCameraIdObjectsDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__desc", r.referencedByDetectionCameraIdObjectsDesc, "")
-	}
-	if r.referencedByDetectionCameraIdObjectsAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__asc", r.referencedByDetectionCameraIdObjectsAsc, "")
-	}
 	if r.referencedByVideoCameraIdObjectsDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__desc", r.referencedByVideoCameraIdObjectsDesc, "")
 	}
 	if r.referencedByVideoCameraIdObjectsAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__asc", r.referencedByVideoCameraIdObjectsAsc, "")
+	}
+	if r.referencedByDetectionCameraIdObjectsDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__desc", r.referencedByDetectionCameraIdObjectsDesc, "")
+	}
+	if r.referencedByDetectionCameraIdObjectsAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__asc", r.referencedByDetectionCameraIdObjectsAsc, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

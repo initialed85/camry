@@ -249,6 +249,8 @@ type ApiGetDetectionsRequest struct {
 	limit *int32
 	offset *int32
 	depth *int32
+	videoLoad *string
+	cameraLoad *string
 	idEq *string
 	idNe *string
 	idGt *string
@@ -406,6 +408,18 @@ func (r ApiGetDetectionsRequest) Offset(offset int32) ApiGetDetectionsRequest {
 // Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc)
 func (r ApiGetDetectionsRequest) Depth(depth int32) ApiGetDetectionsRequest {
 	r.depth = &depth
+	return r
+}
+
+// load the given directly related object, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) VideoLoad(videoLoad string) ApiGetDetectionsRequest {
+	r.videoLoad = &videoLoad
+	return r
+}
+
+// load the given directly related object, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) CameraLoad(cameraLoad string) ApiGetDetectionsRequest {
+	r.cameraLoad = &cameraLoad
 	return r
 }
 
@@ -1295,6 +1309,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.depth != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	if r.videoLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video__load", r.videoLoad, "")
+	}
+	if r.cameraLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera__load", r.cameraLoad, "")
 	}
 	if r.idEq != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")

@@ -21,9 +21,14 @@ import (
 	"net/http/pprof"
 )
 
+type patternAndMutateRouterFn struct {
+	pattern        string
+	mutateRouterFn server.MutateRouterFn
+}
+
 var mu = new(sync.Mutex)
 var newFromItemFnByTableName = make(map[string]func(map[string]any) (any, error))
-var getRouterFnByPattern = make(map[string]server.GetRouterFn)
+var patternsAndMutateRouterFns = make([]patternAndMutateRouterFn, 0)
 var allObjects = make([]any, 0)
 var openApi *types.OpenAPI
 var profile = config.Profile()
@@ -44,11 +49,14 @@ func register(
 	object any,
 	newFromItem func(map[string]any) (any, error),
 	pattern string,
-	getRouterFn server.GetRouterFn,
+	getRouterFn server.MutateRouterFn,
 ) {
 	allObjects = append(allObjects, object)
 	newFromItemFnByTableName[tableName] = newFromItem
-	getRouterFnByPattern[pattern] = getRouterFn
+	patternsAndMutateRouterFns = append(patternsAndMutateRouterFns, patternAndMutateRouterFn{
+		pattern:        pattern,
+		mutateRouterFn: getRouterFn,
+	})
 }
 
 func GetOpenAPI() (*types.OpenAPI, error) {
@@ -84,15 +92,13 @@ func NewFromItem(tableName string, item map[string]any) (any, error) {
 	return newFromItemFn(item)
 }
 
-func GetRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []server.HTTPMiddleware, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) chi.Router {
-	r := chi.NewRouter()
-
+func MutateRouter(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) {
 	mu.Lock()
-	getRouterFnByPattern := getRouterFnByPattern
+	patternsAndGetRouterFns := patternsAndMutateRouterFns
 	mu.Unlock()
 
-	for pattern, getRouterFn := range getRouterFnByPattern {
-		r.Mount(pattern, getRouterFn(db, redisPool, httpMiddlewares, objectMiddlewares, waitForChange))
+	for _, thisPatternAndGetRouterFn := range patternsAndGetRouterFns {
+		thisPatternAndGetRouterFn.mutateRouterFn(r, db, redisPool, objectMiddlewares, waitForChange)
 	}
 
 	healthzMu := new(sync.Mutex)
@@ -199,11 +205,9 @@ func GetRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []server
 
 		server.WriteResponse(w, http.StatusOK, b)
 	})
-
-	return r
 }
 
-func getHTTPHandler[T any, S any, Q any, R any](method string, path string, status int, handle func(context.Context, T, S, Q, any) (R, error), modelObject any) (*server.HTTPHandler[T, S, Q, R], error) {
+func getHTTPHandler[T any, S any, Q any, R any](method string, path string, status int, handle func(context.Context, T, S, Q, any) (R, error), modelObject any, table *introspect.Table) (*server.HTTPHandler[T, S, Q, R], error) {
 	customHTTPHandler, err := server.GetHTTPHandler(method, path, status, handle)
 	if err != nil {
 		return nil, err
@@ -211,6 +215,7 @@ func getHTTPHandler[T any, S any, Q any, R any](method string, path string, stat
 
 	customHTTPHandler.Builtin = true
 	customHTTPHandler.BuiltinModelObject = modelObject
+	customHTTPHandler.BuiltinTable = table
 
 	mu.Lock()
 	httpHandlerSummaries = append(httpHandlerSummaries, customHTTPHandler.Summarize())
@@ -397,15 +402,15 @@ var tableByNameAsJSON = []byte(`{
         "type_template": "time.Time"
       },
       {
-        "column": "segment_producer_claimed_until",
+        "column": "claimed_until",
         "datatype": "timestamp with time zone",
         "table": "camera",
-        "pos": 8,
+        "pos": 18,
         "typeid": "1184",
         "typelen": 8,
         "typemod": -1,
-        "notnull": true,
-        "hasdefault": true,
+        "notnull": false,
+        "hasdefault": false,
         "hasmissing": false,
         "ispkey": false,
         "ftable": null,
@@ -417,24 +422,24 @@ var tableByNameAsJSON = []byte(`{
         "type_template": "time.Time"
       },
       {
-        "column": "stream_producer_claimed_until",
-        "datatype": "timestamp with time zone",
+        "column": "claimed_by",
+        "datatype": "uuid",
         "table": "camera",
-        "pos": 9,
-        "typeid": "1184",
-        "typelen": 8,
+        "pos": 19,
+        "typeid": "2950",
+        "typelen": 16,
         "typemod": -1,
-        "notnull": true,
-        "hasdefault": true,
+        "notnull": false,
+        "hasdefault": false,
         "hasmissing": false,
         "ispkey": false,
         "ftable": null,
         "fcolumn": null,
         "parent_id": "20314",
-        "zero_type": "0001-01-01T00:00:00Z",
-        "query_type_template": "time.Time",
-        "stream_type_template": "time.Time",
-        "type_template": "time.Time"
+        "zero_type": "00000000-0000-0000-0000-000000000000",
+        "query_type_template": "uuid.UUID",
+        "stream_type_template": "[16]uint8",
+        "type_template": "uuid.UUID"
       }
     ]
   },
@@ -982,46 +987,6 @@ var tableByNameAsJSON = []byte(`{
         "type_template": "string"
       },
       {
-        "column": "object_detector_claimed_until",
-        "datatype": "timestamp with time zone",
-        "table": "video",
-        "pos": 12,
-        "typeid": "1184",
-        "typelen": 8,
-        "typemod": -1,
-        "notnull": true,
-        "hasdefault": true,
-        "hasmissing": false,
-        "ispkey": false,
-        "ftable": null,
-        "fcolumn": null,
-        "parent_id": "20331",
-        "zero_type": "0001-01-01T00:00:00Z",
-        "query_type_template": "time.Time",
-        "stream_type_template": "time.Time",
-        "type_template": "time.Time"
-      },
-      {
-        "column": "object_tracker_claimed_until",
-        "datatype": "timestamp with time zone",
-        "table": "video",
-        "pos": 13,
-        "typeid": "1184",
-        "typelen": 8,
-        "typemod": -1,
-        "notnull": true,
-        "hasdefault": true,
-        "hasmissing": false,
-        "ispkey": false,
-        "ftable": null,
-        "fcolumn": null,
-        "parent_id": "20331",
-        "zero_type": "0001-01-01T00:00:00Z",
-        "query_type_template": "time.Time",
-        "stream_type_template": "time.Time",
-        "type_template": "time.Time"
-      },
-      {
         "column": "camera_id",
         "datatype": "uuid",
         "table": "video",
@@ -1045,7 +1010,7 @@ var tableByNameAsJSON = []byte(`{
         "column": "detection_summary",
         "datatype": "jsonb",
         "table": "video",
-        "pos": 15,
+        "pos": 24,
         "typeid": "3802",
         "typelen": -1,
         "typemod": -1,
@@ -1060,6 +1025,46 @@ var tableByNameAsJSON = []byte(`{
         "query_type_template": "any",
         "stream_type_template": "any",
         "type_template": "any"
+      },
+      {
+        "column": "claimed_until",
+        "datatype": "timestamp with time zone",
+        "table": "video",
+        "pos": 25,
+        "typeid": "1184",
+        "typelen": 8,
+        "typemod": -1,
+        "notnull": false,
+        "hasdefault": false,
+        "hasmissing": false,
+        "ispkey": false,
+        "ftable": null,
+        "fcolumn": null,
+        "parent_id": "20331",
+        "zero_type": "0001-01-01T00:00:00Z",
+        "query_type_template": "time.Time",
+        "stream_type_template": "time.Time",
+        "type_template": "time.Time"
+      },
+      {
+        "column": "claimed_by",
+        "datatype": "uuid",
+        "table": "video",
+        "pos": 26,
+        "typeid": "2950",
+        "typelen": 16,
+        "typemod": -1,
+        "notnull": false,
+        "hasdefault": false,
+        "hasmissing": false,
+        "ispkey": false,
+        "ftable": null,
+        "fcolumn": null,
+        "parent_id": "20331",
+        "zero_type": "00000000-0000-0000-0000-000000000000",
+        "query_type_template": "uuid.UUID",
+        "stream_type_template": "[16]uint8",
+        "type_template": "uuid.UUID"
       }
     ]
   }
@@ -1091,5 +1096,5 @@ func RunServer(
 	thisTableByName := tableByName
 	mu.Unlock()
 
-	return server.RunServer(ctx, changes, addr, NewFromItem, GetRouter, db, redisPool, httpMiddlewares, objectMiddlewares, addCustomHandlers, thisTableByName)
+	return server.RunServer(ctx, changes, addr, NewFromItem, MutateRouter, db, redisPool, httpMiddlewares, objectMiddlewares, addCustomHandlers, thisTableByName)
 }

@@ -15,7 +15,7 @@ export const queryClient = new QueryClient({
     queries: {
       staleTime: 1000 * 60, // 1 minute,
       gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days
-      refetchInterval: 1000 * 5, // 5 second
+      refetchInterval: 1000 * 10, // 10 second
       refetchIntervalInBackground: true,
       refetchOnMount: true,
       refetchOnReconnect: true,

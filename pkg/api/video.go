@@ -6,6 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"math"
 	"net/http"
 	"net/netip"
 	"slices"
@@ -41,11 +42,11 @@ type Video struct {
 	FileSize                            *float64       `json:"file_size"`
 	ThumbnailName                       *string        `json:"thumbnail_name"`
 	Status                              *string        `json:"status"`
-	ObjectDetectorClaimedUntil          time.Time      `json:"object_detector_claimed_until"`
-	ObjectTrackerClaimedUntil           time.Time      `json:"object_tracker_claimed_until"`
 	CameraID                            uuid.UUID      `json:"camera_id"`
 	CameraIDObject                      *Camera        `json:"camera_id_object"`
 	DetectionSummary                    any            `json:"detection_summary"`
+	ClaimedUntil                        *time.Time     `json:"claimed_until"`
+	ClaimedBy                           *uuid.UUID     `json:"claimed_by"`
 	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
 }
 
@@ -54,39 +55,39 @@ var VideoTable = "video"
 var VideoTableNamespaceID int32 = 1337 + 4
 
 var (
-	VideoTableIDColumn                         = "id"
-	VideoTableCreatedAtColumn                  = "created_at"
-	VideoTableUpdatedAtColumn                  = "updated_at"
-	VideoTableDeletedAtColumn                  = "deleted_at"
-	VideoTableFileNameColumn                   = "file_name"
-	VideoTableStartedAtColumn                  = "started_at"
-	VideoTableEndedAtColumn                    = "ended_at"
-	VideoTableDurationColumn                   = "duration"
-	VideoTableFileSizeColumn                   = "file_size"
-	VideoTableThumbnailNameColumn              = "thumbnail_name"
-	VideoTableStatusColumn                     = "status"
-	VideoTableObjectDetectorClaimedUntilColumn = "object_detector_claimed_until"
-	VideoTableObjectTrackerClaimedUntilColumn  = "object_tracker_claimed_until"
-	VideoTableCameraIDColumn                   = "camera_id"
-	VideoTableDetectionSummaryColumn           = "detection_summary"
+	VideoTableIDColumn               = "id"
+	VideoTableCreatedAtColumn        = "created_at"
+	VideoTableUpdatedAtColumn        = "updated_at"
+	VideoTableDeletedAtColumn        = "deleted_at"
+	VideoTableFileNameColumn         = "file_name"
+	VideoTableStartedAtColumn        = "started_at"
+	VideoTableEndedAtColumn          = "ended_at"
+	VideoTableDurationColumn         = "duration"
+	VideoTableFileSizeColumn         = "file_size"
+	VideoTableThumbnailNameColumn    = "thumbnail_name"
+	VideoTableStatusColumn           = "status"
+	VideoTableCameraIDColumn         = "camera_id"
+	VideoTableDetectionSummaryColumn = "detection_summary"
+	VideoTableClaimedUntilColumn     = "claimed_until"
+	VideoTableClaimedByColumn        = "claimed_by"
 )
 
 var (
-	VideoTableIDColumnWithTypeCast                         = `"id" AS id`
-	VideoTableCreatedAtColumnWithTypeCast                  = `"created_at" AS created_at`
-	VideoTableUpdatedAtColumnWithTypeCast                  = `"updated_at" AS updated_at`
-	VideoTableDeletedAtColumnWithTypeCast                  = `"deleted_at" AS deleted_at`
-	VideoTableFileNameColumnWithTypeCast                   = `"file_name" AS file_name`
-	VideoTableStartedAtColumnWithTypeCast                  = `"started_at" AS started_at`
-	VideoTableEndedAtColumnWithTypeCast                    = `"ended_at" AS ended_at`
-	VideoTableDurationColumnWithTypeCast                   = `"duration" AS duration`
-	VideoTableFileSizeColumnWithTypeCast                   = `"file_size" AS file_size`
-	VideoTableThumbnailNameColumnWithTypeCast              = `"thumbnail_name" AS thumbnail_name`
-	VideoTableStatusColumnWithTypeCast                     = `"status" AS status`
-	VideoTableObjectDetectorClaimedUntilColumnWithTypeCast = `"object_detector_claimed_until" AS object_detector_claimed_until`
-	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast  = `"object_tracker_claimed_until" AS object_tracker_claimed_until`
-	VideoTableCameraIDColumnWithTypeCast                   = `"camera_id" AS camera_id`
-	VideoTableDetectionSummaryColumnWithTypeCast           = `"detection_summary" AS detection_summary`
+	VideoTableIDColumnWithTypeCast               = `"id" AS id`
+	VideoTableCreatedAtColumnWithTypeCast        = `"created_at" AS created_at`
+	VideoTableUpdatedAtColumnWithTypeCast        = `"updated_at" AS updated_at`
+	VideoTableDeletedAtColumnWithTypeCast        = `"deleted_at" AS deleted_at`
+	VideoTableFileNameColumnWithTypeCast         = `"file_name" AS file_name`
+	VideoTableStartedAtColumnWithTypeCast        = `"started_at" AS started_at`
+	VideoTableEndedAtColumnWithTypeCast          = `"ended_at" AS ended_at`
+	VideoTableDurationColumnWithTypeCast         = `"duration" AS duration`
+	VideoTableFileSizeColumnWithTypeCast         = `"file_size" AS file_size`
+	VideoTableThumbnailNameColumnWithTypeCast    = `"thumbnail_name" AS thumbnail_name`
+	VideoTableStatusColumnWithTypeCast           = `"status" AS status`
+	VideoTableCameraIDColumnWithTypeCast         = `"camera_id" AS camera_id`
+	VideoTableDetectionSummaryColumnWithTypeCast = `"detection_summary" AS detection_summary`
+	VideoTableClaimedUntilColumnWithTypeCast     = `"claimed_until" AS claimed_until`
+	VideoTableClaimedByColumnWithTypeCast        = `"claimed_by" AS claimed_by`
 )
 
 var VideoTableColumns = []string{
@@ -101,10 +102,10 @@ var VideoTableColumns = []string{
 	VideoTableFileSizeColumn,
 	VideoTableThumbnailNameColumn,
 	VideoTableStatusColumn,
-	VideoTableObjectDetectorClaimedUntilColumn,
-	VideoTableObjectTrackerClaimedUntilColumn,
 	VideoTableCameraIDColumn,
 	VideoTableDetectionSummaryColumn,
+	VideoTableClaimedUntilColumn,
+	VideoTableClaimedByColumn,
 }
 
 var VideoTableColumnsWithTypeCasts = []string{
@@ -119,10 +120,10 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableFileSizeColumnWithTypeCast,
 	VideoTableThumbnailNameColumnWithTypeCast,
 	VideoTableStatusColumnWithTypeCast,
-	VideoTableObjectDetectorClaimedUntilColumnWithTypeCast,
-	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast,
 	VideoTableCameraIDColumnWithTypeCast,
 	VideoTableDetectionSummaryColumnWithTypeCast,
+	VideoTableClaimedUntilColumnWithTypeCast,
+	VideoTableClaimedByColumnWithTypeCast,
 }
 
 var VideoIntrospectedTable *introspect.Table
@@ -150,6 +151,12 @@ type VideoOnePathParams struct {
 
 type VideoLoadQueryParams struct {
 	Depth *int `json:"depth"`
+}
+
+type VideoClaimRequest struct {
+	Until          time.Time `json:"until"`
+	By             uuid.UUID `json:"by"`
+	TimeoutSeconds float64   `json:"timeout_seconds"`
 }
 
 /*
@@ -412,44 +419,6 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.Status = &temp2
 
-		case "object_detector_claimed_until":
-			if v == nil {
-				continue
-			}
-
-			temp1, err := types.ParseTime(v)
-			if err != nil {
-				return wrapError(k, v, err)
-			}
-
-			temp2, ok := temp1.(time.Time)
-			if !ok {
-				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuobject_detector_claimed_until.UUID", temp1))
-				}
-			}
-
-			m.ObjectDetectorClaimedUntil = temp2
-
-		case "object_tracker_claimed_until":
-			if v == nil {
-				continue
-			}
-
-			temp1, err := types.ParseTime(v)
-			if err != nil {
-				return wrapError(k, v, err)
-			}
-
-			temp2, ok := temp1.(time.Time)
-			if !ok {
-				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuobject_tracker_claimed_until.UUID", temp1))
-				}
-			}
-
-			m.ObjectTrackerClaimedUntil = temp2
-
 		case "camera_id":
 			if v == nil {
 				continue
@@ -487,6 +456,44 @@ func (m *Video) FromItem(item map[string]any) error {
 			}
 
 			m.DetectionSummary = temp2
+
+		case "claimed_until":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseTime(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Time)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuclaimed_until.UUID", temp1))
+				}
+			}
+
+			m.ClaimedUntil = &temp2
+
+		case "claimed_by":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseUUID(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(uuid.UUID)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuclaimed_by.UUID", temp1))
+				}
+			}
+
+			m.ClaimedBy = &temp2
 
 		}
 	}
@@ -528,11 +535,11 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	m.FileSize = o.FileSize
 	m.ThumbnailName = o.ThumbnailName
 	m.Status = o.Status
-	m.ObjectDetectorClaimedUntil = o.ObjectDetectorClaimedUntil
-	m.ObjectTrackerClaimedUntil = o.ObjectTrackerClaimedUntil
 	m.CameraID = o.CameraID
 	m.CameraIDObject = o.CameraIDObject
 	m.DetectionSummary = o.DetectionSummary
+	m.ClaimedUntil = o.ClaimedUntil
+	m.ClaimedBy = o.ClaimedBy
 	m.ReferencedByDetectionVideoIDObjects = o.ReferencedByDetectionVideoIDObjects
 
 	return nil
@@ -663,28 +670,6 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.ObjectDetectorClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectDetectorClaimedUntilColumn) || isRequired(VideoTableColumnLookup, VideoTableObjectDetectorClaimedUntilColumn) {
-		columns = append(columns, VideoTableObjectDetectorClaimedUntilColumn)
-
-		v, err := types.FormatTime(m.ObjectDetectorClaimedUntil)
-		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil; %v", err)
-		}
-
-		values = append(values, v)
-	}
-
-	if setZeroValues || !types.IsZeroTime(m.ObjectTrackerClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectTrackerClaimedUntilColumn) || isRequired(VideoTableColumnLookup, VideoTableObjectTrackerClaimedUntilColumn) {
-		columns = append(columns, VideoTableObjectTrackerClaimedUntilColumn)
-
-		v, err := types.FormatTime(m.ObjectTrackerClaimedUntil)
-		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil; %v", err)
-		}
-
-		values = append(values, v)
-	}
-
 	if setZeroValues || !types.IsZeroUUID(m.CameraID) || slices.Contains(forceSetValuesForFields, VideoTableCameraIDColumn) || isRequired(VideoTableColumnLookup, VideoTableCameraIDColumn) {
 		columns = append(columns, VideoTableCameraIDColumn)
 
@@ -702,6 +687,28 @@ func (m *Video) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 		v, err := types.FormatJSON(m.DetectionSummary)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.DetectionSummary; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableClaimedUntilColumn) || isRequired(VideoTableColumnLookup, VideoTableClaimedUntilColumn) {
+		columns = append(columns, VideoTableClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.ClaimedUntil)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimedUntil; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroUUID(m.ClaimedBy) || slices.Contains(forceSetValuesForFields, VideoTableClaimedByColumn) || isRequired(VideoTableColumnLookup, VideoTableClaimedByColumn) {
+		columns = append(columns, VideoTableClaimedByColumn)
+
+		v, err := types.FormatUUID(m.ClaimedBy)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimedBy; %v", err)
 		}
 
 		values = append(values, v)
@@ -875,28 +882,6 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroTime(m.ObjectDetectorClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectDetectorClaimedUntilColumn) {
-		columns = append(columns, VideoTableObjectDetectorClaimedUntilColumn)
-
-		v, err := types.FormatTime(m.ObjectDetectorClaimedUntil)
-		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectDetectorClaimedUntil; %v", err)
-		}
-
-		values = append(values, v)
-	}
-
-	if setZeroValues || !types.IsZeroTime(m.ObjectTrackerClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableObjectTrackerClaimedUntilColumn) {
-		columns = append(columns, VideoTableObjectTrackerClaimedUntilColumn)
-
-		v, err := types.FormatTime(m.ObjectTrackerClaimedUntil)
-		if err != nil {
-			return fmt.Errorf("failed to handle m.ObjectTrackerClaimedUntil; %v", err)
-		}
-
-		values = append(values, v)
-	}
-
 	if setZeroValues || !types.IsZeroUUID(m.CameraID) || slices.Contains(forceSetValuesForFields, VideoTableCameraIDColumn) {
 		columns = append(columns, VideoTableCameraIDColumn)
 
@@ -914,6 +899,28 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		v, err := types.FormatJSON(m.DetectionSummary)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.DetectionSummary; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.ClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableClaimedUntilColumn) {
+		columns = append(columns, VideoTableClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.ClaimedUntil)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimedUntil; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroUUID(m.ClaimedBy) || slices.Contains(forceSetValuesForFields, VideoTableClaimedByColumn) {
+		columns = append(columns, VideoTableClaimedByColumn)
+
+		v, err := types.FormatUUID(m.ClaimedBy)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.ClaimedBy; %v", err)
 		}
 
 		values = append(values, v)
@@ -1011,6 +1018,43 @@ func (m *Video) AdvisoryLockWithRetries(ctx context.Context, tx pgx.Tx, key int3
 	return query.AdvisoryLockWithRetries(ctx, tx, VideoTableNamespaceID, key, overallTimeout, individualAttempttimeout)
 }
 
+func (m *Video) Claim(ctx context.Context, tx pgx.Tx, until time.Time, by uuid.UUID, timeout time.Duration) error {
+	if !(slices.Contains(VideoTableColumns, "claimed_until") && slices.Contains(VideoTableColumns, "claimed_by")) {
+		return fmt.Errorf("can only invoke Claim for tables with 'claimed_until' and 'claimed_by' columns")
+	}
+
+	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
+	if err != nil {
+		return fmt.Errorf("failed to claim (advisory lock): %s", err.Error())
+	}
+
+	x, _, _, _, _, err := SelectVideo(
+		ctx,
+		tx,
+		fmt.Sprintf(
+			"%s = $$?? AND (claimed_by = $$?? OR (claimed_until IS null OR claimed_until < now()))",
+			VideoTablePrimaryKeyColumn,
+		),
+		m.GetPrimaryKeyValue(),
+		by,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to claim (select): %s", err.Error())
+	}
+
+	_ = x
+
+	m.ClaimedUntil = &until
+	m.ClaimedBy = &by
+
+	err = m.Update(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to claim (update): %s", err.Error())
+	}
+
+	return nil
+}
+
 func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string, limit *int, offset *int, values ...any) ([]*Video, int64, int64, int64, int64, error) {
 	before := time.Now()
 
@@ -1036,8 +1080,15 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 
 	possiblePathValue := query.GetCurrentPathValue(ctx)
 	isLoadQuery := possiblePathValue != nil && len(possiblePathValue.VisitedTableNames) > 0
-	ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, nil), !isLoadQuery)
-	if !ok {
+
+	shouldLoad := query.ShouldLoad(ctx, VideoTable) || query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", VideoTable))
+
+	var ok bool
+	ctx, ok = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, nil), !isLoadQuery)
+	if !ok && !shouldLoad {
+		if config.Debug() {
+			log.Printf("skipping SelectVideo early (query.ShouldLoad(): %v, query.HandleQueryPathGraphCycles(): %v)", shouldLoad, ok)
+		}
 		return []*Video{}, 0, 0, 0, 0, nil
 	}
 
@@ -1068,11 +1119,12 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 
 		if !types.IsZeroUUID(object.CameraID) {
 			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID), true)
-			if ok {
+			shouldLoad := query.ShouldLoad(ctx, CameraTable)
+			if ok || shouldLoad {
 				thisBefore := time.Now()
 
 				if config.Debug() {
-					log.Printf("loading SelectVideos->SelectCamera for object.CameraIDObject")
+					log.Printf("loading SelectVideos->SelectCamera for object.CameraIDObject{%s: %v}", CameraTablePrimaryKeyColumn, object.CameraID)
 				}
 
 				object.CameraIDObject, _, _, _, _, err = SelectCamera(
@@ -1094,8 +1146,9 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 		}
 
 		err = func() error {
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", VideoTable, object.GetPrimaryKeyValue()), true)
-			if ok {
+			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
+			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", DetectionTable, object.GetPrimaryKeyValue()), true)
+			if ok || shouldLoad {
 				thisBefore := time.Now()
 
 				if config.Debug() {
@@ -1172,13 +1225,60 @@ func SelectVideo(ctx context.Context, tx pgx.Tx, where string, values ...any) (*
 	return object, count, totalCount, page, totalPages, nil
 }
 
+func ClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, by uuid.UUID, timeout time.Duration, wheres ...string) (*Video, error) {
+	if !(slices.Contains(VideoTableColumns, "claimed_until") && slices.Contains(VideoTableColumns, "claimed_by")) {
+		return nil, fmt.Errorf("can only invoke Claim for tables with 'claimed_until' and 'claimed_by' columns")
+	}
+
+	m := &Video{}
+
+	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
+	if err != nil {
+		return nil, fmt.Errorf("failed to claim: %s", err.Error())
+	}
+
+	extraWhere := ""
+	if len(wheres) > 0 {
+		extraWhere = fmt.Sprintf("AND %s", extraWhere)
+	}
+
+	ms, _, _, _, _, err := SelectVideos(
+		ctx,
+		tx,
+		fmt.Sprintf(
+			"(claimed_until IS null OR claimed_until < now())%s",
+			extraWhere,
+		),
+		helpers.Ptr(
+			"claimed_until ASC",
+		),
+		helpers.Ptr(1),
+		nil,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to claim: %s", err.Error())
+	}
+
+	if len(ms) == 0 {
+		return nil, nil
+	}
+
+	m = ms[0]
+
+	m.ClaimedUntil = &until
+	m.ClaimedBy = &by
+
+	err = m.Update(ctx, tx, false)
+	if err != nil {
+		return nil, fmt.Errorf("failed to claim: %s", err.Error())
+	}
+
+	return m, nil
+}
+
 func handleGetVideos(arguments *server.SelectManyArguments, db *pgxpool.Pool) ([]*Video, int64, int64, int64, int64, error) {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
-		if config.Debug() {
-			log.Printf("")
-		}
-
 		return nil, 0, 0, 0, 0, err
 	}
 
@@ -1461,11 +1561,172 @@ func handleDeleteVideo(arguments *server.LoadArguments, db *pgxpool.Pool, waitFo
 	return nil
 }
 
-func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []server.HTTPMiddleware, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) chi.Router {
-	r := chi.NewRouter()
+func MutateRouterForVideo(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) {
+	if slices.Contains(VideoTableColumns, "claimed_until") && slices.Contains(VideoTableColumns, "claimed_by") {
+		func() {
+			postHandlerForClaim, err := getHTTPHandler(
+				http.MethodPost,
+				"/claim-video",
+				http.StatusOK,
+				func(
+					ctx context.Context,
+					pathParams server.EmptyPathParams,
+					queryParams server.EmptyQueryParams,
+					req VideoClaimRequest,
+					rawReq any,
+				) (server.Response[Video], error) {
+					tx, err := db.Begin(ctx)
+					if err != nil {
+						return server.Response[Video]{}, err
+					}
 
-	for _, m := range httpMiddlewares {
-		r.Use(m)
+					defer func() {
+						_ = tx.Rollback(ctx)
+					}()
+
+					object, err := ClaimVideo(ctx, tx, req.Until, req.By, time.Millisecond*time.Duration(req.TimeoutSeconds*1000))
+					if err != nil {
+						return server.Response[Video]{}, err
+					}
+
+					count := int64(0)
+
+					totalCount := int64(0)
+
+					limit := int64(0)
+
+					offset := int64(0)
+
+					if object == nil {
+						return server.Response[Video]{
+							Status:     http.StatusOK,
+							Success:    true,
+							Error:      nil,
+							Objects:    []*Video{},
+							Count:      count,
+							TotalCount: totalCount,
+							Limit:      limit,
+							Offset:     offset,
+						}, nil
+					}
+
+					err = tx.Commit(ctx)
+					if err != nil {
+						return server.Response[Video]{}, err
+					}
+
+					return server.Response[Video]{
+						Status:     http.StatusOK,
+						Success:    true,
+						Error:      nil,
+						Objects:    []*Video{object},
+						Count:      count,
+						TotalCount: totalCount,
+						Limit:      limit,
+						Offset:     offset,
+					}, nil
+				},
+				Video{},
+				VideoIntrospectedTable,
+			)
+			if err != nil {
+				panic(err)
+			}
+			r.Post(postHandlerForClaim.FullPath, postHandlerForClaim.ServeHTTP)
+
+			postHandlerForClaimOne, err := getHTTPHandler(
+				http.MethodPost,
+				"/videos/{primaryKey}/claim",
+				http.StatusOK,
+				func(
+					ctx context.Context,
+					pathParams VideoOnePathParams,
+					queryParams VideoLoadQueryParams,
+					req VideoClaimRequest,
+					rawReq any,
+				) (server.Response[Video], error) {
+					before := time.Now()
+
+					redisConn := redisPool.Get()
+					defer func() {
+						_ = redisConn.Close()
+					}()
+
+					arguments, err := server.GetSelectOneArguments(ctx, queryParams.Depth, VideoIntrospectedTable, pathParams.PrimaryKey, nil, nil)
+					if err != nil {
+						if config.Debug() {
+							log.Printf("request failed in %s %s path: %#+v query: %#+v req: %#+v", time.Since(before), http.MethodGet, pathParams, queryParams, req)
+						}
+
+						return server.Response[Video]{}, err
+					}
+
+					/* note: deliberately no attempt at a cache hit */
+
+					var object *Video
+					var count int64
+					var totalCount int64
+
+					err = func() error {
+						tx, err := db.Begin(arguments.Ctx)
+						if err != nil {
+							return err
+						}
+
+						defer func() {
+							_ = tx.Rollback(arguments.Ctx)
+						}()
+
+						object, count, totalCount, _, _, err = SelectVideo(arguments.Ctx, tx, arguments.Where, arguments.Values...)
+						if err != nil {
+							return fmt.Errorf("failed to select object to claim: %s", err.Error())
+						}
+
+						err = object.Claim(arguments.Ctx, tx, req.Until, req.By, time.Millisecond*time.Duration(req.TimeoutSeconds*1000))
+						if err != nil {
+							return err
+						}
+
+						err = tx.Commit(arguments.Ctx)
+						if err != nil {
+							return err
+						}
+
+						return nil
+					}()
+					if err != nil {
+						if config.Debug() {
+							log.Printf("request failed in %s %s path: %#+v query: %#+v req: %#+v", time.Since(before), http.MethodGet, pathParams, queryParams, req)
+						}
+
+						return server.Response[Video]{}, err
+					}
+
+					limit := int64(0)
+
+					offset := int64(0)
+
+					response := server.Response[Video]{
+						Status:     http.StatusOK,
+						Success:    true,
+						Error:      nil,
+						Objects:    []*Video{object},
+						Count:      count,
+						TotalCount: totalCount,
+						Limit:      limit,
+						Offset:     offset,
+					}
+
+					return response, nil
+				},
+				Video{},
+				VideoIntrospectedTable,
+			)
+			if err != nil {
+				panic(err)
+			}
+			r.Post(postHandlerForClaimOne.FullPath, postHandlerForClaimOne.ServeHTTP)
+		}()
 	}
 
 	func() {
@@ -1577,11 +1838,12 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				return response, nil
 			},
 			Video{},
+			VideoIntrospectedTable,
 		)
 		if err != nil {
 			panic(err)
 		}
-		r.Get(getManyHandler.PathWithinRouter, getManyHandler.ServeHTTP)
+		r.Get(getManyHandler.FullPath, getManyHandler.ServeHTTP)
 	}()
 
 	func() {
@@ -1687,11 +1949,12 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				return response, nil
 			},
 			Video{},
+			VideoIntrospectedTable,
 		)
 		if err != nil {
 			panic(err)
 		}
-		r.Get(getOneHandler.PathWithinRouter, getOneHandler.ServeHTTP)
+		r.Get(getOneHandler.FullPath, getOneHandler.ServeHTTP)
 	}()
 
 	func() {
@@ -1760,11 +2023,12 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				}, nil
 			},
 			Video{},
+			VideoIntrospectedTable,
 		)
 		if err != nil {
 			panic(err)
 		}
-		r.Post(postHandler.PathWithinRouter, postHandler.ServeHTTP)
+		r.Post(postHandler.FullPath, postHandler.ServeHTTP)
 	}()
 
 	func() {
@@ -1813,11 +2077,12 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				}, nil
 			},
 			Video{},
+			VideoIntrospectedTable,
 		)
 		if err != nil {
 			panic(err)
 		}
-		r.Put(putHandler.PathWithinRouter, putHandler.ServeHTTP)
+		r.Put(putHandler.FullPath, putHandler.ServeHTTP)
 	}()
 
 	func() {
@@ -1875,11 +2140,12 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				}, nil
 			},
 			Video{},
+			VideoIntrospectedTable,
 		)
 		if err != nil {
 			panic(err)
 		}
-		r.Patch(patchHandler.PathWithinRouter, patchHandler.ServeHTTP)
+		r.Patch(patchHandler.FullPath, patchHandler.ServeHTTP)
 	}()
 
 	func() {
@@ -1910,14 +2176,13 @@ func GetVideoRouter(db *pgxpool.Pool, redisPool *redis.Pool, httpMiddlewares []s
 				return server.EmptyResponse{}, nil
 			},
 			Video{},
+			VideoIntrospectedTable,
 		)
 		if err != nil {
 			panic(err)
 		}
-		r.Delete(deleteHandler.PathWithinRouter, deleteHandler.ServeHTTP)
+		r.Delete(deleteHandler.FullPath, deleteHandler.ServeHTTP)
 	}()
-
-	return r
 }
 
 func NewVideoFromItem(item map[string]any) (any, error) {
@@ -1937,6 +2202,6 @@ func init() {
 		Video{},
 		NewVideoFromItem,
 		"/videos",
-		GetVideoRouter,
+		MutateRouterForVideo,
 	)
 }

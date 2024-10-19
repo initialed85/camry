@@ -89,7 +89,7 @@ export default function DateSlider(props: DateSliderProps) {
             "&::before": {
               left: "initial",
               right: 0,
-              transform: "translateY(100%)",
+              transform: "translateY(0%)",
               borderRightColor: "currentColor",
             },
           },
