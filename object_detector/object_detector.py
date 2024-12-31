@@ -123,6 +123,7 @@ def do(
 
                         raw_timedelta = cap.get(cv2.CAP_PROP_POS_MSEC)
 
+                        # 0, 4, 8, 12, 16 etc- so I guess we're 25% of the original frame rate
                         if frame_index % 4 != 0:
                             continue
 
@@ -235,6 +236,11 @@ def do(
                         scores = [x.score for x in these_detections if x.score is not None]
                         average_score = sum(scores) / len(scores) if scores else 0.0
                         frame_count = len(these_detections)
+
+                        # TODO: 5 frames at a stride of 4 is 5 seconds- hopefully nobody is doing anything noteworthy in < 5s
+                        if frame_count < 5:
+                            continue
+
                         weighted_score = (
                             ((average_score * frame_count) / float(handled_frame_count))
                             if handled_frame_count != 0
