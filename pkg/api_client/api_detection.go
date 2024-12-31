@@ -249,6 +249,8 @@ type ApiGetDetectionsRequest struct {
 	limit *int32
 	offset *int32
 	depth *int32
+	videoLoad *string
+	cameraLoad *string
 	idEq *string
 	idNe *string
 	idGt *string
@@ -257,6 +259,8 @@ type ApiGetDetectionsRequest struct {
 	idLte *string
 	idIn *string
 	idNotin *string
+	idContains *string
+	idNotcontains *string
 	idLike *string
 	idNotlike *string
 	idIlike *string
@@ -271,6 +275,8 @@ type ApiGetDetectionsRequest struct {
 	createdAtLte *time.Time
 	createdAtIn *time.Time
 	createdAtNotin *time.Time
+	createdAtContains *time.Time
+	createdAtNotcontains *time.Time
 	createdAtLike *time.Time
 	createdAtNotlike *time.Time
 	createdAtIlike *time.Time
@@ -285,6 +291,8 @@ type ApiGetDetectionsRequest struct {
 	updatedAtLte *time.Time
 	updatedAtIn *time.Time
 	updatedAtNotin *time.Time
+	updatedAtContains *time.Time
+	updatedAtNotcontains *time.Time
 	updatedAtLike *time.Time
 	updatedAtNotlike *time.Time
 	updatedAtIlike *time.Time
@@ -299,6 +307,8 @@ type ApiGetDetectionsRequest struct {
 	deletedAtLte *time.Time
 	deletedAtIn *time.Time
 	deletedAtNotin *time.Time
+	deletedAtContains *time.Time
+	deletedAtNotcontains *time.Time
 	deletedAtLike *time.Time
 	deletedAtNotlike *time.Time
 	deletedAtIlike *time.Time
@@ -313,6 +323,8 @@ type ApiGetDetectionsRequest struct {
 	seenAtLte *time.Time
 	seenAtIn *time.Time
 	seenAtNotin *time.Time
+	seenAtContains *time.Time
+	seenAtNotcontains *time.Time
 	seenAtLike *time.Time
 	seenAtNotlike *time.Time
 	seenAtIlike *time.Time
@@ -327,6 +339,8 @@ type ApiGetDetectionsRequest struct {
 	classIdLte *int64
 	classIdIn *int64
 	classIdNotin *int64
+	classIdContains *int64
+	classIdNotcontains *int64
 	classIdDesc *string
 	classIdAsc *string
 	classNameEq *string
@@ -337,6 +351,8 @@ type ApiGetDetectionsRequest struct {
 	classNameLte *string
 	classNameIn *string
 	classNameNotin *string
+	classNameContains *string
+	classNameNotcontains *string
 	classNameLike *string
 	classNameNotlike *string
 	classNameIlike *string
@@ -351,10 +367,16 @@ type ApiGetDetectionsRequest struct {
 	scoreLte *float64
 	scoreIn *float64
 	scoreNotin *float64
+	scoreContains *float64
+	scoreNotcontains *float64
 	scoreDesc *string
 	scoreAsc *string
+	centroidContains *interface{}
+	centroidNotcontains *interface{}
 	centroidDesc *string
 	centroidAsc *string
+	boundingBoxContains *interface{}
+	boundingBoxNotcontains *interface{}
 	boundingBoxDesc *string
 	boundingBoxAsc *string
 	videoIdEq *string
@@ -365,12 +387,16 @@ type ApiGetDetectionsRequest struct {
 	videoIdLte *string
 	videoIdIn *string
 	videoIdNotin *string
+	videoIdContains *string
+	videoIdNotcontains *string
 	videoIdLike *string
 	videoIdNotlike *string
 	videoIdIlike *string
 	videoIdNotilike *string
 	videoIdDesc *string
 	videoIdAsc *string
+	videoIdObjectContains *interface{}
+	videoIdObjectNotcontains *interface{}
 	videoIdObjectDesc *string
 	videoIdObjectAsc *string
 	cameraIdEq *string
@@ -381,12 +407,16 @@ type ApiGetDetectionsRequest struct {
 	cameraIdLte *string
 	cameraIdIn *string
 	cameraIdNotin *string
+	cameraIdContains *string
+	cameraIdNotcontains *string
 	cameraIdLike *string
 	cameraIdNotlike *string
 	cameraIdIlike *string
 	cameraIdNotilike *string
 	cameraIdDesc *string
 	cameraIdAsc *string
+	cameraIdObjectContains *interface{}
+	cameraIdObjectNotcontains *interface{}
 	cameraIdObjectDesc *string
 	cameraIdObjectAsc *string
 }
@@ -406,6 +436,18 @@ func (r ApiGetDetectionsRequest) Offset(offset int32) ApiGetDetectionsRequest {
 // Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc)
 func (r ApiGetDetectionsRequest) Depth(depth int32) ApiGetDetectionsRequest {
 	r.depth = &depth
+	return r
+}
+
+// load the given directly related object, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) VideoLoad(videoLoad string) ApiGetDetectionsRequest {
+	r.videoLoad = &videoLoad
+	return r
+}
+
+// load the given directly related object, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) CameraLoad(cameraLoad string) ApiGetDetectionsRequest {
+	r.cameraLoad = &cameraLoad
 	return r
 }
 
@@ -454,6 +496,18 @@ func (r ApiGetDetectionsRequest) IdIn(idIn string) ApiGetDetectionsRequest {
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetDetectionsRequest) IdNotin(idNotin string) ApiGetDetectionsRequest {
 	r.idNotin = &idNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) IdContains(idContains string) ApiGetDetectionsRequest {
+	r.idContains = &idContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) IdNotcontains(idNotcontains string) ApiGetDetectionsRequest {
+	r.idNotcontains = &idNotcontains
 	return r
 }
 
@@ -541,6 +595,18 @@ func (r ApiGetDetectionsRequest) CreatedAtNotin(createdAtNotin time.Time) ApiGet
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) CreatedAtContains(createdAtContains time.Time) ApiGetDetectionsRequest {
+	r.createdAtContains = &createdAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) CreatedAtNotcontains(createdAtNotcontains time.Time) ApiGetDetectionsRequest {
+	r.createdAtNotcontains = &createdAtNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetDetectionsRequest) CreatedAtLike(createdAtLike time.Time) ApiGetDetectionsRequest {
 	r.createdAtLike = &createdAtLike
@@ -622,6 +688,18 @@ func (r ApiGetDetectionsRequest) UpdatedAtIn(updatedAtIn time.Time) ApiGetDetect
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetDetectionsRequest) UpdatedAtNotin(updatedAtNotin time.Time) ApiGetDetectionsRequest {
 	r.updatedAtNotin = &updatedAtNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) UpdatedAtContains(updatedAtContains time.Time) ApiGetDetectionsRequest {
+	r.updatedAtContains = &updatedAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) UpdatedAtNotcontains(updatedAtNotcontains time.Time) ApiGetDetectionsRequest {
+	r.updatedAtNotcontains = &updatedAtNotcontains
 	return r
 }
 
@@ -709,6 +787,18 @@ func (r ApiGetDetectionsRequest) DeletedAtNotin(deletedAtNotin time.Time) ApiGet
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) DeletedAtContains(deletedAtContains time.Time) ApiGetDetectionsRequest {
+	r.deletedAtContains = &deletedAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) DeletedAtNotcontains(deletedAtNotcontains time.Time) ApiGetDetectionsRequest {
+	r.deletedAtNotcontains = &deletedAtNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetDetectionsRequest) DeletedAtLike(deletedAtLike time.Time) ApiGetDetectionsRequest {
 	r.deletedAtLike = &deletedAtLike
@@ -790,6 +880,18 @@ func (r ApiGetDetectionsRequest) SeenAtIn(seenAtIn time.Time) ApiGetDetectionsRe
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetDetectionsRequest) SeenAtNotin(seenAtNotin time.Time) ApiGetDetectionsRequest {
 	r.seenAtNotin = &seenAtNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) SeenAtContains(seenAtContains time.Time) ApiGetDetectionsRequest {
+	r.seenAtContains = &seenAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) SeenAtNotcontains(seenAtNotcontains time.Time) ApiGetDetectionsRequest {
+	r.seenAtNotcontains = &seenAtNotcontains
 	return r
 }
 
@@ -877,6 +979,18 @@ func (r ApiGetDetectionsRequest) ClassIdNotin(classIdNotin int64) ApiGetDetectio
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) ClassIdContains(classIdContains int64) ApiGetDetectionsRequest {
+	r.classIdContains = &classIdContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) ClassIdNotcontains(classIdNotcontains int64) ApiGetDetectionsRequest {
+	r.classIdNotcontains = &classIdNotcontains
+	return r
+}
+
 // SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetDetectionsRequest) ClassIdDesc(classIdDesc string) ApiGetDetectionsRequest {
 	r.classIdDesc = &classIdDesc
@@ -934,6 +1048,18 @@ func (r ApiGetDetectionsRequest) ClassNameIn(classNameIn string) ApiGetDetection
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetDetectionsRequest) ClassNameNotin(classNameNotin string) ApiGetDetectionsRequest {
 	r.classNameNotin = &classNameNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) ClassNameContains(classNameContains string) ApiGetDetectionsRequest {
+	r.classNameContains = &classNameContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) ClassNameNotcontains(classNameNotcontains string) ApiGetDetectionsRequest {
+	r.classNameNotcontains = &classNameNotcontains
 	return r
 }
 
@@ -1021,6 +1147,18 @@ func (r ApiGetDetectionsRequest) ScoreNotin(scoreNotin float64) ApiGetDetections
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) ScoreContains(scoreContains float64) ApiGetDetectionsRequest {
+	r.scoreContains = &scoreContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) ScoreNotcontains(scoreNotcontains float64) ApiGetDetectionsRequest {
+	r.scoreNotcontains = &scoreNotcontains
+	return r
+}
+
 // SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetDetectionsRequest) ScoreDesc(scoreDesc string) ApiGetDetectionsRequest {
 	r.scoreDesc = &scoreDesc
@@ -1033,6 +1171,18 @@ func (r ApiGetDetectionsRequest) ScoreAsc(scoreAsc string) ApiGetDetectionsReque
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) CentroidContains(centroidContains interface{}) ApiGetDetectionsRequest {
+	r.centroidContains = &centroidContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) CentroidNotcontains(centroidNotcontains interface{}) ApiGetDetectionsRequest {
+	r.centroidNotcontains = &centroidNotcontains
+	return r
+}
+
 // SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetDetectionsRequest) CentroidDesc(centroidDesc string) ApiGetDetectionsRequest {
 	r.centroidDesc = &centroidDesc
@@ -1042,6 +1192,18 @@ func (r ApiGetDetectionsRequest) CentroidDesc(centroidDesc string) ApiGetDetecti
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetDetectionsRequest) CentroidAsc(centroidAsc string) ApiGetDetectionsRequest {
 	r.centroidAsc = &centroidAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) BoundingBoxContains(boundingBoxContains interface{}) ApiGetDetectionsRequest {
+	r.boundingBoxContains = &boundingBoxContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) BoundingBoxNotcontains(boundingBoxNotcontains interface{}) ApiGetDetectionsRequest {
+	r.boundingBoxNotcontains = &boundingBoxNotcontains
 	return r
 }
 
@@ -1105,6 +1267,18 @@ func (r ApiGetDetectionsRequest) VideoIdNotin(videoIdNotin string) ApiGetDetecti
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) VideoIdContains(videoIdContains string) ApiGetDetectionsRequest {
+	r.videoIdContains = &videoIdContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) VideoIdNotcontains(videoIdNotcontains string) ApiGetDetectionsRequest {
+	r.videoIdNotcontains = &videoIdNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetDetectionsRequest) VideoIdLike(videoIdLike string) ApiGetDetectionsRequest {
 	r.videoIdLike = &videoIdLike
@@ -1138,6 +1312,18 @@ func (r ApiGetDetectionsRequest) VideoIdDesc(videoIdDesc string) ApiGetDetection
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetDetectionsRequest) VideoIdAsc(videoIdAsc string) ApiGetDetectionsRequest {
 	r.videoIdAsc = &videoIdAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) VideoIdObjectContains(videoIdObjectContains interface{}) ApiGetDetectionsRequest {
+	r.videoIdObjectContains = &videoIdObjectContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) VideoIdObjectNotcontains(videoIdObjectNotcontains interface{}) ApiGetDetectionsRequest {
+	r.videoIdObjectNotcontains = &videoIdObjectNotcontains
 	return r
 }
 
@@ -1201,6 +1387,18 @@ func (r ApiGetDetectionsRequest) CameraIdNotin(cameraIdNotin string) ApiGetDetec
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) CameraIdContains(cameraIdContains string) ApiGetDetectionsRequest {
+	r.cameraIdContains = &cameraIdContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) CameraIdNotcontains(cameraIdNotcontains string) ApiGetDetectionsRequest {
+	r.cameraIdNotcontains = &cameraIdNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetDetectionsRequest) CameraIdLike(cameraIdLike string) ApiGetDetectionsRequest {
 	r.cameraIdLike = &cameraIdLike
@@ -1234,6 +1432,18 @@ func (r ApiGetDetectionsRequest) CameraIdDesc(cameraIdDesc string) ApiGetDetecti
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetDetectionsRequest) CameraIdAsc(cameraIdAsc string) ApiGetDetectionsRequest {
 	r.cameraIdAsc = &cameraIdAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) CameraIdObjectContains(cameraIdObjectContains interface{}) ApiGetDetectionsRequest {
+	r.cameraIdObjectContains = &cameraIdObjectContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) CameraIdObjectNotcontains(cameraIdObjectNotcontains interface{}) ApiGetDetectionsRequest {
+	r.cameraIdObjectNotcontains = &cameraIdObjectNotcontains
 	return r
 }
 
@@ -1296,6 +1506,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	if r.depth != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
 	}
+	if r.videoLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video__load", r.videoLoad, "")
+	}
+	if r.cameraLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera__load", r.cameraLoad, "")
+	}
 	if r.idEq != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")
 	}
@@ -1319,6 +1535,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.idNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notin", r.idNotin, "")
+	}
+	if r.idContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__contains", r.idContains, "")
+	}
+	if r.idNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notcontains", r.idNotcontains, "")
 	}
 	if r.idLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__like", r.idLike, "")
@@ -1362,6 +1584,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	if r.createdAtNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notin", r.createdAtNotin, "")
 	}
+	if r.createdAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__contains", r.createdAtContains, "")
+	}
+	if r.createdAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notcontains", r.createdAtNotcontains, "")
+	}
 	if r.createdAtLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__like", r.createdAtLike, "")
 	}
@@ -1403,6 +1631,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.updatedAtNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notin", r.updatedAtNotin, "")
+	}
+	if r.updatedAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__contains", r.updatedAtContains, "")
+	}
+	if r.updatedAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notcontains", r.updatedAtNotcontains, "")
 	}
 	if r.updatedAtLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__like", r.updatedAtLike, "")
@@ -1446,6 +1680,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	if r.deletedAtNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notin", r.deletedAtNotin, "")
 	}
+	if r.deletedAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__contains", r.deletedAtContains, "")
+	}
+	if r.deletedAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notcontains", r.deletedAtNotcontains, "")
+	}
 	if r.deletedAtLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__like", r.deletedAtLike, "")
 	}
@@ -1487,6 +1727,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.seenAtNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "seen_at__notin", r.seenAtNotin, "")
+	}
+	if r.seenAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "seen_at__contains", r.seenAtContains, "")
+	}
+	if r.seenAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "seen_at__notcontains", r.seenAtNotcontains, "")
 	}
 	if r.seenAtLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "seen_at__like", r.seenAtLike, "")
@@ -1530,6 +1776,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	if r.classIdNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__notin", r.classIdNotin, "")
 	}
+	if r.classIdContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__contains", r.classIdContains, "")
+	}
+	if r.classIdNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__notcontains", r.classIdNotcontains, "")
+	}
 	if r.classIdDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__desc", r.classIdDesc, "")
 	}
@@ -1559,6 +1811,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.classNameNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notin", r.classNameNotin, "")
+	}
+	if r.classNameContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__contains", r.classNameContains, "")
+	}
+	if r.classNameNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notcontains", r.classNameNotcontains, "")
 	}
 	if r.classNameLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__like", r.classNameLike, "")
@@ -1602,17 +1860,35 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	if r.scoreNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "score__notin", r.scoreNotin, "")
 	}
+	if r.scoreContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "score__contains", r.scoreContains, "")
+	}
+	if r.scoreNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "score__notcontains", r.scoreNotcontains, "")
+	}
 	if r.scoreDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "score__desc", r.scoreDesc, "")
 	}
 	if r.scoreAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "score__asc", r.scoreAsc, "")
 	}
+	if r.centroidContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__contains", r.centroidContains, "")
+	}
+	if r.centroidNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__notcontains", r.centroidNotcontains, "")
+	}
 	if r.centroidDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__desc", r.centroidDesc, "")
 	}
 	if r.centroidAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__asc", r.centroidAsc, "")
+	}
+	if r.boundingBoxContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "bounding_box__contains", r.boundingBoxContains, "")
+	}
+	if r.boundingBoxNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "bounding_box__notcontains", r.boundingBoxNotcontains, "")
 	}
 	if r.boundingBoxDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "bounding_box__desc", r.boundingBoxDesc, "")
@@ -1644,6 +1920,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	if r.videoIdNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__notin", r.videoIdNotin, "")
 	}
+	if r.videoIdContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__contains", r.videoIdContains, "")
+	}
+	if r.videoIdNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__notcontains", r.videoIdNotcontains, "")
+	}
 	if r.videoIdLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__like", r.videoIdLike, "")
 	}
@@ -1661,6 +1943,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.videoIdAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__asc", r.videoIdAsc, "")
+	}
+	if r.videoIdObjectContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id_object__contains", r.videoIdObjectContains, "")
+	}
+	if r.videoIdObjectNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id_object__notcontains", r.videoIdObjectNotcontains, "")
 	}
 	if r.videoIdObjectDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id_object__desc", r.videoIdObjectDesc, "")
@@ -1692,6 +1980,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	if r.cameraIdNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__notin", r.cameraIdNotin, "")
 	}
+	if r.cameraIdContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__contains", r.cameraIdContains, "")
+	}
+	if r.cameraIdNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__notcontains", r.cameraIdNotcontains, "")
+	}
 	if r.cameraIdLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__like", r.cameraIdLike, "")
 	}
@@ -1709,6 +2003,12 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.cameraIdAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__asc", r.cameraIdAsc, "")
+	}
+	if r.cameraIdObjectContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__contains", r.cameraIdObjectContains, "")
+	}
+	if r.cameraIdObjectNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__notcontains", r.cameraIdObjectNotcontains, "")
 	}
 	if r.cameraIdObjectDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__desc", r.cameraIdObjectDesc, "")

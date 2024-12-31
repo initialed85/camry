@@ -53,9 +53,9 @@ func NewDetectionWithDefaults() *Detection {
 	return &this
 }
 
-// GetBoundingBox returns the BoundingBox field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetBoundingBox returns the BoundingBox field value if set, zero value otherwise.
 func (o *Detection) GetBoundingBox() []ArrayOfVec2Inner {
-	if o == nil {
+	if o == nil || IsNil(o.BoundingBox) {
 		var ret []ArrayOfVec2Inner
 		return ret
 	}
@@ -64,7 +64,6 @@ func (o *Detection) GetBoundingBox() []ArrayOfVec2Inner {
 
 // GetBoundingBoxOk returns a tuple with the BoundingBox field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Detection) GetBoundingBoxOk() ([]ArrayOfVec2Inner, bool) {
 	if o == nil || IsNil(o.BoundingBox) {
 		return nil, false
@@ -512,7 +511,7 @@ func (o Detection) MarshalJSON() ([]byte, error) {
 
 func (o Detection) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	if o.BoundingBox != nil {
+	if !IsNil(o.BoundingBox) {
 		toSerialize["bounding_box"] = o.BoundingBox
 	}
 	if !IsNil(o.CameraId) {

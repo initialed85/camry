@@ -78,9 +78,9 @@ func (o *ResponseWithGenericOfVideo) SetCount(v int64) {
 	o.Count = &v
 }
 
-// GetError returns the Error field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetError returns the Error field value if set, zero value otherwise.
 func (o *ResponseWithGenericOfVideo) GetError() []string {
-	if o == nil {
+	if o == nil || IsNil(o.Error) {
 		var ret []string
 		return ret
 	}
@@ -89,7 +89,6 @@ func (o *ResponseWithGenericOfVideo) GetError() []string {
 
 // GetErrorOk returns a tuple with the Error field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ResponseWithGenericOfVideo) GetErrorOk() ([]string, bool) {
 	if o == nil || IsNil(o.Error) {
 		return nil, false
@@ -143,9 +142,9 @@ func (o *ResponseWithGenericOfVideo) SetLimit(v int64) {
 	o.Limit = &v
 }
 
-// GetObjects returns the Objects field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetObjects returns the Objects field value if set, zero value otherwise.
 func (o *ResponseWithGenericOfVideo) GetObjects() []Video {
-	if o == nil {
+	if o == nil || IsNil(o.Objects) {
 		var ret []Video
 		return ret
 	}
@@ -154,7 +153,6 @@ func (o *ResponseWithGenericOfVideo) GetObjects() []Video {
 
 // GetObjectsOk returns a tuple with the Objects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *ResponseWithGenericOfVideo) GetObjectsOk() ([]Video, bool) {
 	if o == nil || IsNil(o.Objects) {
 		return nil, false
@@ -317,13 +315,13 @@ func (o ResponseWithGenericOfVideo) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Count) {
 		toSerialize["count"] = o.Count
 	}
-	if o.Error != nil {
+	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
 	}
 	if !IsNil(o.Limit) {
 		toSerialize["limit"] = o.Limit
 	}
-	if o.Objects != nil {
+	if !IsNil(o.Objects) {
 		toSerialize["objects"] = o.Objects
 	}
 	if !IsNil(o.Offset) {

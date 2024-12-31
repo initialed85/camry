@@ -83,16 +83,6 @@ class ResponseWithGenericOfVideo(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['objects'] = _items
-        # set to None if error (nullable) is None
-        # and model_fields_set contains the field
-        if self.error is None and "error" in self.model_fields_set:
-            _dict['error'] = None
-
-        # set to None if objects (nullable) is None
-        # and model_fields_set contains the field
-        if self.objects is None and "objects" in self.model_fields_set:
-            _dict['objects'] = None
-
         return _dict
 
     @classmethod

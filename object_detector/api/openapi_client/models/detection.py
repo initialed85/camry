@@ -99,11 +99,6 @@ class Detection(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of video_id_object
         if self.video_id_object:
             _dict['video_id_object'] = self.video_id_object.to_dict()
-        # set to None if bounding_box (nullable) is None
-        # and model_fields_set contains the field
-        if self.bounding_box is None and "bounding_box" in self.model_fields_set:
-            _dict['bounding_box'] = None
-
         return _dict
 
     @classmethod

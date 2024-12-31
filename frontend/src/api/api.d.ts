@@ -304,6 +304,10 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given indirectly related objects, value is ignored (presence of key is sufficient) */
+        referenced_by_detection__load?: string;
+        /** @description load the given indirectly related objects, value is ignored (presence of key is sufficient) */
+        referenced_by_video__load?: string;
         /** @description SQL = comparison */
         id__eq?: string;
         /** @description SQL != comparison */
@@ -320,6 +324,10 @@ export interface operations {
         id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         id__notin?: string;
+        /** @description SQL @> comparison */
+        id__contains?: string;
+        /** @description SQL NOT @> comparison */
+        id__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -348,6 +356,10 @@ export interface operations {
         created_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         created_at__notin?: string;
+        /** @description SQL @> comparison */
+        created_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        created_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         created_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -376,6 +388,10 @@ export interface operations {
         updated_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         updated_at__notin?: string;
+        /** @description SQL @> comparison */
+        updated_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        updated_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         updated_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -404,6 +420,10 @@ export interface operations {
         deleted_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         deleted_at__notin?: string;
+        /** @description SQL @> comparison */
+        deleted_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        deleted_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         deleted_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -432,6 +452,10 @@ export interface operations {
         name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         name__notin?: string;
+        /** @description SQL @> comparison */
+        name__contains?: string;
+        /** @description SQL NOT @> comparison */
+        name__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -460,6 +484,10 @@ export interface operations {
         stream_url__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         stream_url__notin?: string;
+        /** @description SQL @> comparison */
+        stream_url__contains?: string;
+        /** @description SQL NOT @> comparison */
+        stream_url__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         stream_url__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -488,6 +516,10 @@ export interface operations {
         last_seen__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         last_seen__notin?: string;
+        /** @description SQL @> comparison */
+        last_seen__contains?: string;
+        /** @description SQL NOT @> comparison */
+        last_seen__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         last_seen__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -516,6 +548,10 @@ export interface operations {
         segment_producer_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         segment_producer_claimed_until__notin?: string;
+        /** @description SQL @> comparison */
+        segment_producer_claimed_until__contains?: string;
+        /** @description SQL NOT @> comparison */
+        segment_producer_claimed_until__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         segment_producer_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -544,6 +580,10 @@ export interface operations {
         stream_producer_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         stream_producer_claimed_until__notin?: string;
+        /** @description SQL @> comparison */
+        stream_producer_claimed_until__contains?: string;
+        /** @description SQL NOT @> comparison */
+        stream_producer_claimed_until__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         stream_producer_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -556,10 +596,18 @@ export interface operations {
         stream_producer_claimed_until__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         stream_producer_claimed_until__asc?: string;
+        /** @description SQL @> comparison */
+        referenced_by_detection_camera_id_objects__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        referenced_by_detection_camera_id_objects__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         referenced_by_detection_camera_id_objects__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         referenced_by_detection_camera_id_objects__asc?: string;
+        /** @description SQL @> comparison */
+        referenced_by_video_camera_id_objects__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        referenced_by_video_camera_id_objects__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         referenced_by_video_camera_id_objects__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -801,6 +849,10 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given directly related object, value is ignored (presence of key is sufficient) */
+        video__load?: string;
+        /** @description load the given directly related object, value is ignored (presence of key is sufficient) */
+        camera__load?: string;
         /** @description SQL = comparison */
         id__eq?: string;
         /** @description SQL != comparison */
@@ -817,6 +869,10 @@ export interface operations {
         id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         id__notin?: string;
+        /** @description SQL @> comparison */
+        id__contains?: string;
+        /** @description SQL NOT @> comparison */
+        id__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -845,6 +901,10 @@ export interface operations {
         created_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         created_at__notin?: string;
+        /** @description SQL @> comparison */
+        created_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        created_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         created_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -873,6 +933,10 @@ export interface operations {
         updated_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         updated_at__notin?: string;
+        /** @description SQL @> comparison */
+        updated_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        updated_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         updated_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -901,6 +965,10 @@ export interface operations {
         deleted_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         deleted_at__notin?: string;
+        /** @description SQL @> comparison */
+        deleted_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        deleted_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         deleted_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -929,6 +997,10 @@ export interface operations {
         seen_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         seen_at__notin?: string;
+        /** @description SQL @> comparison */
+        seen_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        seen_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         seen_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -957,6 +1029,10 @@ export interface operations {
         class_id__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         class_id__notin?: number;
+        /** @description SQL @> comparison */
+        class_id__contains?: number;
+        /** @description SQL NOT @> comparison */
+        class_id__notcontains?: number;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         class_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -977,6 +1053,10 @@ export interface operations {
         class_name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         class_name__notin?: string;
+        /** @description SQL @> comparison */
+        class_name__contains?: string;
+        /** @description SQL NOT @> comparison */
+        class_name__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         class_name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1005,14 +1085,26 @@ export interface operations {
         score__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         score__notin?: number;
+        /** @description SQL @> comparison */
+        score__contains?: number;
+        /** @description SQL NOT @> comparison */
+        score__notcontains?: number;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         score__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         score__asc?: string;
+        /** @description SQL @> comparison */
+        centroid__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        centroid__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         centroid__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         centroid__asc?: string;
+        /** @description SQL @> comparison */
+        bounding_box__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        bounding_box__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         bounding_box__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1033,6 +1125,10 @@ export interface operations {
         video_id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         video_id__notin?: string;
+        /** @description SQL @> comparison */
+        video_id__contains?: string;
+        /** @description SQL NOT @> comparison */
+        video_id__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         video_id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1045,6 +1141,10 @@ export interface operations {
         video_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         video_id__asc?: string;
+        /** @description SQL @> comparison */
+        video_id_object__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        video_id_object__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         video_id_object__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1065,6 +1165,10 @@ export interface operations {
         camera_id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         camera_id__notin?: string;
+        /** @description SQL @> comparison */
+        camera_id__contains?: string;
+        /** @description SQL NOT @> comparison */
+        camera_id__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         camera_id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1077,6 +1181,10 @@ export interface operations {
         camera_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         camera_id__asc?: string;
+        /** @description SQL @> comparison */
+        camera_id_object__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        camera_id_object__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         camera_id_object__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1280,6 +1388,10 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given directly related object, value is ignored (presence of key is sufficient) */
+        camera__load?: string;
+        /** @description load the given indirectly related objects, value is ignored (presence of key is sufficient) */
+        referenced_by_detection__load?: string;
         /** @description SQL = comparison */
         id__eq?: string;
         /** @description SQL != comparison */
@@ -1296,6 +1408,10 @@ export interface operations {
         id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         id__notin?: string;
+        /** @description SQL @> comparison */
+        id__contains?: string;
+        /** @description SQL NOT @> comparison */
+        id__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1324,6 +1440,10 @@ export interface operations {
         created_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         created_at__notin?: string;
+        /** @description SQL @> comparison */
+        created_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        created_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         created_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1352,6 +1472,10 @@ export interface operations {
         updated_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         updated_at__notin?: string;
+        /** @description SQL @> comparison */
+        updated_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        updated_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         updated_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1380,6 +1504,10 @@ export interface operations {
         deleted_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         deleted_at__notin?: string;
+        /** @description SQL @> comparison */
+        deleted_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        deleted_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         deleted_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1408,6 +1536,10 @@ export interface operations {
         file_name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         file_name__notin?: string;
+        /** @description SQL @> comparison */
+        file_name__contains?: string;
+        /** @description SQL NOT @> comparison */
+        file_name__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         file_name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1436,6 +1568,10 @@ export interface operations {
         started_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         started_at__notin?: string;
+        /** @description SQL @> comparison */
+        started_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        started_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         started_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1464,6 +1600,10 @@ export interface operations {
         ended_at__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         ended_at__notin?: string;
+        /** @description SQL @> comparison */
+        ended_at__contains?: string;
+        /** @description SQL NOT @> comparison */
+        ended_at__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         ended_at__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1492,6 +1632,10 @@ export interface operations {
         duration__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         duration__notin?: number;
+        /** @description SQL @> comparison */
+        duration__contains?: number;
+        /** @description SQL NOT @> comparison */
+        duration__notcontains?: number;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         duration__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1512,6 +1656,10 @@ export interface operations {
         file_size__in?: number;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         file_size__notin?: number;
+        /** @description SQL @> comparison */
+        file_size__contains?: number;
+        /** @description SQL NOT @> comparison */
+        file_size__notcontains?: number;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         file_size__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
@@ -1532,6 +1680,10 @@ export interface operations {
         thumbnail_name__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         thumbnail_name__notin?: string;
+        /** @description SQL @> comparison */
+        thumbnail_name__contains?: string;
+        /** @description SQL NOT @> comparison */
+        thumbnail_name__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         thumbnail_name__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1560,6 +1712,10 @@ export interface operations {
         status__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         status__notin?: string;
+        /** @description SQL @> comparison */
+        status__contains?: string;
+        /** @description SQL NOT @> comparison */
+        status__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         status__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1588,6 +1744,10 @@ export interface operations {
         object_detector_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         object_detector_claimed_until__notin?: string;
+        /** @description SQL @> comparison */
+        object_detector_claimed_until__contains?: string;
+        /** @description SQL NOT @> comparison */
+        object_detector_claimed_until__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         object_detector_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1616,6 +1776,10 @@ export interface operations {
         object_tracker_claimed_until__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         object_tracker_claimed_until__notin?: string;
+        /** @description SQL @> comparison */
+        object_tracker_claimed_until__contains?: string;
+        /** @description SQL NOT @> comparison */
+        object_tracker_claimed_until__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         object_tracker_claimed_until__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1644,6 +1808,10 @@ export interface operations {
         camera_id__in?: string;
         /** @description SQL NOT IN comparison, permits comma-separated values */
         camera_id__notin?: string;
+        /** @description SQL @> comparison */
+        camera_id__contains?: string;
+        /** @description SQL NOT @> comparison */
+        camera_id__notcontains?: string;
         /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
         camera_id__like?: string;
         /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
@@ -1656,14 +1824,26 @@ export interface operations {
         camera_id__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         camera_id__asc?: string;
+        /** @description SQL @> comparison */
+        camera_id_object__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        camera_id_object__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         camera_id_object__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         camera_id_object__asc?: string;
+        /** @description SQL @> comparison */
+        detection_summary__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        detection_summary__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         detection_summary__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         detection_summary__asc?: string;
+        /** @description SQL @> comparison */
+        referenced_by_detection_video_id_objects__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        referenced_by_detection_video_id_objects__notcontains?: unknown;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         referenced_by_detection_video_id_objects__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */

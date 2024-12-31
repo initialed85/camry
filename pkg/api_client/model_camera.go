@@ -210,9 +210,9 @@ func (o *Camera) SetName(v string) {
 	o.Name = &v
 }
 
-// GetReferencedByDetectionCameraIdObjects returns the ReferencedByDetectionCameraIdObjects field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetReferencedByDetectionCameraIdObjects returns the ReferencedByDetectionCameraIdObjects field value if set, zero value otherwise.
 func (o *Camera) GetReferencedByDetectionCameraIdObjects() []Detection {
-	if o == nil {
+	if o == nil || IsNil(o.ReferencedByDetectionCameraIdObjects) {
 		var ret []Detection
 		return ret
 	}
@@ -221,7 +221,6 @@ func (o *Camera) GetReferencedByDetectionCameraIdObjects() []Detection {
 
 // GetReferencedByDetectionCameraIdObjectsOk returns a tuple with the ReferencedByDetectionCameraIdObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Camera) GetReferencedByDetectionCameraIdObjectsOk() ([]Detection, bool) {
 	if o == nil || IsNil(o.ReferencedByDetectionCameraIdObjects) {
 		return nil, false
@@ -243,9 +242,9 @@ func (o *Camera) SetReferencedByDetectionCameraIdObjects(v []Detection) {
 	o.ReferencedByDetectionCameraIdObjects = v
 }
 
-// GetReferencedByVideoCameraIdObjects returns the ReferencedByVideoCameraIdObjects field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetReferencedByVideoCameraIdObjects returns the ReferencedByVideoCameraIdObjects field value if set, zero value otherwise.
 func (o *Camera) GetReferencedByVideoCameraIdObjects() []Video {
-	if o == nil {
+	if o == nil || IsNil(o.ReferencedByVideoCameraIdObjects) {
 		var ret []Video
 		return ret
 	}
@@ -254,7 +253,6 @@ func (o *Camera) GetReferencedByVideoCameraIdObjects() []Video {
 
 // GetReferencedByVideoCameraIdObjectsOk returns a tuple with the ReferencedByVideoCameraIdObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Camera) GetReferencedByVideoCameraIdObjectsOk() ([]Video, bool) {
 	if o == nil || IsNil(o.ReferencedByVideoCameraIdObjects) {
 		return nil, false
@@ -429,10 +427,10 @@ func (o Camera) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
 	}
-	if o.ReferencedByDetectionCameraIdObjects != nil {
+	if !IsNil(o.ReferencedByDetectionCameraIdObjects) {
 		toSerialize["referenced_by_detection_camera_id_objects"] = o.ReferencedByDetectionCameraIdObjects
 	}
-	if o.ReferencedByVideoCameraIdObjects != nil {
+	if !IsNil(o.ReferencedByVideoCameraIdObjects) {
 		toSerialize["referenced_by_video_camera_id_objects"] = o.ReferencedByVideoCameraIdObjects
 	}
 	if !IsNil(o.SegmentProducerClaimedUntil) {

@@ -132,7 +132,7 @@ func RunServeWithEnvironment(
 			return err
 		}
 
-		r.Patch(claimVideoForObjectDetectorHandler.PathWithinRouter, claimVideoForObjectDetectorHandler.ServeHTTP)
+		r.Patch("/claim-video-for-object-detector", claimVideoForObjectDetectorHandler.ServeHTTP)
 
 		if addCustomHandlers != nil {
 			err = addCustomHandlers(r)

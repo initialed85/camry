@@ -63,16 +63,6 @@ SetBoundingBox sets BoundingBox field to given value.
 
 HasBoundingBox returns a boolean if a field has been set.
 
-### SetBoundingBoxNil
-
-`func (o *Detection) SetBoundingBoxNil(b bool)`
-
- SetBoundingBoxNil sets the value for BoundingBox to be an explicit nil
-
-### UnsetBoundingBox
-`func (o *Detection) UnsetBoundingBox()`
-
-UnsetBoundingBox ensures that no value is present for BoundingBox, not even an explicit nil
 ### GetCameraId
 
 `func (o *Detection) GetCameraId() string`

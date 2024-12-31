@@ -441,9 +441,9 @@ func (o *Video) SetObjectTrackerClaimedUntil(v time.Time) {
 	o.ObjectTrackerClaimedUntil = &v
 }
 
-// GetReferencedByDetectionVideoIdObjects returns the ReferencedByDetectionVideoIdObjects field value if set, zero value otherwise (both if not set or set to explicit null).
+// GetReferencedByDetectionVideoIdObjects returns the ReferencedByDetectionVideoIdObjects field value if set, zero value otherwise.
 func (o *Video) GetReferencedByDetectionVideoIdObjects() []Detection {
-	if o == nil {
+	if o == nil || IsNil(o.ReferencedByDetectionVideoIdObjects) {
 		var ret []Detection
 		return ret
 	}
@@ -452,7 +452,6 @@ func (o *Video) GetReferencedByDetectionVideoIdObjects() []Detection {
 
 // GetReferencedByDetectionVideoIdObjectsOk returns a tuple with the ReferencedByDetectionVideoIdObjects field value if set, nil otherwise
 // and a boolean to check if the value has been set.
-// NOTE: If the value is an explicit nil, `nil, true` will be returned
 func (o *Video) GetReferencedByDetectionVideoIdObjectsOk() ([]Detection, bool) {
 	if o == nil || IsNil(o.ReferencedByDetectionVideoIdObjects) {
 		return nil, false
@@ -648,7 +647,7 @@ func (o Video) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ObjectTrackerClaimedUntil) {
 		toSerialize["object_tracker_claimed_until"] = o.ObjectTrackerClaimedUntil
 	}
-	if o.ReferencedByDetectionVideoIdObjects != nil {
+	if !IsNil(o.ReferencedByDetectionVideoIdObjects) {
 		toSerialize["referenced_by_detection_video_id_objects"] = o.ReferencedByDetectionVideoIdObjects
 	}
 	if !IsNil(o.StartedAt) {

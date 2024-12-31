@@ -152,7 +152,7 @@ No authorization required
 
 ## GetCameras
 
-> ResponseWithGenericOfCamera GetCameras(ctx).Limit(limit).Offset(offset).Depth(depth).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).NameEq(nameEq).NameNe(nameNe).NameGt(nameGt).NameGte(nameGte).NameLt(nameLt).NameLte(nameLte).NameIn(nameIn).NameNotin(nameNotin).NameLike(nameLike).NameNotlike(nameNotlike).NameIlike(nameIlike).NameNotilike(nameNotilike).NameDesc(nameDesc).NameAsc(nameAsc).StreamUrlEq(streamUrlEq).StreamUrlNe(streamUrlNe).StreamUrlGt(streamUrlGt).StreamUrlGte(streamUrlGte).StreamUrlLt(streamUrlLt).StreamUrlLte(streamUrlLte).StreamUrlIn(streamUrlIn).StreamUrlNotin(streamUrlNotin).StreamUrlLike(streamUrlLike).StreamUrlNotlike(streamUrlNotlike).StreamUrlIlike(streamUrlIlike).StreamUrlNotilike(streamUrlNotilike).StreamUrlDesc(streamUrlDesc).StreamUrlAsc(streamUrlAsc).LastSeenEq(lastSeenEq).LastSeenNe(lastSeenNe).LastSeenGt(lastSeenGt).LastSeenGte(lastSeenGte).LastSeenLt(lastSeenLt).LastSeenLte(lastSeenLte).LastSeenIn(lastSeenIn).LastSeenNotin(lastSeenNotin).LastSeenLike(lastSeenLike).LastSeenNotlike(lastSeenNotlike).LastSeenIlike(lastSeenIlike).LastSeenNotilike(lastSeenNotilike).LastSeenDesc(lastSeenDesc).LastSeenAsc(lastSeenAsc).SegmentProducerClaimedUntilEq(segmentProducerClaimedUntilEq).SegmentProducerClaimedUntilNe(segmentProducerClaimedUntilNe).SegmentProducerClaimedUntilGt(segmentProducerClaimedUntilGt).SegmentProducerClaimedUntilGte(segmentProducerClaimedUntilGte).SegmentProducerClaimedUntilLt(segmentProducerClaimedUntilLt).SegmentProducerClaimedUntilLte(segmentProducerClaimedUntilLte).SegmentProducerClaimedUntilIn(segmentProducerClaimedUntilIn).SegmentProducerClaimedUntilNotin(segmentProducerClaimedUntilNotin).SegmentProducerClaimedUntilLike(segmentProducerClaimedUntilLike).SegmentProducerClaimedUntilNotlike(segmentProducerClaimedUntilNotlike).SegmentProducerClaimedUntilIlike(segmentProducerClaimedUntilIlike).SegmentProducerClaimedUntilNotilike(segmentProducerClaimedUntilNotilike).SegmentProducerClaimedUntilDesc(segmentProducerClaimedUntilDesc).SegmentProducerClaimedUntilAsc(segmentProducerClaimedUntilAsc).StreamProducerClaimedUntilEq(streamProducerClaimedUntilEq).StreamProducerClaimedUntilNe(streamProducerClaimedUntilNe).StreamProducerClaimedUntilGt(streamProducerClaimedUntilGt).StreamProducerClaimedUntilGte(streamProducerClaimedUntilGte).StreamProducerClaimedUntilLt(streamProducerClaimedUntilLt).StreamProducerClaimedUntilLte(streamProducerClaimedUntilLte).StreamProducerClaimedUntilIn(streamProducerClaimedUntilIn).StreamProducerClaimedUntilNotin(streamProducerClaimedUntilNotin).StreamProducerClaimedUntilLike(streamProducerClaimedUntilLike).StreamProducerClaimedUntilNotlike(streamProducerClaimedUntilNotlike).StreamProducerClaimedUntilIlike(streamProducerClaimedUntilIlike).StreamProducerClaimedUntilNotilike(streamProducerClaimedUntilNotilike).StreamProducerClaimedUntilDesc(streamProducerClaimedUntilDesc).StreamProducerClaimedUntilAsc(streamProducerClaimedUntilAsc).ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc).ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc).ReferencedByVideoCameraIdObjectsDesc(referencedByVideoCameraIdObjectsDesc).ReferencedByVideoCameraIdObjectsAsc(referencedByVideoCameraIdObjectsAsc).Execute()
+> ResponseWithGenericOfCamera GetCameras(ctx).Limit(limit).Offset(offset).Depth(depth).ReferencedByDetectionLoad(referencedByDetectionLoad).ReferencedByVideoLoad(referencedByVideoLoad).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdContains(idContains).IdNotcontains(idNotcontains).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtContains(createdAtContains).CreatedAtNotcontains(createdAtNotcontains).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtContains(updatedAtContains).UpdatedAtNotcontains(updatedAtNotcontains).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtContains(deletedAtContains).DeletedAtNotcontains(deletedAtNotcontains).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).NameEq(nameEq).NameNe(nameNe).NameGt(nameGt).NameGte(nameGte).NameLt(nameLt).NameLte(nameLte).NameIn(nameIn).NameNotin(nameNotin).NameContains(nameContains).NameNotcontains(nameNotcontains).NameLike(nameLike).NameNotlike(nameNotlike).NameIlike(nameIlike).NameNotilike(nameNotilike).NameDesc(nameDesc).NameAsc(nameAsc).StreamUrlEq(streamUrlEq).StreamUrlNe(streamUrlNe).StreamUrlGt(streamUrlGt).StreamUrlGte(streamUrlGte).StreamUrlLt(streamUrlLt).StreamUrlLte(streamUrlLte).StreamUrlIn(streamUrlIn).StreamUrlNotin(streamUrlNotin).StreamUrlContains(streamUrlContains).StreamUrlNotcontains(streamUrlNotcontains).StreamUrlLike(streamUrlLike).StreamUrlNotlike(streamUrlNotlike).StreamUrlIlike(streamUrlIlike).StreamUrlNotilike(streamUrlNotilike).StreamUrlDesc(streamUrlDesc).StreamUrlAsc(streamUrlAsc).LastSeenEq(lastSeenEq).LastSeenNe(lastSeenNe).LastSeenGt(lastSeenGt).LastSeenGte(lastSeenGte).LastSeenLt(lastSeenLt).LastSeenLte(lastSeenLte).LastSeenIn(lastSeenIn).LastSeenNotin(lastSeenNotin).LastSeenContains(lastSeenContains).LastSeenNotcontains(lastSeenNotcontains).LastSeenLike(lastSeenLike).LastSeenNotlike(lastSeenNotlike).LastSeenIlike(lastSeenIlike).LastSeenNotilike(lastSeenNotilike).LastSeenDesc(lastSeenDesc).LastSeenAsc(lastSeenAsc).SegmentProducerClaimedUntilEq(segmentProducerClaimedUntilEq).SegmentProducerClaimedUntilNe(segmentProducerClaimedUntilNe).SegmentProducerClaimedUntilGt(segmentProducerClaimedUntilGt).SegmentProducerClaimedUntilGte(segmentProducerClaimedUntilGte).SegmentProducerClaimedUntilLt(segmentProducerClaimedUntilLt).SegmentProducerClaimedUntilLte(segmentProducerClaimedUntilLte).SegmentProducerClaimedUntilIn(segmentProducerClaimedUntilIn).SegmentProducerClaimedUntilNotin(segmentProducerClaimedUntilNotin).SegmentProducerClaimedUntilContains(segmentProducerClaimedUntilContains).SegmentProducerClaimedUntilNotcontains(segmentProducerClaimedUntilNotcontains).SegmentProducerClaimedUntilLike(segmentProducerClaimedUntilLike).SegmentProducerClaimedUntilNotlike(segmentProducerClaimedUntilNotlike).SegmentProducerClaimedUntilIlike(segmentProducerClaimedUntilIlike).SegmentProducerClaimedUntilNotilike(segmentProducerClaimedUntilNotilike).SegmentProducerClaimedUntilDesc(segmentProducerClaimedUntilDesc).SegmentProducerClaimedUntilAsc(segmentProducerClaimedUntilAsc).StreamProducerClaimedUntilEq(streamProducerClaimedUntilEq).StreamProducerClaimedUntilNe(streamProducerClaimedUntilNe).StreamProducerClaimedUntilGt(streamProducerClaimedUntilGt).StreamProducerClaimedUntilGte(streamProducerClaimedUntilGte).StreamProducerClaimedUntilLt(streamProducerClaimedUntilLt).StreamProducerClaimedUntilLte(streamProducerClaimedUntilLte).StreamProducerClaimedUntilIn(streamProducerClaimedUntilIn).StreamProducerClaimedUntilNotin(streamProducerClaimedUntilNotin).StreamProducerClaimedUntilContains(streamProducerClaimedUntilContains).StreamProducerClaimedUntilNotcontains(streamProducerClaimedUntilNotcontains).StreamProducerClaimedUntilLike(streamProducerClaimedUntilLike).StreamProducerClaimedUntilNotlike(streamProducerClaimedUntilNotlike).StreamProducerClaimedUntilIlike(streamProducerClaimedUntilIlike).StreamProducerClaimedUntilNotilike(streamProducerClaimedUntilNotilike).StreamProducerClaimedUntilDesc(streamProducerClaimedUntilDesc).StreamProducerClaimedUntilAsc(streamProducerClaimedUntilAsc).ReferencedByDetectionCameraIdObjectsContains(referencedByDetectionCameraIdObjectsContains).ReferencedByDetectionCameraIdObjectsNotcontains(referencedByDetectionCameraIdObjectsNotcontains).ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc).ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc).ReferencedByVideoCameraIdObjectsContains(referencedByVideoCameraIdObjectsContains).ReferencedByVideoCameraIdObjectsNotcontains(referencedByVideoCameraIdObjectsNotcontains).ReferencedByVideoCameraIdObjectsDesc(referencedByVideoCameraIdObjectsDesc).ReferencedByVideoCameraIdObjectsAsc(referencedByVideoCameraIdObjectsAsc).Execute()
 
 
 
@@ -173,6 +173,8 @@ func main() {
 	limit := int32(56) // int32 | SQL LIMIT operator (optional)
 	offset := int32(56) // int32 | SQL OFFSET operator (optional)
 	depth := int32(56) // int32 | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
+	referencedByDetectionLoad := "referencedByDetectionLoad_example" // string | load the given indirectly related objects, value is ignored (presence of key is sufficient) (optional)
+	referencedByVideoLoad := "referencedByVideoLoad_example" // string | load the given indirectly related objects, value is ignored (presence of key is sufficient) (optional)
 	idEq := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL = comparison (optional)
 	idNe := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL != comparison (optional)
 	idGt := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL > comparison, may not work with all column types (optional)
@@ -181,6 +183,8 @@ func main() {
 	idLte := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL <= comparison, may not work with all column types (optional)
 	idIn := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL IN comparison, permits comma-separated values (optional)
 	idNotin := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL NOT IN comparison, permits comma-separated values (optional)
+	idContains := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL @> comparison (optional)
+	idNotcontains := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL NOT @> comparison (optional)
 	idLike := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	idNotlike := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	idIlike := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -195,6 +199,8 @@ func main() {
 	createdAtLte := time.Now() // time.Time | SQL <= comparison, may not work with all column types (optional)
 	createdAtIn := time.Now() // time.Time | SQL IN comparison, permits comma-separated values (optional)
 	createdAtNotin := time.Now() // time.Time | SQL NOT IN comparison, permits comma-separated values (optional)
+	createdAtContains := time.Now() // time.Time | SQL @> comparison (optional)
+	createdAtNotcontains := time.Now() // time.Time | SQL NOT @> comparison (optional)
 	createdAtLike := time.Now() // time.Time | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	createdAtNotlike := time.Now() // time.Time | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	createdAtIlike := time.Now() // time.Time | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -209,6 +215,8 @@ func main() {
 	updatedAtLte := time.Now() // time.Time | SQL <= comparison, may not work with all column types (optional)
 	updatedAtIn := time.Now() // time.Time | SQL IN comparison, permits comma-separated values (optional)
 	updatedAtNotin := time.Now() // time.Time | SQL NOT IN comparison, permits comma-separated values (optional)
+	updatedAtContains := time.Now() // time.Time | SQL @> comparison (optional)
+	updatedAtNotcontains := time.Now() // time.Time | SQL NOT @> comparison (optional)
 	updatedAtLike := time.Now() // time.Time | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	updatedAtNotlike := time.Now() // time.Time | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	updatedAtIlike := time.Now() // time.Time | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -223,6 +231,8 @@ func main() {
 	deletedAtLte := time.Now() // time.Time | SQL <= comparison, may not work with all column types (optional)
 	deletedAtIn := time.Now() // time.Time | SQL IN comparison, permits comma-separated values (optional)
 	deletedAtNotin := time.Now() // time.Time | SQL NOT IN comparison, permits comma-separated values (optional)
+	deletedAtContains := time.Now() // time.Time | SQL @> comparison (optional)
+	deletedAtNotcontains := time.Now() // time.Time | SQL NOT @> comparison (optional)
 	deletedAtLike := time.Now() // time.Time | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	deletedAtNotlike := time.Now() // time.Time | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	deletedAtIlike := time.Now() // time.Time | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -237,6 +247,8 @@ func main() {
 	nameLte := "nameLte_example" // string | SQL <= comparison, may not work with all column types (optional)
 	nameIn := "nameIn_example" // string | SQL IN comparison, permits comma-separated values (optional)
 	nameNotin := "nameNotin_example" // string | SQL NOT IN comparison, permits comma-separated values (optional)
+	nameContains := "nameContains_example" // string | SQL @> comparison (optional)
+	nameNotcontains := "nameNotcontains_example" // string | SQL NOT @> comparison (optional)
 	nameLike := "nameLike_example" // string | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	nameNotlike := "nameNotlike_example" // string | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	nameIlike := "nameIlike_example" // string | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -251,6 +263,8 @@ func main() {
 	streamUrlLte := "streamUrlLte_example" // string | SQL <= comparison, may not work with all column types (optional)
 	streamUrlIn := "streamUrlIn_example" // string | SQL IN comparison, permits comma-separated values (optional)
 	streamUrlNotin := "streamUrlNotin_example" // string | SQL NOT IN comparison, permits comma-separated values (optional)
+	streamUrlContains := "streamUrlContains_example" // string | SQL @> comparison (optional)
+	streamUrlNotcontains := "streamUrlNotcontains_example" // string | SQL NOT @> comparison (optional)
 	streamUrlLike := "streamUrlLike_example" // string | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	streamUrlNotlike := "streamUrlNotlike_example" // string | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	streamUrlIlike := "streamUrlIlike_example" // string | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -265,6 +279,8 @@ func main() {
 	lastSeenLte := time.Now() // time.Time | SQL <= comparison, may not work with all column types (optional)
 	lastSeenIn := time.Now() // time.Time | SQL IN comparison, permits comma-separated values (optional)
 	lastSeenNotin := time.Now() // time.Time | SQL NOT IN comparison, permits comma-separated values (optional)
+	lastSeenContains := time.Now() // time.Time | SQL @> comparison (optional)
+	lastSeenNotcontains := time.Now() // time.Time | SQL NOT @> comparison (optional)
 	lastSeenLike := time.Now() // time.Time | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	lastSeenNotlike := time.Now() // time.Time | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	lastSeenIlike := time.Now() // time.Time | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -279,6 +295,8 @@ func main() {
 	segmentProducerClaimedUntilLte := time.Now() // time.Time | SQL <= comparison, may not work with all column types (optional)
 	segmentProducerClaimedUntilIn := time.Now() // time.Time | SQL IN comparison, permits comma-separated values (optional)
 	segmentProducerClaimedUntilNotin := time.Now() // time.Time | SQL NOT IN comparison, permits comma-separated values (optional)
+	segmentProducerClaimedUntilContains := time.Now() // time.Time | SQL @> comparison (optional)
+	segmentProducerClaimedUntilNotcontains := time.Now() // time.Time | SQL NOT @> comparison (optional)
 	segmentProducerClaimedUntilLike := time.Now() // time.Time | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	segmentProducerClaimedUntilNotlike := time.Now() // time.Time | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	segmentProducerClaimedUntilIlike := time.Now() // time.Time | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
@@ -293,20 +311,26 @@ func main() {
 	streamProducerClaimedUntilLte := time.Now() // time.Time | SQL <= comparison, may not work with all column types (optional)
 	streamProducerClaimedUntilIn := time.Now() // time.Time | SQL IN comparison, permits comma-separated values (optional)
 	streamProducerClaimedUntilNotin := time.Now() // time.Time | SQL NOT IN comparison, permits comma-separated values (optional)
+	streamProducerClaimedUntilContains := time.Now() // time.Time | SQL @> comparison (optional)
+	streamProducerClaimedUntilNotcontains := time.Now() // time.Time | SQL NOT @> comparison (optional)
 	streamProducerClaimedUntilLike := time.Now() // time.Time | SQL LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	streamProducerClaimedUntilNotlike := time.Now() // time.Time | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	streamProducerClaimedUntilIlike := time.Now() // time.Time | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	streamProducerClaimedUntilNotilike := time.Now() // time.Time | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % (optional)
 	streamProducerClaimedUntilDesc := "streamProducerClaimedUntilDesc_example" // string | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) (optional)
 	streamProducerClaimedUntilAsc := "streamProducerClaimedUntilAsc_example" // string | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) (optional)
+	referencedByDetectionCameraIdObjectsContains := TODO // interface{} | SQL @> comparison (optional)
+	referencedByDetectionCameraIdObjectsNotcontains := TODO // interface{} | SQL NOT @> comparison (optional)
 	referencedByDetectionCameraIdObjectsDesc := "referencedByDetectionCameraIdObjectsDesc_example" // string | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) (optional)
 	referencedByDetectionCameraIdObjectsAsc := "referencedByDetectionCameraIdObjectsAsc_example" // string | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) (optional)
+	referencedByVideoCameraIdObjectsContains := TODO // interface{} | SQL @> comparison (optional)
+	referencedByVideoCameraIdObjectsNotcontains := TODO // interface{} | SQL NOT @> comparison (optional)
 	referencedByVideoCameraIdObjectsDesc := "referencedByVideoCameraIdObjectsDesc_example" // string | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) (optional)
 	referencedByVideoCameraIdObjectsAsc := "referencedByVideoCameraIdObjectsAsc_example" // string | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.CameraAPI.GetCameras(context.Background()).Limit(limit).Offset(offset).Depth(depth).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).NameEq(nameEq).NameNe(nameNe).NameGt(nameGt).NameGte(nameGte).NameLt(nameLt).NameLte(nameLte).NameIn(nameIn).NameNotin(nameNotin).NameLike(nameLike).NameNotlike(nameNotlike).NameIlike(nameIlike).NameNotilike(nameNotilike).NameDesc(nameDesc).NameAsc(nameAsc).StreamUrlEq(streamUrlEq).StreamUrlNe(streamUrlNe).StreamUrlGt(streamUrlGt).StreamUrlGte(streamUrlGte).StreamUrlLt(streamUrlLt).StreamUrlLte(streamUrlLte).StreamUrlIn(streamUrlIn).StreamUrlNotin(streamUrlNotin).StreamUrlLike(streamUrlLike).StreamUrlNotlike(streamUrlNotlike).StreamUrlIlike(streamUrlIlike).StreamUrlNotilike(streamUrlNotilike).StreamUrlDesc(streamUrlDesc).StreamUrlAsc(streamUrlAsc).LastSeenEq(lastSeenEq).LastSeenNe(lastSeenNe).LastSeenGt(lastSeenGt).LastSeenGte(lastSeenGte).LastSeenLt(lastSeenLt).LastSeenLte(lastSeenLte).LastSeenIn(lastSeenIn).LastSeenNotin(lastSeenNotin).LastSeenLike(lastSeenLike).LastSeenNotlike(lastSeenNotlike).LastSeenIlike(lastSeenIlike).LastSeenNotilike(lastSeenNotilike).LastSeenDesc(lastSeenDesc).LastSeenAsc(lastSeenAsc).SegmentProducerClaimedUntilEq(segmentProducerClaimedUntilEq).SegmentProducerClaimedUntilNe(segmentProducerClaimedUntilNe).SegmentProducerClaimedUntilGt(segmentProducerClaimedUntilGt).SegmentProducerClaimedUntilGte(segmentProducerClaimedUntilGte).SegmentProducerClaimedUntilLt(segmentProducerClaimedUntilLt).SegmentProducerClaimedUntilLte(segmentProducerClaimedUntilLte).SegmentProducerClaimedUntilIn(segmentProducerClaimedUntilIn).SegmentProducerClaimedUntilNotin(segmentProducerClaimedUntilNotin).SegmentProducerClaimedUntilLike(segmentProducerClaimedUntilLike).SegmentProducerClaimedUntilNotlike(segmentProducerClaimedUntilNotlike).SegmentProducerClaimedUntilIlike(segmentProducerClaimedUntilIlike).SegmentProducerClaimedUntilNotilike(segmentProducerClaimedUntilNotilike).SegmentProducerClaimedUntilDesc(segmentProducerClaimedUntilDesc).SegmentProducerClaimedUntilAsc(segmentProducerClaimedUntilAsc).StreamProducerClaimedUntilEq(streamProducerClaimedUntilEq).StreamProducerClaimedUntilNe(streamProducerClaimedUntilNe).StreamProducerClaimedUntilGt(streamProducerClaimedUntilGt).StreamProducerClaimedUntilGte(streamProducerClaimedUntilGte).StreamProducerClaimedUntilLt(streamProducerClaimedUntilLt).StreamProducerClaimedUntilLte(streamProducerClaimedUntilLte).StreamProducerClaimedUntilIn(streamProducerClaimedUntilIn).StreamProducerClaimedUntilNotin(streamProducerClaimedUntilNotin).StreamProducerClaimedUntilLike(streamProducerClaimedUntilLike).StreamProducerClaimedUntilNotlike(streamProducerClaimedUntilNotlike).StreamProducerClaimedUntilIlike(streamProducerClaimedUntilIlike).StreamProducerClaimedUntilNotilike(streamProducerClaimedUntilNotilike).StreamProducerClaimedUntilDesc(streamProducerClaimedUntilDesc).StreamProducerClaimedUntilAsc(streamProducerClaimedUntilAsc).ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc).ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc).ReferencedByVideoCameraIdObjectsDesc(referencedByVideoCameraIdObjectsDesc).ReferencedByVideoCameraIdObjectsAsc(referencedByVideoCameraIdObjectsAsc).Execute()
+	resp, r, err := apiClient.CameraAPI.GetCameras(context.Background()).Limit(limit).Offset(offset).Depth(depth).ReferencedByDetectionLoad(referencedByDetectionLoad).ReferencedByVideoLoad(referencedByVideoLoad).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdContains(idContains).IdNotcontains(idNotcontains).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtContains(createdAtContains).CreatedAtNotcontains(createdAtNotcontains).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtContains(updatedAtContains).UpdatedAtNotcontains(updatedAtNotcontains).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtContains(deletedAtContains).DeletedAtNotcontains(deletedAtNotcontains).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).NameEq(nameEq).NameNe(nameNe).NameGt(nameGt).NameGte(nameGte).NameLt(nameLt).NameLte(nameLte).NameIn(nameIn).NameNotin(nameNotin).NameContains(nameContains).NameNotcontains(nameNotcontains).NameLike(nameLike).NameNotlike(nameNotlike).NameIlike(nameIlike).NameNotilike(nameNotilike).NameDesc(nameDesc).NameAsc(nameAsc).StreamUrlEq(streamUrlEq).StreamUrlNe(streamUrlNe).StreamUrlGt(streamUrlGt).StreamUrlGte(streamUrlGte).StreamUrlLt(streamUrlLt).StreamUrlLte(streamUrlLte).StreamUrlIn(streamUrlIn).StreamUrlNotin(streamUrlNotin).StreamUrlContains(streamUrlContains).StreamUrlNotcontains(streamUrlNotcontains).StreamUrlLike(streamUrlLike).StreamUrlNotlike(streamUrlNotlike).StreamUrlIlike(streamUrlIlike).StreamUrlNotilike(streamUrlNotilike).StreamUrlDesc(streamUrlDesc).StreamUrlAsc(streamUrlAsc).LastSeenEq(lastSeenEq).LastSeenNe(lastSeenNe).LastSeenGt(lastSeenGt).LastSeenGte(lastSeenGte).LastSeenLt(lastSeenLt).LastSeenLte(lastSeenLte).LastSeenIn(lastSeenIn).LastSeenNotin(lastSeenNotin).LastSeenContains(lastSeenContains).LastSeenNotcontains(lastSeenNotcontains).LastSeenLike(lastSeenLike).LastSeenNotlike(lastSeenNotlike).LastSeenIlike(lastSeenIlike).LastSeenNotilike(lastSeenNotilike).LastSeenDesc(lastSeenDesc).LastSeenAsc(lastSeenAsc).SegmentProducerClaimedUntilEq(segmentProducerClaimedUntilEq).SegmentProducerClaimedUntilNe(segmentProducerClaimedUntilNe).SegmentProducerClaimedUntilGt(segmentProducerClaimedUntilGt).SegmentProducerClaimedUntilGte(segmentProducerClaimedUntilGte).SegmentProducerClaimedUntilLt(segmentProducerClaimedUntilLt).SegmentProducerClaimedUntilLte(segmentProducerClaimedUntilLte).SegmentProducerClaimedUntilIn(segmentProducerClaimedUntilIn).SegmentProducerClaimedUntilNotin(segmentProducerClaimedUntilNotin).SegmentProducerClaimedUntilContains(segmentProducerClaimedUntilContains).SegmentProducerClaimedUntilNotcontains(segmentProducerClaimedUntilNotcontains).SegmentProducerClaimedUntilLike(segmentProducerClaimedUntilLike).SegmentProducerClaimedUntilNotlike(segmentProducerClaimedUntilNotlike).SegmentProducerClaimedUntilIlike(segmentProducerClaimedUntilIlike).SegmentProducerClaimedUntilNotilike(segmentProducerClaimedUntilNotilike).SegmentProducerClaimedUntilDesc(segmentProducerClaimedUntilDesc).SegmentProducerClaimedUntilAsc(segmentProducerClaimedUntilAsc).StreamProducerClaimedUntilEq(streamProducerClaimedUntilEq).StreamProducerClaimedUntilNe(streamProducerClaimedUntilNe).StreamProducerClaimedUntilGt(streamProducerClaimedUntilGt).StreamProducerClaimedUntilGte(streamProducerClaimedUntilGte).StreamProducerClaimedUntilLt(streamProducerClaimedUntilLt).StreamProducerClaimedUntilLte(streamProducerClaimedUntilLte).StreamProducerClaimedUntilIn(streamProducerClaimedUntilIn).StreamProducerClaimedUntilNotin(streamProducerClaimedUntilNotin).StreamProducerClaimedUntilContains(streamProducerClaimedUntilContains).StreamProducerClaimedUntilNotcontains(streamProducerClaimedUntilNotcontains).StreamProducerClaimedUntilLike(streamProducerClaimedUntilLike).StreamProducerClaimedUntilNotlike(streamProducerClaimedUntilNotlike).StreamProducerClaimedUntilIlike(streamProducerClaimedUntilIlike).StreamProducerClaimedUntilNotilike(streamProducerClaimedUntilNotilike).StreamProducerClaimedUntilDesc(streamProducerClaimedUntilDesc).StreamProducerClaimedUntilAsc(streamProducerClaimedUntilAsc).ReferencedByDetectionCameraIdObjectsContains(referencedByDetectionCameraIdObjectsContains).ReferencedByDetectionCameraIdObjectsNotcontains(referencedByDetectionCameraIdObjectsNotcontains).ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc).ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc).ReferencedByVideoCameraIdObjectsContains(referencedByVideoCameraIdObjectsContains).ReferencedByVideoCameraIdObjectsNotcontains(referencedByVideoCameraIdObjectsNotcontains).ReferencedByVideoCameraIdObjectsDesc(referencedByVideoCameraIdObjectsDesc).ReferencedByVideoCameraIdObjectsAsc(referencedByVideoCameraIdObjectsAsc).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `CameraAPI.GetCameras``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -330,6 +354,8 @@ Name | Type | Description  | Notes
  **limit** | **int32** | SQL LIMIT operator | 
  **offset** | **int32** | SQL OFFSET operator | 
  **depth** | **int32** | Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | 
+ **referencedByDetectionLoad** | **string** | load the given indirectly related objects, value is ignored (presence of key is sufficient) | 
+ **referencedByVideoLoad** | **string** | load the given indirectly related objects, value is ignored (presence of key is sufficient) | 
  **idEq** | **string** | SQL &#x3D; comparison | 
  **idNe** | **string** | SQL !&#x3D; comparison | 
  **idGt** | **string** | SQL &gt; comparison, may not work with all column types | 
@@ -338,6 +364,8 @@ Name | Type | Description  | Notes
  **idLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **idIn** | **string** | SQL IN comparison, permits comma-separated values | 
  **idNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
+ **idContains** | **string** | SQL @&gt; comparison | 
+ **idNotcontains** | **string** | SQL NOT @&gt; comparison | 
  **idLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **idNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **idIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -352,6 +380,8 @@ Name | Type | Description  | Notes
  **createdAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **createdAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
  **createdAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
+ **createdAtContains** | **time.Time** | SQL @&gt; comparison | 
+ **createdAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
  **createdAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **createdAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **createdAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -366,6 +396,8 @@ Name | Type | Description  | Notes
  **updatedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **updatedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
  **updatedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
+ **updatedAtContains** | **time.Time** | SQL @&gt; comparison | 
+ **updatedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
  **updatedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **updatedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **updatedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -380,6 +412,8 @@ Name | Type | Description  | Notes
  **deletedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **deletedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
  **deletedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
+ **deletedAtContains** | **time.Time** | SQL @&gt; comparison | 
+ **deletedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
  **deletedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **deletedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **deletedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -394,6 +428,8 @@ Name | Type | Description  | Notes
  **nameLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **nameIn** | **string** | SQL IN comparison, permits comma-separated values | 
  **nameNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
+ **nameContains** | **string** | SQL @&gt; comparison | 
+ **nameNotcontains** | **string** | SQL NOT @&gt; comparison | 
  **nameLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **nameNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **nameIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -408,6 +444,8 @@ Name | Type | Description  | Notes
  **streamUrlLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **streamUrlIn** | **string** | SQL IN comparison, permits comma-separated values | 
  **streamUrlNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
+ **streamUrlContains** | **string** | SQL @&gt; comparison | 
+ **streamUrlNotcontains** | **string** | SQL NOT @&gt; comparison | 
  **streamUrlLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **streamUrlNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **streamUrlIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -422,6 +460,8 @@ Name | Type | Description  | Notes
  **lastSeenLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **lastSeenIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
  **lastSeenNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
+ **lastSeenContains** | **time.Time** | SQL @&gt; comparison | 
+ **lastSeenNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
  **lastSeenLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **lastSeenNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **lastSeenIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -436,6 +476,8 @@ Name | Type | Description  | Notes
  **segmentProducerClaimedUntilLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **segmentProducerClaimedUntilIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
  **segmentProducerClaimedUntilNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
+ **segmentProducerClaimedUntilContains** | **time.Time** | SQL @&gt; comparison | 
+ **segmentProducerClaimedUntilNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
  **segmentProducerClaimedUntilLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **segmentProducerClaimedUntilNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **segmentProducerClaimedUntilIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
@@ -450,14 +492,20 @@ Name | Type | Description  | Notes
  **streamProducerClaimedUntilLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
  **streamProducerClaimedUntilIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
  **streamProducerClaimedUntilNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
+ **streamProducerClaimedUntilContains** | **time.Time** | SQL @&gt; comparison | 
+ **streamProducerClaimedUntilNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
  **streamProducerClaimedUntilLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **streamProducerClaimedUntilNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
  **streamProducerClaimedUntilIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
  **streamProducerClaimedUntilNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
  **streamProducerClaimedUntilDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
  **streamProducerClaimedUntilAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
+ **referencedByDetectionCameraIdObjectsContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison | 
+ **referencedByDetectionCameraIdObjectsNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison | 
  **referencedByDetectionCameraIdObjectsDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
  **referencedByDetectionCameraIdObjectsAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
+ **referencedByVideoCameraIdObjectsContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison | 
+ **referencedByVideoCameraIdObjectsNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison | 
  **referencedByVideoCameraIdObjectsDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
  **referencedByVideoCameraIdObjectsAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
 

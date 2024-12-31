@@ -249,6 +249,8 @@ type ApiGetCamerasRequest struct {
 	limit *int32
 	offset *int32
 	depth *int32
+	referencedByDetectionLoad *string
+	referencedByVideoLoad *string
 	idEq *string
 	idNe *string
 	idGt *string
@@ -257,6 +259,8 @@ type ApiGetCamerasRequest struct {
 	idLte *string
 	idIn *string
 	idNotin *string
+	idContains *string
+	idNotcontains *string
 	idLike *string
 	idNotlike *string
 	idIlike *string
@@ -271,6 +275,8 @@ type ApiGetCamerasRequest struct {
 	createdAtLte *time.Time
 	createdAtIn *time.Time
 	createdAtNotin *time.Time
+	createdAtContains *time.Time
+	createdAtNotcontains *time.Time
 	createdAtLike *time.Time
 	createdAtNotlike *time.Time
 	createdAtIlike *time.Time
@@ -285,6 +291,8 @@ type ApiGetCamerasRequest struct {
 	updatedAtLte *time.Time
 	updatedAtIn *time.Time
 	updatedAtNotin *time.Time
+	updatedAtContains *time.Time
+	updatedAtNotcontains *time.Time
 	updatedAtLike *time.Time
 	updatedAtNotlike *time.Time
 	updatedAtIlike *time.Time
@@ -299,6 +307,8 @@ type ApiGetCamerasRequest struct {
 	deletedAtLte *time.Time
 	deletedAtIn *time.Time
 	deletedAtNotin *time.Time
+	deletedAtContains *time.Time
+	deletedAtNotcontains *time.Time
 	deletedAtLike *time.Time
 	deletedAtNotlike *time.Time
 	deletedAtIlike *time.Time
@@ -313,6 +323,8 @@ type ApiGetCamerasRequest struct {
 	nameLte *string
 	nameIn *string
 	nameNotin *string
+	nameContains *string
+	nameNotcontains *string
 	nameLike *string
 	nameNotlike *string
 	nameIlike *string
@@ -327,6 +339,8 @@ type ApiGetCamerasRequest struct {
 	streamUrlLte *string
 	streamUrlIn *string
 	streamUrlNotin *string
+	streamUrlContains *string
+	streamUrlNotcontains *string
 	streamUrlLike *string
 	streamUrlNotlike *string
 	streamUrlIlike *string
@@ -341,6 +355,8 @@ type ApiGetCamerasRequest struct {
 	lastSeenLte *time.Time
 	lastSeenIn *time.Time
 	lastSeenNotin *time.Time
+	lastSeenContains *time.Time
+	lastSeenNotcontains *time.Time
 	lastSeenLike *time.Time
 	lastSeenNotlike *time.Time
 	lastSeenIlike *time.Time
@@ -355,6 +371,8 @@ type ApiGetCamerasRequest struct {
 	segmentProducerClaimedUntilLte *time.Time
 	segmentProducerClaimedUntilIn *time.Time
 	segmentProducerClaimedUntilNotin *time.Time
+	segmentProducerClaimedUntilContains *time.Time
+	segmentProducerClaimedUntilNotcontains *time.Time
 	segmentProducerClaimedUntilLike *time.Time
 	segmentProducerClaimedUntilNotlike *time.Time
 	segmentProducerClaimedUntilIlike *time.Time
@@ -369,14 +387,20 @@ type ApiGetCamerasRequest struct {
 	streamProducerClaimedUntilLte *time.Time
 	streamProducerClaimedUntilIn *time.Time
 	streamProducerClaimedUntilNotin *time.Time
+	streamProducerClaimedUntilContains *time.Time
+	streamProducerClaimedUntilNotcontains *time.Time
 	streamProducerClaimedUntilLike *time.Time
 	streamProducerClaimedUntilNotlike *time.Time
 	streamProducerClaimedUntilIlike *time.Time
 	streamProducerClaimedUntilNotilike *time.Time
 	streamProducerClaimedUntilDesc *string
 	streamProducerClaimedUntilAsc *string
+	referencedByDetectionCameraIdObjectsContains *interface{}
+	referencedByDetectionCameraIdObjectsNotcontains *interface{}
 	referencedByDetectionCameraIdObjectsDesc *string
 	referencedByDetectionCameraIdObjectsAsc *string
+	referencedByVideoCameraIdObjectsContains *interface{}
+	referencedByVideoCameraIdObjectsNotcontains *interface{}
 	referencedByVideoCameraIdObjectsDesc *string
 	referencedByVideoCameraIdObjectsAsc *string
 }
@@ -396,6 +420,18 @@ func (r ApiGetCamerasRequest) Offset(offset int32) ApiGetCamerasRequest {
 // Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc)
 func (r ApiGetCamerasRequest) Depth(depth int32) ApiGetCamerasRequest {
 	r.depth = &depth
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) ReferencedByDetectionLoad(referencedByDetectionLoad string) ApiGetCamerasRequest {
+	r.referencedByDetectionLoad = &referencedByDetectionLoad
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) ReferencedByVideoLoad(referencedByVideoLoad string) ApiGetCamerasRequest {
+	r.referencedByVideoLoad = &referencedByVideoLoad
 	return r
 }
 
@@ -444,6 +480,18 @@ func (r ApiGetCamerasRequest) IdIn(idIn string) ApiGetCamerasRequest {
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetCamerasRequest) IdNotin(idNotin string) ApiGetCamerasRequest {
 	r.idNotin = &idNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) IdContains(idContains string) ApiGetCamerasRequest {
+	r.idContains = &idContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) IdNotcontains(idNotcontains string) ApiGetCamerasRequest {
+	r.idNotcontains = &idNotcontains
 	return r
 }
 
@@ -531,6 +579,18 @@ func (r ApiGetCamerasRequest) CreatedAtNotin(createdAtNotin time.Time) ApiGetCam
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) CreatedAtContains(createdAtContains time.Time) ApiGetCamerasRequest {
+	r.createdAtContains = &createdAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) CreatedAtNotcontains(createdAtNotcontains time.Time) ApiGetCamerasRequest {
+	r.createdAtNotcontains = &createdAtNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetCamerasRequest) CreatedAtLike(createdAtLike time.Time) ApiGetCamerasRequest {
 	r.createdAtLike = &createdAtLike
@@ -612,6 +672,18 @@ func (r ApiGetCamerasRequest) UpdatedAtIn(updatedAtIn time.Time) ApiGetCamerasRe
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetCamerasRequest) UpdatedAtNotin(updatedAtNotin time.Time) ApiGetCamerasRequest {
 	r.updatedAtNotin = &updatedAtNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) UpdatedAtContains(updatedAtContains time.Time) ApiGetCamerasRequest {
+	r.updatedAtContains = &updatedAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) UpdatedAtNotcontains(updatedAtNotcontains time.Time) ApiGetCamerasRequest {
+	r.updatedAtNotcontains = &updatedAtNotcontains
 	return r
 }
 
@@ -699,6 +771,18 @@ func (r ApiGetCamerasRequest) DeletedAtNotin(deletedAtNotin time.Time) ApiGetCam
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) DeletedAtContains(deletedAtContains time.Time) ApiGetCamerasRequest {
+	r.deletedAtContains = &deletedAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) DeletedAtNotcontains(deletedAtNotcontains time.Time) ApiGetCamerasRequest {
+	r.deletedAtNotcontains = &deletedAtNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetCamerasRequest) DeletedAtLike(deletedAtLike time.Time) ApiGetCamerasRequest {
 	r.deletedAtLike = &deletedAtLike
@@ -780,6 +864,18 @@ func (r ApiGetCamerasRequest) NameIn(nameIn string) ApiGetCamerasRequest {
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetCamerasRequest) NameNotin(nameNotin string) ApiGetCamerasRequest {
 	r.nameNotin = &nameNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) NameContains(nameContains string) ApiGetCamerasRequest {
+	r.nameContains = &nameContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) NameNotcontains(nameNotcontains string) ApiGetCamerasRequest {
+	r.nameNotcontains = &nameNotcontains
 	return r
 }
 
@@ -867,6 +963,18 @@ func (r ApiGetCamerasRequest) StreamUrlNotin(streamUrlNotin string) ApiGetCamera
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) StreamUrlContains(streamUrlContains string) ApiGetCamerasRequest {
+	r.streamUrlContains = &streamUrlContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) StreamUrlNotcontains(streamUrlNotcontains string) ApiGetCamerasRequest {
+	r.streamUrlNotcontains = &streamUrlNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetCamerasRequest) StreamUrlLike(streamUrlLike string) ApiGetCamerasRequest {
 	r.streamUrlLike = &streamUrlLike
@@ -948,6 +1056,18 @@ func (r ApiGetCamerasRequest) LastSeenIn(lastSeenIn time.Time) ApiGetCamerasRequ
 // SQL NOT IN comparison, permits comma-separated values
 func (r ApiGetCamerasRequest) LastSeenNotin(lastSeenNotin time.Time) ApiGetCamerasRequest {
 	r.lastSeenNotin = &lastSeenNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) LastSeenContains(lastSeenContains time.Time) ApiGetCamerasRequest {
+	r.lastSeenContains = &lastSeenContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) LastSeenNotcontains(lastSeenNotcontains time.Time) ApiGetCamerasRequest {
+	r.lastSeenNotcontains = &lastSeenNotcontains
 	return r
 }
 
@@ -1035,6 +1155,18 @@ func (r ApiGetCamerasRequest) SegmentProducerClaimedUntilNotin(segmentProducerCl
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) SegmentProducerClaimedUntilContains(segmentProducerClaimedUntilContains time.Time) ApiGetCamerasRequest {
+	r.segmentProducerClaimedUntilContains = &segmentProducerClaimedUntilContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) SegmentProducerClaimedUntilNotcontains(segmentProducerClaimedUntilNotcontains time.Time) ApiGetCamerasRequest {
+	r.segmentProducerClaimedUntilNotcontains = &segmentProducerClaimedUntilNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetCamerasRequest) SegmentProducerClaimedUntilLike(segmentProducerClaimedUntilLike time.Time) ApiGetCamerasRequest {
 	r.segmentProducerClaimedUntilLike = &segmentProducerClaimedUntilLike
@@ -1119,6 +1251,18 @@ func (r ApiGetCamerasRequest) StreamProducerClaimedUntilNotin(streamProducerClai
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) StreamProducerClaimedUntilContains(streamProducerClaimedUntilContains time.Time) ApiGetCamerasRequest {
+	r.streamProducerClaimedUntilContains = &streamProducerClaimedUntilContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) StreamProducerClaimedUntilNotcontains(streamProducerClaimedUntilNotcontains time.Time) ApiGetCamerasRequest {
+	r.streamProducerClaimedUntilNotcontains = &streamProducerClaimedUntilNotcontains
+	return r
+}
+
 // SQL LIKE comparison, value is implicitly prefixed and suffixed with %
 func (r ApiGetCamerasRequest) StreamProducerClaimedUntilLike(streamProducerClaimedUntilLike time.Time) ApiGetCamerasRequest {
 	r.streamProducerClaimedUntilLike = &streamProducerClaimedUntilLike
@@ -1155,6 +1299,18 @@ func (r ApiGetCamerasRequest) StreamProducerClaimedUntilAsc(streamProducerClaime
 	return r
 }
 
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsContains(referencedByDetectionCameraIdObjectsContains interface{}) ApiGetCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsContains = &referencedByDetectionCameraIdObjectsContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsNotcontains(referencedByDetectionCameraIdObjectsNotcontains interface{}) ApiGetCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsNotcontains = &referencedByDetectionCameraIdObjectsNotcontains
+	return r
+}
+
 // SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc string) ApiGetCamerasRequest {
 	r.referencedByDetectionCameraIdObjectsDesc = &referencedByDetectionCameraIdObjectsDesc
@@ -1164,6 +1320,18 @@ func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsDesc(reference
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
 func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc string) ApiGetCamerasRequest {
 	r.referencedByDetectionCameraIdObjectsAsc = &referencedByDetectionCameraIdObjectsAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) ReferencedByVideoCameraIdObjectsContains(referencedByVideoCameraIdObjectsContains interface{}) ApiGetCamerasRequest {
+	r.referencedByVideoCameraIdObjectsContains = &referencedByVideoCameraIdObjectsContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) ReferencedByVideoCameraIdObjectsNotcontains(referencedByVideoCameraIdObjectsNotcontains interface{}) ApiGetCamerasRequest {
+	r.referencedByVideoCameraIdObjectsNotcontains = &referencedByVideoCameraIdObjectsNotcontains
 	return r
 }
 
@@ -1226,6 +1394,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.depth != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
 	}
+	if r.referencedByDetectionLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection__load", r.referencedByDetectionLoad, "")
+	}
+	if r.referencedByVideoLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video__load", r.referencedByVideoLoad, "")
+	}
 	if r.idEq != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")
 	}
@@ -1249,6 +1423,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	}
 	if r.idNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notin", r.idNotin, "")
+	}
+	if r.idContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__contains", r.idContains, "")
+	}
+	if r.idNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notcontains", r.idNotcontains, "")
 	}
 	if r.idLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__like", r.idLike, "")
@@ -1292,6 +1472,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.createdAtNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notin", r.createdAtNotin, "")
 	}
+	if r.createdAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__contains", r.createdAtContains, "")
+	}
+	if r.createdAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notcontains", r.createdAtNotcontains, "")
+	}
 	if r.createdAtLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__like", r.createdAtLike, "")
 	}
@@ -1333,6 +1519,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	}
 	if r.updatedAtNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notin", r.updatedAtNotin, "")
+	}
+	if r.updatedAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__contains", r.updatedAtContains, "")
+	}
+	if r.updatedAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notcontains", r.updatedAtNotcontains, "")
 	}
 	if r.updatedAtLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__like", r.updatedAtLike, "")
@@ -1376,6 +1568,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.deletedAtNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notin", r.deletedAtNotin, "")
 	}
+	if r.deletedAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__contains", r.deletedAtContains, "")
+	}
+	if r.deletedAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notcontains", r.deletedAtNotcontains, "")
+	}
 	if r.deletedAtLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__like", r.deletedAtLike, "")
 	}
@@ -1417,6 +1615,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	}
 	if r.nameNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "name__notin", r.nameNotin, "")
+	}
+	if r.nameContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__contains", r.nameContains, "")
+	}
+	if r.nameNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__notcontains", r.nameNotcontains, "")
 	}
 	if r.nameLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "name__like", r.nameLike, "")
@@ -1460,6 +1664,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.streamUrlNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__notin", r.streamUrlNotin, "")
 	}
+	if r.streamUrlContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__contains", r.streamUrlContains, "")
+	}
+	if r.streamUrlNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__notcontains", r.streamUrlNotcontains, "")
+	}
 	if r.streamUrlLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__like", r.streamUrlLike, "")
 	}
@@ -1501,6 +1711,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	}
 	if r.lastSeenNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__notin", r.lastSeenNotin, "")
+	}
+	if r.lastSeenContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__contains", r.lastSeenContains, "")
+	}
+	if r.lastSeenNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__notcontains", r.lastSeenNotcontains, "")
 	}
 	if r.lastSeenLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__like", r.lastSeenLike, "")
@@ -1544,6 +1760,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.segmentProducerClaimedUntilNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__notin", r.segmentProducerClaimedUntilNotin, "")
 	}
+	if r.segmentProducerClaimedUntilContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__contains", r.segmentProducerClaimedUntilContains, "")
+	}
+	if r.segmentProducerClaimedUntilNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__notcontains", r.segmentProducerClaimedUntilNotcontains, "")
+	}
 	if r.segmentProducerClaimedUntilLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__like", r.segmentProducerClaimedUntilLike, "")
 	}
@@ -1586,6 +1808,12 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.streamProducerClaimedUntilNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__notin", r.streamProducerClaimedUntilNotin, "")
 	}
+	if r.streamProducerClaimedUntilContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__contains", r.streamProducerClaimedUntilContains, "")
+	}
+	if r.streamProducerClaimedUntilNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__notcontains", r.streamProducerClaimedUntilNotcontains, "")
+	}
 	if r.streamProducerClaimedUntilLike != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__like", r.streamProducerClaimedUntilLike, "")
 	}
@@ -1604,11 +1832,23 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.streamProducerClaimedUntilAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__asc", r.streamProducerClaimedUntilAsc, "")
 	}
+	if r.referencedByDetectionCameraIdObjectsContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__contains", r.referencedByDetectionCameraIdObjectsContains, "")
+	}
+	if r.referencedByDetectionCameraIdObjectsNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__notcontains", r.referencedByDetectionCameraIdObjectsNotcontains, "")
+	}
 	if r.referencedByDetectionCameraIdObjectsDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__desc", r.referencedByDetectionCameraIdObjectsDesc, "")
 	}
 	if r.referencedByDetectionCameraIdObjectsAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__asc", r.referencedByDetectionCameraIdObjectsAsc, "")
+	}
+	if r.referencedByVideoCameraIdObjectsContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__contains", r.referencedByVideoCameraIdObjectsContains, "")
+	}
+	if r.referencedByVideoCameraIdObjectsNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__notcontains", r.referencedByVideoCameraIdObjectsNotcontains, "")
 	}
 	if r.referencedByVideoCameraIdObjectsDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__desc", r.referencedByVideoCameraIdObjectsDesc, "")

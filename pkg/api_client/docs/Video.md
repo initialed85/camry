@@ -376,16 +376,6 @@ SetReferencedByDetectionVideoIdObjects sets ReferencedByDetectionVideoIdObjects 
 
 HasReferencedByDetectionVideoIdObjects returns a boolean if a field has been set.
 
-### SetReferencedByDetectionVideoIdObjectsNil
-
-`func (o *Video) SetReferencedByDetectionVideoIdObjectsNil(b bool)`
-
- SetReferencedByDetectionVideoIdObjectsNil sets the value for ReferencedByDetectionVideoIdObjects to be an explicit nil
-
-### UnsetReferencedByDetectionVideoIdObjects
-`func (o *Video) UnsetReferencedByDetectionVideoIdObjects()`
-
-UnsetReferencedByDetectionVideoIdObjects ensures that no value is present for ReferencedByDetectionVideoIdObjects, not even an explicit nil
 ### GetStartedAt
 
 `func (o *Video) GetStartedAt() time.Time`

@@ -185,16 +185,6 @@ SetReferencedByDetectionCameraIdObjects sets ReferencedByDetectionCameraIdObject
 
 HasReferencedByDetectionCameraIdObjects returns a boolean if a field has been set.
 
-### SetReferencedByDetectionCameraIdObjectsNil
-
-`func (o *Camera) SetReferencedByDetectionCameraIdObjectsNil(b bool)`
-
- SetReferencedByDetectionCameraIdObjectsNil sets the value for ReferencedByDetectionCameraIdObjects to be an explicit nil
-
-### UnsetReferencedByDetectionCameraIdObjects
-`func (o *Camera) UnsetReferencedByDetectionCameraIdObjects()`
-
-UnsetReferencedByDetectionCameraIdObjects ensures that no value is present for ReferencedByDetectionCameraIdObjects, not even an explicit nil
 ### GetReferencedByVideoCameraIdObjects
 
 `func (o *Camera) GetReferencedByVideoCameraIdObjects() []Video`
@@ -220,16 +210,6 @@ SetReferencedByVideoCameraIdObjects sets ReferencedByVideoCameraIdObjects field 
 
 HasReferencedByVideoCameraIdObjects returns a boolean if a field has been set.
 
-### SetReferencedByVideoCameraIdObjectsNil
-
-`func (o *Camera) SetReferencedByVideoCameraIdObjectsNil(b bool)`
-
- SetReferencedByVideoCameraIdObjectsNil sets the value for ReferencedByVideoCameraIdObjects to be an explicit nil
-
-### UnsetReferencedByVideoCameraIdObjects
-`func (o *Camera) UnsetReferencedByVideoCameraIdObjects()`
-
-UnsetReferencedByVideoCameraIdObjects ensures that no value is present for ReferencedByVideoCameraIdObjects, not even an explicit nil
 ### GetSegmentProducerClaimedUntil
 
 `func (o *Camera) GetSegmentProducerClaimedUntil() time.Time`

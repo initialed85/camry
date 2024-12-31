@@ -100,11 +100,6 @@ class Video(BaseModel):
         if self.detection_summary is None and "detection_summary" in self.model_fields_set:
             _dict['detection_summary'] = None
 
-        # set to None if referenced_by_detection_video_id_objects (nullable) is None
-        # and model_fields_set contains the field
-        if self.referenced_by_detection_video_id_objects is None and "referenced_by_detection_video_id_objects" in self.model_fields_set:
-            _dict['referenced_by_detection_video_id_objects'] = None
-
         return _dict
 
     @classmethod
