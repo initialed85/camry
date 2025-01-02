@@ -36,7 +36,9 @@ export interface VideoTableProps {
 export function VideoTable(props: VideoTableProps) {
   const [ref, inView] = useInView();
 
-  const [currentVideo, setCurrentVideo] = useState<components["schemas"]["Video"] | undefined>(undefined);
+  const [currentVideo, setCurrentVideo] = useState<
+    components["schemas"]["Video"] | undefined
+  >(undefined);
   const [showPlayModal, setShowPlayModal] = useState(false);
 
   const { data: allCamerasData } = useQuery("get", "/api/cameras", {
@@ -47,7 +49,9 @@ export function VideoTable(props: VideoTableProps) {
     },
   });
 
-  const visibleCameraCount = props.cameraId ? 1 : allCamerasData?.objects?.length || 1;
+  const visibleCameraCount = props.cameraId
+    ? 1
+    : allCamerasData?.objects?.length || 1;
 
   const relevantLimit = defaultLimit * visibleCameraCount;
 
@@ -66,7 +70,9 @@ export function VideoTable(props: VideoTableProps) {
           query: {
             camera_id__eq: props.cameraId || undefined,
             detection_summary__contains: props.classNameFilter
-              ? JSON.stringify([{ class_name: props.classNameFilter.replaceAll("?", "") }])
+              ? JSON.stringify([
+                  { class_name: props.classNameFilter.replaceAll("?", "") },
+                ])
               : undefined,
             // TODO: skipping this means we can keep infinitely scrolling back forever, I think
             // started_at__gt: props.startedAtGt && props.startedAtGt,
@@ -201,7 +207,9 @@ export function VideoTable(props: VideoTableProps) {
             >
               {props.responsive ? "S" : "Summary"}
             </th>
-            <th style={{ ...truncateStyleProps }}>{props.responsive ? "D" : "Detected"}</th>
+            <th style={{ ...truncateStyleProps }}>
+              {props.responsive ? "D" : "Detected"}
+            </th>
             <th
               style={{
                 width: props.responsive ? 80 : 160,
@@ -210,7 +218,9 @@ export function VideoTable(props: VideoTableProps) {
             >
               Preview
             </th>
-            <th style={{ width: "7.5%", ...truncateStyleProps }}>{props.responsive ? "M" : "Media"}</th>
+            <th style={{ width: "7.5%", ...truncateStyleProps }}>
+              {props.responsive ? "M" : "Media"}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -220,16 +230,20 @@ export function VideoTable(props: VideoTableProps) {
                 if (props.classNameFilter) {
                   const detectionSummaries = video?.detection_summary as [];
 
-                  const matchingClassNames = detectionSummaries.filter((detectionSummary: any) => {
-                    // if (
-                    //   detectionSummary.average_score < 0.5 ||
-                    //   detectionSummary.detected_frame_count < 8
-                    // ) {
-                    //   return false;
-                    // }
+                  const matchingClassNames = detectionSummaries.filter(
+                    (detectionSummary: any) => {
+                      // if (
+                      //   detectionSummary.average_score < 0.5 ||
+                      //   detectionSummary.detected_frame_count < 8
+                      // ) {
+                      //   return false;
+                      // }
 
-                    return (detectionSummary.class_name as string).includes(props.classNameFilter);
-                  });
+                      return (detectionSummary.class_name as string).includes(
+                        props.classNameFilter,
+                      );
+                    },
+                  );
 
                   return matchingClassNames.length;
                 }
@@ -248,8 +262,12 @@ export function VideoTable(props: VideoTableProps) {
 
                 const available = video?.status !== "recording";
 
-                const minutes = Math.floor((video?.duration || 0) / (1_000_000_000 * 60));
-                const seconds = Math.floor((video?.duration || 0) / 1_000_000_000 - minutes * 60);
+                const minutes = Math.floor(
+                  (video?.duration || 0) / (1_000_000_000 * 60),
+                );
+                const seconds = Math.floor(
+                  (video?.duration || 0) / 1_000_000_000 - minutes * 60,
+                );
 
                 const fileSize = (video?.file_size || 0.0).toFixed(2);
 
@@ -259,7 +277,11 @@ export function VideoTable(props: VideoTableProps) {
 
                 if (video?.thumbnail_name) {
                   thumbnail = (
-                    <a target="_blank" rel="noreferrer" href={`/media/${video?.thumbnail_name}`}>
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      href={`/media/${video?.thumbnail_name}`}
+                    >
                       <img
                         alt={`still from ${video?.camera_id_object?.name} @ ${startedAt}`}
                         src={`/media/${video?.thumbnail_name}`}
@@ -323,7 +345,10 @@ export function VideoTable(props: VideoTableProps) {
                             key={x.class_name}
                             style={{
                               color:
-                                props.classNameFilter && (x.class_name as string).includes(props.classNameFilter)
+                                props.classNameFilter &&
+                                (x.class_name as string).includes(
+                                  props.classNameFilter,
+                                )
                                   ? "#ff0000"
                                   : undefined,
                             }}
@@ -338,12 +363,16 @@ export function VideoTable(props: VideoTableProps) {
                           key={x.class_name}
                           style={{
                             color:
-                              props.classNameFilter && (x.class_name as string).includes(props.classNameFilter)
+                              props.classNameFilter &&
+                              (x.class_name as string).includes(
+                                props.classNameFilter,
+                              )
                                 ? "#ff0000"
                                 : undefined,
                           }}
                         >
-                          {x.class_name} @ {x.average_score.toFixed(2)} (over {x.detected_frame_count} frames)
+                          {x.class_name} @ {x.average_score.toFixed(2)} (over{" "}
+                          {x.detected_frame_count} frames)
                           <br />
                         </span>
                       );
@@ -354,11 +383,14 @@ export function VideoTable(props: VideoTableProps) {
                   <tr key={`video-table-row-${video.id}`}>
                     <td>
                       <Typography style={{ display: "inline" }}>
-                        {getDateString(startedAt)} {startedAt.toTimeString().split(" ")[0]}
+                        {getDateString(startedAt)}{" "}
+                        {startedAt.toTimeString().split(" ")[0]}
                       </Typography>
                       {props.responsive ? <br /> : " -> "}
                       <Typography color="neutral" style={{ display: "inline" }}>
-                        {endedAt ? endedAt.toTimeString().split(" ")[0] : new Date().toTimeString().split(" ")[0]}{" "}
+                        {endedAt
+                          ? endedAt.toTimeString().split(" ")[0]
+                          : new Date().toTimeString().split(" ")[0]}{" "}
                         <br />
                       </Typography>
                     </td>
@@ -391,7 +423,10 @@ export function VideoTable(props: VideoTableProps) {
                             variant={"plain"}
                             sx={{ px: 0, mx: 0, py: 0, my: 0 }}
                             onClick={() => {
-                              window.open(`/media/${video?.file_name}`, "_blank");
+                              window.open(
+                                `/media/${video?.file_name}`,
+                                "_blank",
+                              );
                             }}
                           >
                             <CloudDownloadOutlinedIcon color={"success"} />
@@ -418,7 +453,9 @@ export function VideoTable(props: VideoTableProps) {
           ) : (
             <tr>
               <td colSpan={5}>
-                <Typography color={"neutral"}>(No videos for the selected camera / date)</Typography>
+                <Typography color={"neutral"}>
+                  (No videos for the selected camera / date)
+                </Typography>
               </td>
             </tr>
           )}
@@ -452,7 +489,13 @@ export function VideoTable(props: VideoTableProps) {
             verticalAlign: "center",
           }}
         >
-          {currentVideo && <Video video={currentVideo} width={desiredWidth} height={desiredHeight} />}
+          {currentVideo && (
+            <Video
+              video={currentVideo}
+              width={desiredWidth}
+              height={desiredHeight}
+            />
+          )}
         </ModalDialog>
       </Modal>
     </>

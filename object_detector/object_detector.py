@@ -45,6 +45,7 @@ def do(
         videos_response = video_api.get_videos(
             file_name__eq=one_shot_video_file_name,
             started_at__desc="",
+            _request_timeout=10,
         )
 
         videos = videos_response.objects
@@ -64,10 +65,10 @@ def do(
                 return
 
             print("")
-
             raise
 
     if not videos:
+        print("")
         return
 
     for video in videos:
@@ -82,6 +83,7 @@ def do(
             detections_response = detection_api.get_detections(
                 camera_id__eq=video.camera_id,
                 video_id__eq=video.id,
+                _request_timeout=10,
             )
 
             for detection in detections_response.objects or []:
@@ -89,12 +91,19 @@ def do(
                     continue
 
                 print(f"deleting old detection {detection.id}")
-                detection_api.delete_detection(detection.id)
+                detection_api.delete_detection(
+                    detection.id,
+                    _request_timeout=10,
+                )
 
         if video.file_name is None:
             continue
 
-        video_api.patch_video(video.id, Video(status="detecting"))
+        video_api.patch_video(
+            video.id,
+            Video(status="detecting"),
+            _request_timeout=10,
+        )
 
         model = YOLO("yolov8n.pt")
 
@@ -210,6 +219,7 @@ def do(
 
                     detection_api.post_detections(
                         detections,
+                        _request_timeout=60,
                     )
                 else:
                     print("no detections to post")
@@ -237,8 +247,12 @@ def do(
                         average_score = sum(scores) / len(scores) if scores else 0.0
                         frame_count = len(these_detections)
 
-                        # TODO: 5 frames at a stride of 4 is 5 seconds- hopefully nobody is doing anything noteworthy in < 5s
+                        # TODO: 5 frames at a stride of 4 is 5 seconds
                         if frame_count < 5:
+                            continue
+
+                        # TODO: (aggregate) confidence limit at 0.5
+                        if average_score < 0.5:
                             continue
 
                         weighted_score = (
@@ -246,6 +260,7 @@ def do(
                             if handled_frame_count != 0
                             else 0.0
                         )
+
                         detection_summary_by_class_name[class_name] = (weighted_score, average_score, frame_count)
 
                     raw_detection_summary = sorted(
@@ -277,6 +292,7 @@ def do(
                         detection_summary=detection_summary,
                         object_tracker_claimed_until=datetime.datetime.now().replace(tzinfo=UTC),
                     ),
+                    _request_timeout=10,
                 )
 
                 after = datetime.datetime.now()
