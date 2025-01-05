@@ -112,12 +112,29 @@
           }
         }
       },
-      "ClaimRequest": {
+      "CameraSegmentProducerClaimRequest": {
         "type": "object",
         "properties": {
-          "claim_duration_seconds": {
+          "timeout_seconds": {
             "type": "number",
             "format": "double"
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "CameraStreamProducerClaimRequest": {
+        "type": "object",
+        "properties": {
+          "timeout_seconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -425,6 +442,32 @@
             "type": "string"
           },
           "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "VideoObjectDetectorClaimRequest": {
+        "type": "object",
+        "properties": {
+          "timeout_seconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
+      "VideoObjectTrackerClaimRequest": {
+        "type": "object",
+        "properties": {
+          "timeout_seconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "until": {
             "type": "string",
             "format": "date-time"
           }
@@ -2256,17 +2299,39 @@
         }
       }
     },
-    "/api/custom/claim-video-for-object-detector": {
-      "patch": {
+    "/api/cameras/{primaryKey}/segment-producer-claim": {
+      "post": {
         "tags": [
-          "Custom"
+          "Camera"
         ],
-        "operationId": "PatchCustomClaimVideoForObjectDetector",
+        "operationId": "PostCamerasSegmentProducerClaim",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ClaimRequest"
+                "$ref": "#/components/schemas/CameraSegmentProducerClaimRequest"
               }
             }
           },
@@ -2274,17 +2339,99 @@
         },
         "responses": {
           "200": {
-            "description": "PatchCustomClaimVideoForObjectDetector success",
+            "description": "PostCamerasSegmentProducerClaim success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/NullableVideo"
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
                 }
               }
             }
           },
           "default": {
-            "description": "PatchCustomClaimVideoForObjectDetector failure",
+            "description": "PostCamerasSegmentProducerClaim failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cameras/{primaryKey}/stream-producer-claim": {
+      "post": {
+        "tags": [
+          "Camera"
+        ],
+        "operationId": "PostCamerasStreamProducerClaim",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CameraStreamProducerClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostCamerasStreamProducerClaim success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostCamerasStreamProducerClaim failure",
             "content": {
               "application/json": {
                 "schema": {
@@ -4299,6 +4446,246 @@
           },
           "default": {
             "description": "DeleteDetection failure"
+          }
+        }
+      }
+    },
+    "/api/object-detector-claim-video": {
+      "post": {
+        "tags": [
+          "ObjectDetectorClaimVideo"
+        ],
+        "operationId": "PostObjectDetectorClaimVideos",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoObjectDetectorClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostObjectDetectorClaimVideos success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostObjectDetectorClaimVideos failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/object-tracker-claim-video": {
+      "post": {
+        "tags": [
+          "ObjectTrackerClaimVideo"
+        ],
+        "operationId": "PostObjectTrackerClaimVideos",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoObjectTrackerClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostObjectTrackerClaimVideos success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostObjectTrackerClaimVideos failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/segment-producer-claim-camera": {
+      "post": {
+        "tags": [
+          "SegmentProducerClaimCamera"
+        ],
+        "operationId": "PostSegmentProducerClaimCameras",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CameraSegmentProducerClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostSegmentProducerClaimCameras success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostSegmentProducerClaimCameras failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/stream-producer-claim-camera": {
+      "post": {
+        "tags": [
+          "StreamProducerClaimCamera"
+        ],
+        "operationId": "PostStreamProducerClaimCameras",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CameraStreamProducerClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostStreamProducerClaimCameras success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfCamera"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostStreamProducerClaimCameras failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
           }
         }
       }
@@ -6854,6 +7241,170 @@
           },
           "default": {
             "description": "DeleteVideo failure"
+          }
+        }
+      }
+    },
+    "/api/videos/{primaryKey}/object-detector-claim": {
+      "post": {
+        "tags": [
+          "Video"
+        ],
+        "operationId": "PostVideosObjectDetectorClaim",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoObjectDetectorClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostVideosObjectDetectorClaim success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostVideosObjectDetectorClaim failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/videos/{primaryKey}/object-tracker-claim": {
+      "post": {
+        "tags": [
+          "Video"
+        ],
+        "operationId": "PostVideosObjectTrackerClaim",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoObjectTrackerClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostVideosObjectTrackerClaim success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostVideosObjectTrackerClaim failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
           }
         }
       }

@@ -2173,3 +2173,263 @@ func (a *CameraAPIService) PostCamerasExecute(r ApiPostCamerasRequest) (*Respons
 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
+
+type ApiPostCamerasSegmentProducerClaimRequest struct {
+	ctx context.Context
+	ApiService *CameraAPIService
+	primaryKey string
+	cameraSegmentProducerClaimRequest *CameraSegmentProducerClaimRequest
+	depth *int64
+}
+
+func (r ApiPostCamerasSegmentProducerClaimRequest) CameraSegmentProducerClaimRequest(cameraSegmentProducerClaimRequest CameraSegmentProducerClaimRequest) ApiPostCamerasSegmentProducerClaimRequest {
+	r.cameraSegmentProducerClaimRequest = &cameraSegmentProducerClaimRequest
+	return r
+}
+
+// Query parameter depth
+func (r ApiPostCamerasSegmentProducerClaimRequest) Depth(depth int64) ApiPostCamerasSegmentProducerClaimRequest {
+	r.depth = &depth
+	return r
+}
+
+func (r ApiPostCamerasSegmentProducerClaimRequest) Execute() (*ResponseWithGenericOfCamera, *http.Response, error) {
+	return r.ApiService.PostCamerasSegmentProducerClaimExecute(r)
+}
+
+/*
+PostCamerasSegmentProducerClaim Method for PostCamerasSegmentProducerClaim
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param primaryKey Path parameter primaryKey
+ @return ApiPostCamerasSegmentProducerClaimRequest
+*/
+func (a *CameraAPIService) PostCamerasSegmentProducerClaim(ctx context.Context, primaryKey string) ApiPostCamerasSegmentProducerClaimRequest {
+	return ApiPostCamerasSegmentProducerClaimRequest{
+		ApiService: a,
+		ctx: ctx,
+		primaryKey: primaryKey,
+	}
+}
+
+// Execute executes the request
+//  @return ResponseWithGenericOfCamera
+func (a *CameraAPIService) PostCamerasSegmentProducerClaimExecute(r ApiPostCamerasSegmentProducerClaimRequest) (*ResponseWithGenericOfCamera, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ResponseWithGenericOfCamera
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CameraAPIService.PostCamerasSegmentProducerClaim")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/cameras/{primaryKey}/segment-producer-claim"
+	localVarPath = strings.Replace(localVarPath, "{"+"primaryKey"+"}", url.PathEscape(parameterValueToString(r.primaryKey, "primaryKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.cameraSegmentProducerClaimRequest == nil {
+		return localVarReturnValue, nil, reportError("cameraSegmentProducerClaimRequest is required and must be specified")
+	}
+
+	if r.depth != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.cameraSegmentProducerClaimRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v GetCamerasDefaultResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostCamerasStreamProducerClaimRequest struct {
+	ctx context.Context
+	ApiService *CameraAPIService
+	primaryKey string
+	cameraStreamProducerClaimRequest *CameraStreamProducerClaimRequest
+	depth *int64
+}
+
+func (r ApiPostCamerasStreamProducerClaimRequest) CameraStreamProducerClaimRequest(cameraStreamProducerClaimRequest CameraStreamProducerClaimRequest) ApiPostCamerasStreamProducerClaimRequest {
+	r.cameraStreamProducerClaimRequest = &cameraStreamProducerClaimRequest
+	return r
+}
+
+// Query parameter depth
+func (r ApiPostCamerasStreamProducerClaimRequest) Depth(depth int64) ApiPostCamerasStreamProducerClaimRequest {
+	r.depth = &depth
+	return r
+}
+
+func (r ApiPostCamerasStreamProducerClaimRequest) Execute() (*ResponseWithGenericOfCamera, *http.Response, error) {
+	return r.ApiService.PostCamerasStreamProducerClaimExecute(r)
+}
+
+/*
+PostCamerasStreamProducerClaim Method for PostCamerasStreamProducerClaim
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param primaryKey Path parameter primaryKey
+ @return ApiPostCamerasStreamProducerClaimRequest
+*/
+func (a *CameraAPIService) PostCamerasStreamProducerClaim(ctx context.Context, primaryKey string) ApiPostCamerasStreamProducerClaimRequest {
+	return ApiPostCamerasStreamProducerClaimRequest{
+		ApiService: a,
+		ctx: ctx,
+		primaryKey: primaryKey,
+	}
+}
+
+// Execute executes the request
+//  @return ResponseWithGenericOfCamera
+func (a *CameraAPIService) PostCamerasStreamProducerClaimExecute(r ApiPostCamerasStreamProducerClaimRequest) (*ResponseWithGenericOfCamera, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ResponseWithGenericOfCamera
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "CameraAPIService.PostCamerasStreamProducerClaim")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/cameras/{primaryKey}/stream-producer-claim"
+	localVarPath = strings.Replace(localVarPath, "{"+"primaryKey"+"}", url.PathEscape(parameterValueToString(r.primaryKey, "primaryKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.cameraStreamProducerClaimRequest == nil {
+		return localVarReturnValue, nil, reportError("cameraStreamProducerClaimRequest is required and must be specified")
+	}
+
+	if r.depth != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.cameraStreamProducerClaimRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v GetCamerasDefaultResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}

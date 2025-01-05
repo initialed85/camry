@@ -36,7 +36,7 @@ export interface paths {
     patch: operations["PatchCamera"];
     trace?: never;
   };
-  "/api/custom/claim-video-for-object-detector": {
+  "/api/cameras/{primaryKey}/segment-producer-claim": {
     parameters: {
       query?: never;
       header?: never;
@@ -45,11 +45,27 @@ export interface paths {
     };
     get?: never;
     put?: never;
-    post?: never;
+    post: operations["PostCamerasSegmentProducerClaim"];
     delete?: never;
     options?: never;
     head?: never;
-    patch: operations["PatchCustomClaimVideoForObjectDetector"];
+    patch?: never;
+    trace?: never;
+  };
+  "/api/cameras/{primaryKey}/stream-producer-claim": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostCamerasStreamProducerClaim"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
     trace?: never;
   };
   "/api/detections": {
@@ -84,6 +100,70 @@ export interface paths {
     patch: operations["PatchDetection"];
     trace?: never;
   };
+  "/api/object-detector-claim-video": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostObjectDetectorClaimVideos"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/object-tracker-claim-video": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostObjectTrackerClaimVideos"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/segment-producer-claim-camera": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostSegmentProducerClaimCameras"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/stream-producer-claim-camera": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostStreamProducerClaimCameras"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/videos": {
     parameters: {
       query?: never;
@@ -114,6 +194,38 @@ export interface paths {
     options?: never;
     head?: never;
     patch: operations["PatchVideo"];
+    trace?: never;
+  };
+  "/api/videos/{primaryKey}/object-detector-claim": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostVideosObjectDetectorClaim"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/videos/{primaryKey}/object-tracker-claim": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostVideosObjectTrackerClaim"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
     trace?: never;
   };
 }
@@ -157,9 +269,17 @@ export interface components {
       /** Format: date-time */
       updated_at?: string;
     };
-    ClaimRequest: {
+    CameraSegmentProducerClaimRequest: {
       /** Format: double */
-      claim_duration_seconds?: number;
+      timeout_seconds?: number;
+      /** Format: date-time */
+      until?: string;
+    };
+    CameraStreamProducerClaimRequest: {
+      /** Format: double */
+      timeout_seconds?: number;
+      /** Format: date-time */
+      until?: string;
     };
     Detection: {
       bounding_box?:
@@ -283,6 +403,18 @@ export interface components {
       thumbnail_name?: string;
       /** Format: date-time */
       updated_at?: string;
+    };
+    VideoObjectDetectorClaimRequest: {
+      /** Format: double */
+      timeout_seconds?: number;
+      /** Format: date-time */
+      until?: string;
+    };
+    VideoObjectTrackerClaimRequest: {
+      /** Format: double */
+      timeout_seconds?: number;
+      /** Format: date-time */
+      until?: string;
     };
   };
   responses: never;
@@ -800,29 +932,79 @@ export interface operations {
       };
     };
   };
-  PatchCustomClaimVideoForObjectDetector: {
+  PostCamerasSegmentProducerClaim: {
     parameters: {
-      query?: never;
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
       header?: never;
-      path?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
       cookie?: never;
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["ClaimRequest"];
+        "application/json": components["schemas"]["CameraSegmentProducerClaimRequest"];
       };
     };
     responses: {
-      /** @description PatchCustomClaimVideoForObjectDetector success */
+      /** @description PostCamerasSegmentProducerClaim success */
       200: {
         headers: {
           [name: string]: unknown;
         };
         content: {
-          "application/json": components["schemas"]["NullableVideo"];
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
         };
       };
-      /** @description PatchCustomClaimVideoForObjectDetector failure */
+      /** @description PostCamerasSegmentProducerClaim failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostCamerasStreamProducerClaim: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CameraStreamProducerClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostCamerasStreamProducerClaim success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
+        };
+      };
+      /** @description PostCamerasStreamProducerClaim failure */
       default: {
         headers: {
           [name: string]: unknown;
@@ -1362,6 +1544,158 @@ export interface operations {
         };
       };
       /** @description PatchDetection failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostObjectDetectorClaimVideos: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["VideoObjectDetectorClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostObjectDetectorClaimVideos success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
+        };
+      };
+      /** @description PostObjectDetectorClaimVideos failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostObjectTrackerClaimVideos: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["VideoObjectTrackerClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostObjectTrackerClaimVideos success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
+        };
+      };
+      /** @description PostObjectTrackerClaimVideos failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostSegmentProducerClaimCameras: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CameraSegmentProducerClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostSegmentProducerClaimCameras success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
+        };
+      };
+      /** @description PostSegmentProducerClaimCameras failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostStreamProducerClaimCameras: {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["CameraStreamProducerClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostStreamProducerClaimCameras success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfCamera"];
+        };
+      };
+      /** @description PostStreamProducerClaimCameras failure */
       default: {
         headers: {
           [name: string]: unknown;
@@ -2021,6 +2355,94 @@ export interface operations {
         };
       };
       /** @description PatchVideo failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostVideosObjectDetectorClaim: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["VideoObjectDetectorClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostVideosObjectDetectorClaim success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
+        };
+      };
+      /** @description PostVideosObjectDetectorClaim failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostVideosObjectTrackerClaim: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["VideoObjectTrackerClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostVideosObjectTrackerClaim success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
+        };
+      };
+      /** @description PostVideosObjectTrackerClaim failure */
       default: {
         headers: {
           [name: string]: unknown;

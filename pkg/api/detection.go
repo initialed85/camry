@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"math"
+	"maps"
 	"net/http"
 	"net/netip"
 	"slices"
@@ -27,7 +27,6 @@ import (
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgtype"
 	"github.com/jackc/pgx/v5/pgxpool"
-	"golang.org/x/exp/maps"
 )
 
 type Detection struct {
@@ -48,6 +47,8 @@ type Detection struct {
 }
 
 var DetectionTable = "detection"
+
+var DetectionTableWithSchema = fmt.Sprintf("%s.%s", schema, DetectionTable)
 
 var DetectionTableNamespaceID int32 = 1337 + 2
 
@@ -136,12 +137,6 @@ type DetectionOnePathParams struct {
 
 type DetectionLoadQueryParams struct {
 	Depth *int `json:"depth"`
-}
-
-type DetectionClaimRequest struct {
-	Until          time.Time `json:"until"`
-	By             uuid.UUID `json:"by"`
-	TimeoutSeconds float64   `json:"timeout_seconds"`
 }
 
 /*
@@ -429,6 +424,22 @@ func (m *Detection) FromItem(item map[string]any) error {
 	return nil
 }
 
+func (m *Detection) ToItem() map[string]any {
+	item := make(map[string]any)
+
+	b, err := json.Marshal(m)
+	if err != nil {
+		panic(fmt.Sprintf("%T.ToItem() failed intermediate marshal to JSON: %s", m, err))
+	}
+
+	err = json.Unmarshal(b, &item)
+	if err != nil {
+		panic(fmt.Sprintf("%T.ToItem() failed intermediate unmarshal from JSON: %s", m, err))
+	}
+
+	return item
+}
+
 func (m *Detection) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) error {
 	extraWhere := ""
 	if len(includeDeleteds) > 0 && includeDeleteds[0] {
@@ -470,7 +481,7 @@ func (m *Detection) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bo
 	return nil
 }
 
-func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZeroValues bool, forceSetValuesForFields ...string) error {
+func (m *Detection) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, forceSetValuesForFields ...string) ([]string, []any, error) {
 	columns := make([]string, 0)
 	values := make([]any, 0)
 
@@ -479,7 +490,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatUUID(m.ID)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ID; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.ID; %v", err)
 		}
 
 		values = append(values, v)
@@ -490,7 +501,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatTime(m.CreatedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.CreatedAt; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.CreatedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -501,7 +512,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatTime(m.UpdatedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.UpdatedAt; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.UpdatedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -512,7 +523,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatTime(m.DeletedAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.DeletedAt; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.DeletedAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -523,7 +534,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatTime(m.SeenAt)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.SeenAt; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.SeenAt; %v", err)
 		}
 
 		values = append(values, v)
@@ -534,7 +545,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatInt(m.ClassID)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ClassID; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.ClassID; %v", err)
 		}
 
 		values = append(values, v)
@@ -545,7 +556,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatString(m.ClassName)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.ClassName; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.ClassName; %v", err)
 		}
 
 		values = append(values, v)
@@ -556,7 +567,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatFloat(m.Score)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.Score; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.Score; %v", err)
 		}
 
 		values = append(values, v)
@@ -567,7 +578,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatPoint(m.Centroid)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.Centroid; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.Centroid; %v", err)
 		}
 
 		values = append(values, v)
@@ -578,7 +589,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatPolygon(m.BoundingBox)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.BoundingBox; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.BoundingBox; %v", err)
 		}
 
 		values = append(values, v)
@@ -589,7 +600,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatUUID(m.VideoID)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.VideoID; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.VideoID; %v", err)
 		}
 
 		values = append(values, v)
@@ -600,10 +611,19 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 
 		v, err := types.FormatUUID(m.CameraID)
 		if err != nil {
-			return fmt.Errorf("failed to handle m.CameraID; %v", err)
+			return nil, nil, fmt.Errorf("failed to handle m.CameraID; %v", err)
 		}
 
 		values = append(values, v)
+	}
+
+	return columns, values, nil
+}
+
+func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZeroValues bool, forceSetValuesForFields ...string) error {
+	columns, values, err := m.GetColumnsAndValues(setPrimaryKey, setZeroValues, forceSetValuesForFields...)
+	if err != nil {
+		return fmt.Errorf("failed to get columns and values to insert %#+v; %v", m, err)
 	}
 
 	ctx, cleanup := query.WithQueryID(ctx)
@@ -614,7 +634,7 @@ func (m *Detection) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, s
 	item, err := query.Insert(
 		ctx,
 		tx,
-		DetectionTable,
+		DetectionTableWithSchema,
 		columns,
 		nil,
 		false,
@@ -800,7 +820,7 @@ func (m *Detection) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, f
 	_, err = query.Update(
 		ctx,
 		tx,
-		DetectionTable,
+		DetectionTableWithSchema,
 		columns,
 		fmt.Sprintf("%v = $$??", DetectionTableIDColumn),
 		DetectionTableColumns,
@@ -848,7 +868,7 @@ func (m *Detection) Delete(ctx context.Context, tx pgx.Tx, hardDeletes ...bool) 
 	err = query.Delete(
 		ctx,
 		tx,
-		DetectionTable,
+		DetectionTableWithSchema,
 		fmt.Sprintf("%v = $$??", DetectionTableIDColumn),
 		values...,
 	)
@@ -862,11 +882,11 @@ func (m *Detection) Delete(ctx context.Context, tx pgx.Tx, hardDeletes ...bool) 
 }
 
 func (m *Detection) LockTable(ctx context.Context, tx pgx.Tx, timeouts ...time.Duration) error {
-	return query.LockTable(ctx, tx, DetectionTable, timeouts...)
+	return query.LockTable(ctx, tx, DetectionTableWithSchema, timeouts...)
 }
 
 func (m *Detection) LockTableWithRetries(ctx context.Context, tx pgx.Tx, overallTimeout time.Duration, individualAttempttimeout time.Duration) error {
-	return query.LockTableWithRetries(ctx, tx, DetectionTable, overallTimeout, individualAttempttimeout)
+	return query.LockTableWithRetries(ctx, tx, DetectionTableWithSchema, overallTimeout, individualAttempttimeout)
 }
 
 func (m *Detection) AdvisoryLock(ctx context.Context, tx pgx.Tx, key int32, timeouts ...time.Duration) error {
@@ -875,43 +895,6 @@ func (m *Detection) AdvisoryLock(ctx context.Context, tx pgx.Tx, key int32, time
 
 func (m *Detection) AdvisoryLockWithRetries(ctx context.Context, tx pgx.Tx, key int32, overallTimeout time.Duration, individualAttempttimeout time.Duration) error {
 	return query.AdvisoryLockWithRetries(ctx, tx, DetectionTableNamespaceID, key, overallTimeout, individualAttempttimeout)
-}
-
-func (m *Detection) Claim(ctx context.Context, tx pgx.Tx, until time.Time, by uuid.UUID, timeout time.Duration) error {
-	if !(slices.Contains(DetectionTableColumns, "claimed_until") && slices.Contains(DetectionTableColumns, "claimed_by")) {
-		return fmt.Errorf("can only invoke Claim for tables with 'claimed_until' and 'claimed_by' columns")
-	}
-
-	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
-	if err != nil {
-		return fmt.Errorf("failed to claim (advisory lock): %s", err.Error())
-	}
-
-	x, _, _, _, _, err := SelectDetection(
-		ctx,
-		tx,
-		fmt.Sprintf(
-			"%s = $$?? AND (claimed_by = $$?? OR (claimed_until IS null OR claimed_until < now()))",
-			DetectionTablePrimaryKeyColumn,
-		),
-		m.GetPrimaryKeyValue(),
-		by,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to claim (select): %s", err.Error())
-	}
-
-	_ = x
-
-	/* m.ClaimedUntil = &until */
-	/* m.ClaimedBy = &by */
-
-	err = m.Update(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to claim (update): %s", err.Error())
-	}
-
-	return nil
 }
 
 func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *string, limit *int, offset *int, values ...any) ([]*Detection, int64, int64, int64, int64, error) {
@@ -951,29 +934,57 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 		return []*Detection{}, 0, 0, 0, 0, nil
 	}
 
-	items, count, totalCount, page, totalPages, err := query.Select(
-		ctx,
-		tx,
-		DetectionTableColumnsWithTypeCasts,
-		DetectionTable,
-		where,
-		orderBy,
-		limit,
-		offset,
-		values...,
-	)
-	if err != nil {
-		return nil, 0, 0, 0, 0, fmt.Errorf("failed to call SelectDetections; %v", err)
+	var items *[]map[string]any
+	var count int64
+	var totalCount int64
+	var page int64
+	var totalPages int64
+	var err error
+
+	useInstead, shouldSkip := query.ShouldSkip[Detection](ctx)
+	if !shouldSkip {
+		items, count, totalCount, page, totalPages, err = query.Select(
+			ctx,
+			tx,
+			DetectionTableColumnsWithTypeCasts,
+			DetectionTableWithSchema,
+			where,
+			orderBy,
+			limit,
+			offset,
+			values...,
+		)
+		if err != nil {
+			return nil, 0, 0, 0, 0, fmt.Errorf("failed to call SelectDetections; %v", err)
+		}
+	} else {
+		ctx = query.WithoutSkip(ctx)
+		count = 1
+		totalCount = 1
+		page = 1
+		totalPages = 1
+		items = &[]map[string]any{
+			nil,
+		}
 	}
 
 	objects := make([]*Detection, 0)
 
 	for _, item := range *items {
-		object := &Detection{}
+		var object *Detection
 
-		err = object.FromItem(item)
-		if err != nil {
-			return nil, 0, 0, 0, 0, err
+		if !shouldSkip {
+			object = &Detection{}
+			err = object.FromItem(item)
+			if err != nil {
+				return nil, 0, 0, 0, 0, err
+			}
+		} else {
+			object = useInstead
+		}
+
+		if object == nil {
+			return nil, 0, 0, 0, 0, fmt.Errorf("assertion failed: object unexpectedly nil")
 		}
 
 		if !types.IsZeroUUID(object.VideoID) {
@@ -1075,55 +1086,70 @@ func SelectDetection(ctx context.Context, tx pgx.Tx, where string, values ...any
 	return object, count, totalCount, page, totalPages, nil
 }
 
-func ClaimDetection(ctx context.Context, tx pgx.Tx, until time.Time, by uuid.UUID, timeout time.Duration, wheres ...string) (*Detection, error) {
-	if !(slices.Contains(DetectionTableColumns, "claimed_until") && slices.Contains(DetectionTableColumns, "claimed_by")) {
-		return nil, fmt.Errorf("can only invoke Claim for tables with 'claimed_until' and 'claimed_by' columns")
+func InsertDetections(ctx context.Context, tx pgx.Tx, objects []*Detection, setPrimaryKey bool, setZeroValues bool, forceSetValuesForFields ...string) ([]*Detection, error) {
+	var columns []string
+	values := make([]any, 0)
+
+	for i, object := range objects {
+		thisColumns, thisValues, err := object.GetColumnsAndValues(setPrimaryKey, setZeroValues, forceSetValuesForFields...)
+		if err != nil {
+			return nil, err
+		}
+
+		if columns == nil {
+			columns = thisColumns
+		} else {
+			if len(columns) != len(thisColumns) {
+				return nil, fmt.Errorf(
+					"assertion failed: call 1 of object.GetColumnsAndValues() gave %d columns but call %d gave %d columns",
+					len(columns),
+					i+1,
+					len(thisColumns),
+				)
+			}
+		}
+
+		values = append(values, thisValues...)
 	}
 
-	m := &Detection{}
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
 
-	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
-	if err != nil {
-		return nil, fmt.Errorf("failed to claim: %s", err.Error())
-	}
+	ctx = query.WithMaxDepth(ctx, nil)
 
-	extraWhere := ""
-	if len(wheres) > 0 {
-		extraWhere = fmt.Sprintf("AND %s", extraWhere)
-	}
-
-	ms, _, _, _, _, err := SelectDetections(
+	items, err := query.BulkInsert(
 		ctx,
 		tx,
-		fmt.Sprintf(
-			"(claimed_until IS null OR claimed_until < now())%s",
-			extraWhere,
-		),
-		helpers.Ptr(
-			"claimed_until ASC",
-		),
-		helpers.Ptr(1),
+		DetectionTableWithSchema,
+		columns,
 		nil,
+		false,
+		false,
+		DetectionTableColumns,
+		values...,
 	)
 	if err != nil {
-		return nil, fmt.Errorf("failed to claim: %s", err.Error())
+		return nil, fmt.Errorf("failed to bulk insert %d objects; %v", len(objects), err)
 	}
 
-	if len(ms) == 0 {
-		return nil, nil
+	returnedObjects := make([]*Detection, 0)
+
+	for _, item := range items {
+		v := &Detection{}
+		err = v.FromItem(*item)
+		if err != nil {
+			return nil, fmt.Errorf("failed %T.FromItem for %#+v; %v", *item, *item, err)
+		}
+
+		err = v.Reload(query.WithSkip(ctx, v), tx)
+		if err != nil {
+			return nil, fmt.Errorf("failed %T.Reload for %#+v; %v", *item, *item, err)
+		}
+
+		returnedObjects = append(returnedObjects, v)
 	}
 
-	m = ms[0]
-
-	/* m.ClaimedUntil = &until */
-	/* m.ClaimedBy = &by */
-
-	err = m.Update(ctx, tx, false)
-	if err != nil {
-		return nil, fmt.Errorf("failed to claim: %s", err.Error())
-	}
-
-	return m, nil
+	return returnedObjects, nil
 }
 
 func handleGetDetections(arguments *server.SelectManyArguments, db *pgxpool.Pool) ([]*Detection, int64, int64, int64, int64, error) {
@@ -1172,7 +1198,7 @@ func handleGetDetection(arguments *server.SelectOneArguments, db *pgxpool.Pool, 
 	return []*Detection{object}, count, totalCount, page, totalPages, nil
 }
 
-func handlePostDetections(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, objects []*Detection, forceSetValuesForFieldsByObjectIndex [][]string) ([]*Detection, int64, int64, int64, int64, error) {
+func handlePostDetection(arguments *server.LoadArguments, db *pgxpool.Pool, waitForChange server.WaitForChange, objects []*Detection, forceSetValuesForFieldsByObjectIndex [][]string) ([]*Detection, int64, int64, int64, int64, error) {
 	tx, err := db.Begin(arguments.Ctx)
 	if err != nil {
 		err = fmt.Errorf("failed to begin DB transaction; %v", err)
@@ -1188,17 +1214,22 @@ func handlePostDetections(arguments *server.LoadArguments, db *pgxpool.Pool, wai
 		err = fmt.Errorf("failed to get xid; %v", err)
 		return nil, 0, 0, 0, 0, err
 	}
-	_ = xid
 
-	for i, object := range objects {
-		err = object.Insert(arguments.Ctx, tx, false, false, forceSetValuesForFieldsByObjectIndex[i]...)
-		if err != nil {
-			err = fmt.Errorf("failed to insert %#+v; %v", object, err)
-			return nil, 0, 0, 0, 0, err
+	/* TODO: problematic- basically the bulks insert insists all rows have the same schema, which they usually should */
+	forceSetValuesForFieldsByObjectIndexMaximal := make(map[string]struct{})
+	for _, forceSetforceSetValuesForFields := range forceSetValuesForFieldsByObjectIndex {
+		for _, field := range forceSetforceSetValuesForFields {
+			forceSetValuesForFieldsByObjectIndexMaximal[field] = struct{}{}
 		}
-
-		objects[i] = object
 	}
+
+	returnedObjects, err := InsertDetections(arguments.Ctx, tx, objects, false, false, slices.Collect(maps.Keys(forceSetValuesForFieldsByObjectIndexMaximal))...)
+	if err != nil {
+		err = fmt.Errorf("failed to insert %d objects; %v", len(objects), err)
+		return nil, 0, 0, 0, 0, err
+	}
+
+	copy(objects, returnedObjects)
 
 	errs := make(chan error, 1)
 	go func() {
@@ -1412,172 +1443,6 @@ func handleDeleteDetection(arguments *server.LoadArguments, db *pgxpool.Pool, wa
 }
 
 func MutateRouterForDetection(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool, objectMiddlewares []server.ObjectMiddleware, waitForChange server.WaitForChange) {
-	if slices.Contains(DetectionTableColumns, "claimed_until") && slices.Contains(DetectionTableColumns, "claimed_by") {
-		func() {
-			postHandlerForClaim, err := getHTTPHandler(
-				http.MethodPost,
-				"/claim-detection",
-				http.StatusOK,
-				func(
-					ctx context.Context,
-					pathParams server.EmptyPathParams,
-					queryParams server.EmptyQueryParams,
-					req DetectionClaimRequest,
-					rawReq any,
-				) (server.Response[Detection], error) {
-					tx, err := db.Begin(ctx)
-					if err != nil {
-						return server.Response[Detection]{}, err
-					}
-
-					defer func() {
-						_ = tx.Rollback(ctx)
-					}()
-
-					object, err := ClaimDetection(ctx, tx, req.Until, req.By, time.Millisecond*time.Duration(req.TimeoutSeconds*1000))
-					if err != nil {
-						return server.Response[Detection]{}, err
-					}
-
-					count := int64(0)
-
-					totalCount := int64(0)
-
-					limit := int64(0)
-
-					offset := int64(0)
-
-					if object == nil {
-						return server.Response[Detection]{
-							Status:     http.StatusOK,
-							Success:    true,
-							Error:      nil,
-							Objects:    []*Detection{},
-							Count:      count,
-							TotalCount: totalCount,
-							Limit:      limit,
-							Offset:     offset,
-						}, nil
-					}
-
-					err = tx.Commit(ctx)
-					if err != nil {
-						return server.Response[Detection]{}, err
-					}
-
-					return server.Response[Detection]{
-						Status:     http.StatusOK,
-						Success:    true,
-						Error:      nil,
-						Objects:    []*Detection{object},
-						Count:      count,
-						TotalCount: totalCount,
-						Limit:      limit,
-						Offset:     offset,
-					}, nil
-				},
-				Detection{},
-				DetectionIntrospectedTable,
-			)
-			if err != nil {
-				panic(err)
-			}
-			r.Post(postHandlerForClaim.FullPath, postHandlerForClaim.ServeHTTP)
-
-			postHandlerForClaimOne, err := getHTTPHandler(
-				http.MethodPost,
-				"/detections/{primaryKey}/claim",
-				http.StatusOK,
-				func(
-					ctx context.Context,
-					pathParams DetectionOnePathParams,
-					queryParams DetectionLoadQueryParams,
-					req DetectionClaimRequest,
-					rawReq any,
-				) (server.Response[Detection], error) {
-					before := time.Now()
-
-					redisConn := redisPool.Get()
-					defer func() {
-						_ = redisConn.Close()
-					}()
-
-					arguments, err := server.GetSelectOneArguments(ctx, queryParams.Depth, DetectionIntrospectedTable, pathParams.PrimaryKey, nil, nil)
-					if err != nil {
-						if config.Debug() {
-							log.Printf("request failed in %s %s path: %#+v query: %#+v req: %#+v", time.Since(before), http.MethodGet, pathParams, queryParams, req)
-						}
-
-						return server.Response[Detection]{}, err
-					}
-
-					/* note: deliberately no attempt at a cache hit */
-
-					var object *Detection
-					var count int64
-					var totalCount int64
-
-					err = func() error {
-						tx, err := db.Begin(arguments.Ctx)
-						if err != nil {
-							return err
-						}
-
-						defer func() {
-							_ = tx.Rollback(arguments.Ctx)
-						}()
-
-						object, count, totalCount, _, _, err = SelectDetection(arguments.Ctx, tx, arguments.Where, arguments.Values...)
-						if err != nil {
-							return fmt.Errorf("failed to select object to claim: %s", err.Error())
-						}
-
-						err = object.Claim(arguments.Ctx, tx, req.Until, req.By, time.Millisecond*time.Duration(req.TimeoutSeconds*1000))
-						if err != nil {
-							return err
-						}
-
-						err = tx.Commit(arguments.Ctx)
-						if err != nil {
-							return err
-						}
-
-						return nil
-					}()
-					if err != nil {
-						if config.Debug() {
-							log.Printf("request failed in %s %s path: %#+v query: %#+v req: %#+v", time.Since(before), http.MethodGet, pathParams, queryParams, req)
-						}
-
-						return server.Response[Detection]{}, err
-					}
-
-					limit := int64(0)
-
-					offset := int64(0)
-
-					response := server.Response[Detection]{
-						Status:     http.StatusOK,
-						Success:    true,
-						Error:      nil,
-						Objects:    []*Detection{object},
-						Count:      count,
-						TotalCount: totalCount,
-						Limit:      limit,
-						Offset:     offset,
-					}
-
-					return response, nil
-				},
-				Detection{},
-				DetectionIntrospectedTable,
-			)
-			if err != nil {
-				panic(err)
-			}
-			r.Post(postHandlerForClaimOne.FullPath, postHandlerForClaimOne.ServeHTTP)
-		}()
-	}
 
 	func() {
 		getManyHandler, err := getHTTPHandler(
@@ -1837,7 +1702,7 @@ func MutateRouterForDetection(r chi.Router, db *pgxpool.Pool, redisPool *redis.P
 				forceSetValuesForFieldsByObjectIndex := make([][]string, 0)
 				for _, item := range allItems {
 					forceSetValuesForFields := make([]string, 0)
-					for _, possibleField := range maps.Keys(item) {
+					for _, possibleField := range slices.Collect(maps.Keys(item)) {
 						if !slices.Contains(DetectionTableColumns, possibleField) {
 							continue
 						}
@@ -1852,7 +1717,7 @@ func MutateRouterForDetection(r chi.Router, db *pgxpool.Pool, redisPool *redis.P
 					return server.Response[Detection]{}, err
 				}
 
-				objects, count, totalCount, _, _, err := handlePostDetections(arguments, db, waitForChange, req, forceSetValuesForFieldsByObjectIndex)
+				objects, count, totalCount, _, _, err := handlePostDetection(arguments, db, waitForChange, req, forceSetValuesForFieldsByObjectIndex)
 				if err != nil {
 					return server.Response[Detection]{}, err
 				}
@@ -1953,7 +1818,7 @@ func MutateRouterForDetection(r chi.Router, db *pgxpool.Pool, redisPool *redis.P
 				}
 
 				forceSetValuesForFields := make([]string, 0)
-				for _, possibleField := range maps.Keys(item) {
+				for _, possibleField := range slices.Collect(maps.Keys(item)) {
 					if !slices.Contains(DetectionTableColumns, possibleField) {
 						continue
 					}

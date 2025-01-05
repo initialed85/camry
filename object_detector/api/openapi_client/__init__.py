@@ -18,8 +18,11 @@ __version__ = "1.0.0"
 
 # import apis into sdk package
 from openapi_client.api.camera_api import CameraApi
-from openapi_client.api.custom_api import CustomApi
 from openapi_client.api.detection_api import DetectionApi
+from openapi_client.api.object_detector_claim_video_api import ObjectDetectorClaimVideoApi
+from openapi_client.api.object_tracker_claim_video_api import ObjectTrackerClaimVideoApi
+from openapi_client.api.segment_producer_claim_camera_api import SegmentProducerClaimCameraApi
+from openapi_client.api.stream_producer_claim_camera_api import StreamProducerClaimCameraApi
 from openapi_client.api.video_api import VideoApi
 
 # import ApiClient
@@ -36,7 +39,8 @@ from openapi_client.exceptions import ApiException
 # import models into sdk package
 from openapi_client.models.array_of_vec2_inner import ArrayOfVec2Inner
 from openapi_client.models.camera import Camera
-from openapi_client.models.claim_request import ClaimRequest
+from openapi_client.models.camera_segment_producer_claim_request import CameraSegmentProducerClaimRequest
+from openapi_client.models.camera_stream_producer_claim_request import CameraStreamProducerClaimRequest
 from openapi_client.models.detection import Detection
 from openapi_client.models.get_cameras_default_response import GetCamerasDefaultResponse
 from openapi_client.models.response_with_generic_of_camera import ResponseWithGenericOfCamera
@@ -44,3 +48,5 @@ from openapi_client.models.response_with_generic_of_detection import ResponseWit
 from openapi_client.models.response_with_generic_of_video import ResponseWithGenericOfVideo
 from openapi_client.models.vec2 import Vec2
 from openapi_client.models.video import Video
+from openapi_client.models.video_object_detector_claim_request import VideoObjectDetectorClaimRequest
+from openapi_client.models.video_object_tracker_claim_request import VideoObjectTrackerClaimRequest

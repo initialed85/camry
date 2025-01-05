@@ -18,8 +18,8 @@ from .api.openapi_client import (
     DetectionApi,
     Detection,
     ArrayOfVec2Inner as DetectionBoundingBoxInner,
-    CustomApi,
-    ClaimRequest,
+    ObjectDetectorClaimVideoApi,
+    VideoObjectDetectorClaimRequest,
 )
 
 
@@ -35,7 +35,7 @@ debug = os.getenv("DEBUG", "") == "1"
 def do(
     video_api: VideoApi,
     detection_api: DetectionApi,
-    custom_api: CustomApi,
+    object_detector_claim_video_api: ObjectDetectorClaimVideoApi,
     source_path: str,
     one_shot_video_file_name: str | None = None,
 ):
@@ -52,13 +52,15 @@ def do(
     else:
         print("waiting to claim a video... ", end="")
 
+        until = (datetime.datetime.utcnow() + datetime.timedelta(seconds=60)).replace(tzinfo=UTC)
+
         try:
             # TODO: inject this as an env var
-            video = custom_api.patch_custom_claim_video_for_object_detector(
-                claim_request=ClaimRequest(claim_duration_seconds=60),
+            resp = object_detector_claim_video_api.post_object_detector_claim_videos(
+                video_object_detector_claim_request=VideoObjectDetectorClaimRequest(until=until, timeout_seconds=10),
                 _request_timeout=70,
             )
-            videos = [video]
+            videos = resp.objects
         except Exception as e:
             if "wanted exactly 1 unclaimed video, got 0" in str(e):
                 print("no videos available to claim.")
@@ -324,7 +326,7 @@ def run():
     api_client = ApiClient(configuration)
     video_api = VideoApi(api_client)
     detection_api = DetectionApi(api_client)
-    custom_api = CustomApi(api_client)
+    custom_api = ObjectDetectorClaimVideoApi(api_client)
 
     while 1:
         try:

@@ -87,4 +87,32 @@ func Test_api_client_CameraAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test CameraAPIService PostCamerasSegmentProducerClaim", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var primaryKey string
+
+		resp, httpRes, err := apiClient.CameraAPI.PostCamerasSegmentProducerClaim(context.Background(), primaryKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test CameraAPIService PostCamerasStreamProducerClaim", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var primaryKey string
+
+		resp, httpRes, err := apiClient.CameraAPI.PostCamerasStreamProducerClaim(context.Background(), primaryKey).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 }

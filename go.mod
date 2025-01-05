@@ -9,10 +9,9 @@ require (
 	github.com/go-chi/chi/v5 v5.2.0
 	github.com/gomodule/redigo v1.9.2
 	github.com/google/uuid v1.6.0
-	github.com/initialed85/djangolang v0.1.12
+	github.com/initialed85/djangolang v0.1.26
 	github.com/jackc/pgx/v5 v5.7.2
 	github.com/stretchr/testify v1.9.0
-	golang.org/x/exp v0.0.0-20241217172543-b2144cdd0a67
 	gopkg.in/yaml.v2 v2.4.0
 )
 
@@ -27,6 +26,7 @@ require (
 	github.com/nats-io/nuid v1.0.1 // indirect
 	github.com/paulmach/orb v0.11.1 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
+	golang.org/x/exp v0.0.0-20250103183323-7d7fa50e5329 // indirect
 	golang.org/x/sync v0.10.0 // indirect
 	golang.org/x/sys v0.28.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect

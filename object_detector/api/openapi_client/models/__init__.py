@@ -16,7 +16,8 @@
 # import models into model package
 from openapi_client.models.array_of_vec2_inner import ArrayOfVec2Inner
 from openapi_client.models.camera import Camera
-from openapi_client.models.claim_request import ClaimRequest
+from openapi_client.models.camera_segment_producer_claim_request import CameraSegmentProducerClaimRequest
+from openapi_client.models.camera_stream_producer_claim_request import CameraStreamProducerClaimRequest
 from openapi_client.models.detection import Detection
 from openapi_client.models.get_cameras_default_response import GetCamerasDefaultResponse
 from openapi_client.models.response_with_generic_of_camera import ResponseWithGenericOfCamera
@@ -24,3 +25,5 @@ from openapi_client.models.response_with_generic_of_detection import ResponseWit
 from openapi_client.models.response_with_generic_of_video import ResponseWithGenericOfVideo
 from openapi_client.models.vec2 import Vec2
 from openapi_client.models.video import Video
+from openapi_client.models.video_object_detector_claim_request import VideoObjectDetectorClaimRequest
+from openapi_client.models.video_object_tracker_claim_request import VideoObjectTrackerClaimRequest

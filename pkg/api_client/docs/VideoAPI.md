@@ -9,6 +9,8 @@ Method | HTTP request | Description
 [**GetVideos**](VideoAPI.md#GetVideos) | **Get** /api/videos | 
 [**PatchVideo**](VideoAPI.md#PatchVideo) | **Patch** /api/videos/{primaryKey} | 
 [**PostVideos**](VideoAPI.md#PostVideos) | **Post** /api/videos | 
+[**PostVideosObjectDetectorClaim**](VideoAPI.md#PostVideosObjectDetectorClaim) | **Post** /api/videos/{primaryKey}/object-detector-claim | 
+[**PostVideosObjectTrackerClaim**](VideoAPI.md#PostVideosObjectTrackerClaim) | **Post** /api/videos/{primaryKey}/object-tracker-claim | 
 
 
 
@@ -797,6 +799,150 @@ Other parameters are passed through a pointer to a apiPostVideosRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **video** | [**[]Video**](Video.md) |  | 
+ **depth** | **int64** | Query parameter depth | 
+
+### Return type
+
+[**ResponseWithGenericOfVideo**](ResponseWithGenericOfVideo.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PostVideosObjectDetectorClaim
+
+> ResponseWithGenericOfVideo PostVideosObjectDetectorClaim(ctx, primaryKey).VideoObjectDetectorClaimRequest(videoObjectDetectorClaimRequest).Depth(depth).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	primaryKey := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Path parameter primaryKey
+	videoObjectDetectorClaimRequest := *openapiclient.NewVideoObjectDetectorClaimRequest() // VideoObjectDetectorClaimRequest | 
+	depth := int64(789) // int64 | Query parameter depth (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.VideoAPI.PostVideosObjectDetectorClaim(context.Background(), primaryKey).VideoObjectDetectorClaimRequest(videoObjectDetectorClaimRequest).Depth(depth).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `VideoAPI.PostVideosObjectDetectorClaim``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PostVideosObjectDetectorClaim`: ResponseWithGenericOfVideo
+	fmt.Fprintf(os.Stdout, "Response from `VideoAPI.PostVideosObjectDetectorClaim`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**primaryKey** | **string** | Path parameter primaryKey | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPostVideosObjectDetectorClaimRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **videoObjectDetectorClaimRequest** | [**VideoObjectDetectorClaimRequest**](VideoObjectDetectorClaimRequest.md) |  | 
+ **depth** | **int64** | Query parameter depth | 
+
+### Return type
+
+[**ResponseWithGenericOfVideo**](ResponseWithGenericOfVideo.md)
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+- **Content-Type**: application/json
+- **Accept**: application/json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## PostVideosObjectTrackerClaim
+
+> ResponseWithGenericOfVideo PostVideosObjectTrackerClaim(ctx, primaryKey).VideoObjectTrackerClaimRequest(videoObjectTrackerClaimRequest).Depth(depth).Execute()
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/GIT_USER_ID/GIT_REPO_ID"
+)
+
+func main() {
+	primaryKey := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Path parameter primaryKey
+	videoObjectTrackerClaimRequest := *openapiclient.NewVideoObjectTrackerClaimRequest() // VideoObjectTrackerClaimRequest | 
+	depth := int64(789) // int64 | Query parameter depth (optional)
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.VideoAPI.PostVideosObjectTrackerClaim(context.Background(), primaryKey).VideoObjectTrackerClaimRequest(videoObjectTrackerClaimRequest).Depth(depth).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `VideoAPI.PostVideosObjectTrackerClaim``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `PostVideosObjectTrackerClaim`: ResponseWithGenericOfVideo
+	fmt.Fprintf(os.Stdout, "Response from `VideoAPI.PostVideosObjectTrackerClaim`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
+**primaryKey** | **string** | Path parameter primaryKey | 
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiPostVideosObjectTrackerClaimRequest struct via the builder pattern
+
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+
+ **videoObjectTrackerClaimRequest** | [**VideoObjectTrackerClaimRequest**](VideoObjectTrackerClaimRequest.md) |  | 
  **depth** | **int64** | Query parameter depth | 
 
 ### Return type

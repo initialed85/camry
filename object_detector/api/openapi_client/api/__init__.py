@@ -2,7 +2,10 @@
 
 # import apis into api package
 from openapi_client.api.camera_api import CameraApi
-from openapi_client.api.custom_api import CustomApi
 from openapi_client.api.detection_api import DetectionApi
+from openapi_client.api.object_detector_claim_video_api import ObjectDetectorClaimVideoApi
+from openapi_client.api.object_tracker_claim_video_api import ObjectTrackerClaimVideoApi
+from openapi_client.api.segment_producer_claim_camera_api import SegmentProducerClaimCameraApi
+from openapi_client.api.stream_producer_claim_camera_api import StreamProducerClaimCameraApi
 from openapi_client.api.video_api import VideoApi
 

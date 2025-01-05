@@ -1579,30 +1579,92 @@ paths:
           description: PatchCamera failure
       tags:
       - Camera
-  /api/custom/claim-video-for-object-detector:
-    patch:
-      operationId: PatchCustomClaimVideoForObjectDetector
+  /api/cameras/{primaryKey}/segment-producer-claim:
+    post:
+      operationId: PostCamerasSegmentProducerClaim
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClaimRequest'
+              $ref: '#/components/schemas/CameraSegmentProducerClaimRequest'
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/NullableVideo'
-          description: PatchCustomClaimVideoForObjectDetector success
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: PostCamerasSegmentProducerClaim success
         default:
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetCameras_default_response'
-          description: PatchCustomClaimVideoForObjectDetector failure
+          description: PostCamerasSegmentProducerClaim failure
       tags:
-      - Custom
+      - Camera
+  /api/cameras/{primaryKey}/stream-producer-claim:
+    post:
+      operationId: PostCamerasStreamProducerClaim
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CameraStreamProducerClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: PostCamerasStreamProducerClaim success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostCamerasStreamProducerClaim failure
+      tags:
+      - Camera
   /api/detections:
     get:
       operationId: GetDetections
@@ -3323,6 +3385,102 @@ paths:
           description: PatchDetection failure
       tags:
       - Detection
+  /api/object-detector-claim-video:
+    post:
+      operationId: PostObjectDetectorClaimVideos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoObjectDetectorClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: PostObjectDetectorClaimVideos success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostObjectDetectorClaimVideos failure
+      tags:
+      - ObjectDetectorClaimVideo
+  /api/object-tracker-claim-video:
+    post:
+      operationId: PostObjectTrackerClaimVideos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoObjectTrackerClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: PostObjectTrackerClaimVideos success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostObjectTrackerClaimVideos failure
+      tags:
+      - ObjectTrackerClaimVideo
+  /api/segment-producer-claim-camera:
+    post:
+      operationId: PostSegmentProducerClaimCameras
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CameraSegmentProducerClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: PostSegmentProducerClaimCameras success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostSegmentProducerClaimCameras failure
+      tags:
+      - SegmentProducerClaimCamera
+  /api/stream-producer-claim-camera:
+    post:
+      operationId: PostStreamProducerClaimCameras
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CameraStreamProducerClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfCamera'
+          description: PostStreamProducerClaimCameras success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostStreamProducerClaimCameras failure
+      tags:
+      - StreamProducerClaimCamera
   /api/videos:
     get:
       operationId: GetVideos
@@ -5575,6 +5733,92 @@ paths:
           description: PatchVideo failure
       tags:
       - Video
+  /api/videos/{primaryKey}/object-detector-claim:
+    post:
+      operationId: PostVideosObjectDetectorClaim
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoObjectDetectorClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: PostVideosObjectDetectorClaim success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostVideosObjectDetectorClaim failure
+      tags:
+      - Video
+  /api/videos/{primaryKey}/object-tracker-claim:
+    post:
+      operationId: PostVideosObjectTrackerClaim
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VideoObjectTrackerClaimRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfVideo'
+          description: PostVideosObjectTrackerClaim success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostVideosObjectTrackerClaim failure
+      tags:
+      - Video
 components:
   schemas:
     Any: {}
@@ -5768,13 +6012,28 @@ components:
         updated_at:
           format: date-time
           type: string
-    ClaimRequest:
+    CameraSegmentProducerClaimRequest:
       example:
-        claim_duration_seconds: 0.8008281904610115
+        until: 2000-01-23T04:56:07.000+00:00
+        timeout_seconds: 0.8008281904610115
       properties:
-        claim_duration_seconds:
+        timeout_seconds:
           format: double
           type: number
+        until:
+          format: date-time
+          type: string
+    CameraStreamProducerClaimRequest:
+      example:
+        until: 2000-01-23T04:56:07.000+00:00
+        timeout_seconds: 0.8008281904610115
+      properties:
+        timeout_seconds:
+          format: double
+          type: number
+        until:
+          format: date-time
+          type: string
     Detection:
       example:
         camera_id_object: null
@@ -6428,6 +6687,28 @@ components:
         thumbnail_name:
           type: string
         updated_at:
+          format: date-time
+          type: string
+    VideoObjectDetectorClaimRequest:
+      example:
+        until: 2000-01-23T04:56:07.000+00:00
+        timeout_seconds: 0.8008281904610115
+      properties:
+        timeout_seconds:
+          format: double
+          type: number
+        until:
+          format: date-time
+          type: string
+    VideoObjectTrackerClaimRequest:
+      example:
+        until: 2000-01-23T04:56:07.000+00:00
+        timeout_seconds: 0.8008281904610115
+      properties:
+        timeout_seconds:
+          format: double
+          type: number
+        until:
           format: date-time
           type: string
     GetCameras_default_response:

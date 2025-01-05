@@ -51,9 +51,15 @@ type APIClient struct {
 
 	CameraAPI *CameraAPIService
 
-	CustomAPI *CustomAPIService
-
 	DetectionAPI *DetectionAPIService
+
+	ObjectDetectorClaimVideoAPI *ObjectDetectorClaimVideoAPIService
+
+	ObjectTrackerClaimVideoAPI *ObjectTrackerClaimVideoAPIService
+
+	SegmentProducerClaimCameraAPI *SegmentProducerClaimCameraAPIService
+
+	StreamProducerClaimCameraAPI *StreamProducerClaimCameraAPIService
 
 	VideoAPI *VideoAPIService
 }
@@ -75,8 +81,11 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 
 	// API Services
 	c.CameraAPI = (*CameraAPIService)(&c.common)
-	c.CustomAPI = (*CustomAPIService)(&c.common)
 	c.DetectionAPI = (*DetectionAPIService)(&c.common)
+	c.ObjectDetectorClaimVideoAPI = (*ObjectDetectorClaimVideoAPIService)(&c.common)
+	c.ObjectTrackerClaimVideoAPI = (*ObjectTrackerClaimVideoAPIService)(&c.common)
+	c.SegmentProducerClaimCameraAPI = (*SegmentProducerClaimCameraAPIService)(&c.common)
+	c.StreamProducerClaimCameraAPI = (*StreamProducerClaimCameraAPIService)(&c.common)
 	c.VideoAPI = (*VideoAPIService)(&c.common)
 
 	return c

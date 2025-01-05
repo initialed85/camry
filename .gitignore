@@ -5,3 +5,4 @@ tmp/
 **/__pycache__
 **/.openapi-generator
 **/api/docs/
+cmd/api/api

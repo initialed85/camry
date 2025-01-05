@@ -2933,3 +2933,263 @@ func (a *VideoAPIService) PostVideosExecute(r ApiPostVideosRequest) (*ResponseWi
 
 	return localVarReturnValue, localVarHTTPResponse, nil
 }
+
+type ApiPostVideosObjectDetectorClaimRequest struct {
+	ctx context.Context
+	ApiService *VideoAPIService
+	primaryKey string
+	videoObjectDetectorClaimRequest *VideoObjectDetectorClaimRequest
+	depth *int64
+}
+
+func (r ApiPostVideosObjectDetectorClaimRequest) VideoObjectDetectorClaimRequest(videoObjectDetectorClaimRequest VideoObjectDetectorClaimRequest) ApiPostVideosObjectDetectorClaimRequest {
+	r.videoObjectDetectorClaimRequest = &videoObjectDetectorClaimRequest
+	return r
+}
+
+// Query parameter depth
+func (r ApiPostVideosObjectDetectorClaimRequest) Depth(depth int64) ApiPostVideosObjectDetectorClaimRequest {
+	r.depth = &depth
+	return r
+}
+
+func (r ApiPostVideosObjectDetectorClaimRequest) Execute() (*ResponseWithGenericOfVideo, *http.Response, error) {
+	return r.ApiService.PostVideosObjectDetectorClaimExecute(r)
+}
+
+/*
+PostVideosObjectDetectorClaim Method for PostVideosObjectDetectorClaim
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param primaryKey Path parameter primaryKey
+ @return ApiPostVideosObjectDetectorClaimRequest
+*/
+func (a *VideoAPIService) PostVideosObjectDetectorClaim(ctx context.Context, primaryKey string) ApiPostVideosObjectDetectorClaimRequest {
+	return ApiPostVideosObjectDetectorClaimRequest{
+		ApiService: a,
+		ctx: ctx,
+		primaryKey: primaryKey,
+	}
+}
+
+// Execute executes the request
+//  @return ResponseWithGenericOfVideo
+func (a *VideoAPIService) PostVideosObjectDetectorClaimExecute(r ApiPostVideosObjectDetectorClaimRequest) (*ResponseWithGenericOfVideo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ResponseWithGenericOfVideo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VideoAPIService.PostVideosObjectDetectorClaim")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/videos/{primaryKey}/object-detector-claim"
+	localVarPath = strings.Replace(localVarPath, "{"+"primaryKey"+"}", url.PathEscape(parameterValueToString(r.primaryKey, "primaryKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.videoObjectDetectorClaimRequest == nil {
+		return localVarReturnValue, nil, reportError("videoObjectDetectorClaimRequest is required and must be specified")
+	}
+
+	if r.depth != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.videoObjectDetectorClaimRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v GetCamerasDefaultResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostVideosObjectTrackerClaimRequest struct {
+	ctx context.Context
+	ApiService *VideoAPIService
+	primaryKey string
+	videoObjectTrackerClaimRequest *VideoObjectTrackerClaimRequest
+	depth *int64
+}
+
+func (r ApiPostVideosObjectTrackerClaimRequest) VideoObjectTrackerClaimRequest(videoObjectTrackerClaimRequest VideoObjectTrackerClaimRequest) ApiPostVideosObjectTrackerClaimRequest {
+	r.videoObjectTrackerClaimRequest = &videoObjectTrackerClaimRequest
+	return r
+}
+
+// Query parameter depth
+func (r ApiPostVideosObjectTrackerClaimRequest) Depth(depth int64) ApiPostVideosObjectTrackerClaimRequest {
+	r.depth = &depth
+	return r
+}
+
+func (r ApiPostVideosObjectTrackerClaimRequest) Execute() (*ResponseWithGenericOfVideo, *http.Response, error) {
+	return r.ApiService.PostVideosObjectTrackerClaimExecute(r)
+}
+
+/*
+PostVideosObjectTrackerClaim Method for PostVideosObjectTrackerClaim
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param primaryKey Path parameter primaryKey
+ @return ApiPostVideosObjectTrackerClaimRequest
+*/
+func (a *VideoAPIService) PostVideosObjectTrackerClaim(ctx context.Context, primaryKey string) ApiPostVideosObjectTrackerClaimRequest {
+	return ApiPostVideosObjectTrackerClaimRequest{
+		ApiService: a,
+		ctx: ctx,
+		primaryKey: primaryKey,
+	}
+}
+
+// Execute executes the request
+//  @return ResponseWithGenericOfVideo
+func (a *VideoAPIService) PostVideosObjectTrackerClaimExecute(r ApiPostVideosObjectTrackerClaimRequest) (*ResponseWithGenericOfVideo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ResponseWithGenericOfVideo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VideoAPIService.PostVideosObjectTrackerClaim")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/videos/{primaryKey}/object-tracker-claim"
+	localVarPath = strings.Replace(localVarPath, "{"+"primaryKey"+"}", url.PathEscape(parameterValueToString(r.primaryKey, "primaryKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.videoObjectTrackerClaimRequest == nil {
+		return localVarReturnValue, nil, reportError("videoObjectTrackerClaimRequest is required and must be specified")
+	}
+
+	if r.depth != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.videoObjectTrackerClaimRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v GetCamerasDefaultResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
