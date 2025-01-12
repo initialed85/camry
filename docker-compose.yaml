@@ -11,7 +11,7 @@ services:
     healthcheck:
       interval: 5s
       timeout: 4s
-      start_period: 10s
+      start_period: 60s
       test: ["CMD", "pg_isready", "-h", "localhost", "-U", "postgres"]
     volumes:
       - postgres:/home/postgres/pgdata/data
