@@ -5,7 +5,7 @@ import time
 import datetime
 
 from atexit import register
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 from pytz import UTC
 from ultralytics import YOLO
 from ultralytics.models.yolo.detect.predict import Results
@@ -37,7 +37,7 @@ def do(
     detection_api: DetectionApi,
     object_detector_claim_video_api: ObjectDetectorClaimVideoApi,
     source_path: str,
-    one_shot_video_file_name: str | None = None,
+    one_shot_video_file_name: Optional[str] = None,
 ):
     videos = []
 

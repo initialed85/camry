@@ -1,6 +1,9 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
+RUN gpg --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC && \
+    gpg --export --armor A4B469963BF863CC | apt-key add - || true
+
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 
 WORKDIR /srv/

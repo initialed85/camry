@@ -25,12 +25,14 @@ docker build --platform=linux/amd64 -t kube-registry:5000/camry-api:latest -f ./
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-segment-producer:latest -f ./docker/segment-producer/Dockerfile .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-stream-producer:latest -f ./docker/stream-producer/Dockerfile .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:latest -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=pytorch/pytorch:2.4.0-cuda11.8-cudnn9-runtime .
-# docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:sm30 -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=dizcza/pytorch-sm30:v1.10.2 .
+docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:sm30 -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=dizcza/pytorch-sm30:v1.10.2 .
+docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:amd -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=rocm/pytorch:rocm5.3.2_ubuntu20.04_py3.7_pytorch_1.10.2 .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-frontend:latest -f ./docker/frontend/Dockerfile .
 
 docker image push kube-registry:5000/camry-api:latest
 docker image push kube-registry:5000/camry-segment-producer:latest
 docker image push kube-registry:5000/camry-stream-producer:latest
 docker image push kube-registry:5000/camry-object-detector:latest
-# docker image push kube-registry:5000/camry-object-detector:sm30
+docker image push kube-registry:5000/camry-object-detector:sm30
+docker image push kube-registry:5000/camry-object-detector:amd
 docker image push kube-registry:5000/camry-frontend:latest
