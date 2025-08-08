@@ -17,16 +17,16 @@ fi
 
 # TODO: hack workaround for intermittent builds on darwin aarch64
 mkdir -p ./tmp
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/api -trimpath ./cmd/api
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/segment-producer -trimpath ./cmd/segment_producer
-GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/stream-producer -trimpath ./cmd/stream_producer
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/api -trimpath -x ./cmd/api
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/segment-producer -trimpath -x ./cmd/segment_producer
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/stream-producer -trimpath -x ./cmd/stream_producer
 
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-api:latest -f ./docker/api/Dockerfile .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-segment-producer:latest -f ./docker/segment-producer/Dockerfile .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-stream-producer:latest -f ./docker/stream-producer/Dockerfile .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:latest -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=pytorch/pytorch:2.4.0-cuda11.8-cudnn9-runtime .
-docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:sm30 -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=dizcza/pytorch-sm30:v1.10.2 .
-docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:amd -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=rocm/pytorch:rocm5.3.2_ubuntu20.04_py3.7_pytorch_1.10.2 .
+# docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:sm30 -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=dizcza/pytorch-sm30:v1.10.2 .
+# docker build --platform=linux/amd64 -t kube-registry:5000/camry-object-detector:amd -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=rocm/pytorch:rocm5.3.2_ubuntu20.04_py3.7_pytorch_1.10.2 .
 docker build --platform=linux/amd64 -t kube-registry:5000/camry-frontend:latest -f ./docker/frontend/Dockerfile .
 
 docker image push kube-registry:5000/camry-api:latest

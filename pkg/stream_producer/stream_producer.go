@@ -55,15 +55,14 @@ func getCommandLine(
 
 	arguments = append(
 		arguments,
-		"-rtsp_transport",
-		"tcp",
+		"-rtsp_transport", "tcp",
 		"-re",
-		"-i",
-		streamURL,
-		"-c",
-		"copy",
-		"-f",
-		"rtsp",
+		"-i", streamURL,
+		"-c:v", "copy",
+		"-c:a", "libopus",
+		"-b:a", "64k",
+		"-async", "50",
+		"-f", "rtsp",
 	)
 
 	if !enablePassthrough {
