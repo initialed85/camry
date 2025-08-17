@@ -19,8 +19,8 @@ import { getDateString } from "../helpers";
 import { Video } from "./Video";
 
 const defaultLimit = 10;
-const desiredWidthRatio = 1920 / 1080;
-const desiredHeightRatio = 1080 / 1920;
+const desiredWidthRatio = 3840 / 2160;
+const desiredHeightRatio = 2160 / 3840;
 
 export interface VideoTableProps {
   responsive: boolean;

@@ -33,6 +33,6 @@ docker image push kube-registry:5000/camry-api:latest
 docker image push kube-registry:5000/camry-segment-producer:latest
 docker image push kube-registry:5000/camry-stream-producer:latest
 docker image push kube-registry:5000/camry-object-detector:latest
-docker image push kube-registry:5000/camry-object-detector:sm30
-docker image push kube-registry:5000/camry-object-detector:amd
+# docker image push kube-registry:5000/camry-object-detector:sm30
+# docker image push kube-registry:5000/camry-object-detector:amd
 docker image push kube-registry:5000/camry-frontend:latest

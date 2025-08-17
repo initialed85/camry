@@ -142,14 +142,18 @@ export function Video(props: VideoProps) {
             return;
           }
 
+          (ctx as any).webkitImageSmoothingEnabled = false;
+          (ctx as any).mozImageSmoothingEnabled = false;
+          ctx.imageSmoothingEnabled = false;
+
           ctx.clearRect(0, 0, width, height);
 
           if (firstUpdate) {
             return;
           }
 
-          const scaleX = width / 1920;
-          const scaleY = height / 1080;
+          const scaleX = width / 3840;
+          const scaleY = height / 2160;
 
           const absoluteTimeMilliseconds =
             absoluteTimeMillisecondsRef + relativeTimeMilliseconds;
@@ -184,17 +188,10 @@ export function Video(props: VideoProps) {
               return;
             }
 
-            const lineWidth = 2 * scaleX;
-            const textOffsetX = 3 * scaleX;
-            const textOffsetY = 4 * scaleY;
-            const centroidRadius = 7 * scaleX;
-
-            ctx.lineWidth = lineWidth;
-            ctx.strokeStyle = `rgba(255, 0, 0, 0.95)`;
-
-            ctx.fillStyle = `rgba(255, 255, 255, 0.95)`;
-            ctx.font = `${28 * scaleX}px sans-serif`;
-            ctx.textAlign = "left";
+            const lineWidth = 4 * scaleX;
+            const textOffsetX = 6 * scaleX;
+            const textOffsetY = 6 * scaleY;
+            const centroidRadius = 9 * scaleX;
 
             const topLeftX = topLeft.X * scaleX;
             const topLeftY = topLeft.Y * scaleY;
@@ -204,6 +201,27 @@ export function Video(props: VideoProps) {
 
             const centroidX = centroid.X * scaleX;
             const centroidY = centroid.Y * scaleY;
+
+            const grad = ctx.createLinearGradient(
+              topLeftX,
+              topLeftY,
+              bottomRightX,
+              bottomRightY,
+            );
+            grad.addColorStop(0.0, `rgba(255, 31, 31, 1.0)`);
+            grad.addColorStop(0.2, `rgba(255, 255, 31, 1.0)`);
+            grad.addColorStop(0.6, `rgba(31, 255, 31, 1.0)`);
+            grad.addColorStop(0.8, `rgba(255, 31, 255, 1.0)`);
+            grad.addColorStop(1.0, `rgba(31, 31, 255, 1.0)`);
+
+            ctx.lineWidth = lineWidth;
+            // ctx.strokeStyle = `rgba(255, 0, 0, 0.77)`;
+            ctx.strokeStyle = grad;
+
+            ctx.fillStyle = `rgba(255, 255, 255, 0.99)`;
+            ctx.font = `${32 * scaleX}px monospace`;
+            ctx.textAlign = "left";
+            ctx.textRendering = "optimizeLegibility";
 
             if (deltaMilliseconds <= 200) {
               ctx.fillText(
