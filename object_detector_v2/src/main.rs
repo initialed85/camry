@@ -14,7 +14,7 @@ use similari::trackers::sort::PositionalMetricType::IoU;
 use similari::trackers::sort::simple_api::Sort;
 use std::{env, time::Instant};
 
-const STRIDE: i32 = 2;
+const STRIDE: i32 = 4;
 const CONF_THRESHOLD: f32 = 0.1;
 const NMS_THRESHOLD: f32 = 0.1;
 const BBOX_HISTORY: usize = 65536;
@@ -102,6 +102,9 @@ fn main() -> Result<()> {
         SORT_CONF_THRESHOLD,
         None,
     );
+
+    let mut total_boxes = 0;
+    let mut total_tracks = 0;
 
     ffmpeg::init().unwrap();
 
@@ -220,7 +223,13 @@ fn main() -> Result<()> {
                             NMS_THRESHOLD,
                         )?;
                         let after = Instant::now();
-                        println!("inferencing took {:?}", after - before);
+                        println!(
+                            "inferencing took {:?} for {:?} boxes",
+                            after - before,
+                            scaled_boxes.len()
+                        );
+
+                        total_boxes += scaled_boxes.len();
 
                         let before = Instant::now();
                         for (i, scaled_b) in scaled_boxes.iter().enumerate() {
@@ -255,7 +264,13 @@ fn main() -> Result<()> {
 
                         tracks = tracker.predict(bboxes.as_slice());
                         let after = Instant::now();
-                        println!("tracking took {:?}", after - before);
+                        println!(
+                            "tracking took {:?} for {:?} tracks",
+                            after - before,
+                            tracks.len()
+                        );
+
+                        total_tracks += tracks.len();
                     }
 
                     #[cfg(target_os = "macos")]
@@ -380,6 +395,9 @@ fn main() -> Result<()> {
         decoder.send_eof()?;
         receive_and_process_decoded_frames(&mut decoder)?;
     }
+
+    println!("total_boxes: {total_boxes}");
+    println!("total_tracks: {total_tracks}");
 
     Ok(())
 }
