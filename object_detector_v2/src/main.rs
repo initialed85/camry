@@ -9,10 +9,10 @@ use opencv::{
     dnn, highgui, imgproc,
     prelude::*,
 };
-use similari::prelude::Universal2DBox;
+use similari::prelude::{SortTrack, Universal2DBox};
 use similari::trackers::sort::PositionalMetricType::IoU;
 use similari::trackers::sort::simple_api::Sort;
-use std::{env, time::Instant};
+use std::{collections::HashMap, env, time::Instant};
 
 const STRIDE: i32 = 4;
 const CONF_THRESHOLD: f32 = 0.1;
@@ -93,6 +93,7 @@ fn main() -> Result<()> {
     let mut boxes = core::Vector::<core::Rect>::new();
     let mut bboxes = vec![];
     let mut tracks = vec![];
+    let mut tracks_by_id: HashMap<u64, Vec<SortTrack>> = HashMap::new();
 
     let mut tracker = Sort::new(
         1,
@@ -104,7 +105,6 @@ fn main() -> Result<()> {
     );
 
     let mut total_boxes = 0;
-    let mut total_tracks = 0;
 
     ffmpeg::init().unwrap();
 
@@ -263,14 +263,26 @@ fn main() -> Result<()> {
                         }
 
                         tracks = tracker.predict(bboxes.as_slice());
+
+                        for t in tracks.iter() {
+                            let tracks_for_id = &mut match tracks_by_id.get_mut(&t.id) {
+                                Some(tracks_for_id) => tracks_for_id,
+                                None => {
+                                    tracks_by_id.insert(t.id, vec![]);
+
+                                    tracks_by_id.get_mut(&t.id).unwrap()
+                                }
+                            };
+
+                            tracks_for_id.push(t.clone());
+                        }
+
                         let after = Instant::now();
                         println!(
                             "tracking took {:?} for {:?} tracks",
                             after - before,
                             tracks.len()
                         );
-
-                        total_tracks += tracks.len();
                     }
 
                     #[cfg(target_os = "macos")]
@@ -397,7 +409,7 @@ fn main() -> Result<()> {
     }
 
     println!("total_boxes: {total_boxes}");
-    println!("total_tracks: {total_tracks}");
+    println!("total_tracks: {:}", tracks_by_id.len());
 
     Ok(())
 }
