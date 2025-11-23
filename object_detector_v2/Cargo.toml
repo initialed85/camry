@@ -1,0 +1,11 @@
+[package]
+name = "object-detector"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.100"
+ffmpeg = { package = "ffmpeg-next", version = "8.0.0" }
+itertools = "0.14.0"
+opencv = { version = "0.97.2", features = ["clang-runtime"] }
+similari = "0.26.2"
