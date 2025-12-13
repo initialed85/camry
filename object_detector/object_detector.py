@@ -1,3 +1,4 @@
+import sys
 import traceback
 import cv2
 import os
@@ -120,51 +121,41 @@ def do(
 
                 filename = os.path.join(source_path, video.file_name)
 
-                # cap: cv2.VideoCapture = cv2.VideoCapture(filename)
-                container = av.open(filename)
-                stream = container.streams.video[0]
-                stream.codec_context.options = {'hwaccel': 'cuda'}
+                try:
+                    container = av.open(filename)
+                except av.InvalidDataError:
+                    print(f"hmm... {traceback.format_exc()}", file=sys.stderr)
+                    return 0
 
-                # try:
+                stream = container.streams.video[0]
+                stream.codec_context.options = {"hwaccel": "cuda"}
+
                 frame_index = -1
                 handled_frame_count = 0
-
-                # while cap.isOpened():
-                #     frame_index += 1
-
-                #     success, frame = cap.read()
-                #     if not success:
-                #         break
-
-                #     raw_timedelta = cap.get(cv2.CAP_PROP_POS_MSEC)
-
-                #     # 0, 4, 8, 12, 16 etc- so I guess we're 25% of the original frame rate
-                #     if frame_index % 4 != 0:
-                #         continue
 
                 for frame_index, frame in enumerate(container.decode(video=0)):
                     if frame_index % 4 != 0:
                         continue
 
-                    img = frame.to_ndarray(format='rgb24')
+                    img = frame.to_ndarray(format="rgb24")
 
-                    results: List[Results] = cast(list[Results], model(
-                        img,
-                        verbose=debug,
-                    ))
+                    results: List[Results] = cast(
+                        list[Results],
+                        model(
+                            img,
+                            verbose=debug,
+                        ),
+                    )
 
                     frame_index_and_timedelta_and_results.append(
                         (
                             frame_index,
-                            # datetime.timedelta(milliseconds=raw_timedelta),
                             datetime.timedelta(seconds=frame.time),
                             results,
                         )
                     )
 
                     handled_frame_count += 1
-                # finally:
-                #     cap.release()
 
                 return handled_frame_count
 
@@ -173,11 +164,11 @@ def do(
             detections: List[Detection] = []
 
             def handle_results():
-                for frame_index, timedelta, results in frame_index_and_timedelta_and_results:
+                for _frame_index, timedelta, results in frame_index_and_timedelta_and_results:
                     for result in results:
                         for box in result.boxes or []:  # should be one box per result (because stream=True)
                             class_id = [int(v) for v in box.cls][0]
-                            class_name = result.names[class_id]
+                            class_name = cast(str, result.names[class_id])
                             confidence = [float(v) for v in box.conf][0]
 
                             for raw_xyxy in box.xyxy:
