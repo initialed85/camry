@@ -130,32 +130,36 @@ def do(
                 stream = container.streams.video[0]
                 stream.codec_context.options = {"hwaccel": "cuda"}
 
+                ctx = cast(av.VideoCodecContext, av.Codec("h264_cuvid", "r").create())
+                ctx.extradata = stream.codec_context.extradata
+
                 frame_index = -1
                 handled_frame_count = 0
 
-                for frame_index, frame in enumerate(container.decode(video=0)):
-                    if frame_index % 4 != 0:
-                        continue
+                for packet in container.demux(stream):
+                    for frame_index, frame in enumerate(ctx.decode(packet)):
+                        if frame_index % 4 != 0:
+                            continue
 
-                    img = frame.to_ndarray(format="rgb24")
+                        img = frame.to_ndarray(format="rgb24")
 
-                    results: List[Results] = cast(
-                        list[Results],
-                        model(
-                            img,
-                            verbose=debug,
-                        ),
-                    )
-
-                    frame_index_and_timedelta_and_results.append(
-                        (
-                            frame_index,
-                            datetime.timedelta(seconds=frame.time),
-                            results,
+                        results: List[Results] = cast(
+                            list[Results],
+                            model(
+                                img,
+                                verbose=debug,
+                            ),
                         )
-                    )
 
-                    handled_frame_count += 1
+                        frame_index_and_timedelta_and_results.append(
+                            (
+                                frame_index,
+                                datetime.timedelta(seconds=frame.time),
+                                results,
+                            )
+                        )
+
+                        handled_frame_count += 1
 
                 return handled_frame_count
 
