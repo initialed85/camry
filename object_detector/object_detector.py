@@ -127,41 +127,49 @@ def do(
                     print(f"hmm... {traceback.format_exc()}", file=sys.stderr)
                     return 0
 
-                stream = container.streams.video[0]
-                stream.codec_context.options = {"hwaccel": "cuda"}
+                ctx: av.VideoCodecContext | None = None
 
-                ctx = cast(av.VideoCodecContext, av.Codec("h264_cuvid", "r").create())
-                ctx.extradata = stream.codec_context.extradata
+                try:
+                    stream = container.streams.video[0]
+                    stream.codec_context.options = {"hwaccel": "cuda"}
 
-                frame_index = -1
-                handled_frame_count = 0
+                    ctx = cast(av.VideoCodecContext, av.Codec("h264_cuvid", "r").create())
+                    ctx.extradata = stream.codec_context.extradata
 
-                for packet in container.demux(stream):
-                    for frame_index, frame in enumerate(ctx.decode(packet)):
-                        if frame_index % 4 != 0:
-                            continue
+                    frame_index = -1
+                    handled_frame_count = 0
 
-                        img = frame.to_ndarray(format="rgb24")
+                    for packet in container.demux(stream):
+                        for frame_index, frame in enumerate(ctx.decode(packet)):
+                            if frame_index % 4 != 0:
+                                continue
 
-                        results: List[Results] = cast(
-                            list[Results],
-                            model(
-                                img,
-                                verbose=debug,
-                            ),
-                        )
+                            img = frame.to_ndarray(format="rgb24")
 
-                        frame_index_and_timedelta_and_results.append(
-                            (
-                                frame_index,
-                                datetime.timedelta(seconds=frame.time),
-                                results,
+                            results: List[Results] = cast(
+                                list[Results],
+                                model(
+                                    img,
+                                    verbose=debug,
+                                ),
                             )
-                        )
 
-                        handled_frame_count += 1
+                            frame_index_and_timedelta_and_results.append(
+                                (
+                                    frame_index,
+                                    datetime.timedelta(seconds=frame.time),
+                                    results,
+                                )
+                            )
 
-                return handled_frame_count
+                            handled_frame_count += 1
+
+                    return handled_frame_count
+                finally:
+                    if ctx:
+                        ctx.close()
+
+                    container.close()
 
             handled_frame_count = do_inference()
 
