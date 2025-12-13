@@ -3,9 +3,10 @@ import cv2
 import os
 import time
 import datetime
+import av
 
 from atexit import register
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Optional, Tuple, cast
 from pytz import UTC
 from ultralytics import YOLO
 from ultralytics.models.yolo.detect.predict import Results
@@ -119,41 +120,51 @@ def do(
 
                 filename = os.path.join(source_path, video.file_name)
 
-                cap: cv2.VideoCapture = cv2.VideoCapture(filename)
+                # cap: cv2.VideoCapture = cv2.VideoCapture(filename)
+                container = av.open(filename)
+                stream = container.streams.video[0]
+                stream.codec_context.options = {'hwaccel': 'cuda'}
 
-                try:
-                    frame_index = -1
-                    handled_frame_count = 0
+                # try:
+                frame_index = -1
+                handled_frame_count = 0
 
-                    while cap.isOpened():
-                        frame_index += 1
+                # while cap.isOpened():
+                #     frame_index += 1
 
-                        success, frame = cap.read()
-                        if not success:
-                            break
+                #     success, frame = cap.read()
+                #     if not success:
+                #         break
 
-                        raw_timedelta = cap.get(cv2.CAP_PROP_POS_MSEC)
+                #     raw_timedelta = cap.get(cv2.CAP_PROP_POS_MSEC)
 
-                        # 0, 4, 8, 12, 16 etc- so I guess we're 25% of the original frame rate
-                        if frame_index % 4 != 0:
-                            continue
+                #     # 0, 4, 8, 12, 16 etc- so I guess we're 25% of the original frame rate
+                #     if frame_index % 4 != 0:
+                #         continue
 
-                        results: List[Results] = model(
-                            frame,
-                            verbose=debug,
+                for frame_index, frame in enumerate(container.decode(video=0)):
+                    if frame_index % 4 != 0:
+                        continue
+
+                    img = frame.to_ndarray(format='rgb24')
+
+                    results: List[Results] = cast(list[Results], model(
+                        img,
+                        verbose=debug,
+                    ))
+
+                    frame_index_and_timedelta_and_results.append(
+                        (
+                            frame_index,
+                            # datetime.timedelta(milliseconds=raw_timedelta),
+                            datetime.timedelta(seconds=frame.time),
+                            results,
                         )
+                    )
 
-                        frame_index_and_timedelta_and_results.append(
-                            (
-                                frame_index,
-                                datetime.timedelta(milliseconds=raw_timedelta),
-                                results,
-                            )
-                        )
-
-                        handled_frame_count += 1
-                finally:
-                    cap.release()
+                    handled_frame_count += 1
+                # finally:
+                #     cap.release()
 
                 return handled_frame_count
 
