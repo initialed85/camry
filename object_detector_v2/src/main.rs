@@ -52,8 +52,12 @@ const WHITE: core::Scalar = core::Scalar {
 };
 
 fn main() -> Result<()> {
+    println!("main() entered");
+
     let mut app_startup_duration = Duration::default();
     let mut vid_startup_duration = Duration::default();
+    let mut decoding_duration = Duration::default();
+    let mut processing_duration = Duration::default();
     let mut passthrough_duration = Duration::default();
     let mut load_image_duration = Duration::default();
     let mut scale_frame_duration = Duration::default();
@@ -134,6 +138,8 @@ fn main() -> Result<()> {
     app_startup_duration.add_assign(startup_after - startup_before);
 
     if let Ok(mut ictx) = input(&env::args().nth(1).expect("Cannot open file.")) {
+        println!("opened {:?}", env::args().nth(1));
+
         let vid_startup_before = Instant::now();
 
         let input = ictx
@@ -170,7 +176,7 @@ fn main() -> Result<()> {
             Pixel::BGR24,
             MODEL_DIMENSION as u32,
             MODEL_DIMENSION as u32,
-            Flags::POINT,  // Fastest possible - nearest neighbor
+            Flags::POINT, // Fastest possible - nearest neighbor
         )?;
 
         let scale_x = decoder.width() as f32 / MODEL_DIMENSION as f32;
@@ -183,16 +189,18 @@ fn main() -> Result<()> {
         let vid_startup_after = Instant::now();
         vid_startup_duration.add_assign(vid_startup_after - vid_startup_before);
 
+        println!("iterating frames...");
+
+        let mut decoded: Video = Video::empty();
+        let mut img: Mat = Mat::default();
+        let mut img_scaled = Mat::default();
+
         let mut receive_and_process_decoded_frames =
             |decoder: &mut ffmpeg::decoder::Video| -> Result<()> {
-                let mut decoded: Video = Video::empty();
-                let mut img: Mat;
-                let mut img_scaled = Mat::default();
-
                 while decoder.receive_frame(&mut decoded).is_ok() {
-                    let timestamp = decoded.timestamp();
-
                     let before_all = Instant::now();
+
+                    let timestamp = decoded.timestamp();
 
                     #[cfg(debug_assertions)]
                     #[cfg(target_os = "macos")]
@@ -437,15 +445,30 @@ fn main() -> Result<()> {
                 Ok(())
             };
 
+        println!("streaming packets into decoder...");
         for (stream, packet) in ictx.packets() {
             // note: ignoring the audio streams
             if stream.index() == video_stream_index {
+                let before = Instant::now();
                 decoder.send_packet(&packet)?;
+                let after = Instant::now();
+                decoding_duration.add_assign(after - before);
+
+                let before = Instant::now();
                 receive_and_process_decoded_frames(&mut decoder)?;
+                let after = Instant::now();
+                processing_duration.add_assign(after - before);
             }
         }
+
+        let before = Instant::now();
+        println!("writing an eof into the decoder...");
         decoder.send_eof()?;
+
+        println!("receiving and processing the eof...");
         receive_and_process_decoded_frames(&mut decoder)?;
+        let after = Instant::now();
+        processing_duration.add_assign(after - before);
     }
 
     println!("all_boxes: {:?}", all_boxes);
@@ -456,6 +479,8 @@ fn main() -> Result<()> {
 
     println!("app_startup_duration: {:?}", app_startup_duration);
     println!("vid_startup_duration: {:?}", vid_startup_duration);
+    println!("decoding_duration: {:?}", decoding_duration);
+    println!("processing_duration: {:?}", processing_duration);
     println!("passthrough_duration: {:?}", passthrough_duration);
     println!("load_image_duration: {:?}", load_image_duration);
     println!("scale_frame_duration: {:?}", scale_frame_duration);
