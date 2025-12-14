@@ -4,11 +4,10 @@ import os
 import time
 import datetime
 
-from atexit import register
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional, Tuple, cast
 from pytz import UTC
-from ultralytics import YOLO
-from ultralytics.models.yolo.detect.predict import Results
+from ultralytics import YOLO  # type: ignore
+from ultralytics.models.yolo.detect.predict import Results  # type: ignore
 
 from .api.openapi_client import (
     ApiClient,
@@ -22,12 +21,6 @@ from .api.openapi_client import (
     VideoObjectDetectorClaimRequest,
 )
 
-
-def cleanup():
-    cv2.destroyAllWindows()
-
-
-register(cleanup)
 
 debug = os.getenv("DEBUG", "") == "1"
 
@@ -52,7 +45,9 @@ def do(
     else:
         print("waiting to claim a video... ", end="")
 
-        until = (datetime.datetime.utcnow() + datetime.timedelta(seconds=60)).replace(tzinfo=UTC)
+        now = datetime.datetime.now().astimezone(UTC)
+
+        until = now + datetime.timedelta(seconds=60)
 
         try:
             # TODO: inject this as an env var
@@ -110,7 +105,6 @@ def do(
         model = YOLO("yolov8n.pt")
 
         try:
-
             frame_index_and_timedelta_and_results: List[Tuple[int, datetime.timedelta, List[Results]]] = []
 
             def do_inference():
@@ -138,9 +132,12 @@ def do(
                         if frame_index % 4 != 0:
                             continue
 
-                        results: List[Results] = model(
-                            frame,
-                            verbose=debug,
+                        results = cast(
+                            List[Results],
+                            model(
+                                frame,
+                                verbose=debug,
+                            ),
                         )
 
                         frame_index_and_timedelta_and_results.append(
@@ -157,19 +154,20 @@ def do(
 
                 return handled_frame_count
 
-            handled_frame_count = do_inference()
-
-            detections: List[Detection] = []
-
             def handle_results():
-                for frame_index, timedelta, results in frame_index_and_timedelta_and_results:
-                    for result in results:
-                        for box in result.boxes or []:  # should be one box per result (because stream=True)
-                            class_id = [int(v) for v in box.cls][0]
-                            class_name = result.names[class_id]
-                            confidence = [float(v) for v in box.conf][0]
+                detections: list[Detection] = []
 
-                            for raw_xyxy in box.xyxy:
+                for _frame_index, timedelta, results in frame_index_and_timedelta_and_results:
+                    for result in results:
+                        if not result.boxes:
+                            continue
+
+                        for box in result.boxes:  # should be one box per result (because stream=True)
+                            class_id = [int(v) for v in box.cls][0]  # type: ignore
+                            class_name = cast(str, result.names[class_id])
+                            confidence = [float(v) for v in box.conf][0]  # type: ignore
+
+                            for raw_xyxy in box.xyxy:  # type: ignore
                                 ltx, lty, rbx, rby = [float(v) for v in raw_xyxy]
 
                                 polygon = [
@@ -191,7 +189,7 @@ def do(
                                     for p in polygon
                                 ]
 
-                                cx, cy, _, _ = [float(v) for v in box.xywh[0]]
+                                cx, cy, _, _ = [float(v) for v in box.xywh[0]]  # type: ignore
 
                                 centroid = DetectionBoundingBoxInner(
                                     X=cx,
@@ -213,9 +211,9 @@ def do(
 
                                 detections.append(detection)
 
-            handle_results()
+                return detections
 
-            def post_detections():
+            def post_detections(detections: list[Detection]):
                 if detections:
                     print(f"posting {len(detections)} detections")
 
@@ -233,7 +231,7 @@ def do(
 
                 before_summarise = datetime.datetime.now()
 
-                detection_summary = []
+                detection_summary: list[dict[str, Any]] = []
 
                 if detections:
                     detections_by_class_name: Dict[str, List[Detection]] = dict()
@@ -303,7 +301,11 @@ def do(
                     f"{video.file_name} handled in {after - before} (summarise took {after - before_summarise}, request took {after - before_request})"
                 )
 
-            post_detections()
+            handled_frame_count = do_inference()
+
+            detections = handle_results()
+
+            post_detections(detections)
 
             if one_shot_video_file_name:
                 break
