@@ -162,6 +162,7 @@ fn main() -> Result<()> {
             Flags::FAST_BILINEAR,
         )?;
 
+        // Use Point filter for ultra-fast nearest-neighbor scaling
         let mut scaler = Context::get(
             decoder.format(),
             decoder.width(),
@@ -169,7 +170,7 @@ fn main() -> Result<()> {
             Pixel::BGR24,
             MODEL_DIMENSION as u32,
             MODEL_DIMENSION as u32,
-            Flags::FAST_BILINEAR,
+            Flags::POINT,  // Fastest possible - nearest neighbor
         )?;
 
         let scale_x = decoder.width() as f32 / MODEL_DIMENSION as f32;
@@ -186,7 +187,7 @@ fn main() -> Result<()> {
             |decoder: &mut ffmpeg::decoder::Video| -> Result<()> {
                 let mut decoded: Video = Video::empty();
                 let mut img: Mat;
-                let mut img_scaled: Mat;
+                let mut img_scaled = Mat::default();
 
                 while decoder.receive_frame(&mut decoded).is_ok() {
                     let timestamp = decoded.timestamp();
