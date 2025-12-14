@@ -12,7 +12,12 @@ use opencv::{
 use similari::prelude::{SortTrack, Universal2DBox};
 use similari::trackers::sort::PositionalMetricType::IoU;
 use similari::trackers::sort::simple_api::Sort;
-use std::{collections::HashMap, env, time::Instant};
+use std::ops::AddAssign;
+use std::{
+    collections::HashMap,
+    env,
+    time::{Duration, Instant},
+};
 
 const STRIDE: i32 = 4;
 const CONF_THRESHOLD: f32 = 0.1;
@@ -47,14 +52,26 @@ const WHITE: core::Scalar = core::Scalar {
 };
 
 fn main() -> Result<()> {
-    let config = "yolov4-tiny.cfg";
-    // let config = "people-r-people.cfg";
+    let mut app_startup_duration = Duration::default();
+    let mut vid_startup_duration = Duration::default();
+    let mut passthrough_duration = Duration::default();
+    let mut load_image_duration = Duration::default();
+    let mut scale_frame_duration = Duration::default();
+    let mut load_scaled_image_duration = Duration::default();
+    let mut inferencing_duration = Duration::default();
+    let mut tracking_duration = Duration::default();
+    let mut drawing_duration = Duration::default();
+    let mut total_frame_duration = Duration::default();
 
-    let weights = "yolov4-tiny.weights";
+    let startup_before = Instant::now();
+
+    // let config = "people-r-people.cfg";
     // let weights = "people-r-people.weights";
 
-    let net = dnn::read_net(weights, config, "Darknet")?;
+    let config = "yolov4-tiny.cfg";
+    let weights = "yolov4-tiny.weights";
 
+    let net = dnn::read_net(weights, config, "Darknet")?;
     let mut model = dnn::DetectionModel::new_1(&net)?;
 
     #[cfg(target_os = "linux")]
@@ -65,8 +82,6 @@ fn main() -> Result<()> {
 
     #[cfg(target_os = "macos")]
     {
-        highgui::named_window("object-detector", highgui::WINDOW_FULLSCREEN)?;
-
         model.set_preferable_backend(dnn::Backend::DNN_BACKEND_OPENCV)?;
         model.set_preferable_target(dnn::Target::DNN_TARGET_OPENCL)?;
     }
@@ -90,10 +105,11 @@ fn main() -> Result<()> {
     let mut class_ids = core::Vector::<i32>::new();
     let mut confidences = core::Vector::<f32>::new();
     let mut scaled_boxes = core::Vector::<core::Rect>::new();
-    let mut boxes = core::Vector::<core::Rect>::new();
+    let mut boxes = vec![];
     let mut bboxes = vec![];
     let mut tracks = vec![];
-    let mut tracks_by_id: HashMap<u64, Vec<SortTrack>> = HashMap::new();
+    let mut all_boxes = vec![];
+    let mut all_tracks_by_id: HashMap<u64, Vec<SortTrack>> = HashMap::new();
 
     let mut tracker = Sort::new(
         1,
@@ -108,7 +124,18 @@ fn main() -> Result<()> {
 
     ffmpeg::init().unwrap();
 
+    #[cfg(debug_assertions)]
+    #[cfg(target_os = "macos")]
+    {
+        highgui::named_window("object-detector", highgui::WINDOW_FULLSCREEN)?;
+    }
+
+    let startup_after = Instant::now();
+    app_startup_duration.add_assign(startup_after - startup_before);
+
     if let Ok(mut ictx) = input(&env::args().nth(1).expect("Cannot open file.")) {
+        let vid_startup_before = Instant::now();
+
         let input = ictx
             .streams()
             .best(Type::Video)
@@ -152,21 +179,28 @@ fn main() -> Result<()> {
         let mut rgb_frame = Video::empty();
         let mut rgb_frame_scaled = Video::empty();
 
+        let vid_startup_after = Instant::now();
+        vid_startup_duration.add_assign(vid_startup_after - vid_startup_before);
+
         let mut receive_and_process_decoded_frames =
             |decoder: &mut ffmpeg::decoder::Video| -> Result<()> {
-                let mut decoded = Video::empty();
-                let mut img: Mat = Default::default();
-                let mut img_scaled: Mat = Default::default();
+                let mut decoded: Video = Video::empty();
+                let mut img: Mat;
+                let mut img_scaled: Mat;
 
                 while decoder.receive_frame(&mut decoded).is_ok() {
+                    let timestamp = decoded.timestamp();
+
                     let before_all = Instant::now();
 
+                    #[cfg(debug_assertions)]
                     #[cfg(target_os = "macos")]
                     {
                         let before = Instant::now();
                         passthrough.run(&decoded, &mut rgb_frame)?;
                         let after = Instant::now();
-                        println!("passthrough frame took {:?}", after - before);
+                        passthrough_duration.add_assign(after - before);
+                        // println!("passthrough frame took {:?}", after - before);
 
                         // more performant than the safe variant (which implies a copy)
                         let before = Instant::now();
@@ -180,15 +214,18 @@ fn main() -> Result<()> {
                             )?
                         };
                         let after = Instant::now();
-                        println!("loading passthrough image took {:?}", after - before);
+                        load_image_duration.add_assign(after - before);
+                        // println!("loading passthrough image took {:?}", after - before);
                     }
 
                     let before = Instant::now();
                     scaler.run(&decoded, &mut rgb_frame_scaled)?;
                     let after = Instant::now();
-                    println!("scaling frame took {:?}", after - before);
+                    // println!("scaling frame took {:?}", after - before);
+                    scale_frame_duration.add_assign(after - before);
 
                     // more performant than the safe variant (which implies a copy)
+                    let before = Instant::now();
                     img_scaled = unsafe {
                         Mat::new_rows_cols_with_data_unsafe(
                             MODEL_DIMENSION,
@@ -199,7 +236,8 @@ fn main() -> Result<()> {
                         )?
                     };
                     let after = Instant::now();
-                    println!("loading scaled image took {:?}", after - before);
+                    // println!("loading scaled image took {:?}", after - before);
+                    load_scaled_image_duration.add_assign(after - before);
 
                     //
                     // handle the model and the tracker
@@ -223,11 +261,12 @@ fn main() -> Result<()> {
                             NMS_THRESHOLD,
                         )?;
                         let after = Instant::now();
-                        println!(
-                            "inferencing took {:?} for {:?} boxes",
-                            after - before,
-                            scaled_boxes.len()
-                        );
+                        // println!(
+                        //     "inferencing took {:?} for {:?} boxes",
+                        //     after - before,
+                        //     scaled_boxes.len()
+                        // );
+                        inferencing_duration.add_assign(after - before);
 
                         total_boxes += scaled_boxes.len();
 
@@ -241,6 +280,7 @@ fn main() -> Result<()> {
                             b.height = (b.height as f32 * scale_y) as i32;
 
                             boxes.push(b);
+                            all_boxes.push((b, timestamp));
 
                             let cid = class_ids.get(i)?;
                             if !(MIN_CLASS_ID..=MAX_CLASS_ID).contains(&cid) {
@@ -265,26 +305,26 @@ fn main() -> Result<()> {
                         tracks = tracker.predict(bboxes.as_slice());
 
                         for t in tracks.iter() {
-                            let tracks_for_id = &mut match tracks_by_id.get_mut(&t.id) {
+                            let tracks_for_id = &mut match all_tracks_by_id.get_mut(&t.id) {
                                 Some(tracks_for_id) => tracks_for_id,
                                 None => {
-                                    tracks_by_id.insert(t.id, vec![]);
+                                    all_tracks_by_id.insert(t.id, vec![]);
 
-                                    tracks_by_id.get_mut(&t.id).unwrap()
+                                    all_tracks_by_id.get_mut(&t.id).unwrap()
                                 }
                             };
 
                             tracks_for_id.push(t.clone());
                         }
-
                         let after = Instant::now();
-                        println!(
-                            "tracking took {:?} for {:?} tracks",
-                            after - before,
-                            tracks.len()
-                        );
+                        tracking_duration.add_assign(after - before);
+                        //     "tracking took {:?} for {:?} tracks",
+                        //     after - before,
+                        //     tracks.len()
+                        // );
                     }
 
+                    #[cfg(debug_assertions)]
                     #[cfg(target_os = "macos")]
                     {
                         let before = Instant::now();
@@ -384,14 +424,13 @@ fn main() -> Result<()> {
                         }
 
                         let after = Instant::now();
-                        println!("drawing {:?}", after - before);
+                        drawing_duration.add_assign(after - before);
                     }
 
                     frame_index += 1;
 
                     let after_all = Instant::now();
-                    println!("frame took {:?}", after_all - before_all);
-                    println!();
+                    total_frame_duration.add_assign(after_all - before_all);
                 }
 
                 Ok(())
@@ -408,8 +447,26 @@ fn main() -> Result<()> {
         receive_and_process_decoded_frames(&mut decoder)?;
     }
 
+    println!("all_boxes: {:?}", all_boxes);
+    println!("all_tracks_by_id: {:?}", all_tracks_by_id);
     println!("total_boxes: {total_boxes}");
-    println!("total_tracks: {:}", tracks_by_id.len());
+    println!("all_tracks_by_id_len: {:}", all_tracks_by_id.len());
+    println!();
+
+    println!("app_startup_duration: {:?}", app_startup_duration);
+    println!("vid_startup_duration: {:?}", vid_startup_duration);
+    println!("passthrough_duration: {:?}", passthrough_duration);
+    println!("load_image_duration: {:?}", load_image_duration);
+    println!("scale_frame_duration: {:?}", scale_frame_duration);
+    println!(
+        "load_scaled_image_duration: {:?}",
+        load_scaled_image_duration
+    );
+    println!("inferencing_duration: {:?}", inferencing_duration);
+    println!("tracking_duration: {:?}", tracking_duration);
+    println!("drawing_duration: {:?}", drawing_duration);
+    println!("total_frame_duration: {:?}", total_frame_duration);
+    println!();
 
     Ok(())
 }

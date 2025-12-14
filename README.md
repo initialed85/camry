@@ -16,6 +16,11 @@ Intended as the spiritual sucessor to [initialed85/cameranator](https://github.c
 
 ## Tasks
 
+- [WIP] Rust object detector
+  - [TODO] Transcoding on the GPU
+- [TODO] Work out how to make cache more effective (the regular camera + video claim stuff means very few cache hits); there's a
+  TODO about smarter cache invalidation in Djangolang for this
+
 ## Usage
 
 ### Development
