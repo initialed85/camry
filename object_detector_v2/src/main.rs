@@ -1,8 +1,9 @@
-use anyhow::Result;
-use ffmpeg::format::{Pixel, input};
+use anyhow::{Result, anyhow};
+use chrono::Utc;
 use ffmpeg::media::Type;
 use ffmpeg::software::scaling::{context::Context, flag::Flags};
-use ffmpeg::util::frame::video::Video;
+use ffmpeg::{Dictionary, format::Pixel};
+
 use itertools::izip;
 use opencv::{
     core::{self, CV_8UC3},
@@ -12,12 +13,18 @@ use opencv::{
 use similari::prelude::{SortTrack, Universal2DBox};
 use similari::trackers::sort::PositionalMetricType::IoU;
 use similari::trackers::sort::simple_api::Sort;
-use std::ops::AddAssign;
 use std::{
     collections::HashMap,
-    env,
+    path::Path,
+    process::exit,
     time::{Duration, Instant},
 };
+use std::{ops::AddAssign, thread::sleep};
+
+mod api_client;
+mod api_types;
+
+use crate::api_types::*;
 
 const STRIDE: i32 = 4;
 const CONF_THRESHOLD: f32 = 0.1;
@@ -52,9 +59,35 @@ const WHITE: core::Scalar = core::Scalar {
 };
 
 fn main() -> Result<()> {
+    let api_url = std::env::var("API_URL").unwrap_or("".to_string());
+    if api_url.is_empty() {
+        return Err(anyhow!("API_URL env var empty or unset"));
+    }
+
+    let raw_source_path = std::env::var("SOURCE_PATH").unwrap_or("".to_string());
+    if raw_source_path.is_empty() {
+        return Err(anyhow!("SOURCE_PATH env var empty or unset"));
+    }
+    let source_path = Path::new(&raw_source_path);
+    if !source_path.exists() {
+        return Err(anyhow!(format!(
+            "SOURCE_PATH={raw_source_path} does not exist"
+        )));
+    }
+
+    let one_shot_file_name = std::env::var("ONE_SHOT_FILE_NAME").unwrap_or("".to_string());
+
     println!("main() entered");
 
-    let mut app_startup_duration = Duration::default();
+    let rt = tokio::runtime::Builder::new_multi_thread()
+        .enable_all()
+        .build()?;
+
+    let client = api_client::DjangolangClient {
+        client: reqwest::Client::new(),
+        base_url: reqwest::Url::parse(&api_url)?,
+    };
+
     let mut vid_startup_duration = Duration::default();
     let mut decoding_duration = Duration::default();
     let mut processing_duration = Duration::default();
@@ -66,8 +99,6 @@ fn main() -> Result<()> {
     let mut tracking_duration = Duration::default();
     let mut drawing_duration = Duration::default();
     let mut total_frame_duration = Duration::default();
-
-    let startup_before = Instant::now();
 
     // let config = "people-r-people.cfg";
     // let weights = "people-r-people.weights";
@@ -126,19 +157,95 @@ fn main() -> Result<()> {
 
     let mut total_boxes = 0;
 
-    ffmpeg::init().unwrap();
-
     #[cfg(debug_assertions)]
     #[cfg(target_os = "macos")]
     {
         highgui::named_window("object-detector", highgui::WINDOW_FULLSCREEN)?;
     }
 
-    let startup_after = Instant::now();
-    app_startup_duration.add_assign(startup_after - startup_before);
+    loop {
+        //
+        // figure out the video to handle
+        //
 
-    if let Ok(mut ictx) = input(&env::args().nth(1).expect("Cannot open file.")) {
-        println!("opened {:?}", env::args().nth(1));
+        let mut file_name: String = String::new();
+
+        let res: GetVideoResponse = if !one_shot_file_name.is_empty() {
+            println!(
+                "trying to find video with file_name of ONE_SHOT_FILE_NAME={:?}...",
+                one_shot_file_name
+            );
+
+            let req = GetVideosRequest {
+                file_name_eq: Some(one_shot_file_name.clone()),
+                ..Default::default()
+            };
+
+            rt.block_on(client.get_videos(req))?
+        } else {
+            println!("trying to claim video...");
+
+            let req = PostObjectDetectorClaimVideosRequest {
+                body: PostObjectDetectorClaimVideosRequestBody {
+                    timeout_seconds: Some(10.0),
+                    until: Some(Utc::now() + Duration::from_secs(70)),
+                },
+            };
+
+            rt.block_on(client.post_object_detector_claim_videos(req))?
+        };
+
+        match res {
+            GetVideoResponse::Ok(res) => {
+                println!("res: {:?}", res);
+
+                if let Some(objects) = res.objects
+                    && !objects.is_empty()
+                    && let Some(object_file_name) = &objects[0].file_name
+                {
+                    file_name = object_file_name.clone()
+                }
+            }
+            GetVideoResponse::Unknown(res) => {
+                sleep(Duration::from_secs(1));
+                continue;
+            }
+        }
+
+        if file_name.is_empty() {
+            return Err(anyhow!("file_name unexpectedly empty"));
+        }
+
+        let file_path = source_path.join(Path::new(&file_name));
+
+        if !file_path.exists() {
+            return Err(anyhow!(format!(
+                "file_path={:?} does not exist",
+                file_path.to_str().unwrap_or(""),
+            ),));
+        }
+
+        //
+        // handle the video
+        //
+
+        let mut options = Dictionary::new();
+
+        #[cfg(target_os = "macos")]
+        {
+            options.set("hwaccel", "videotoolbox");
+            options.set("hwaccel_output_format", "videotoolbox");
+        }
+
+        #[cfg(target_os = "linux")]
+        {
+            options.set("hwaccel", "cuda");
+            options.set("hwaccel_output_format", "cuda");
+        }
+
+        let mut ictx = ffmpeg::format::input_with_dictionary(&file_path, options)?;
+
+        println!("opened {:?}", file_path);
 
         let vid_startup_before = Instant::now();
 
@@ -152,11 +259,29 @@ fn main() -> Result<()> {
         let context_decoder = ffmpeg::codec::context::Context::from_parameters(input.parameters())?;
         let mut decoder = context_decoder.decoder().video()?;
 
-        // TODO: multi-threaded decoding; doesn't seem to move the needle
-        // decoder.set_threading(ffmpeg::threading::Config {
-        //     kind: ffmpeg::threading::Type::Frame,
-        //     count: 0,
-        // });
+        println!("time_base: {:?}", decoder.time_base());
+
+        let mut filter = ffmpeg::filter::Graph::new();
+        let args = format!(
+            "video_size={}x{}:pix_fmt={}:time_base=1/90000:pixel_aspect={}/{}",
+            decoder.width(),
+            decoder.height(),
+            decoder.format().descriptor().unwrap().name(),
+            decoder.aspect_ratio().numerator(),
+            decoder.aspect_ratio().denominator()
+        );
+        filter.add(&ffmpeg::filter::find("buffer").unwrap(), "in", &args)?;
+
+        let out = ffmpeg::filter::find("buffersink").unwrap();
+ku        // out.set_pixel_format(decoder.format());
+        filter.add(&out, "out", "")?;
+
+        filter
+            .output("in", 0)?
+            .input("out", 0)?
+            .parse("scale_vt=416:416")?;
+
+        filter.validate()?;
 
         let mut passthrough = Context::get(
             decoder.format(),
@@ -183,15 +308,13 @@ fn main() -> Result<()> {
         let scale_y = decoder.height() as f32 / MODEL_DIMENSION as f32;
 
         let mut frame_index = 0;
-        let mut rgb_frame = Video::empty();
-        let mut rgb_frame_scaled = Video::empty();
+        let mut rgb_frame = ffmpeg::frame::Video::empty();
+        let mut rgb_frame_scaled = ffmpeg::frame::Video::empty();
 
         let vid_startup_after = Instant::now();
         vid_startup_duration.add_assign(vid_startup_after - vid_startup_before);
 
-        println!("iterating frames...");
-
-        let mut decoded: Video = Video::empty();
+        let mut decoded: ffmpeg::frame::Video = ffmpeg::frame::Video::empty();
         let mut img: Mat = Mat::default();
         let mut img_scaled = Mat::default();
 
@@ -446,19 +569,27 @@ fn main() -> Result<()> {
             };
 
         println!("streaming packets into decoder...");
+        let mut video_packet_index = -1;
         for (stream, packet) in ictx.packets() {
-            // note: ignoring the audio streams
-            if stream.index() == video_stream_index {
-                let before = Instant::now();
-                decoder.send_packet(&packet)?;
-                let after = Instant::now();
-                decoding_duration.add_assign(after - before);
-
-                let before = Instant::now();
-                receive_and_process_decoded_frames(&mut decoder)?;
-                let after = Instant::now();
-                processing_duration.add_assign(after - before);
+            if stream.index() != video_stream_index {
+                continue;
             }
+
+            video_packet_index += 1;
+
+            // if !packet.is_key() && video_packet_index % STRIDE != 0 {
+            //     continue;
+            // }
+
+            let before = Instant::now();
+            decoder.send_packet(&packet)?;
+            let after = Instant::now();
+            decoding_duration.add_assign(after - before);
+
+            let before = Instant::now();
+            receive_and_process_decoded_frames(&mut decoder)?;
+            let after = Instant::now();
+            processing_duration.add_assign(after - before);
         }
 
         let before = Instant::now();
@@ -469,30 +600,32 @@ fn main() -> Result<()> {
         receive_and_process_decoded_frames(&mut decoder)?;
         let after = Instant::now();
         processing_duration.add_assign(after - before);
+
+        println!("all_boxes: {:?}", all_boxes);
+        println!("all_tracks_by_id: {:?}", all_tracks_by_id);
+        println!("total_boxes: {total_boxes}");
+        println!("all_tracks_by_id_len: {:}", all_tracks_by_id.len());
+        println!();
+
+        println!("vid_startup_duration: {:?}", vid_startup_duration);
+        println!("decoding_duration: {:?}", decoding_duration);
+        println!("processing_duration: {:?}", processing_duration);
+        println!("passthrough_duration: {:?}", passthrough_duration);
+        println!("load_image_duration: {:?}", load_image_duration);
+        println!("scale_frame_duration: {:?}", scale_frame_duration);
+        println!(
+            "load_scaled_image_duration: {:?}",
+            load_scaled_image_duration
+        );
+        println!("inferencing_duration: {:?}", inferencing_duration);
+        println!("tracking_duration: {:?}", tracking_duration);
+        println!("drawing_duration: {:?}", drawing_duration);
+        println!("total_frame_duration: {:?}", total_frame_duration);
+        println!();
+
+        if !one_shot_file_name.is_empty() {
+            println!("exiting because this was a one-shot run");
+            exit(0);
+        }
     }
-
-    println!("all_boxes: {:?}", all_boxes);
-    println!("all_tracks_by_id: {:?}", all_tracks_by_id);
-    println!("total_boxes: {total_boxes}");
-    println!("all_tracks_by_id_len: {:}", all_tracks_by_id.len());
-    println!();
-
-    println!("app_startup_duration: {:?}", app_startup_duration);
-    println!("vid_startup_duration: {:?}", vid_startup_duration);
-    println!("decoding_duration: {:?}", decoding_duration);
-    println!("processing_duration: {:?}", processing_duration);
-    println!("passthrough_duration: {:?}", passthrough_duration);
-    println!("load_image_duration: {:?}", load_image_duration);
-    println!("scale_frame_duration: {:?}", scale_frame_duration);
-    println!(
-        "load_scaled_image_duration: {:?}",
-        load_scaled_image_duration
-    );
-    println!("inferencing_duration: {:?}", inferencing_duration);
-    println!("tracking_duration: {:?}", tracking_duration);
-    println!("drawing_duration: {:?}", drawing_duration);
-    println!("total_frame_duration: {:?}", total_frame_duration);
-    println!();
-
-    Ok(())
 }
