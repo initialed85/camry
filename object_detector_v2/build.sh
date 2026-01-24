@@ -1,19 +1,7 @@
 #!/bin/bash
 
-(return 0 2>/dev/null) && sourced=1 || sourced=0
+export CPATH=/usr/local/cuda-13.1/targets/x86_64-linux/include:${CPATH}
 
-if [[ "${sourced}" == "0" ]]; then
-	set -e
-fi
+cd /home/edward/Projects/Home/camry/object_detector_v2
 
-PKG_CONFIG_PATH="$(brew --prefix ffmpeg)/lib/pkgconfig:$PKG_CONFIG_PATH"
-PKG_CONFIG_PATH="$(brew --prefix opencv)/lib/pkgconfig:$PKG_CONFIG_PATH"
-export PKG_CONFIG_PATH
-
-if [[ "${sourced}" == "0" ]]; then
-	if [[ "${DEBUG}" == "1" ]]; then
-		cargo build
-	else
-		cargo build --release
-	fi
-fi
+cargo build --release

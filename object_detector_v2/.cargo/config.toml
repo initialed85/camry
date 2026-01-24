@@ -1,7 +1,5 @@
-[build]
-
 [target.x86_64-unknown-linux-gnu]
-rustflags = ["-C", "target-cpu=x86-64"]
+linker = "clang-20"
 
-[target.aarch64-apple-darwin]
-rustflags = ["-C", "target-cpu=native"]
+[env]
+CPATH = { value = "/usr/local/cuda-13.1/targets/x86_64-linux/include" }

@@ -4,10 +4,9 @@ use ffmpeg::media::Type;
 use ffmpeg::software::scaling::{context::Context, flag::Flags};
 use ffmpeg::{Dictionary, format::Pixel};
 
-use itertools::izip;
 use opencv::{
     core::{self, CV_8UC3},
-    dnn, highgui, imgproc,
+    dnn,
     prelude::*,
 };
 use similari::prelude::{SortTrack, Universal2DBox};
@@ -91,13 +90,12 @@ fn main() -> Result<()> {
     let mut vid_startup_duration = Duration::default();
     let mut decoding_duration = Duration::default();
     let mut processing_duration = Duration::default();
-    let mut passthrough_duration = Duration::default();
-    let mut load_image_duration = Duration::default();
+    let load_image_duration = Duration::default();
     let mut scale_frame_duration = Duration::default();
     let mut load_scaled_image_duration = Duration::default();
     let mut inferencing_duration = Duration::default();
     let mut tracking_duration = Duration::default();
-    let mut drawing_duration = Duration::default();
+    let drawing_duration = Duration::default();
     let mut total_frame_duration = Duration::default();
 
     // let config = "people-r-people.cfg";
@@ -109,17 +107,8 @@ fn main() -> Result<()> {
     let net = dnn::read_net(weights, config, "Darknet")?;
     let mut model = dnn::DetectionModel::new_1(&net)?;
 
-    #[cfg(target_os = "linux")]
-    {
-        model.set_preferable_backend(dnn::Backend::DNN_BACKEND_CUDA)?;
-        model.set_preferable_target(dnn::Target::DNN_TARGET_CUDA)?;
-    }
-
-    #[cfg(target_os = "macos")]
-    {
-        model.set_preferable_backend(dnn::Backend::DNN_BACKEND_OPENCV)?;
-        model.set_preferable_target(dnn::Target::DNN_TARGET_OPENCL)?;
-    }
+    model.set_preferable_backend(dnn::Backend::DNN_BACKEND_CUDA)?;
+    model.set_preferable_target(dnn::Target::DNN_TARGET_CUDA)?;
 
     let scale: f64 = 1.0 / 255.0;
 
@@ -156,12 +145,6 @@ fn main() -> Result<()> {
     );
 
     let mut total_boxes = 0;
-
-    #[cfg(debug_assertions)]
-    #[cfg(target_os = "macos")]
-    {
-        highgui::named_window("object-detector", highgui::WINDOW_FULLSCREEN)?;
-    }
 
     loop {
         //
@@ -206,7 +189,7 @@ fn main() -> Result<()> {
                     file_name = object_file_name.clone()
                 }
             }
-            GetVideoResponse::Unknown(res) => {
+            GetVideoResponse::Unknown(_res) => {
                 sleep(Duration::from_secs(1));
                 continue;
             }
@@ -222,7 +205,7 @@ fn main() -> Result<()> {
             return Err(anyhow!(format!(
                 "file_path={:?} does not exist",
                 file_path.to_str().unwrap_or(""),
-            ),));
+            )));
         }
 
         //
@@ -231,17 +214,8 @@ fn main() -> Result<()> {
 
         let mut options = Dictionary::new();
 
-        #[cfg(target_os = "macos")]
-        {
-            options.set("hwaccel", "videotoolbox");
-            options.set("hwaccel_output_format", "videotoolbox");
-        }
-
-        #[cfg(target_os = "linux")]
-        {
-            options.set("hwaccel", "cuda");
-            options.set("hwaccel_output_format", "cuda");
-        }
+        options.set("hwaccel", "cuda");
+        options.set("hwaccel_output_format", "cuda");
 
         let mut ictx = ffmpeg::format::input_with_dictionary(&file_path, options)?;
 
@@ -256,44 +230,41 @@ fn main() -> Result<()> {
 
         let video_stream_index = input.index();
 
-        let context_decoder = ffmpeg::codec::context::Context::from_parameters(input.parameters())?;
-        let mut decoder = context_decoder.decoder().video()?;
+        let mut decoder = match ffmpeg::codec::decoder::find_by_name("h264_cuvid") {
+            Some(codec) => {
+                println!("Using CUDA hardware decoder (h264_cuvid)");
+                let mut ctx = ffmpeg::codec::context::Context::new_with_codec(codec);
+                ctx.set_parameters(input.parameters())?;
+                ctx.decoder().video()?
+            }
+            None => {
+                return Err(anyhow!(
+                    "failed to get CUDA hardware decoder; cannot continue!"
+                ));
+            }
+        };
 
-        println!("time_base: {:?}", decoder.time_base());
+        // ffmpeg::log::set_level(ffmpeg::log::Level::Trace);
 
-        let mut filter = ffmpeg::filter::Graph::new();
-        let args = format!(
-            "video_size={}x{}:pix_fmt={}:time_base=1/90000:pixel_aspect={}/{}",
-            decoder.width(),
-            decoder.height(),
-            decoder.format().descriptor().unwrap().name(),
-            decoder.aspect_ratio().numerator(),
-            decoder.aspect_ratio().denominator()
-        );
-        filter.add(&ffmpeg::filter::find("buffer").unwrap(), "in", &args)?;
+        // let mut filter_graph = ffmpeg::filter::Graph::new();
 
-        let out = ffmpeg::filter::find("buffersink").unwrap();
-ku        // out.set_pixel_format(decoder.format());
-        filter.add(&out, "out", "")?;
+        // filter_graph.add(
+        //     &ffmpeg::filter::find("buffer").unwrap(),
+        //     "in",
+        //     "video_size=uhd2160:pix_fmt=yuv420p:time_base=1/1000:frame_rate=20",
+        // )?;
 
-        filter
-            .output("in", 0)?
-            .input("out", 0)?
-            .parse("scale_vt=416:416")?;
+        // filter_graph.add(&ffmpeg::filter::find("buffersink").unwrap(), "out", "")?;
 
-        filter.validate()?;
+        // filter_graph
+        //     .output("in", 0)?
+        //     .input("out", 0)?
+        //     .parse("scale_cuda=416:416:format=yuv420p:interp_algo=bilinear")?;
 
-        let mut passthrough = Context::get(
-            decoder.format(),
-            decoder.width(),
-            decoder.height(),
-            Pixel::BGR24,
-            decoder.width(),
-            decoder.height(),
-            Flags::FAST_BILINEAR,
-        )?;
+        // println!("before");
+        // filter_graph.validate()?;
+        // println!("after");
 
-        // Use Point filter for ultra-fast nearest-neighbor scaling
         let mut scaler = Context::get(
             decoder.format(),
             decoder.width(),
@@ -301,21 +272,21 @@ ku        // out.set_pixel_format(decoder.format());
             Pixel::BGR24,
             MODEL_DIMENSION as u32,
             MODEL_DIMENSION as u32,
-            Flags::POINT, // Fastest possible - nearest neighbor
+            Flags::FAST_BILINEAR,
         )?;
 
         let scale_x = decoder.width() as f32 / MODEL_DIMENSION as f32;
         let scale_y = decoder.height() as f32 / MODEL_DIMENSION as f32;
 
         let mut frame_index = 0;
-        let mut rgb_frame = ffmpeg::frame::Video::empty();
+        let _rgb_frame = ffmpeg::frame::Video::empty();
         let mut rgb_frame_scaled = ffmpeg::frame::Video::empty();
 
         let vid_startup_after = Instant::now();
         vid_startup_duration.add_assign(vid_startup_after - vid_startup_before);
 
         let mut decoded: ffmpeg::frame::Video = ffmpeg::frame::Video::empty();
-        let mut img: Mat = Mat::default();
+        let _img: Mat = Mat::default();
         let mut img_scaled = Mat::default();
 
         let mut receive_and_process_decoded_frames =
@@ -325,35 +296,18 @@ ku        // out.set_pixel_format(decoder.format());
 
                     let timestamp = decoded.timestamp();
 
-                    #[cfg(debug_assertions)]
-                    #[cfg(target_os = "macos")]
-                    {
-                        let before = Instant::now();
-                        passthrough.run(&decoded, &mut rgb_frame)?;
-                        let after = Instant::now();
-                        passthrough_duration.add_assign(after - before);
-                        // println!("passthrough frame took {:?}", after - before);
-
-                        // more performant than the safe variant (which implies a copy)
-                        let before = Instant::now();
-                        img = unsafe {
-                            Mat::new_rows_cols_with_data_unsafe(
-                                decoder.height() as i32,
-                                decoder.width() as i32,
-                                CV_8UC3,
-                                rgb_frame.data(0).as_ptr() as *mut _,
-                                rgb_frame.stride(0),
-                            )?
-                        };
-                        let after = Instant::now();
-                        load_image_duration.add_assign(after - before);
-                        // println!("loading passthrough image took {:?}", after - before);
-                    }
-
                     let before = Instant::now();
+
                     scaler.run(&decoded, &mut rgb_frame_scaled)?;
+
+                    // match filter_graph.get("in") {
+                    //     Some(mut filter_graph) => {
+                    //         filter_graph.source().add(&decoded)?;
+                    //     }
+                    //     None => continue,
+                    // }
+
                     let after = Instant::now();
-                    // println!("scaling frame took {:?}", after - before);
                     scale_frame_duration.add_assign(after - before);
 
                     // more performant than the safe variant (which implies a copy)
@@ -368,7 +322,6 @@ ku        // out.set_pixel_format(decoder.format());
                         )?
                     };
                     let after = Instant::now();
-                    // println!("loading scaled image took {:?}", after - before);
                     load_scaled_image_duration.add_assign(after - before);
 
                     //
@@ -393,11 +346,6 @@ ku        // out.set_pixel_format(decoder.format());
                             NMS_THRESHOLD,
                         )?;
                         let after = Instant::now();
-                        // println!(
-                        //     "inferencing took {:?} for {:?} boxes",
-                        //     after - before,
-                        //     scaled_boxes.len()
-                        // );
                         inferencing_duration.add_assign(after - before);
 
                         total_boxes += scaled_boxes.len();
@@ -450,113 +398,6 @@ ku        // out.set_pixel_format(decoder.format());
                         }
                         let after = Instant::now();
                         tracking_duration.add_assign(after - before);
-                        //     "tracking took {:?} for {:?} tracks",
-                        //     after - before,
-                        //     tracks.len()
-                        // );
-                    }
-
-                    #[cfg(debug_assertions)]
-                    #[cfg(target_os = "macos")]
-                    {
-                        let before = Instant::now();
-
-                        //
-                        // draw the detected objects
-                        //
-
-                        for (cid, _cf, b) in izip!(&class_ids, &confidences, &boxes) {
-                            if !(MIN_CLASS_ID..=MAX_CLASS_ID).contains(&cid) {
-                                continue;
-                            }
-
-                            imgproc::rectangle(
-                                &mut img,
-                                core::Rect::new(
-                                    b.x + PADDING_I,
-                                    b.y + PADDING_I,
-                                    b.width - PADDING_I * 2,
-                                    b.height - PADDING_I * 2,
-                                ),
-                                RED,
-                                LINE_THICKNESS,
-                                imgproc::LineTypes::LINE_8.into(),
-                                0,
-                            )?;
-                        }
-
-                        //
-                        // draw the observed tracked objects
-                        //
-
-                        for t in &tracks {
-                            let b = &t.observed_bbox;
-
-                            let width = b.height * b.aspect;
-
-                            imgproc::rectangle(
-                                &mut img,
-                                core::Rect::new(
-                                    b.xc as i32,
-                                    b.yc as i32,
-                                    width as i32,
-                                    b.height as i32,
-                                ),
-                                BLUE,
-                                LINE_THICKNESS,
-                                imgproc::LineTypes::LINE_8.into(),
-                                0,
-                            )?;
-                        }
-
-                        //
-                        // draw the predicted tracked objects
-                        //
-
-                        for t in &tracks {
-                            let b = &t.predicted_bbox;
-
-                            let width = b.height * b.aspect;
-
-                            imgproc::rectangle(
-                                &mut img,
-                                core::Rect::new(
-                                    b.xc as i32,
-                                    b.yc as i32,
-                                    width as i32,
-                                    b.height as i32,
-                                ),
-                                GREEN,
-                                LINE_THICKNESS,
-                                imgproc::LineTypes::LINE_8.into(),
-                                0,
-                            )?;
-
-                            imgproc::put_text_def(
-                                &mut img,
-                                &format!("{:}", t.id),
-                                core::Point::new(
-                                    (b.xc + ((b.aspect * b.height) / 3.0)) as i32,
-                                    (b.yc + b.height / 2.0) as i32,
-                                ),
-                                imgproc::FONT_HERSHEY_TRIPLEX,
-                                TEXT_SCALE_LARGE,
-                                WHITE,
-                            )?;
-                        }
-
-                        highgui::imshow("object-detector", &img)?;
-
-                        match highgui::wait_key(1)? {
-                            32 => _ = highgui::wait_key(0)?,
-                            27 => {
-                                break;
-                            }
-                            _ => {}
-                        }
-
-                        let after = Instant::now();
-                        drawing_duration.add_assign(after - before);
                     }
 
                     frame_index += 1;
@@ -569,17 +410,10 @@ ku        // out.set_pixel_format(decoder.format());
             };
 
         println!("streaming packets into decoder...");
-        let mut video_packet_index = -1;
         for (stream, packet) in ictx.packets() {
             if stream.index() != video_stream_index {
                 continue;
             }
-
-            video_packet_index += 1;
-
-            // if !packet.is_key() && video_packet_index % STRIDE != 0 {
-            //     continue;
-            // }
 
             let before = Instant::now();
             decoder.send_packet(&packet)?;
@@ -610,7 +444,6 @@ ku        // out.set_pixel_format(decoder.format());
         println!("vid_startup_duration: {:?}", vid_startup_duration);
         println!("decoding_duration: {:?}", decoding_duration);
         println!("processing_duration: {:?}", processing_duration);
-        println!("passthrough_duration: {:?}", passthrough_duration);
         println!("load_image_duration: {:?}", load_image_duration);
         println!("scale_frame_duration: {:?}", scale_frame_duration);
         println!(
