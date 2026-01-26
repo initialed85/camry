@@ -16,6 +16,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"time"
 )
 
 
@@ -26,10 +27,1109 @@ type ApiPostStreamProducerClaimCamerasRequest struct {
 	ctx context.Context
 	ApiService *StreamProducerClaimCameraAPIService
 	cameraStreamProducerClaimRequest *CameraStreamProducerClaimRequest
+	limit *int32
+	offset *int32
+	depth *int32
+	referencedByDetectionLoad *string
+	referencedByVideoLoad *string
+	idEq *string
+	idNe *string
+	idGt *string
+	idGte *string
+	idLt *string
+	idLte *string
+	idIn *string
+	idNotin *string
+	idContains *string
+	idNotcontains *string
+	idLike *string
+	idNotlike *string
+	idIlike *string
+	idNotilike *string
+	idDesc *string
+	idAsc *string
+	createdAtEq *time.Time
+	createdAtNe *time.Time
+	createdAtGt *time.Time
+	createdAtGte *time.Time
+	createdAtLt *time.Time
+	createdAtLte *time.Time
+	createdAtIn *time.Time
+	createdAtNotin *time.Time
+	createdAtContains *time.Time
+	createdAtNotcontains *time.Time
+	createdAtLike *time.Time
+	createdAtNotlike *time.Time
+	createdAtIlike *time.Time
+	createdAtNotilike *time.Time
+	createdAtDesc *string
+	createdAtAsc *string
+	updatedAtEq *time.Time
+	updatedAtNe *time.Time
+	updatedAtGt *time.Time
+	updatedAtGte *time.Time
+	updatedAtLt *time.Time
+	updatedAtLte *time.Time
+	updatedAtIn *time.Time
+	updatedAtNotin *time.Time
+	updatedAtContains *time.Time
+	updatedAtNotcontains *time.Time
+	updatedAtLike *time.Time
+	updatedAtNotlike *time.Time
+	updatedAtIlike *time.Time
+	updatedAtNotilike *time.Time
+	updatedAtDesc *string
+	updatedAtAsc *string
+	deletedAtEq *time.Time
+	deletedAtNe *time.Time
+	deletedAtGt *time.Time
+	deletedAtGte *time.Time
+	deletedAtLt *time.Time
+	deletedAtLte *time.Time
+	deletedAtIn *time.Time
+	deletedAtNotin *time.Time
+	deletedAtContains *time.Time
+	deletedAtNotcontains *time.Time
+	deletedAtLike *time.Time
+	deletedAtNotlike *time.Time
+	deletedAtIlike *time.Time
+	deletedAtNotilike *time.Time
+	deletedAtDesc *string
+	deletedAtAsc *string
+	nameEq *string
+	nameNe *string
+	nameGt *string
+	nameGte *string
+	nameLt *string
+	nameLte *string
+	nameIn *string
+	nameNotin *string
+	nameContains *string
+	nameNotcontains *string
+	nameLike *string
+	nameNotlike *string
+	nameIlike *string
+	nameNotilike *string
+	nameDesc *string
+	nameAsc *string
+	streamUrlEq *string
+	streamUrlNe *string
+	streamUrlGt *string
+	streamUrlGte *string
+	streamUrlLt *string
+	streamUrlLte *string
+	streamUrlIn *string
+	streamUrlNotin *string
+	streamUrlContains *string
+	streamUrlNotcontains *string
+	streamUrlLike *string
+	streamUrlNotlike *string
+	streamUrlIlike *string
+	streamUrlNotilike *string
+	streamUrlDesc *string
+	streamUrlAsc *string
+	lastSeenEq *time.Time
+	lastSeenNe *time.Time
+	lastSeenGt *time.Time
+	lastSeenGte *time.Time
+	lastSeenLt *time.Time
+	lastSeenLte *time.Time
+	lastSeenIn *time.Time
+	lastSeenNotin *time.Time
+	lastSeenContains *time.Time
+	lastSeenNotcontains *time.Time
+	lastSeenLike *time.Time
+	lastSeenNotlike *time.Time
+	lastSeenIlike *time.Time
+	lastSeenNotilike *time.Time
+	lastSeenDesc *string
+	lastSeenAsc *string
+	segmentProducerClaimedUntilEq *time.Time
+	segmentProducerClaimedUntilNe *time.Time
+	segmentProducerClaimedUntilGt *time.Time
+	segmentProducerClaimedUntilGte *time.Time
+	segmentProducerClaimedUntilLt *time.Time
+	segmentProducerClaimedUntilLte *time.Time
+	segmentProducerClaimedUntilIn *time.Time
+	segmentProducerClaimedUntilNotin *time.Time
+	segmentProducerClaimedUntilContains *time.Time
+	segmentProducerClaimedUntilNotcontains *time.Time
+	segmentProducerClaimedUntilLike *time.Time
+	segmentProducerClaimedUntilNotlike *time.Time
+	segmentProducerClaimedUntilIlike *time.Time
+	segmentProducerClaimedUntilNotilike *time.Time
+	segmentProducerClaimedUntilDesc *string
+	segmentProducerClaimedUntilAsc *string
+	streamProducerClaimedUntilEq *time.Time
+	streamProducerClaimedUntilNe *time.Time
+	streamProducerClaimedUntilGt *time.Time
+	streamProducerClaimedUntilGte *time.Time
+	streamProducerClaimedUntilLt *time.Time
+	streamProducerClaimedUntilLte *time.Time
+	streamProducerClaimedUntilIn *time.Time
+	streamProducerClaimedUntilNotin *time.Time
+	streamProducerClaimedUntilContains *time.Time
+	streamProducerClaimedUntilNotcontains *time.Time
+	streamProducerClaimedUntilLike *time.Time
+	streamProducerClaimedUntilNotlike *time.Time
+	streamProducerClaimedUntilIlike *time.Time
+	streamProducerClaimedUntilNotilike *time.Time
+	streamProducerClaimedUntilDesc *string
+	streamProducerClaimedUntilAsc *string
+	referencedByDetectionCameraIdObjectsContains *interface{}
+	referencedByDetectionCameraIdObjectsNotcontains *interface{}
+	referencedByDetectionCameraIdObjectsDesc *string
+	referencedByDetectionCameraIdObjectsAsc *string
+	referencedByVideoCameraIdObjectsContains *interface{}
+	referencedByVideoCameraIdObjectsNotcontains *interface{}
+	referencedByVideoCameraIdObjectsDesc *string
+	referencedByVideoCameraIdObjectsAsc *string
 }
 
 func (r ApiPostStreamProducerClaimCamerasRequest) CameraStreamProducerClaimRequest(cameraStreamProducerClaimRequest CameraStreamProducerClaimRequest) ApiPostStreamProducerClaimCamerasRequest {
 	r.cameraStreamProducerClaimRequest = &cameraStreamProducerClaimRequest
+	return r
+}
+
+// SQL LIMIT operator
+func (r ApiPostStreamProducerClaimCamerasRequest) Limit(limit int32) ApiPostStreamProducerClaimCamerasRequest {
+	r.limit = &limit
+	return r
+}
+
+// SQL OFFSET operator
+func (r ApiPostStreamProducerClaimCamerasRequest) Offset(offset int32) ApiPostStreamProducerClaimCamerasRequest {
+	r.offset = &offset
+	return r
+}
+
+// Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc)
+func (r ApiPostStreamProducerClaimCamerasRequest) Depth(depth int32) ApiPostStreamProducerClaimCamerasRequest {
+	r.depth = &depth
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByDetectionLoad(referencedByDetectionLoad string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByDetectionLoad = &referencedByDetectionLoad
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByVideoLoad(referencedByVideoLoad string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByVideoLoad = &referencedByVideoLoad
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) IdEq(idEq string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idEq = &idEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) IdNe(idNe string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idNe = &idNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) IdGt(idGt string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idGt = &idGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) IdGte(idGte string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idGte = &idGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) IdLt(idLt string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idLt = &idLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) IdLte(idLte string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idLte = &idLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) IdIn(idIn string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idIn = &idIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) IdNotin(idNotin string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idNotin = &idNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) IdContains(idContains string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idContains = &idContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) IdNotcontains(idNotcontains string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idNotcontains = &idNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) IdLike(idLike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idLike = &idLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) IdNotlike(idNotlike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idNotlike = &idNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) IdIlike(idIlike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idIlike = &idIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) IdNotilike(idNotilike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idNotilike = &idNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) IdDesc(idDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idDesc = &idDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) IdAsc(idAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.idAsc = &idAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtEq(createdAtEq time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtEq = &createdAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtNe(createdAtNe time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtNe = &createdAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtGt(createdAtGt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtGt = &createdAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtGte(createdAtGte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtGte = &createdAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtLt(createdAtLt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtLt = &createdAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtLte(createdAtLte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtLte = &createdAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtIn(createdAtIn time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtIn = &createdAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtNotin(createdAtNotin time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtNotin = &createdAtNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtContains(createdAtContains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtContains = &createdAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtNotcontains(createdAtNotcontains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtNotcontains = &createdAtNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtLike(createdAtLike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtLike = &createdAtLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtNotlike(createdAtNotlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtNotlike = &createdAtNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtIlike(createdAtIlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtIlike = &createdAtIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtNotilike(createdAtNotilike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtNotilike = &createdAtNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtDesc(createdAtDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtDesc = &createdAtDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) CreatedAtAsc(createdAtAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.createdAtAsc = &createdAtAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtEq(updatedAtEq time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtEq = &updatedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtNe(updatedAtNe time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtNe = &updatedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtGt(updatedAtGt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtGt = &updatedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtGte(updatedAtGte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtGte = &updatedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtLt(updatedAtLt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtLt = &updatedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtLte(updatedAtLte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtLte = &updatedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtIn(updatedAtIn time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtIn = &updatedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtNotin(updatedAtNotin time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtNotin = &updatedAtNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtContains(updatedAtContains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtContains = &updatedAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtNotcontains(updatedAtNotcontains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtNotcontains = &updatedAtNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtLike(updatedAtLike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtLike = &updatedAtLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtNotlike(updatedAtNotlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtNotlike = &updatedAtNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtIlike(updatedAtIlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtIlike = &updatedAtIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtNotilike(updatedAtNotilike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtNotilike = &updatedAtNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtDesc(updatedAtDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtDesc = &updatedAtDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) UpdatedAtAsc(updatedAtAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.updatedAtAsc = &updatedAtAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtEq(deletedAtEq time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtEq = &deletedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtNe(deletedAtNe time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtNe = &deletedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtGt(deletedAtGt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtGt = &deletedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtGte(deletedAtGte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtGte = &deletedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtLt(deletedAtLt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtLt = &deletedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtLte(deletedAtLte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtLte = &deletedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtIn(deletedAtIn time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtIn = &deletedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtNotin(deletedAtNotin time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtNotin = &deletedAtNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtContains(deletedAtContains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtContains = &deletedAtContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtNotcontains(deletedAtNotcontains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtNotcontains = &deletedAtNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtLike(deletedAtLike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtLike = &deletedAtLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtNotlike(deletedAtNotlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtNotlike = &deletedAtNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtIlike(deletedAtIlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtIlike = &deletedAtIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtNotilike(deletedAtNotilike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtNotilike = &deletedAtNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtDesc(deletedAtDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtDesc = &deletedAtDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) DeletedAtAsc(deletedAtAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.deletedAtAsc = &deletedAtAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) NameEq(nameEq string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameEq = &nameEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) NameNe(nameNe string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameNe = &nameNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) NameGt(nameGt string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameGt = &nameGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) NameGte(nameGte string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameGte = &nameGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) NameLt(nameLt string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameLt = &nameLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) NameLte(nameLte string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameLte = &nameLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) NameIn(nameIn string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameIn = &nameIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) NameNotin(nameNotin string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameNotin = &nameNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) NameContains(nameContains string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameContains = &nameContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) NameNotcontains(nameNotcontains string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameNotcontains = &nameNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) NameLike(nameLike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameLike = &nameLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) NameNotlike(nameNotlike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameNotlike = &nameNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) NameIlike(nameIlike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameIlike = &nameIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) NameNotilike(nameNotilike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameNotilike = &nameNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) NameDesc(nameDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameDesc = &nameDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) NameAsc(nameAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.nameAsc = &nameAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlEq(streamUrlEq string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlEq = &streamUrlEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlNe(streamUrlNe string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlNe = &streamUrlNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlGt(streamUrlGt string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlGt = &streamUrlGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlGte(streamUrlGte string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlGte = &streamUrlGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlLt(streamUrlLt string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlLt = &streamUrlLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlLte(streamUrlLte string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlLte = &streamUrlLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlIn(streamUrlIn string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlIn = &streamUrlIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlNotin(streamUrlNotin string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlNotin = &streamUrlNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlContains(streamUrlContains string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlContains = &streamUrlContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlNotcontains(streamUrlNotcontains string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlNotcontains = &streamUrlNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlLike(streamUrlLike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlLike = &streamUrlLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlNotlike(streamUrlNotlike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlNotlike = &streamUrlNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlIlike(streamUrlIlike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlIlike = &streamUrlIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlNotilike(streamUrlNotilike string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlNotilike = &streamUrlNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlDesc(streamUrlDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlDesc = &streamUrlDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamUrlAsc(streamUrlAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamUrlAsc = &streamUrlAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenEq(lastSeenEq time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenEq = &lastSeenEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenNe(lastSeenNe time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenNe = &lastSeenNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenGt(lastSeenGt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenGt = &lastSeenGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenGte(lastSeenGte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenGte = &lastSeenGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenLt(lastSeenLt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenLt = &lastSeenLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenLte(lastSeenLte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenLte = &lastSeenLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenIn(lastSeenIn time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenIn = &lastSeenIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenNotin(lastSeenNotin time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenNotin = &lastSeenNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenContains(lastSeenContains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenContains = &lastSeenContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenNotcontains(lastSeenNotcontains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenNotcontains = &lastSeenNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenLike(lastSeenLike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenLike = &lastSeenLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenNotlike(lastSeenNotlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenNotlike = &lastSeenNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenIlike(lastSeenIlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenIlike = &lastSeenIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenNotilike(lastSeenNotilike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenNotilike = &lastSeenNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenDesc(lastSeenDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenDesc = &lastSeenDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) LastSeenAsc(lastSeenAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.lastSeenAsc = &lastSeenAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilEq(segmentProducerClaimedUntilEq time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilEq = &segmentProducerClaimedUntilEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilNe(segmentProducerClaimedUntilNe time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilNe = &segmentProducerClaimedUntilNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilGt(segmentProducerClaimedUntilGt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilGt = &segmentProducerClaimedUntilGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilGte(segmentProducerClaimedUntilGte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilGte = &segmentProducerClaimedUntilGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilLt(segmentProducerClaimedUntilLt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilLt = &segmentProducerClaimedUntilLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilLte(segmentProducerClaimedUntilLte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilLte = &segmentProducerClaimedUntilLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilIn(segmentProducerClaimedUntilIn time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilIn = &segmentProducerClaimedUntilIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilNotin(segmentProducerClaimedUntilNotin time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilNotin = &segmentProducerClaimedUntilNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilContains(segmentProducerClaimedUntilContains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilContains = &segmentProducerClaimedUntilContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilNotcontains(segmentProducerClaimedUntilNotcontains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilNotcontains = &segmentProducerClaimedUntilNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilLike(segmentProducerClaimedUntilLike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilLike = &segmentProducerClaimedUntilLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilNotlike(segmentProducerClaimedUntilNotlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilNotlike = &segmentProducerClaimedUntilNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilIlike(segmentProducerClaimedUntilIlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilIlike = &segmentProducerClaimedUntilIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilNotilike(segmentProducerClaimedUntilNotilike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilNotilike = &segmentProducerClaimedUntilNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilDesc(segmentProducerClaimedUntilDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilDesc = &segmentProducerClaimedUntilDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) SegmentProducerClaimedUntilAsc(segmentProducerClaimedUntilAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.segmentProducerClaimedUntilAsc = &segmentProducerClaimedUntilAsc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilEq(streamProducerClaimedUntilEq time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilEq = &streamProducerClaimedUntilEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilNe(streamProducerClaimedUntilNe time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilNe = &streamProducerClaimedUntilNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilGt(streamProducerClaimedUntilGt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilGt = &streamProducerClaimedUntilGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilGte(streamProducerClaimedUntilGte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilGte = &streamProducerClaimedUntilGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilLt(streamProducerClaimedUntilLt time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilLt = &streamProducerClaimedUntilLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilLte(streamProducerClaimedUntilLte time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilLte = &streamProducerClaimedUntilLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilIn(streamProducerClaimedUntilIn time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilIn = &streamProducerClaimedUntilIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilNotin(streamProducerClaimedUntilNotin time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilNotin = &streamProducerClaimedUntilNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilContains(streamProducerClaimedUntilContains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilContains = &streamProducerClaimedUntilContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilNotcontains(streamProducerClaimedUntilNotcontains time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilNotcontains = &streamProducerClaimedUntilNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilLike(streamProducerClaimedUntilLike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilLike = &streamProducerClaimedUntilLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilNotlike(streamProducerClaimedUntilNotlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilNotlike = &streamProducerClaimedUntilNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilIlike(streamProducerClaimedUntilIlike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilIlike = &streamProducerClaimedUntilIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilNotilike(streamProducerClaimedUntilNotilike time.Time) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilNotilike = &streamProducerClaimedUntilNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilDesc(streamProducerClaimedUntilDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilDesc = &streamProducerClaimedUntilDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) StreamProducerClaimedUntilAsc(streamProducerClaimedUntilAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.streamProducerClaimedUntilAsc = &streamProducerClaimedUntilAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByDetectionCameraIdObjectsContains(referencedByDetectionCameraIdObjectsContains interface{}) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsContains = &referencedByDetectionCameraIdObjectsContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByDetectionCameraIdObjectsNotcontains(referencedByDetectionCameraIdObjectsNotcontains interface{}) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsNotcontains = &referencedByDetectionCameraIdObjectsNotcontains
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByDetectionCameraIdObjectsDesc(referencedByDetectionCameraIdObjectsDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsDesc = &referencedByDetectionCameraIdObjectsDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByDetectionCameraIdObjectsAsc(referencedByDetectionCameraIdObjectsAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByDetectionCameraIdObjectsAsc = &referencedByDetectionCameraIdObjectsAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByVideoCameraIdObjectsContains(referencedByVideoCameraIdObjectsContains interface{}) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByVideoCameraIdObjectsContains = &referencedByVideoCameraIdObjectsContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByVideoCameraIdObjectsNotcontains(referencedByVideoCameraIdObjectsNotcontains interface{}) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByVideoCameraIdObjectsNotcontains = &referencedByVideoCameraIdObjectsNotcontains
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByVideoCameraIdObjectsDesc(referencedByVideoCameraIdObjectsDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByVideoCameraIdObjectsDesc = &referencedByVideoCameraIdObjectsDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByVideoCameraIdObjectsAsc(referencedByVideoCameraIdObjectsAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByVideoCameraIdObjectsAsc = &referencedByVideoCameraIdObjectsAsc
 	return r
 }
 
@@ -74,6 +1174,477 @@ func (a *StreamProducerClaimCameraAPIService) PostStreamProducerClaimCamerasExec
 		return localVarReturnValue, nil, reportError("cameraStreamProducerClaimRequest is required and must be specified")
 	}
 
+	if r.limit != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", r.limit, "")
+	}
+	if r.offset != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "offset", r.offset, "")
+	}
+	if r.depth != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	if r.referencedByDetectionLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection__load", r.referencedByDetectionLoad, "")
+	}
+	if r.referencedByVideoLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video__load", r.referencedByVideoLoad, "")
+	}
+	if r.idEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")
+	}
+	if r.idNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__ne", r.idNe, "")
+	}
+	if r.idGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__gt", r.idGt, "")
+	}
+	if r.idGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__gte", r.idGte, "")
+	}
+	if r.idLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__lt", r.idLt, "")
+	}
+	if r.idLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__lte", r.idLte, "")
+	}
+	if r.idIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__in", r.idIn, "")
+	}
+	if r.idNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notin", r.idNotin, "")
+	}
+	if r.idContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__contains", r.idContains, "")
+	}
+	if r.idNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notcontains", r.idNotcontains, "")
+	}
+	if r.idLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__like", r.idLike, "")
+	}
+	if r.idNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notlike", r.idNotlike, "")
+	}
+	if r.idIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__ilike", r.idIlike, "")
+	}
+	if r.idNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notilike", r.idNotilike, "")
+	}
+	if r.idDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__desc", r.idDesc, "")
+	}
+	if r.idAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "id__asc", r.idAsc, "")
+	}
+	if r.createdAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__eq", r.createdAtEq, "")
+	}
+	if r.createdAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__ne", r.createdAtNe, "")
+	}
+	if r.createdAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__gt", r.createdAtGt, "")
+	}
+	if r.createdAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__gte", r.createdAtGte, "")
+	}
+	if r.createdAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__lt", r.createdAtLt, "")
+	}
+	if r.createdAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__lte", r.createdAtLte, "")
+	}
+	if r.createdAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__in", r.createdAtIn, "")
+	}
+	if r.createdAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notin", r.createdAtNotin, "")
+	}
+	if r.createdAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__contains", r.createdAtContains, "")
+	}
+	if r.createdAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notcontains", r.createdAtNotcontains, "")
+	}
+	if r.createdAtLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__like", r.createdAtLike, "")
+	}
+	if r.createdAtNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notlike", r.createdAtNotlike, "")
+	}
+	if r.createdAtIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__ilike", r.createdAtIlike, "")
+	}
+	if r.createdAtNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notilike", r.createdAtNotilike, "")
+	}
+	if r.createdAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__desc", r.createdAtDesc, "")
+	}
+	if r.createdAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__asc", r.createdAtAsc, "")
+	}
+	if r.updatedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__eq", r.updatedAtEq, "")
+	}
+	if r.updatedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__ne", r.updatedAtNe, "")
+	}
+	if r.updatedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__gt", r.updatedAtGt, "")
+	}
+	if r.updatedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__gte", r.updatedAtGte, "")
+	}
+	if r.updatedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__lt", r.updatedAtLt, "")
+	}
+	if r.updatedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__lte", r.updatedAtLte, "")
+	}
+	if r.updatedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__in", r.updatedAtIn, "")
+	}
+	if r.updatedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notin", r.updatedAtNotin, "")
+	}
+	if r.updatedAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__contains", r.updatedAtContains, "")
+	}
+	if r.updatedAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notcontains", r.updatedAtNotcontains, "")
+	}
+	if r.updatedAtLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__like", r.updatedAtLike, "")
+	}
+	if r.updatedAtNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notlike", r.updatedAtNotlike, "")
+	}
+	if r.updatedAtIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__ilike", r.updatedAtIlike, "")
+	}
+	if r.updatedAtNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notilike", r.updatedAtNotilike, "")
+	}
+	if r.updatedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__desc", r.updatedAtDesc, "")
+	}
+	if r.updatedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__asc", r.updatedAtAsc, "")
+	}
+	if r.deletedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__eq", r.deletedAtEq, "")
+	}
+	if r.deletedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__ne", r.deletedAtNe, "")
+	}
+	if r.deletedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__gt", r.deletedAtGt, "")
+	}
+	if r.deletedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__gte", r.deletedAtGte, "")
+	}
+	if r.deletedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__lt", r.deletedAtLt, "")
+	}
+	if r.deletedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__lte", r.deletedAtLte, "")
+	}
+	if r.deletedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__in", r.deletedAtIn, "")
+	}
+	if r.deletedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notin", r.deletedAtNotin, "")
+	}
+	if r.deletedAtContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__contains", r.deletedAtContains, "")
+	}
+	if r.deletedAtNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notcontains", r.deletedAtNotcontains, "")
+	}
+	if r.deletedAtLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__like", r.deletedAtLike, "")
+	}
+	if r.deletedAtNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notlike", r.deletedAtNotlike, "")
+	}
+	if r.deletedAtIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__ilike", r.deletedAtIlike, "")
+	}
+	if r.deletedAtNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notilike", r.deletedAtNotilike, "")
+	}
+	if r.deletedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__desc", r.deletedAtDesc, "")
+	}
+	if r.deletedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__asc", r.deletedAtAsc, "")
+	}
+	if r.nameEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__eq", r.nameEq, "")
+	}
+	if r.nameNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__ne", r.nameNe, "")
+	}
+	if r.nameGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__gt", r.nameGt, "")
+	}
+	if r.nameGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__gte", r.nameGte, "")
+	}
+	if r.nameLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__lt", r.nameLt, "")
+	}
+	if r.nameLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__lte", r.nameLte, "")
+	}
+	if r.nameIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__in", r.nameIn, "")
+	}
+	if r.nameNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__notin", r.nameNotin, "")
+	}
+	if r.nameContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__contains", r.nameContains, "")
+	}
+	if r.nameNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__notcontains", r.nameNotcontains, "")
+	}
+	if r.nameLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__like", r.nameLike, "")
+	}
+	if r.nameNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__notlike", r.nameNotlike, "")
+	}
+	if r.nameIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__ilike", r.nameIlike, "")
+	}
+	if r.nameNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__notilike", r.nameNotilike, "")
+	}
+	if r.nameDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__desc", r.nameDesc, "")
+	}
+	if r.nameAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "name__asc", r.nameAsc, "")
+	}
+	if r.streamUrlEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__eq", r.streamUrlEq, "")
+	}
+	if r.streamUrlNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__ne", r.streamUrlNe, "")
+	}
+	if r.streamUrlGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__gt", r.streamUrlGt, "")
+	}
+	if r.streamUrlGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__gte", r.streamUrlGte, "")
+	}
+	if r.streamUrlLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__lt", r.streamUrlLt, "")
+	}
+	if r.streamUrlLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__lte", r.streamUrlLte, "")
+	}
+	if r.streamUrlIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__in", r.streamUrlIn, "")
+	}
+	if r.streamUrlNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__notin", r.streamUrlNotin, "")
+	}
+	if r.streamUrlContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__contains", r.streamUrlContains, "")
+	}
+	if r.streamUrlNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__notcontains", r.streamUrlNotcontains, "")
+	}
+	if r.streamUrlLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__like", r.streamUrlLike, "")
+	}
+	if r.streamUrlNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__notlike", r.streamUrlNotlike, "")
+	}
+	if r.streamUrlIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__ilike", r.streamUrlIlike, "")
+	}
+	if r.streamUrlNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__notilike", r.streamUrlNotilike, "")
+	}
+	if r.streamUrlDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__desc", r.streamUrlDesc, "")
+	}
+	if r.streamUrlAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_url__asc", r.streamUrlAsc, "")
+	}
+	if r.lastSeenEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__eq", r.lastSeenEq, "")
+	}
+	if r.lastSeenNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__ne", r.lastSeenNe, "")
+	}
+	if r.lastSeenGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__gt", r.lastSeenGt, "")
+	}
+	if r.lastSeenGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__gte", r.lastSeenGte, "")
+	}
+	if r.lastSeenLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__lt", r.lastSeenLt, "")
+	}
+	if r.lastSeenLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__lte", r.lastSeenLte, "")
+	}
+	if r.lastSeenIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__in", r.lastSeenIn, "")
+	}
+	if r.lastSeenNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__notin", r.lastSeenNotin, "")
+	}
+	if r.lastSeenContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__contains", r.lastSeenContains, "")
+	}
+	if r.lastSeenNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__notcontains", r.lastSeenNotcontains, "")
+	}
+	if r.lastSeenLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__like", r.lastSeenLike, "")
+	}
+	if r.lastSeenNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__notlike", r.lastSeenNotlike, "")
+	}
+	if r.lastSeenIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__ilike", r.lastSeenIlike, "")
+	}
+	if r.lastSeenNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__notilike", r.lastSeenNotilike, "")
+	}
+	if r.lastSeenDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__desc", r.lastSeenDesc, "")
+	}
+	if r.lastSeenAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "last_seen__asc", r.lastSeenAsc, "")
+	}
+	if r.segmentProducerClaimedUntilEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__eq", r.segmentProducerClaimedUntilEq, "")
+	}
+	if r.segmentProducerClaimedUntilNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__ne", r.segmentProducerClaimedUntilNe, "")
+	}
+	if r.segmentProducerClaimedUntilGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__gt", r.segmentProducerClaimedUntilGt, "")
+	}
+	if r.segmentProducerClaimedUntilGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__gte", r.segmentProducerClaimedUntilGte, "")
+	}
+	if r.segmentProducerClaimedUntilLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__lt", r.segmentProducerClaimedUntilLt, "")
+	}
+	if r.segmentProducerClaimedUntilLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__lte", r.segmentProducerClaimedUntilLte, "")
+	}
+	if r.segmentProducerClaimedUntilIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__in", r.segmentProducerClaimedUntilIn, "")
+	}
+	if r.segmentProducerClaimedUntilNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__notin", r.segmentProducerClaimedUntilNotin, "")
+	}
+	if r.segmentProducerClaimedUntilContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__contains", r.segmentProducerClaimedUntilContains, "")
+	}
+	if r.segmentProducerClaimedUntilNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__notcontains", r.segmentProducerClaimedUntilNotcontains, "")
+	}
+	if r.segmentProducerClaimedUntilLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__like", r.segmentProducerClaimedUntilLike, "")
+	}
+	if r.segmentProducerClaimedUntilNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__notlike", r.segmentProducerClaimedUntilNotlike, "")
+	}
+	if r.segmentProducerClaimedUntilIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__ilike", r.segmentProducerClaimedUntilIlike, "")
+	}
+	if r.segmentProducerClaimedUntilNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__notilike", r.segmentProducerClaimedUntilNotilike, "")
+	}
+	if r.segmentProducerClaimedUntilDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__desc", r.segmentProducerClaimedUntilDesc, "")
+	}
+	if r.segmentProducerClaimedUntilAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "segment_producer_claimed_until__asc", r.segmentProducerClaimedUntilAsc, "")
+	}
+	if r.streamProducerClaimedUntilEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__eq", r.streamProducerClaimedUntilEq, "")
+	}
+	if r.streamProducerClaimedUntilNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__ne", r.streamProducerClaimedUntilNe, "")
+	}
+	if r.streamProducerClaimedUntilGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__gt", r.streamProducerClaimedUntilGt, "")
+	}
+	if r.streamProducerClaimedUntilGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__gte", r.streamProducerClaimedUntilGte, "")
+	}
+	if r.streamProducerClaimedUntilLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__lt", r.streamProducerClaimedUntilLt, "")
+	}
+	if r.streamProducerClaimedUntilLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__lte", r.streamProducerClaimedUntilLte, "")
+	}
+	if r.streamProducerClaimedUntilIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__in", r.streamProducerClaimedUntilIn, "")
+	}
+	if r.streamProducerClaimedUntilNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__notin", r.streamProducerClaimedUntilNotin, "")
+	}
+	if r.streamProducerClaimedUntilContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__contains", r.streamProducerClaimedUntilContains, "")
+	}
+	if r.streamProducerClaimedUntilNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__notcontains", r.streamProducerClaimedUntilNotcontains, "")
+	}
+	if r.streamProducerClaimedUntilLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__like", r.streamProducerClaimedUntilLike, "")
+	}
+	if r.streamProducerClaimedUntilNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__notlike", r.streamProducerClaimedUntilNotlike, "")
+	}
+	if r.streamProducerClaimedUntilIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__ilike", r.streamProducerClaimedUntilIlike, "")
+	}
+	if r.streamProducerClaimedUntilNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__notilike", r.streamProducerClaimedUntilNotilike, "")
+	}
+	if r.streamProducerClaimedUntilDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__desc", r.streamProducerClaimedUntilDesc, "")
+	}
+	if r.streamProducerClaimedUntilAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__asc", r.streamProducerClaimedUntilAsc, "")
+	}
+	if r.referencedByDetectionCameraIdObjectsContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__contains", r.referencedByDetectionCameraIdObjectsContains, "")
+	}
+	if r.referencedByDetectionCameraIdObjectsNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__notcontains", r.referencedByDetectionCameraIdObjectsNotcontains, "")
+	}
+	if r.referencedByDetectionCameraIdObjectsDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__desc", r.referencedByDetectionCameraIdObjectsDesc, "")
+	}
+	if r.referencedByDetectionCameraIdObjectsAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__asc", r.referencedByDetectionCameraIdObjectsAsc, "")
+	}
+	if r.referencedByVideoCameraIdObjectsContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__contains", r.referencedByVideoCameraIdObjectsContains, "")
+	}
+	if r.referencedByVideoCameraIdObjectsNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__notcontains", r.referencedByVideoCameraIdObjectsNotcontains, "")
+	}
+	if r.referencedByVideoCameraIdObjectsDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__desc", r.referencedByVideoCameraIdObjectsDesc, "")
+	}
+	if r.referencedByVideoCameraIdObjectsAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__asc", r.referencedByVideoCameraIdObjectsAsc, "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 

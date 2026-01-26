@@ -20,9 +20,7 @@ export function Video(props: VideoProps) {
     },
   });
 
-  const enrichedDetectionsRef = useRef<components["schemas"]["Detection"][]>(
-    [],
-  );
+  const enrichedDetectionsRef = useRef<components["schemas"]["Detection"][]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const readyRef = useRef(false);
 
@@ -39,9 +37,9 @@ export function Video(props: VideoProps) {
         return;
       }
 
-      if (detection.score < 0.33) {
-        return false;
-      }
+      // if (detection.score < 0.33) {
+      //   return false;
+      // }
 
       const boundingBoxPoints: Point[] = [];
       detection?.bounding_box?.forEach((point) => {
@@ -67,11 +65,7 @@ export function Video(props: VideoProps) {
 
   if (error) {
     console.warn(error);
-    return (
-      <div style={{ fontWeight: "bold", color: "red" }}>
-        ERROR: {JSON.stringify(error)}
-      </div>
-    );
+    return <div style={{ fontWeight: "bold", color: "red" }}>ERROR: {JSON.stringify(error)}</div>;
   }
 
   if (isLoading) {
@@ -115,13 +109,7 @@ export function Video(props: VideoProps) {
         onReady={() => {
           readyRef.current = true;
         }}
-        onTimeUpdate={(
-          left: number,
-          top: number,
-          width: number,
-          height: number,
-          relativeTimeMilliseconds: number,
-        ) => {
+        onTimeUpdate={(left: number, top: number, width: number, height: number, relativeTimeMilliseconds: number) => {
           if (!canvasRef.current) {
             return;
           }
@@ -155,16 +143,13 @@ export function Video(props: VideoProps) {
           const scaleX = width / 3840;
           const scaleY = height / 2160;
 
-          const absoluteTimeMilliseconds =
-            absoluteTimeMillisecondsRef + relativeTimeMilliseconds;
+          const absoluteTimeMilliseconds = absoluteTimeMillisecondsRef + relativeTimeMilliseconds;
 
           const enrichedDetections = enrichedDetectionsRef.current || [];
           enrichedDetections.forEach((detection: Detection) => {
-            const deltaMilliseconds =
-              absoluteTimeMilliseconds -
-              new Date(detection.seen_at || "").getTime();
+            const deltaMilliseconds = absoluteTimeMilliseconds - new Date(detection.seen_at || "").getTime();
 
-            if (deltaMilliseconds < 0 || deltaMilliseconds > 5_000) {
+            if (deltaMilliseconds < 0 || deltaMilliseconds > 1_00) {
               return;
             }
 
@@ -202,12 +187,7 @@ export function Video(props: VideoProps) {
             const centroidX = centroid.X * scaleX;
             const centroidY = centroid.Y * scaleY;
 
-            const grad = ctx.createLinearGradient(
-              topLeftX,
-              topLeftY,
-              bottomRightX,
-              bottomRightY,
-            );
+            const grad = ctx.createLinearGradient(topLeftX, topLeftY, bottomRightX, bottomRightY);
             grad.addColorStop(0.0, `rgba(255, 31, 31, 1.0)`);
             grad.addColorStop(0.2, `rgba(255, 255, 31, 1.0)`);
             grad.addColorStop(0.6, `rgba(31, 255, 31, 1.0)`);
@@ -230,12 +210,7 @@ export function Video(props: VideoProps) {
                 bottomRightY - textOffsetY,
               );
 
-              ctx.strokeRect(
-                topLeftX,
-                topLeftY,
-                Math.abs(bottomRightX - topLeftX),
-                Math.abs(bottomRightY - topLeftY),
-              );
+              ctx.strokeRect(topLeftX, topLeftY, Math.abs(bottomRightX - topLeftX), Math.abs(bottomRightY - topLeftY));
             }
 
             const color = (1.0 - deltaMilliseconds / 5_000) * 255;

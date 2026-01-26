@@ -1,0 +1,5 @@
+docker/object-detector-v2/Video_Codec_SDK_13.0.19.zip filter=lfs diff=lfs merge=lfs -text
+object_detector_v2/yolov7-tiny.weights filter=lfs diff=lfs merge=lfs -text
+object_detector_v2/yolov7.weights filter=lfs diff=lfs merge=lfs -text
+object_detector_v2/people-r-people.weights filter=lfs diff=lfs merge=lfs -text
+object_detector_v2/yolov4-tiny.weights filter=lfs diff=lfs merge=lfs -text

@@ -1,11 +1,20 @@
 ARG BASE_IMAGE
 FROM ${BASE_IMAGE}
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
+
 RUN gpg --keyserver keyserver.ubuntu.com --recv-keys A4B469963BF863CC && \
     gpg --export --armor A4B469963BF863CC | apt-key add - || true
 
 RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 curl \
-    clang pkg-config
+    clang pkg-config clang libclang-dev libavfilter-dev libavdevice-dev
+
+RUN apt-get update && apt-get install -y lsb-release wget software-properties-common gnupg
+RUN wget https://apt.llvm.org/llvm.sh
+RUN chmod u+x llvm.sh
+RUN ./llvm.sh 20
+RUN apt-get update && apt-get install -y
 
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install.sh && \
     chmod +x install.sh && \
@@ -22,12 +31,6 @@ COPY ./object_detector_v2/.cargo /srv/
 RUN mkdir -p /srv/src
 RUN touch /srv/src/main.rs
 RUN --mount=type=cache,target=/usr/local/cargo/registry cargo fetch
-
-ENV DEBIAN_FRONTEND=noninteractive
-ENV TZ=Etc/UTC
-
-RUN apt-get install -y clang libclang-dev
-RUN apt-get install -y libavfilter-dev libavdevice-dev
 
 RUN ln -s /usr/local/cuda-11.8 /usr/local/cuda
 

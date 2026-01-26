@@ -83,15 +83,17 @@ def do(
                 _request_timeout=10,
             )
 
-            for detection in detections_response.objects or []:
-                if not detection.id:
-                    continue
+            _ = detections_response
 
-                print(f"deleting old detection {detection.id}")
-                detection_api.delete_detection(
-                    detection.id,
-                    _request_timeout=10,
-                )
+            # for detection in detections_response.objects or []:
+            #     if not detection.id:
+            #         continue
+
+            #     print(f"deleting old detection {detection.id}")
+            #     detection_api.delete_detection(
+            #         detection.id,
+            #         _request_timeout=10,
+            #     )
 
         if video.file_name is None:
             continue
@@ -247,20 +249,25 @@ def do(
                         average_score = sum(scores) / len(scores) if scores else 0.0
                         frame_count = len(these_detections)
 
-                        # TODO: 5 frames at a stride of 4 is 5 seconds
-                        if frame_count < 5:
-                            continue
-
-                        # TODO: (aggregate) confidence limit at 0.5
-                        if average_score < 0.5:
-                            continue
-
                         weighted_score = (
                             ((average_score * frame_count) / float(handled_frame_count))
                             if handled_frame_count != 0
                             else 0.0
                         )
 
+                        item = (weighted_score, average_score, frame_count)
+
+                        # TODO: 5 frames at a stride of 4 is 5 seconds
+                        if frame_count < 5:
+                            print(f"low frames: {class_name} {item}")
+                            continue
+
+                        # TODO: (aggregate) confidence limit at 0.5
+                        if weighted_score < 0.5:
+                            print(f"low score : {class_name} {item}")
+                            continue
+
+                        print(f"keeping   : {class_name} {item}")
                         detection_summary_by_class_name[class_name] = (weighted_score, average_score, frame_count)
 
                     raw_detection_summary = sorted(
@@ -279,9 +286,6 @@ def do(
                             for (class_name, (weighted_score, average_score, frame_count)) in raw_detection_summary
                         ]
                     )
-
-                    for item in detection_summary:
-                        print(item)
 
                 before_request = datetime.datetime.now()
 

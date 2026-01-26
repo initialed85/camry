@@ -1,0 +1,31 @@
+#!/bin/bash
+
+set -e
+
+cmake -DCMAKE_BUILD_TYPE=Release \
+	-DCMAKE_INSTALL_PREFIX=/usr/local \
+	-DOPENCV_EXTRA_MODULES_PATH=/srv/opencv_contrib/modules \
+	-DWITH_CUDA=ON \
+	-DWITH_CUDNN=ON \
+	-DCUDA_ARCH_BIN="7.5" \
+	-DCUDA_ARCH_PTX="7.5" \
+	-DWITH_CUBLAS=ON \
+	-DENABLE_FAST_MATH=ON \
+	-DCUDA_FAST_MATH=ON \
+	-DWITH_OPENEXR=OFF \
+	-DBUILD_opencv_dnn=ON \
+	-DOPENCV_DNN_CUDA=ON \
+	-DBUILD_EXAMPLES=OFF \
+	-DBUILD_TESTS=OFF \
+	-DBUILD_PERF_TESTS=OFF \
+	-DWITH_QT=OFF \
+	-DWITH_GTK=ON \
+	-DWITH_OPENGL=ON \
+	-DWITH_FFMPEG=ON \
+	-DWITH_GSTREAMER=ON \
+	-DWITH_V4L=ON \
+	-DWITH_LIBV4L=ON \
+	-DBUILD_opencv_python3=ON \
+	-DPYTHON3_EXECUTABLE=/usr/bin/python3 \
+	-DCUDA_CUDA_LIBRARY=/usr/local/cuda-13.1/targets/x86_64-linux/lib/stubs/libcuda.so \
+	..
