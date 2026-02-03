@@ -1,43 +1,38 @@
-FROM ubuntu:24.04
+FROM ubuntu:24.04 AS builder
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV TZ=Etc/UTC
 
-RUN apt-get update && apt-get install -y git clang-20 build-essential wget cmake
+RUN apt-get update && apt-get install -y \
+    git clang-20 build-essential wget cmake python3 python3-dev python3-pip \
+    nasm libblas-dev liblapack-dev gfortran libavfilter-dev zlib1g unzip curl \
+    libssl-dev pkg-config libavdevice-dev
+
+RUN python3 -m pip install --break-system-packages numpy
+
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install.sh && \
+    chmod +x install.sh && \
+    ./install.sh -y && rm -frv install.sh
+ENV PATH=${PATH}:/root/.cargo/bin/
+RUN rustup update
 
 WORKDIR /srv/cuda-toolkit
-
 RUN wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/cuda-ubuntu2404.pin
-
 RUN mv cuda-ubuntu2404.pin /etc/apt/preferences.d/cuda-repository-pin-600
-
 RUN wget https://developer.download.nvidia.com/compute/cuda/13.1.0/local_installers/cuda-repo-ubuntu2404-13-1-local_13.1.0-590.44.01-1_amd64.deb
-
 RUN dpkg -i cuda-repo-ubuntu2404-13-1-local_13.1.0-590.44.01-1_amd64.deb
-
 RUN ldconfig
-
 RUN cp /var/cuda-repo-ubuntu2404-13-1-local/cuda-*-keyring.gpg /usr/share/keyrings/
-
 RUN apt-get update && apt-get -y install cuda-toolkit-13-1
+RUN ln -s /usr/local/cuda-11.8 /usr/local/cuda
 
 WORKDIR /srv/cudnn
-
 RUN wget https://developer.download.nvidia.com/compute/cudnn/9.17.0/local_installers/cudnn-local-repo-ubuntu2404-9.17.0_1.0-1_amd64.deb
-
 RUN dpkg -i cudnn-local-repo-ubuntu2404-9.17.0_1.0-1_amd64.deb
-
 RUN cp /var/cudnn-local-repo-ubuntu2404-9.17.0/cudnn-*-keyring.gpg /usr/share/keyrings/
-
 RUN apt-get update && apt-get install -y libcudnn9-cuda-13 libcudnn9-dev-cuda-13 libcudnn9-headers-cuda-13 libcudnn9-samples libcudnn9-static-cuda-13
-
 RUN ldconfig
-
 WORKDIR /srv/
-
-RUN git clone https://github.com/opencv/opencv_contrib.git
-
-RUN git clone https://github.com/opencv/opencv.git
 
 ENV LD_LIBRARY_PATH=
 ENV CUDA_HOME=/usr/local/cuda-13.1
@@ -46,77 +41,41 @@ ENV PATH=${CUDA_HOME}/bin:${PATH}
 ENV CUDNN_HOME=/usr/
 ENV CUDNN_INCLUDE_DIR=${CUDNN_HOME}/include/x86_64-linux-gnu
 ENV CUDNN_LIBRARY=${CUDNN_HOME}/lib/x86_64-linux-gnu
-
+RUN git clone https://github.com/opencv/opencv_contrib.git
+RUN git clone https://github.com/opencv/opencv.git
 WORKDIR /srv/opencv/build
-
 COPY build.sh ./build.sh
-
-RUN apt-get install -y python3 python3-dev python3-pip
-
-RUN python3 -m pip install --break-system-packages numpy
-
-RUN apt-get install -y nasm libblas-dev liblapack-dev gfortran
-
-RUN apt-get install -y libavfilter-dev zlib1g
-
 RUN apt-get install -y cudnn9-cuda-13-1 libcudnn9-cuda-13 libcudnn9-dev-cuda-13 libcudnn9-headers-cuda-13
-
 RUN ldconfig
 
 WORKDIR /srv/video-codec-sdk
-
 COPY docker/object-detector-v2/Video_Codec_SDK_13.0.19.zip .
-
-RUN apt-get install -y unzip
-
 RUN unzip Video_Codec_SDK_13.0.19.zip
-
 RUN mv -fv Video_Codec_SDK_13.0.19 /usr/src/
-
 WORKDIR /usr/src/Video_Codec_SDK_13.0.19/Lib/Interface
-
 RUN cp -fv /usr/src/Video_Codec_SDK_13.0.19/Interface/* /usr/include/x86_64-linux-gnu/
 
 WORKDIR /srv/opencv/build
-
 COPY docker/object-detector-v2/build.sh ./build.sh
-
 RUN ./build.sh
-
 RUN make -j $(nproc)
-
 RUN make install
-
 RUN ldconfig
 
-RUN apt-get install -y curl
-
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > install.sh && \
-    chmod +x install.sh && \
-    ./install.sh -y && rm -frv install.sh
-ENV PATH=${PATH}:/root/.cargo/bin/
-RUN rustup update
-
 WORKDIR /srv/object_detector_v2/
-
 COPY ./object_detector_v2/Cargo.toml /srv/object_detector_v2/
 COPY ./object_detector_v2/Cargo.lock /srv/object_detector_v2/
 COPY ./object_detector_v2/.cargo /srv/object_detector_v2/
-
-RUN apt-get install -y libssl-dev
-
-RUN apt-get install -y pkg-config
-
 RUN mkdir -p /srv/object_detector_v2/src
 RUN touch /srv/object_detector_v2/src/main.rs
 RUN --mount=type=cache,target=/usr/local/cargo/registry cargo fetch
-
-RUN ln -s /usr/local/cuda-11.8 /usr/local/cuda
-
-RUN apt-get install -y libavdevice-dev
-
 COPY ./object_detector_v2/ /srv/object_detector_v2/
 RUN --mount=type=cache,target=/usr/local/cargo/registry cargo build --release
+RUN mv -f /srv/object_detector_v2/target/release/object-detector /object-detector
+
+FROM scratch
+
+COPY --link --from=builder / /
 
 ENV SOURCE_PATH=/srv/media
 
