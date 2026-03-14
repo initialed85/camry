@@ -41,4 +41,4 @@ docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-object
 # docker image push initialed85/camry-object-detector-v2:latest
 # docker image push initialed85/camry-object-detector-v2:sm30
 # docker image push initialed85/camry-frontend:latest
-# docker image push initialed85/camry-object-detector-v2:new
+docker image push initialed85/camry-object-detector-v2:new

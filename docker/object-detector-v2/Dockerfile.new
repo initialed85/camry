@@ -73,11 +73,42 @@ COPY ./object_detector_v2/ /srv/object_detector_v2/
 RUN --mount=type=cache,target=/usr/local/cargo/registry cargo build --release
 RUN mv -f /srv/object_detector_v2/target/release/object-detector /object-detector
 
+RUN rm -fr /srv/
+RUN apt-get purge -y --auto-remove
+RUN apt-get autoremove -y
+RUN rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
+RUN rm -fr /root/
+RUN mkdir -p /root/
+RUN rm -rf /var/cudnn-local-repo-ubuntu2404-9.17.0
+RUN rm -rf /var/cuda-repo-ubuntu2404-13-1-local
+RUN rm -rf /etc/apt/sources.list.d/cudnn-local-ubuntu2404-9.17.0.list
+RUN rm -rf /etc/apt/sources.list.d/cuda-ubuntu2404-13-1-local.list
+
+WORKDIR /srv/
+RUN mv -f /object-detector /srv/
+COPY ./object_detector_v2/people-r-people.cfg /srv/
+COPY ./object_detector_v2/people-r-people.weights /srv/
+COPY ./object_detector_v2/yolov4-tiny.cfg /srv/
+COPY ./object_detector_v2/yolov4-tiny.weights /srv/
+COPY ./object_detector_v2/yolov7.cfg /srv/
+COPY ./object_detector_v2/yolov7-tiny.cfg /srv/
+COPY ./object_detector_v2/yolov7-tiny.weights /srv/
+COPY ./object_detector_v2/yolov7.weights /srv/
+COPY ./object_detector_v2/coco.names /srv/
+
 FROM scratch
 
 COPY --link --from=builder / /
 
+ENV DEBIAN_FRONTEND=noninteractive
+ENV TZ=Etc/UTC
 ENV SOURCE_PATH=/srv/media
 
-ENTRYPOINT [ "target/release/object-detector" ]
+RUN apt-get update && \
+    apt-get install -y heaptrack && \
+    rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
+
+WORKDIR /srv/
+
+ENTRYPOINT [ "/srv/object-detector" ]
 CMD []

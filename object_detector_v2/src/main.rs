@@ -160,17 +160,6 @@ fn main() -> Result<()> {
 
     model.set_input_params(scale, size, mean, swap_rb, crop)?;
 
-    let mut tracker = Sort::new(
-        1,
-        BBOX_HISTORY,
-        MAX_IDLE_EPOCHS,
-        IoU(IOU_THRESHOLD),
-        SORT_CONF_THRESHOLD,
-        None,
-    );
-
-    let mut total_boxes = 0;
-
     loop {
         let file_before_all = Instant::now();
 
@@ -334,8 +323,6 @@ fn main() -> Result<()> {
 
         let mut frame_index = 0;
         let mut handled_frame_count = 0;
-        let _rgb_frame = ffmpeg::frame::Video::empty();
-        let mut rgb_frame_scaled = ffmpeg::frame::Video::empty();
 
         let vid_startup_after = Instant::now();
         vid_startup_duration.add_assign(vid_startup_after - vid_startup_before);
@@ -346,6 +333,17 @@ fn main() -> Result<()> {
 
         let tracks_by_id: Arc<Mutex<HashMap<u64, Vec<SortTrack>>>> =
             Arc::new(Mutex::new(HashMap::new()));
+
+        let mut tracker = Sort::new(
+            1,
+            BBOX_HISTORY,
+            MAX_IDLE_EPOCHS,
+            IoU(IOU_THRESHOLD),
+            SORT_CONF_THRESHOLD,
+            None,
+        );
+
+        let mut total_boxes = 0;
 
         let mut receive_and_process_decoded_frames =
             |decoder: &mut ffmpeg::decoder::Video| -> Result<()> {
@@ -368,6 +366,7 @@ fn main() -> Result<()> {
 
                         let before = Instant::now();
 
+                        let mut rgb_frame_scaled = ffmpeg::frame::Video::empty();
                         scaler.run(&decoded, &mut rgb_frame_scaled)?;
 
                         let after = Instant::now();
@@ -620,99 +619,6 @@ fn main() -> Result<()> {
                     detections.push(detection);
                 }
             }
-
-            // for (i, bbox) in frame_task.inferencing_bboxes.iter().enumerate() {
-            //     let tl = bbox.tl();
-            //     let br = bbox.br();
-
-            //     let width = bbox.width;
-            //     let height = bbox.height;
-
-            //     let center_x = tl.x + (width / 2);
-            //     let center_y = tl.y + (height / 2);
-
-            //     let centroid = DetectionCentroid {
-            //         x: Some(center_x.into()),
-            //         y: Some(center_y.into()),
-            //     };
-
-            //     // closed polygon for postgres
-            //     let bounding_box: Vec<DetectionCentroid> = vec![
-            //         // top left
-            //         DetectionCentroid {
-            //             x: Some(tl.x.into()),
-            //             y: Some(tl.y.into()),
-            //         },
-            //         // top right
-            //         DetectionCentroid {
-            //             x: Some(br.x.into()),
-            //             y: Some(tl.y.into()),
-            //         },
-            //         // bottom right
-            //         DetectionCentroid {
-            //             x: Some(br.x.into()),
-            //             y: Some(br.y.into()),
-            //         },
-            //         // bottom left
-            //         DetectionCentroid {
-            //             x: Some(tl.x.into()),
-            //             y: Some(br.y.into()),
-            //         },
-            //         // top left again
-            //         DetectionCentroid {
-            //             x: Some(tl.x.into()),
-            //             y: Some(tl.y.into()),
-            //         },
-            //     ];
-
-            //     let class_id = match frame_task.class_ids.get(i) {
-            //         Ok(class_id) => Some(class_id as i64),
-            //         Err(_) => None,
-            //     };
-
-            //     let confidence = match frame_task.confidences.get(i) {
-            //         Ok(confidence) => Some(confidence as f64),
-            //         Err(_) => None,
-            //     };
-
-            //     let mut class_name = None;
-
-            //     if let Some(class_id) = class_id
-            //         && let Some(possible_class_name) = name_by_class_id.get(&class_id)
-            //     {
-            //         class_name = Some(possible_class_name.clone());
-            //     }
-
-            //     {
-            //         let class_name = class_name.clone().unwrap();
-            //         let class_id = class_id.unwrap();
-            //         let confidence = confidence.unwrap();
-
-            //         let tlx = tl.x;
-            //         let tly = tl.y;
-
-            //         let brx = br.x;
-            //         let bry = br.y;
-
-            //         println!(
-            //             "{class_name} ({class_id}) @ {confidence} [({tlx}, {tly}), ({brx}, {bry})] ({center_x}, {center_y})"
-            //         );
-            //     }
-
-            //     let detection = Detection {
-            //         bounding_box: Some(bounding_box),
-            //         camera_id: video.camera_id,
-            //         centroid: Some(centroid),
-            //         class_id,
-            //         class_name,
-            //         score: confidence,
-            //         seen_at: Some(frame_task.timestamp),
-            //         video_id: video.id,
-            //         ..Default::default()
-            //     };
-
-            //     detections.push(detection);
-            // }
         }
 
         let mut detections_by_class_name = HashMap::<String, Vec<Detection>>::new();
