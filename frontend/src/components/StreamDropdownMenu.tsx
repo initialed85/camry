@@ -35,7 +35,7 @@ export default function StreamDropdownMenu(props: StreamDropdownMenuProps) {
               key={`stream-dropdown-menu-item-${camera.id}`}
               onClick={(event) => {
                 window.open(
-                  `https://camry-stream.initialed85.cc/streams/${camera.id}`,
+                  `https://camry-stream.dev.initialed85.cc/streams/${camera.id}`,
                   "_blank",
                 );
               }}

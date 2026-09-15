@@ -6,7 +6,7 @@ module.exports = function (app) {
     createProxyMiddleware({
       target:
         process.env.REMOTE === "1"
-          ? "https://camry.initialed85.cc/media"
+          ? "https://camry.dev.initialed85.cc/media"
           : "http://localhost:6060",
       changeOrigin: true,
     }),
@@ -17,7 +17,7 @@ module.exports = function (app) {
     createProxyMiddleware({
       target:
         process.env.REMOTE === "1"
-          ? "https://camry.initialed85.cc/api"
+          ? "https://camry.dev.initialed85.cc/api"
           : "http://localhost:7070/api",
       changeOrigin: true,
     }),
