@@ -279,7 +279,7 @@ def do(
 
                         item = (weighted_score, average_score, frame_count)
 
-                        # TODO: 5 frames at a stride of 4 is 5 seconds
+                        # At 25 fps, five samples at a stride of four span about 0.64 seconds.
                         if frame_count < 5:
                             print(f"low frames: {class_name} {item}")
                             continue

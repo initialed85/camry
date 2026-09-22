@@ -293,19 +293,50 @@ export function Video(props: VideoProps) {
           const detectionVideoStartedAt = detectionVideoStartedAtRef.current;
 
           const enrichedDetections = enrichedDetectionsRef.current || [];
+
+          // Inference intentionally samples every fourth source frame. Pick
+          // the nearest sampled timestamp before drawing so adjacent samples
+          // do not produce ghosted boxes/centroids at the same playback time.
+          // All detections from one sampled frame share its timestamp, so this
+          // still preserves multiple objects in that frame.
+          let closestDetectionTimestamp: number | undefined;
+          let closestDetectionAge = Number.POSITIVE_INFINITY;
           enrichedDetections.forEach((detection: Detection) => {
             const detectionTimestamp = Date.parse(detection.seen_at || "");
             const detectionRelativeTimeMilliseconds =
               detectionTimestamp - detectionVideoStartedAt;
             const deltaMilliseconds =
               relativeTimeMilliseconds - detectionRelativeTimeMilliseconds;
+            const age = Math.abs(deltaMilliseconds);
 
             if (
-              !Number.isFinite(deltaMilliseconds) ||
-              Math.abs(deltaMilliseconds) > detectionMatchWindowMilliseconds
+              Number.isFinite(deltaMilliseconds) &&
+              age <= detectionMatchWindowMilliseconds &&
+              age < closestDetectionAge
+            ) {
+              closestDetectionTimestamp = detectionTimestamp;
+              closestDetectionAge = age;
+            }
+          });
+
+          if (closestDetectionTimestamp === undefined) {
+            return;
+          }
+          const sampledTimestamp = closestDetectionTimestamp;
+
+          enrichedDetections.forEach((detection: Detection) => {
+            const detectionTimestamp = Date.parse(detection.seen_at || "");
+            if (
+              !Number.isFinite(detectionTimestamp) ||
+              Math.abs(detectionTimestamp - sampledTimestamp) > 2
             ) {
               return;
             }
+
+            const detectionRelativeTimeMilliseconds =
+              detectionTimestamp - detectionVideoStartedAt;
+            const deltaMilliseconds =
+              relativeTimeMilliseconds - detectionRelativeTimeMilliseconds;
 
             const topLeft = detection.bounding_box?.[0];
             const bottomRight = detection.bounding_box?.[2];
