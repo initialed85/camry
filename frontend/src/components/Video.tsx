@@ -288,8 +288,14 @@ export function Video(props: VideoProps) {
           ctx.clearRect(0, 0, width, height);
 
           const frameDimensions = detectionFrameDimensionsRef.current;
-          const scaleX = width / frameDimensions.width;
-          const scaleY = height / frameDimensions.height;
+          const coordinateScaleX = width / frameDimensions.width;
+          const coordinateScaleY = height / frameDimensions.height;
+
+          // Keep the visual weight from the original high-res overlay. The
+          // coordinate transform above is for low-res detector coordinates;
+          // stroke/font/radius sizing must not be multiplied by that factor.
+          const visualScaleX = width / fallbackFrameDimensions.width;
+          const visualScaleY = height / fallbackFrameDimensions.height;
           const detectionVideoStartedAt = detectionVideoStartedAtRef.current;
 
           const enrichedDetections = enrichedDetectionsRef.current || [];
@@ -333,11 +339,6 @@ export function Video(props: VideoProps) {
               return;
             }
 
-            const detectionRelativeTimeMilliseconds =
-              detectionTimestamp - detectionVideoStartedAt;
-            const deltaMilliseconds =
-              relativeTimeMilliseconds - detectionRelativeTimeMilliseconds;
-
             const topLeft = detection.bounding_box?.[0];
             const bottomRight = detection.bounding_box?.[2];
             const centroid = detection.centroid;
@@ -358,19 +359,19 @@ export function Video(props: VideoProps) {
               return;
             }
 
-            const lineWidth = 4 * scaleX;
-            const textOffsetX = 6 * scaleX;
-            const textOffsetY = 6 * scaleY;
-            const centroidRadius = 9 * scaleX;
+            const lineWidth = 4 * visualScaleX;
+            const textOffsetX = 6 * visualScaleX;
+            const textOffsetY = 6 * visualScaleY;
+            const centroidRadius = 9 * visualScaleX;
 
-            const topLeftX = topLeft.X * scaleX;
-            const topLeftY = topLeft.Y * scaleY;
+            const topLeftX = topLeft.X * coordinateScaleX;
+            const topLeftY = topLeft.Y * coordinateScaleY;
 
-            const bottomRightX = bottomRight.X * scaleX;
-            const bottomRightY = bottomRight.Y * scaleY;
+            const bottomRightX = bottomRight.X * coordinateScaleX;
+            const bottomRightY = bottomRight.Y * coordinateScaleY;
 
-            const centroidX = centroid.X * scaleX;
-            const centroidY = centroid.Y * scaleY;
+            const centroidX = centroid.X * coordinateScaleX;
+            const centroidY = centroid.Y * coordinateScaleY;
 
             const grad = ctx.createLinearGradient(
               topLeftX,
@@ -388,7 +389,7 @@ export function Video(props: VideoProps) {
             ctx.strokeStyle = grad;
 
             ctx.fillStyle = `rgba(255, 255, 255, 0.99)`;
-            ctx.font = `${32 * scaleX}px monospace`;
+            ctx.font = `${32 * visualScaleX}px monospace`;
             ctx.textAlign = "left";
             ctx.textRendering = "optimizeLegibility";
 
@@ -405,11 +406,10 @@ export function Video(props: VideoProps) {
               Math.abs(bottomRightY - topLeftY),
             );
 
-            const age = Math.abs(deltaMilliseconds);
-            const alpha = 1.0 - age / detectionMatchWindowMilliseconds;
-            const color = alpha * 255;
-
-            ctx.strokeStyle = `rgba(${color}, ${color}, ${color}, ${alpha})`;
+            // Keep the centroid steady while this sampled detection is alive;
+            // its position is already transformed with the same low-res ->
+            // high-res coordinate scale as the bounding box.
+            ctx.strokeStyle = `rgba(255, 255, 255, 0.99)`;
             ctx.beginPath();
             ctx.arc(centroidX, centroidY, centroidRadius, 0, Math.PI * 2);
             ctx.stroke();
