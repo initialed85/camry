@@ -30,6 +30,7 @@ type Video struct {
 	FileName *string `json:"file_name,omitempty"`
 	FileSize *float64 `json:"file_size,omitempty"`
 	Id *string `json:"id,omitempty"`
+	IsLowRes *bool `json:"is_low_res,omitempty"`
 	ObjectDetectorClaimedUntil *time.Time `json:"object_detector_claimed_until,omitempty"`
 	ObjectTrackerClaimedUntil *time.Time `json:"object_tracker_claimed_until,omitempty"`
 	ReferencedByDetectionVideoIdObjects []Detection `json:"referenced_by_detection_video_id_objects,omitempty"`
@@ -377,6 +378,38 @@ func (o *Video) SetId(v string) {
 	o.Id = &v
 }
 
+// GetIsLowRes returns the IsLowRes field value if set, zero value otherwise.
+func (o *Video) GetIsLowRes() bool {
+	if o == nil || IsNil(o.IsLowRes) {
+		var ret bool
+		return ret
+	}
+	return *o.IsLowRes
+}
+
+// GetIsLowResOk returns a tuple with the IsLowRes field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Video) GetIsLowResOk() (*bool, bool) {
+	if o == nil || IsNil(o.IsLowRes) {
+		return nil, false
+	}
+	return o.IsLowRes, true
+}
+
+// HasIsLowRes returns a boolean if a field has been set.
+func (o *Video) HasIsLowRes() bool {
+	if o != nil && !IsNil(o.IsLowRes) {
+		return true
+	}
+
+	return false
+}
+
+// SetIsLowRes gets a reference to the given bool and assigns it to the IsLowRes field.
+func (o *Video) SetIsLowRes(v bool) {
+	o.IsLowRes = &v
+}
+
 // GetObjectDetectorClaimedUntil returns the ObjectDetectorClaimedUntil field value if set, zero value otherwise.
 func (o *Video) GetObjectDetectorClaimedUntil() time.Time {
 	if o == nil || IsNil(o.ObjectDetectorClaimedUntil) {
@@ -640,6 +673,9 @@ func (o Video) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Id) {
 		toSerialize["id"] = o.Id
+	}
+	if !IsNil(o.IsLowRes) {
+		toSerialize["is_low_res"] = o.IsLowRes
 	}
 	if !IsNil(o.ObjectDetectorClaimedUntil) {
 		toSerialize["object_detector_claimed_until"] = o.ObjectDetectorClaimedUntil

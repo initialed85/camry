@@ -442,6 +442,26 @@ var tableByNameAsJSON = []byte(`{
         "query_type_template": "time.Time",
         "stream_type_template": "time.Time",
         "type_template": "time.Time"
+      },
+      {
+        "column": "low_res_stream_url",
+        "datatype": "text",
+        "table": "camera",
+        "pos": 10,
+        "typeid": "25",
+        "typelen": -1,
+        "typemod": -1,
+        "notnull": false,
+        "hasdefault": false,
+        "hasmissing": false,
+        "ispkey": false,
+        "ftable": null,
+        "fcolumn": null,
+        "parent_id": "20314",
+        "zero_type": "",
+        "query_type_template": "string",
+        "stream_type_template": "string",
+        "type_template": "string"
       }
     ]
   },
@@ -1067,6 +1087,26 @@ var tableByNameAsJSON = []byte(`{
         "query_type_template": "any",
         "stream_type_template": "any",
         "type_template": "any"
+      },
+      {
+        "column": "is_low_res",
+        "datatype": "boolean",
+        "table": "video",
+        "pos": 16,
+        "typeid": "16",
+        "typelen": 1,
+        "typemod": -1,
+        "notnull": true,
+        "hasdefault": true,
+        "hasmissing": true,
+        "ispkey": false,
+        "ftable": null,
+        "fcolumn": null,
+        "parent_id": "20331",
+        "zero_type": false,
+        "query_type_template": "bool",
+        "stream_type_template": "bool",
+        "type_template": "bool"
       }
     ]
   },

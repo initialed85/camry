@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/netip"
 	"slices"
+	"sort"
 	"strings"
 	"time"
 
@@ -47,6 +48,7 @@ type Video struct {
 	CameraID                            uuid.UUID      `json:"camera_id"`
 	CameraIDObject                      *Camera        `json:"camera_id_object"`
 	DetectionSummary                    any            `json:"detection_summary"`
+	IsLowRes                            bool           `json:"is_low_res"`
 	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
 }
 
@@ -72,6 +74,7 @@ var (
 	VideoTableObjectTrackerClaimedUntilColumn  = "object_tracker_claimed_until"
 	VideoTableCameraIDColumn                   = "camera_id"
 	VideoTableDetectionSummaryColumn           = "detection_summary"
+	VideoTableIsLowResColumn                   = "is_low_res"
 )
 
 var (
@@ -90,6 +93,7 @@ var (
 	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast  = `"object_tracker_claimed_until" AS object_tracker_claimed_until`
 	VideoTableCameraIDColumnWithTypeCast                   = `"camera_id" AS camera_id`
 	VideoTableDetectionSummaryColumnWithTypeCast           = `"detection_summary" AS detection_summary`
+	VideoTableIsLowResColumnWithTypeCast                   = `"is_low_res" AS is_low_res`
 )
 
 var VideoTableColumns = []string{
@@ -108,6 +112,7 @@ var VideoTableColumns = []string{
 	VideoTableObjectTrackerClaimedUntilColumn,
 	VideoTableCameraIDColumn,
 	VideoTableDetectionSummaryColumn,
+	VideoTableIsLowResColumn,
 }
 
 var VideoTableColumnsWithTypeCasts = []string{
@@ -126,6 +131,7 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableObjectTrackerClaimedUntilColumnWithTypeCast,
 	VideoTableCameraIDColumnWithTypeCast,
 	VideoTableDetectionSummaryColumnWithTypeCast,
+	VideoTableIsLowResColumnWithTypeCast,
 }
 
 var VideoIntrospectedTable *introspect.Table
@@ -501,6 +507,25 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.DetectionSummary = temp2
 
+		case "is_low_res":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseBool(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(bool)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuis_low_res.UUID", temp1))
+				}
+			}
+
+			m.IsLowRes = temp2
+
 		}
 	}
 
@@ -562,6 +587,7 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	m.CameraID = o.CameraID
 	m.CameraIDObject = o.CameraIDObject
 	m.DetectionSummary = o.DetectionSummary
+	m.IsLowRes = o.IsLowRes
 	m.ReferencedByDetectionVideoIDObjects = o.ReferencedByDetectionVideoIDObjects
 
 	return nil
@@ -731,6 +757,17 @@ func (m *Video) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, forc
 		v, err := types.FormatJSON(m.DetectionSummary)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.DetectionSummary; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroBool(m.IsLowRes) || slices.Contains(forceSetValuesForFields, VideoTableIsLowResColumn) || isRequired(VideoTableColumnLookup, VideoTableIsLowResColumn) {
+		columns = append(columns, VideoTableIsLowResColumn)
+
+		v, err := types.FormatBool(m.IsLowRes)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.IsLowRes; %v", err)
 		}
 
 		values = append(values, v)
@@ -954,6 +991,17 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		v, err := types.FormatJSON(m.DetectionSummary)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.DetectionSummary; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroBool(m.IsLowRes) || slices.Contains(forceSetValuesForFields, VideoTableIsLowResColumn) {
+		columns = append(columns, VideoTableIsLowResColumn)
+
+		v, err := types.FormatBool(m.IsLowRes)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.IsLowRes; %v", err)
 		}
 
 		values = append(values, v)
@@ -2572,4 +2620,205 @@ func init() {
 		"/videos",
 		MutateRouterForVideo,
 	)
+}
+func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
+	var columnName string
+	switch fieldName {
+	case "id":
+		columnName = VideoTableIDColumn
+	case "created_at":
+		columnName = VideoTableCreatedAtColumn
+	case "updated_at":
+		columnName = VideoTableUpdatedAtColumn
+	case "deleted_at":
+		columnName = VideoTableDeletedAtColumn
+	case "file_name":
+		columnName = VideoTableFileNameColumn
+	case "started_at":
+		columnName = VideoTableStartedAtColumn
+	case "ended_at":
+		columnName = VideoTableEndedAtColumn
+	case "duration":
+		columnName = VideoTableDurationColumn
+	case "file_size":
+		columnName = VideoTableFileSizeColumn
+	case "thumbnail_name":
+		columnName = VideoTableThumbnailNameColumn
+	case "status":
+		columnName = VideoTableStatusColumn
+	case "object_detector_claimed_until":
+		columnName = VideoTableObjectDetectorClaimedUntilColumn
+	case "object_tracker_claimed_until":
+		columnName = VideoTableObjectTrackerClaimedUntilColumn
+	case "camera_id":
+		columnName = VideoTableCameraIDColumn
+	case "detection_summary":
+		columnName = VideoTableDetectionSummaryColumn
+	case "is_low_res":
+		columnName = VideoTableIsLowResColumn
+
+	default:
+		return fmt.Errorf("unknown field name: %v", fieldName)
+	}
+	var columnValue any
+	var err error
+	switch columnName {
+	case VideoTableIDColumn:
+		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+	case VideoTableCreatedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case VideoTableUpdatedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case VideoTableDeletedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case VideoTableFileNameColumn:
+		columnValue, err = types.FormatString(value.(string))
+	case VideoTableStartedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case VideoTableEndedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case VideoTableThumbnailNameColumn:
+		columnValue, err = types.FormatString(value.(string))
+	case VideoTableStatusColumn:
+		columnValue, err = types.FormatString(value.(string))
+	case VideoTableObjectDetectorClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case VideoTableObjectTrackerClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case VideoTableCameraIDColumn:
+		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+
+	}
+	if err != nil {
+		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+	}
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+	ctx = query.WithMaxDepth(ctx, nil)
+	_, err = query.Update(
+		ctx,
+		tx,
+		VideoTableWithSchema,
+		[]string{columnName},
+		fmt.Sprintf("%v = $$??", VideoTableIDColumn),
+		[]string{VideoTableIDColumn},
+		columnValue,
+		m.ID,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
+	}
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+	return nil
+}
+func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
+	if len(fields) == 0 {
+		return nil
+	}
+	fieldNames := make([]string, 0, len(fields))
+	for fieldName := range fields {
+		fieldNames = append(fieldNames, fieldName)
+	}
+	sort.Strings(fieldNames)
+	columns := make([]string, 0, len(fields))
+	values := make([]any, 0, len(fields)*2)
+	for _, fieldName := range fieldNames {
+		value := fields[fieldName]
+		var columnName string
+		switch fieldName {
+		case "id":
+			columnName = VideoTableIDColumn
+		case "created_at":
+			columnName = VideoTableCreatedAtColumn
+		case "updated_at":
+			columnName = VideoTableUpdatedAtColumn
+		case "deleted_at":
+			columnName = VideoTableDeletedAtColumn
+		case "file_name":
+			columnName = VideoTableFileNameColumn
+		case "started_at":
+			columnName = VideoTableStartedAtColumn
+		case "ended_at":
+			columnName = VideoTableEndedAtColumn
+		case "duration":
+			columnName = VideoTableDurationColumn
+		case "file_size":
+			columnName = VideoTableFileSizeColumn
+		case "thumbnail_name":
+			columnName = VideoTableThumbnailNameColumn
+		case "status":
+			columnName = VideoTableStatusColumn
+		case "object_detector_claimed_until":
+			columnName = VideoTableObjectDetectorClaimedUntilColumn
+		case "object_tracker_claimed_until":
+			columnName = VideoTableObjectTrackerClaimedUntilColumn
+		case "camera_id":
+			columnName = VideoTableCameraIDColumn
+		case "detection_summary":
+			columnName = VideoTableDetectionSummaryColumn
+		case "is_low_res":
+			columnName = VideoTableIsLowResColumn
+
+		default:
+			return fmt.Errorf("unknown field name: %v", fieldName)
+		}
+		var columnValue any
+		var err error
+		switch columnName {
+		case VideoTableIDColumn:
+			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		case VideoTableCreatedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case VideoTableUpdatedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case VideoTableDeletedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case VideoTableFileNameColumn:
+			columnValue, err = types.FormatString(value.(string))
+		case VideoTableStartedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case VideoTableEndedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case VideoTableThumbnailNameColumn:
+			columnValue, err = types.FormatString(value.(string))
+		case VideoTableStatusColumn:
+			columnValue, err = types.FormatString(value.(string))
+		case VideoTableObjectDetectorClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case VideoTableObjectTrackerClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case VideoTableCameraIDColumn:
+			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+
+		}
+		if err != nil {
+			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+		}
+		columns = append(columns, columnName)
+		values = append(values, columnValue)
+	}
+	values = append(values, m.ID)
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+	ctx = query.WithMaxDepth(ctx, nil)
+	_, err := query.Update(
+		ctx,
+		tx,
+		VideoTableWithSchema,
+		columns,
+		fmt.Sprintf("%v = $$??", VideoTableIDColumn),
+		[]string{VideoTableIDColumn},
+		values...,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update fields: %v", err)
+	}
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+	return nil
 }

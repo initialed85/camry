@@ -254,6 +254,7 @@ export interface components {
       id?: string;
       /** Format: date-time */
       last_seen?: string;
+      low_res_stream_url?: string;
       name?: string;
       referenced_by_detection_camera_id_objects?:
         | components["schemas"]["Detection"][]
@@ -390,6 +391,7 @@ export interface components {
       file_size?: number;
       /** Format: uuid */
       id?: string;
+      is_low_res?: boolean;
       /** Format: date-time */
       object_detector_claimed_until?: string;
       /** Format: date-time */
@@ -728,6 +730,38 @@ export interface operations {
         stream_producer_claimed_until__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         stream_producer_claimed_until__asc?: string;
+        /** @description SQL = comparison */
+        low_res_stream_url__eq?: string;
+        /** @description SQL != comparison */
+        low_res_stream_url__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        low_res_stream_url__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        low_res_stream_url__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        low_res_stream_url__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        low_res_stream_url__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        low_res_stream_url__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        low_res_stream_url__notin?: string;
+        /** @description SQL @> comparison */
+        low_res_stream_url__contains?: string;
+        /** @description SQL NOT @> comparison */
+        low_res_stream_url__notcontains?: string;
+        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__like?: string;
+        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__notlike?: string;
+        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__ilike?: string;
+        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__notilike?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        low_res_stream_url__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        low_res_stream_url__asc?: string;
         /** @description SQL @> comparison */
         referenced_by_detection_camera_id_objects__contains?: unknown;
         /** @description SQL NOT @> comparison */
@@ -2022,6 +2056,30 @@ export interface operations {
         detection_summary__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         detection_summary__asc?: string;
+        /** @description SQL = comparison */
+        is_low_res__eq?: boolean;
+        /** @description SQL != comparison */
+        is_low_res__ne?: boolean;
+        /** @description SQL > comparison, may not work with all column types */
+        is_low_res__gt?: boolean;
+        /** @description SQL >= comparison, may not work with all column types */
+        is_low_res__gte?: boolean;
+        /** @description SQL < comparison, may not work with all column types */
+        is_low_res__lt?: boolean;
+        /** @description SQL <= comparison, may not work with all column types */
+        is_low_res__lte?: boolean;
+        /** @description SQL IN comparison, permits comma-separated values */
+        is_low_res__in?: boolean;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        is_low_res__notin?: boolean;
+        /** @description SQL @> comparison */
+        is_low_res__contains?: boolean;
+        /** @description SQL NOT @> comparison */
+        is_low_res__notcontains?: boolean;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__asc?: string;
         /** @description SQL @> comparison */
         referenced_by_detection_video_id_objects__contains?: unknown;
         /** @description SQL NOT @> comparison */
@@ -2529,6 +2587,30 @@ export interface operations {
         detection_summary__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         detection_summary__asc?: string;
+        /** @description SQL = comparison */
+        is_low_res__eq?: boolean;
+        /** @description SQL != comparison */
+        is_low_res__ne?: boolean;
+        /** @description SQL > comparison, may not work with all column types */
+        is_low_res__gt?: boolean;
+        /** @description SQL >= comparison, may not work with all column types */
+        is_low_res__gte?: boolean;
+        /** @description SQL < comparison, may not work with all column types */
+        is_low_res__lt?: boolean;
+        /** @description SQL <= comparison, may not work with all column types */
+        is_low_res__lte?: boolean;
+        /** @description SQL IN comparison, permits comma-separated values */
+        is_low_res__in?: boolean;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        is_low_res__notin?: boolean;
+        /** @description SQL @> comparison */
+        is_low_res__contains?: boolean;
+        /** @description SQL NOT @> comparison */
+        is_low_res__notcontains?: boolean;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__asc?: string;
         /** @description SQL @> comparison */
         referenced_by_detection_video_id_objects__contains?: unknown;
         /** @description SQL NOT @> comparison */
@@ -2876,6 +2958,38 @@ export interface operations {
         stream_producer_claimed_until__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         stream_producer_claimed_until__asc?: string;
+        /** @description SQL = comparison */
+        low_res_stream_url__eq?: string;
+        /** @description SQL != comparison */
+        low_res_stream_url__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        low_res_stream_url__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        low_res_stream_url__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        low_res_stream_url__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        low_res_stream_url__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        low_res_stream_url__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        low_res_stream_url__notin?: string;
+        /** @description SQL @> comparison */
+        low_res_stream_url__contains?: string;
+        /** @description SQL NOT @> comparison */
+        low_res_stream_url__notcontains?: string;
+        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__like?: string;
+        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__notlike?: string;
+        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__ilike?: string;
+        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__notilike?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        low_res_stream_url__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        low_res_stream_url__asc?: string;
         /** @description SQL @> comparison */
         referenced_by_detection_camera_id_objects__contains?: unknown;
         /** @description SQL NOT @> comparison */
@@ -3231,6 +3345,38 @@ export interface operations {
         stream_producer_claimed_until__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         stream_producer_claimed_until__asc?: string;
+        /** @description SQL = comparison */
+        low_res_stream_url__eq?: string;
+        /** @description SQL != comparison */
+        low_res_stream_url__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        low_res_stream_url__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        low_res_stream_url__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        low_res_stream_url__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        low_res_stream_url__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        low_res_stream_url__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        low_res_stream_url__notin?: string;
+        /** @description SQL @> comparison */
+        low_res_stream_url__contains?: string;
+        /** @description SQL NOT @> comparison */
+        low_res_stream_url__notcontains?: string;
+        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__like?: string;
+        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__notlike?: string;
+        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__ilike?: string;
+        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        low_res_stream_url__notilike?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        low_res_stream_url__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        low_res_stream_url__asc?: string;
         /** @description SQL @> comparison */
         referenced_by_detection_camera_id_objects__contains?: unknown;
         /** @description SQL NOT @> comparison */
@@ -3746,6 +3892,30 @@ export interface operations {
         detection_summary__desc?: string;
         /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
         detection_summary__asc?: string;
+        /** @description SQL = comparison */
+        is_low_res__eq?: boolean;
+        /** @description SQL != comparison */
+        is_low_res__ne?: boolean;
+        /** @description SQL > comparison, may not work with all column types */
+        is_low_res__gt?: boolean;
+        /** @description SQL >= comparison, may not work with all column types */
+        is_low_res__gte?: boolean;
+        /** @description SQL < comparison, may not work with all column types */
+        is_low_res__lt?: boolean;
+        /** @description SQL <= comparison, may not work with all column types */
+        is_low_res__lte?: boolean;
+        /** @description SQL IN comparison, permits comma-separated values */
+        is_low_res__in?: boolean;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        is_low_res__notin?: boolean;
+        /** @description SQL @> comparison */
+        is_low_res__contains?: boolean;
+        /** @description SQL NOT @> comparison */
+        is_low_res__notcontains?: boolean;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__desc?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__asc?: string;
         /** @description SQL @> comparison */
         referenced_by_detection_video_id_objects__contains?: unknown;
         /** @description SQL NOT @> comparison */

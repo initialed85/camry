@@ -1360,6 +1360,140 @@ paths:
         schema:
           type: string
         style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: low_res_stream_url__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: low_res_stream_url__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__contains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__notcontains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: low_res_stream_url__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: low_res_stream_url__asc
+        required: false
+        schema:
+          type: string
+        style: form
       - description: SQL @> comparison
         explode: true
         in: query
@@ -5450,6 +5584,104 @@ paths:
         schema:
           type: string
         style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: is_low_res__eq
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: is_low_res__ne
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__gt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__gte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__lt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__lte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_low_res__in
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_low_res__notin
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: is_low_res__contains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: is_low_res__notcontains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_low_res__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_low_res__asc
+        required: false
+        schema:
+          type: string
+        style: form
       - description: SQL @> comparison
         explode: true
         in: query
@@ -7568,6 +7800,104 @@ paths:
         schema:
           type: string
         style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: is_low_res__eq
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: is_low_res__ne
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__gt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__gte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__lt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__lte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_low_res__in
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_low_res__notin
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: is_low_res__contains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: is_low_res__notcontains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_low_res__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_low_res__asc
+        required: false
+        schema:
+          type: string
+        style: form
       - description: SQL @> comparison
         explode: true
         in: query
@@ -8972,6 +9302,140 @@ paths:
         explode: true
         in: query
         name: stream_producer_claimed_until__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: low_res_stream_url__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: low_res_stream_url__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__contains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__notcontains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: low_res_stream_url__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: low_res_stream_url__asc
         required: false
         schema:
           type: string
@@ -10412,6 +10876,140 @@ paths:
         explode: true
         in: query
         name: stream_producer_claimed_until__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: low_res_stream_url__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: low_res_stream_url__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: low_res_stream_url__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__contains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: low_res_stream_url__notcontains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: low_res_stream_url__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: low_res_stream_url__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: low_res_stream_url__asc
         required: false
         schema:
           type: string
@@ -12566,6 +13164,104 @@ paths:
         schema:
           type: string
         style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: is_low_res__eq
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: is_low_res__ne
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__gt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__gte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__lt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_low_res__lte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_low_res__in
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_low_res__notin
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: is_low_res__contains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: is_low_res__notcontains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_low_res__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_low_res__asc
+        required: false
+        schema:
+          type: string
+        style: form
       - description: SQL @> comparison
         explode: true
         in: query
@@ -12871,6 +13567,7 @@ components:
       example:
         last_seen: 2000-01-23T04:56:07.000+00:00
         updated_at: 2000-01-23T04:56:07.000+00:00
+        low_res_stream_url: low_res_stream_url
         name: name
         created_at: 2000-01-23T04:56:07.000+00:00
         stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
@@ -12902,6 +13599,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -12941,6 +13639,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -12963,6 +13662,7 @@ components:
           detection_summary: ""
           file_size: 9.301444243932576
           duration: 7
+          is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
           - null
@@ -12982,6 +13682,7 @@ components:
           detection_summary: ""
           file_size: 9.301444243932576
           duration: 7
+          is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
           - null
@@ -13008,6 +13709,8 @@ components:
           type: string
         last_seen:
           format: date-time
+          type: string
+        low_res_stream_url:
           type: string
         name:
           type: string
@@ -13082,6 +13785,7 @@ components:
           detection_summary: ""
           file_size: 9.301444243932576
           duration: 7
+          is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
           - null
@@ -13150,6 +13854,7 @@ components:
         objects:
         - last_seen: 2000-01-23T04:56:07.000+00:00
           updated_at: 2000-01-23T04:56:07.000+00:00
+          low_res_stream_url: low_res_stream_url
           name: name
           created_at: 2000-01-23T04:56:07.000+00:00
           stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
@@ -13181,6 +13886,7 @@ components:
               detection_summary: ""
               file_size: 9.301444243932576
               duration: 7
+              is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
               - null
@@ -13220,6 +13926,7 @@ components:
               detection_summary: ""
               file_size: 9.301444243932576
               duration: 7
+              is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
               - null
@@ -13242,6 +13949,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -13261,6 +13969,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -13277,6 +13986,7 @@ components:
           stream_url: stream_url
         - last_seen: 2000-01-23T04:56:07.000+00:00
           updated_at: 2000-01-23T04:56:07.000+00:00
+          low_res_stream_url: low_res_stream_url
           name: name
           created_at: 2000-01-23T04:56:07.000+00:00
           stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
@@ -13308,6 +14018,7 @@ components:
               detection_summary: ""
               file_size: 9.301444243932576
               duration: 7
+              is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
               - null
@@ -13347,6 +14058,7 @@ components:
               detection_summary: ""
               file_size: 9.301444243932576
               duration: 7
+              is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
               - null
@@ -13369,6 +14081,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -13388,6 +14101,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -13468,6 +14182,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -13507,6 +14222,7 @@ components:
             detection_summary: ""
             file_size: 9.301444243932576
             duration: 7
+            is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
             - null
@@ -13568,6 +14284,7 @@ components:
           detection_summary: ""
           file_size: 9.301444243932576
           duration: 7
+          is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
           - null
@@ -13587,6 +14304,7 @@ components:
           detection_summary: ""
           file_size: 9.301444243932576
           duration: 7
+          is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
           - null
@@ -13650,6 +14368,7 @@ components:
         detection_summary: ""
         file_size: 9.301444243932576
         duration: 7
+        is_low_res: true
         object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
         referenced_by_detection_video_id_objects:
         - null
@@ -13688,6 +14407,8 @@ components:
         id:
           format: uuid
           type: string
+        is_low_res:
+          type: boolean
         object_detector_claimed_until:
           format: date-time
           type: string

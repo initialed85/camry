@@ -11,6 +11,7 @@ import (
 	"net/http"
 	"net/netip"
 	"slices"
+	"sort"
 	"strings"
 	"time"
 
@@ -40,6 +41,7 @@ type Camera struct {
 	LastSeen                             time.Time    `json:"last_seen"`
 	SegmentProducerClaimedUntil          time.Time    `json:"segment_producer_claimed_until"`
 	StreamProducerClaimedUntil           time.Time    `json:"stream_producer_claimed_until"`
+	LowResStreamURL                      *string      `json:"low_res_stream_url"`
 	ReferencedByDetectionCameraIDObjects []*Detection `json:"referenced_by_detection_camera_id_objects"`
 	ReferencedByVideoCameraIDObjects     []*Video     `json:"referenced_by_video_camera_id_objects"`
 }
@@ -60,6 +62,7 @@ var (
 	CameraTableLastSeenColumn                    = "last_seen"
 	CameraTableSegmentProducerClaimedUntilColumn = "segment_producer_claimed_until"
 	CameraTableStreamProducerClaimedUntilColumn  = "stream_producer_claimed_until"
+	CameraTableLowResStreamURLColumn             = "low_res_stream_url"
 )
 
 var (
@@ -72,6 +75,7 @@ var (
 	CameraTableLastSeenColumnWithTypeCast                    = `"last_seen" AS last_seen`
 	CameraTableSegmentProducerClaimedUntilColumnWithTypeCast = `"segment_producer_claimed_until" AS segment_producer_claimed_until`
 	CameraTableStreamProducerClaimedUntilColumnWithTypeCast  = `"stream_producer_claimed_until" AS stream_producer_claimed_until`
+	CameraTableLowResStreamURLColumnWithTypeCast             = `"low_res_stream_url" AS low_res_stream_url`
 )
 
 var CameraTableColumns = []string{
@@ -84,6 +88,7 @@ var CameraTableColumns = []string{
 	CameraTableLastSeenColumn,
 	CameraTableSegmentProducerClaimedUntilColumn,
 	CameraTableStreamProducerClaimedUntilColumn,
+	CameraTableLowResStreamURLColumn,
 }
 
 var CameraTableColumnsWithTypeCasts = []string{
@@ -96,6 +101,7 @@ var CameraTableColumnsWithTypeCasts = []string{
 	CameraTableLastSeenColumnWithTypeCast,
 	CameraTableSegmentProducerClaimedUntilColumnWithTypeCast,
 	CameraTableStreamProducerClaimedUntilColumnWithTypeCast,
+	CameraTableLowResStreamURLColumnWithTypeCast,
 }
 
 var CameraIntrospectedTable *introspect.Table
@@ -357,6 +363,25 @@ func (m *Camera) FromItem(item map[string]any) error {
 
 			m.StreamProducerClaimedUntil = temp2
 
+		case "low_res_stream_url":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseString(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(string)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uulow_res_stream_url.UUID", temp1))
+				}
+			}
+
+			m.LowResStreamURL = &temp2
+
 		}
 	}
 
@@ -411,6 +436,7 @@ func (m *Camera) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool)
 	m.LastSeen = o.LastSeen
 	m.SegmentProducerClaimedUntil = o.SegmentProducerClaimedUntil
 	m.StreamProducerClaimedUntil = o.StreamProducerClaimedUntil
+	m.LowResStreamURL = o.LowResStreamURL
 	m.ReferencedByDetectionCameraIDObjects = o.ReferencedByDetectionCameraIDObjects
 	m.ReferencedByVideoCameraIDObjects = o.ReferencedByVideoCameraIDObjects
 
@@ -515,6 +541,17 @@ func (m *Camera) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, for
 		v, err := types.FormatTime(m.StreamProducerClaimedUntil)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.StreamProducerClaimedUntil; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroString(m.LowResStreamURL) || slices.Contains(forceSetValuesForFields, CameraTableLowResStreamURLColumn) || isRequired(CameraTableColumnLookup, CameraTableLowResStreamURLColumn) {
+		columns = append(columns, CameraTableLowResStreamURLColumn)
+
+		v, err := types.FormatString(m.LowResStreamURL)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.LowResStreamURL; %v", err)
 		}
 
 		values = append(values, v)
@@ -672,6 +709,17 @@ func (m *Camera) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, forc
 		v, err := types.FormatTime(m.StreamProducerClaimedUntil)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.StreamProducerClaimedUntil; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroString(m.LowResStreamURL) || slices.Contains(forceSetValuesForFields, CameraTableLowResStreamURLColumn) {
+		columns = append(columns, CameraTableLowResStreamURLColumn)
+
+		v, err := types.FormatString(m.LowResStreamURL)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.LowResStreamURL; %v", err)
 		}
 
 		values = append(values, v)
@@ -2299,4 +2347,173 @@ func init() {
 		"/cameras",
 		MutateRouterForCamera,
 	)
+}
+func (m *Camera) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
+	var columnName string
+	switch fieldName {
+	case "id":
+		columnName = CameraTableIDColumn
+	case "created_at":
+		columnName = CameraTableCreatedAtColumn
+	case "updated_at":
+		columnName = CameraTableUpdatedAtColumn
+	case "deleted_at":
+		columnName = CameraTableDeletedAtColumn
+	case "name":
+		columnName = CameraTableNameColumn
+	case "stream_url":
+		columnName = CameraTableStreamURLColumn
+	case "last_seen":
+		columnName = CameraTableLastSeenColumn
+	case "segment_producer_claimed_until":
+		columnName = CameraTableSegmentProducerClaimedUntilColumn
+	case "stream_producer_claimed_until":
+		columnName = CameraTableStreamProducerClaimedUntilColumn
+	case "low_res_stream_url":
+		columnName = CameraTableLowResStreamURLColumn
+
+	default:
+		return fmt.Errorf("unknown field name: %v", fieldName)
+	}
+	var columnValue any
+	var err error
+	switch columnName {
+	case CameraTableIDColumn:
+		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+	case CameraTableCreatedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case CameraTableUpdatedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case CameraTableDeletedAtColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case CameraTableNameColumn:
+		columnValue, err = types.FormatString(value.(string))
+	case CameraTableStreamURLColumn:
+		columnValue, err = types.FormatString(value.(string))
+	case CameraTableLastSeenColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case CameraTableSegmentProducerClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case CameraTableStreamProducerClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value.(time.Time))
+	case CameraTableLowResStreamURLColumn:
+		columnValue, err = types.FormatString(value.(string))
+
+	}
+	if err != nil {
+		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+	}
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+	ctx = query.WithMaxDepth(ctx, nil)
+	_, err = query.Update(
+		ctx,
+		tx,
+		CameraTableWithSchema,
+		[]string{columnName},
+		fmt.Sprintf("%v = $$??", CameraTableIDColumn),
+		[]string{CameraTableIDColumn},
+		columnValue,
+		m.ID,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
+	}
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+	return nil
+}
+func (m *Camera) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
+	if len(fields) == 0 {
+		return nil
+	}
+	fieldNames := make([]string, 0, len(fields))
+	for fieldName := range fields {
+		fieldNames = append(fieldNames, fieldName)
+	}
+	sort.Strings(fieldNames)
+	columns := make([]string, 0, len(fields))
+	values := make([]any, 0, len(fields)*2)
+	for _, fieldName := range fieldNames {
+		value := fields[fieldName]
+		var columnName string
+		switch fieldName {
+		case "id":
+			columnName = CameraTableIDColumn
+		case "created_at":
+			columnName = CameraTableCreatedAtColumn
+		case "updated_at":
+			columnName = CameraTableUpdatedAtColumn
+		case "deleted_at":
+			columnName = CameraTableDeletedAtColumn
+		case "name":
+			columnName = CameraTableNameColumn
+		case "stream_url":
+			columnName = CameraTableStreamURLColumn
+		case "last_seen":
+			columnName = CameraTableLastSeenColumn
+		case "segment_producer_claimed_until":
+			columnName = CameraTableSegmentProducerClaimedUntilColumn
+		case "stream_producer_claimed_until":
+			columnName = CameraTableStreamProducerClaimedUntilColumn
+		case "low_res_stream_url":
+			columnName = CameraTableLowResStreamURLColumn
+
+		default:
+			return fmt.Errorf("unknown field name: %v", fieldName)
+		}
+		var columnValue any
+		var err error
+		switch columnName {
+		case CameraTableIDColumn:
+			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		case CameraTableCreatedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case CameraTableUpdatedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case CameraTableDeletedAtColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case CameraTableNameColumn:
+			columnValue, err = types.FormatString(value.(string))
+		case CameraTableStreamURLColumn:
+			columnValue, err = types.FormatString(value.(string))
+		case CameraTableLastSeenColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case CameraTableSegmentProducerClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case CameraTableStreamProducerClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value.(time.Time))
+		case CameraTableLowResStreamURLColumn:
+			columnValue, err = types.FormatString(value.(string))
+
+		}
+		if err != nil {
+			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+		}
+		columns = append(columns, columnName)
+		values = append(values, columnValue)
+	}
+	values = append(values, m.ID)
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+	ctx = query.WithMaxDepth(ctx, nil)
+	_, err := query.Update(
+		ctx,
+		tx,
+		CameraTableWithSchema,
+		columns,
+		fmt.Sprintf("%v = $$??", CameraTableIDColumn),
+		[]string{CameraTableIDColumn},
+		values...,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update fields: %v", err)
+	}
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+	return nil
 }

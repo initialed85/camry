@@ -193,6 +193,7 @@ fn main() -> Result<()> {
                     until: Some(Utc::now() + Duration::from_secs(70)),
                 },
                 status_eq: Some("needs detection".to_string()),
+                is_low_res_eq: Some(true),
                 ..Default::default()
             };
 

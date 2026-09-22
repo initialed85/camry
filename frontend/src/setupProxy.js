@@ -7,7 +7,7 @@ module.exports = function (app) {
       target:
         process.env.REMOTE === "1"
           ? "https://camry.dev.initialed85.cc/media"
-          : "http://localhost:6060",
+          : "http://localhost:6060/media",
       changeOrigin: true,
     }),
   );

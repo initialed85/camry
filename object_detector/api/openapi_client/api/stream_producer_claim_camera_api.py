@@ -194,6 +194,22 @@ class StreamProducerClaimCameraApi:
         stream_producer_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        low_res_stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        low_res_stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        low_res_stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        low_res_stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        low_res_stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        low_res_stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        low_res_stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        low_res_stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        low_res_stream_url__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
+        low_res_stream_url__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
+        low_res_stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        low_res_stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -518,6 +534,38 @@ class StreamProducerClaimCameraApi:
         :type stream_producer_claimed_until__desc: str
         :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
+        :param low_res_stream_url__eq: SQL = comparison
+        :type low_res_stream_url__eq: str
+        :param low_res_stream_url__ne: SQL != comparison
+        :type low_res_stream_url__ne: str
+        :param low_res_stream_url__gt: SQL > comparison, may not work with all column types
+        :type low_res_stream_url__gt: str
+        :param low_res_stream_url__gte: SQL >= comparison, may not work with all column types
+        :type low_res_stream_url__gte: str
+        :param low_res_stream_url__lt: SQL < comparison, may not work with all column types
+        :type low_res_stream_url__lt: str
+        :param low_res_stream_url__lte: SQL <= comparison, may not work with all column types
+        :type low_res_stream_url__lte: str
+        :param low_res_stream_url__in: SQL IN comparison, permits comma-separated values
+        :type low_res_stream_url__in: str
+        :param low_res_stream_url__notin: SQL NOT IN comparison, permits comma-separated values
+        :type low_res_stream_url__notin: str
+        :param low_res_stream_url__contains: SQL @> comparison
+        :type low_res_stream_url__contains: str
+        :param low_res_stream_url__notcontains: SQL NOT @> comparison
+        :type low_res_stream_url__notcontains: str
+        :param low_res_stream_url__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__like: str
+        :param low_res_stream_url__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__notlike: str
+        :param low_res_stream_url__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__ilike: str
+        :param low_res_stream_url__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__notilike: str
+        :param low_res_stream_url__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type low_res_stream_url__desc: str
+        :param low_res_stream_url__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type low_res_stream_url__asc: str
         :param referenced_by_detection_camera_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_camera_id_objects__contains: object
         :param referenced_by_detection_camera_id_objects__notcontains: SQL NOT @> comparison
@@ -707,6 +755,22 @@ class StreamProducerClaimCameraApi:
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
+            low_res_stream_url__eq=low_res_stream_url__eq,
+            low_res_stream_url__ne=low_res_stream_url__ne,
+            low_res_stream_url__gt=low_res_stream_url__gt,
+            low_res_stream_url__gte=low_res_stream_url__gte,
+            low_res_stream_url__lt=low_res_stream_url__lt,
+            low_res_stream_url__lte=low_res_stream_url__lte,
+            low_res_stream_url__in=low_res_stream_url__in,
+            low_res_stream_url__notin=low_res_stream_url__notin,
+            low_res_stream_url__contains=low_res_stream_url__contains,
+            low_res_stream_url__notcontains=low_res_stream_url__notcontains,
+            low_res_stream_url__like=low_res_stream_url__like,
+            low_res_stream_url__notlike=low_res_stream_url__notlike,
+            low_res_stream_url__ilike=low_res_stream_url__ilike,
+            low_res_stream_url__notilike=low_res_stream_url__notilike,
+            low_res_stream_url__desc=low_res_stream_url__desc,
+            low_res_stream_url__asc=low_res_stream_url__asc,
             referenced_by_detection_camera_id_objects__contains=referenced_by_detection_camera_id_objects__contains,
             referenced_by_detection_camera_id_objects__notcontains=referenced_by_detection_camera_id_objects__notcontains,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
@@ -888,6 +952,22 @@ class StreamProducerClaimCameraApi:
         stream_producer_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        low_res_stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        low_res_stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        low_res_stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        low_res_stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        low_res_stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        low_res_stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        low_res_stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        low_res_stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        low_res_stream_url__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
+        low_res_stream_url__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
+        low_res_stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        low_res_stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -1212,6 +1292,38 @@ class StreamProducerClaimCameraApi:
         :type stream_producer_claimed_until__desc: str
         :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
+        :param low_res_stream_url__eq: SQL = comparison
+        :type low_res_stream_url__eq: str
+        :param low_res_stream_url__ne: SQL != comparison
+        :type low_res_stream_url__ne: str
+        :param low_res_stream_url__gt: SQL > comparison, may not work with all column types
+        :type low_res_stream_url__gt: str
+        :param low_res_stream_url__gte: SQL >= comparison, may not work with all column types
+        :type low_res_stream_url__gte: str
+        :param low_res_stream_url__lt: SQL < comparison, may not work with all column types
+        :type low_res_stream_url__lt: str
+        :param low_res_stream_url__lte: SQL <= comparison, may not work with all column types
+        :type low_res_stream_url__lte: str
+        :param low_res_stream_url__in: SQL IN comparison, permits comma-separated values
+        :type low_res_stream_url__in: str
+        :param low_res_stream_url__notin: SQL NOT IN comparison, permits comma-separated values
+        :type low_res_stream_url__notin: str
+        :param low_res_stream_url__contains: SQL @> comparison
+        :type low_res_stream_url__contains: str
+        :param low_res_stream_url__notcontains: SQL NOT @> comparison
+        :type low_res_stream_url__notcontains: str
+        :param low_res_stream_url__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__like: str
+        :param low_res_stream_url__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__notlike: str
+        :param low_res_stream_url__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__ilike: str
+        :param low_res_stream_url__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__notilike: str
+        :param low_res_stream_url__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type low_res_stream_url__desc: str
+        :param low_res_stream_url__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type low_res_stream_url__asc: str
         :param referenced_by_detection_camera_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_camera_id_objects__contains: object
         :param referenced_by_detection_camera_id_objects__notcontains: SQL NOT @> comparison
@@ -1401,6 +1513,22 @@ class StreamProducerClaimCameraApi:
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
+            low_res_stream_url__eq=low_res_stream_url__eq,
+            low_res_stream_url__ne=low_res_stream_url__ne,
+            low_res_stream_url__gt=low_res_stream_url__gt,
+            low_res_stream_url__gte=low_res_stream_url__gte,
+            low_res_stream_url__lt=low_res_stream_url__lt,
+            low_res_stream_url__lte=low_res_stream_url__lte,
+            low_res_stream_url__in=low_res_stream_url__in,
+            low_res_stream_url__notin=low_res_stream_url__notin,
+            low_res_stream_url__contains=low_res_stream_url__contains,
+            low_res_stream_url__notcontains=low_res_stream_url__notcontains,
+            low_res_stream_url__like=low_res_stream_url__like,
+            low_res_stream_url__notlike=low_res_stream_url__notlike,
+            low_res_stream_url__ilike=low_res_stream_url__ilike,
+            low_res_stream_url__notilike=low_res_stream_url__notilike,
+            low_res_stream_url__desc=low_res_stream_url__desc,
+            low_res_stream_url__asc=low_res_stream_url__asc,
             referenced_by_detection_camera_id_objects__contains=referenced_by_detection_camera_id_objects__contains,
             referenced_by_detection_camera_id_objects__notcontains=referenced_by_detection_camera_id_objects__notcontains,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
@@ -1582,6 +1710,22 @@ class StreamProducerClaimCameraApi:
         stream_producer_claimed_until__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
         stream_producer_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         stream_producer_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        low_res_stream_url__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        low_res_stream_url__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        low_res_stream_url__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        low_res_stream_url__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        low_res_stream_url__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        low_res_stream_url__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        low_res_stream_url__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        low_res_stream_url__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        low_res_stream_url__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
+        low_res_stream_url__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
+        low_res_stream_url__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        low_res_stream_url__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        low_res_stream_url__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -1906,6 +2050,38 @@ class StreamProducerClaimCameraApi:
         :type stream_producer_claimed_until__desc: str
         :param stream_producer_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type stream_producer_claimed_until__asc: str
+        :param low_res_stream_url__eq: SQL = comparison
+        :type low_res_stream_url__eq: str
+        :param low_res_stream_url__ne: SQL != comparison
+        :type low_res_stream_url__ne: str
+        :param low_res_stream_url__gt: SQL > comparison, may not work with all column types
+        :type low_res_stream_url__gt: str
+        :param low_res_stream_url__gte: SQL >= comparison, may not work with all column types
+        :type low_res_stream_url__gte: str
+        :param low_res_stream_url__lt: SQL < comparison, may not work with all column types
+        :type low_res_stream_url__lt: str
+        :param low_res_stream_url__lte: SQL <= comparison, may not work with all column types
+        :type low_res_stream_url__lte: str
+        :param low_res_stream_url__in: SQL IN comparison, permits comma-separated values
+        :type low_res_stream_url__in: str
+        :param low_res_stream_url__notin: SQL NOT IN comparison, permits comma-separated values
+        :type low_res_stream_url__notin: str
+        :param low_res_stream_url__contains: SQL @> comparison
+        :type low_res_stream_url__contains: str
+        :param low_res_stream_url__notcontains: SQL NOT @> comparison
+        :type low_res_stream_url__notcontains: str
+        :param low_res_stream_url__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__like: str
+        :param low_res_stream_url__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__notlike: str
+        :param low_res_stream_url__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__ilike: str
+        :param low_res_stream_url__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type low_res_stream_url__notilike: str
+        :param low_res_stream_url__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type low_res_stream_url__desc: str
+        :param low_res_stream_url__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type low_res_stream_url__asc: str
         :param referenced_by_detection_camera_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_camera_id_objects__contains: object
         :param referenced_by_detection_camera_id_objects__notcontains: SQL NOT @> comparison
@@ -2095,6 +2271,22 @@ class StreamProducerClaimCameraApi:
             stream_producer_claimed_until__notilike=stream_producer_claimed_until__notilike,
             stream_producer_claimed_until__desc=stream_producer_claimed_until__desc,
             stream_producer_claimed_until__asc=stream_producer_claimed_until__asc,
+            low_res_stream_url__eq=low_res_stream_url__eq,
+            low_res_stream_url__ne=low_res_stream_url__ne,
+            low_res_stream_url__gt=low_res_stream_url__gt,
+            low_res_stream_url__gte=low_res_stream_url__gte,
+            low_res_stream_url__lt=low_res_stream_url__lt,
+            low_res_stream_url__lte=low_res_stream_url__lte,
+            low_res_stream_url__in=low_res_stream_url__in,
+            low_res_stream_url__notin=low_res_stream_url__notin,
+            low_res_stream_url__contains=low_res_stream_url__contains,
+            low_res_stream_url__notcontains=low_res_stream_url__notcontains,
+            low_res_stream_url__like=low_res_stream_url__like,
+            low_res_stream_url__notlike=low_res_stream_url__notlike,
+            low_res_stream_url__ilike=low_res_stream_url__ilike,
+            low_res_stream_url__notilike=low_res_stream_url__notilike,
+            low_res_stream_url__desc=low_res_stream_url__desc,
+            low_res_stream_url__asc=low_res_stream_url__asc,
             referenced_by_detection_camera_id_objects__contains=referenced_by_detection_camera_id_objects__contains,
             referenced_by_detection_camera_id_objects__notcontains=referenced_by_detection_camera_id_objects__notcontains,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
@@ -2271,6 +2463,22 @@ class StreamProducerClaimCameraApi:
         stream_producer_claimed_until__notilike,
         stream_producer_claimed_until__desc,
         stream_producer_claimed_until__asc,
+        low_res_stream_url__eq,
+        low_res_stream_url__ne,
+        low_res_stream_url__gt,
+        low_res_stream_url__gte,
+        low_res_stream_url__lt,
+        low_res_stream_url__lte,
+        low_res_stream_url__in,
+        low_res_stream_url__notin,
+        low_res_stream_url__contains,
+        low_res_stream_url__notcontains,
+        low_res_stream_url__like,
+        low_res_stream_url__notlike,
+        low_res_stream_url__ilike,
+        low_res_stream_url__notilike,
+        low_res_stream_url__desc,
+        low_res_stream_url__asc,
         referenced_by_detection_camera_id_objects__contains,
         referenced_by_detection_camera_id_objects__notcontains,
         referenced_by_detection_camera_id_objects__desc,
@@ -3650,6 +3858,70 @@ class StreamProducerClaimCameraApi:
         if stream_producer_claimed_until__asc is not None:
             
             _query_params.append(('stream_producer_claimed_until__asc', stream_producer_claimed_until__asc))
+            
+        if low_res_stream_url__eq is not None:
+            
+            _query_params.append(('low_res_stream_url__eq', low_res_stream_url__eq))
+            
+        if low_res_stream_url__ne is not None:
+            
+            _query_params.append(('low_res_stream_url__ne', low_res_stream_url__ne))
+            
+        if low_res_stream_url__gt is not None:
+            
+            _query_params.append(('low_res_stream_url__gt', low_res_stream_url__gt))
+            
+        if low_res_stream_url__gte is not None:
+            
+            _query_params.append(('low_res_stream_url__gte', low_res_stream_url__gte))
+            
+        if low_res_stream_url__lt is not None:
+            
+            _query_params.append(('low_res_stream_url__lt', low_res_stream_url__lt))
+            
+        if low_res_stream_url__lte is not None:
+            
+            _query_params.append(('low_res_stream_url__lte', low_res_stream_url__lte))
+            
+        if low_res_stream_url__in is not None:
+            
+            _query_params.append(('low_res_stream_url__in', low_res_stream_url__in))
+            
+        if low_res_stream_url__notin is not None:
+            
+            _query_params.append(('low_res_stream_url__notin', low_res_stream_url__notin))
+            
+        if low_res_stream_url__contains is not None:
+            
+            _query_params.append(('low_res_stream_url__contains', low_res_stream_url__contains))
+            
+        if low_res_stream_url__notcontains is not None:
+            
+            _query_params.append(('low_res_stream_url__notcontains', low_res_stream_url__notcontains))
+            
+        if low_res_stream_url__like is not None:
+            
+            _query_params.append(('low_res_stream_url__like', low_res_stream_url__like))
+            
+        if low_res_stream_url__notlike is not None:
+            
+            _query_params.append(('low_res_stream_url__notlike', low_res_stream_url__notlike))
+            
+        if low_res_stream_url__ilike is not None:
+            
+            _query_params.append(('low_res_stream_url__ilike', low_res_stream_url__ilike))
+            
+        if low_res_stream_url__notilike is not None:
+            
+            _query_params.append(('low_res_stream_url__notilike', low_res_stream_url__notilike))
+            
+        if low_res_stream_url__desc is not None:
+            
+            _query_params.append(('low_res_stream_url__desc', low_res_stream_url__desc))
+            
+        if low_res_stream_url__asc is not None:
+            
+            _query_params.append(('low_res_stream_url__asc', low_res_stream_url__asc))
             
         if referenced_by_detection_camera_id_objects__contains is not None:
             

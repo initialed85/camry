@@ -14,6 +14,7 @@ Name | Type | Description | Notes
 **FileName** | Pointer to **string** |  | [optional] 
 **FileSize** | Pointer to **float64** |  | [optional] 
 **Id** | Pointer to **string** |  | [optional] 
+**IsLowRes** | Pointer to **bool** |  | [optional] 
 **ObjectDetectorClaimedUntil** | Pointer to **time.Time** |  | [optional] 
 **ObjectTrackerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
 **ReferencedByDetectionVideoIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
@@ -300,6 +301,31 @@ SetId sets Id field to given value.
 `func (o *Video) HasId() bool`
 
 HasId returns a boolean if a field has been set.
+
+### GetIsLowRes
+
+`func (o *Video) GetIsLowRes() bool`
+
+GetIsLowRes returns the IsLowRes field if non-nil, zero value otherwise.
+
+### GetIsLowResOk
+
+`func (o *Video) GetIsLowResOk() (*bool, bool)`
+
+GetIsLowResOk returns a tuple with the IsLowRes field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetIsLowRes
+
+`func (o *Video) SetIsLowRes(v bool)`
+
+SetIsLowRes sets IsLowRes field to given value.
+
+### HasIsLowRes
+
+`func (o *Video) HasIsLowRes() bool`
+
+HasIsLowRes returns a boolean if a field has been set.
 
 ### GetObjectDetectorClaimedUntil
 

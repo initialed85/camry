@@ -256,6 +256,18 @@ type ApiPostObjectTrackerClaimVideosRequest struct {
 	detectionSummaryNotcontains *interface{}
 	detectionSummaryDesc *string
 	detectionSummaryAsc *string
+	isLowResEq *bool
+	isLowResNe *bool
+	isLowResGt *bool
+	isLowResGte *bool
+	isLowResLt *bool
+	isLowResLte *bool
+	isLowResIn *bool
+	isLowResNotin *bool
+	isLowResContains *bool
+	isLowResNotcontains *bool
+	isLowResDesc *string
+	isLowResAsc *string
 	referencedByDetectionVideoIdObjectsContains *interface{}
 	referencedByDetectionVideoIdObjectsNotcontains *interface{}
 	referencedByDetectionVideoIdObjectsDesc *string
@@ -1641,6 +1653,78 @@ func (r ApiPostObjectTrackerClaimVideosRequest) DetectionSummaryAsc(detectionSum
 	return r
 }
 
+// SQL &#x3D; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResEq(isLowResEq bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResEq = &isLowResEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResNe(isLowResNe bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResNe = &isLowResNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResGt(isLowResGt bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResGt = &isLowResGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResGte(isLowResGte bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResGte = &isLowResGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResLt(isLowResLt bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResLt = &isLowResLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResLte(isLowResLte bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResLte = &isLowResLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResIn(isLowResIn bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResIn = &isLowResIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResNotin(isLowResNotin bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResNotin = &isLowResNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResContains(isLowResContains bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResContains = &isLowResContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResNotcontains(isLowResNotcontains bool) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResNotcontains = &isLowResNotcontains
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResDesc(isLowResDesc string) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResDesc = &isLowResDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResAsc(isLowResAsc string) ApiPostObjectTrackerClaimVideosRequest {
+	r.isLowResAsc = &isLowResAsc
+	return r
+}
+
 // SQL @&gt; comparison
 func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByDetectionVideoIdObjectsContains(referencedByDetectionVideoIdObjectsContains interface{}) ApiPostObjectTrackerClaimVideosRequest {
 	r.referencedByDetectionVideoIdObjectsContains = &referencedByDetectionVideoIdObjectsContains
@@ -2392,6 +2476,42 @@ func (a *ObjectTrackerClaimVideoAPIService) PostObjectTrackerClaimVideosExecute(
 	}
 	if r.detectionSummaryAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "detection_summary__asc", r.detectionSummaryAsc, "")
+	}
+	if r.isLowResEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__eq", r.isLowResEq, "")
+	}
+	if r.isLowResNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__ne", r.isLowResNe, "")
+	}
+	if r.isLowResGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__gt", r.isLowResGt, "")
+	}
+	if r.isLowResGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__gte", r.isLowResGte, "")
+	}
+	if r.isLowResLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__lt", r.isLowResLt, "")
+	}
+	if r.isLowResLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__lte", r.isLowResLte, "")
+	}
+	if r.isLowResIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__in", r.isLowResIn, "")
+	}
+	if r.isLowResNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__notin", r.isLowResNotin, "")
+	}
+	if r.isLowResContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__contains", r.isLowResContains, "")
+	}
+	if r.isLowResNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__notcontains", r.isLowResNotcontains, "")
+	}
+	if r.isLowResDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__desc", r.isLowResDesc, "")
+	}
+	if r.isLowResAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__asc", r.isLowResAsc, "")
 	}
 	if r.referencedByDetectionVideoIdObjectsContains != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_video_id_objects__contains", r.referencedByDetectionVideoIdObjectsContains, "")

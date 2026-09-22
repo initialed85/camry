@@ -40,6 +40,7 @@ func getCommandLine(
 	durationSeconds int,
 	destinationPath string,
 	cameraID uuid.UUID,
+	isLowRes bool,
 ) []string {
 	arguments := make([]string, 0)
 
@@ -95,9 +96,14 @@ func getCommandLine(
 		}
 	}
 
+	fileSuffix := ""
+	if isLowRes {
+		fileSuffix = "_low_res"
+	}
+
 	arguments = append(
 		arguments,
-		filepath.Join(destinationPath, "Segment_%Y-%m-%dT%H:%M:%S_"+cameraID.String()+".mp4"),
+		filepath.Join(destinationPath, "Segment_%Y-%m-%dT%H:%M:%S_"+cameraID.String()+fileSuffix+".mp4"),
 	)
 
 	return arguments
@@ -294,6 +300,7 @@ func run(
 	durationSeconds int,
 	destinationPath string,
 	cameraID uuid.UUID,
+	isLowRes bool,
 	onOpen func(string, float64, time.Time) error,
 	onUpdate func(string, float64, time.Time) error,
 	onSave func(string, float64, time.Time) error,
@@ -305,6 +312,7 @@ func run(
 		durationSeconds,
 		destinationPath,
 		cameraID,
+		isLowRes,
 	)
 
 	signals := make(chan os.Signal, 16)
@@ -419,9 +427,12 @@ func Run() error {
 			now := internal.GetNow()
 			camera.LastSeen = now
 			camera.SegmentProducerClaimedUntil = now.Add(claimRefreshDuration)
-			camera.StreamProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
 
-			err = camera.Update(ctx, tx, false)
+			err = camera.UpdateFields(ctx, tx, map[string]any{
+				api.CameraTableLastSeenColumn:                    camera.LastSeen,
+				api.CameraTableSegmentProducerClaimedUntilColumn: camera.SegmentProducerClaimedUntil,
+				api.CameraTableUpdatedAtColumn:                   time.Now().UTC(),
+			})
 			if err != nil {
 				return err
 			}
@@ -506,248 +517,87 @@ func Run() error {
 		return fmt.Errorf("failed to handle orphaned videos: %v", err)
 	}
 
-	mu := new(sync.Mutex)
-	var video *api.Video
-
-	onOpen := func(filePath string, fileSize float64, timestamp time.Time) error {
-		mu.Lock()
-		defer mu.Unlock()
-
-		tx, err := db.Begin(ctx)
-		if err != nil {
-			return err
-		}
-
-		defer func() {
-			_ = tx.Rollback(ctx)
-		}()
-
-		if video != nil {
-			log.Printf("warning: there was a Video in-flight that should have been closed out- marking %v as failed", video.ID)
-
-			filePath := filepath.Join(destinationPath, video.FileName)
-
-			_, fileName := filepath.Split(filePath)
-			video.FileName = fileName
-
-			ext := filepath.Ext(fileName)
-			thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
-			err = helpers.GenerateThumbnail(filePath, thumbnailPath)
-			if err == nil {
-				_, thumbnailName := filepath.Split(thumbnailPath)
-				video.ThumbnailName = &thumbnailName
-			}
-
-			video.Status = djangolang_helpers.Ptr("failed")
-			err = video.Update(ctx, tx, false)
-			if err != nil {
-				return err
-			}
-
-			video = nil
-		}
-
-		_, fileName := filepath.Split(filePath)
-
-		video = &api.Video{
-			FileName:  fileName,
-			StartedAt: internal.GetNow(),
-			Status:    djangolang_helpers.Ptr("recording"),
-			CameraID:  camera.ID,
-		}
-
-		err = video.Insert(ctx, tx, false, false)
-		if err != nil {
-			return err
-		}
-
-		camera.LastSeen = timestamp
-		camera.SegmentProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
-		camera.StreamProducerClaimedUntil = time.Time{}
-
-		err = camera.Update(ctx, tx, false)
-		if err != nil {
-			return err
-		}
-
-		err = tx.Commit(ctx)
-		if err != nil {
-			return err
-		}
-
-		return nil
+	cameraMu := new(sync.Mutex)
+	recordings := []*recording{
+		newRecording(ctx, db, camera, cameraMu, destinationPath, claimRefreshDuration, false),
 	}
-
-	onUpdate := func(filePath string, fileSize float64, timestamp time.Time) error {
-		mu.Lock()
-		defer mu.Unlock()
-
-		if video == nil {
-			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can update in the database")
-		}
-
-		tx, err := db.Begin(ctx)
-		if err != nil {
-			return err
-		}
-
-		defer func() {
-			_ = tx.Rollback(ctx)
-		}()
-
-		video.FileSize = djangolang_helpers.Ptr(fileSize)
-
-		duration := timestamp.Sub(video.StartedAt)
-		video.Duration = &duration
-
-		err = video.Update(ctx, tx, false)
-		if err != nil {
-			return err
-		}
-
-		camera.LastSeen = timestamp
-		camera.SegmentProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
-		camera.StreamProducerClaimedUntil = time.Time{}
-
-		err = camera.Update(ctx, tx, false)
-		if err != nil {
-			return err
-		}
-
-		err = tx.Commit(ctx)
-		if err != nil {
-			return err
-		}
-
-		return nil
-	}
-
-	onSave := func(filePath string, fileSize float64, timestamp time.Time) error {
-		mu.Lock()
-		defer mu.Unlock()
-
-		if video == nil {
-			return fmt.Errorf("assertion failed: there should be a Video in-flight that we can update in the database")
-		}
-
-		tx, err := db.Begin(ctx)
-		if err != nil {
-			return err
-		}
-
-		defer func() {
-			_ = tx.Rollback(ctx)
-		}()
-
-		_, fileName := filepath.Split(filePath)
-		video.FileName = fileName
-
-		ext := filepath.Ext(fileName)
-		thumbnailPath := fmt.Sprintf("%v.jpg", filePath[:len(filePath)-len(ext)])
-		err = helpers.GenerateThumbnail(filePath, thumbnailPath)
-		if err == nil {
-			_, thumbnailName := filepath.Split(thumbnailPath)
-			video.ThumbnailName = &thumbnailName
-		}
-
-		video.FileSize = djangolang_helpers.Ptr(fileSize)
-
-		video.Duration = djangolang_helpers.Ptr(timestamp.Sub(video.StartedAt))
-
-		duration, err := helpers.GetVideoDuration(filePath)
-		if err == nil {
-			video.Duration = &duration
-		}
-
-		video.EndedAt = djangolang_helpers.Ptr(timestamp)
-		video.Status = djangolang_helpers.Ptr("needs detection")
-
-		err = video.Update(ctx, tx, false)
-		if err != nil {
-			return err
-		}
-
-		camera.LastSeen = timestamp
-		camera.SegmentProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
-		camera.StreamProducerClaimedUntil = time.Time{}
-
-		err = camera.Update(ctx, tx, false)
-		if err != nil {
-			return err
-		}
-
-		err = tx.Commit(ctx)
-		if err != nil {
-			return err
-		}
-
-		video = nil
-
-		return nil
+	if camera.LowResStreamURL != nil && strings.TrimSpace(*camera.LowResStreamURL) != "" {
+		recordings = append(recordings, newRecording(ctx, db, camera, cameraMu, destinationPath, claimRefreshDuration, true))
 	}
 
 	defer func() {
-		ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
-		defer cancel()
+		cleanupCtx, cleanupCancel := context.WithTimeout(context.Background(), time.Second*10)
+		defer cleanupCancel()
 
 		err := func() error {
-			tx, err := db.Begin(ctx)
+			tx, err := db.Begin(cleanupCtx)
 			if err != nil {
 				return err
 			}
+			defer func() { _ = tx.Rollback(cleanupCtx) }()
 
-			defer func() {
-				_ = tx.Rollback(ctx)
-			}()
-
-			if video != nil && video.Status != nil && *video.Status != "needs detection" {
-				video.Status = internal.Ptr("failed")
-				err = video.Update(ctx, tx, false)
-				if err != nil {
+			for _, thisRecording := range recordings {
+				if err := thisRecording.cleanup(cleanupCtx, tx); err != nil {
 					return err
 				}
 			}
 
-			if camera != nil {
-				camera.SegmentProducerClaimedUntil = internal.GetNow()
-				camera.StreamProducerClaimedUntil = time.Time{}
-
-				err = camera.Update(ctx, tx, false)
-				if err != nil {
-					return err
-				}
-
-				log.Printf("released claim on camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
-			}
-
-			err = tx.Commit(ctx)
+			cameraMu.Lock()
+			camera.SegmentProducerClaimedUntil = internal.GetNow()
+			err = camera.UpdateFields(cleanupCtx, tx, map[string]any{
+				api.CameraTableSegmentProducerClaimedUntilColumn: camera.SegmentProducerClaimedUntil,
+				api.CameraTableUpdatedAtColumn:                   time.Now().UTC(),
+			})
+			cameraMu.Unlock()
 			if err != nil {
 				return err
 			}
 
-			return nil
+			return tx.Commit(cleanupCtx)
 		}()
 		if err != nil {
 			log.Printf("warning: had %v on shutdown cleanup", err)
 		}
 	}()
 
-	err = run(
-		ctx,
-		cancel,
-		enablePassthrough,
-		enableNvidia,
-		camera.StreamURL,
-		durationSeconds,
-		destinationPath,
-		camera.ID,
-		onOpen,
-		onUpdate,
-		onSave,
-	)
-	if err != nil {
-		return err
+	errCh := make(chan error, len(recordings))
+	var wg sync.WaitGroup
+	for _, thisRecording := range recordings {
+		thisRecording := thisRecording
+		streamURL := camera.StreamURL
+		if thisRecording.isLowRes {
+			streamURL = *camera.LowResStreamURL
+		}
+
+		wg.Add(1)
+		go func() {
+			defer wg.Done()
+			err := run(
+				ctx,
+				cancel,
+				enablePassthrough,
+				enableNvidia,
+				streamURL,
+				durationSeconds,
+				destinationPath,
+				camera.ID,
+				thisRecording.isLowRes,
+				thisRecording.onOpen,
+				thisRecording.onUpdate,
+				thisRecording.onSave,
+			)
+			if err != nil {
+				errCh <- err
+				cancel()
+			}
+		}()
 	}
 
-	return nil
+	wg.Wait()
+	select {
+	case err := <-errCh:
+		return err
+	default:
+		return nil
+	}
 }

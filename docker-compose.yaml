@@ -122,7 +122,7 @@ services:
       - sh
       - -c
       - |
-        curl -vvv -X POST http://api:7070/api/cameras -d '[{"name": "Driveway", "stream_url": "rtsp://192.168.137.31:554/Streaming/Channels/101"}, {"name": "Front door", "stream_url": "rtsp://192.168.137.32:554/Streaming/Channels/101"}, {"name": "Side gate", "stream_url": "rtsp://192.168.137.33:554/Streaming/Channels/101"}]'
+        curl -vvv -X POST http://api:7070/api/cameras -d '[{"name": "Driveway", "stream_url": "rtsp://192.168.137.31:554/Streaming/Channels/101", "low_res_stream_url": "rtsp://192.168.137.31:554/Streaming/Channels/102"}, {"name": "Front door", "stream_url": "rtsp://192.168.137.32:554/Streaming/Channels/101", "low_res_stream_url": "rtsp://192.168.137.32:554/Streaming/Channels/102"}, {"name": "Side gate", "stream_url": "rtsp://192.168.137.33:554/Streaming/Channels/101", "low_res_stream_url": "rtsp://192.168.137.33:554/Streaming/Channels/102"}]'
 
   segment-producer-driveway:
     profiles:

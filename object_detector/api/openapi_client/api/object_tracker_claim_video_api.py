@@ -17,7 +17,7 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 from typing_extensions import Annotated
 
 from datetime import datetime
-from pydantic import Field, StrictFloat, StrictInt, StrictStr
+from pydantic import Field, StrictBool, StrictFloat, StrictInt, StrictStr
 from typing import Any, Optional, Union
 from typing_extensions import Annotated
 from openapi_client.models.response_with_generic_of_video import ResponseWithGenericOfVideo
@@ -274,6 +274,18 @@ class ObjectTrackerClaimVideoApi:
         detection_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         detection_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         detection_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_low_res__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
+        is_low_res__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
+        is_low_res__gt: Annotated[Optional[StrictBool], Field(description="SQL > comparison, may not work with all column types")] = None,
+        is_low_res__gte: Annotated[Optional[StrictBool], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        is_low_res__lt: Annotated[Optional[StrictBool], Field(description="SQL < comparison, may not work with all column types")] = None,
+        is_low_res__lte: Annotated[Optional[StrictBool], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        is_low_res__in: Annotated[Optional[StrictBool], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        is_low_res__notin: Annotated[Optional[StrictBool], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        is_low_res__contains: Annotated[Optional[StrictBool], Field(description="SQL @> comparison")] = None,
+        is_low_res__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
+        is_low_res__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_low_res__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -754,6 +766,30 @@ class ObjectTrackerClaimVideoApi:
         :type detection_summary__desc: str
         :param detection_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type detection_summary__asc: str
+        :param is_low_res__eq: SQL = comparison
+        :type is_low_res__eq: bool
+        :param is_low_res__ne: SQL != comparison
+        :type is_low_res__ne: bool
+        :param is_low_res__gt: SQL > comparison, may not work with all column types
+        :type is_low_res__gt: bool
+        :param is_low_res__gte: SQL >= comparison, may not work with all column types
+        :type is_low_res__gte: bool
+        :param is_low_res__lt: SQL < comparison, may not work with all column types
+        :type is_low_res__lt: bool
+        :param is_low_res__lte: SQL <= comparison, may not work with all column types
+        :type is_low_res__lte: bool
+        :param is_low_res__in: SQL IN comparison, permits comma-separated values
+        :type is_low_res__in: bool
+        :param is_low_res__notin: SQL NOT IN comparison, permits comma-separated values
+        :type is_low_res__notin: bool
+        :param is_low_res__contains: SQL @> comparison
+        :type is_low_res__contains: bool
+        :param is_low_res__notcontains: SQL NOT @> comparison
+        :type is_low_res__notcontains: bool
+        :param is_low_res__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type is_low_res__desc: str
+        :param is_low_res__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type is_low_res__asc: str
         :param referenced_by_detection_video_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_video_id_objects__contains: object
         :param referenced_by_detection_video_id_objects__notcontains: SQL NOT @> comparison
@@ -1015,6 +1051,18 @@ class ObjectTrackerClaimVideoApi:
             detection_summary__notcontains=detection_summary__notcontains,
             detection_summary__desc=detection_summary__desc,
             detection_summary__asc=detection_summary__asc,
+            is_low_res__eq=is_low_res__eq,
+            is_low_res__ne=is_low_res__ne,
+            is_low_res__gt=is_low_res__gt,
+            is_low_res__gte=is_low_res__gte,
+            is_low_res__lt=is_low_res__lt,
+            is_low_res__lte=is_low_res__lte,
+            is_low_res__in=is_low_res__in,
+            is_low_res__notin=is_low_res__notin,
+            is_low_res__contains=is_low_res__contains,
+            is_low_res__notcontains=is_low_res__notcontains,
+            is_low_res__desc=is_low_res__desc,
+            is_low_res__asc=is_low_res__asc,
             referenced_by_detection_video_id_objects__contains=referenced_by_detection_video_id_objects__contains,
             referenced_by_detection_video_id_objects__notcontains=referenced_by_detection_video_id_objects__notcontains,
             referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
@@ -1272,6 +1320,18 @@ class ObjectTrackerClaimVideoApi:
         detection_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         detection_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         detection_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_low_res__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
+        is_low_res__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
+        is_low_res__gt: Annotated[Optional[StrictBool], Field(description="SQL > comparison, may not work with all column types")] = None,
+        is_low_res__gte: Annotated[Optional[StrictBool], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        is_low_res__lt: Annotated[Optional[StrictBool], Field(description="SQL < comparison, may not work with all column types")] = None,
+        is_low_res__lte: Annotated[Optional[StrictBool], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        is_low_res__in: Annotated[Optional[StrictBool], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        is_low_res__notin: Annotated[Optional[StrictBool], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        is_low_res__contains: Annotated[Optional[StrictBool], Field(description="SQL @> comparison")] = None,
+        is_low_res__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
+        is_low_res__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_low_res__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -1752,6 +1812,30 @@ class ObjectTrackerClaimVideoApi:
         :type detection_summary__desc: str
         :param detection_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type detection_summary__asc: str
+        :param is_low_res__eq: SQL = comparison
+        :type is_low_res__eq: bool
+        :param is_low_res__ne: SQL != comparison
+        :type is_low_res__ne: bool
+        :param is_low_res__gt: SQL > comparison, may not work with all column types
+        :type is_low_res__gt: bool
+        :param is_low_res__gte: SQL >= comparison, may not work with all column types
+        :type is_low_res__gte: bool
+        :param is_low_res__lt: SQL < comparison, may not work with all column types
+        :type is_low_res__lt: bool
+        :param is_low_res__lte: SQL <= comparison, may not work with all column types
+        :type is_low_res__lte: bool
+        :param is_low_res__in: SQL IN comparison, permits comma-separated values
+        :type is_low_res__in: bool
+        :param is_low_res__notin: SQL NOT IN comparison, permits comma-separated values
+        :type is_low_res__notin: bool
+        :param is_low_res__contains: SQL @> comparison
+        :type is_low_res__contains: bool
+        :param is_low_res__notcontains: SQL NOT @> comparison
+        :type is_low_res__notcontains: bool
+        :param is_low_res__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type is_low_res__desc: str
+        :param is_low_res__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type is_low_res__asc: str
         :param referenced_by_detection_video_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_video_id_objects__contains: object
         :param referenced_by_detection_video_id_objects__notcontains: SQL NOT @> comparison
@@ -2013,6 +2097,18 @@ class ObjectTrackerClaimVideoApi:
             detection_summary__notcontains=detection_summary__notcontains,
             detection_summary__desc=detection_summary__desc,
             detection_summary__asc=detection_summary__asc,
+            is_low_res__eq=is_low_res__eq,
+            is_low_res__ne=is_low_res__ne,
+            is_low_res__gt=is_low_res__gt,
+            is_low_res__gte=is_low_res__gte,
+            is_low_res__lt=is_low_res__lt,
+            is_low_res__lte=is_low_res__lte,
+            is_low_res__in=is_low_res__in,
+            is_low_res__notin=is_low_res__notin,
+            is_low_res__contains=is_low_res__contains,
+            is_low_res__notcontains=is_low_res__notcontains,
+            is_low_res__desc=is_low_res__desc,
+            is_low_res__asc=is_low_res__asc,
             referenced_by_detection_video_id_objects__contains=referenced_by_detection_video_id_objects__contains,
             referenced_by_detection_video_id_objects__notcontains=referenced_by_detection_video_id_objects__notcontains,
             referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
@@ -2270,6 +2366,18 @@ class ObjectTrackerClaimVideoApi:
         detection_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         detection_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         detection_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_low_res__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
+        is_low_res__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
+        is_low_res__gt: Annotated[Optional[StrictBool], Field(description="SQL > comparison, may not work with all column types")] = None,
+        is_low_res__gte: Annotated[Optional[StrictBool], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        is_low_res__lt: Annotated[Optional[StrictBool], Field(description="SQL < comparison, may not work with all column types")] = None,
+        is_low_res__lte: Annotated[Optional[StrictBool], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        is_low_res__in: Annotated[Optional[StrictBool], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        is_low_res__notin: Annotated[Optional[StrictBool], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        is_low_res__contains: Annotated[Optional[StrictBool], Field(description="SQL @> comparison")] = None,
+        is_low_res__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
+        is_low_res__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_low_res__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -2750,6 +2858,30 @@ class ObjectTrackerClaimVideoApi:
         :type detection_summary__desc: str
         :param detection_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type detection_summary__asc: str
+        :param is_low_res__eq: SQL = comparison
+        :type is_low_res__eq: bool
+        :param is_low_res__ne: SQL != comparison
+        :type is_low_res__ne: bool
+        :param is_low_res__gt: SQL > comparison, may not work with all column types
+        :type is_low_res__gt: bool
+        :param is_low_res__gte: SQL >= comparison, may not work with all column types
+        :type is_low_res__gte: bool
+        :param is_low_res__lt: SQL < comparison, may not work with all column types
+        :type is_low_res__lt: bool
+        :param is_low_res__lte: SQL <= comparison, may not work with all column types
+        :type is_low_res__lte: bool
+        :param is_low_res__in: SQL IN comparison, permits comma-separated values
+        :type is_low_res__in: bool
+        :param is_low_res__notin: SQL NOT IN comparison, permits comma-separated values
+        :type is_low_res__notin: bool
+        :param is_low_res__contains: SQL @> comparison
+        :type is_low_res__contains: bool
+        :param is_low_res__notcontains: SQL NOT @> comparison
+        :type is_low_res__notcontains: bool
+        :param is_low_res__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type is_low_res__desc: str
+        :param is_low_res__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type is_low_res__asc: str
         :param referenced_by_detection_video_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_video_id_objects__contains: object
         :param referenced_by_detection_video_id_objects__notcontains: SQL NOT @> comparison
@@ -3011,6 +3143,18 @@ class ObjectTrackerClaimVideoApi:
             detection_summary__notcontains=detection_summary__notcontains,
             detection_summary__desc=detection_summary__desc,
             detection_summary__asc=detection_summary__asc,
+            is_low_res__eq=is_low_res__eq,
+            is_low_res__ne=is_low_res__ne,
+            is_low_res__gt=is_low_res__gt,
+            is_low_res__gte=is_low_res__gte,
+            is_low_res__lt=is_low_res__lt,
+            is_low_res__lte=is_low_res__lte,
+            is_low_res__in=is_low_res__in,
+            is_low_res__notin=is_low_res__notin,
+            is_low_res__contains=is_low_res__contains,
+            is_low_res__notcontains=is_low_res__notcontains,
+            is_low_res__desc=is_low_res__desc,
+            is_low_res__asc=is_low_res__asc,
             referenced_by_detection_video_id_objects__contains=referenced_by_detection_video_id_objects__contains,
             referenced_by_detection_video_id_objects__notcontains=referenced_by_detection_video_id_objects__notcontains,
             referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
@@ -3263,6 +3407,18 @@ class ObjectTrackerClaimVideoApi:
         detection_summary__notcontains,
         detection_summary__desc,
         detection_summary__asc,
+        is_low_res__eq,
+        is_low_res__ne,
+        is_low_res__gt,
+        is_low_res__gte,
+        is_low_res__lt,
+        is_low_res__lte,
+        is_low_res__in,
+        is_low_res__notin,
+        is_low_res__contains,
+        is_low_res__notcontains,
+        is_low_res__desc,
+        is_low_res__asc,
         referenced_by_detection_video_id_objects__contains,
         referenced_by_detection_video_id_objects__notcontains,
         referenced_by_detection_video_id_objects__desc,
@@ -5084,6 +5240,54 @@ class ObjectTrackerClaimVideoApi:
         if detection_summary__asc is not None:
             
             _query_params.append(('detection_summary__asc', detection_summary__asc))
+            
+        if is_low_res__eq is not None:
+            
+            _query_params.append(('is_low_res__eq', is_low_res__eq))
+            
+        if is_low_res__ne is not None:
+            
+            _query_params.append(('is_low_res__ne', is_low_res__ne))
+            
+        if is_low_res__gt is not None:
+            
+            _query_params.append(('is_low_res__gt', is_low_res__gt))
+            
+        if is_low_res__gte is not None:
+            
+            _query_params.append(('is_low_res__gte', is_low_res__gte))
+            
+        if is_low_res__lt is not None:
+            
+            _query_params.append(('is_low_res__lt', is_low_res__lt))
+            
+        if is_low_res__lte is not None:
+            
+            _query_params.append(('is_low_res__lte', is_low_res__lte))
+            
+        if is_low_res__in is not None:
+            
+            _query_params.append(('is_low_res__in', is_low_res__in))
+            
+        if is_low_res__notin is not None:
+            
+            _query_params.append(('is_low_res__notin', is_low_res__notin))
+            
+        if is_low_res__contains is not None:
+            
+            _query_params.append(('is_low_res__contains', is_low_res__contains))
+            
+        if is_low_res__notcontains is not None:
+            
+            _query_params.append(('is_low_res__notcontains', is_low_res__notcontains))
+            
+        if is_low_res__desc is not None:
+            
+            _query_params.append(('is_low_res__desc', is_low_res__desc))
+            
+        if is_low_res__asc is not None:
+            
+            _query_params.append(('is_low_res__asc', is_low_res__asc))
             
         if referenced_by_detection_video_id_objects__contains is not None:
             

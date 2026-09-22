@@ -359,10 +359,13 @@ func Run() error {
 
 			now := internal.GetNow()
 			camera.LastSeen = now
-			camera.SegmentProducerClaimedUntil = time.Time{}
 			camera.StreamProducerClaimedUntil = now.Add(claimRefreshDuration)
 
-			err = camera.Update(ctx, tx, false)
+			err = camera.UpdateFields(ctx, tx, map[string]any{
+				api.CameraTableLastSeenColumn:                   camera.LastSeen,
+				api.CameraTableStreamProducerClaimedUntilColumn: camera.StreamProducerClaimedUntil,
+				api.CameraTableUpdatedAtColumn:                  time.Now().UTC(),
+			})
 			if err != nil {
 				return err
 			}
@@ -396,10 +399,13 @@ func Run() error {
 		}()
 
 		camera.LastSeen = timestamp
-		camera.SegmentProducerClaimedUntil = time.Time{}
 		camera.StreamProducerClaimedUntil = timestamp.Add(claimRefreshDuration)
 
-		err = camera.Update(ctx, tx, false)
+		err = camera.UpdateFields(ctx, tx, map[string]any{
+			api.CameraTableLastSeenColumn:                   camera.LastSeen,
+			api.CameraTableStreamProducerClaimedUntilColumn: camera.StreamProducerClaimedUntil,
+			api.CameraTableUpdatedAtColumn:                  time.Now().UTC(),
+		})
 		if err != nil {
 			return err
 		}
@@ -427,10 +433,13 @@ func Run() error {
 			}()
 
 			if camera != nil {
-				camera.SegmentProducerClaimedUntil = time.Time{} // zero to ensure we don't wipe out an existing value
 				camera.StreamProducerClaimedUntil = internal.GetNow()
 
-				err = camera.Update(ctx, tx, false)
+				err = camera.UpdateFields(ctx, tx, map[string]any{
+					api.CameraTableLastSeenColumn:                   camera.LastSeen,
+					api.CameraTableStreamProducerClaimedUntilColumn: camera.StreamProducerClaimedUntil,
+					api.CameraTableUpdatedAtColumn:                  time.Now().UTC(),
+				})
 				if err != nil {
 					return err
 				}

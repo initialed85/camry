@@ -23,6 +23,7 @@ RUN dpkg-reconfigure -f noninteractive tzdata
 # COPY --from=builder /srv/bin/segment-producer /srv/bin/segment-producer
 
 COPY ./tmp/segment-producer /srv/bin/segment-producer
+COPY ./tmp/fix-thumbnails /srv/bin/fix-thumbnails
 
 RUN mkdir /srv/media
 

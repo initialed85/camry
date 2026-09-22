@@ -31,6 +31,7 @@ class Camera(BaseModel):
     deleted_at: Optional[datetime] = None
     id: Optional[StrictStr] = None
     last_seen: Optional[datetime] = None
+    low_res_stream_url: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
     referenced_by_detection_camera_id_objects: Optional[List[Detection]] = None
     referenced_by_video_camera_id_objects: Optional[List[Video]] = None
@@ -38,7 +39,7 @@ class Camera(BaseModel):
     stream_producer_claimed_until: Optional[datetime] = None
     stream_url: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "name", "referenced_by_detection_camera_id_objects", "referenced_by_video_camera_id_objects", "segment_producer_claimed_until", "stream_producer_claimed_until", "stream_url", "updated_at"]
+    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "low_res_stream_url", "name", "referenced_by_detection_camera_id_objects", "referenced_by_video_camera_id_objects", "segment_producer_claimed_until", "stream_producer_claimed_until", "stream_url", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -109,6 +110,7 @@ class Camera(BaseModel):
             "deleted_at": obj.get("deleted_at"),
             "id": obj.get("id"),
             "last_seen": obj.get("last_seen"),
+            "low_res_stream_url": obj.get("low_res_stream_url"),
             "name": obj.get("name"),
             "referenced_by_detection_camera_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_camera_id_objects"]] if obj.get("referenced_by_detection_camera_id_objects") is not None else None,
             "referenced_by_video_camera_id_objects": [Video.from_dict(_item) for _item in obj["referenced_by_video_camera_id_objects"]] if obj.get("referenced_by_video_camera_id_objects") is not None else None,

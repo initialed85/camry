@@ -8,6 +8,7 @@ Name | Type | Description | Notes
 **DeletedAt** | Pointer to **time.Time** |  | [optional] 
 **Id** | Pointer to **string** |  | [optional] 
 **LastSeen** | Pointer to **time.Time** |  | [optional] 
+**LowResStreamUrl** | Pointer to **string** |  | [optional] 
 **Name** | Pointer to **string** |  | [optional] 
 **ReferencedByDetectionCameraIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
 **ReferencedByVideoCameraIdObjects** | Pointer to [**[]Video**](Video.md) |  | [optional] 
@@ -134,6 +135,31 @@ SetLastSeen sets LastSeen field to given value.
 `func (o *Camera) HasLastSeen() bool`
 
 HasLastSeen returns a boolean if a field has been set.
+
+### GetLowResStreamUrl
+
+`func (o *Camera) GetLowResStreamUrl() string`
+
+GetLowResStreamUrl returns the LowResStreamUrl field if non-nil, zero value otherwise.
+
+### GetLowResStreamUrlOk
+
+`func (o *Camera) GetLowResStreamUrlOk() (*string, bool)`
+
+GetLowResStreamUrlOk returns a tuple with the LowResStreamUrl field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetLowResStreamUrl
+
+`func (o *Camera) SetLowResStreamUrl(v string)`
+
+SetLowResStreamUrl sets LowResStreamUrl field to given value.
+
+### HasLowResStreamUrl
+
+`func (o *Camera) HasLowResStreamUrl() bool`
+
+HasLowResStreamUrl returns a boolean if a field has been set.
 
 ### GetName
 

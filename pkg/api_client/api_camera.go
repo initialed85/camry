@@ -395,6 +395,22 @@ type ApiGetCamerasRequest struct {
 	streamProducerClaimedUntilNotilike *time.Time
 	streamProducerClaimedUntilDesc *string
 	streamProducerClaimedUntilAsc *string
+	lowResStreamUrlEq *string
+	lowResStreamUrlNe *string
+	lowResStreamUrlGt *string
+	lowResStreamUrlGte *string
+	lowResStreamUrlLt *string
+	lowResStreamUrlLte *string
+	lowResStreamUrlIn *string
+	lowResStreamUrlNotin *string
+	lowResStreamUrlContains *string
+	lowResStreamUrlNotcontains *string
+	lowResStreamUrlLike *string
+	lowResStreamUrlNotlike *string
+	lowResStreamUrlIlike *string
+	lowResStreamUrlNotilike *string
+	lowResStreamUrlDesc *string
+	lowResStreamUrlAsc *string
 	referencedByDetectionCameraIdObjectsContains *interface{}
 	referencedByDetectionCameraIdObjectsNotcontains *interface{}
 	referencedByDetectionCameraIdObjectsDesc *string
@@ -1299,6 +1315,102 @@ func (r ApiGetCamerasRequest) StreamProducerClaimedUntilAsc(streamProducerClaime
 	return r
 }
 
+// SQL &#x3D; comparison
+func (r ApiGetCamerasRequest) LowResStreamUrlEq(lowResStreamUrlEq string) ApiGetCamerasRequest {
+	r.lowResStreamUrlEq = &lowResStreamUrlEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetCamerasRequest) LowResStreamUrlNe(lowResStreamUrlNe string) ApiGetCamerasRequest {
+	r.lowResStreamUrlNe = &lowResStreamUrlNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetCamerasRequest) LowResStreamUrlGt(lowResStreamUrlGt string) ApiGetCamerasRequest {
+	r.lowResStreamUrlGt = &lowResStreamUrlGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetCamerasRequest) LowResStreamUrlGte(lowResStreamUrlGte string) ApiGetCamerasRequest {
+	r.lowResStreamUrlGte = &lowResStreamUrlGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetCamerasRequest) LowResStreamUrlLt(lowResStreamUrlLt string) ApiGetCamerasRequest {
+	r.lowResStreamUrlLt = &lowResStreamUrlLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetCamerasRequest) LowResStreamUrlLte(lowResStreamUrlLte string) ApiGetCamerasRequest {
+	r.lowResStreamUrlLte = &lowResStreamUrlLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetCamerasRequest) LowResStreamUrlIn(lowResStreamUrlIn string) ApiGetCamerasRequest {
+	r.lowResStreamUrlIn = &lowResStreamUrlIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetCamerasRequest) LowResStreamUrlNotin(lowResStreamUrlNotin string) ApiGetCamerasRequest {
+	r.lowResStreamUrlNotin = &lowResStreamUrlNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetCamerasRequest) LowResStreamUrlContains(lowResStreamUrlContains string) ApiGetCamerasRequest {
+	r.lowResStreamUrlContains = &lowResStreamUrlContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetCamerasRequest) LowResStreamUrlNotcontains(lowResStreamUrlNotcontains string) ApiGetCamerasRequest {
+	r.lowResStreamUrlNotcontains = &lowResStreamUrlNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetCamerasRequest) LowResStreamUrlLike(lowResStreamUrlLike string) ApiGetCamerasRequest {
+	r.lowResStreamUrlLike = &lowResStreamUrlLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetCamerasRequest) LowResStreamUrlNotlike(lowResStreamUrlNotlike string) ApiGetCamerasRequest {
+	r.lowResStreamUrlNotlike = &lowResStreamUrlNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetCamerasRequest) LowResStreamUrlIlike(lowResStreamUrlIlike string) ApiGetCamerasRequest {
+	r.lowResStreamUrlIlike = &lowResStreamUrlIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetCamerasRequest) LowResStreamUrlNotilike(lowResStreamUrlNotilike string) ApiGetCamerasRequest {
+	r.lowResStreamUrlNotilike = &lowResStreamUrlNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) LowResStreamUrlDesc(lowResStreamUrlDesc string) ApiGetCamerasRequest {
+	r.lowResStreamUrlDesc = &lowResStreamUrlDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) LowResStreamUrlAsc(lowResStreamUrlAsc string) ApiGetCamerasRequest {
+	r.lowResStreamUrlAsc = &lowResStreamUrlAsc
+	return r
+}
+
 // SQL @&gt; comparison
 func (r ApiGetCamerasRequest) ReferencedByDetectionCameraIdObjectsContains(referencedByDetectionCameraIdObjectsContains interface{}) ApiGetCamerasRequest {
 	r.referencedByDetectionCameraIdObjectsContains = &referencedByDetectionCameraIdObjectsContains
@@ -1831,6 +1943,54 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	}
 	if r.streamProducerClaimedUntilAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "stream_producer_claimed_until__asc", r.streamProducerClaimedUntilAsc, "")
+	}
+	if r.lowResStreamUrlEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__eq", r.lowResStreamUrlEq, "")
+	}
+	if r.lowResStreamUrlNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__ne", r.lowResStreamUrlNe, "")
+	}
+	if r.lowResStreamUrlGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__gt", r.lowResStreamUrlGt, "")
+	}
+	if r.lowResStreamUrlGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__gte", r.lowResStreamUrlGte, "")
+	}
+	if r.lowResStreamUrlLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__lt", r.lowResStreamUrlLt, "")
+	}
+	if r.lowResStreamUrlLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__lte", r.lowResStreamUrlLte, "")
+	}
+	if r.lowResStreamUrlIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__in", r.lowResStreamUrlIn, "")
+	}
+	if r.lowResStreamUrlNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__notin", r.lowResStreamUrlNotin, "")
+	}
+	if r.lowResStreamUrlContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__contains", r.lowResStreamUrlContains, "")
+	}
+	if r.lowResStreamUrlNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__notcontains", r.lowResStreamUrlNotcontains, "")
+	}
+	if r.lowResStreamUrlLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__like", r.lowResStreamUrlLike, "")
+	}
+	if r.lowResStreamUrlNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__notlike", r.lowResStreamUrlNotlike, "")
+	}
+	if r.lowResStreamUrlIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__ilike", r.lowResStreamUrlIlike, "")
+	}
+	if r.lowResStreamUrlNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__notilike", r.lowResStreamUrlNotilike, "")
+	}
+	if r.lowResStreamUrlDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__desc", r.lowResStreamUrlDesc, "")
+	}
+	if r.lowResStreamUrlAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "low_res_stream_url__asc", r.lowResStreamUrlAsc, "")
 	}
 	if r.referencedByDetectionCameraIdObjectsContains != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__contains", r.referencedByDetectionCameraIdObjectsContains, "")

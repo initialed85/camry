@@ -52,7 +52,7 @@ DJANGOLANG_API_ROOT=/api DJANGOLANG_PACKAGE_NAME=api POSTGRES_DB=camry POSTGRES_
 
 # dump out the OpenAPI v3 schema for the Djangolang API
 mkdir -p ./schema
-# DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
+DJANGOLANG_API_ROOT=/api ./pkg/api/bin/api dump-openapi-json >./schema/openapi.json
 go build -o ./cmd/api/api ./cmd/api
 
 # TODO: we need this because custom endpoints don't come out in a plain old dump-openapi-json call

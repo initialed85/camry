@@ -8213,6 +8213,9 @@ pub(crate) struct PostObjectDetectorClaimVideosRequest {
     pub(crate) status_asc: Option<String>,
     ///SQL = comparison
     ///- Location: `Query`
+    pub(crate) is_low_res_eq: Option<bool>,
+    ///SQL = comparison
+    ///- Location: `Query`
     pub(crate) object_detector_claimed_until_eq: Option<chrono::DateTime<chrono::Utc>>,
     ///SQL != comparison
     ///- Location: `Query`
@@ -9975,6 +9978,15 @@ impl PostObjectDetectorClaimVideosRequest {
             prefix = if prefix == '\0' { '?' } else { '&' };
             write!(
                 & mut path, "{prefix}status__asc={}",
+                oas3_gen_support::percent_encode_query_component(&
+                oas3_gen_support::serialize_query_param(value) ?)
+            )
+                .unwrap();
+        }
+        if let Some(value) = &self.is_low_res_eq {
+            prefix = if prefix == '\0' { '?' } else { '&' };
+            write!(
+                & mut path, "{prefix}is_low_res__eq={}",
                 oas3_gen_support::percent_encode_query_component(&
                 oas3_gen_support::serialize_query_param(value) ?)
             )

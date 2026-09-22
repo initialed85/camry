@@ -24,6 +24,7 @@ type Camera struct {
 	DeletedAt *time.Time `json:"deleted_at,omitempty"`
 	Id *string `json:"id,omitempty"`
 	LastSeen *time.Time `json:"last_seen,omitempty"`
+	LowResStreamUrl *string `json:"low_res_stream_url,omitempty"`
 	Name *string `json:"name,omitempty"`
 	ReferencedByDetectionCameraIdObjects []Detection `json:"referenced_by_detection_camera_id_objects,omitempty"`
 	ReferencedByVideoCameraIdObjects []Video `json:"referenced_by_video_camera_id_objects,omitempty"`
@@ -176,6 +177,38 @@ func (o *Camera) HasLastSeen() bool {
 // SetLastSeen gets a reference to the given time.Time and assigns it to the LastSeen field.
 func (o *Camera) SetLastSeen(v time.Time) {
 	o.LastSeen = &v
+}
+
+// GetLowResStreamUrl returns the LowResStreamUrl field value if set, zero value otherwise.
+func (o *Camera) GetLowResStreamUrl() string {
+	if o == nil || IsNil(o.LowResStreamUrl) {
+		var ret string
+		return ret
+	}
+	return *o.LowResStreamUrl
+}
+
+// GetLowResStreamUrlOk returns a tuple with the LowResStreamUrl field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Camera) GetLowResStreamUrlOk() (*string, bool) {
+	if o == nil || IsNil(o.LowResStreamUrl) {
+		return nil, false
+	}
+	return o.LowResStreamUrl, true
+}
+
+// HasLowResStreamUrl returns a boolean if a field has been set.
+func (o *Camera) HasLowResStreamUrl() bool {
+	if o != nil && !IsNil(o.LowResStreamUrl) {
+		return true
+	}
+
+	return false
+}
+
+// SetLowResStreamUrl gets a reference to the given string and assigns it to the LowResStreamUrl field.
+func (o *Camera) SetLowResStreamUrl(v string) {
+	o.LowResStreamUrl = &v
 }
 
 // GetName returns the Name field value if set, zero value otherwise.
@@ -423,6 +456,9 @@ func (o Camera) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.LastSeen) {
 		toSerialize["last_seen"] = o.LastSeen
+	}
+	if !IsNil(o.LowResStreamUrl) {
+		toSerialize["low_res_stream_url"] = o.LowResStreamUrl
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
