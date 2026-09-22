@@ -12,6 +12,8 @@ interface VideoJSProps {
     width: number,
     height: number,
     relativeTimeMilliseconds: number,
+    sourceWidth: number,
+    sourceHeight: number,
   ) => void;
 }
 
@@ -50,6 +52,8 @@ export const VideoJS = (props: VideoJSProps) => {
             rect.width,
             rect.height,
             relativeTimeSeconds * 1_000.0,
+            player.videoWidth(),
+            player.videoHeight(),
           );
 
           player.requestAnimationFrame(() => {

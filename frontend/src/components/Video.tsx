@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useQuery } from "../api";
 import { components } from "../api/api";
 import VideoJS from "./VideoJS";
@@ -7,6 +7,31 @@ type Detection = components["schemas"]["Detection"];
 
 type Point = components["schemas"]["Detection"]["centroid"];
 
+type FrameDimensions = {
+  width: number;
+  height: number;
+};
+
+const fallbackFrameDimensions: FrameDimensions = {
+  width: 3840,
+  height: 2160,
+};
+
+const detectionMatchWindowMilliseconds = 250;
+
+function getLowResFileName(fileName: string | undefined): string | undefined {
+  if (!fileName || fileName.includes("_low_res.")) {
+    return undefined;
+  }
+
+  const extensionIndex = fileName.lastIndexOf(".");
+  if (extensionIndex < 0) {
+    return `${fileName}_low_res`;
+  }
+
+  return `${fileName.slice(0, extensionIndex)}_low_res${fileName.slice(extensionIndex)}`;
+}
+
 export interface VideoProps {
   video: components["schemas"]["Video"];
   width: number;
@@ -14,34 +39,85 @@ export interface VideoProps {
 }
 
 export function Video(props: VideoProps) {
-  const { isLoading, error, data } = useQuery("get", "/api/detections", {
-    params: {
-      query: { video_id__eq: props.video?.id || "", limit: 1_000_000 },
-    },
-  });
+  const lowResFileName = getLowResFileName(props.video.file_name);
+  const shouldFindLowResVideo =
+    props.video.is_low_res !== true && Boolean(lowResFileName);
 
-  const enrichedDetectionsRef = useRef<components["schemas"]["Detection"][]>(
-    [],
+  // Detection runs against the low-resolution recording, while the UI plays
+  // the matching high-resolution recording. Find that sibling so that we can
+  // load its detections and use its start time for timeline matching.
+  const { data: lowResVideosData, isLoading: isLowResVideoLoading } = useQuery(
+    "get",
+    "/api/videos",
+    {
+      params: {
+        query: {
+          file_name__eq: lowResFileName || "",
+          is_low_res__eq: true,
+          limit: 1,
+        },
+      },
+    },
+    { enabled: shouldFindLowResVideo },
   );
+
+  const lowResVideo = lowResVideosData?.objects?.[0];
+  const detectionVideo = lowResVideo || props.video;
+  const detectionVideoId = detectionVideo.id || "";
+  const detectionVideoStartedAtRef = useRef(
+    Date.parse(detectionVideo.started_at || props.video.started_at || ""),
+  );
+
+  useEffect(() => {
+    detectionVideoStartedAtRef.current = Date.parse(
+      detectionVideo.started_at || props.video.started_at || "",
+    );
+  }, [detectionVideo.started_at, props.video.started_at]);
+
+  const { isLoading, error, data } = useQuery(
+    "get",
+    "/api/detections",
+    {
+      params: {
+        query: { video_id__eq: detectionVideoId, limit: 1_000_000 },
+      },
+    },
+    {
+      enabled:
+        Boolean(detectionVideoId) &&
+        (!shouldFindLowResVideo || !isLowResVideoLoading),
+    },
+  );
+
+  const [lowResDimensions, setLowResDimensions] =
+    useState<FrameDimensions | null>(null);
+  const detectionFrameDimensionsRef = useRef<FrameDimensions>(
+    fallbackFrameDimensions,
+  );
+  const detectingLowResVideoRef = useRef(Boolean(lowResVideo));
+
+  useEffect(() => {
+    setLowResDimensions(null);
+  }, [lowResVideo?.file_name]);
+
+  useEffect(() => {
+    detectingLowResVideoRef.current = Boolean(lowResVideo);
+    detectionFrameDimensionsRef.current =
+      lowResDimensions || fallbackFrameDimensions;
+  }, [lowResDimensions, lowResVideo]);
+
+  const enrichedDetectionsRef = useRef<Detection[]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const readyRef = useRef(false);
 
   useEffect(() => {
-    if (enrichedDetectionsRef.current?.length) {
-      return;
-    }
-
-    let enrichedDetections: Detection[] = [];
+    const enrichedDetections: Detection[] = [];
 
     const detections: Detection[] = data?.objects || [];
     detections.forEach((detection: Detection) => {
-      if (!detection?.score) {
+      if (detection?.score === undefined) {
         return;
       }
-
-      // if (detection.score < 0.33) {
-      //   return false;
-      // }
 
       const boundingBoxPoints: Point[] = [];
       detection?.bounding_box?.forEach((point) => {
@@ -63,7 +139,38 @@ export function Video(props: VideoProps) {
     enrichedDetectionsRef.current = enrichedDetections;
   }, [data?.objects]);
 
-  const absoluteTimeMillisecondsRef = Date.parse(props.video.started_at || "");
+  const lowResMetadataVideo = lowResVideo?.file_name ? (
+    <video
+      aria-hidden="true"
+      muted
+      playsInline
+      preload="metadata"
+      src={`/media/${lowResVideo.file_name}`}
+      style={{
+        position: "absolute",
+        width: 1,
+        height: 1,
+        opacity: 0,
+        pointerEvents: "none",
+      }}
+      onLoadedMetadata={(event) => {
+        const target = event.currentTarget;
+        if (target.videoWidth > 0 && target.videoHeight > 0) {
+          setLowResDimensions({
+            width: target.videoWidth,
+            height: target.videoHeight,
+          });
+        } else {
+          setLowResDimensions(fallbackFrameDimensions);
+        }
+      }}
+      onError={() => {
+        // Keep the overlay usable if the low-res media is no longer available;
+        // detections still have the canonical fallback dimensions.
+        setLowResDimensions(fallbackFrameDimensions);
+      }}
+    />
+  ) : null;
 
   if (error) {
     console.warn(error);
@@ -74,20 +181,29 @@ export function Video(props: VideoProps) {
     );
   }
 
-  if (isLoading) {
-    return null;
+  // Wait for the low-res metadata before starting playback so the first
+  // rendered frame uses the right coordinate system rather than jumping later.
+  if (
+    isLoading ||
+    (shouldFindLowResVideo && isLowResVideoLoading) ||
+    (lowResVideo?.file_name && !lowResDimensions)
+  ) {
+    return lowResMetadataVideo;
   }
 
   return (
     <>
+      {lowResMetadataVideo}
       <canvas
         ref={canvasRef}
         style={{
           position: "absolute",
-          display: "inline",
+          display: "block",
           zIndex: 500,
-          padding: 0,
-          margin: 0,
+          left: 0,
+          top: 0,
+          width: 0,
+          height: 0,
           cursor: "not-allowed",
           pointerEvents: "none",
         }}
@@ -121,23 +237,46 @@ export function Video(props: VideoProps) {
           width: number,
           height: number,
           relativeTimeMilliseconds: number,
+          sourceWidth: number,
+          sourceHeight: number,
         ) => {
           if (!canvasRef.current) {
             return;
           }
 
-          const canvas = canvasRef.current as HTMLCanvasElement;
+          const canvas = canvasRef.current;
 
-          const firstUpdate = canvas.style.left === "0px";
+          // The canvas is an absolute child of the modal. Convert the video's
+          // viewport rect to that containing block so the overlay stays aligned
+          // when the modal is moved or resized.
+          const offsetParentRect = canvas.offsetParent?.getBoundingClientRect();
+          const parentLeft = offsetParentRect?.left || 0;
+          const parentTop = offsetParentRect?.top || 0;
+          canvas.style.left = `${left - parentLeft}px`;
+          canvas.style.top = `${top - parentTop}px`;
+          canvas.style.width = `${width}px`;
+          canvas.style.height = `${height}px`;
+          canvas.width = Math.max(1, Math.round(width));
+          canvas.height = Math.max(1, Math.round(height));
 
-          canvas.width = width;
-          canvas.height = height;
-
-          if (!readyRef?.current) {
+          if (!readyRef.current) {
             return;
           }
 
-          const ctx = canvas.getContext("2d") as CanvasRenderingContext2D;
+          // When detections are for the high-res video, use the actual source
+          // dimensions reported by video.js instead of a hard-coded resolution.
+          if (
+            !detectingLowResVideoRef.current &&
+            sourceWidth > 0 &&
+            sourceHeight > 0
+          ) {
+            detectionFrameDimensionsRef.current = {
+              width: sourceWidth,
+              height: sourceHeight,
+            };
+          }
+
+          const ctx = canvas.getContext("2d");
           if (!ctx) {
             return;
           }
@@ -148,23 +287,23 @@ export function Video(props: VideoProps) {
 
           ctx.clearRect(0, 0, width, height);
 
-          if (firstUpdate) {
-            return;
-          }
-
-          const scaleX = width / 3840;
-          const scaleY = height / 2160;
-
-          const absoluteTimeMilliseconds =
-            absoluteTimeMillisecondsRef + relativeTimeMilliseconds;
+          const frameDimensions = detectionFrameDimensionsRef.current;
+          const scaleX = width / frameDimensions.width;
+          const scaleY = height / frameDimensions.height;
+          const detectionVideoStartedAt = detectionVideoStartedAtRef.current;
 
           const enrichedDetections = enrichedDetectionsRef.current || [];
           enrichedDetections.forEach((detection: Detection) => {
+            const detectionTimestamp = Date.parse(detection.seen_at || "");
+            const detectionRelativeTimeMilliseconds =
+              detectionTimestamp - detectionVideoStartedAt;
             const deltaMilliseconds =
-              absoluteTimeMilliseconds -
-              new Date(detection.seen_at || "").getTime();
+              relativeTimeMilliseconds - detectionRelativeTimeMilliseconds;
 
-            if (deltaMilliseconds < 0 || deltaMilliseconds > 1_00) {
+            if (
+              !Number.isFinite(deltaMilliseconds) ||
+              Math.abs(deltaMilliseconds) > detectionMatchWindowMilliseconds
+            ) {
               return;
             }
 
@@ -215,7 +354,6 @@ export function Video(props: VideoProps) {
             grad.addColorStop(1.0, `rgba(31, 31, 255, 1.0)`);
 
             ctx.lineWidth = lineWidth;
-            // ctx.strokeStyle = `rgba(255, 0, 0, 0.77)`;
             ctx.strokeStyle = grad;
 
             ctx.fillStyle = `rgba(255, 255, 255, 0.99)`;
@@ -223,30 +361,26 @@ export function Video(props: VideoProps) {
             ctx.textAlign = "left";
             ctx.textRendering = "optimizeLegibility";
 
-            if (deltaMilliseconds <= 200) {
-              ctx.fillText(
-                `${detection.class_name} @ ${detection.score.toFixed(2)}`,
-                topLeftX + textOffsetX,
-                bottomRightY - textOffsetY,
-              );
+            ctx.fillText(
+              `${detection.class_name} @ ${detection.score.toFixed(2)}`,
+              topLeftX + textOffsetX,
+              bottomRightY - textOffsetY,
+            );
 
-              ctx.strokeRect(
-                topLeftX,
-                topLeftY,
-                Math.abs(bottomRightX - topLeftX),
-                Math.abs(bottomRightY - topLeftY),
-              );
-            }
+            ctx.strokeRect(
+              topLeftX,
+              topLeftY,
+              Math.abs(bottomRightX - topLeftX),
+              Math.abs(bottomRightY - topLeftY),
+            );
 
-            const color = (1.0 - deltaMilliseconds / 5_000) * 255;
-            const alpha = 1.0 - deltaMilliseconds / 5_000;
+            const age = Math.abs(deltaMilliseconds);
+            const alpha = 1.0 - age / detectionMatchWindowMilliseconds;
+            const color = alpha * 255;
 
             ctx.strokeStyle = `rgba(${color}, ${color}, ${color}, ${alpha})`;
-
             ctx.beginPath();
-
             ctx.arc(centroidX, centroidY, centroidRadius, 0, Math.PI * 2);
-
             ctx.stroke();
           });
         }}

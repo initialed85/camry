@@ -9,10 +9,10 @@ RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 WORKDIR /srv/
 
 COPY ./object_detector/requirements.txt /srv/
-RUN python3 -m pip install -r requirements.txt
+RUN python3 -m pip install -r requirements.txt --break-system-packages
 
 COPY ./object_detector/api/requirements.txt /srv/api/
-RUN python3 -m pip install -r api/requirements.txt
+RUN python3 -m pip install -r api/requirements.txt --break-system-packages
 
 COPY object_detector /srv/object_detector
 COPY yolov8n.pt /srv/

@@ -99,6 +99,27 @@ def do(
         if video.file_name is None:
             continue
 
+        # The detector intentionally claims the low-resolution recording, but
+        # the frontend displays the paired high-resolution recording. Keep the
+        # high-resolution row's status/summary in sync after inference so the
+        # normal video list still shows what was detected.
+        high_res_video: Optional[Video] = None
+        if video.file_name.endswith("_low_res.mp4"):
+            high_res_file_name = f"{video.file_name[:-len('_low_res.mp4')]}.mp4"
+            high_res_videos_response = video_api.get_videos(
+                file_name__eq=high_res_file_name,
+                limit=1,
+                _request_timeout=10,
+            )
+            high_res_video = next(
+                (
+                    candidate
+                    for candidate in (high_res_videos_response.objects or [])
+                    if candidate and candidate.id
+                ),
+                None,
+            )
+
         video_api.patch_video(
             video.id,
             Video(status="detecting"),
@@ -290,15 +311,24 @@ def do(
 
                 before_request = datetime.datetime.now()
 
+                detection_video_update = Video(
+                    status="needs tracking",
+                    detection_summary=detection_summary,
+                    object_tracker_claimed_until=datetime.datetime.now().replace(tzinfo=UTC),
+                )
+
                 video_api.patch_video(
                     video.id,
-                    Video(
-                        status="needs tracking",
-                        detection_summary=detection_summary,
-                        object_tracker_claimed_until=datetime.datetime.now().replace(tzinfo=UTC),
-                    ),
+                    detection_video_update,
                     _request_timeout=10,
                 )
+
+                if high_res_video and high_res_video.id:
+                    video_api.patch_video(
+                        high_res_video.id,
+                        detection_video_update,
+                        _request_timeout=10,
+                    )
 
                 after = datetime.datetime.now()
 
