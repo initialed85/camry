@@ -108,14 +108,20 @@ def do(
         # high-resolution row's status/summary in sync after inference so the
         # normal video list still shows what was detected.
         high_res_video: Optional[Video] = None
+        high_res_file_name: Optional[str] = None
         if video.file_name.endswith("_low_res.mp4"):
             high_res_file_name = f"{video.file_name[:-len('_low_res.mp4')]}.mp4"
+
+        def find_high_res_video() -> Optional[Video]:
+            if high_res_file_name is None:
+                return None
+
             high_res_videos_response = video_api.get_videos(
                 file_name__eq=high_res_file_name,
                 limit=1,
                 _request_timeout=10,
             )
-            high_res_video = next(
+            return next(
                 (
                     candidate
                     for candidate in (high_res_videos_response.objects or [])
@@ -123,6 +129,8 @@ def do(
                 ),
                 None,
             )
+
+        high_res_video = find_high_res_video()
 
         video_api.patch_video(
             video.id,
@@ -314,6 +322,12 @@ def do(
                     )
 
                 before_request = datetime.datetime.now()
+
+                # The low-res segment can close just before its high-res
+                # sibling. Retry the lookup after inference so the final
+                # status/summary update also repairs that small race.
+                if high_res_file_name is not None and high_res_video is None:
+                    high_res_video = find_high_res_video()
 
                 detection_video_update = Video(
                     status="needs tracking",
