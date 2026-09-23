@@ -1442,7 +1442,7 @@ func ObjectDetectorClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, t
 		tx,
 		where,
 		helpers.Ptr(
-			"object_detector_claimed_until ASC",
+			"object_detector_claimed_until ASC, id ASC",
 		),
 		helpers.Ptr(1),
 		nil,
@@ -1487,7 +1487,7 @@ func ObjectTrackerClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, ti
 		tx,
 		where,
 		helpers.Ptr(
-			"object_tracker_claimed_until ASC",
+			"object_tracker_claimed_until ASC, id ASC",
 		),
 		helpers.Ptr(1),
 		nil,
