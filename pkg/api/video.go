@@ -1423,7 +1423,7 @@ func InsertVideos(ctx context.Context, tx pgx.Tx, objects []*Video, setPrimaryKe
 	return returnedObjects, nil
 }
 
-func ObjectDetectorClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, values ...any) (*Video, error) {
+func ObjectDetectorClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, orderBy *string, values ...any) (*Video, error) {
 	m := &Video{}
 
 	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
@@ -1437,13 +1437,15 @@ func ObjectDetectorClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, t
 
 	where += "    (object_detector_claimed_until IS null OR object_detector_claimed_until < now())"
 
+	if orderBy == nil {
+		orderBy = helpers.Ptr("object_detector_claimed_until ASC, ID ASC")
+	}
+
 	ms, _, _, _, _, err := SelectVideos(
 		ctx,
 		tx,
 		where,
-		helpers.Ptr(
-			"object_detector_claimed_until ASC, id ASC",
-		),
+		orderBy,
 		helpers.Ptr(1),
 		nil,
 		values...,
@@ -1468,7 +1470,7 @@ func ObjectDetectorClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, t
 	return m, nil
 }
 
-func ObjectTrackerClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, values ...any) (*Video, error) {
+func ObjectTrackerClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, orderBy *string, values ...any) (*Video, error) {
 	m := &Video{}
 
 	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
@@ -1482,13 +1484,15 @@ func ObjectTrackerClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, ti
 
 	where += "    (object_tracker_claimed_until IS null OR object_tracker_claimed_until < now())"
 
+	if orderBy == nil {
+		orderBy = helpers.Ptr("object_tracker_claimed_until ASC, ID ASC")
+	}
+
 	ms, _, _, _, _, err := SelectVideos(
 		ctx,
 		tx,
 		where,
-		helpers.Ptr(
-			"object_tracker_claimed_until ASC, id ASC",
-		),
+		orderBy,
 		helpers.Ptr(1),
 		nil,
 		values...,
@@ -1831,7 +1835,7 @@ func MutateRouterForVideo(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool,
 					return server.Response[Video]{}, err
 				}
 
-				object, err := ObjectDetectorClaimVideo(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.Values...)
+				object, err := ObjectDetectorClaimVideo(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.OrderBy, arguments.Values...)
 				if err != nil {
 					return server.Response[Video]{}, err
 				}
@@ -2001,7 +2005,7 @@ func MutateRouterForVideo(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool,
 					return server.Response[Video]{}, err
 				}
 
-				object, err := ObjectTrackerClaimVideo(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.Values...)
+				object, err := ObjectTrackerClaimVideo(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.OrderBy, arguments.Values...)
 				if err != nil {
 					return server.Response[Video]{}, err
 				}

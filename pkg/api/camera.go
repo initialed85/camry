@@ -1150,7 +1150,7 @@ func InsertCameras(ctx context.Context, tx pgx.Tx, objects []*Camera, setPrimary
 	return returnedObjects, nil
 }
 
-func SegmentProducerClaimCamera(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, values ...any) (*Camera, error) {
+func SegmentProducerClaimCamera(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, orderBy *string, values ...any) (*Camera, error) {
 	m := &Camera{}
 
 	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
@@ -1164,13 +1164,15 @@ func SegmentProducerClaimCamera(ctx context.Context, tx pgx.Tx, until time.Time,
 
 	where += "    (segment_producer_claimed_until IS null OR segment_producer_claimed_until < now())"
 
+	if orderBy == nil {
+		orderBy = helpers.Ptr("segment_producer_claimed_until ASC, ID ASC")
+	}
+
 	ms, _, _, _, _, err := SelectCameras(
 		ctx,
 		tx,
 		where,
-		helpers.Ptr(
-			"segment_producer_claimed_until ASC, id ASC",
-		),
+		orderBy,
 		helpers.Ptr(1),
 		nil,
 		values...,
@@ -1195,7 +1197,7 @@ func SegmentProducerClaimCamera(ctx context.Context, tx pgx.Tx, until time.Time,
 	return m, nil
 }
 
-func StreamProducerClaimCamera(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, values ...any) (*Camera, error) {
+func StreamProducerClaimCamera(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, orderBy *string, values ...any) (*Camera, error) {
 	m := &Camera{}
 
 	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
@@ -1209,13 +1211,15 @@ func StreamProducerClaimCamera(ctx context.Context, tx pgx.Tx, until time.Time, 
 
 	where += "    (stream_producer_claimed_until IS null OR stream_producer_claimed_until < now())"
 
+	if orderBy == nil {
+		orderBy = helpers.Ptr("stream_producer_claimed_until ASC, ID ASC")
+	}
+
 	ms, _, _, _, _, err := SelectCameras(
 		ctx,
 		tx,
 		where,
-		helpers.Ptr(
-			"stream_producer_claimed_until ASC, id ASC",
-		),
+		orderBy,
 		helpers.Ptr(1),
 		nil,
 		values...,
@@ -1558,7 +1562,7 @@ func MutateRouterForCamera(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool
 					return server.Response[Camera]{}, err
 				}
 
-				object, err := SegmentProducerClaimCamera(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.Values...)
+				object, err := SegmentProducerClaimCamera(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.OrderBy, arguments.Values...)
 				if err != nil {
 					return server.Response[Camera]{}, err
 				}
@@ -1728,7 +1732,7 @@ func MutateRouterForCamera(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool
 					return server.Response[Camera]{}, err
 				}
 
-				object, err := StreamProducerClaimCamera(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.Values...)
+				object, err := StreamProducerClaimCamera(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.OrderBy, arguments.Values...)
 				if err != nil {
 					return server.Response[Camera]{}, err
 				}

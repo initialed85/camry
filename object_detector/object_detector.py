@@ -57,6 +57,7 @@ def do(
                 # Segment producers leave files as "recording" until ffmpeg
                 # closes them and writes the MP4 moov atom.
                 status__eq="needs detection",
+                started_at__asc="",
                 _request_timeout=70,
             )
             videos = resp.objects
