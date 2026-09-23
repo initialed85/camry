@@ -250,6 +250,8 @@ def do(
                 return detections
 
             def post_detections(detections: list[Detection]):
+                nonlocal high_res_video
+
                 if detections:
                     print(f"posting {len(detections)} detections")
 
