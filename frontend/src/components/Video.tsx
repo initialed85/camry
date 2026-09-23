@@ -5,7 +5,9 @@ import VideoJS from "./VideoJS";
 
 type Detection = components["schemas"]["Detection"];
 
-type Point = components["schemas"]["Detection"]["centroid"];
+type EnrichedDetection = Detection & {
+  timestampMilliseconds: number;
+};
 
 type FrameDimensions = {
   width: number;
@@ -18,6 +20,40 @@ const fallbackFrameDimensions: FrameDimensions = {
 };
 
 const detectionFrameMatchWindowMilliseconds = 100;
+
+function findClosestTimestamp(
+  timestamps: number[],
+  targetMilliseconds: number,
+): number | undefined {
+  let low = 0;
+  let high = timestamps.length;
+
+  while (low < high) {
+    const middle = Math.floor((low + high) / 2);
+    if (timestamps[middle] < targetMilliseconds) {
+      low = middle + 1;
+    } else {
+      high = middle;
+    }
+  }
+
+  let closestTimestamp: number | undefined;
+  let closestDistance = Number.POSITIVE_INFINITY;
+  for (const index of [low - 1, low]) {
+    if (index < 0 || index >= timestamps.length) {
+      continue;
+    }
+
+    const timestamp = timestamps[index];
+    const distance = Math.abs(timestamp - targetMilliseconds);
+    if (distance < closestDistance) {
+      closestTimestamp = timestamp;
+      closestDistance = distance;
+    }
+  }
+
+  return closestTimestamp;
+}
 
 function getLowResFileName(fileName: string | undefined): string | undefined {
   if (!fileName || fileName.includes("_low_res.")) {
@@ -64,15 +100,19 @@ export function Video(props: VideoProps) {
   const lowResVideo = lowResVideosData?.objects?.[0];
   const detectionVideo = lowResVideo || props.video;
   const detectionVideoId = detectionVideo.id || "";
-  const detectionVideoStartedAtRef = useRef(
-    Date.parse(detectionVideo.started_at || props.video.started_at || ""),
+  // Detection timestamps are absolute wall-clock times. Playback time starts
+  // at zero for the high-resolution source, so anchor them to that source's
+  // recorded start rather than the low-resolution detector source. The two
+  // segment writers can start a few hundred milliseconds apart.
+  const playbackVideoStartedAtRef = useRef(
+    Date.parse(props.video.started_at || ""),
   );
 
   useEffect(() => {
-    detectionVideoStartedAtRef.current = Date.parse(
-      detectionVideo.started_at || props.video.started_at || "",
+    playbackVideoStartedAtRef.current = Date.parse(
+      props.video.started_at || "",
     );
-  }, [detectionVideo.started_at, props.video.started_at]);
+  }, [props.video.started_at]);
 
   const { isLoading, error, data } = useQuery(
     "get",
@@ -106,12 +146,15 @@ export function Video(props: VideoProps) {
       lowResDimensions || fallbackFrameDimensions;
   }, [lowResDimensions, lowResVideo]);
 
-  const enrichedDetectionsRef = useRef<Detection[]>([]);
+  const detectionsByTimestampRef = useRef<Map<number, EnrichedDetection[]>>(
+    new Map(),
+  );
+  const detectionTimestampsRef = useRef<number[]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const readyRef = useRef(false);
 
   useEffect(() => {
-    const enrichedDetections: Detection[] = [];
+    const detectionsByTimestamp = new Map<number, EnrichedDetection[]>();
 
     const detections: Detection[] = data?.objects || [];
     detections.forEach((detection: Detection) => {
@@ -119,24 +162,25 @@ export function Video(props: VideoProps) {
         return;
       }
 
-      const boundingBoxPoints: Point[] = [];
-      detection?.bounding_box?.forEach((point) => {
-        boundingBoxPoints.push(point);
-      });
+      const timestampMilliseconds = Date.parse(detection?.seen_at || "");
+      if (!Number.isFinite(timestampMilliseconds)) {
+        return;
+      }
 
-      const centroidPoint = detection?.centroid;
-
-      const enrichedDetection = {
+      const enrichedDetection: EnrichedDetection = {
         ...detection,
-        timestampMilliseconds: Date.parse(detection?.seen_at || ""),
-        boundingBoxPoints,
-        centroidPoint,
+        timestampMilliseconds,
       };
-
-      enrichedDetections.push(enrichedDetection);
+      const frameDetections =
+        detectionsByTimestamp.get(timestampMilliseconds) || [];
+      frameDetections.push(enrichedDetection);
+      detectionsByTimestamp.set(timestampMilliseconds, frameDetections);
     });
 
-    enrichedDetectionsRef.current = enrichedDetections;
+    detectionsByTimestampRef.current = detectionsByTimestamp;
+    detectionTimestampsRef.current = Array.from(
+      detectionsByTimestamp.keys(),
+    ).sort((a, b) => a - b);
   }, [data?.objects]);
 
   const lowResMetadataVideo = lowResVideo?.file_name ? (
@@ -296,47 +340,33 @@ export function Video(props: VideoProps) {
           // stroke/font/radius sizing must not be multiplied by that factor.
           const visualScaleX = width / fallbackFrameDimensions.width;
           const visualScaleY = height / fallbackFrameDimensions.height;
-          const detectionVideoStartedAt = detectionVideoStartedAtRef.current;
-
-          const enrichedDetections = enrichedDetectionsRef.current || [];
-
-          // Match playback to the closest detector frame. Even at full frame
-          // rate, the browser clock usually falls between frame timestamps;
-          // all detections from the matched frame share its timestamp.
-          let closestDetectionTimestamp: number | undefined;
-          let closestDetectionAge = Number.POSITIVE_INFINITY;
-          enrichedDetections.forEach((detection: Detection) => {
-            const detectionTimestamp = Date.parse(detection.seen_at || "");
-            const detectionRelativeTimeMilliseconds =
-              detectionTimestamp - detectionVideoStartedAt;
-            const deltaMilliseconds =
-              relativeTimeMilliseconds - detectionRelativeTimeMilliseconds;
-            const age = Math.abs(deltaMilliseconds);
-
-            if (
-              Number.isFinite(deltaMilliseconds) &&
-              age <= detectionFrameMatchWindowMilliseconds &&
-              age < closestDetectionAge
-            ) {
-              closestDetectionTimestamp = detectionTimestamp;
-              closestDetectionAge = age;
-            }
-          });
-
-          if (closestDetectionTimestamp === undefined) {
+          const playbackVideoStartedAt = playbackVideoStartedAtRef.current;
+          if (!Number.isFinite(playbackVideoStartedAt)) {
             return;
           }
-          const matchedTimestamp = closestDetectionTimestamp;
 
-          enrichedDetections.forEach((detection: Detection) => {
-            const detectionTimestamp = Date.parse(detection.seen_at || "");
-            if (
-              !Number.isFinite(detectionTimestamp) ||
-              Math.abs(detectionTimestamp - matchedTimestamp) > 2
-            ) {
-              return;
-            }
+          // Match playback to the closest detector frame. Index the timestamps
+          // once when the query arrives rather than scanning and parsing every
+          // detection on every animation frame. This matters for busy videos
+          // with thousands of boxes and avoids burst/freeze behavior caused by
+          // main-thread work competing with video playback.
+          const targetDetectionTimestamp =
+            playbackVideoStartedAt + relativeTimeMilliseconds;
+          const matchedTimestamp = findClosestTimestamp(
+            detectionTimestampsRef.current,
+            targetDetectionTimestamp,
+          );
+          if (
+            matchedTimestamp === undefined ||
+            Math.abs(matchedTimestamp - targetDetectionTimestamp) >
+              detectionFrameMatchWindowMilliseconds
+          ) {
+            return;
+          }
 
+          const matchedDetections =
+            detectionsByTimestampRef.current.get(matchedTimestamp) || [];
+          matchedDetections.forEach((detection: EnrichedDetection) => {
             const topLeft = detection.bounding_box?.[0];
             const bottomRight = detection.bounding_box?.[2];
             const centroid = detection.centroid;
