@@ -2379,25 +2379,25 @@ func (m *Camera) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, v
 	var err error
 	switch columnName {
 	case CameraTableIDColumn:
-		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		columnValue, err = types.FormatUUID(value)
 	case CameraTableCreatedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case CameraTableUpdatedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case CameraTableDeletedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case CameraTableNameColumn:
-		columnValue, err = types.FormatString(value.(string))
+		columnValue, err = types.FormatString(value)
 	case CameraTableStreamURLColumn:
-		columnValue, err = types.FormatString(value.(string))
+		columnValue, err = types.FormatString(value)
 	case CameraTableLastSeenColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case CameraTableSegmentProducerClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case CameraTableStreamProducerClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case CameraTableLowResStreamURLColumn:
-		columnValue, err = types.FormatString(value.(string))
+		columnValue, err = types.FormatString(value)
 
 	}
 	if err != nil {
@@ -2468,25 +2468,25 @@ func (m *Camera) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]
 		var err error
 		switch columnName {
 		case CameraTableIDColumn:
-			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+			columnValue, err = types.FormatUUID(value)
 		case CameraTableCreatedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case CameraTableUpdatedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case CameraTableDeletedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case CameraTableNameColumn:
-			columnValue, err = types.FormatString(value.(string))
+			columnValue, err = types.FormatString(value)
 		case CameraTableStreamURLColumn:
-			columnValue, err = types.FormatString(value.(string))
+			columnValue, err = types.FormatString(value)
 		case CameraTableLastSeenColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case CameraTableSegmentProducerClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case CameraTableStreamProducerClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case CameraTableLowResStreamURLColumn:
-			columnValue, err = types.FormatString(value.(string))
+			columnValue, err = types.FormatString(value)
 
 		}
 		if err != nil {

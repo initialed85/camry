@@ -2664,29 +2664,37 @@ func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, va
 	var err error
 	switch columnName {
 	case VideoTableIDColumn:
-		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		columnValue, err = types.FormatUUID(value)
 	case VideoTableCreatedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case VideoTableUpdatedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case VideoTableDeletedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case VideoTableFileNameColumn:
-		columnValue, err = types.FormatString(value.(string))
+		columnValue, err = types.FormatString(value)
 	case VideoTableStartedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case VideoTableEndedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
+	case VideoTableDurationColumn:
+		columnValue, err = types.FormatDuration(value)
+	case VideoTableFileSizeColumn:
+		columnValue, err = types.FormatFloat(value)
 	case VideoTableThumbnailNameColumn:
-		columnValue, err = types.FormatString(value.(string))
+		columnValue, err = types.FormatString(value)
 	case VideoTableStatusColumn:
-		columnValue, err = types.FormatString(value.(string))
+		columnValue, err = types.FormatString(value)
 	case VideoTableObjectDetectorClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case VideoTableObjectTrackerClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case VideoTableCameraIDColumn:
-		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		columnValue, err = types.FormatUUID(value)
+	case VideoTableDetectionSummaryColumn:
+		columnValue, err = types.FormatJSON(value)
+	case VideoTableIsLowResColumn:
+		columnValue, err = types.FormatBool(value)
 
 	}
 	if err != nil {
@@ -2769,29 +2777,37 @@ func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]a
 		var err error
 		switch columnName {
 		case VideoTableIDColumn:
-			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+			columnValue, err = types.FormatUUID(value)
 		case VideoTableCreatedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case VideoTableUpdatedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case VideoTableDeletedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case VideoTableFileNameColumn:
-			columnValue, err = types.FormatString(value.(string))
+			columnValue, err = types.FormatString(value)
 		case VideoTableStartedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case VideoTableEndedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
+		case VideoTableDurationColumn:
+			columnValue, err = types.FormatDuration(value)
+		case VideoTableFileSizeColumn:
+			columnValue, err = types.FormatFloat(value)
 		case VideoTableThumbnailNameColumn:
-			columnValue, err = types.FormatString(value.(string))
+			columnValue, err = types.FormatString(value)
 		case VideoTableStatusColumn:
-			columnValue, err = types.FormatString(value.(string))
+			columnValue, err = types.FormatString(value)
 		case VideoTableObjectDetectorClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case VideoTableObjectTrackerClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case VideoTableCameraIDColumn:
-			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+			columnValue, err = types.FormatUUID(value)
+		case VideoTableDetectionSummaryColumn:
+			columnValue, err = types.FormatJSON(value)
+		case VideoTableIsLowResColumn:
+			columnValue, err = types.FormatBool(value)
 
 		}
 		if err != nil {

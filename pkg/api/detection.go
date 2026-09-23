@@ -1960,21 +1960,29 @@ func (m *Detection) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string
 	var err error
 	switch columnName {
 	case DetectionTableIDColumn:
-		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		columnValue, err = types.FormatUUID(value)
 	case DetectionTableCreatedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case DetectionTableUpdatedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case DetectionTableDeletedAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
 	case DetectionTableSeenAtColumn:
-		columnValue, err = types.FormatTime(value.(time.Time))
+		columnValue, err = types.FormatTime(value)
+	case DetectionTableClassIDColumn:
+		columnValue, err = types.FormatInt(value)
 	case DetectionTableClassNameColumn:
-		columnValue, err = types.FormatString(value.(string))
+		columnValue, err = types.FormatString(value)
+	case DetectionTableScoreColumn:
+		columnValue, err = types.FormatFloat(value)
+	case DetectionTableCentroidColumn:
+		columnValue, err = types.FormatPoint(value)
+	case DetectionTableBoundingBoxColumn:
+		columnValue, err = types.FormatPolygon(value)
 	case DetectionTableVideoIDColumn:
-		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		columnValue, err = types.FormatUUID(value)
 	case DetectionTableCameraIDColumn:
-		columnValue, err = types.FormatUUID(value.(uuid.UUID))
+		columnValue, err = types.FormatUUID(value)
 
 	}
 	if err != nil {
@@ -2049,21 +2057,29 @@ func (m *Detection) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[stri
 		var err error
 		switch columnName {
 		case DetectionTableIDColumn:
-			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+			columnValue, err = types.FormatUUID(value)
 		case DetectionTableCreatedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case DetectionTableUpdatedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case DetectionTableDeletedAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
 		case DetectionTableSeenAtColumn:
-			columnValue, err = types.FormatTime(value.(time.Time))
+			columnValue, err = types.FormatTime(value)
+		case DetectionTableClassIDColumn:
+			columnValue, err = types.FormatInt(value)
 		case DetectionTableClassNameColumn:
-			columnValue, err = types.FormatString(value.(string))
+			columnValue, err = types.FormatString(value)
+		case DetectionTableScoreColumn:
+			columnValue, err = types.FormatFloat(value)
+		case DetectionTableCentroidColumn:
+			columnValue, err = types.FormatPoint(value)
+		case DetectionTableBoundingBoxColumn:
+			columnValue, err = types.FormatPolygon(value)
 		case DetectionTableVideoIDColumn:
-			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+			columnValue, err = types.FormatUUID(value)
 		case DetectionTableCameraIDColumn:
-			columnValue, err = types.FormatUUID(value.(uuid.UUID))
+			columnValue, err = types.FormatUUID(value)
 
 		}
 		if err != nil {
