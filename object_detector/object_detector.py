@@ -113,9 +113,38 @@ def do(
             high_res_file_name = f"{video.file_name[:-len('_low_res.mp4')]}.mp4"
 
         def find_high_res_video() -> Optional[Video]:
+            candidates: list[Video] = []
+            if video.camera_id and video.started_at:
+                # The two segment writers can cross a wall-clock second, so
+                # their filenames are not always exact siblings. Match the
+                # high-res row by camera and nearest start time instead.
+                start = video.started_at
+                high_res_videos_response = video_api.get_videos(
+                    camera_id__eq=str(video.camera_id),
+                    is_low_res__eq=False,
+                    started_at__gte=start - datetime.timedelta(seconds=5),
+                    started_at__lte=start + datetime.timedelta(seconds=5),
+                    limit=10,
+                    _request_timeout=10,
+                )
+                candidates = [
+                    candidate
+                    for candidate in (high_res_videos_response.objects or [])
+                    if candidate and candidate.id and candidate.started_at
+                ]
+                if candidates:
+                    return min(
+                        candidates,
+                        key=lambda candidate: abs(
+                            (candidate.started_at - start).total_seconds()
+                        ),
+                    )
+
             if high_res_file_name is None:
                 return None
 
+            # Keep the exact filename lookup as a fallback for older or
+            # manually-created rows that lack usable timing metadata.
             high_res_videos_response = video_api.get_videos(
                 file_name__eq=high_res_file_name,
                 limit=1,
