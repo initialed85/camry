@@ -17,7 +17,7 @@ const fallbackFrameDimensions: FrameDimensions = {
   height: 2160,
 };
 
-const detectionMatchWindowMilliseconds = 250;
+const detectionFrameMatchWindowMilliseconds = 100;
 
 function getLowResFileName(fileName: string | undefined): string | undefined {
   if (!fileName || fileName.includes("_low_res.")) {
@@ -300,11 +300,9 @@ export function Video(props: VideoProps) {
 
           const enrichedDetections = enrichedDetectionsRef.current || [];
 
-          // Inference intentionally samples every fourth source frame. Pick
-          // the nearest sampled timestamp before drawing so adjacent samples
-          // do not produce ghosted boxes/centroids at the same playback time.
-          // All detections from one sampled frame share its timestamp, so this
-          // still preserves multiple objects in that frame.
+          // Match playback to the closest detector frame. Even at full frame
+          // rate, the browser clock usually falls between frame timestamps;
+          // all detections from the matched frame share its timestamp.
           let closestDetectionTimestamp: number | undefined;
           let closestDetectionAge = Number.POSITIVE_INFINITY;
           enrichedDetections.forEach((detection: Detection) => {
@@ -317,7 +315,7 @@ export function Video(props: VideoProps) {
 
             if (
               Number.isFinite(deltaMilliseconds) &&
-              age <= detectionMatchWindowMilliseconds &&
+              age <= detectionFrameMatchWindowMilliseconds &&
               age < closestDetectionAge
             ) {
               closestDetectionTimestamp = detectionTimestamp;
@@ -328,13 +326,13 @@ export function Video(props: VideoProps) {
           if (closestDetectionTimestamp === undefined) {
             return;
           }
-          const sampledTimestamp = closestDetectionTimestamp;
+          const matchedTimestamp = closestDetectionTimestamp;
 
           enrichedDetections.forEach((detection: Detection) => {
             const detectionTimestamp = Date.parse(detection.seen_at || "");
             if (
               !Number.isFinite(detectionTimestamp) ||
-              Math.abs(detectionTimestamp - sampledTimestamp) > 2
+              Math.abs(detectionTimestamp - matchedTimestamp) > 2
             ) {
               return;
             }
@@ -406,9 +404,6 @@ export function Video(props: VideoProps) {
               Math.abs(bottomRightY - topLeftY),
             );
 
-            // Keep the centroid steady while this sampled detection is alive;
-            // its position is already transformed with the same low-res ->
-            // high-res coordinate scale as the bounding box.
             ctx.strokeStyle = `rgba(255, 255, 255, 0.99)`;
             ctx.beginPath();
             ctx.arc(centroidX, centroidY, centroidRadius, 0, Math.PI * 2);

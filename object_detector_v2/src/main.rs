@@ -29,7 +29,7 @@ mod api_types;
 
 use crate::api_types::*;
 
-const STRIDE: i32 = 2;
+const STRIDE: i32 = 1;
 const CONF_THRESHOLD: f32 = 0.2;
 const NMS_THRESHOLD: f32 = 0.5;
 const BBOX_HISTORY: usize = 100;
@@ -666,7 +666,7 @@ fn main() -> Result<()> {
                 handled_frame_count,
             };
 
-            // 5 frames at 20 fps with a stride of 4 = 1s?
+            // Five processed frames at 20 fps span about 0.25 seconds.
             if detected_frame_count < 5 {
                 println!("low frames: {:?}", detection_summary);
                 continue;

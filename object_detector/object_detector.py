@@ -126,7 +126,8 @@ def do(
             _request_timeout=10,
         )
 
-        model = YOLO("yolov8n.pt")
+        model_path = os.getenv("MODEL_PATH", "yolo26n.pt")
+        model = YOLO(model_path)
 
         try:
             frame_index_and_timedelta_and_results: List[Tuple[int, datetime.timedelta, List[Results]]] = []
@@ -152,10 +153,9 @@ def do(
 
                         raw_timedelta = cap.get(cv2.CAP_PROP_POS_MSEC)
 
-                        # 0, 4, 8, 12, 16 etc- so I guess we're 25% of the original frame rate
-                        if frame_index % 4 != 0:
-                            continue
-
+                        # The detector reads the low-resolution recording, so
+                        # infer every decoded frame rather than decimating the
+                        # temporal signal again.
                         results = cast(
                             List[Results],
                             model(
@@ -279,7 +279,7 @@ def do(
 
                         item = (weighted_score, average_score, frame_count)
 
-                        # At 25 fps, five samples at a stride of four span about 0.64 seconds.
+                        # At 25 fps, five consecutive frames span about 0.16 seconds.
                         if frame_count < 5:
                             print(f"low frames: {class_name} {item}")
                             continue

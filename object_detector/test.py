@@ -73,7 +73,7 @@ def do(
     for video in videos:
         print(f"claimed {video.file_name} - {video.status} - {video.started_at} - {video.duration}")
 
-        model = YOLO("yolov8n.pt")
+        model = YOLO(os.getenv("MODEL_PATH", "yolo26n.pt"))
 
         try:
 
@@ -103,10 +103,6 @@ def do(
                             break
 
                         raw_timedelta = cap.get(cv2.CAP_PROP_POS_MSEC)
-
-                        # 0, 4, 8, 12, 16 etc- so I guess we're 25% of the original frame rate
-                        if frame_index % 2 != 0:
-                            continue
 
                         before = time.time()
                         results: List[Results] = model(
