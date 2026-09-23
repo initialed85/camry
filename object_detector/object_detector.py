@@ -54,6 +54,9 @@ def do(
             resp = object_detector_claim_video_api.post_object_detector_claim_videos(
                 video_object_detector_claim_request=VideoObjectDetectorClaimRequest(until=until, timeout_seconds=10),
                 is_low_res__eq=True,
+                # Segment producers leave files as "recording" until ffmpeg
+                # closes them and writes the MP4 moov atom.
+                status__eq="needs detection",
                 _request_timeout=70,
             )
             videos = resp.objects
