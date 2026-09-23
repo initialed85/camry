@@ -46,6 +46,8 @@ github.com/hexops/gotextdiff v1.0.3 h1:gitA9+qJrrTCsiCl7+kh75nPqQt1cx4ZkudSTLoUq
 github.com/hexops/gotextdiff v1.0.3/go.mod h1:pSWU5MAI3yDq+fZBTazCSJysOMbxWL1BSow5/V2vxeg=
 github.com/initialed85/djangolang v0.1.36-0.20260923150839-e3fb19891bbc h1:8efrPXSBr1arB8OEM98JhCWIHhzzb4vGeMuKgq9nu4c=
 github.com/initialed85/djangolang v0.1.36-0.20260923150839-e3fb19891bbc/go.mod h1:cIe8F6cO5mzcdVKIPbNLbXw4GBneXP802TEXeApDzBg=
+github.com/initialed85/djangolang v0.1.36 h1:Abkr3jvpXoi1GJMHFlrPu7pM3lRw7GVS4IECDSPawX0=
+github.com/initialed85/djangolang v0.1.36/go.mod h1:cIe8F6cO5mzcdVKIPbNLbXw4GBneXP802TEXeApDzBg=
 github.com/initialed85/structmeta v0.0.0-20240923104310-4adf4f5a7354 h1:J2ax29IYAhlqMinMit2I+uOPCcTkTmHsZzwAlPY2Rjs=
 github.com/initialed85/structmeta v0.0.0-20240923104310-4adf4f5a7354/go.mod h1:hTGWTsfgy6Um+L8e3Qcj8/pBkHGcIGxEpZAKziWhQfc=
 github.com/jackc/chunkreader v1.0.0 h1:4s39bBR8ByfqH+DKm8rQA3E1LHZWB9XWcrz8fqaZbe0=
