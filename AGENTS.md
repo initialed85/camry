@@ -55,9 +55,9 @@ Pin the intended release explicitly first. For example:
 
 ```sh
 GOPRIVATE=github.com/initialed85/djangolang \
-  go install github.com/initialed85/djangolang@v0.1.36
+  go install github.com/initialed85/djangolang@v0.1.37
 GOPRIVATE=github.com/initialed85/djangolang \
-  go get github.com/initialed85/djangolang@v0.1.36
+  go get github.com/initialed85/djangolang@v0.1.37
 ```
 
 Confirm `go.mod` before generating:
