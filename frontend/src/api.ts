@@ -1,9 +1,3 @@
-import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister";
-import {
-  persistQueryClient,
-  removeOldestQuery,
-} from "@tanstack/react-query-persist-client";
-
 import { default as createFetchClient } from "openapi-fetch";
 import createClientForReactQuery from "openapi-react-query";
 
@@ -24,15 +18,14 @@ export const queryClient = new QueryClient({
   },
 });
 
-const localStoragePersister = createSyncStoragePersister({
-  storage: window.localStorage,
-  retry: removeOldestQuery,
-});
-
-persistQueryClient({
-  queryClient,
-  persister: localStoragePersister,
-});
+// The old synchronous React Query persister serialized the entire cache to
+// localStorage on updates, blocking the main thread when video/detection pages
+// grew large. The app needs the API online anyway, so don't persist API data.
+try {
+  window.localStorage.removeItem("REACT_QUERY_OFFLINE_CACHE");
+} catch {
+  // Ignore unavailable/disabled localStorage; queries work without it.
+}
 
 export const clientForReactQuery = createFetchClient<paths>({
   baseUrl: "/",
