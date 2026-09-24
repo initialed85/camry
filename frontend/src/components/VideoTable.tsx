@@ -113,6 +113,10 @@ export function VideoTable(props: VideoTableProps) {
       return res.data;
     },
     initialPageParam: 0,
+    // Don't refetch every loaded video page while a modal is playing. Each
+    // update can reconcile many rows and thumbnail elements on the main thread.
+    refetchInterval: showPlayModal ? false : 30_000,
+    refetchIntervalInBackground: false,
     getNextPageParam: (lastPage, pages) => {
       /*
       TODO: this doesn't cater for the fact that we have new data coming in- really we should
@@ -318,6 +322,8 @@ export function VideoTable(props: VideoTableProps) {
                       <img
                         alt={`still from ${video?.camera_id_object?.name} @ ${startedAt}`}
                         src={`/media/${video?.thumbnail_name}`}
+                        loading="lazy"
+                        decoding="async"
                         style={{
                           width: props.responsive ? 80 : 160,
                           height: props.responsive ? 45 : 90,
