@@ -20,6 +20,27 @@ import { Video } from "./Video";
 
 const defaultLimit = 10;
 const desiredWidthRatio = 3840 / 2160;
+
+type ParsedDetectionFilter = {
+  className: string;
+  minimumAverageScore?: number;
+};
+
+function parseDetectionFilter(value: string): ParsedDetectionFilter {
+  const normalizedValue = value.trim().toLowerCase();
+  const confidenceMatch = normalizedValue.match(
+    /^(.+?)\s*>=\s*(0(?:\.\d+)?|1(?:\.0+)?)$/,
+  );
+
+  if (confidenceMatch) {
+    return {
+      className: confidenceMatch[1].trim().replaceAll("?", ""),
+      minimumAverageScore: Number(confidenceMatch[2]),
+    };
+  }
+
+  return { className: normalizedValue.replaceAll("?", "") };
+}
 const desiredHeightRatio = 2160 / 3840;
 
 export interface VideoTableProps {
@@ -54,8 +75,9 @@ export function VideoTable(props: VideoTableProps) {
     : allCamerasData?.objects?.length || 1;
 
   const relevantLimit = defaultLimit * visibleCameraCount;
+  const detectionFilter = parseDetectionFilter(props.classNameFilter);
 
-  const queryHash = JSON.stringify(props);
+  const queryHash = JSON.stringify({ ...props, detectionFilter });
 
   const {
     data: infiniteVideosData,
@@ -69,10 +91,8 @@ export function VideoTable(props: VideoTableProps) {
         params: {
           query: {
             camera_id__eq: props.cameraId || undefined,
-            detection_summary__contains: props.classNameFilter
-              ? JSON.stringify([
-                  { class_name: props.classNameFilter.replaceAll("?", "") },
-                ])
+            detection_summary__contains: detectionFilter.className
+              ? JSON.stringify([{ class_name: detectionFilter.className }])
               : undefined,
             // TODO: skipping this means we can keep infinitely scrolling back forever, I think
             // started_at__gt: props.startedAtGt && props.startedAtGt,
@@ -228,25 +248,21 @@ export function VideoTable(props: VideoTableProps) {
           {videosData?.objects?.length ? (
             videosData?.objects
               ?.filter((video) => {
-                if (props.classNameFilter) {
-                  const detectionSummaries = video?.detection_summary as [];
+                if (detectionFilter.className) {
+                  const detectionSummaries =
+                    (video?.detection_summary as any[] | null) || [];
 
-                  const matchingClassNames = detectionSummaries.filter(
-                    (detectionSummary: any) => {
-                      // if (
-                      //   detectionSummary.average_score < 0.5 ||
-                      //   detectionSummary.detected_frame_count < 8
-                      // ) {
-                      //   return false;
-                      // }
-
-                      return (detectionSummary.class_name as string).includes(
-                        props.classNameFilter,
-                      );
-                    },
-                  );
-
-                  return matchingClassNames.length;
+                  return detectionSummaries.some((detectionSummary: any) => {
+                    const classMatches = (
+                      detectionSummary.class_name as string
+                    ).includes(detectionFilter.className);
+                    const scoreMatches =
+                      detectionFilter.minimumAverageScore === undefined ||
+                      (typeof detectionSummary.average_score === "number" &&
+                        detectionSummary.average_score >=
+                          detectionFilter.minimumAverageScore);
+                    return classMatches && scoreMatches;
+                  });
                 }
 
                 return true;
@@ -364,9 +380,9 @@ export function VideoTable(props: VideoTableProps) {
                             key={x.class_name}
                             style={{
                               color:
-                                props.classNameFilter &&
+                                detectionFilter.className &&
                                 (x.class_name as string).includes(
-                                  props.classNameFilter,
+                                  detectionFilter.className,
                                 )
                                   ? "#ff0000"
                                   : undefined,
@@ -382,9 +398,9 @@ export function VideoTable(props: VideoTableProps) {
                           key={x.class_name}
                           style={{
                             color:
-                              props.classNameFilter &&
+                              detectionFilter.className &&
                               (x.class_name as string).includes(
-                                props.classNameFilter,
+                                detectionFilter.className,
                               )
                                 ? "#ff0000"
                                 : undefined,
