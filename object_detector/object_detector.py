@@ -116,14 +116,25 @@ def do(
             candidates: list[Video] = []
             if video.camera_id and video.started_at:
                 # The two segment writers can cross a wall-clock second, so
-                # their filenames are not always exact siblings. Match the
-                # high-res row by camera and nearest start time instead.
+                # their filenames are not always exact siblings. Use the
+                # camera plus a minute-level filename prefix, then choose the
+                # nearest start time from the small candidate set. Avoid the
+                # generated datetime query parameters here: they serialize
+                # offsets as +0800 while the API parser requires RFC3339.
                 start = video.started_at
+                parts = video.file_name.split("_")
+                minute_prefix = (
+                    f"Segment_{parts[1].rsplit(':', 1)[0]}"
+                    if len(parts) >= 3 and ':' in parts[1]
+                    else None
+                )
+                if minute_prefix is None:
+                    return None
+
                 high_res_videos_response = video_api.get_videos(
                     camera_id__eq=str(video.camera_id),
                     is_low_res__eq=False,
-                    started_at__gte=start - datetime.timedelta(seconds=5),
-                    started_at__lte=start + datetime.timedelta(seconds=5),
+                    file_name__ilike=minute_prefix,
                     limit=10,
                     _request_timeout=10,
                 )
