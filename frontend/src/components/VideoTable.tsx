@@ -29,7 +29,7 @@ type ParsedDetectionFilter = {
 function parseDetectionFilter(value: string): ParsedDetectionFilter {
   const normalizedValue = value.trim().toLowerCase();
   const confidenceMatch = normalizedValue.match(
-    /^(.+?)\s*>=\s*(0(?:\.\d+)?|1(?:\.0+)?)$/,
+    /^(.+?)\s*>=?\s*(0(?:\.\d+)?|1(?:\.0+)?)$/,
   );
 
   if (confidenceMatch) {
@@ -74,8 +74,14 @@ export function VideoTable(props: VideoTableProps) {
     ? 1
     : allCamerasData?.objects?.length || 1;
 
-  const relevantLimit = defaultLimit * visibleCameraCount;
   const detectionFilter = parseDetectionFilter(props.classNameFilter);
+  // Numeric confidence thresholds are applied client-side because the API
+  // only supports JSON containment on detection_summary. Fetch a larger batch
+  // so a high threshold does not make the search appear empty one page at a time.
+  const relevantLimit =
+    detectionFilter.minimumAverageScore === undefined
+      ? defaultLimit * visibleCameraCount
+      : 500;
 
   const queryHash = JSON.stringify({ ...props, detectionFilter });
 
@@ -114,11 +120,21 @@ export function VideoTable(props: VideoTableProps) {
       finished videos from processing videos
       */
 
-      if (lastPage?.count === 0) {
-        return lastPage?.offset;
+      if (!lastPage) {
+        return undefined;
       }
 
-      return (lastPage?.offset || 0) + relevantLimit;
+      const pageCount = lastPage.count || 0;
+      if (pageCount === 0) {
+        return undefined;
+      }
+
+      const pageLimit = lastPage.limit || relevantLimit;
+      if (pageCount < pageLimit) {
+        return undefined;
+      }
+
+      return (lastPage.offset || 0) + pageLimit;
     },
   });
 

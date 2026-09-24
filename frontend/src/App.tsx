@@ -134,7 +134,7 @@ function App() {
           <StreamDropdownMenu responsive={responsive} />
           <Input
             size="sm"
-            placeholder="Class or e.g. person>=0.7"
+            placeholder="e.g. person>=0.5"
             sx={{ mr: 1.5, width: "100%", maxWidth: 300 }}
             onChange={(e) => {
               setClassNameFilter((e.target.value || "").trim().toLowerCase());
