@@ -102,6 +102,7 @@ def do(
 
         if video.file_name is None:
             continue
+        video_file_name: str = cast(str, video.file_name)
 
         # The detector intentionally claims the low-resolution recording, but
         # the frontend displays the paired high-resolution recording. Keep the
@@ -109,11 +110,11 @@ def do(
         # normal video list still shows what was detected.
         high_res_video: Optional[Video] = None
         high_res_file_name: Optional[str] = None
-        if video.file_name.endswith("_low_res.mp4"):
-            high_res_file_name = f"{video.file_name[:-len('_low_res.mp4')]}.mp4"
+        if video_file_name.endswith("_low_res.mp4"):
+            high_res_file_name = f"{video_file_name[:-len('_low_res.mp4')]}.mp4"
 
-        def find_high_res_video() -> Optional[Video]:
-            candidates: list[Video] = []
+        def find_high_res_video(file_name: str) -> Optional[Video]:
+            candidates: list[tuple[Video, datetime.datetime]] = []
             if video.camera_id and video.started_at:
                 # The two segment writers can cross a wall-clock second, so
                 # their filenames are not always exact siblings. Use the
@@ -122,7 +123,7 @@ def do(
                 # generated datetime query parameters here: they serialize
                 # offsets as +0800 while the API parser requires RFC3339.
                 start = video.started_at
-                parts = video.file_name.split("_")
+                parts = file_name.split("_")
                 minute_prefix = (
                     f"Segment_{parts[1].rsplit(':', 1)[0]}"
                     if len(parts) >= 3 and ':' in parts[1]
@@ -138,24 +139,27 @@ def do(
                     limit=10,
                     _request_timeout=10,
                 )
-                candidates = [
-                    candidate
-                    for candidate in (high_res_videos_response.objects or [])
-                    if candidate and candidate.id and candidate.started_at
-                ]
+                for candidate in high_res_videos_response.objects or []:
+                    if not candidate or not candidate.id:
+                        continue
+                    candidate_started_at = candidate.started_at
+                    if candidate_started_at is not None:
+                        candidates.append((candidate, candidate_started_at))
+
                 if candidates:
-                    return min(
+                    closest_candidate, _ = min(
                         candidates,
-                        key=lambda candidate: abs(
-                            (candidate.started_at - start).total_seconds()
+                        key=lambda candidate_and_start: abs(
+                            (candidate_and_start[1] - start).total_seconds()
                         ),
                     )
-
-            if high_res_file_name is None:
-                return None
+                    return closest_candidate
 
             # Keep the exact filename lookup as a fallback for older or
             # manually-created rows that lack usable timing metadata.
+            if not file_name.endswith("_low_res.mp4"):
+                return None
+            high_res_file_name = f"{file_name[:-len('_low_res.mp4')]}.mp4"
             high_res_videos_response = video_api.get_videos(
                 file_name__eq=high_res_file_name,
                 limit=1,
@@ -170,7 +174,7 @@ def do(
                 None,
             )
 
-        high_res_video = find_high_res_video()
+        high_res_video = find_high_res_video(video_file_name)
 
         video_api.patch_video(
             video.id,
@@ -185,10 +189,7 @@ def do(
             frame_index_and_timedelta_and_results: List[Tuple[int, datetime.timedelta, List[Results]]] = []
 
             def do_inference():
-                if video.file_name is None:
-                    return 0
-
-                filename = os.path.join(source_path, video.file_name)
+                filename = os.path.join(source_path, video_file_name)
 
                 cap: cv2.VideoCapture = cv2.VideoCapture(filename)
 
@@ -369,7 +370,7 @@ def do(
                 # sibling. Retry the lookup after inference so the final
                 # status/summary update also repairs that small race.
                 if high_res_file_name is not None and high_res_video is None:
-                    high_res_video = find_high_res_video()
+                    high_res_video = find_high_res_video(video_file_name)
 
                 detection_video_update = Video(
                     status="needs tracking",

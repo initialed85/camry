@@ -14,6 +14,7 @@ The generated Camry code calls generic runtime/query code from the `github.com/i
 ## Prerequisites
 
 - Go (the current project/toolchain uses Go 1.26 after the current djangolang release)
+- Python 3.12 (the detector's local virtual environment should live at `object_detector/.venv`)
 - Docker Compose
 - Node/npm
 - Java (OpenAPI Generator runs a Java JAR)
@@ -54,9 +55,9 @@ Pin the intended release explicitly first. For example:
 
 ```sh
 GOPRIVATE=github.com/initialed85/djangolang \
-  go install github.com/initialed85/djangolang@v0.1.35
+  go install github.com/initialed85/djangolang@v0.1.36
 GOPRIVATE=github.com/initialed85/djangolang \
-  go get github.com/initialed85/djangolang@v0.1.35
+  go get github.com/initialed85/djangolang@v0.1.36
 ```
 
 Confirm `go.mod` before generating:
@@ -100,8 +101,29 @@ grep -n 'UpdateField\|UpdateFields' pkg/api/{camera,detection,video}.go
 
 go test ./... -run '^$'
 python3 -m compileall -q object_detector
+object_detector/.venv/bin/pyright --pythonpath object_detector/.venv/bin/python object_detector/object_detector.py
 git diff --check
 ```
+
+## Object detector local Python environment and typing
+
+Use a Python 3.12 virtual environment at `object_detector/.venv`; don't rely on system Python or a machine-global Pyright install. Create it when absent and install the detector requirements:
+
+```sh
+python3.12 -m venv object_detector/.venv
+object_detector/.venv/bin/python -m pip install --upgrade pip
+object_detector/.venv/bin/python -m pip install -r object_detector/requirements.txt
+```
+
+Run Pyright against the maintained detector entrypoint, not the generated OpenAPI client (which is not fully typed):
+
+```sh
+object_detector/.venv/bin/pyright \
+  --pythonpath object_detector/.venv/bin/python \
+  object_detector/object_detector.py
+```
+
+The installed OpenCV package may not provide Pyright import stubs; use the detector venv's interpreter with `--pythonpath` so installed project dependencies resolve.
 
 The full frontend validation is:
 
@@ -146,5 +168,9 @@ kubectl -n camry get pods -o wide
 kubectl -n camry get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .status.containerStatuses[*]}{.imageID}{"\n"}{end}{end}'
 kubectl -n camry logs -l app=object-detector --since=5m --prefix=true
 ```
+
+For detector-only fixes, use the fast image flow when the detector base image already exists locally and the Dockerfile uses the frozen base: build and push only the detector image, then restart only its StatefulSet. Verify the new digest on every pod and check recent logs for model/API errors. For generated API changes, build/push the API image and restart only the API StatefulSet.
+
+The detector matches high-res video rows to low-res detections using camera ID and nearby `started_at` time because the two segment writers may differ by a second in their filenames. Avoid sending Python-generated offset datetimes as API filters unless formatted as strict RFC3339 (`+08:00`); the generated client can serialize offsets as `+0800`, which the current API parser rejects.
 
 Do not modify router/network configuration as part of Camry image rollouts.
