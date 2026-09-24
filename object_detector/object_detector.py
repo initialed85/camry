@@ -334,16 +334,10 @@ def do(
 
                         item = (weighted_score, average_score, frame_count)
 
-                        # At 25 fps, five consecutive frames span about 0.16 seconds.
-                        if frame_count < 5:
-                            print(f"low frames: {class_name} {item}")
-                            continue
-
-                        # TODO: (aggregate) confidence limit at 0.5
-                        if weighted_score < 0.5:
-                            print(f"low score : {class_name} {item}")
-                            continue
-
+                        # Keep every class the model detected in the summary.
+                        # Filtering low-confidence or sparse classes here made
+                        # the summary disagree with the raw detections and hid
+                        # legitimate person detections from the UI search.
                         print(f"keeping   : {class_name} {item}")
                         detection_summary_by_class_name[class_name] = (weighted_score, average_score, frame_count)
 
