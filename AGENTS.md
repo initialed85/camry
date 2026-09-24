@@ -31,13 +31,13 @@ The wrapper may download the generator JAR on first use. Warnings from Java/Open
 
 ## Local generation environment
 
-Start the Compose environment in a separate terminal and leave it running while generating:
+For tmux/non-interactive workflows, start Compose detached and stop it explicitly:
 
 ```sh
-./run-env.sh
+./run-env.sh up -d
 ```
 
-`run-env.sh` owns a teardown trap and removes the Compose environment/volumes when it exits. `build.sh` waits for the `post-migrate` service to finish successfully and then connects to PostgreSQL/Redis on localhost.
+`run-env.sh` pulls/builds dependencies, starts Postgres/Redis/NATS, configures Postgres logical WAL, and restarts Postgres. `build.sh` waits for `post-migrate` to finish successfully and then connects to Postgres/Redis on localhost.
 
 Check readiness with:
 
@@ -45,7 +45,15 @@ Check readiness with:
 docker compose ps -a
 ```
 
-Expected: `postgres` healthy, `redis` and `nats` up, and `post-migrate` exited with status 0.
+Expected: `postgres` healthy, `redis` and `nats` up, and `post-migrate` exited with status 0. Follow logs with `./run-env.sh logs`.
+
+Stop the stack while preserving the local Postgres volume with:
+
+```sh
+./run-env.sh down
+```
+
+To intentionally reset local databases/volumes, use `./run-env.sh down --volumes`. The legacy `./run-env.sh` (no subcommand) still follows logs in the foreground and tears down containers and volumes on exit.
 
 ## Selecting djangolang
 
