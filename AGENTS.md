@@ -223,18 +223,49 @@ docker build --platform=linux/amd64 \
 docker image push initialed85/camry-api:latest
 ```
 
-For a complete release, use the project script as requested. Verify the image digest before rollout; `:latest` is mutable.
+For frontend-only changes, avoid `build-tag-and-push.sh`: it also builds/pushes every other workload, including the large object-detector image. Build and push just the frontend image:
+
+```sh
+docker build --progress=plain --platform=linux/amd64 \
+  -t initialed85/camry-frontend:latest -f ./docker/frontend/Dockerfile .
+docker image push initialed85/camry-frontend:latest
+docker buildx imagetools inspect docker.io/initialed85/camry-frontend:latest
+```
+
+The deployment uses mutable `:latest` with `imagePullPolicy: Always`; confirm the published digest and `linux/amd64` manifest before restarting anything. For a complete release, use the project script as requested.
 
 ## Kubernetes rollout checks
 
-Only restart workloads whose image/code changed:
+Before Kubernetes writes, check the current context and inspect the exact target workload/image. Use the intended context explicitly (normally `home-dev` or `home-prod-next` here). Only restart workloads whose image/code changed.
+
+For the Camry frontend in `home-dev`, the verified workload is `deployment/frontend` in namespace `camry`. After pushing and verifying the frontend image digest:
 
 ```sh
-kubectl -n camry rollout restart statefulset/api
-kubectl -n camry rollout status statefulset/api --timeout=300s
+kubectl config current-context
+kubectl --context home-dev -n camry get deployment frontend -o wide
+kubectl --context home-dev -n camry rollout restart deployment/frontend
+kubectl --context home-dev -n camry rollout status deployment/frontend --timeout=300s
+kubectl --context home-dev -n camry get pods -l app=frontend -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{range .status.containerStatuses[*]}{.imageID}{"\tready="}{.ready}{"\n"}{end}{end}'
+kubectl --context home-dev -n camry logs deployment/frontend --since=5m --tail=60
 ```
 
-For detector/frontend changes use their StatefulSet/Deployment equivalents. Then verify:
+Compare the ready pod's `imageID` to the just-published registry digest/platform manifest. Smoke-test the actual Nginx response through the service without depending on public DNS:
+
+```sh
+kubectl --context home-dev -n camry port-forward service/frontend 18080:80
+# In another shell:
+curl -fsSI http://127.0.0.1:18080/
+# Stop port-forward with Ctrl-C.
+```
+
+For other components, inspect their actual StatefulSet/Deployment before using the equivalent restart. The API example is:
+
+```sh
+kubectl --context home-dev -n camry rollout restart statefulset/api
+kubectl --context home-dev -n camry rollout status statefulset/api --timeout=300s
+```
+
+Then verify:
 
 ```sh
 kubectl -n camry get pods -o wide
