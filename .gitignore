@@ -1,4 +1,5 @@
 **/bin
+PLAN.md
 media/*.jpg
 media/*.mp4
 tmp/

@@ -4,3 +4,11 @@
   opacity: 1 !important;
   transition-duration: 0s !important;
 }
+
+/* Controls should remain visible and interactive in the replay modal. */
+.video-js.vjs-has-started .vjs-control-bar {
+  display: flex !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}

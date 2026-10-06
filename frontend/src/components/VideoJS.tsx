@@ -30,7 +30,6 @@ export const VideoJS = (props: VideoJSProps) => {
       videoElement.classList.add("vjs-big-play-centered");
       videoElement.classList.add("vjs-has-started");
       videoElement.style.border = "0";
-      videoElement.style.zIndex = "300";
 
       videoRef.current.appendChild(videoElement);
 
