@@ -89,6 +89,8 @@ services:
       - "POSTGRES_DB=camry"
       - "REDIS_URL=redis://redis:6379"
       - "DJANGOLANG_PROFILE=${DJANGOLANG_PROFILE:-0}"
+      - "PASSWORD=${CAMRY_PASSWORD:-dev-password}"
+      - "TOKEN=${CAMRY_TOKEN:-00000000000000000000000000000000}"
     ports:
       - 7070:7070/tcp
     command:

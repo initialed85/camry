@@ -1,10 +1,13 @@
+import Box from "@mui/joy/Box";
 import Grid from "@mui/joy/Grid";
 import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useState } from "react";
+import { AUTH_REQUIRED_EVENT, checkAuth } from "./auth";
 import CameraDropdownMenu from "./components/CameraDropdownMenu";
 import DateSlider from "./components/DateSlider";
+import Login from "./components/Login";
 import ModeToggle from "./components/ModeToggle";
 import StreamDropdownMenu from "./components/StreamDropdownMenu";
 import { VideoTable } from "./components/VideoTable";
@@ -43,6 +46,26 @@ function App() {
   );
 
   const [classNameFilter, setClassNameFilter] = useState<string>("");
+
+  // undefined means the initial /api/custom/auth check has not answered yet.
+  const [authenticated, setAuthenticated] = useState<boolean | undefined>(
+    undefined,
+  );
+
+  useEffect(() => {
+    checkAuth()
+      .then((status) => setAuthenticated(status.authenticated))
+      .catch(() => setAuthenticated(false));
+  }, []);
+
+  useEffect(() => {
+    const onAuthRequired = () => setAuthenticated(false);
+
+    window.addEventListener(AUTH_REQUIRED_EVENT, onAuthRequired);
+
+    return () =>
+      window.removeEventListener(AUTH_REQUIRED_EVENT, onAuthRequired);
+  }, []);
 
   useEffect(() => {
     if (startedAtLte) {
@@ -93,6 +116,26 @@ function App() {
     windowHeight,
     windowWidth,
   ]);
+
+  if (authenticated === undefined) {
+    return (
+      <Box
+        sx={{
+          display: "grid",
+          minHeight: "100vh",
+          placeItems: "center",
+        }}
+      >
+        <Typography level="body-sm" sx={{ color: "#777" }}>
+          Checking authentication...
+        </Typography>
+      </Box>
+    );
+  }
+
+  if (!authenticated) {
+    return <Login onAuthenticated={() => setAuthenticated(true)} />;
+  }
 
   return (
     <Sheet

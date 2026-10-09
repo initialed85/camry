@@ -3,6 +3,7 @@ import createClientForReactQuery from "openapi-react-query";
 
 import { QueryClient } from "@tanstack/react-query";
 import type { paths } from "./api/api";
+import { AUTH_REQUIRED_EVENT, clearToken, getToken } from "./auth";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -29,6 +30,29 @@ try {
 
 export const clientForReactQuery = createFetchClient<paths>({
   baseUrl: "/",
+});
+
+// The auth endpoints are not in the generated OpenAPI schema, but every generated
+// route needs the bearer token, so attach it (and bounce back to the login page
+// when Traefik rejects the request).
+clientForReactQuery.use({
+  onRequest: ({ request }) => {
+    const token = getToken();
+
+    if (token) {
+      request.headers.set("Authorization", `Bearer ${token}`);
+    }
+
+    return request;
+  },
+  onResponse: ({ response }) => {
+    if (response.status === 401) {
+      clearToken();
+      window.dispatchEvent(new Event(AUTH_REQUIRED_EVENT));
+    }
+
+    return response;
+  },
 });
 
 export const { useQuery, useMutation, useSuspenseQuery } =

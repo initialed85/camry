@@ -4,9 +4,22 @@ import (
 	"os"
 	"strings"
 
+	"github.com/go-chi/chi/v5"
+	"github.com/initialed85/camry/internal/auth"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/djangolang/pkg/config"
 )
+
+func addCustomHandlers(r chi.Router) error {
+	a, err := auth.New()
+	if err != nil {
+		return err
+	}
+
+	a.Routes(r)
+
+	return nil
+}
 
 var log = api.ThisLogger()
 
@@ -29,6 +42,6 @@ func main() {
 		api.RunDumpOpenAPIYAML()
 
 	case "serve":
-		api.RunServeWithEnvironment(nil, nil, nil)
+		api.RunServeWithEnvironment(nil, nil, addCustomHandlers)
 	}
 }
