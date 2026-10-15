@@ -30,7 +30,7 @@ The generated Camry code calls generic runtime/query code from the `github.com/i
 - **`needs detection`** — set by the segment producer on `onSave` (segment closed, `ended_at`/`duration`/thumbnail written). The recording half of the pipeline is done; the row is queued for the object detector.
 - **`failed`** — set by the segment producer when a segment is abandoned/corrupt (file reopened before save, or cleanup on a row that never reached `needs detection`). UI shows an error icon.
 - **`detecting`** — the object detector claims one unclaimed low-res row via `POST /api/object-detector-claim-video` (filtered on `status__eq="needs detection"`, `is_low_res__eq=true`, ordered oldest-first), then patches `status="detecting"` on **both** the low-res row and its high-res sibling (matched by file name minus `_low_res`).
-- **`needs tracking`** — the terminal state the pipeline actually reaches. After inference, the detector posts detections and patches both rows with `status="needs tracking"`, `detection_summary`, and `object_tracker_claimed_until=now`.
+- **`needs tracking`** — the terminal state the pipeline actually reaches. After inference, the detector posts its tracks, posts detections (each stamped with the track row it belongs to), and patches both rows with `status="needs tracking"`, `detection_summary`, `track_summary`, and `object_tracker_claimed_until=now`.
 
 **`needs tracking` is NOT handled by anything running in production.** It is effectively "processed/finalized", not "broken/waiting":
 
@@ -44,7 +44,40 @@ So when you check "how is Camry going": `needs tracking` rows sitting around for
 
 The `prune` CronJob (namespace `camry`, configmap `prune`) runs alongside: deletes `/srv/media` files and `detection`/`video` rows older than 7 days, VACUUMs/ANALYZEs, and its `fix.sql` resets stuck `detecting` and `failed` rows back to `needs detection` so crashed work is retried automatically. It does **not** touch `needs tracking`. Because `fix.sql` re-queues stale `detecting` rows, a backlog of `detecting` low-res rows that keeps cycling back to `needs detection` usually means the detector workers are idle/not claiming (or high-res siblings stranded as above) rather than live inference.
 
-## Local Frontend Browser Validation
+## Object detector: knobs, tracking, fixtures
+
+The detector (`object_detector/object_detector.py`) does one pass per claimed low-res segment: infer every frame, track objects across frames, then write. Knobs, all defaulting to today's behaviour:
+
+- `MODEL_PATH` (image default `/srv/yolo26n.onnx`; `yolo26n.pt` is the PyTorch fallback), `IMGSZ` (`640`, or native `384x640`), `CONF` (`0.25`), `DEVICE` (`cpu|cuda|mps`), `HALF` (`0|1`), `BATCH` (frames per `predict` call, `1`).
+- Claim lease: `CLAIM_LEASE_SECONDS` (default 60). The claim is a lease — while it holds, no other worker can take the row — so it must outlast one segment of processing. CPU segments take ~2 min, dev runs 1200. The segment producer uses the same idea with a refresh (`claimRefreshDuration = duration + 2s`).
+- Tracking gates: `TRACKABLE_CLASSES` (person, car, dog, cat, motorcycle, truck, bus, bicycle), `TRACK_MIN_HITS` (4), `TRACK_MAX_AGE` (10 frames), `TRACK_MATCH_SCORE` (0.45), `TRACK_CONTINUITY_SECONDS` (120), `TRACK_STATIC_DISPLACEMENT` (0.06), `TRACK_SEED_LIMIT` (200).
+- Fixture mode: `FIXTURE_DIR` (segment videos + `video-*.json` rows), `FIXTURE_OUT_DIR`, `FIXTURE_SOURCE_PATH` (prefix rewriting `/srv/media` paths), `ONE_SHOT_FILE_NAME`. No claim, no API, JSON output.
+
+Tracking lives inside the detector: the model is cached per process, results are streamed frame-by-frame, and boxes are matched with IoU + centroid displacement. Identity is a UUIDv5 over (camera, class, first sighting ms) → `track.key`. Raw detections are never dropped; noise is rejected at the track level (`frame_count >= TRACK_MIN_HITS`). Identities continue across segments by seeding from `GET /api/tracks?camera_id__eq=...` with the time window applied **locally** — never as a generated datetime filter, because the generated client serialises offsets as `+0800` and the API parser rejects that.
+
+Write order per segment (a crash mid-write leaves rows that `prune` re-queues):
+
+1. `POST /api/tracks` in bulk with `key` = the tracker identity and **no `id`** (the API generates `track.id` and ignores a client-supplied one), then `GET /api/tracks?video_id__eq=...` to read the generated row ids back.
+2. `POST /api/detections` in bulk, each row stamped with its API track row id (`detection.track_id` → `track.id`).
+3. `PATCH` both video rows with the full model: `status`, `detection_summary`, `track_summary`.
+
+`track.key` is the stable identity the UI labels with; `track.id` is the FK target. API `PATCH` zeroes NOT NULL columns the body omits, so every patch sends the whole model.
+
+Fixtures live in `fixtures/<camera>_<timestamp>/` (segment `.mp4` + `video-*.json` + the live `video-*.detections.json`), fetched by `object_detector/tools/fetch_fixture.py`. Measure with:
+
+```sh
+CONF=0.33 IMGSZ=384x640 DEVICE=cpu \
+  object_detector/.venv/bin/python object_detector/bench.py \
+  --fixture fixtures/Side_Gate_2026-10-14T21_43 --label baseline
+```
+
+`bench.py` appends `{label, ms_per_frame, peak_rss_mb, frames, detections}` to `fixtures/<name>/bench.jsonl`; a zero-frame run is a broken run, not a result.
+
+Runtime numbers (side-gate fixture, 384×640, conf 0.33, CPU): PyTorch `yolo26n.pt` 23.7 ms/frame, ONNX Runtime 16.2 ms/frame, **identical 327 detections**. The detector image exports the ONNX graph at build time (`docker/object-detector/Dockerfile`), which is why `MODEL_PATH` defaults to `.onnx`. The ONNX CPU runtime sizes its thread pool to the machine's physical cores and `OMP_NUM_THREADS` does not cap it, so the StatefulSet carries CPU `requests`/`limits` — without them two pods eat a 12-core node.
+
+Claims (`POST /api/object-detector-claim-video`) are serialized by a transaction-scoped `pg_advisory_xact_lock` retried up to `timeout_seconds`, so a claim lock never outlives its connection: deleting pods cannot clear a "stuck" claim lock. Nothing claims `object_tracker_claimed_until` (the detector stamps it with `now` at completion), so the tracker claim endpoints stay inert.
+
+## Local frontend browser validation
 
 Use this workflow for frontend changes that need a real browser, especially video/media UI:
 
@@ -54,6 +87,10 @@ REMOTE=1 npm start
 ```
 
 The Create React App dev server is at `http://localhost:3000`. `frontend/src/setupProxy.js` sends `/api` and `/media` to `https://camry.dev.initialed85.cc` when `REMOTE=1`; this is Camry's **dev** backend, not production. Keep the dev server running during browser tests and stop it with Ctrl-C when done. Confirm the app compiles and inspect API/media requests in the browser/network or dev-server logs.
+
+### Headless Chromium against deployed dev
+
+`tmp/browser_check.mjs` (gitignored) drives the deployed dev frontend with Playwright + the locally installed Google Chrome: `npm install playwright --prefix /tmp/pw`, then `CAMRY_TOKEN=$(kubectl --context home-dev -n camry get secret secret -o jsonpath='{.data.TOKEN}' | base64 -d) node tmp/browser_check.mjs`. It authenticates through `localStorage` (`camry-token`), scrolls the infinite video table to a target row (`tr:has(img[alt*="23:36:01"]):has-text("Side Gate")` — the row's `started_at` is one second off the segment filename), opens the modal, plays, and samples overlay-canvas pixels per mode. Notes: the modal's own toggle buttons do not exist (the modal inherits the app-level mode, and the header buttons are `aria-hidden` while the dialog is open, so toggle before opening); the table's thumbnails are keyed by `started_at`, not the file name; and video.js fluid sizing left the `<video>` element at 1×1 px in headless, so the script forces a player box with CSS before asserting overlay pixels.
 
 ### Playwright on CachyOS
 
@@ -220,6 +257,12 @@ object_detector/.venv/bin/pyright \
 
 The installed OpenCV package may not provide Pyright import stubs; use the detector venv's interpreter with `--pythonpath` so installed project dependencies resolve.
 
+Run the detector's unit tests (tracking gates, identity, continuity, summaries; the model-dependent test skips when `yolo26n.pt` is absent):
+
+```sh
+object_detector/.venv/bin/python -m unittest object_detector.tests
+```
+
 The full frontend validation is:
 
 ```sh
@@ -259,6 +302,12 @@ The deployment uses mutable `:latest` with `imagePullPolicy: Always`; confirm th
 ## Kubernetes rollout checks
 
 Before Kubernetes writes, check the current context and inspect the exact target workload/image. Use the intended context explicitly (normally `home-dev` or `home-prod-next` here). Only restart workloads whose image/code changed.
+
+`home-dev` reconciles from `origin/master` of `~/Projects/Home/home-ops`, so live `kubectl` edits to Camry manifests, configmaps, replica counts, or the NVIDIA device-plugin config are reverted within about a minute. Commit and push the manifest, then restart what reads it; commit and push are pre-authorised for this kind of cluster config.
+
+The `camry` `config` ConfigMap is regenerated by the API pod: keys added to it, or to the API's own environment, never reach the other workloads, and the detector's `env:` entries are rewritten. The detector's inference knobs (`DEVICE`, `MODEL_PATH`, `IMGSZ`, `CONF`, `CLAIM_LEASE_SECONDS`) are defaults in `object_detector/object_detector.py` with environment variables as overrides.
+
+`august-desktop` advertises `nvidia.com/gpu` as time-sliced replicas (10 in `clusters/dev/cluster/device-plugins/nvidia-device-plugin.yaml`). A replica is a scheduling token, not a partition: every slice is a handle on the whole GPU, sharing VRAM and SM time. Changing the count needs a daemonset restart to re-register.
 
 For the Camry frontend in `home-dev`, the verified workload is `deployment/frontend` in namespace `camry`. After pushing and verifying the frontend image digest:
 
