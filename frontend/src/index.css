@@ -5,6 +5,14 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /*
+    The app chrome is not zoomable: panning stays, pinch and double-tap zoom do
+    not. iOS Safari ignores the viewport meta tag, so touch-action is the lever
+    there. The video stage handles its own zoom gestures.
+  */
+  touch-action: pan-x pan-y;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 code {
