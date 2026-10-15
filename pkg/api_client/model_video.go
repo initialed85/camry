@@ -33,6 +33,7 @@ type Video struct {
 	IsLowRes *bool `json:"is_low_res,omitempty"`
 	ObjectDetectorClaimedUntil *time.Time `json:"object_detector_claimed_until,omitempty"`
 	ObjectTrackerClaimedUntil *time.Time `json:"object_tracker_claimed_until,omitempty"`
+	OverlayOffsetMs *int64 `json:"overlay_offset_ms,omitempty"`
 	ReferencedByDetectionVideoIdObjects []Detection `json:"referenced_by_detection_video_id_objects,omitempty"`
 	ReferencedByTrackVideoIdObjects []Track `json:"referenced_by_track_video_id_objects,omitempty"`
 	StartedAt *time.Time `json:"started_at,omitempty"`
@@ -476,6 +477,38 @@ func (o *Video) SetObjectTrackerClaimedUntil(v time.Time) {
 	o.ObjectTrackerClaimedUntil = &v
 }
 
+// GetOverlayOffsetMs returns the OverlayOffsetMs field value if set, zero value otherwise.
+func (o *Video) GetOverlayOffsetMs() int64 {
+	if o == nil || IsNil(o.OverlayOffsetMs) {
+		var ret int64
+		return ret
+	}
+	return *o.OverlayOffsetMs
+}
+
+// GetOverlayOffsetMsOk returns a tuple with the OverlayOffsetMs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Video) GetOverlayOffsetMsOk() (*int64, bool) {
+	if o == nil || IsNil(o.OverlayOffsetMs) {
+		return nil, false
+	}
+	return o.OverlayOffsetMs, true
+}
+
+// HasOverlayOffsetMs returns a boolean if a field has been set.
+func (o *Video) HasOverlayOffsetMs() bool {
+	if o != nil && !IsNil(o.OverlayOffsetMs) {
+		return true
+	}
+
+	return false
+}
+
+// SetOverlayOffsetMs gets a reference to the given int64 and assigns it to the OverlayOffsetMs field.
+func (o *Video) SetOverlayOffsetMs(v int64) {
+	o.OverlayOffsetMs = &v
+}
+
 // GetReferencedByDetectionVideoIdObjects returns the ReferencedByDetectionVideoIdObjects field value if set, zero value otherwise.
 func (o *Video) GetReferencedByDetectionVideoIdObjects() []Detection {
 	if o == nil || IsNil(o.ReferencedByDetectionVideoIdObjects) {
@@ -749,6 +782,9 @@ func (o Video) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ObjectTrackerClaimedUntil) {
 		toSerialize["object_tracker_claimed_until"] = o.ObjectTrackerClaimedUntil
+	}
+	if !IsNil(o.OverlayOffsetMs) {
+		toSerialize["overlay_offset_ms"] = o.OverlayOffsetMs
 	}
 	if !IsNil(o.ReferencedByDetectionVideoIdObjects) {
 		toSerialize["referenced_by_detection_video_id_objects"] = o.ReferencedByDetectionVideoIdObjects

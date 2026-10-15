@@ -251,247 +251,7 @@ type ApiGetTracksRequest struct {
 	depth *int32
 	cameraLoad *string
 	videoLoad *string
-	referencedByDetectionLoad *string
-	idEq *string
-	idNe *string
-	idGt *string
-	idGte *string
-	idLt *string
-	idLte *string
-	idIn *string
-	idNotin *string
-	idContains *string
-	idNotcontains *string
-	idLike *string
-	idNotlike *string
-	idIlike *string
-	idNotilike *string
-	idDesc *string
-	idAsc *string
-	createdAtEq *time.Time
-	createdAtNe *time.Time
-	createdAtGt *time.Time
-	createdAtGte *time.Time
-	createdAtLt *time.Time
-	createdAtLte *time.Time
-	createdAtIn *time.Time
-	createdAtNotin *time.Time
-	createdAtContains *time.Time
-	createdAtNotcontains *time.Time
-	createdAtLike *time.Time
-	createdAtNotlike *time.Time
-	createdAtIlike *time.Time
-	createdAtNotilike *time.Time
-	createdAtDesc *string
-	createdAtAsc *string
-	updatedAtEq *time.Time
-	updatedAtNe *time.Time
-	updatedAtGt *time.Time
-	updatedAtGte *time.Time
-	updatedAtLt *time.Time
-	updatedAtLte *time.Time
-	updatedAtIn *time.Time
-	updatedAtNotin *time.Time
-	updatedAtContains *time.Time
-	updatedAtNotcontains *time.Time
-	updatedAtLike *time.Time
-	updatedAtNotlike *time.Time
-	updatedAtIlike *time.Time
-	updatedAtNotilike *time.Time
-	updatedAtDesc *string
-	updatedAtAsc *string
-	deletedAtEq *time.Time
-	deletedAtNe *time.Time
-	deletedAtGt *time.Time
-	deletedAtGte *time.Time
-	deletedAtLt *time.Time
-	deletedAtLte *time.Time
-	deletedAtIn *time.Time
-	deletedAtNotin *time.Time
-	deletedAtContains *time.Time
-	deletedAtNotcontains *time.Time
-	deletedAtLike *time.Time
-	deletedAtNotlike *time.Time
-	deletedAtIlike *time.Time
-	deletedAtNotilike *time.Time
-	deletedAtDesc *string
-	deletedAtAsc *string
-	cameraIdEq *string
-	cameraIdNe *string
-	cameraIdGt *string
-	cameraIdGte *string
-	cameraIdLt *string
-	cameraIdLte *string
-	cameraIdIn *string
-	cameraIdNotin *string
-	cameraIdContains *string
-	cameraIdNotcontains *string
-	cameraIdLike *string
-	cameraIdNotlike *string
-	cameraIdIlike *string
-	cameraIdNotilike *string
-	cameraIdDesc *string
-	cameraIdAsc *string
-	cameraIdObjectContains *interface{}
-	cameraIdObjectNotcontains *interface{}
-	cameraIdObjectDesc *string
-	cameraIdObjectAsc *string
-	videoIdEq *string
-	videoIdNe *string
-	videoIdGt *string
-	videoIdGte *string
-	videoIdLt *string
-	videoIdLte *string
-	videoIdIn *string
-	videoIdNotin *string
-	videoIdContains *string
-	videoIdNotcontains *string
-	videoIdLike *string
-	videoIdNotlike *string
-	videoIdIlike *string
-	videoIdNotilike *string
-	videoIdDesc *string
-	videoIdAsc *string
-	videoIdObjectContains *interface{}
-	videoIdObjectNotcontains *interface{}
-	videoIdObjectDesc *string
-	videoIdObjectAsc *string
-	classIdEq *int64
-	classIdNe *int64
-	classIdGt *int64
-	classIdGte *int64
-	classIdLt *int64
-	classIdLte *int64
-	classIdIn *int64
-	classIdNotin *int64
-	classIdContains *int64
-	classIdNotcontains *int64
-	classIdDesc *string
-	classIdAsc *string
-	classNameEq *string
-	classNameNe *string
-	classNameGt *string
-	classNameGte *string
-	classNameLt *string
-	classNameLte *string
-	classNameIn *string
-	classNameNotin *string
-	classNameContains *string
-	classNameNotcontains *string
-	classNameLike *string
-	classNameNotlike *string
-	classNameIlike *string
-	classNameNotilike *string
-	classNameDesc *string
-	classNameAsc *string
-	startedAtEq *time.Time
-	startedAtNe *time.Time
-	startedAtGt *time.Time
-	startedAtGte *time.Time
-	startedAtLt *time.Time
-	startedAtLte *time.Time
-	startedAtIn *time.Time
-	startedAtNotin *time.Time
-	startedAtContains *time.Time
-	startedAtNotcontains *time.Time
-	startedAtLike *time.Time
-	startedAtNotlike *time.Time
-	startedAtIlike *time.Time
-	startedAtNotilike *time.Time
-	startedAtDesc *string
-	startedAtAsc *string
-	endedAtEq *time.Time
-	endedAtNe *time.Time
-	endedAtGt *time.Time
-	endedAtGte *time.Time
-	endedAtLt *time.Time
-	endedAtLte *time.Time
-	endedAtIn *time.Time
-	endedAtNotin *time.Time
-	endedAtContains *time.Time
-	endedAtNotcontains *time.Time
-	endedAtLike *time.Time
-	endedAtNotlike *time.Time
-	endedAtIlike *time.Time
-	endedAtNotilike *time.Time
-	endedAtDesc *string
-	endedAtAsc *string
-	frameCountEq *int64
-	frameCountNe *int64
-	frameCountGt *int64
-	frameCountGte *int64
-	frameCountLt *int64
-	frameCountLte *int64
-	frameCountIn *int64
-	frameCountNotin *int64
-	frameCountContains *int64
-	frameCountNotcontains *int64
-	frameCountDesc *string
-	frameCountAsc *string
-	meanScoreEq *float64
-	meanScoreNe *float64
-	meanScoreGt *float64
-	meanScoreGte *float64
-	meanScoreLt *float64
-	meanScoreLte *float64
-	meanScoreIn *float64
-	meanScoreNotin *float64
-	meanScoreContains *float64
-	meanScoreNotcontains *float64
-	meanScoreDesc *string
-	meanScoreAsc *string
-	maxScoreEq *float64
-	maxScoreNe *float64
-	maxScoreGt *float64
-	maxScoreGte *float64
-	maxScoreLt *float64
-	maxScoreLte *float64
-	maxScoreIn *float64
-	maxScoreNotin *float64
-	maxScoreContains *float64
-	maxScoreNotcontains *float64
-	maxScoreDesc *string
-	maxScoreAsc *string
-	centroidContains *interface{}
-	centroidNotcontains *interface{}
-	centroidDesc *string
-	centroidAsc *string
-	boundingBoxContains *interface{}
-	boundingBoxNotcontains *interface{}
-	boundingBoxDesc *string
-	boundingBoxAsc *string
-	trajectoryContains *interface{}
-	trajectoryNotcontains *interface{}
-	trajectoryDesc *string
-	trajectoryAsc *string
-	isStaticEq *bool
-	isStaticNe *bool
-	isStaticGt *bool
-	isStaticGte *bool
-	isStaticLt *bool
-	isStaticLte *bool
-	isStaticIn *bool
-	isStaticNotin *bool
-	isStaticContains *bool
-	isStaticNotcontains *bool
-	isStaticDesc *string
-	isStaticAsc *string
-	statusEq *string
-	statusNe *string
-	statusGt *string
-	statusGte *string
-	statusLt *string
-	statusLte *string
-	statusIn *string
-	statusNotin *string
-	statusContains *string
-	statusNotcontains *string
-	statusLike *string
-	statusNotlike *string
-	statusIlike *string
-	statusNotilike *string
-	statusDesc *string
-	statusAsc *string
+	referencedByDetectionTrackIDLoad *string
 	keyEq *string
 	keyNe *string
 	keyGt *string
@@ -500,18 +260,150 @@ type ApiGetTracksRequest struct {
 	keyLte *string
 	keyIn *string
 	keyNotin *string
-	keyContains *string
-	keyNotcontains *string
-	keyLike *string
-	keyNotlike *string
-	keyIlike *string
-	keyNotilike *string
-	keyDesc *string
 	keyAsc *string
-	referencedByDetectionTrackIdObjectsContains *interface{}
-	referencedByDetectionTrackIdObjectsNotcontains *interface{}
-	referencedByDetectionTrackIdObjectsDesc *string
-	referencedByDetectionTrackIdObjectsAsc *string
+	keyDesc *string
+	createdAtEq *time.Time
+	createdAtNe *time.Time
+	createdAtGt *time.Time
+	createdAtGte *time.Time
+	createdAtLt *time.Time
+	createdAtLte *time.Time
+	createdAtIn *time.Time
+	createdAtNotin *time.Time
+	createdAtAsc *string
+	createdAtDesc *string
+	updatedAtEq *time.Time
+	updatedAtNe *time.Time
+	updatedAtGt *time.Time
+	updatedAtGte *time.Time
+	updatedAtLt *time.Time
+	updatedAtLte *time.Time
+	updatedAtIn *time.Time
+	updatedAtNotin *time.Time
+	updatedAtAsc *string
+	updatedAtDesc *string
+	deletedAtEq *time.Time
+	deletedAtNe *time.Time
+	deletedAtGt *time.Time
+	deletedAtGte *time.Time
+	deletedAtLt *time.Time
+	deletedAtLte *time.Time
+	deletedAtIn *time.Time
+	deletedAtNotin *time.Time
+	deletedAtIsnull *string
+	deletedAtIsnotnull *string
+	deletedAtAsc *string
+	deletedAtDesc *string
+	cameraIdEq *string
+	cameraIdNe *string
+	cameraIdGt *string
+	cameraIdGte *string
+	cameraIdLt *string
+	cameraIdLte *string
+	cameraIdIn *string
+	cameraIdNotin *string
+	cameraIdAsc *string
+	cameraIdDesc *string
+	videoIdEq *string
+	videoIdNe *string
+	videoIdGt *string
+	videoIdGte *string
+	videoIdLt *string
+	videoIdLte *string
+	videoIdIn *string
+	videoIdNotin *string
+	videoIdAsc *string
+	videoIdDesc *string
+	classIdEq *int32
+	classIdNe *int32
+	classIdGt *int32
+	classIdGte *int32
+	classIdLt *int32
+	classIdLte *int32
+	classIdIn *int32
+	classIdNotin *int32
+	classIdAsc *string
+	classIdDesc *string
+	classNameEq *string
+	classNameNe *string
+	classNameIn *string
+	classNameNotin *string
+	classNameLike *string
+	classNameNotlike *string
+	classNameIlike *string
+	classNameNotilike *string
+	classNameAsc *string
+	classNameDesc *string
+	startedAtEq *time.Time
+	startedAtNe *time.Time
+	startedAtGt *time.Time
+	startedAtGte *time.Time
+	startedAtLt *time.Time
+	startedAtLte *time.Time
+	startedAtIn *time.Time
+	startedAtNotin *time.Time
+	startedAtAsc *string
+	startedAtDesc *string
+	endedAtEq *time.Time
+	endedAtNe *time.Time
+	endedAtGt *time.Time
+	endedAtGte *time.Time
+	endedAtLt *time.Time
+	endedAtLte *time.Time
+	endedAtIn *time.Time
+	endedAtNotin *time.Time
+	endedAtAsc *string
+	endedAtDesc *string
+	frameCountEq *int32
+	frameCountNe *int32
+	frameCountGt *int32
+	frameCountGte *int32
+	frameCountLt *int32
+	frameCountLte *int32
+	frameCountIn *int32
+	frameCountNotin *int32
+	frameCountAsc *string
+	frameCountDesc *string
+	meanScoreEq *float32
+	meanScoreNe *float32
+	meanScoreGt *float32
+	meanScoreGte *float32
+	meanScoreLt *float32
+	meanScoreLte *float32
+	meanScoreIn *float32
+	meanScoreNotin *float32
+	meanScoreAsc *string
+	meanScoreDesc *string
+	maxScoreEq *float32
+	maxScoreNe *float32
+	maxScoreGt *float32
+	maxScoreGte *float32
+	maxScoreLt *float32
+	maxScoreLte *float32
+	maxScoreIn *float32
+	maxScoreNotin *float32
+	maxScoreAsc *string
+	maxScoreDesc *string
+	trajectoryContains *interface{}
+	trajectoryNotcontains *interface{}
+	trajectoryAsc *string
+	trajectoryDesc *string
+	isStaticEq *bool
+	isStaticNe *bool
+	isStaticIsfalse *string
+	isStaticIstrue *string
+	isStaticAsc *string
+	isStaticDesc *string
+	statusEq *string
+	statusNe *string
+	statusIn *string
+	statusNotin *string
+	statusLike *string
+	statusNotlike *string
+	statusIlike *string
+	statusNotilike *string
+	statusAsc *string
+	statusDesc *string
 }
 
 // SQL LIMIT operator
@@ -532,1461 +424,21 @@ func (r ApiGetTracksRequest) Depth(depth int32) ApiGetTracksRequest {
 	return r
 }
 
-// load the given directly related object, value is ignored (presence of key is sufficient)
+// load the given outbound relationship, value is ignored (presence of key is sufficient)
 func (r ApiGetTracksRequest) CameraLoad(cameraLoad string) ApiGetTracksRequest {
 	r.cameraLoad = &cameraLoad
 	return r
 }
 
-// load the given directly related object, value is ignored (presence of key is sufficient)
+// load the given outbound relationship, value is ignored (presence of key is sufficient)
 func (r ApiGetTracksRequest) VideoLoad(videoLoad string) ApiGetTracksRequest {
 	r.videoLoad = &videoLoad
 	return r
 }
 
-// load the given indirectly related objects, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) ReferencedByDetectionLoad(referencedByDetectionLoad string) ApiGetTracksRequest {
-	r.referencedByDetectionLoad = &referencedByDetectionLoad
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) IdEq(idEq string) ApiGetTracksRequest {
-	r.idEq = &idEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) IdNe(idNe string) ApiGetTracksRequest {
-	r.idNe = &idNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IdGt(idGt string) ApiGetTracksRequest {
-	r.idGt = &idGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IdGte(idGte string) ApiGetTracksRequest {
-	r.idGte = &idGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IdLt(idLt string) ApiGetTracksRequest {
-	r.idLt = &idLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IdLte(idLte string) ApiGetTracksRequest {
-	r.idLte = &idLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) IdIn(idIn string) ApiGetTracksRequest {
-	r.idIn = &idIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) IdNotin(idNotin string) ApiGetTracksRequest {
-	r.idNotin = &idNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) IdContains(idContains string) ApiGetTracksRequest {
-	r.idContains = &idContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) IdNotcontains(idNotcontains string) ApiGetTracksRequest {
-	r.idNotcontains = &idNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) IdLike(idLike string) ApiGetTracksRequest {
-	r.idLike = &idLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) IdNotlike(idNotlike string) ApiGetTracksRequest {
-	r.idNotlike = &idNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) IdIlike(idIlike string) ApiGetTracksRequest {
-	r.idIlike = &idIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) IdNotilike(idNotilike string) ApiGetTracksRequest {
-	r.idNotilike = &idNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) IdDesc(idDesc string) ApiGetTracksRequest {
-	r.idDesc = &idDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) IdAsc(idAsc string) ApiGetTracksRequest {
-	r.idAsc = &idAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) CreatedAtEq(createdAtEq time.Time) ApiGetTracksRequest {
-	r.createdAtEq = &createdAtEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) CreatedAtNe(createdAtNe time.Time) ApiGetTracksRequest {
-	r.createdAtNe = &createdAtNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CreatedAtGt(createdAtGt time.Time) ApiGetTracksRequest {
-	r.createdAtGt = &createdAtGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CreatedAtGte(createdAtGte time.Time) ApiGetTracksRequest {
-	r.createdAtGte = &createdAtGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CreatedAtLt(createdAtLt time.Time) ApiGetTracksRequest {
-	r.createdAtLt = &createdAtLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CreatedAtLte(createdAtLte time.Time) ApiGetTracksRequest {
-	r.createdAtLte = &createdAtLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) CreatedAtIn(createdAtIn time.Time) ApiGetTracksRequest {
-	r.createdAtIn = &createdAtIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) CreatedAtNotin(createdAtNotin time.Time) ApiGetTracksRequest {
-	r.createdAtNotin = &createdAtNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) CreatedAtContains(createdAtContains time.Time) ApiGetTracksRequest {
-	r.createdAtContains = &createdAtContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) CreatedAtNotcontains(createdAtNotcontains time.Time) ApiGetTracksRequest {
-	r.createdAtNotcontains = &createdAtNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CreatedAtLike(createdAtLike time.Time) ApiGetTracksRequest {
-	r.createdAtLike = &createdAtLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CreatedAtNotlike(createdAtNotlike time.Time) ApiGetTracksRequest {
-	r.createdAtNotlike = &createdAtNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CreatedAtIlike(createdAtIlike time.Time) ApiGetTracksRequest {
-	r.createdAtIlike = &createdAtIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CreatedAtNotilike(createdAtNotilike time.Time) ApiGetTracksRequest {
-	r.createdAtNotilike = &createdAtNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CreatedAtDesc(createdAtDesc string) ApiGetTracksRequest {
-	r.createdAtDesc = &createdAtDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CreatedAtAsc(createdAtAsc string) ApiGetTracksRequest {
-	r.createdAtAsc = &createdAtAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) UpdatedAtEq(updatedAtEq time.Time) ApiGetTracksRequest {
-	r.updatedAtEq = &updatedAtEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) UpdatedAtNe(updatedAtNe time.Time) ApiGetTracksRequest {
-	r.updatedAtNe = &updatedAtNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) UpdatedAtGt(updatedAtGt time.Time) ApiGetTracksRequest {
-	r.updatedAtGt = &updatedAtGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) UpdatedAtGte(updatedAtGte time.Time) ApiGetTracksRequest {
-	r.updatedAtGte = &updatedAtGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) UpdatedAtLt(updatedAtLt time.Time) ApiGetTracksRequest {
-	r.updatedAtLt = &updatedAtLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) UpdatedAtLte(updatedAtLte time.Time) ApiGetTracksRequest {
-	r.updatedAtLte = &updatedAtLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) UpdatedAtIn(updatedAtIn time.Time) ApiGetTracksRequest {
-	r.updatedAtIn = &updatedAtIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) UpdatedAtNotin(updatedAtNotin time.Time) ApiGetTracksRequest {
-	r.updatedAtNotin = &updatedAtNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) UpdatedAtContains(updatedAtContains time.Time) ApiGetTracksRequest {
-	r.updatedAtContains = &updatedAtContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) UpdatedAtNotcontains(updatedAtNotcontains time.Time) ApiGetTracksRequest {
-	r.updatedAtNotcontains = &updatedAtNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) UpdatedAtLike(updatedAtLike time.Time) ApiGetTracksRequest {
-	r.updatedAtLike = &updatedAtLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) UpdatedAtNotlike(updatedAtNotlike time.Time) ApiGetTracksRequest {
-	r.updatedAtNotlike = &updatedAtNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) UpdatedAtIlike(updatedAtIlike time.Time) ApiGetTracksRequest {
-	r.updatedAtIlike = &updatedAtIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) UpdatedAtNotilike(updatedAtNotilike time.Time) ApiGetTracksRequest {
-	r.updatedAtNotilike = &updatedAtNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) UpdatedAtDesc(updatedAtDesc string) ApiGetTracksRequest {
-	r.updatedAtDesc = &updatedAtDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) UpdatedAtAsc(updatedAtAsc string) ApiGetTracksRequest {
-	r.updatedAtAsc = &updatedAtAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) DeletedAtEq(deletedAtEq time.Time) ApiGetTracksRequest {
-	r.deletedAtEq = &deletedAtEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) DeletedAtNe(deletedAtNe time.Time) ApiGetTracksRequest {
-	r.deletedAtNe = &deletedAtNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) DeletedAtGt(deletedAtGt time.Time) ApiGetTracksRequest {
-	r.deletedAtGt = &deletedAtGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) DeletedAtGte(deletedAtGte time.Time) ApiGetTracksRequest {
-	r.deletedAtGte = &deletedAtGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) DeletedAtLt(deletedAtLt time.Time) ApiGetTracksRequest {
-	r.deletedAtLt = &deletedAtLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) DeletedAtLte(deletedAtLte time.Time) ApiGetTracksRequest {
-	r.deletedAtLte = &deletedAtLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) DeletedAtIn(deletedAtIn time.Time) ApiGetTracksRequest {
-	r.deletedAtIn = &deletedAtIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) DeletedAtNotin(deletedAtNotin time.Time) ApiGetTracksRequest {
-	r.deletedAtNotin = &deletedAtNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) DeletedAtContains(deletedAtContains time.Time) ApiGetTracksRequest {
-	r.deletedAtContains = &deletedAtContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) DeletedAtNotcontains(deletedAtNotcontains time.Time) ApiGetTracksRequest {
-	r.deletedAtNotcontains = &deletedAtNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) DeletedAtLike(deletedAtLike time.Time) ApiGetTracksRequest {
-	r.deletedAtLike = &deletedAtLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) DeletedAtNotlike(deletedAtNotlike time.Time) ApiGetTracksRequest {
-	r.deletedAtNotlike = &deletedAtNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) DeletedAtIlike(deletedAtIlike time.Time) ApiGetTracksRequest {
-	r.deletedAtIlike = &deletedAtIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) DeletedAtNotilike(deletedAtNotilike time.Time) ApiGetTracksRequest {
-	r.deletedAtNotilike = &deletedAtNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) DeletedAtDesc(deletedAtDesc string) ApiGetTracksRequest {
-	r.deletedAtDesc = &deletedAtDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) DeletedAtAsc(deletedAtAsc string) ApiGetTracksRequest {
-	r.deletedAtAsc = &deletedAtAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) CameraIdEq(cameraIdEq string) ApiGetTracksRequest {
-	r.cameraIdEq = &cameraIdEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) CameraIdNe(cameraIdNe string) ApiGetTracksRequest {
-	r.cameraIdNe = &cameraIdNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CameraIdGt(cameraIdGt string) ApiGetTracksRequest {
-	r.cameraIdGt = &cameraIdGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CameraIdGte(cameraIdGte string) ApiGetTracksRequest {
-	r.cameraIdGte = &cameraIdGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CameraIdLt(cameraIdLt string) ApiGetTracksRequest {
-	r.cameraIdLt = &cameraIdLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) CameraIdLte(cameraIdLte string) ApiGetTracksRequest {
-	r.cameraIdLte = &cameraIdLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) CameraIdIn(cameraIdIn string) ApiGetTracksRequest {
-	r.cameraIdIn = &cameraIdIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) CameraIdNotin(cameraIdNotin string) ApiGetTracksRequest {
-	r.cameraIdNotin = &cameraIdNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) CameraIdContains(cameraIdContains string) ApiGetTracksRequest {
-	r.cameraIdContains = &cameraIdContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) CameraIdNotcontains(cameraIdNotcontains string) ApiGetTracksRequest {
-	r.cameraIdNotcontains = &cameraIdNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CameraIdLike(cameraIdLike string) ApiGetTracksRequest {
-	r.cameraIdLike = &cameraIdLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CameraIdNotlike(cameraIdNotlike string) ApiGetTracksRequest {
-	r.cameraIdNotlike = &cameraIdNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CameraIdIlike(cameraIdIlike string) ApiGetTracksRequest {
-	r.cameraIdIlike = &cameraIdIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) CameraIdNotilike(cameraIdNotilike string) ApiGetTracksRequest {
-	r.cameraIdNotilike = &cameraIdNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CameraIdDesc(cameraIdDesc string) ApiGetTracksRequest {
-	r.cameraIdDesc = &cameraIdDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CameraIdAsc(cameraIdAsc string) ApiGetTracksRequest {
-	r.cameraIdAsc = &cameraIdAsc
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) CameraIdObjectContains(cameraIdObjectContains interface{}) ApiGetTracksRequest {
-	r.cameraIdObjectContains = &cameraIdObjectContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) CameraIdObjectNotcontains(cameraIdObjectNotcontains interface{}) ApiGetTracksRequest {
-	r.cameraIdObjectNotcontains = &cameraIdObjectNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CameraIdObjectDesc(cameraIdObjectDesc string) ApiGetTracksRequest {
-	r.cameraIdObjectDesc = &cameraIdObjectDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CameraIdObjectAsc(cameraIdObjectAsc string) ApiGetTracksRequest {
-	r.cameraIdObjectAsc = &cameraIdObjectAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) VideoIdEq(videoIdEq string) ApiGetTracksRequest {
-	r.videoIdEq = &videoIdEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) VideoIdNe(videoIdNe string) ApiGetTracksRequest {
-	r.videoIdNe = &videoIdNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) VideoIdGt(videoIdGt string) ApiGetTracksRequest {
-	r.videoIdGt = &videoIdGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) VideoIdGte(videoIdGte string) ApiGetTracksRequest {
-	r.videoIdGte = &videoIdGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) VideoIdLt(videoIdLt string) ApiGetTracksRequest {
-	r.videoIdLt = &videoIdLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) VideoIdLte(videoIdLte string) ApiGetTracksRequest {
-	r.videoIdLte = &videoIdLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) VideoIdIn(videoIdIn string) ApiGetTracksRequest {
-	r.videoIdIn = &videoIdIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) VideoIdNotin(videoIdNotin string) ApiGetTracksRequest {
-	r.videoIdNotin = &videoIdNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) VideoIdContains(videoIdContains string) ApiGetTracksRequest {
-	r.videoIdContains = &videoIdContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) VideoIdNotcontains(videoIdNotcontains string) ApiGetTracksRequest {
-	r.videoIdNotcontains = &videoIdNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) VideoIdLike(videoIdLike string) ApiGetTracksRequest {
-	r.videoIdLike = &videoIdLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) VideoIdNotlike(videoIdNotlike string) ApiGetTracksRequest {
-	r.videoIdNotlike = &videoIdNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) VideoIdIlike(videoIdIlike string) ApiGetTracksRequest {
-	r.videoIdIlike = &videoIdIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) VideoIdNotilike(videoIdNotilike string) ApiGetTracksRequest {
-	r.videoIdNotilike = &videoIdNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) VideoIdDesc(videoIdDesc string) ApiGetTracksRequest {
-	r.videoIdDesc = &videoIdDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) VideoIdAsc(videoIdAsc string) ApiGetTracksRequest {
-	r.videoIdAsc = &videoIdAsc
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) VideoIdObjectContains(videoIdObjectContains interface{}) ApiGetTracksRequest {
-	r.videoIdObjectContains = &videoIdObjectContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) VideoIdObjectNotcontains(videoIdObjectNotcontains interface{}) ApiGetTracksRequest {
-	r.videoIdObjectNotcontains = &videoIdObjectNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) VideoIdObjectDesc(videoIdObjectDesc string) ApiGetTracksRequest {
-	r.videoIdObjectDesc = &videoIdObjectDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) VideoIdObjectAsc(videoIdObjectAsc string) ApiGetTracksRequest {
-	r.videoIdObjectAsc = &videoIdObjectAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) ClassIdEq(classIdEq int64) ApiGetTracksRequest {
-	r.classIdEq = &classIdEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) ClassIdNe(classIdNe int64) ApiGetTracksRequest {
-	r.classIdNe = &classIdNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassIdGt(classIdGt int64) ApiGetTracksRequest {
-	r.classIdGt = &classIdGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassIdGte(classIdGte int64) ApiGetTracksRequest {
-	r.classIdGte = &classIdGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassIdLt(classIdLt int64) ApiGetTracksRequest {
-	r.classIdLt = &classIdLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassIdLte(classIdLte int64) ApiGetTracksRequest {
-	r.classIdLte = &classIdLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) ClassIdIn(classIdIn int64) ApiGetTracksRequest {
-	r.classIdIn = &classIdIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) ClassIdNotin(classIdNotin int64) ApiGetTracksRequest {
-	r.classIdNotin = &classIdNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) ClassIdContains(classIdContains int64) ApiGetTracksRequest {
-	r.classIdContains = &classIdContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) ClassIdNotcontains(classIdNotcontains int64) ApiGetTracksRequest {
-	r.classIdNotcontains = &classIdNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) ClassIdDesc(classIdDesc string) ApiGetTracksRequest {
-	r.classIdDesc = &classIdDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) ClassIdAsc(classIdAsc string) ApiGetTracksRequest {
-	r.classIdAsc = &classIdAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) ClassNameEq(classNameEq string) ApiGetTracksRequest {
-	r.classNameEq = &classNameEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) ClassNameNe(classNameNe string) ApiGetTracksRequest {
-	r.classNameNe = &classNameNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassNameGt(classNameGt string) ApiGetTracksRequest {
-	r.classNameGt = &classNameGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassNameGte(classNameGte string) ApiGetTracksRequest {
-	r.classNameGte = &classNameGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassNameLt(classNameLt string) ApiGetTracksRequest {
-	r.classNameLt = &classNameLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) ClassNameLte(classNameLte string) ApiGetTracksRequest {
-	r.classNameLte = &classNameLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) ClassNameIn(classNameIn string) ApiGetTracksRequest {
-	r.classNameIn = &classNameIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) ClassNameNotin(classNameNotin string) ApiGetTracksRequest {
-	r.classNameNotin = &classNameNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) ClassNameContains(classNameContains string) ApiGetTracksRequest {
-	r.classNameContains = &classNameContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) ClassNameNotcontains(classNameNotcontains string) ApiGetTracksRequest {
-	r.classNameNotcontains = &classNameNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) ClassNameLike(classNameLike string) ApiGetTracksRequest {
-	r.classNameLike = &classNameLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) ClassNameNotlike(classNameNotlike string) ApiGetTracksRequest {
-	r.classNameNotlike = &classNameNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) ClassNameIlike(classNameIlike string) ApiGetTracksRequest {
-	r.classNameIlike = &classNameIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) ClassNameNotilike(classNameNotilike string) ApiGetTracksRequest {
-	r.classNameNotilike = &classNameNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) ClassNameDesc(classNameDesc string) ApiGetTracksRequest {
-	r.classNameDesc = &classNameDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) ClassNameAsc(classNameAsc string) ApiGetTracksRequest {
-	r.classNameAsc = &classNameAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) StartedAtEq(startedAtEq time.Time) ApiGetTracksRequest {
-	r.startedAtEq = &startedAtEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) StartedAtNe(startedAtNe time.Time) ApiGetTracksRequest {
-	r.startedAtNe = &startedAtNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StartedAtGt(startedAtGt time.Time) ApiGetTracksRequest {
-	r.startedAtGt = &startedAtGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StartedAtGte(startedAtGte time.Time) ApiGetTracksRequest {
-	r.startedAtGte = &startedAtGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StartedAtLt(startedAtLt time.Time) ApiGetTracksRequest {
-	r.startedAtLt = &startedAtLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StartedAtLte(startedAtLte time.Time) ApiGetTracksRequest {
-	r.startedAtLte = &startedAtLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) StartedAtIn(startedAtIn time.Time) ApiGetTracksRequest {
-	r.startedAtIn = &startedAtIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) StartedAtNotin(startedAtNotin time.Time) ApiGetTracksRequest {
-	r.startedAtNotin = &startedAtNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) StartedAtContains(startedAtContains time.Time) ApiGetTracksRequest {
-	r.startedAtContains = &startedAtContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) StartedAtNotcontains(startedAtNotcontains time.Time) ApiGetTracksRequest {
-	r.startedAtNotcontains = &startedAtNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StartedAtLike(startedAtLike time.Time) ApiGetTracksRequest {
-	r.startedAtLike = &startedAtLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StartedAtNotlike(startedAtNotlike time.Time) ApiGetTracksRequest {
-	r.startedAtNotlike = &startedAtNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StartedAtIlike(startedAtIlike time.Time) ApiGetTracksRequest {
-	r.startedAtIlike = &startedAtIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StartedAtNotilike(startedAtNotilike time.Time) ApiGetTracksRequest {
-	r.startedAtNotilike = &startedAtNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) StartedAtDesc(startedAtDesc string) ApiGetTracksRequest {
-	r.startedAtDesc = &startedAtDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) StartedAtAsc(startedAtAsc string) ApiGetTracksRequest {
-	r.startedAtAsc = &startedAtAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) EndedAtEq(endedAtEq time.Time) ApiGetTracksRequest {
-	r.endedAtEq = &endedAtEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) EndedAtNe(endedAtNe time.Time) ApiGetTracksRequest {
-	r.endedAtNe = &endedAtNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) EndedAtGt(endedAtGt time.Time) ApiGetTracksRequest {
-	r.endedAtGt = &endedAtGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) EndedAtGte(endedAtGte time.Time) ApiGetTracksRequest {
-	r.endedAtGte = &endedAtGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) EndedAtLt(endedAtLt time.Time) ApiGetTracksRequest {
-	r.endedAtLt = &endedAtLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) EndedAtLte(endedAtLte time.Time) ApiGetTracksRequest {
-	r.endedAtLte = &endedAtLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) EndedAtIn(endedAtIn time.Time) ApiGetTracksRequest {
-	r.endedAtIn = &endedAtIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) EndedAtNotin(endedAtNotin time.Time) ApiGetTracksRequest {
-	r.endedAtNotin = &endedAtNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) EndedAtContains(endedAtContains time.Time) ApiGetTracksRequest {
-	r.endedAtContains = &endedAtContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) EndedAtNotcontains(endedAtNotcontains time.Time) ApiGetTracksRequest {
-	r.endedAtNotcontains = &endedAtNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) EndedAtLike(endedAtLike time.Time) ApiGetTracksRequest {
-	r.endedAtLike = &endedAtLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) EndedAtNotlike(endedAtNotlike time.Time) ApiGetTracksRequest {
-	r.endedAtNotlike = &endedAtNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) EndedAtIlike(endedAtIlike time.Time) ApiGetTracksRequest {
-	r.endedAtIlike = &endedAtIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) EndedAtNotilike(endedAtNotilike time.Time) ApiGetTracksRequest {
-	r.endedAtNotilike = &endedAtNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) EndedAtDesc(endedAtDesc string) ApiGetTracksRequest {
-	r.endedAtDesc = &endedAtDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) EndedAtAsc(endedAtAsc string) ApiGetTracksRequest {
-	r.endedAtAsc = &endedAtAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) FrameCountEq(frameCountEq int64) ApiGetTracksRequest {
-	r.frameCountEq = &frameCountEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) FrameCountNe(frameCountNe int64) ApiGetTracksRequest {
-	r.frameCountNe = &frameCountNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) FrameCountGt(frameCountGt int64) ApiGetTracksRequest {
-	r.frameCountGt = &frameCountGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) FrameCountGte(frameCountGte int64) ApiGetTracksRequest {
-	r.frameCountGte = &frameCountGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) FrameCountLt(frameCountLt int64) ApiGetTracksRequest {
-	r.frameCountLt = &frameCountLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) FrameCountLte(frameCountLte int64) ApiGetTracksRequest {
-	r.frameCountLte = &frameCountLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) FrameCountIn(frameCountIn int64) ApiGetTracksRequest {
-	r.frameCountIn = &frameCountIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) FrameCountNotin(frameCountNotin int64) ApiGetTracksRequest {
-	r.frameCountNotin = &frameCountNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) FrameCountContains(frameCountContains int64) ApiGetTracksRequest {
-	r.frameCountContains = &frameCountContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) FrameCountNotcontains(frameCountNotcontains int64) ApiGetTracksRequest {
-	r.frameCountNotcontains = &frameCountNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) FrameCountDesc(frameCountDesc string) ApiGetTracksRequest {
-	r.frameCountDesc = &frameCountDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) FrameCountAsc(frameCountAsc string) ApiGetTracksRequest {
-	r.frameCountAsc = &frameCountAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) MeanScoreEq(meanScoreEq float64) ApiGetTracksRequest {
-	r.meanScoreEq = &meanScoreEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) MeanScoreNe(meanScoreNe float64) ApiGetTracksRequest {
-	r.meanScoreNe = &meanScoreNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MeanScoreGt(meanScoreGt float64) ApiGetTracksRequest {
-	r.meanScoreGt = &meanScoreGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MeanScoreGte(meanScoreGte float64) ApiGetTracksRequest {
-	r.meanScoreGte = &meanScoreGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MeanScoreLt(meanScoreLt float64) ApiGetTracksRequest {
-	r.meanScoreLt = &meanScoreLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MeanScoreLte(meanScoreLte float64) ApiGetTracksRequest {
-	r.meanScoreLte = &meanScoreLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) MeanScoreIn(meanScoreIn float64) ApiGetTracksRequest {
-	r.meanScoreIn = &meanScoreIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) MeanScoreNotin(meanScoreNotin float64) ApiGetTracksRequest {
-	r.meanScoreNotin = &meanScoreNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) MeanScoreContains(meanScoreContains float64) ApiGetTracksRequest {
-	r.meanScoreContains = &meanScoreContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) MeanScoreNotcontains(meanScoreNotcontains float64) ApiGetTracksRequest {
-	r.meanScoreNotcontains = &meanScoreNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) MeanScoreDesc(meanScoreDesc string) ApiGetTracksRequest {
-	r.meanScoreDesc = &meanScoreDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) MeanScoreAsc(meanScoreAsc string) ApiGetTracksRequest {
-	r.meanScoreAsc = &meanScoreAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) MaxScoreEq(maxScoreEq float64) ApiGetTracksRequest {
-	r.maxScoreEq = &maxScoreEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) MaxScoreNe(maxScoreNe float64) ApiGetTracksRequest {
-	r.maxScoreNe = &maxScoreNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MaxScoreGt(maxScoreGt float64) ApiGetTracksRequest {
-	r.maxScoreGt = &maxScoreGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MaxScoreGte(maxScoreGte float64) ApiGetTracksRequest {
-	r.maxScoreGte = &maxScoreGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MaxScoreLt(maxScoreLt float64) ApiGetTracksRequest {
-	r.maxScoreLt = &maxScoreLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) MaxScoreLte(maxScoreLte float64) ApiGetTracksRequest {
-	r.maxScoreLte = &maxScoreLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) MaxScoreIn(maxScoreIn float64) ApiGetTracksRequest {
-	r.maxScoreIn = &maxScoreIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) MaxScoreNotin(maxScoreNotin float64) ApiGetTracksRequest {
-	r.maxScoreNotin = &maxScoreNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) MaxScoreContains(maxScoreContains float64) ApiGetTracksRequest {
-	r.maxScoreContains = &maxScoreContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) MaxScoreNotcontains(maxScoreNotcontains float64) ApiGetTracksRequest {
-	r.maxScoreNotcontains = &maxScoreNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) MaxScoreDesc(maxScoreDesc string) ApiGetTracksRequest {
-	r.maxScoreDesc = &maxScoreDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) MaxScoreAsc(maxScoreAsc string) ApiGetTracksRequest {
-	r.maxScoreAsc = &maxScoreAsc
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) CentroidContains(centroidContains interface{}) ApiGetTracksRequest {
-	r.centroidContains = &centroidContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) CentroidNotcontains(centroidNotcontains interface{}) ApiGetTracksRequest {
-	r.centroidNotcontains = &centroidNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CentroidDesc(centroidDesc string) ApiGetTracksRequest {
-	r.centroidDesc = &centroidDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) CentroidAsc(centroidAsc string) ApiGetTracksRequest {
-	r.centroidAsc = &centroidAsc
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) BoundingBoxContains(boundingBoxContains interface{}) ApiGetTracksRequest {
-	r.boundingBoxContains = &boundingBoxContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) BoundingBoxNotcontains(boundingBoxNotcontains interface{}) ApiGetTracksRequest {
-	r.boundingBoxNotcontains = &boundingBoxNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) BoundingBoxDesc(boundingBoxDesc string) ApiGetTracksRequest {
-	r.boundingBoxDesc = &boundingBoxDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) BoundingBoxAsc(boundingBoxAsc string) ApiGetTracksRequest {
-	r.boundingBoxAsc = &boundingBoxAsc
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) TrajectoryContains(trajectoryContains interface{}) ApiGetTracksRequest {
-	r.trajectoryContains = &trajectoryContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) TrajectoryNotcontains(trajectoryNotcontains interface{}) ApiGetTracksRequest {
-	r.trajectoryNotcontains = &trajectoryNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) TrajectoryDesc(trajectoryDesc string) ApiGetTracksRequest {
-	r.trajectoryDesc = &trajectoryDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) TrajectoryAsc(trajectoryAsc string) ApiGetTracksRequest {
-	r.trajectoryAsc = &trajectoryAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) IsStaticEq(isStaticEq bool) ApiGetTracksRequest {
-	r.isStaticEq = &isStaticEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) IsStaticNe(isStaticNe bool) ApiGetTracksRequest {
-	r.isStaticNe = &isStaticNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IsStaticGt(isStaticGt bool) ApiGetTracksRequest {
-	r.isStaticGt = &isStaticGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IsStaticGte(isStaticGte bool) ApiGetTracksRequest {
-	r.isStaticGte = &isStaticGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IsStaticLt(isStaticLt bool) ApiGetTracksRequest {
-	r.isStaticLt = &isStaticLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) IsStaticLte(isStaticLte bool) ApiGetTracksRequest {
-	r.isStaticLte = &isStaticLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) IsStaticIn(isStaticIn bool) ApiGetTracksRequest {
-	r.isStaticIn = &isStaticIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) IsStaticNotin(isStaticNotin bool) ApiGetTracksRequest {
-	r.isStaticNotin = &isStaticNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) IsStaticContains(isStaticContains bool) ApiGetTracksRequest {
-	r.isStaticContains = &isStaticContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) IsStaticNotcontains(isStaticNotcontains bool) ApiGetTracksRequest {
-	r.isStaticNotcontains = &isStaticNotcontains
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) IsStaticDesc(isStaticDesc string) ApiGetTracksRequest {
-	r.isStaticDesc = &isStaticDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) IsStaticAsc(isStaticAsc string) ApiGetTracksRequest {
-	r.isStaticAsc = &isStaticAsc
-	return r
-}
-
-// SQL &#x3D; comparison
-func (r ApiGetTracksRequest) StatusEq(statusEq string) ApiGetTracksRequest {
-	r.statusEq = &statusEq
-	return r
-}
-
-// SQL !&#x3D; comparison
-func (r ApiGetTracksRequest) StatusNe(statusNe string) ApiGetTracksRequest {
-	r.statusNe = &statusNe
-	return r
-}
-
-// SQL &gt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StatusGt(statusGt string) ApiGetTracksRequest {
-	r.statusGt = &statusGt
-	return r
-}
-
-// SQL &gt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StatusGte(statusGte string) ApiGetTracksRequest {
-	r.statusGte = &statusGte
-	return r
-}
-
-// SQL &lt; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StatusLt(statusLt string) ApiGetTracksRequest {
-	r.statusLt = &statusLt
-	return r
-}
-
-// SQL &lt;&#x3D; comparison, may not work with all column types
-func (r ApiGetTracksRequest) StatusLte(statusLte string) ApiGetTracksRequest {
-	r.statusLte = &statusLte
-	return r
-}
-
-// SQL IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) StatusIn(statusIn string) ApiGetTracksRequest {
-	r.statusIn = &statusIn
-	return r
-}
-
-// SQL NOT IN comparison, permits comma-separated values
-func (r ApiGetTracksRequest) StatusNotin(statusNotin string) ApiGetTracksRequest {
-	r.statusNotin = &statusNotin
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) StatusContains(statusContains string) ApiGetTracksRequest {
-	r.statusContains = &statusContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) StatusNotcontains(statusNotcontains string) ApiGetTracksRequest {
-	r.statusNotcontains = &statusNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StatusLike(statusLike string) ApiGetTracksRequest {
-	r.statusLike = &statusLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StatusNotlike(statusNotlike string) ApiGetTracksRequest {
-	r.statusNotlike = &statusNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StatusIlike(statusIlike string) ApiGetTracksRequest {
-	r.statusIlike = &statusIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) StatusNotilike(statusNotilike string) ApiGetTracksRequest {
-	r.statusNotilike = &statusNotilike
-	return r
-}
-
-// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) StatusDesc(statusDesc string) ApiGetTracksRequest {
-	r.statusDesc = &statusDesc
-	return r
-}
-
-// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) StatusAsc(statusAsc string) ApiGetTracksRequest {
-	r.statusAsc = &statusAsc
+// load the given inbound relationship, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) ReferencedByDetectionTrackIDLoad(referencedByDetectionTrackIDLoad string) ApiGetTracksRequest {
+	r.referencedByDetectionTrackIDLoad = &referencedByDetectionTrackIDLoad
 	return r
 }
 
@@ -2038,39 +490,9 @@ func (r ApiGetTracksRequest) KeyNotin(keyNotin string) ApiGetTracksRequest {
 	return r
 }
 
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) KeyContains(keyContains string) ApiGetTracksRequest {
-	r.keyContains = &keyContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) KeyNotcontains(keyNotcontains string) ApiGetTracksRequest {
-	r.keyNotcontains = &keyNotcontains
-	return r
-}
-
-// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) KeyLike(keyLike string) ApiGetTracksRequest {
-	r.keyLike = &keyLike
-	return r
-}
-
-// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) KeyNotlike(keyNotlike string) ApiGetTracksRequest {
-	r.keyNotlike = &keyNotlike
-	return r
-}
-
-// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) KeyIlike(keyIlike string) ApiGetTracksRequest {
-	r.keyIlike = &keyIlike
-	return r
-}
-
-// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-func (r ApiGetTracksRequest) KeyNotilike(keyNotilike string) ApiGetTracksRequest {
-	r.keyNotilike = &keyNotilike
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) KeyAsc(keyAsc string) ApiGetTracksRequest {
+	r.keyAsc = &keyAsc
 	return r
 }
 
@@ -2080,33 +502,855 @@ func (r ApiGetTracksRequest) KeyDesc(keyDesc string) ApiGetTracksRequest {
 	return r
 }
 
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) CreatedAtEq(createdAtEq time.Time) ApiGetTracksRequest {
+	r.createdAtEq = &createdAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) CreatedAtNe(createdAtNe time.Time) ApiGetTracksRequest {
+	r.createdAtNe = &createdAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CreatedAtGt(createdAtGt time.Time) ApiGetTracksRequest {
+	r.createdAtGt = &createdAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CreatedAtGte(createdAtGte time.Time) ApiGetTracksRequest {
+	r.createdAtGte = &createdAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CreatedAtLt(createdAtLt time.Time) ApiGetTracksRequest {
+	r.createdAtLt = &createdAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CreatedAtLte(createdAtLte time.Time) ApiGetTracksRequest {
+	r.createdAtLte = &createdAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) CreatedAtIn(createdAtIn time.Time) ApiGetTracksRequest {
+	r.createdAtIn = &createdAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) CreatedAtNotin(createdAtNotin time.Time) ApiGetTracksRequest {
+	r.createdAtNotin = &createdAtNotin
+	return r
+}
+
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) KeyAsc(keyAsc string) ApiGetTracksRequest {
-	r.keyAsc = &keyAsc
-	return r
-}
-
-// SQL @&gt; comparison
-func (r ApiGetTracksRequest) ReferencedByDetectionTrackIdObjectsContains(referencedByDetectionTrackIdObjectsContains interface{}) ApiGetTracksRequest {
-	r.referencedByDetectionTrackIdObjectsContains = &referencedByDetectionTrackIdObjectsContains
-	return r
-}
-
-// SQL NOT @&gt; comparison
-func (r ApiGetTracksRequest) ReferencedByDetectionTrackIdObjectsNotcontains(referencedByDetectionTrackIdObjectsNotcontains interface{}) ApiGetTracksRequest {
-	r.referencedByDetectionTrackIdObjectsNotcontains = &referencedByDetectionTrackIdObjectsNotcontains
+func (r ApiGetTracksRequest) CreatedAtAsc(createdAtAsc string) ApiGetTracksRequest {
+	r.createdAtAsc = &createdAtAsc
 	return r
 }
 
 // SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) ReferencedByDetectionTrackIdObjectsDesc(referencedByDetectionTrackIdObjectsDesc string) ApiGetTracksRequest {
-	r.referencedByDetectionTrackIdObjectsDesc = &referencedByDetectionTrackIdObjectsDesc
+func (r ApiGetTracksRequest) CreatedAtDesc(createdAtDesc string) ApiGetTracksRequest {
+	r.createdAtDesc = &createdAtDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) UpdatedAtEq(updatedAtEq time.Time) ApiGetTracksRequest {
+	r.updatedAtEq = &updatedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) UpdatedAtNe(updatedAtNe time.Time) ApiGetTracksRequest {
+	r.updatedAtNe = &updatedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) UpdatedAtGt(updatedAtGt time.Time) ApiGetTracksRequest {
+	r.updatedAtGt = &updatedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) UpdatedAtGte(updatedAtGte time.Time) ApiGetTracksRequest {
+	r.updatedAtGte = &updatedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) UpdatedAtLt(updatedAtLt time.Time) ApiGetTracksRequest {
+	r.updatedAtLt = &updatedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) UpdatedAtLte(updatedAtLte time.Time) ApiGetTracksRequest {
+	r.updatedAtLte = &updatedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) UpdatedAtIn(updatedAtIn time.Time) ApiGetTracksRequest {
+	r.updatedAtIn = &updatedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) UpdatedAtNotin(updatedAtNotin time.Time) ApiGetTracksRequest {
+	r.updatedAtNotin = &updatedAtNotin
 	return r
 }
 
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-func (r ApiGetTracksRequest) ReferencedByDetectionTrackIdObjectsAsc(referencedByDetectionTrackIdObjectsAsc string) ApiGetTracksRequest {
-	r.referencedByDetectionTrackIdObjectsAsc = &referencedByDetectionTrackIdObjectsAsc
+func (r ApiGetTracksRequest) UpdatedAtAsc(updatedAtAsc string) ApiGetTracksRequest {
+	r.updatedAtAsc = &updatedAtAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) UpdatedAtDesc(updatedAtDesc string) ApiGetTracksRequest {
+	r.updatedAtDesc = &updatedAtDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) DeletedAtEq(deletedAtEq time.Time) ApiGetTracksRequest {
+	r.deletedAtEq = &deletedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) DeletedAtNe(deletedAtNe time.Time) ApiGetTracksRequest {
+	r.deletedAtNe = &deletedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) DeletedAtGt(deletedAtGt time.Time) ApiGetTracksRequest {
+	r.deletedAtGt = &deletedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) DeletedAtGte(deletedAtGte time.Time) ApiGetTracksRequest {
+	r.deletedAtGte = &deletedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) DeletedAtLt(deletedAtLt time.Time) ApiGetTracksRequest {
+	r.deletedAtLt = &deletedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) DeletedAtLte(deletedAtLte time.Time) ApiGetTracksRequest {
+	r.deletedAtLte = &deletedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) DeletedAtIn(deletedAtIn time.Time) ApiGetTracksRequest {
+	r.deletedAtIn = &deletedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) DeletedAtNotin(deletedAtNotin time.Time) ApiGetTracksRequest {
+	r.deletedAtNotin = &deletedAtNotin
+	return r
+}
+
+// SQL IS null comparison, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) DeletedAtIsnull(deletedAtIsnull string) ApiGetTracksRequest {
+	r.deletedAtIsnull = &deletedAtIsnull
+	return r
+}
+
+// SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) DeletedAtIsnotnull(deletedAtIsnotnull string) ApiGetTracksRequest {
+	r.deletedAtIsnotnull = &deletedAtIsnotnull
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) DeletedAtAsc(deletedAtAsc string) ApiGetTracksRequest {
+	r.deletedAtAsc = &deletedAtAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) DeletedAtDesc(deletedAtDesc string) ApiGetTracksRequest {
+	r.deletedAtDesc = &deletedAtDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) CameraIdEq(cameraIdEq string) ApiGetTracksRequest {
+	r.cameraIdEq = &cameraIdEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) CameraIdNe(cameraIdNe string) ApiGetTracksRequest {
+	r.cameraIdNe = &cameraIdNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CameraIdGt(cameraIdGt string) ApiGetTracksRequest {
+	r.cameraIdGt = &cameraIdGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CameraIdGte(cameraIdGte string) ApiGetTracksRequest {
+	r.cameraIdGte = &cameraIdGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CameraIdLt(cameraIdLt string) ApiGetTracksRequest {
+	r.cameraIdLt = &cameraIdLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) CameraIdLte(cameraIdLte string) ApiGetTracksRequest {
+	r.cameraIdLte = &cameraIdLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) CameraIdIn(cameraIdIn string) ApiGetTracksRequest {
+	r.cameraIdIn = &cameraIdIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) CameraIdNotin(cameraIdNotin string) ApiGetTracksRequest {
+	r.cameraIdNotin = &cameraIdNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) CameraIdAsc(cameraIdAsc string) ApiGetTracksRequest {
+	r.cameraIdAsc = &cameraIdAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) CameraIdDesc(cameraIdDesc string) ApiGetTracksRequest {
+	r.cameraIdDesc = &cameraIdDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) VideoIdEq(videoIdEq string) ApiGetTracksRequest {
+	r.videoIdEq = &videoIdEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) VideoIdNe(videoIdNe string) ApiGetTracksRequest {
+	r.videoIdNe = &videoIdNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) VideoIdGt(videoIdGt string) ApiGetTracksRequest {
+	r.videoIdGt = &videoIdGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) VideoIdGte(videoIdGte string) ApiGetTracksRequest {
+	r.videoIdGte = &videoIdGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) VideoIdLt(videoIdLt string) ApiGetTracksRequest {
+	r.videoIdLt = &videoIdLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) VideoIdLte(videoIdLte string) ApiGetTracksRequest {
+	r.videoIdLte = &videoIdLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) VideoIdIn(videoIdIn string) ApiGetTracksRequest {
+	r.videoIdIn = &videoIdIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) VideoIdNotin(videoIdNotin string) ApiGetTracksRequest {
+	r.videoIdNotin = &videoIdNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) VideoIdAsc(videoIdAsc string) ApiGetTracksRequest {
+	r.videoIdAsc = &videoIdAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) VideoIdDesc(videoIdDesc string) ApiGetTracksRequest {
+	r.videoIdDesc = &videoIdDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) ClassIdEq(classIdEq int32) ApiGetTracksRequest {
+	r.classIdEq = &classIdEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) ClassIdNe(classIdNe int32) ApiGetTracksRequest {
+	r.classIdNe = &classIdNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) ClassIdGt(classIdGt int32) ApiGetTracksRequest {
+	r.classIdGt = &classIdGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) ClassIdGte(classIdGte int32) ApiGetTracksRequest {
+	r.classIdGte = &classIdGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) ClassIdLt(classIdLt int32) ApiGetTracksRequest {
+	r.classIdLt = &classIdLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) ClassIdLte(classIdLte int32) ApiGetTracksRequest {
+	r.classIdLte = &classIdLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) ClassIdIn(classIdIn int32) ApiGetTracksRequest {
+	r.classIdIn = &classIdIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) ClassIdNotin(classIdNotin int32) ApiGetTracksRequest {
+	r.classIdNotin = &classIdNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) ClassIdAsc(classIdAsc string) ApiGetTracksRequest {
+	r.classIdAsc = &classIdAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) ClassIdDesc(classIdDesc string) ApiGetTracksRequest {
+	r.classIdDesc = &classIdDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) ClassNameEq(classNameEq string) ApiGetTracksRequest {
+	r.classNameEq = &classNameEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) ClassNameNe(classNameNe string) ApiGetTracksRequest {
+	r.classNameNe = &classNameNe
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) ClassNameIn(classNameIn string) ApiGetTracksRequest {
+	r.classNameIn = &classNameIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) ClassNameNotin(classNameNotin string) ApiGetTracksRequest {
+	r.classNameNotin = &classNameNotin
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) ClassNameLike(classNameLike string) ApiGetTracksRequest {
+	r.classNameLike = &classNameLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) ClassNameNotlike(classNameNotlike string) ApiGetTracksRequest {
+	r.classNameNotlike = &classNameNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) ClassNameIlike(classNameIlike string) ApiGetTracksRequest {
+	r.classNameIlike = &classNameIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) ClassNameNotilike(classNameNotilike string) ApiGetTracksRequest {
+	r.classNameNotilike = &classNameNotilike
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) ClassNameAsc(classNameAsc string) ApiGetTracksRequest {
+	r.classNameAsc = &classNameAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) ClassNameDesc(classNameDesc string) ApiGetTracksRequest {
+	r.classNameDesc = &classNameDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) StartedAtEq(startedAtEq time.Time) ApiGetTracksRequest {
+	r.startedAtEq = &startedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) StartedAtNe(startedAtNe time.Time) ApiGetTracksRequest {
+	r.startedAtNe = &startedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) StartedAtGt(startedAtGt time.Time) ApiGetTracksRequest {
+	r.startedAtGt = &startedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) StartedAtGte(startedAtGte time.Time) ApiGetTracksRequest {
+	r.startedAtGte = &startedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) StartedAtLt(startedAtLt time.Time) ApiGetTracksRequest {
+	r.startedAtLt = &startedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) StartedAtLte(startedAtLte time.Time) ApiGetTracksRequest {
+	r.startedAtLte = &startedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) StartedAtIn(startedAtIn time.Time) ApiGetTracksRequest {
+	r.startedAtIn = &startedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) StartedAtNotin(startedAtNotin time.Time) ApiGetTracksRequest {
+	r.startedAtNotin = &startedAtNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) StartedAtAsc(startedAtAsc string) ApiGetTracksRequest {
+	r.startedAtAsc = &startedAtAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) StartedAtDesc(startedAtDesc string) ApiGetTracksRequest {
+	r.startedAtDesc = &startedAtDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) EndedAtEq(endedAtEq time.Time) ApiGetTracksRequest {
+	r.endedAtEq = &endedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) EndedAtNe(endedAtNe time.Time) ApiGetTracksRequest {
+	r.endedAtNe = &endedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) EndedAtGt(endedAtGt time.Time) ApiGetTracksRequest {
+	r.endedAtGt = &endedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) EndedAtGte(endedAtGte time.Time) ApiGetTracksRequest {
+	r.endedAtGte = &endedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) EndedAtLt(endedAtLt time.Time) ApiGetTracksRequest {
+	r.endedAtLt = &endedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) EndedAtLte(endedAtLte time.Time) ApiGetTracksRequest {
+	r.endedAtLte = &endedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) EndedAtIn(endedAtIn time.Time) ApiGetTracksRequest {
+	r.endedAtIn = &endedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) EndedAtNotin(endedAtNotin time.Time) ApiGetTracksRequest {
+	r.endedAtNotin = &endedAtNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) EndedAtAsc(endedAtAsc string) ApiGetTracksRequest {
+	r.endedAtAsc = &endedAtAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) EndedAtDesc(endedAtDesc string) ApiGetTracksRequest {
+	r.endedAtDesc = &endedAtDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) FrameCountEq(frameCountEq int32) ApiGetTracksRequest {
+	r.frameCountEq = &frameCountEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) FrameCountNe(frameCountNe int32) ApiGetTracksRequest {
+	r.frameCountNe = &frameCountNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) FrameCountGt(frameCountGt int32) ApiGetTracksRequest {
+	r.frameCountGt = &frameCountGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) FrameCountGte(frameCountGte int32) ApiGetTracksRequest {
+	r.frameCountGte = &frameCountGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) FrameCountLt(frameCountLt int32) ApiGetTracksRequest {
+	r.frameCountLt = &frameCountLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) FrameCountLte(frameCountLte int32) ApiGetTracksRequest {
+	r.frameCountLte = &frameCountLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) FrameCountIn(frameCountIn int32) ApiGetTracksRequest {
+	r.frameCountIn = &frameCountIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) FrameCountNotin(frameCountNotin int32) ApiGetTracksRequest {
+	r.frameCountNotin = &frameCountNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) FrameCountAsc(frameCountAsc string) ApiGetTracksRequest {
+	r.frameCountAsc = &frameCountAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) FrameCountDesc(frameCountDesc string) ApiGetTracksRequest {
+	r.frameCountDesc = &frameCountDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) MeanScoreEq(meanScoreEq float32) ApiGetTracksRequest {
+	r.meanScoreEq = &meanScoreEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) MeanScoreNe(meanScoreNe float32) ApiGetTracksRequest {
+	r.meanScoreNe = &meanScoreNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MeanScoreGt(meanScoreGt float32) ApiGetTracksRequest {
+	r.meanScoreGt = &meanScoreGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MeanScoreGte(meanScoreGte float32) ApiGetTracksRequest {
+	r.meanScoreGte = &meanScoreGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MeanScoreLt(meanScoreLt float32) ApiGetTracksRequest {
+	r.meanScoreLt = &meanScoreLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MeanScoreLte(meanScoreLte float32) ApiGetTracksRequest {
+	r.meanScoreLte = &meanScoreLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) MeanScoreIn(meanScoreIn float32) ApiGetTracksRequest {
+	r.meanScoreIn = &meanScoreIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) MeanScoreNotin(meanScoreNotin float32) ApiGetTracksRequest {
+	r.meanScoreNotin = &meanScoreNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) MeanScoreAsc(meanScoreAsc string) ApiGetTracksRequest {
+	r.meanScoreAsc = &meanScoreAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) MeanScoreDesc(meanScoreDesc string) ApiGetTracksRequest {
+	r.meanScoreDesc = &meanScoreDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) MaxScoreEq(maxScoreEq float32) ApiGetTracksRequest {
+	r.maxScoreEq = &maxScoreEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) MaxScoreNe(maxScoreNe float32) ApiGetTracksRequest {
+	r.maxScoreNe = &maxScoreNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MaxScoreGt(maxScoreGt float32) ApiGetTracksRequest {
+	r.maxScoreGt = &maxScoreGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MaxScoreGte(maxScoreGte float32) ApiGetTracksRequest {
+	r.maxScoreGte = &maxScoreGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MaxScoreLt(maxScoreLt float32) ApiGetTracksRequest {
+	r.maxScoreLt = &maxScoreLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetTracksRequest) MaxScoreLte(maxScoreLte float32) ApiGetTracksRequest {
+	r.maxScoreLte = &maxScoreLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) MaxScoreIn(maxScoreIn float32) ApiGetTracksRequest {
+	r.maxScoreIn = &maxScoreIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) MaxScoreNotin(maxScoreNotin float32) ApiGetTracksRequest {
+	r.maxScoreNotin = &maxScoreNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) MaxScoreAsc(maxScoreAsc string) ApiGetTracksRequest {
+	r.maxScoreAsc = &maxScoreAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) MaxScoreDesc(maxScoreDesc string) ApiGetTracksRequest {
+	r.maxScoreDesc = &maxScoreDesc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetTracksRequest) TrajectoryContains(trajectoryContains interface{}) ApiGetTracksRequest {
+	r.trajectoryContains = &trajectoryContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetTracksRequest) TrajectoryNotcontains(trajectoryNotcontains interface{}) ApiGetTracksRequest {
+	r.trajectoryNotcontains = &trajectoryNotcontains
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) TrajectoryAsc(trajectoryAsc string) ApiGetTracksRequest {
+	r.trajectoryAsc = &trajectoryAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) TrajectoryDesc(trajectoryDesc string) ApiGetTracksRequest {
+	r.trajectoryDesc = &trajectoryDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) IsStaticEq(isStaticEq bool) ApiGetTracksRequest {
+	r.isStaticEq = &isStaticEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) IsStaticNe(isStaticNe bool) ApiGetTracksRequest {
+	r.isStaticNe = &isStaticNe
+	return r
+}
+
+// SQL IS false comparison, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) IsStaticIsfalse(isStaticIsfalse string) ApiGetTracksRequest {
+	r.isStaticIsfalse = &isStaticIsfalse
+	return r
+}
+
+// SQL IS true comparison, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) IsStaticIstrue(isStaticIstrue string) ApiGetTracksRequest {
+	r.isStaticIstrue = &isStaticIstrue
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) IsStaticAsc(isStaticAsc string) ApiGetTracksRequest {
+	r.isStaticAsc = &isStaticAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) IsStaticDesc(isStaticDesc string) ApiGetTracksRequest {
+	r.isStaticDesc = &isStaticDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetTracksRequest) StatusEq(statusEq string) ApiGetTracksRequest {
+	r.statusEq = &statusEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetTracksRequest) StatusNe(statusNe string) ApiGetTracksRequest {
+	r.statusNe = &statusNe
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) StatusIn(statusIn string) ApiGetTracksRequest {
+	r.statusIn = &statusIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetTracksRequest) StatusNotin(statusNotin string) ApiGetTracksRequest {
+	r.statusNotin = &statusNotin
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) StatusLike(statusLike string) ApiGetTracksRequest {
+	r.statusLike = &statusLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) StatusNotlike(statusNotlike string) ApiGetTracksRequest {
+	r.statusNotlike = &statusNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) StatusIlike(statusIlike string) ApiGetTracksRequest {
+	r.statusIlike = &statusIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetTracksRequest) StatusNotilike(statusNotilike string) ApiGetTracksRequest {
+	r.statusNotilike = &statusNotilike
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) StatusAsc(statusAsc string) ApiGetTracksRequest {
+	r.statusAsc = &statusAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetTracksRequest) StatusDesc(statusDesc string) ApiGetTracksRequest {
+	r.statusDesc = &statusDesc
 	return r
 }
 
@@ -2163,728 +1407,8 @@ func (a *TrackAPIService) GetTracksExecute(r ApiGetTracksRequest) (*ResponseWith
 	if r.videoLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "video__load", r.videoLoad, "")
 	}
-	if r.referencedByDetectionLoad != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection__load", r.referencedByDetectionLoad, "")
-	}
-	if r.idEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")
-	}
-	if r.idNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__ne", r.idNe, "")
-	}
-	if r.idGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__gt", r.idGt, "")
-	}
-	if r.idGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__gte", r.idGte, "")
-	}
-	if r.idLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__lt", r.idLt, "")
-	}
-	if r.idLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__lte", r.idLte, "")
-	}
-	if r.idIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__in", r.idIn, "")
-	}
-	if r.idNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notin", r.idNotin, "")
-	}
-	if r.idContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__contains", r.idContains, "")
-	}
-	if r.idNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notcontains", r.idNotcontains, "")
-	}
-	if r.idLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__like", r.idLike, "")
-	}
-	if r.idNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notlike", r.idNotlike, "")
-	}
-	if r.idIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__ilike", r.idIlike, "")
-	}
-	if r.idNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__notilike", r.idNotilike, "")
-	}
-	if r.idDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__desc", r.idDesc, "")
-	}
-	if r.idAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "id__asc", r.idAsc, "")
-	}
-	if r.createdAtEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__eq", r.createdAtEq, "")
-	}
-	if r.createdAtNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__ne", r.createdAtNe, "")
-	}
-	if r.createdAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__gt", r.createdAtGt, "")
-	}
-	if r.createdAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__gte", r.createdAtGte, "")
-	}
-	if r.createdAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__lt", r.createdAtLt, "")
-	}
-	if r.createdAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__lte", r.createdAtLte, "")
-	}
-	if r.createdAtIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__in", r.createdAtIn, "")
-	}
-	if r.createdAtNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notin", r.createdAtNotin, "")
-	}
-	if r.createdAtContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__contains", r.createdAtContains, "")
-	}
-	if r.createdAtNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notcontains", r.createdAtNotcontains, "")
-	}
-	if r.createdAtLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__like", r.createdAtLike, "")
-	}
-	if r.createdAtNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notlike", r.createdAtNotlike, "")
-	}
-	if r.createdAtIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__ilike", r.createdAtIlike, "")
-	}
-	if r.createdAtNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notilike", r.createdAtNotilike, "")
-	}
-	if r.createdAtDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__desc", r.createdAtDesc, "")
-	}
-	if r.createdAtAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__asc", r.createdAtAsc, "")
-	}
-	if r.updatedAtEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__eq", r.updatedAtEq, "")
-	}
-	if r.updatedAtNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__ne", r.updatedAtNe, "")
-	}
-	if r.updatedAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__gt", r.updatedAtGt, "")
-	}
-	if r.updatedAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__gte", r.updatedAtGte, "")
-	}
-	if r.updatedAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__lt", r.updatedAtLt, "")
-	}
-	if r.updatedAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__lte", r.updatedAtLte, "")
-	}
-	if r.updatedAtIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__in", r.updatedAtIn, "")
-	}
-	if r.updatedAtNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notin", r.updatedAtNotin, "")
-	}
-	if r.updatedAtContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__contains", r.updatedAtContains, "")
-	}
-	if r.updatedAtNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notcontains", r.updatedAtNotcontains, "")
-	}
-	if r.updatedAtLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__like", r.updatedAtLike, "")
-	}
-	if r.updatedAtNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notlike", r.updatedAtNotlike, "")
-	}
-	if r.updatedAtIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__ilike", r.updatedAtIlike, "")
-	}
-	if r.updatedAtNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notilike", r.updatedAtNotilike, "")
-	}
-	if r.updatedAtDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__desc", r.updatedAtDesc, "")
-	}
-	if r.updatedAtAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__asc", r.updatedAtAsc, "")
-	}
-	if r.deletedAtEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__eq", r.deletedAtEq, "")
-	}
-	if r.deletedAtNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__ne", r.deletedAtNe, "")
-	}
-	if r.deletedAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__gt", r.deletedAtGt, "")
-	}
-	if r.deletedAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__gte", r.deletedAtGte, "")
-	}
-	if r.deletedAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__lt", r.deletedAtLt, "")
-	}
-	if r.deletedAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__lte", r.deletedAtLte, "")
-	}
-	if r.deletedAtIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__in", r.deletedAtIn, "")
-	}
-	if r.deletedAtNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notin", r.deletedAtNotin, "")
-	}
-	if r.deletedAtContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__contains", r.deletedAtContains, "")
-	}
-	if r.deletedAtNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notcontains", r.deletedAtNotcontains, "")
-	}
-	if r.deletedAtLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__like", r.deletedAtLike, "")
-	}
-	if r.deletedAtNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notlike", r.deletedAtNotlike, "")
-	}
-	if r.deletedAtIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__ilike", r.deletedAtIlike, "")
-	}
-	if r.deletedAtNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notilike", r.deletedAtNotilike, "")
-	}
-	if r.deletedAtDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__desc", r.deletedAtDesc, "")
-	}
-	if r.deletedAtAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__asc", r.deletedAtAsc, "")
-	}
-	if r.cameraIdEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__eq", r.cameraIdEq, "")
-	}
-	if r.cameraIdNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__ne", r.cameraIdNe, "")
-	}
-	if r.cameraIdGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__gt", r.cameraIdGt, "")
-	}
-	if r.cameraIdGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__gte", r.cameraIdGte, "")
-	}
-	if r.cameraIdLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__lt", r.cameraIdLt, "")
-	}
-	if r.cameraIdLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__lte", r.cameraIdLte, "")
-	}
-	if r.cameraIdIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__in", r.cameraIdIn, "")
-	}
-	if r.cameraIdNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__notin", r.cameraIdNotin, "")
-	}
-	if r.cameraIdContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__contains", r.cameraIdContains, "")
-	}
-	if r.cameraIdNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__notcontains", r.cameraIdNotcontains, "")
-	}
-	if r.cameraIdLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__like", r.cameraIdLike, "")
-	}
-	if r.cameraIdNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__notlike", r.cameraIdNotlike, "")
-	}
-	if r.cameraIdIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__ilike", r.cameraIdIlike, "")
-	}
-	if r.cameraIdNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__notilike", r.cameraIdNotilike, "")
-	}
-	if r.cameraIdDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__desc", r.cameraIdDesc, "")
-	}
-	if r.cameraIdAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__asc", r.cameraIdAsc, "")
-	}
-	if r.cameraIdObjectContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__contains", r.cameraIdObjectContains, "")
-	}
-	if r.cameraIdObjectNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__notcontains", r.cameraIdObjectNotcontains, "")
-	}
-	if r.cameraIdObjectDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__desc", r.cameraIdObjectDesc, "")
-	}
-	if r.cameraIdObjectAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__asc", r.cameraIdObjectAsc, "")
-	}
-	if r.videoIdEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__eq", r.videoIdEq, "")
-	}
-	if r.videoIdNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__ne", r.videoIdNe, "")
-	}
-	if r.videoIdGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__gt", r.videoIdGt, "")
-	}
-	if r.videoIdGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__gte", r.videoIdGte, "")
-	}
-	if r.videoIdLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__lt", r.videoIdLt, "")
-	}
-	if r.videoIdLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__lte", r.videoIdLte, "")
-	}
-	if r.videoIdIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__in", r.videoIdIn, "")
-	}
-	if r.videoIdNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__notin", r.videoIdNotin, "")
-	}
-	if r.videoIdContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__contains", r.videoIdContains, "")
-	}
-	if r.videoIdNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__notcontains", r.videoIdNotcontains, "")
-	}
-	if r.videoIdLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__like", r.videoIdLike, "")
-	}
-	if r.videoIdNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__notlike", r.videoIdNotlike, "")
-	}
-	if r.videoIdIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__ilike", r.videoIdIlike, "")
-	}
-	if r.videoIdNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__notilike", r.videoIdNotilike, "")
-	}
-	if r.videoIdDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__desc", r.videoIdDesc, "")
-	}
-	if r.videoIdAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__asc", r.videoIdAsc, "")
-	}
-	if r.videoIdObjectContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id_object__contains", r.videoIdObjectContains, "")
-	}
-	if r.videoIdObjectNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id_object__notcontains", r.videoIdObjectNotcontains, "")
-	}
-	if r.videoIdObjectDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id_object__desc", r.videoIdObjectDesc, "")
-	}
-	if r.videoIdObjectAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id_object__asc", r.videoIdObjectAsc, "")
-	}
-	if r.classIdEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__eq", r.classIdEq, "")
-	}
-	if r.classIdNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__ne", r.classIdNe, "")
-	}
-	if r.classIdGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__gt", r.classIdGt, "")
-	}
-	if r.classIdGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__gte", r.classIdGte, "")
-	}
-	if r.classIdLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__lt", r.classIdLt, "")
-	}
-	if r.classIdLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__lte", r.classIdLte, "")
-	}
-	if r.classIdIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__in", r.classIdIn, "")
-	}
-	if r.classIdNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__notin", r.classIdNotin, "")
-	}
-	if r.classIdContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__contains", r.classIdContains, "")
-	}
-	if r.classIdNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__notcontains", r.classIdNotcontains, "")
-	}
-	if r.classIdDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__desc", r.classIdDesc, "")
-	}
-	if r.classIdAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__asc", r.classIdAsc, "")
-	}
-	if r.classNameEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__eq", r.classNameEq, "")
-	}
-	if r.classNameNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__ne", r.classNameNe, "")
-	}
-	if r.classNameGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__gt", r.classNameGt, "")
-	}
-	if r.classNameGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__gte", r.classNameGte, "")
-	}
-	if r.classNameLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__lt", r.classNameLt, "")
-	}
-	if r.classNameLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__lte", r.classNameLte, "")
-	}
-	if r.classNameIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__in", r.classNameIn, "")
-	}
-	if r.classNameNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notin", r.classNameNotin, "")
-	}
-	if r.classNameContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__contains", r.classNameContains, "")
-	}
-	if r.classNameNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notcontains", r.classNameNotcontains, "")
-	}
-	if r.classNameLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__like", r.classNameLike, "")
-	}
-	if r.classNameNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notlike", r.classNameNotlike, "")
-	}
-	if r.classNameIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__ilike", r.classNameIlike, "")
-	}
-	if r.classNameNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notilike", r.classNameNotilike, "")
-	}
-	if r.classNameDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__desc", r.classNameDesc, "")
-	}
-	if r.classNameAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__asc", r.classNameAsc, "")
-	}
-	if r.startedAtEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__eq", r.startedAtEq, "")
-	}
-	if r.startedAtNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__ne", r.startedAtNe, "")
-	}
-	if r.startedAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gt", r.startedAtGt, "")
-	}
-	if r.startedAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gte", r.startedAtGte, "")
-	}
-	if r.startedAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lt", r.startedAtLt, "")
-	}
-	if r.startedAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lte", r.startedAtLte, "")
-	}
-	if r.startedAtIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__in", r.startedAtIn, "")
-	}
-	if r.startedAtNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__notin", r.startedAtNotin, "")
-	}
-	if r.startedAtContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__contains", r.startedAtContains, "")
-	}
-	if r.startedAtNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__notcontains", r.startedAtNotcontains, "")
-	}
-	if r.startedAtLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__like", r.startedAtLike, "")
-	}
-	if r.startedAtNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__notlike", r.startedAtNotlike, "")
-	}
-	if r.startedAtIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__ilike", r.startedAtIlike, "")
-	}
-	if r.startedAtNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__notilike", r.startedAtNotilike, "")
-	}
-	if r.startedAtDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__desc", r.startedAtDesc, "")
-	}
-	if r.startedAtAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__asc", r.startedAtAsc, "")
-	}
-	if r.endedAtEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__eq", r.endedAtEq, "")
-	}
-	if r.endedAtNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__ne", r.endedAtNe, "")
-	}
-	if r.endedAtGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__gt", r.endedAtGt, "")
-	}
-	if r.endedAtGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__gte", r.endedAtGte, "")
-	}
-	if r.endedAtLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__lt", r.endedAtLt, "")
-	}
-	if r.endedAtLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__lte", r.endedAtLte, "")
-	}
-	if r.endedAtIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__in", r.endedAtIn, "")
-	}
-	if r.endedAtNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__notin", r.endedAtNotin, "")
-	}
-	if r.endedAtContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__contains", r.endedAtContains, "")
-	}
-	if r.endedAtNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__notcontains", r.endedAtNotcontains, "")
-	}
-	if r.endedAtLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__like", r.endedAtLike, "")
-	}
-	if r.endedAtNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__notlike", r.endedAtNotlike, "")
-	}
-	if r.endedAtIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__ilike", r.endedAtIlike, "")
-	}
-	if r.endedAtNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__notilike", r.endedAtNotilike, "")
-	}
-	if r.endedAtDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__desc", r.endedAtDesc, "")
-	}
-	if r.endedAtAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__asc", r.endedAtAsc, "")
-	}
-	if r.frameCountEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__eq", r.frameCountEq, "")
-	}
-	if r.frameCountNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__ne", r.frameCountNe, "")
-	}
-	if r.frameCountGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__gt", r.frameCountGt, "")
-	}
-	if r.frameCountGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__gte", r.frameCountGte, "")
-	}
-	if r.frameCountLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__lt", r.frameCountLt, "")
-	}
-	if r.frameCountLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__lte", r.frameCountLte, "")
-	}
-	if r.frameCountIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__in", r.frameCountIn, "")
-	}
-	if r.frameCountNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__notin", r.frameCountNotin, "")
-	}
-	if r.frameCountContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__contains", r.frameCountContains, "")
-	}
-	if r.frameCountNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__notcontains", r.frameCountNotcontains, "")
-	}
-	if r.frameCountDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__desc", r.frameCountDesc, "")
-	}
-	if r.frameCountAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__asc", r.frameCountAsc, "")
-	}
-	if r.meanScoreEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__eq", r.meanScoreEq, "")
-	}
-	if r.meanScoreNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__ne", r.meanScoreNe, "")
-	}
-	if r.meanScoreGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__gt", r.meanScoreGt, "")
-	}
-	if r.meanScoreGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__gte", r.meanScoreGte, "")
-	}
-	if r.meanScoreLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__lt", r.meanScoreLt, "")
-	}
-	if r.meanScoreLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__lte", r.meanScoreLte, "")
-	}
-	if r.meanScoreIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__in", r.meanScoreIn, "")
-	}
-	if r.meanScoreNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__notin", r.meanScoreNotin, "")
-	}
-	if r.meanScoreContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__contains", r.meanScoreContains, "")
-	}
-	if r.meanScoreNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__notcontains", r.meanScoreNotcontains, "")
-	}
-	if r.meanScoreDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__desc", r.meanScoreDesc, "")
-	}
-	if r.meanScoreAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__asc", r.meanScoreAsc, "")
-	}
-	if r.maxScoreEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__eq", r.maxScoreEq, "")
-	}
-	if r.maxScoreNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__ne", r.maxScoreNe, "")
-	}
-	if r.maxScoreGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__gt", r.maxScoreGt, "")
-	}
-	if r.maxScoreGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__gte", r.maxScoreGte, "")
-	}
-	if r.maxScoreLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__lt", r.maxScoreLt, "")
-	}
-	if r.maxScoreLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__lte", r.maxScoreLte, "")
-	}
-	if r.maxScoreIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__in", r.maxScoreIn, "")
-	}
-	if r.maxScoreNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__notin", r.maxScoreNotin, "")
-	}
-	if r.maxScoreContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__contains", r.maxScoreContains, "")
-	}
-	if r.maxScoreNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__notcontains", r.maxScoreNotcontains, "")
-	}
-	if r.maxScoreDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__desc", r.maxScoreDesc, "")
-	}
-	if r.maxScoreAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__asc", r.maxScoreAsc, "")
-	}
-	if r.centroidContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__contains", r.centroidContains, "")
-	}
-	if r.centroidNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__notcontains", r.centroidNotcontains, "")
-	}
-	if r.centroidDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__desc", r.centroidDesc, "")
-	}
-	if r.centroidAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "centroid__asc", r.centroidAsc, "")
-	}
-	if r.boundingBoxContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "bounding_box__contains", r.boundingBoxContains, "")
-	}
-	if r.boundingBoxNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "bounding_box__notcontains", r.boundingBoxNotcontains, "")
-	}
-	if r.boundingBoxDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "bounding_box__desc", r.boundingBoxDesc, "")
-	}
-	if r.boundingBoxAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "bounding_box__asc", r.boundingBoxAsc, "")
-	}
-	if r.trajectoryContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__contains", r.trajectoryContains, "")
-	}
-	if r.trajectoryNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__notcontains", r.trajectoryNotcontains, "")
-	}
-	if r.trajectoryDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__desc", r.trajectoryDesc, "")
-	}
-	if r.trajectoryAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__asc", r.trajectoryAsc, "")
-	}
-	if r.isStaticEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__eq", r.isStaticEq, "")
-	}
-	if r.isStaticNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__ne", r.isStaticNe, "")
-	}
-	if r.isStaticGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__gt", r.isStaticGt, "")
-	}
-	if r.isStaticGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__gte", r.isStaticGte, "")
-	}
-	if r.isStaticLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__lt", r.isStaticLt, "")
-	}
-	if r.isStaticLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__lte", r.isStaticLte, "")
-	}
-	if r.isStaticIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__in", r.isStaticIn, "")
-	}
-	if r.isStaticNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__notin", r.isStaticNotin, "")
-	}
-	if r.isStaticContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__contains", r.isStaticContains, "")
-	}
-	if r.isStaticNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__notcontains", r.isStaticNotcontains, "")
-	}
-	if r.isStaticDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__desc", r.isStaticDesc, "")
-	}
-	if r.isStaticAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__asc", r.isStaticAsc, "")
-	}
-	if r.statusEq != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__eq", r.statusEq, "")
-	}
-	if r.statusNe != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__ne", r.statusNe, "")
-	}
-	if r.statusGt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__gt", r.statusGt, "")
-	}
-	if r.statusGte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__gte", r.statusGte, "")
-	}
-	if r.statusLt != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__lt", r.statusLt, "")
-	}
-	if r.statusLte != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__lte", r.statusLte, "")
-	}
-	if r.statusIn != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__in", r.statusIn, "")
-	}
-	if r.statusNotin != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__notin", r.statusNotin, "")
-	}
-	if r.statusContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__contains", r.statusContains, "")
-	}
-	if r.statusNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__notcontains", r.statusNotcontains, "")
-	}
-	if r.statusLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__like", r.statusLike, "")
-	}
-	if r.statusNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__notlike", r.statusNotlike, "")
-	}
-	if r.statusIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__ilike", r.statusIlike, "")
-	}
-	if r.statusNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__notilike", r.statusNotilike, "")
-	}
-	if r.statusDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__desc", r.statusDesc, "")
-	}
-	if r.statusAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "status__asc", r.statusAsc, "")
+	if r.referencedByDetectionTrackIDLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_Detection_TrackID__load", r.referencedByDetectionTrackIDLoad, "")
 	}
 	if r.keyEq != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "key__eq", r.keyEq, "")
@@ -2910,41 +1434,437 @@ func (a *TrackAPIService) GetTracksExecute(r ApiGetTracksRequest) (*ResponseWith
 	if r.keyNotin != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "key__notin", r.keyNotin, "")
 	}
-	if r.keyContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "key__contains", r.keyContains, "")
-	}
-	if r.keyNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "key__notcontains", r.keyNotcontains, "")
-	}
-	if r.keyLike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "key__like", r.keyLike, "")
-	}
-	if r.keyNotlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "key__notlike", r.keyNotlike, "")
-	}
-	if r.keyIlike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "key__ilike", r.keyIlike, "")
-	}
-	if r.keyNotilike != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "key__notilike", r.keyNotilike, "")
+	if r.keyAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "key__asc", r.keyAsc, "")
 	}
 	if r.keyDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "key__desc", r.keyDesc, "")
 	}
-	if r.keyAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "key__asc", r.keyAsc, "")
+	if r.createdAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__eq", r.createdAtEq, "")
 	}
-	if r.referencedByDetectionTrackIdObjectsContains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_track_id_objects__contains", r.referencedByDetectionTrackIdObjectsContains, "")
+	if r.createdAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__ne", r.createdAtNe, "")
 	}
-	if r.referencedByDetectionTrackIdObjectsNotcontains != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_track_id_objects__notcontains", r.referencedByDetectionTrackIdObjectsNotcontains, "")
+	if r.createdAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__gt", r.createdAtGt, "")
 	}
-	if r.referencedByDetectionTrackIdObjectsDesc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_track_id_objects__desc", r.referencedByDetectionTrackIdObjectsDesc, "")
+	if r.createdAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__gte", r.createdAtGte, "")
 	}
-	if r.referencedByDetectionTrackIdObjectsAsc != nil {
-		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_track_id_objects__asc", r.referencedByDetectionTrackIdObjectsAsc, "")
+	if r.createdAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__lt", r.createdAtLt, "")
+	}
+	if r.createdAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__lte", r.createdAtLte, "")
+	}
+	if r.createdAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__in", r.createdAtIn, "")
+	}
+	if r.createdAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__notin", r.createdAtNotin, "")
+	}
+	if r.createdAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__asc", r.createdAtAsc, "")
+	}
+	if r.createdAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "created_at__desc", r.createdAtDesc, "")
+	}
+	if r.updatedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__eq", r.updatedAtEq, "")
+	}
+	if r.updatedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__ne", r.updatedAtNe, "")
+	}
+	if r.updatedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__gt", r.updatedAtGt, "")
+	}
+	if r.updatedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__gte", r.updatedAtGte, "")
+	}
+	if r.updatedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__lt", r.updatedAtLt, "")
+	}
+	if r.updatedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__lte", r.updatedAtLte, "")
+	}
+	if r.updatedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__in", r.updatedAtIn, "")
+	}
+	if r.updatedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__notin", r.updatedAtNotin, "")
+	}
+	if r.updatedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__asc", r.updatedAtAsc, "")
+	}
+	if r.updatedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "updated_at__desc", r.updatedAtDesc, "")
+	}
+	if r.deletedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__eq", r.deletedAtEq, "")
+	}
+	if r.deletedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__ne", r.deletedAtNe, "")
+	}
+	if r.deletedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__gt", r.deletedAtGt, "")
+	}
+	if r.deletedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__gte", r.deletedAtGte, "")
+	}
+	if r.deletedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__lt", r.deletedAtLt, "")
+	}
+	if r.deletedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__lte", r.deletedAtLte, "")
+	}
+	if r.deletedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__in", r.deletedAtIn, "")
+	}
+	if r.deletedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__notin", r.deletedAtNotin, "")
+	}
+	if r.deletedAtIsnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__isnull", r.deletedAtIsnull, "")
+	}
+	if r.deletedAtIsnotnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__isnotnull", r.deletedAtIsnotnull, "")
+	}
+	if r.deletedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__asc", r.deletedAtAsc, "")
+	}
+	if r.deletedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "deleted_at__desc", r.deletedAtDesc, "")
+	}
+	if r.cameraIdEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__eq", r.cameraIdEq, "")
+	}
+	if r.cameraIdNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__ne", r.cameraIdNe, "")
+	}
+	if r.cameraIdGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__gt", r.cameraIdGt, "")
+	}
+	if r.cameraIdGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__gte", r.cameraIdGte, "")
+	}
+	if r.cameraIdLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__lt", r.cameraIdLt, "")
+	}
+	if r.cameraIdLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__lte", r.cameraIdLte, "")
+	}
+	if r.cameraIdIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__in", r.cameraIdIn, "")
+	}
+	if r.cameraIdNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__notin", r.cameraIdNotin, "")
+	}
+	if r.cameraIdAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__asc", r.cameraIdAsc, "")
+	}
+	if r.cameraIdDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id__desc", r.cameraIdDesc, "")
+	}
+	if r.videoIdEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__eq", r.videoIdEq, "")
+	}
+	if r.videoIdNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__ne", r.videoIdNe, "")
+	}
+	if r.videoIdGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__gt", r.videoIdGt, "")
+	}
+	if r.videoIdGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__gte", r.videoIdGte, "")
+	}
+	if r.videoIdLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__lt", r.videoIdLt, "")
+	}
+	if r.videoIdLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__lte", r.videoIdLte, "")
+	}
+	if r.videoIdIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__in", r.videoIdIn, "")
+	}
+	if r.videoIdNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__notin", r.videoIdNotin, "")
+	}
+	if r.videoIdAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__asc", r.videoIdAsc, "")
+	}
+	if r.videoIdDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "video_id__desc", r.videoIdDesc, "")
+	}
+	if r.classIdEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__eq", r.classIdEq, "")
+	}
+	if r.classIdNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__ne", r.classIdNe, "")
+	}
+	if r.classIdGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__gt", r.classIdGt, "")
+	}
+	if r.classIdGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__gte", r.classIdGte, "")
+	}
+	if r.classIdLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__lt", r.classIdLt, "")
+	}
+	if r.classIdLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__lte", r.classIdLte, "")
+	}
+	if r.classIdIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__in", r.classIdIn, "")
+	}
+	if r.classIdNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__notin", r.classIdNotin, "")
+	}
+	if r.classIdAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__asc", r.classIdAsc, "")
+	}
+	if r.classIdDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_id__desc", r.classIdDesc, "")
+	}
+	if r.classNameEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__eq", r.classNameEq, "")
+	}
+	if r.classNameNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__ne", r.classNameNe, "")
+	}
+	if r.classNameIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__in", r.classNameIn, "")
+	}
+	if r.classNameNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notin", r.classNameNotin, "")
+	}
+	if r.classNameLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__like", r.classNameLike, "")
+	}
+	if r.classNameNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notlike", r.classNameNotlike, "")
+	}
+	if r.classNameIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__ilike", r.classNameIlike, "")
+	}
+	if r.classNameNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__notilike", r.classNameNotilike, "")
+	}
+	if r.classNameAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__asc", r.classNameAsc, "")
+	}
+	if r.classNameDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "class_name__desc", r.classNameDesc, "")
+	}
+	if r.startedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__eq", r.startedAtEq, "")
+	}
+	if r.startedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__ne", r.startedAtNe, "")
+	}
+	if r.startedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gt", r.startedAtGt, "")
+	}
+	if r.startedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__gte", r.startedAtGte, "")
+	}
+	if r.startedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lt", r.startedAtLt, "")
+	}
+	if r.startedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__lte", r.startedAtLte, "")
+	}
+	if r.startedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__in", r.startedAtIn, "")
+	}
+	if r.startedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__notin", r.startedAtNotin, "")
+	}
+	if r.startedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__asc", r.startedAtAsc, "")
+	}
+	if r.startedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "started_at__desc", r.startedAtDesc, "")
+	}
+	if r.endedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__eq", r.endedAtEq, "")
+	}
+	if r.endedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__ne", r.endedAtNe, "")
+	}
+	if r.endedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__gt", r.endedAtGt, "")
+	}
+	if r.endedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__gte", r.endedAtGte, "")
+	}
+	if r.endedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__lt", r.endedAtLt, "")
+	}
+	if r.endedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__lte", r.endedAtLte, "")
+	}
+	if r.endedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__in", r.endedAtIn, "")
+	}
+	if r.endedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__notin", r.endedAtNotin, "")
+	}
+	if r.endedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__asc", r.endedAtAsc, "")
+	}
+	if r.endedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "ended_at__desc", r.endedAtDesc, "")
+	}
+	if r.frameCountEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__eq", r.frameCountEq, "")
+	}
+	if r.frameCountNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__ne", r.frameCountNe, "")
+	}
+	if r.frameCountGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__gt", r.frameCountGt, "")
+	}
+	if r.frameCountGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__gte", r.frameCountGte, "")
+	}
+	if r.frameCountLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__lt", r.frameCountLt, "")
+	}
+	if r.frameCountLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__lte", r.frameCountLte, "")
+	}
+	if r.frameCountIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__in", r.frameCountIn, "")
+	}
+	if r.frameCountNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__notin", r.frameCountNotin, "")
+	}
+	if r.frameCountAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__asc", r.frameCountAsc, "")
+	}
+	if r.frameCountDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "frame_count__desc", r.frameCountDesc, "")
+	}
+	if r.meanScoreEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__eq", r.meanScoreEq, "")
+	}
+	if r.meanScoreNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__ne", r.meanScoreNe, "")
+	}
+	if r.meanScoreGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__gt", r.meanScoreGt, "")
+	}
+	if r.meanScoreGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__gte", r.meanScoreGte, "")
+	}
+	if r.meanScoreLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__lt", r.meanScoreLt, "")
+	}
+	if r.meanScoreLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__lte", r.meanScoreLte, "")
+	}
+	if r.meanScoreIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__in", r.meanScoreIn, "")
+	}
+	if r.meanScoreNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__notin", r.meanScoreNotin, "")
+	}
+	if r.meanScoreAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__asc", r.meanScoreAsc, "")
+	}
+	if r.meanScoreDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "mean_score__desc", r.meanScoreDesc, "")
+	}
+	if r.maxScoreEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__eq", r.maxScoreEq, "")
+	}
+	if r.maxScoreNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__ne", r.maxScoreNe, "")
+	}
+	if r.maxScoreGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__gt", r.maxScoreGt, "")
+	}
+	if r.maxScoreGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__gte", r.maxScoreGte, "")
+	}
+	if r.maxScoreLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__lt", r.maxScoreLt, "")
+	}
+	if r.maxScoreLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__lte", r.maxScoreLte, "")
+	}
+	if r.maxScoreIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__in", r.maxScoreIn, "")
+	}
+	if r.maxScoreNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__notin", r.maxScoreNotin, "")
+	}
+	if r.maxScoreAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__asc", r.maxScoreAsc, "")
+	}
+	if r.maxScoreDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "max_score__desc", r.maxScoreDesc, "")
+	}
+	if r.trajectoryContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__contains", r.trajectoryContains, "")
+	}
+	if r.trajectoryNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__notcontains", r.trajectoryNotcontains, "")
+	}
+	if r.trajectoryAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__asc", r.trajectoryAsc, "")
+	}
+	if r.trajectoryDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "trajectory__desc", r.trajectoryDesc, "")
+	}
+	if r.isStaticEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__eq", r.isStaticEq, "")
+	}
+	if r.isStaticNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__ne", r.isStaticNe, "")
+	}
+	if r.isStaticIsfalse != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__isfalse", r.isStaticIsfalse, "")
+	}
+	if r.isStaticIstrue != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__istrue", r.isStaticIstrue, "")
+	}
+	if r.isStaticAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__asc", r.isStaticAsc, "")
+	}
+	if r.isStaticDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "is_static__desc", r.isStaticDesc, "")
+	}
+	if r.statusEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__eq", r.statusEq, "")
+	}
+	if r.statusNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__ne", r.statusNe, "")
+	}
+	if r.statusIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__in", r.statusIn, "")
+	}
+	if r.statusNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__notin", r.statusNotin, "")
+	}
+	if r.statusLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__like", r.statusLike, "")
+	}
+	if r.statusNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__notlike", r.statusNotlike, "")
+	}
+	if r.statusIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__ilike", r.statusIlike, "")
+	}
+	if r.statusNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__notilike", r.statusNotilike, "")
+	}
+	if r.statusAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__asc", r.statusAsc, "")
+	}
+	if r.statusDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "status__desc", r.statusDesc, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

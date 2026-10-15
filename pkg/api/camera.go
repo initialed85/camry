@@ -42,6 +42,7 @@ type Camera struct {
 	SegmentProducerClaimedUntil          time.Time    `json:"segment_producer_claimed_until"`
 	StreamProducerClaimedUntil           time.Time    `json:"stream_producer_claimed_until"`
 	LowResStreamURL                      *string      `json:"low_res_stream_url"`
+	OverlayOffsetMs                      int64        `json:"overlay_offset_ms"`
 	ReferencedByDetectionCameraIDObjects []*Detection `json:"referenced_by_detection_camera_id_objects"`
 	ReferencedByTrackCameraIDObjects     []*Track     `json:"referenced_by_track_camera_id_objects"`
 	ReferencedByVideoCameraIDObjects     []*Video     `json:"referenced_by_video_camera_id_objects"`
@@ -64,6 +65,7 @@ var (
 	CameraTableSegmentProducerClaimedUntilColumn = "segment_producer_claimed_until"
 	CameraTableStreamProducerClaimedUntilColumn  = "stream_producer_claimed_until"
 	CameraTableLowResStreamURLColumn             = "low_res_stream_url"
+	CameraTableOverlayOffsetMsColumn             = "overlay_offset_ms"
 )
 
 var (
@@ -77,6 +79,7 @@ var (
 	CameraTableSegmentProducerClaimedUntilColumnWithTypeCast = `"segment_producer_claimed_until" AS segment_producer_claimed_until`
 	CameraTableStreamProducerClaimedUntilColumnWithTypeCast  = `"stream_producer_claimed_until" AS stream_producer_claimed_until`
 	CameraTableLowResStreamURLColumnWithTypeCast             = `"low_res_stream_url" AS low_res_stream_url`
+	CameraTableOverlayOffsetMsColumnWithTypeCast             = `"overlay_offset_ms" AS overlay_offset_ms`
 )
 
 var CameraTableColumns = []string{
@@ -90,6 +93,7 @@ var CameraTableColumns = []string{
 	CameraTableSegmentProducerClaimedUntilColumn,
 	CameraTableStreamProducerClaimedUntilColumn,
 	CameraTableLowResStreamURLColumn,
+	CameraTableOverlayOffsetMsColumn,
 }
 
 var CameraTableColumnsWithTypeCasts = []string{
@@ -103,6 +107,7 @@ var CameraTableColumnsWithTypeCasts = []string{
 	CameraTableSegmentProducerClaimedUntilColumnWithTypeCast,
 	CameraTableStreamProducerClaimedUntilColumnWithTypeCast,
 	CameraTableLowResStreamURLColumnWithTypeCast,
+	CameraTableOverlayOffsetMsColumnWithTypeCast,
 }
 
 var CameraIntrospectedTable *introspect.Table
@@ -164,6 +169,214 @@ func (m *Camera) GetPrimaryKeyColumn() string {
 
 func (m *Camera) GetPrimaryKeyValue() any {
 	return m.ID
+}
+func (Camera) GetQueryInfo() query.ModelQueryInfo {
+	return query.ModelQueryInfo{
+		TableName:        "camera",
+		PrimaryKeyColumn: "id",
+		Relationships: []query.RelationshipDefinition{
+			{
+				Name:         "referenced_by_Detection_CameraID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "detection",
+				LocalColumn:  "camera_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
+			},
+			{
+				Name:         "referenced_by_Track_CameraID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "track",
+				LocalColumn:  "camera_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
+			},
+			{
+				Name:         "referenced_by_Video_CameraID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "video",
+				LocalColumn:  "camera_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
+			},
+		},
+		Filters: []query.FilterDefinition{
+			{
+				Name:     "created_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "updated_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "deleted_at",
+				DataType: "timestamp with time zone",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "name",
+				DataType: "text",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "stream_url",
+				DataType: "text",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "last_seen",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "segment_producer_claimed_until",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "stream_producer_claimed_until",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "low_res_stream_url",
+				DataType: "text",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "overlay_offset_ms",
+				DataType: "integer",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+		},
+	}
 }
 
 func (m *Camera) FromItem(item map[string]any) error {
@@ -383,6 +596,25 @@ func (m *Camera) FromItem(item map[string]any) error {
 
 			m.LowResStreamURL = &temp2
 
+		case "overlay_offset_ms":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseInt(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(int64)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuoverlay_offset_ms.UUID", temp1))
+				}
+			}
+
+			m.OverlayOffsetMs = temp2
+
 		}
 	}
 
@@ -438,6 +670,7 @@ func (m *Camera) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool)
 	m.SegmentProducerClaimedUntil = o.SegmentProducerClaimedUntil
 	m.StreamProducerClaimedUntil = o.StreamProducerClaimedUntil
 	m.LowResStreamURL = o.LowResStreamURL
+	m.OverlayOffsetMs = o.OverlayOffsetMs
 	m.ReferencedByDetectionCameraIDObjects = o.ReferencedByDetectionCameraIDObjects
 	m.ReferencedByTrackCameraIDObjects = o.ReferencedByTrackCameraIDObjects
 	m.ReferencedByVideoCameraIDObjects = o.ReferencedByVideoCameraIDObjects
@@ -554,6 +787,17 @@ func (m *Camera) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, for
 		v, err := types.FormatString(m.LowResStreamURL)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.LowResStreamURL; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroInt(m.OverlayOffsetMs) || slices.Contains(forceSetValuesForFields, CameraTableOverlayOffsetMsColumn) || isRequired(CameraTableColumnLookup, CameraTableOverlayOffsetMsColumn) {
+		columns = append(columns, CameraTableOverlayOffsetMsColumn)
+
+		v, err := types.FormatInt(m.OverlayOffsetMs)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.OverlayOffsetMs; %v", err)
 		}
 
 		values = append(values, v)
@@ -727,6 +971,17 @@ func (m *Camera) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, forc
 		values = append(values, v)
 	}
 
+	if setZeroValues || !types.IsZeroInt(m.OverlayOffsetMs) || slices.Contains(forceSetValuesForFields, CameraTableOverlayOffsetMsColumn) {
+		columns = append(columns, CameraTableOverlayOffsetMsColumn)
+
+		v, err := types.FormatInt(m.OverlayOffsetMs)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.OverlayOffsetMs; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
 	v, err := types.FormatUUID(m.ID)
 	if err != nil {
 		return fmt.Errorf("failed to handle m.ID; %v", err)
@@ -753,6 +1008,239 @@ func (m *Camera) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, forc
 	}
 
 	err = m.Reload(ctx, tx, slices.Contains(forceSetValuesForFields, "deleted_at"))
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
+func (m *Camera) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
+	var columnName string
+	switch fieldName {
+
+	case "id":
+		columnName = CameraTableIDColumn
+
+	case "created_at":
+		columnName = CameraTableCreatedAtColumn
+
+	case "updated_at":
+		columnName = CameraTableUpdatedAtColumn
+
+	case "deleted_at":
+		columnName = CameraTableDeletedAtColumn
+
+	case "name":
+		columnName = CameraTableNameColumn
+
+	case "stream_url":
+		columnName = CameraTableStreamURLColumn
+
+	case "last_seen":
+		columnName = CameraTableLastSeenColumn
+
+	case "segment_producer_claimed_until":
+		columnName = CameraTableSegmentProducerClaimedUntilColumn
+
+	case "stream_producer_claimed_until":
+		columnName = CameraTableStreamProducerClaimedUntilColumn
+
+	case "low_res_stream_url":
+		columnName = CameraTableLowResStreamURLColumn
+
+	case "overlay_offset_ms":
+		columnName = CameraTableOverlayOffsetMsColumn
+	default:
+		return fmt.Errorf("unknown field name: %v", fieldName)
+	}
+
+	var columnValue any
+	var err error
+	switch columnName {
+
+	case CameraTableIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case CameraTableCreatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case CameraTableUpdatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case CameraTableDeletedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case CameraTableNameColumn:
+		columnValue, err = types.FormatString(value)
+
+	case CameraTableStreamURLColumn:
+		columnValue, err = types.FormatString(value)
+
+	case CameraTableLastSeenColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case CameraTableSegmentProducerClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case CameraTableStreamProducerClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case CameraTableLowResStreamURLColumn:
+		columnValue, err = types.FormatString(value)
+
+	case CameraTableOverlayOffsetMsColumn:
+		columnValue, err = types.FormatInt(value)
+	}
+	if err != nil {
+		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+	}
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err = query.Update(
+		ctx,
+		tx,
+		CameraTableWithSchema,
+		[]string{columnName},
+		fmt.Sprintf("%v = $$??", CameraTablePrimaryKeyColumn),
+		[]string{CameraTablePrimaryKeyColumn},
+		columnValue,
+		m.GetPrimaryKeyValue(),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
+	}
+
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
+
+func (m *Camera) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
+	if len(fields) == 0 {
+		return nil
+	}
+	fieldNames := make([]string, 0, len(fields))
+	for fieldName := range fields {
+		fieldNames = append(fieldNames, fieldName)
+	}
+	sort.Strings(fieldNames)
+
+	columns := make([]string, 0, len(fields))
+	values := make([]any, 0, len(fields)*2)
+
+	for _, fieldName := range fieldNames {
+		value := fields[fieldName]
+		var columnName string
+		switch fieldName {
+
+		case "id":
+			columnName = CameraTableIDColumn
+
+		case "created_at":
+			columnName = CameraTableCreatedAtColumn
+
+		case "updated_at":
+			columnName = CameraTableUpdatedAtColumn
+
+		case "deleted_at":
+			columnName = CameraTableDeletedAtColumn
+
+		case "name":
+			columnName = CameraTableNameColumn
+
+		case "stream_url":
+			columnName = CameraTableStreamURLColumn
+
+		case "last_seen":
+			columnName = CameraTableLastSeenColumn
+
+		case "segment_producer_claimed_until":
+			columnName = CameraTableSegmentProducerClaimedUntilColumn
+
+		case "stream_producer_claimed_until":
+			columnName = CameraTableStreamProducerClaimedUntilColumn
+
+		case "low_res_stream_url":
+			columnName = CameraTableLowResStreamURLColumn
+
+		case "overlay_offset_ms":
+			columnName = CameraTableOverlayOffsetMsColumn
+		default:
+			return fmt.Errorf("unknown field name: %v", fieldName)
+		}
+
+		var columnValue any
+		var err error
+		switch columnName {
+
+		case CameraTableIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case CameraTableCreatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case CameraTableUpdatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case CameraTableDeletedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case CameraTableNameColumn:
+			columnValue, err = types.FormatString(value)
+
+		case CameraTableStreamURLColumn:
+			columnValue, err = types.FormatString(value)
+
+		case CameraTableLastSeenColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case CameraTableSegmentProducerClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case CameraTableStreamProducerClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case CameraTableLowResStreamURLColumn:
+			columnValue, err = types.FormatString(value)
+
+		case CameraTableOverlayOffsetMsColumn:
+			columnValue, err = types.FormatInt(value)
+		}
+		if err != nil {
+			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+		}
+
+		columns = append(columns, columnName)
+		values = append(values, columnValue)
+	}
+	values = append(values, m.GetPrimaryKeyValue())
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err := query.Update(
+		ctx,
+		tx,
+		CameraTableWithSchema,
+		columns,
+		fmt.Sprintf("%v = $$??", CameraTablePrimaryKeyColumn),
+		[]string{CameraTablePrimaryKeyColumn},
+		values...,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update fields: %v", err)
+	}
+
+	err = m.Reload(ctx, tx, false)
 	if err != nil {
 		return fmt.Errorf("failed to reload after update")
 	}
@@ -904,12 +1392,13 @@ func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string
 	isLoadQuery := possiblePathValue != nil && len(possiblePathValue.VisitedTableNames) > 0
 
 	shouldLoad := query.ShouldLoad(ctx, CameraTable) || query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", CameraTable))
+	shouldLoad = shouldLoad || query.ShouldLoadFromSelectionTree(ctx, CameraTable) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", CameraTable))
 
-	var ok bool
-	ctx, ok = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, nil), !isLoadQuery)
-	if !ok && !shouldLoad {
+	var action query.PathAction
+	ctx, action = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, nil), !isLoadQuery)
+	if (action == query.PathActionCycleDetected || action == query.PathActionDepthExceeded) && !shouldLoad {
 		if config.Debug() {
-			log.Printf("skipping SelectCamera early (query.ShouldLoad(): %v, query.HandleQueryPathGraphCycles(): %v)", shouldLoad, ok)
+			log.Printf("skipping SelectCamera early (query.ShouldLoad(): %v, action: %v)", shouldLoad, action)
 		}
 		return []*Camera{}, 0, 0, 0, 0, nil
 	}
@@ -966,36 +1455,51 @@ func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string
 		if object == nil {
 			return nil, 0, 0, 0, 0, fmt.Errorf("assertion failed: object unexpectedly nil")
 		}
-
 		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   DetectionTable,
+				LocalColumn: DetectionTableCameraIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", DetectionTable, object.GetPrimaryKeyValue()), true)
-			if ok || shouldLoad {
-				thisBefore := time.Now()
-
-				if config.Debug() {
-					log.Printf("loading SelectCameras->SelectDetections for object.ReferencedByDetectionCameraIDObjects")
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", DetectionTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
 				}
-
-				object.ReferencedByDetectionCameraIDObjects, _, _, _, _, err = SelectDetections(
-					ctx,
-					tx,
-					fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
-					nil,
-					nil,
-					nil,
-					object.GetPrimaryKeyValue(),
-				)
-				if err != nil {
-					if !errors.Is(err, sql.ErrNoRows) {
-						return err
-					}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
 				}
+			}
 
-				if config.Debug() {
-					log.Printf("loaded SelectCameras->SelectDetections for object.ReferencedByDetectionCameraIDObjects in %s", time.Since(thisBefore))
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectCameras->SelectDetections for object.ReferencedByDetectionCameraIDObjects")
+			}
+
+			object.ReferencedByDetectionCameraIDObjects, _, _, _, _, err = SelectDetections(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", DetectionTableCameraIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
 				}
+			}
 
+			if config.Debug() {
+				log.Printf("loaded SelectCameras->SelectDetections for object.ReferencedByDetectionCameraIDObjects in %s", time.Since(thisBefore))
 			}
 
 			return nil
@@ -1005,34 +1509,50 @@ func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string
 		}
 
 		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   TrackTable,
+				LocalColumn: TrackTableCameraIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", TrackTable))
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", TrackTable, object.GetPrimaryKeyValue()), true)
-			if ok || shouldLoad {
-				thisBefore := time.Now()
-
-				if config.Debug() {
-					log.Printf("loading SelectCameras->SelectTracks for object.ReferencedByTrackCameraIDObjects")
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", TrackTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", TrackTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
 				}
-
-				object.ReferencedByTrackCameraIDObjects, _, _, _, _, err = SelectTracks(
-					ctx,
-					tx,
-					fmt.Sprintf("%v = $1", TrackTableCameraIDColumn),
-					nil,
-					nil,
-					nil,
-					object.GetPrimaryKeyValue(),
-				)
-				if err != nil {
-					if !errors.Is(err, sql.ErrNoRows) {
-						return err
-					}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
 				}
+			}
 
-				if config.Debug() {
-					log.Printf("loaded SelectCameras->SelectTracks for object.ReferencedByTrackCameraIDObjects in %s", time.Since(thisBefore))
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectCameras->SelectTracks for object.ReferencedByTrackCameraIDObjects")
+			}
+
+			object.ReferencedByTrackCameraIDObjects, _, _, _, _, err = SelectTracks(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", TrackTableCameraIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
 				}
+			}
 
+			if config.Debug() {
+				log.Printf("loaded SelectCameras->SelectTracks for object.ReferencedByTrackCameraIDObjects in %s", time.Since(thisBefore))
 			}
 
 			return nil
@@ -1042,34 +1562,50 @@ func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string
 		}
 
 		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   VideoTable,
+				LocalColumn: VideoTableCameraIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", VideoTable))
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", VideoTable, object.GetPrimaryKeyValue()), true)
-			if ok || shouldLoad {
-				thisBefore := time.Now()
-
-				if config.Debug() {
-					log.Printf("loading SelectCameras->SelectVideos for object.ReferencedByVideoCameraIDObjects")
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", VideoTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", VideoTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
 				}
-
-				object.ReferencedByVideoCameraIDObjects, _, _, _, _, err = SelectVideos(
-					ctx,
-					tx,
-					fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
-					nil,
-					nil,
-					nil,
-					object.GetPrimaryKeyValue(),
-				)
-				if err != nil {
-					if !errors.Is(err, sql.ErrNoRows) {
-						return err
-					}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
 				}
+			}
 
-				if config.Debug() {
-					log.Printf("loaded SelectCameras->SelectVideos for object.ReferencedByVideoCameraIDObjects in %s", time.Since(thisBefore))
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectCameras->SelectVideos for object.ReferencedByVideoCameraIDObjects")
+			}
+
+			object.ReferencedByVideoCameraIDObjects, _, _, _, _, err = SelectVideos(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", VideoTableCameraIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
 				}
+			}
 
+			if config.Debug() {
+				log.Printf("loaded SelectCameras->SelectVideos for object.ReferencedByVideoCameraIDObjects in %s", time.Since(thisBefore))
 			}
 
 			return nil
@@ -2390,173 +2926,4 @@ func init() {
 		"/cameras",
 		MutateRouterForCamera,
 	)
-}
-func (m *Camera) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
-	var columnName string
-	switch fieldName {
-	case "id":
-		columnName = CameraTableIDColumn
-	case "created_at":
-		columnName = CameraTableCreatedAtColumn
-	case "updated_at":
-		columnName = CameraTableUpdatedAtColumn
-	case "deleted_at":
-		columnName = CameraTableDeletedAtColumn
-	case "name":
-		columnName = CameraTableNameColumn
-	case "stream_url":
-		columnName = CameraTableStreamURLColumn
-	case "last_seen":
-		columnName = CameraTableLastSeenColumn
-	case "segment_producer_claimed_until":
-		columnName = CameraTableSegmentProducerClaimedUntilColumn
-	case "stream_producer_claimed_until":
-		columnName = CameraTableStreamProducerClaimedUntilColumn
-	case "low_res_stream_url":
-		columnName = CameraTableLowResStreamURLColumn
-
-	default:
-		return fmt.Errorf("unknown field name: %v", fieldName)
-	}
-	var columnValue any
-	var err error
-	switch columnName {
-	case CameraTableIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case CameraTableCreatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case CameraTableUpdatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case CameraTableDeletedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case CameraTableNameColumn:
-		columnValue, err = types.FormatString(value)
-	case CameraTableStreamURLColumn:
-		columnValue, err = types.FormatString(value)
-	case CameraTableLastSeenColumn:
-		columnValue, err = types.FormatTime(value)
-	case CameraTableSegmentProducerClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value)
-	case CameraTableStreamProducerClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value)
-	case CameraTableLowResStreamURLColumn:
-		columnValue, err = types.FormatString(value)
-
-	}
-	if err != nil {
-		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-	}
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err = query.Update(
-		ctx,
-		tx,
-		CameraTableWithSchema,
-		[]string{columnName},
-		fmt.Sprintf("%v = $$??", CameraTableIDColumn),
-		[]string{CameraTableIDColumn},
-		columnValue,
-		m.ID,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
-}
-func (m *Camera) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
-	if len(fields) == 0 {
-		return nil
-	}
-	fieldNames := make([]string, 0, len(fields))
-	for fieldName := range fields {
-		fieldNames = append(fieldNames, fieldName)
-	}
-	sort.Strings(fieldNames)
-	columns := make([]string, 0, len(fields))
-	values := make([]any, 0, len(fields)*2)
-	for _, fieldName := range fieldNames {
-		value := fields[fieldName]
-		var columnName string
-		switch fieldName {
-		case "id":
-			columnName = CameraTableIDColumn
-		case "created_at":
-			columnName = CameraTableCreatedAtColumn
-		case "updated_at":
-			columnName = CameraTableUpdatedAtColumn
-		case "deleted_at":
-			columnName = CameraTableDeletedAtColumn
-		case "name":
-			columnName = CameraTableNameColumn
-		case "stream_url":
-			columnName = CameraTableStreamURLColumn
-		case "last_seen":
-			columnName = CameraTableLastSeenColumn
-		case "segment_producer_claimed_until":
-			columnName = CameraTableSegmentProducerClaimedUntilColumn
-		case "stream_producer_claimed_until":
-			columnName = CameraTableStreamProducerClaimedUntilColumn
-		case "low_res_stream_url":
-			columnName = CameraTableLowResStreamURLColumn
-
-		default:
-			return fmt.Errorf("unknown field name: %v", fieldName)
-		}
-		var columnValue any
-		var err error
-		switch columnName {
-		case CameraTableIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case CameraTableCreatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case CameraTableUpdatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case CameraTableDeletedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case CameraTableNameColumn:
-			columnValue, err = types.FormatString(value)
-		case CameraTableStreamURLColumn:
-			columnValue, err = types.FormatString(value)
-		case CameraTableLastSeenColumn:
-			columnValue, err = types.FormatTime(value)
-		case CameraTableSegmentProducerClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value)
-		case CameraTableStreamProducerClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value)
-		case CameraTableLowResStreamURLColumn:
-			columnValue, err = types.FormatString(value)
-
-		}
-		if err != nil {
-			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-		}
-		columns = append(columns, columnName)
-		values = append(values, columnValue)
-	}
-	values = append(values, m.ID)
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err := query.Update(
-		ctx,
-		tx,
-		CameraTableWithSchema,
-		columns,
-		fmt.Sprintf("%v = $$??", CameraTableIDColumn),
-		[]string{CameraTableIDColumn},
-		values...,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update fields: %v", err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
 }

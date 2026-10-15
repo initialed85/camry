@@ -4,19 +4,20 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CreatedAt** | Pointer to **time.Time** |  | [optional]
-**DeletedAt** | Pointer to **time.Time** |  | [optional]
-**Id** | Pointer to **string** |  | [optional]
-**LastSeen** | Pointer to **time.Time** |  | [optional]
-**LowResStreamUrl** | Pointer to **string** |  | [optional]
-**Name** | Pointer to **string** |  | [optional]
-**ReferencedByDetectionCameraIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional]
-**ReferencedByTrackCameraIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional]
-**ReferencedByVideoCameraIdObjects** | Pointer to [**[]Video**](Video.md) |  | [optional]
-**SegmentProducerClaimedUntil** | Pointer to **time.Time** |  | [optional]
-**StreamProducerClaimedUntil** | Pointer to **time.Time** |  | [optional]
-**StreamUrl** | Pointer to **string** |  | [optional]
-**UpdatedAt** | Pointer to **time.Time** |  | [optional]
+**CreatedAt** | Pointer to **time.Time** |  | [optional] 
+**DeletedAt** | Pointer to **time.Time** |  | [optional] 
+**Id** | Pointer to **string** |  | [optional] 
+**LastSeen** | Pointer to **time.Time** |  | [optional] 
+**LowResStreamUrl** | Pointer to **string** |  | [optional] 
+**Name** | Pointer to **string** |  | [optional] 
+**OverlayOffsetMs** | Pointer to **int64** |  | [optional] 
+**ReferencedByDetectionCameraIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
+**ReferencedByTrackCameraIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional] 
+**ReferencedByVideoCameraIdObjects** | Pointer to [**[]Video**](Video.md) |  | [optional] 
+**SegmentProducerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
+**StreamProducerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
+**StreamUrl** | Pointer to **string** |  | [optional] 
+**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
 
 ## Methods
 
@@ -186,6 +187,31 @@ SetName sets Name field to given value.
 `func (o *Camera) HasName() bool`
 
 HasName returns a boolean if a field has been set.
+
+### GetOverlayOffsetMs
+
+`func (o *Camera) GetOverlayOffsetMs() int64`
+
+GetOverlayOffsetMs returns the OverlayOffsetMs field if non-nil, zero value otherwise.
+
+### GetOverlayOffsetMsOk
+
+`func (o *Camera) GetOverlayOffsetMsOk() (*int64, bool)`
+
+GetOverlayOffsetMsOk returns a tuple with the OverlayOffsetMs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOverlayOffsetMs
+
+`func (o *Camera) SetOverlayOffsetMs(v int64)`
+
+SetOverlayOffsetMs sets OverlayOffsetMs field to given value.
+
+### HasOverlayOffsetMs
+
+`func (o *Camera) HasOverlayOffsetMs() bool`
+
+HasOverlayOffsetMs returns a boolean if a field has been set.
 
 ### GetReferencedByDetectionCameraIdObjects
 

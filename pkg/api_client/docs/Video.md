@@ -4,26 +4,27 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CameraId** | Pointer to **string** |  | [optional]
-**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional]
-**CreatedAt** | Pointer to **time.Time** |  | [optional]
-**DeletedAt** | Pointer to **time.Time** |  | [optional]
-**DetectionSummary** | Pointer to **interface{}** |  | [optional]
-**Duration** | Pointer to **int64** |  | [optional]
-**EndedAt** | Pointer to **time.Time** |  | [optional]
-**FileName** | Pointer to **string** |  | [optional]
-**FileSize** | Pointer to **float64** |  | [optional]
-**Id** | Pointer to **string** |  | [optional]
-**IsLowRes** | Pointer to **bool** |  | [optional]
-**ObjectDetectorClaimedUntil** | Pointer to **time.Time** |  | [optional]
-**ObjectTrackerClaimedUntil** | Pointer to **time.Time** |  | [optional]
-**ReferencedByDetectionVideoIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional]
-**ReferencedByTrackVideoIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional]
-**StartedAt** | Pointer to **time.Time** |  | [optional]
-**Status** | Pointer to **string** |  | [optional]
-**ThumbnailName** | Pointer to **string** |  | [optional]
-**TrackSummary** | Pointer to **interface{}** |  | [optional]
-**UpdatedAt** | Pointer to **time.Time** |  | [optional]
+**CameraId** | Pointer to **string** |  | [optional] 
+**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional] 
+**CreatedAt** | Pointer to **time.Time** |  | [optional] 
+**DeletedAt** | Pointer to **time.Time** |  | [optional] 
+**DetectionSummary** | Pointer to **interface{}** |  | [optional] 
+**Duration** | Pointer to **int64** |  | [optional] 
+**EndedAt** | Pointer to **time.Time** |  | [optional] 
+**FileName** | Pointer to **string** |  | [optional] 
+**FileSize** | Pointer to **float64** |  | [optional] 
+**Id** | Pointer to **string** |  | [optional] 
+**IsLowRes** | Pointer to **bool** |  | [optional] 
+**ObjectDetectorClaimedUntil** | Pointer to **time.Time** |  | [optional] 
+**ObjectTrackerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
+**OverlayOffsetMs** | Pointer to **int64** |  | [optional] 
+**ReferencedByDetectionVideoIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
+**ReferencedByTrackVideoIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional] 
+**StartedAt** | Pointer to **time.Time** |  | [optional] 
+**Status** | Pointer to **string** |  | [optional] 
+**ThumbnailName** | Pointer to **string** |  | [optional] 
+**TrackSummary** | Pointer to **interface{}** |  | [optional] 
+**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
 
 ## Methods
 
@@ -378,6 +379,31 @@ SetObjectTrackerClaimedUntil sets ObjectTrackerClaimedUntil field to given value
 `func (o *Video) HasObjectTrackerClaimedUntil() bool`
 
 HasObjectTrackerClaimedUntil returns a boolean if a field has been set.
+
+### GetOverlayOffsetMs
+
+`func (o *Video) GetOverlayOffsetMs() int64`
+
+GetOverlayOffsetMs returns the OverlayOffsetMs field if non-nil, zero value otherwise.
+
+### GetOverlayOffsetMsOk
+
+`func (o *Video) GetOverlayOffsetMsOk() (*int64, bool)`
+
+GetOverlayOffsetMsOk returns a tuple with the OverlayOffsetMs field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetOverlayOffsetMs
+
+`func (o *Video) SetOverlayOffsetMs(v int64)`
+
+SetOverlayOffsetMs sets OverlayOffsetMs field to given value.
+
+### HasOverlayOffsetMs
+
+`func (o *Video) HasOverlayOffsetMs() bool`
+
+HasOverlayOffsetMs returns a boolean if a field has been set.
 
 ### GetReferencedByDetectionVideoIdObjects
 

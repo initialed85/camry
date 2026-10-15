@@ -18,7 +18,7 @@ import re  # noqa: F401
 import json
 
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, StrictStr
+from pydantic import BaseModel, ConfigDict, StrictInt, StrictStr
 from typing import Any, ClassVar, Dict, List, Optional
 from typing import Optional, Set
 from typing_extensions import Self
@@ -33,6 +33,7 @@ class Camera(BaseModel):
     last_seen: Optional[datetime] = None
     low_res_stream_url: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
+    overlay_offset_ms: Optional[StrictInt] = None
     referenced_by_detection_camera_id_objects: Optional[List[Detection]] = None
     referenced_by_track_camera_id_objects: Optional[List[Track]] = None
     referenced_by_video_camera_id_objects: Optional[List[Video]] = None
@@ -40,7 +41,7 @@ class Camera(BaseModel):
     stream_producer_claimed_until: Optional[datetime] = None
     stream_url: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "low_res_stream_url", "name", "referenced_by_detection_camera_id_objects", "referenced_by_track_camera_id_objects", "referenced_by_video_camera_id_objects", "segment_producer_claimed_until", "stream_producer_claimed_until", "stream_url", "updated_at"]
+    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "low_res_stream_url", "name", "overlay_offset_ms", "referenced_by_detection_camera_id_objects", "referenced_by_track_camera_id_objects", "referenced_by_video_camera_id_objects", "segment_producer_claimed_until", "stream_producer_claimed_until", "stream_url", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -120,6 +121,7 @@ class Camera(BaseModel):
             "last_seen": obj.get("last_seen"),
             "low_res_stream_url": obj.get("low_res_stream_url"),
             "name": obj.get("name"),
+            "overlay_offset_ms": obj.get("overlay_offset_ms"),
             "referenced_by_detection_camera_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_camera_id_objects"]] if obj.get("referenced_by_detection_camera_id_objects") is not None else None,
             "referenced_by_track_camera_id_objects": [Track.from_dict(_item) for _item in obj["referenced_by_track_camera_id_objects"]] if obj.get("referenced_by_track_camera_id_objects") is not None else None,
             "referenced_by_video_camera_id_objects": [Video.from_dict(_item) for _item in obj["referenced_by_video_camera_id_objects"]] if obj.get("referenced_by_video_camera_id_objects") is not None else None,

@@ -40,6 +40,7 @@ class Video(BaseModel):
     is_low_res: Optional[StrictBool] = None
     object_detector_claimed_until: Optional[datetime] = None
     object_tracker_claimed_until: Optional[datetime] = None
+    overlay_offset_ms: Optional[StrictInt] = None
     referenced_by_detection_video_id_objects: Optional[List[Detection]] = None
     referenced_by_track_video_id_objects: Optional[List[Track]] = None
     started_at: Optional[datetime] = None
@@ -47,7 +48,7 @@ class Video(BaseModel):
     thumbnail_name: Optional[StrictStr] = None
     track_summary: Optional[Any] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "detection_summary", "duration", "ended_at", "file_name", "file_size", "id", "is_low_res", "object_detector_claimed_until", "object_tracker_claimed_until", "referenced_by_detection_video_id_objects", "referenced_by_track_video_id_objects", "started_at", "status", "thumbnail_name", "track_summary", "updated_at"]
+    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "detection_summary", "duration", "ended_at", "file_name", "file_size", "id", "is_low_res", "object_detector_claimed_until", "object_tracker_claimed_until", "overlay_offset_ms", "referenced_by_detection_video_id_objects", "referenced_by_track_video_id_objects", "started_at", "status", "thumbnail_name", "track_summary", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -140,6 +141,7 @@ class Video(BaseModel):
             "is_low_res": obj.get("is_low_res"),
             "object_detector_claimed_until": obj.get("object_detector_claimed_until"),
             "object_tracker_claimed_until": obj.get("object_tracker_claimed_until"),
+            "overlay_offset_ms": obj.get("overlay_offset_ms"),
             "referenced_by_detection_video_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_video_id_objects"]] if obj.get("referenced_by_detection_video_id_objects") is not None else None,
             "referenced_by_track_video_id_objects": [Track.from_dict(_item) for _item in obj["referenced_by_track_video_id_objects"]] if obj.get("referenced_by_track_video_id_objects") is not None else None,
             "started_at": obj.get("started_at"),

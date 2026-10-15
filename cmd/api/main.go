@@ -5,12 +5,15 @@ import (
 	"strings"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/gomodule/redigo/redis"
 	"github.com/initialed85/camry/internal/auth"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/djangolang/pkg/config"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func addCustomHandlers(r chi.Router) error {
+func addCustomHandlers(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool) error {
+
 	a, err := auth.New()
 	if err != nil {
 		return err

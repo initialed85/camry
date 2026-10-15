@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**TimeoutSeconds** | Pointer to **float64** |  | [optional]
-**Until** | Pointer to **time.Time** |  | [optional]
+**TimeoutSeconds** | Pointer to **float64** |  | [optional] 
+**Until** | Pointer to **time.Time** |  | [optional] 
 
 ## Methods
 

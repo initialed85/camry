@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Count** | Pointer to **int64** |  | [optional]
-**Error** | Pointer to **[]string** |  | [optional]
-**Limit** | Pointer to **int64** |  | [optional]
-**Objects** | Pointer to [**[]Track**](Track.md) |  | [optional]
-**Offset** | Pointer to **int64** |  | [optional]
-**Status** | Pointer to **int64** |  | [optional]
-**Success** | Pointer to **bool** |  | [optional]
-**TotalCount** | Pointer to **int64** |  | [optional]
+**Count** | Pointer to **int64** |  | [optional] 
+**Error** | Pointer to **[]string** |  | [optional] 
+**Limit** | Pointer to **int64** |  | [optional] 
+**Objects** | Pointer to [**[]Track**](Track.md) |  | [optional] 
+**Offset** | Pointer to **int64** |  | [optional] 
+**Status** | Pointer to **int64** |  | [optional] 
+**Success** | Pointer to **bool** |  | [optional] 
+**TotalCount** | Pointer to **int64** |  | [optional] 
 
 ## Methods
 

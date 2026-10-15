@@ -26,6 +26,7 @@ type Camera struct {
 	LastSeen *time.Time `json:"last_seen,omitempty"`
 	LowResStreamUrl *string `json:"low_res_stream_url,omitempty"`
 	Name *string `json:"name,omitempty"`
+	OverlayOffsetMs *int64 `json:"overlay_offset_ms,omitempty"`
 	ReferencedByDetectionCameraIdObjects []Detection `json:"referenced_by_detection_camera_id_objects,omitempty"`
 	ReferencedByTrackCameraIdObjects []Track `json:"referenced_by_track_camera_id_objects,omitempty"`
 	ReferencedByVideoCameraIdObjects []Video `json:"referenced_by_video_camera_id_objects,omitempty"`
@@ -242,6 +243,38 @@ func (o *Camera) HasName() bool {
 // SetName gets a reference to the given string and assigns it to the Name field.
 func (o *Camera) SetName(v string) {
 	o.Name = &v
+}
+
+// GetOverlayOffsetMs returns the OverlayOffsetMs field value if set, zero value otherwise.
+func (o *Camera) GetOverlayOffsetMs() int64 {
+	if o == nil || IsNil(o.OverlayOffsetMs) {
+		var ret int64
+		return ret
+	}
+	return *o.OverlayOffsetMs
+}
+
+// GetOverlayOffsetMsOk returns a tuple with the OverlayOffsetMs field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Camera) GetOverlayOffsetMsOk() (*int64, bool) {
+	if o == nil || IsNil(o.OverlayOffsetMs) {
+		return nil, false
+	}
+	return o.OverlayOffsetMs, true
+}
+
+// HasOverlayOffsetMs returns a boolean if a field has been set.
+func (o *Camera) HasOverlayOffsetMs() bool {
+	if o != nil && !IsNil(o.OverlayOffsetMs) {
+		return true
+	}
+
+	return false
+}
+
+// SetOverlayOffsetMs gets a reference to the given int64 and assigns it to the OverlayOffsetMs field.
+func (o *Camera) SetOverlayOffsetMs(v int64) {
+	o.OverlayOffsetMs = &v
 }
 
 // GetReferencedByDetectionCameraIdObjects returns the ReferencedByDetectionCameraIdObjects field value if set, zero value otherwise.
@@ -495,6 +528,9 @@ func (o Camera) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Name) {
 		toSerialize["name"] = o.Name
+	}
+	if !IsNil(o.OverlayOffsetMs) {
+		toSerialize["overlay_offset_ms"] = o.OverlayOffsetMs
 	}
 	if !IsNil(o.ReferencedByDetectionCameraIdObjects) {
 		toSerialize["referenced_by_detection_camera_id_objects"] = o.ReferencedByDetectionCameraIdObjects

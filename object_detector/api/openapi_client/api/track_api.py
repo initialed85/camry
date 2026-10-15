@@ -274,9 +274,9 @@ class TrackApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-
+            
             _query_params.append(('depth', depth))
-
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -539,9 +539,9 @@ class TrackApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-
+            
             _query_params.append(('depth', depth))
-
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -584,249 +584,9 @@ class TrackApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
-        video__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        created_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        updated_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        deleted_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        camera_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        camera_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        video_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        video_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        video_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        video_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
-        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
-        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
-        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
-        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_id__contains: Annotated[Optional[StrictInt], Field(description="SQL @> comparison")] = None,
-        class_id__notcontains: Annotated[Optional[StrictInt], Field(description="SQL NOT @> comparison")] = None,
-        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        class_name__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        class_name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        class_name__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_name__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        class_name__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        started_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        started_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        started_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        started_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        started_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        started_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        started_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        started_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        ended_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        ended_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        ended_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        ended_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        ended_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        ended_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        ended_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        frame_count__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
-        frame_count__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
-        frame_count__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
-        frame_count__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        frame_count__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
-        frame_count__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        frame_count__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        frame_count__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        frame_count__contains: Annotated[Optional[StrictInt], Field(description="SQL @> comparison")] = None,
-        frame_count__notcontains: Annotated[Optional[StrictInt], Field(description="SQL NOT @> comparison")] = None,
-        frame_count__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        frame_count__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        mean_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
-        mean_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
-        mean_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
-        mean_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        mean_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
-        mean_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        mean_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        mean_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        mean_score__contains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL @> comparison")] = None,
-        mean_score__notcontains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT @> comparison")] = None,
-        mean_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        mean_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        max_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
-        max_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
-        max_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
-        max_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        max_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
-        max_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        max_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        max_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        max_score__contains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL @> comparison")] = None,
-        max_score__notcontains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT @> comparison")] = None,
-        max_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        max_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        centroid__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        centroid__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        centroid__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        centroid__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        bounding_box__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        bounding_box__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        bounding_box__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        bounding_box__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        trajectory__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        trajectory__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        trajectory__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        trajectory__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        is_static__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
-        is_static__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
-        is_static__gt: Annotated[Optional[StrictBool], Field(description="SQL > comparison, may not work with all column types")] = None,
-        is_static__gte: Annotated[Optional[StrictBool], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        is_static__lt: Annotated[Optional[StrictBool], Field(description="SQL < comparison, may not work with all column types")] = None,
-        is_static__lte: Annotated[Optional[StrictBool], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        is_static__in: Annotated[Optional[StrictBool], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        is_static__notin: Annotated[Optional[StrictBool], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        is_static__contains: Annotated[Optional[StrictBool], Field(description="SQL @> comparison")] = None,
-        is_static__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
-        is_static__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        is_static__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        status__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        status__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        status__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        status__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        status__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        status__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        status__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        status__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        video__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_track_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         key__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         key__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         key__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -835,18 +595,150 @@ class TrackApi:
         key__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         key__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         key__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        key__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        key__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        key__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         key__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection_track_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        referenced_by_detection_track_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        referenced_by_detection_track_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection_track_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        key__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
+        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
+        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
+        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
+        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        started_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        started_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        started_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        started_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        started_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        ended_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        ended_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        ended_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        ended_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        frame_count__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
+        frame_count__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
+        frame_count__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
+        frame_count__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        frame_count__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
+        frame_count__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        frame_count__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        frame_count__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        frame_count__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        frame_count__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        mean_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
+        mean_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
+        mean_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
+        mean_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        mean_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
+        mean_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        mean_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        mean_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        mean_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        mean_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        max_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
+        max_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
+        max_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
+        max_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        max_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
+        max_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        max_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        max_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        max_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        max_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        trajectory__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        trajectory__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        trajectory__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        trajectory__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_static__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
+        is_static__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
+        is_static__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        is_static__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        is_static__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_static__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        status__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        status__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -869,492 +761,12 @@ class TrackApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
-        :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :param camera__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type camera__load: str
-        :param video__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :param video__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type video__load: str
-        :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection__load: str
-        :param id__eq: SQL = comparison
-        :type id__eq: str
-        :param id__ne: SQL != comparison
-        :type id__ne: str
-        :param id__gt: SQL > comparison, may not work with all column types
-        :type id__gt: str
-        :param id__gte: SQL >= comparison, may not work with all column types
-        :type id__gte: str
-        :param id__lt: SQL < comparison, may not work with all column types
-        :type id__lt: str
-        :param id__lte: SQL <= comparison, may not work with all column types
-        :type id__lte: str
-        :param id__in: SQL IN comparison, permits comma-separated values
-        :type id__in: str
-        :param id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type id__notin: str
-        :param id__contains: SQL @> comparison
-        :type id__contains: str
-        :param id__notcontains: SQL NOT @> comparison
-        :type id__notcontains: str
-        :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__like: str
-        :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__notlike: str
-        :param id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__ilike: str
-        :param id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__notilike: str
-        :param id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type id__desc: str
-        :param id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type id__asc: str
-        :param created_at__eq: SQL = comparison
-        :type created_at__eq: datetime
-        :param created_at__ne: SQL != comparison
-        :type created_at__ne: datetime
-        :param created_at__gt: SQL > comparison, may not work with all column types
-        :type created_at__gt: datetime
-        :param created_at__gte: SQL >= comparison, may not work with all column types
-        :type created_at__gte: datetime
-        :param created_at__lt: SQL < comparison, may not work with all column types
-        :type created_at__lt: datetime
-        :param created_at__lte: SQL <= comparison, may not work with all column types
-        :type created_at__lte: datetime
-        :param created_at__in: SQL IN comparison, permits comma-separated values
-        :type created_at__in: datetime
-        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type created_at__notin: datetime
-        :param created_at__contains: SQL @> comparison
-        :type created_at__contains: datetime
-        :param created_at__notcontains: SQL NOT @> comparison
-        :type created_at__notcontains: datetime
-        :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: datetime
-        :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: datetime
-        :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: datetime
-        :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: datetime
-        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type created_at__desc: str
-        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type created_at__asc: str
-        :param updated_at__eq: SQL = comparison
-        :type updated_at__eq: datetime
-        :param updated_at__ne: SQL != comparison
-        :type updated_at__ne: datetime
-        :param updated_at__gt: SQL > comparison, may not work with all column types
-        :type updated_at__gt: datetime
-        :param updated_at__gte: SQL >= comparison, may not work with all column types
-        :type updated_at__gte: datetime
-        :param updated_at__lt: SQL < comparison, may not work with all column types
-        :type updated_at__lt: datetime
-        :param updated_at__lte: SQL <= comparison, may not work with all column types
-        :type updated_at__lte: datetime
-        :param updated_at__in: SQL IN comparison, permits comma-separated values
-        :type updated_at__in: datetime
-        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type updated_at__notin: datetime
-        :param updated_at__contains: SQL @> comparison
-        :type updated_at__contains: datetime
-        :param updated_at__notcontains: SQL NOT @> comparison
-        :type updated_at__notcontains: datetime
-        :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: datetime
-        :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: datetime
-        :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: datetime
-        :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: datetime
-        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type updated_at__desc: str
-        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type updated_at__asc: str
-        :param deleted_at__eq: SQL = comparison
-        :type deleted_at__eq: datetime
-        :param deleted_at__ne: SQL != comparison
-        :type deleted_at__ne: datetime
-        :param deleted_at__gt: SQL > comparison, may not work with all column types
-        :type deleted_at__gt: datetime
-        :param deleted_at__gte: SQL >= comparison, may not work with all column types
-        :type deleted_at__gte: datetime
-        :param deleted_at__lt: SQL < comparison, may not work with all column types
-        :type deleted_at__lt: datetime
-        :param deleted_at__lte: SQL <= comparison, may not work with all column types
-        :type deleted_at__lte: datetime
-        :param deleted_at__in: SQL IN comparison, permits comma-separated values
-        :type deleted_at__in: datetime
-        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type deleted_at__notin: datetime
-        :param deleted_at__contains: SQL @> comparison
-        :type deleted_at__contains: datetime
-        :param deleted_at__notcontains: SQL NOT @> comparison
-        :type deleted_at__notcontains: datetime
-        :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: datetime
-        :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: datetime
-        :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: datetime
-        :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: datetime
-        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type deleted_at__desc: str
-        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type deleted_at__asc: str
-        :param camera_id__eq: SQL = comparison
-        :type camera_id__eq: str
-        :param camera_id__ne: SQL != comparison
-        :type camera_id__ne: str
-        :param camera_id__gt: SQL > comparison, may not work with all column types
-        :type camera_id__gt: str
-        :param camera_id__gte: SQL >= comparison, may not work with all column types
-        :type camera_id__gte: str
-        :param camera_id__lt: SQL < comparison, may not work with all column types
-        :type camera_id__lt: str
-        :param camera_id__lte: SQL <= comparison, may not work with all column types
-        :type camera_id__lte: str
-        :param camera_id__in: SQL IN comparison, permits comma-separated values
-        :type camera_id__in: str
-        :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type camera_id__notin: str
-        :param camera_id__contains: SQL @> comparison
-        :type camera_id__contains: str
-        :param camera_id__notcontains: SQL NOT @> comparison
-        :type camera_id__notcontains: str
-        :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__like: str
-        :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__notlike: str
-        :param camera_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__ilike: str
-        :param camera_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__notilike: str
-        :param camera_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type camera_id__desc: str
-        :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type camera_id__asc: str
-        :param camera_id_object__contains: SQL @> comparison
-        :type camera_id_object__contains: object
-        :param camera_id_object__notcontains: SQL NOT @> comparison
-        :type camera_id_object__notcontains: object
-        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type camera_id_object__desc: str
-        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type camera_id_object__asc: str
-        :param video_id__eq: SQL = comparison
-        :type video_id__eq: str
-        :param video_id__ne: SQL != comparison
-        :type video_id__ne: str
-        :param video_id__gt: SQL > comparison, may not work with all column types
-        :type video_id__gt: str
-        :param video_id__gte: SQL >= comparison, may not work with all column types
-        :type video_id__gte: str
-        :param video_id__lt: SQL < comparison, may not work with all column types
-        :type video_id__lt: str
-        :param video_id__lte: SQL <= comparison, may not work with all column types
-        :type video_id__lte: str
-        :param video_id__in: SQL IN comparison, permits comma-separated values
-        :type video_id__in: str
-        :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type video_id__notin: str
-        :param video_id__contains: SQL @> comparison
-        :type video_id__contains: str
-        :param video_id__notcontains: SQL NOT @> comparison
-        :type video_id__notcontains: str
-        :param video_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__like: str
-        :param video_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__notlike: str
-        :param video_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__ilike: str
-        :param video_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__notilike: str
-        :param video_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type video_id__desc: str
-        :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type video_id__asc: str
-        :param video_id_object__contains: SQL @> comparison
-        :type video_id_object__contains: object
-        :param video_id_object__notcontains: SQL NOT @> comparison
-        :type video_id_object__notcontains: object
-        :param video_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type video_id_object__desc: str
-        :param video_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type video_id_object__asc: str
-        :param class_id__eq: SQL = comparison
-        :type class_id__eq: int
-        :param class_id__ne: SQL != comparison
-        :type class_id__ne: int
-        :param class_id__gt: SQL > comparison, may not work with all column types
-        :type class_id__gt: int
-        :param class_id__gte: SQL >= comparison, may not work with all column types
-        :type class_id__gte: int
-        :param class_id__lt: SQL < comparison, may not work with all column types
-        :type class_id__lt: int
-        :param class_id__lte: SQL <= comparison, may not work with all column types
-        :type class_id__lte: int
-        :param class_id__in: SQL IN comparison, permits comma-separated values
-        :type class_id__in: int
-        :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type class_id__notin: int
-        :param class_id__contains: SQL @> comparison
-        :type class_id__contains: int
-        :param class_id__notcontains: SQL NOT @> comparison
-        :type class_id__notcontains: int
-        :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type class_id__desc: str
-        :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type class_id__asc: str
-        :param class_name__eq: SQL = comparison
-        :type class_name__eq: str
-        :param class_name__ne: SQL != comparison
-        :type class_name__ne: str
-        :param class_name__gt: SQL > comparison, may not work with all column types
-        :type class_name__gt: str
-        :param class_name__gte: SQL >= comparison, may not work with all column types
-        :type class_name__gte: str
-        :param class_name__lt: SQL < comparison, may not work with all column types
-        :type class_name__lt: str
-        :param class_name__lte: SQL <= comparison, may not work with all column types
-        :type class_name__lte: str
-        :param class_name__in: SQL IN comparison, permits comma-separated values
-        :type class_name__in: str
-        :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
-        :type class_name__notin: str
-        :param class_name__contains: SQL @> comparison
-        :type class_name__contains: str
-        :param class_name__notcontains: SQL NOT @> comparison
-        :type class_name__notcontains: str
-        :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__like: str
-        :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__notlike: str
-        :param class_name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__ilike: str
-        :param class_name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__notilike: str
-        :param class_name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type class_name__desc: str
-        :param class_name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type class_name__asc: str
-        :param started_at__eq: SQL = comparison
-        :type started_at__eq: datetime
-        :param started_at__ne: SQL != comparison
-        :type started_at__ne: datetime
-        :param started_at__gt: SQL > comparison, may not work with all column types
-        :type started_at__gt: datetime
-        :param started_at__gte: SQL >= comparison, may not work with all column types
-        :type started_at__gte: datetime
-        :param started_at__lt: SQL < comparison, may not work with all column types
-        :type started_at__lt: datetime
-        :param started_at__lte: SQL <= comparison, may not work with all column types
-        :type started_at__lte: datetime
-        :param started_at__in: SQL IN comparison, permits comma-separated values
-        :type started_at__in: datetime
-        :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type started_at__notin: datetime
-        :param started_at__contains: SQL @> comparison
-        :type started_at__contains: datetime
-        :param started_at__notcontains: SQL NOT @> comparison
-        :type started_at__notcontains: datetime
-        :param started_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__like: datetime
-        :param started_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notlike: datetime
-        :param started_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__ilike: datetime
-        :param started_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notilike: datetime
-        :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type started_at__desc: str
-        :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type started_at__asc: str
-        :param ended_at__eq: SQL = comparison
-        :type ended_at__eq: datetime
-        :param ended_at__ne: SQL != comparison
-        :type ended_at__ne: datetime
-        :param ended_at__gt: SQL > comparison, may not work with all column types
-        :type ended_at__gt: datetime
-        :param ended_at__gte: SQL >= comparison, may not work with all column types
-        :type ended_at__gte: datetime
-        :param ended_at__lt: SQL < comparison, may not work with all column types
-        :type ended_at__lt: datetime
-        :param ended_at__lte: SQL <= comparison, may not work with all column types
-        :type ended_at__lte: datetime
-        :param ended_at__in: SQL IN comparison, permits comma-separated values
-        :type ended_at__in: datetime
-        :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type ended_at__notin: datetime
-        :param ended_at__contains: SQL @> comparison
-        :type ended_at__contains: datetime
-        :param ended_at__notcontains: SQL NOT @> comparison
-        :type ended_at__notcontains: datetime
-        :param ended_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__like: datetime
-        :param ended_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notlike: datetime
-        :param ended_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__ilike: datetime
-        :param ended_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notilike: datetime
-        :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type ended_at__desc: str
-        :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type ended_at__asc: str
-        :param frame_count__eq: SQL = comparison
-        :type frame_count__eq: int
-        :param frame_count__ne: SQL != comparison
-        :type frame_count__ne: int
-        :param frame_count__gt: SQL > comparison, may not work with all column types
-        :type frame_count__gt: int
-        :param frame_count__gte: SQL >= comparison, may not work with all column types
-        :type frame_count__gte: int
-        :param frame_count__lt: SQL < comparison, may not work with all column types
-        :type frame_count__lt: int
-        :param frame_count__lte: SQL <= comparison, may not work with all column types
-        :type frame_count__lte: int
-        :param frame_count__in: SQL IN comparison, permits comma-separated values
-        :type frame_count__in: int
-        :param frame_count__notin: SQL NOT IN comparison, permits comma-separated values
-        :type frame_count__notin: int
-        :param frame_count__contains: SQL @> comparison
-        :type frame_count__contains: int
-        :param frame_count__notcontains: SQL NOT @> comparison
-        :type frame_count__notcontains: int
-        :param frame_count__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type frame_count__desc: str
-        :param frame_count__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type frame_count__asc: str
-        :param mean_score__eq: SQL = comparison
-        :type mean_score__eq: float
-        :param mean_score__ne: SQL != comparison
-        :type mean_score__ne: float
-        :param mean_score__gt: SQL > comparison, may not work with all column types
-        :type mean_score__gt: float
-        :param mean_score__gte: SQL >= comparison, may not work with all column types
-        :type mean_score__gte: float
-        :param mean_score__lt: SQL < comparison, may not work with all column types
-        :type mean_score__lt: float
-        :param mean_score__lte: SQL <= comparison, may not work with all column types
-        :type mean_score__lte: float
-        :param mean_score__in: SQL IN comparison, permits comma-separated values
-        :type mean_score__in: float
-        :param mean_score__notin: SQL NOT IN comparison, permits comma-separated values
-        :type mean_score__notin: float
-        :param mean_score__contains: SQL @> comparison
-        :type mean_score__contains: float
-        :param mean_score__notcontains: SQL NOT @> comparison
-        :type mean_score__notcontains: float
-        :param mean_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type mean_score__desc: str
-        :param mean_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type mean_score__asc: str
-        :param max_score__eq: SQL = comparison
-        :type max_score__eq: float
-        :param max_score__ne: SQL != comparison
-        :type max_score__ne: float
-        :param max_score__gt: SQL > comparison, may not work with all column types
-        :type max_score__gt: float
-        :param max_score__gte: SQL >= comparison, may not work with all column types
-        :type max_score__gte: float
-        :param max_score__lt: SQL < comparison, may not work with all column types
-        :type max_score__lt: float
-        :param max_score__lte: SQL <= comparison, may not work with all column types
-        :type max_score__lte: float
-        :param max_score__in: SQL IN comparison, permits comma-separated values
-        :type max_score__in: float
-        :param max_score__notin: SQL NOT IN comparison, permits comma-separated values
-        :type max_score__notin: float
-        :param max_score__contains: SQL @> comparison
-        :type max_score__contains: float
-        :param max_score__notcontains: SQL NOT @> comparison
-        :type max_score__notcontains: float
-        :param max_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type max_score__desc: str
-        :param max_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type max_score__asc: str
-        :param centroid__contains: SQL @> comparison
-        :type centroid__contains: object
-        :param centroid__notcontains: SQL NOT @> comparison
-        :type centroid__notcontains: object
-        :param centroid__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type centroid__desc: str
-        :param centroid__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type centroid__asc: str
-        :param bounding_box__contains: SQL @> comparison
-        :type bounding_box__contains: object
-        :param bounding_box__notcontains: SQL NOT @> comparison
-        :type bounding_box__notcontains: object
-        :param bounding_box__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type bounding_box__desc: str
-        :param bounding_box__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type bounding_box__asc: str
-        :param trajectory__contains: SQL @> comparison
-        :type trajectory__contains: object
-        :param trajectory__notcontains: SQL NOT @> comparison
-        :type trajectory__notcontains: object
-        :param trajectory__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type trajectory__desc: str
-        :param trajectory__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type trajectory__asc: str
-        :param is_static__eq: SQL = comparison
-        :type is_static__eq: bool
-        :param is_static__ne: SQL != comparison
-        :type is_static__ne: bool
-        :param is_static__gt: SQL > comparison, may not work with all column types
-        :type is_static__gt: bool
-        :param is_static__gte: SQL >= comparison, may not work with all column types
-        :type is_static__gte: bool
-        :param is_static__lt: SQL < comparison, may not work with all column types
-        :type is_static__lt: bool
-        :param is_static__lte: SQL <= comparison, may not work with all column types
-        :type is_static__lte: bool
-        :param is_static__in: SQL IN comparison, permits comma-separated values
-        :type is_static__in: bool
-        :param is_static__notin: SQL NOT IN comparison, permits comma-separated values
-        :type is_static__notin: bool
-        :param is_static__contains: SQL @> comparison
-        :type is_static__contains: bool
-        :param is_static__notcontains: SQL NOT @> comparison
-        :type is_static__notcontains: bool
-        :param is_static__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type is_static__desc: str
-        :param is_static__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type is_static__asc: str
-        :param status__eq: SQL = comparison
-        :type status__eq: str
-        :param status__ne: SQL != comparison
-        :type status__ne: str
-        :param status__gt: SQL > comparison, may not work with all column types
-        :type status__gt: str
-        :param status__gte: SQL >= comparison, may not work with all column types
-        :type status__gte: str
-        :param status__lt: SQL < comparison, may not work with all column types
-        :type status__lt: str
-        :param status__lte: SQL <= comparison, may not work with all column types
-        :type status__lte: str
-        :param status__in: SQL IN comparison, permits comma-separated values
-        :type status__in: str
-        :param status__notin: SQL NOT IN comparison, permits comma-separated values
-        :type status__notin: str
-        :param status__contains: SQL @> comparison
-        :type status__contains: str
-        :param status__notcontains: SQL NOT @> comparison
-        :type status__notcontains: str
-        :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__like: str
-        :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__notlike: str
-        :param status__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__ilike: str
-        :param status__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__notilike: str
-        :param status__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type status__desc: str
-        :param status__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type status__asc: str
+        :param referenced_by_detection_track_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_track_id__load: str
         :param key__eq: SQL = comparison
         :type key__eq: str
         :param key__ne: SQL != comparison
@@ -1371,30 +783,294 @@ class TrackApi:
         :type key__in: str
         :param key__notin: SQL NOT IN comparison, permits comma-separated values
         :type key__notin: str
-        :param key__contains: SQL @> comparison
-        :type key__contains: str
-        :param key__notcontains: SQL NOT @> comparison
-        :type key__notcontains: str
-        :param key__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__like: str
-        :param key__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__notlike: str
-        :param key__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__ilike: str
-        :param key__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__notilike: str
-        :param key__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type key__desc: str
         :param key__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type key__asc: str
-        :param referenced_by_detection_track_id_objects__contains: SQL @> comparison
-        :type referenced_by_detection_track_id_objects__contains: object
-        :param referenced_by_detection_track_id_objects__notcontains: SQL NOT @> comparison
-        :type referenced_by_detection_track_id_objects__notcontains: object
-        :param referenced_by_detection_track_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection_track_id_objects__desc: str
-        :param referenced_by_detection_track_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection_track_id_objects__asc: str
+        :param key__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type key__desc: str
+        :param created_at__eq: SQL = comparison
+        :type created_at__eq: datetime
+        :param created_at__ne: SQL != comparison
+        :type created_at__ne: datetime
+        :param created_at__gt: SQL > comparison, may not work with all column types
+        :type created_at__gt: datetime
+        :param created_at__gte: SQL >= comparison, may not work with all column types
+        :type created_at__gte: datetime
+        :param created_at__lt: SQL < comparison, may not work with all column types
+        :type created_at__lt: datetime
+        :param created_at__lte: SQL <= comparison, may not work with all column types
+        :type created_at__lte: datetime
+        :param created_at__in: SQL IN comparison, permits comma-separated values
+        :type created_at__in: datetime
+        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type created_at__notin: datetime
+        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type created_at__asc: str
+        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type created_at__desc: str
+        :param updated_at__eq: SQL = comparison
+        :type updated_at__eq: datetime
+        :param updated_at__ne: SQL != comparison
+        :type updated_at__ne: datetime
+        :param updated_at__gt: SQL > comparison, may not work with all column types
+        :type updated_at__gt: datetime
+        :param updated_at__gte: SQL >= comparison, may not work with all column types
+        :type updated_at__gte: datetime
+        :param updated_at__lt: SQL < comparison, may not work with all column types
+        :type updated_at__lt: datetime
+        :param updated_at__lte: SQL <= comparison, may not work with all column types
+        :type updated_at__lte: datetime
+        :param updated_at__in: SQL IN comparison, permits comma-separated values
+        :type updated_at__in: datetime
+        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type updated_at__notin: datetime
+        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type updated_at__asc: str
+        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type updated_at__desc: str
+        :param deleted_at__eq: SQL = comparison
+        :type deleted_at__eq: datetime
+        :param deleted_at__ne: SQL != comparison
+        :type deleted_at__ne: datetime
+        :param deleted_at__gt: SQL > comparison, may not work with all column types
+        :type deleted_at__gt: datetime
+        :param deleted_at__gte: SQL >= comparison, may not work with all column types
+        :type deleted_at__gte: datetime
+        :param deleted_at__lt: SQL < comparison, may not work with all column types
+        :type deleted_at__lt: datetime
+        :param deleted_at__lte: SQL <= comparison, may not work with all column types
+        :type deleted_at__lte: datetime
+        :param deleted_at__in: SQL IN comparison, permits comma-separated values
+        :type deleted_at__in: datetime
+        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type deleted_at__notin: datetime
+        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isnull: str
+        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isnotnull: str
+        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type deleted_at__asc: str
+        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type deleted_at__desc: str
+        :param camera_id__eq: SQL = comparison
+        :type camera_id__eq: str
+        :param camera_id__ne: SQL != comparison
+        :type camera_id__ne: str
+        :param camera_id__gt: SQL > comparison, may not work with all column types
+        :type camera_id__gt: str
+        :param camera_id__gte: SQL >= comparison, may not work with all column types
+        :type camera_id__gte: str
+        :param camera_id__lt: SQL < comparison, may not work with all column types
+        :type camera_id__lt: str
+        :param camera_id__lte: SQL <= comparison, may not work with all column types
+        :type camera_id__lte: str
+        :param camera_id__in: SQL IN comparison, permits comma-separated values
+        :type camera_id__in: str
+        :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type camera_id__notin: str
+        :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id__asc: str
+        :param camera_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id__desc: str
+        :param video_id__eq: SQL = comparison
+        :type video_id__eq: str
+        :param video_id__ne: SQL != comparison
+        :type video_id__ne: str
+        :param video_id__gt: SQL > comparison, may not work with all column types
+        :type video_id__gt: str
+        :param video_id__gte: SQL >= comparison, may not work with all column types
+        :type video_id__gte: str
+        :param video_id__lt: SQL < comparison, may not work with all column types
+        :type video_id__lt: str
+        :param video_id__lte: SQL <= comparison, may not work with all column types
+        :type video_id__lte: str
+        :param video_id__in: SQL IN comparison, permits comma-separated values
+        :type video_id__in: str
+        :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type video_id__notin: str
+        :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type video_id__asc: str
+        :param video_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type video_id__desc: str
+        :param class_id__eq: SQL = comparison
+        :type class_id__eq: int
+        :param class_id__ne: SQL != comparison
+        :type class_id__ne: int
+        :param class_id__gt: SQL > comparison, may not work with all column types
+        :type class_id__gt: int
+        :param class_id__gte: SQL >= comparison, may not work with all column types
+        :type class_id__gte: int
+        :param class_id__lt: SQL < comparison, may not work with all column types
+        :type class_id__lt: int
+        :param class_id__lte: SQL <= comparison, may not work with all column types
+        :type class_id__lte: int
+        :param class_id__in: SQL IN comparison, permits comma-separated values
+        :type class_id__in: int
+        :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type class_id__notin: int
+        :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type class_id__asc: str
+        :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type class_id__desc: str
+        :param class_name__eq: SQL = comparison
+        :type class_name__eq: str
+        :param class_name__ne: SQL != comparison
+        :type class_name__ne: str
+        :param class_name__in: SQL IN comparison, permits comma-separated values
+        :type class_name__in: str
+        :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
+        :type class_name__notin: str
+        :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__like: str
+        :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__notlike: str
+        :param class_name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__ilike: str
+        :param class_name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__notilike: str
+        :param class_name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type class_name__asc: str
+        :param class_name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type class_name__desc: str
+        :param started_at__eq: SQL = comparison
+        :type started_at__eq: datetime
+        :param started_at__ne: SQL != comparison
+        :type started_at__ne: datetime
+        :param started_at__gt: SQL > comparison, may not work with all column types
+        :type started_at__gt: datetime
+        :param started_at__gte: SQL >= comparison, may not work with all column types
+        :type started_at__gte: datetime
+        :param started_at__lt: SQL < comparison, may not work with all column types
+        :type started_at__lt: datetime
+        :param started_at__lte: SQL <= comparison, may not work with all column types
+        :type started_at__lte: datetime
+        :param started_at__in: SQL IN comparison, permits comma-separated values
+        :type started_at__in: datetime
+        :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type started_at__notin: datetime
+        :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type started_at__asc: str
+        :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type started_at__desc: str
+        :param ended_at__eq: SQL = comparison
+        :type ended_at__eq: datetime
+        :param ended_at__ne: SQL != comparison
+        :type ended_at__ne: datetime
+        :param ended_at__gt: SQL > comparison, may not work with all column types
+        :type ended_at__gt: datetime
+        :param ended_at__gte: SQL >= comparison, may not work with all column types
+        :type ended_at__gte: datetime
+        :param ended_at__lt: SQL < comparison, may not work with all column types
+        :type ended_at__lt: datetime
+        :param ended_at__lte: SQL <= comparison, may not work with all column types
+        :type ended_at__lte: datetime
+        :param ended_at__in: SQL IN comparison, permits comma-separated values
+        :type ended_at__in: datetime
+        :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type ended_at__notin: datetime
+        :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type ended_at__asc: str
+        :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type ended_at__desc: str
+        :param frame_count__eq: SQL = comparison
+        :type frame_count__eq: int
+        :param frame_count__ne: SQL != comparison
+        :type frame_count__ne: int
+        :param frame_count__gt: SQL > comparison, may not work with all column types
+        :type frame_count__gt: int
+        :param frame_count__gte: SQL >= comparison, may not work with all column types
+        :type frame_count__gte: int
+        :param frame_count__lt: SQL < comparison, may not work with all column types
+        :type frame_count__lt: int
+        :param frame_count__lte: SQL <= comparison, may not work with all column types
+        :type frame_count__lte: int
+        :param frame_count__in: SQL IN comparison, permits comma-separated values
+        :type frame_count__in: int
+        :param frame_count__notin: SQL NOT IN comparison, permits comma-separated values
+        :type frame_count__notin: int
+        :param frame_count__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type frame_count__asc: str
+        :param frame_count__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type frame_count__desc: str
+        :param mean_score__eq: SQL = comparison
+        :type mean_score__eq: float
+        :param mean_score__ne: SQL != comparison
+        :type mean_score__ne: float
+        :param mean_score__gt: SQL > comparison, may not work with all column types
+        :type mean_score__gt: float
+        :param mean_score__gte: SQL >= comparison, may not work with all column types
+        :type mean_score__gte: float
+        :param mean_score__lt: SQL < comparison, may not work with all column types
+        :type mean_score__lt: float
+        :param mean_score__lte: SQL <= comparison, may not work with all column types
+        :type mean_score__lte: float
+        :param mean_score__in: SQL IN comparison, permits comma-separated values
+        :type mean_score__in: float
+        :param mean_score__notin: SQL NOT IN comparison, permits comma-separated values
+        :type mean_score__notin: float
+        :param mean_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type mean_score__asc: str
+        :param mean_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type mean_score__desc: str
+        :param max_score__eq: SQL = comparison
+        :type max_score__eq: float
+        :param max_score__ne: SQL != comparison
+        :type max_score__ne: float
+        :param max_score__gt: SQL > comparison, may not work with all column types
+        :type max_score__gt: float
+        :param max_score__gte: SQL >= comparison, may not work with all column types
+        :type max_score__gte: float
+        :param max_score__lt: SQL < comparison, may not work with all column types
+        :type max_score__lt: float
+        :param max_score__lte: SQL <= comparison, may not work with all column types
+        :type max_score__lte: float
+        :param max_score__in: SQL IN comparison, permits comma-separated values
+        :type max_score__in: float
+        :param max_score__notin: SQL NOT IN comparison, permits comma-separated values
+        :type max_score__notin: float
+        :param max_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type max_score__asc: str
+        :param max_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type max_score__desc: str
+        :param trajectory__contains: SQL @> comparison
+        :type trajectory__contains: object
+        :param trajectory__notcontains: SQL NOT @> comparison
+        :type trajectory__notcontains: object
+        :param trajectory__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type trajectory__asc: str
+        :param trajectory__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type trajectory__desc: str
+        :param is_static__eq: SQL = comparison
+        :type is_static__eq: bool
+        :param is_static__ne: SQL != comparison
+        :type is_static__ne: bool
+        :param is_static__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type is_static__isfalse: str
+        :param is_static__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type is_static__istrue: str
+        :param is_static__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type is_static__asc: str
+        :param is_static__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type is_static__desc: str
+        :param status__eq: SQL = comparison
+        :type status__eq: str
+        :param status__ne: SQL != comparison
+        :type status__ne: str
+        :param status__in: SQL IN comparison, permits comma-separated values
+        :type status__in: str
+        :param status__notin: SQL NOT IN comparison, permits comma-separated values
+        :type status__notin: str
+        :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__like: str
+        :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__notlike: str
+        :param status__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__ilike: str
+        :param status__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__notilike: str
+        :param status__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type status__asc: str
+        :param status__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type status__desc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1423,247 +1099,7 @@ class TrackApi:
             depth=depth,
             camera__load=camera__load,
             video__load=video__load,
-            referenced_by_detection__load=referenced_by_detection__load,
-            id__eq=id__eq,
-            id__ne=id__ne,
-            id__gt=id__gt,
-            id__gte=id__gte,
-            id__lt=id__lt,
-            id__lte=id__lte,
-            id__in=id__in,
-            id__notin=id__notin,
-            id__contains=id__contains,
-            id__notcontains=id__notcontains,
-            id__like=id__like,
-            id__notlike=id__notlike,
-            id__ilike=id__ilike,
-            id__notilike=id__notilike,
-            id__desc=id__desc,
-            id__asc=id__asc,
-            created_at__eq=created_at__eq,
-            created_at__ne=created_at__ne,
-            created_at__gt=created_at__gt,
-            created_at__gte=created_at__gte,
-            created_at__lt=created_at__lt,
-            created_at__lte=created_at__lte,
-            created_at__in=created_at__in,
-            created_at__notin=created_at__notin,
-            created_at__contains=created_at__contains,
-            created_at__notcontains=created_at__notcontains,
-            created_at__like=created_at__like,
-            created_at__notlike=created_at__notlike,
-            created_at__ilike=created_at__ilike,
-            created_at__notilike=created_at__notilike,
-            created_at__desc=created_at__desc,
-            created_at__asc=created_at__asc,
-            updated_at__eq=updated_at__eq,
-            updated_at__ne=updated_at__ne,
-            updated_at__gt=updated_at__gt,
-            updated_at__gte=updated_at__gte,
-            updated_at__lt=updated_at__lt,
-            updated_at__lte=updated_at__lte,
-            updated_at__in=updated_at__in,
-            updated_at__notin=updated_at__notin,
-            updated_at__contains=updated_at__contains,
-            updated_at__notcontains=updated_at__notcontains,
-            updated_at__like=updated_at__like,
-            updated_at__notlike=updated_at__notlike,
-            updated_at__ilike=updated_at__ilike,
-            updated_at__notilike=updated_at__notilike,
-            updated_at__desc=updated_at__desc,
-            updated_at__asc=updated_at__asc,
-            deleted_at__eq=deleted_at__eq,
-            deleted_at__ne=deleted_at__ne,
-            deleted_at__gt=deleted_at__gt,
-            deleted_at__gte=deleted_at__gte,
-            deleted_at__lt=deleted_at__lt,
-            deleted_at__lte=deleted_at__lte,
-            deleted_at__in=deleted_at__in,
-            deleted_at__notin=deleted_at__notin,
-            deleted_at__contains=deleted_at__contains,
-            deleted_at__notcontains=deleted_at__notcontains,
-            deleted_at__like=deleted_at__like,
-            deleted_at__notlike=deleted_at__notlike,
-            deleted_at__ilike=deleted_at__ilike,
-            deleted_at__notilike=deleted_at__notilike,
-            deleted_at__desc=deleted_at__desc,
-            deleted_at__asc=deleted_at__asc,
-            camera_id__eq=camera_id__eq,
-            camera_id__ne=camera_id__ne,
-            camera_id__gt=camera_id__gt,
-            camera_id__gte=camera_id__gte,
-            camera_id__lt=camera_id__lt,
-            camera_id__lte=camera_id__lte,
-            camera_id__in=camera_id__in,
-            camera_id__notin=camera_id__notin,
-            camera_id__contains=camera_id__contains,
-            camera_id__notcontains=camera_id__notcontains,
-            camera_id__like=camera_id__like,
-            camera_id__notlike=camera_id__notlike,
-            camera_id__ilike=camera_id__ilike,
-            camera_id__notilike=camera_id__notilike,
-            camera_id__desc=camera_id__desc,
-            camera_id__asc=camera_id__asc,
-            camera_id_object__contains=camera_id_object__contains,
-            camera_id_object__notcontains=camera_id_object__notcontains,
-            camera_id_object__desc=camera_id_object__desc,
-            camera_id_object__asc=camera_id_object__asc,
-            video_id__eq=video_id__eq,
-            video_id__ne=video_id__ne,
-            video_id__gt=video_id__gt,
-            video_id__gte=video_id__gte,
-            video_id__lt=video_id__lt,
-            video_id__lte=video_id__lte,
-            video_id__in=video_id__in,
-            video_id__notin=video_id__notin,
-            video_id__contains=video_id__contains,
-            video_id__notcontains=video_id__notcontains,
-            video_id__like=video_id__like,
-            video_id__notlike=video_id__notlike,
-            video_id__ilike=video_id__ilike,
-            video_id__notilike=video_id__notilike,
-            video_id__desc=video_id__desc,
-            video_id__asc=video_id__asc,
-            video_id_object__contains=video_id_object__contains,
-            video_id_object__notcontains=video_id_object__notcontains,
-            video_id_object__desc=video_id_object__desc,
-            video_id_object__asc=video_id_object__asc,
-            class_id__eq=class_id__eq,
-            class_id__ne=class_id__ne,
-            class_id__gt=class_id__gt,
-            class_id__gte=class_id__gte,
-            class_id__lt=class_id__lt,
-            class_id__lte=class_id__lte,
-            class_id__in=class_id__in,
-            class_id__notin=class_id__notin,
-            class_id__contains=class_id__contains,
-            class_id__notcontains=class_id__notcontains,
-            class_id__desc=class_id__desc,
-            class_id__asc=class_id__asc,
-            class_name__eq=class_name__eq,
-            class_name__ne=class_name__ne,
-            class_name__gt=class_name__gt,
-            class_name__gte=class_name__gte,
-            class_name__lt=class_name__lt,
-            class_name__lte=class_name__lte,
-            class_name__in=class_name__in,
-            class_name__notin=class_name__notin,
-            class_name__contains=class_name__contains,
-            class_name__notcontains=class_name__notcontains,
-            class_name__like=class_name__like,
-            class_name__notlike=class_name__notlike,
-            class_name__ilike=class_name__ilike,
-            class_name__notilike=class_name__notilike,
-            class_name__desc=class_name__desc,
-            class_name__asc=class_name__asc,
-            started_at__eq=started_at__eq,
-            started_at__ne=started_at__ne,
-            started_at__gt=started_at__gt,
-            started_at__gte=started_at__gte,
-            started_at__lt=started_at__lt,
-            started_at__lte=started_at__lte,
-            started_at__in=started_at__in,
-            started_at__notin=started_at__notin,
-            started_at__contains=started_at__contains,
-            started_at__notcontains=started_at__notcontains,
-            started_at__like=started_at__like,
-            started_at__notlike=started_at__notlike,
-            started_at__ilike=started_at__ilike,
-            started_at__notilike=started_at__notilike,
-            started_at__desc=started_at__desc,
-            started_at__asc=started_at__asc,
-            ended_at__eq=ended_at__eq,
-            ended_at__ne=ended_at__ne,
-            ended_at__gt=ended_at__gt,
-            ended_at__gte=ended_at__gte,
-            ended_at__lt=ended_at__lt,
-            ended_at__lte=ended_at__lte,
-            ended_at__in=ended_at__in,
-            ended_at__notin=ended_at__notin,
-            ended_at__contains=ended_at__contains,
-            ended_at__notcontains=ended_at__notcontains,
-            ended_at__like=ended_at__like,
-            ended_at__notlike=ended_at__notlike,
-            ended_at__ilike=ended_at__ilike,
-            ended_at__notilike=ended_at__notilike,
-            ended_at__desc=ended_at__desc,
-            ended_at__asc=ended_at__asc,
-            frame_count__eq=frame_count__eq,
-            frame_count__ne=frame_count__ne,
-            frame_count__gt=frame_count__gt,
-            frame_count__gte=frame_count__gte,
-            frame_count__lt=frame_count__lt,
-            frame_count__lte=frame_count__lte,
-            frame_count__in=frame_count__in,
-            frame_count__notin=frame_count__notin,
-            frame_count__contains=frame_count__contains,
-            frame_count__notcontains=frame_count__notcontains,
-            frame_count__desc=frame_count__desc,
-            frame_count__asc=frame_count__asc,
-            mean_score__eq=mean_score__eq,
-            mean_score__ne=mean_score__ne,
-            mean_score__gt=mean_score__gt,
-            mean_score__gte=mean_score__gte,
-            mean_score__lt=mean_score__lt,
-            mean_score__lte=mean_score__lte,
-            mean_score__in=mean_score__in,
-            mean_score__notin=mean_score__notin,
-            mean_score__contains=mean_score__contains,
-            mean_score__notcontains=mean_score__notcontains,
-            mean_score__desc=mean_score__desc,
-            mean_score__asc=mean_score__asc,
-            max_score__eq=max_score__eq,
-            max_score__ne=max_score__ne,
-            max_score__gt=max_score__gt,
-            max_score__gte=max_score__gte,
-            max_score__lt=max_score__lt,
-            max_score__lte=max_score__lte,
-            max_score__in=max_score__in,
-            max_score__notin=max_score__notin,
-            max_score__contains=max_score__contains,
-            max_score__notcontains=max_score__notcontains,
-            max_score__desc=max_score__desc,
-            max_score__asc=max_score__asc,
-            centroid__contains=centroid__contains,
-            centroid__notcontains=centroid__notcontains,
-            centroid__desc=centroid__desc,
-            centroid__asc=centroid__asc,
-            bounding_box__contains=bounding_box__contains,
-            bounding_box__notcontains=bounding_box__notcontains,
-            bounding_box__desc=bounding_box__desc,
-            bounding_box__asc=bounding_box__asc,
-            trajectory__contains=trajectory__contains,
-            trajectory__notcontains=trajectory__notcontains,
-            trajectory__desc=trajectory__desc,
-            trajectory__asc=trajectory__asc,
-            is_static__eq=is_static__eq,
-            is_static__ne=is_static__ne,
-            is_static__gt=is_static__gt,
-            is_static__gte=is_static__gte,
-            is_static__lt=is_static__lt,
-            is_static__lte=is_static__lte,
-            is_static__in=is_static__in,
-            is_static__notin=is_static__notin,
-            is_static__contains=is_static__contains,
-            is_static__notcontains=is_static__notcontains,
-            is_static__desc=is_static__desc,
-            is_static__asc=is_static__asc,
-            status__eq=status__eq,
-            status__ne=status__ne,
-            status__gt=status__gt,
-            status__gte=status__gte,
-            status__lt=status__lt,
-            status__lte=status__lte,
-            status__in=status__in,
-            status__notin=status__notin,
-            status__contains=status__contains,
-            status__notcontains=status__notcontains,
-            status__like=status__like,
-            status__notlike=status__notlike,
-            status__ilike=status__ilike,
-            status__notilike=status__notilike,
-            status__desc=status__desc,
-            status__asc=status__asc,
+            referenced_by_detection_track_id__load=referenced_by_detection_track_id__load,
             key__eq=key__eq,
             key__ne=key__ne,
             key__gt=key__gt,
@@ -1672,18 +1108,150 @@ class TrackApi:
             key__lte=key__lte,
             key__in=key__in,
             key__notin=key__notin,
-            key__contains=key__contains,
-            key__notcontains=key__notcontains,
-            key__like=key__like,
-            key__notlike=key__notlike,
-            key__ilike=key__ilike,
-            key__notilike=key__notilike,
-            key__desc=key__desc,
             key__asc=key__asc,
-            referenced_by_detection_track_id_objects__contains=referenced_by_detection_track_id_objects__contains,
-            referenced_by_detection_track_id_objects__notcontains=referenced_by_detection_track_id_objects__notcontains,
-            referenced_by_detection_track_id_objects__desc=referenced_by_detection_track_id_objects__desc,
-            referenced_by_detection_track_id_objects__asc=referenced_by_detection_track_id_objects__asc,
+            key__desc=key__desc,
+            created_at__eq=created_at__eq,
+            created_at__ne=created_at__ne,
+            created_at__gt=created_at__gt,
+            created_at__gte=created_at__gte,
+            created_at__lt=created_at__lt,
+            created_at__lte=created_at__lte,
+            created_at__in=created_at__in,
+            created_at__notin=created_at__notin,
+            created_at__asc=created_at__asc,
+            created_at__desc=created_at__desc,
+            updated_at__eq=updated_at__eq,
+            updated_at__ne=updated_at__ne,
+            updated_at__gt=updated_at__gt,
+            updated_at__gte=updated_at__gte,
+            updated_at__lt=updated_at__lt,
+            updated_at__lte=updated_at__lte,
+            updated_at__in=updated_at__in,
+            updated_at__notin=updated_at__notin,
+            updated_at__asc=updated_at__asc,
+            updated_at__desc=updated_at__desc,
+            deleted_at__eq=deleted_at__eq,
+            deleted_at__ne=deleted_at__ne,
+            deleted_at__gt=deleted_at__gt,
+            deleted_at__gte=deleted_at__gte,
+            deleted_at__lt=deleted_at__lt,
+            deleted_at__lte=deleted_at__lte,
+            deleted_at__in=deleted_at__in,
+            deleted_at__notin=deleted_at__notin,
+            deleted_at__isnull=deleted_at__isnull,
+            deleted_at__isnotnull=deleted_at__isnotnull,
+            deleted_at__asc=deleted_at__asc,
+            deleted_at__desc=deleted_at__desc,
+            camera_id__eq=camera_id__eq,
+            camera_id__ne=camera_id__ne,
+            camera_id__gt=camera_id__gt,
+            camera_id__gte=camera_id__gte,
+            camera_id__lt=camera_id__lt,
+            camera_id__lte=camera_id__lte,
+            camera_id__in=camera_id__in,
+            camera_id__notin=camera_id__notin,
+            camera_id__asc=camera_id__asc,
+            camera_id__desc=camera_id__desc,
+            video_id__eq=video_id__eq,
+            video_id__ne=video_id__ne,
+            video_id__gt=video_id__gt,
+            video_id__gte=video_id__gte,
+            video_id__lt=video_id__lt,
+            video_id__lte=video_id__lte,
+            video_id__in=video_id__in,
+            video_id__notin=video_id__notin,
+            video_id__asc=video_id__asc,
+            video_id__desc=video_id__desc,
+            class_id__eq=class_id__eq,
+            class_id__ne=class_id__ne,
+            class_id__gt=class_id__gt,
+            class_id__gte=class_id__gte,
+            class_id__lt=class_id__lt,
+            class_id__lte=class_id__lte,
+            class_id__in=class_id__in,
+            class_id__notin=class_id__notin,
+            class_id__asc=class_id__asc,
+            class_id__desc=class_id__desc,
+            class_name__eq=class_name__eq,
+            class_name__ne=class_name__ne,
+            class_name__in=class_name__in,
+            class_name__notin=class_name__notin,
+            class_name__like=class_name__like,
+            class_name__notlike=class_name__notlike,
+            class_name__ilike=class_name__ilike,
+            class_name__notilike=class_name__notilike,
+            class_name__asc=class_name__asc,
+            class_name__desc=class_name__desc,
+            started_at__eq=started_at__eq,
+            started_at__ne=started_at__ne,
+            started_at__gt=started_at__gt,
+            started_at__gte=started_at__gte,
+            started_at__lt=started_at__lt,
+            started_at__lte=started_at__lte,
+            started_at__in=started_at__in,
+            started_at__notin=started_at__notin,
+            started_at__asc=started_at__asc,
+            started_at__desc=started_at__desc,
+            ended_at__eq=ended_at__eq,
+            ended_at__ne=ended_at__ne,
+            ended_at__gt=ended_at__gt,
+            ended_at__gte=ended_at__gte,
+            ended_at__lt=ended_at__lt,
+            ended_at__lte=ended_at__lte,
+            ended_at__in=ended_at__in,
+            ended_at__notin=ended_at__notin,
+            ended_at__asc=ended_at__asc,
+            ended_at__desc=ended_at__desc,
+            frame_count__eq=frame_count__eq,
+            frame_count__ne=frame_count__ne,
+            frame_count__gt=frame_count__gt,
+            frame_count__gte=frame_count__gte,
+            frame_count__lt=frame_count__lt,
+            frame_count__lte=frame_count__lte,
+            frame_count__in=frame_count__in,
+            frame_count__notin=frame_count__notin,
+            frame_count__asc=frame_count__asc,
+            frame_count__desc=frame_count__desc,
+            mean_score__eq=mean_score__eq,
+            mean_score__ne=mean_score__ne,
+            mean_score__gt=mean_score__gt,
+            mean_score__gte=mean_score__gte,
+            mean_score__lt=mean_score__lt,
+            mean_score__lte=mean_score__lte,
+            mean_score__in=mean_score__in,
+            mean_score__notin=mean_score__notin,
+            mean_score__asc=mean_score__asc,
+            mean_score__desc=mean_score__desc,
+            max_score__eq=max_score__eq,
+            max_score__ne=max_score__ne,
+            max_score__gt=max_score__gt,
+            max_score__gte=max_score__gte,
+            max_score__lt=max_score__lt,
+            max_score__lte=max_score__lte,
+            max_score__in=max_score__in,
+            max_score__notin=max_score__notin,
+            max_score__asc=max_score__asc,
+            max_score__desc=max_score__desc,
+            trajectory__contains=trajectory__contains,
+            trajectory__notcontains=trajectory__notcontains,
+            trajectory__asc=trajectory__asc,
+            trajectory__desc=trajectory__desc,
+            is_static__eq=is_static__eq,
+            is_static__ne=is_static__ne,
+            is_static__isfalse=is_static__isfalse,
+            is_static__istrue=is_static__istrue,
+            is_static__asc=is_static__asc,
+            is_static__desc=is_static__desc,
+            status__eq=status__eq,
+            status__ne=status__ne,
+            status__in=status__in,
+            status__notin=status__notin,
+            status__like=status__like,
+            status__notlike=status__notlike,
+            status__ilike=status__ilike,
+            status__notilike=status__notilike,
+            status__asc=status__asc,
+            status__desc=status__desc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1710,249 +1278,9 @@ class TrackApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
-        video__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        created_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        updated_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        deleted_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        camera_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        camera_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        video_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        video_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        video_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        video_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
-        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
-        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
-        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
-        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_id__contains: Annotated[Optional[StrictInt], Field(description="SQL @> comparison")] = None,
-        class_id__notcontains: Annotated[Optional[StrictInt], Field(description="SQL NOT @> comparison")] = None,
-        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        class_name__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        class_name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        class_name__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_name__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        class_name__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        started_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        started_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        started_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        started_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        started_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        started_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        started_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        started_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        ended_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        ended_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        ended_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        ended_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        ended_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        ended_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        ended_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        frame_count__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
-        frame_count__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
-        frame_count__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
-        frame_count__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        frame_count__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
-        frame_count__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        frame_count__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        frame_count__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        frame_count__contains: Annotated[Optional[StrictInt], Field(description="SQL @> comparison")] = None,
-        frame_count__notcontains: Annotated[Optional[StrictInt], Field(description="SQL NOT @> comparison")] = None,
-        frame_count__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        frame_count__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        mean_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
-        mean_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
-        mean_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
-        mean_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        mean_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
-        mean_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        mean_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        mean_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        mean_score__contains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL @> comparison")] = None,
-        mean_score__notcontains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT @> comparison")] = None,
-        mean_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        mean_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        max_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
-        max_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
-        max_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
-        max_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        max_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
-        max_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        max_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        max_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        max_score__contains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL @> comparison")] = None,
-        max_score__notcontains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT @> comparison")] = None,
-        max_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        max_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        centroid__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        centroid__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        centroid__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        centroid__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        bounding_box__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        bounding_box__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        bounding_box__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        bounding_box__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        trajectory__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        trajectory__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        trajectory__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        trajectory__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        is_static__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
-        is_static__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
-        is_static__gt: Annotated[Optional[StrictBool], Field(description="SQL > comparison, may not work with all column types")] = None,
-        is_static__gte: Annotated[Optional[StrictBool], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        is_static__lt: Annotated[Optional[StrictBool], Field(description="SQL < comparison, may not work with all column types")] = None,
-        is_static__lte: Annotated[Optional[StrictBool], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        is_static__in: Annotated[Optional[StrictBool], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        is_static__notin: Annotated[Optional[StrictBool], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        is_static__contains: Annotated[Optional[StrictBool], Field(description="SQL @> comparison")] = None,
-        is_static__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
-        is_static__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        is_static__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        status__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        status__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        status__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        status__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        status__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        status__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        status__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        status__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        video__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_track_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         key__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         key__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         key__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -1961,18 +1289,150 @@ class TrackApi:
         key__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         key__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         key__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        key__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        key__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        key__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         key__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection_track_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        referenced_by_detection_track_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        referenced_by_detection_track_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection_track_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        key__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
+        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
+        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
+        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
+        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        started_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        started_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        started_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        started_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        started_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        ended_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        ended_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        ended_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        ended_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        frame_count__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
+        frame_count__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
+        frame_count__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
+        frame_count__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        frame_count__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
+        frame_count__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        frame_count__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        frame_count__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        frame_count__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        frame_count__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        mean_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
+        mean_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
+        mean_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
+        mean_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        mean_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
+        mean_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        mean_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        mean_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        mean_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        mean_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        max_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
+        max_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
+        max_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
+        max_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        max_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
+        max_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        max_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        max_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        max_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        max_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        trajectory__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        trajectory__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        trajectory__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        trajectory__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_static__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
+        is_static__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
+        is_static__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        is_static__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        is_static__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_static__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        status__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        status__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1995,492 +1455,12 @@ class TrackApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
-        :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :param camera__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type camera__load: str
-        :param video__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :param video__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type video__load: str
-        :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection__load: str
-        :param id__eq: SQL = comparison
-        :type id__eq: str
-        :param id__ne: SQL != comparison
-        :type id__ne: str
-        :param id__gt: SQL > comparison, may not work with all column types
-        :type id__gt: str
-        :param id__gte: SQL >= comparison, may not work with all column types
-        :type id__gte: str
-        :param id__lt: SQL < comparison, may not work with all column types
-        :type id__lt: str
-        :param id__lte: SQL <= comparison, may not work with all column types
-        :type id__lte: str
-        :param id__in: SQL IN comparison, permits comma-separated values
-        :type id__in: str
-        :param id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type id__notin: str
-        :param id__contains: SQL @> comparison
-        :type id__contains: str
-        :param id__notcontains: SQL NOT @> comparison
-        :type id__notcontains: str
-        :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__like: str
-        :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__notlike: str
-        :param id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__ilike: str
-        :param id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__notilike: str
-        :param id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type id__desc: str
-        :param id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type id__asc: str
-        :param created_at__eq: SQL = comparison
-        :type created_at__eq: datetime
-        :param created_at__ne: SQL != comparison
-        :type created_at__ne: datetime
-        :param created_at__gt: SQL > comparison, may not work with all column types
-        :type created_at__gt: datetime
-        :param created_at__gte: SQL >= comparison, may not work with all column types
-        :type created_at__gte: datetime
-        :param created_at__lt: SQL < comparison, may not work with all column types
-        :type created_at__lt: datetime
-        :param created_at__lte: SQL <= comparison, may not work with all column types
-        :type created_at__lte: datetime
-        :param created_at__in: SQL IN comparison, permits comma-separated values
-        :type created_at__in: datetime
-        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type created_at__notin: datetime
-        :param created_at__contains: SQL @> comparison
-        :type created_at__contains: datetime
-        :param created_at__notcontains: SQL NOT @> comparison
-        :type created_at__notcontains: datetime
-        :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: datetime
-        :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: datetime
-        :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: datetime
-        :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: datetime
-        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type created_at__desc: str
-        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type created_at__asc: str
-        :param updated_at__eq: SQL = comparison
-        :type updated_at__eq: datetime
-        :param updated_at__ne: SQL != comparison
-        :type updated_at__ne: datetime
-        :param updated_at__gt: SQL > comparison, may not work with all column types
-        :type updated_at__gt: datetime
-        :param updated_at__gte: SQL >= comparison, may not work with all column types
-        :type updated_at__gte: datetime
-        :param updated_at__lt: SQL < comparison, may not work with all column types
-        :type updated_at__lt: datetime
-        :param updated_at__lte: SQL <= comparison, may not work with all column types
-        :type updated_at__lte: datetime
-        :param updated_at__in: SQL IN comparison, permits comma-separated values
-        :type updated_at__in: datetime
-        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type updated_at__notin: datetime
-        :param updated_at__contains: SQL @> comparison
-        :type updated_at__contains: datetime
-        :param updated_at__notcontains: SQL NOT @> comparison
-        :type updated_at__notcontains: datetime
-        :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: datetime
-        :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: datetime
-        :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: datetime
-        :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: datetime
-        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type updated_at__desc: str
-        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type updated_at__asc: str
-        :param deleted_at__eq: SQL = comparison
-        :type deleted_at__eq: datetime
-        :param deleted_at__ne: SQL != comparison
-        :type deleted_at__ne: datetime
-        :param deleted_at__gt: SQL > comparison, may not work with all column types
-        :type deleted_at__gt: datetime
-        :param deleted_at__gte: SQL >= comparison, may not work with all column types
-        :type deleted_at__gte: datetime
-        :param deleted_at__lt: SQL < comparison, may not work with all column types
-        :type deleted_at__lt: datetime
-        :param deleted_at__lte: SQL <= comparison, may not work with all column types
-        :type deleted_at__lte: datetime
-        :param deleted_at__in: SQL IN comparison, permits comma-separated values
-        :type deleted_at__in: datetime
-        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type deleted_at__notin: datetime
-        :param deleted_at__contains: SQL @> comparison
-        :type deleted_at__contains: datetime
-        :param deleted_at__notcontains: SQL NOT @> comparison
-        :type deleted_at__notcontains: datetime
-        :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: datetime
-        :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: datetime
-        :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: datetime
-        :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: datetime
-        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type deleted_at__desc: str
-        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type deleted_at__asc: str
-        :param camera_id__eq: SQL = comparison
-        :type camera_id__eq: str
-        :param camera_id__ne: SQL != comparison
-        :type camera_id__ne: str
-        :param camera_id__gt: SQL > comparison, may not work with all column types
-        :type camera_id__gt: str
-        :param camera_id__gte: SQL >= comparison, may not work with all column types
-        :type camera_id__gte: str
-        :param camera_id__lt: SQL < comparison, may not work with all column types
-        :type camera_id__lt: str
-        :param camera_id__lte: SQL <= comparison, may not work with all column types
-        :type camera_id__lte: str
-        :param camera_id__in: SQL IN comparison, permits comma-separated values
-        :type camera_id__in: str
-        :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type camera_id__notin: str
-        :param camera_id__contains: SQL @> comparison
-        :type camera_id__contains: str
-        :param camera_id__notcontains: SQL NOT @> comparison
-        :type camera_id__notcontains: str
-        :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__like: str
-        :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__notlike: str
-        :param camera_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__ilike: str
-        :param camera_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__notilike: str
-        :param camera_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type camera_id__desc: str
-        :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type camera_id__asc: str
-        :param camera_id_object__contains: SQL @> comparison
-        :type camera_id_object__contains: object
-        :param camera_id_object__notcontains: SQL NOT @> comparison
-        :type camera_id_object__notcontains: object
-        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type camera_id_object__desc: str
-        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type camera_id_object__asc: str
-        :param video_id__eq: SQL = comparison
-        :type video_id__eq: str
-        :param video_id__ne: SQL != comparison
-        :type video_id__ne: str
-        :param video_id__gt: SQL > comparison, may not work with all column types
-        :type video_id__gt: str
-        :param video_id__gte: SQL >= comparison, may not work with all column types
-        :type video_id__gte: str
-        :param video_id__lt: SQL < comparison, may not work with all column types
-        :type video_id__lt: str
-        :param video_id__lte: SQL <= comparison, may not work with all column types
-        :type video_id__lte: str
-        :param video_id__in: SQL IN comparison, permits comma-separated values
-        :type video_id__in: str
-        :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type video_id__notin: str
-        :param video_id__contains: SQL @> comparison
-        :type video_id__contains: str
-        :param video_id__notcontains: SQL NOT @> comparison
-        :type video_id__notcontains: str
-        :param video_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__like: str
-        :param video_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__notlike: str
-        :param video_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__ilike: str
-        :param video_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__notilike: str
-        :param video_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type video_id__desc: str
-        :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type video_id__asc: str
-        :param video_id_object__contains: SQL @> comparison
-        :type video_id_object__contains: object
-        :param video_id_object__notcontains: SQL NOT @> comparison
-        :type video_id_object__notcontains: object
-        :param video_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type video_id_object__desc: str
-        :param video_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type video_id_object__asc: str
-        :param class_id__eq: SQL = comparison
-        :type class_id__eq: int
-        :param class_id__ne: SQL != comparison
-        :type class_id__ne: int
-        :param class_id__gt: SQL > comparison, may not work with all column types
-        :type class_id__gt: int
-        :param class_id__gte: SQL >= comparison, may not work with all column types
-        :type class_id__gte: int
-        :param class_id__lt: SQL < comparison, may not work with all column types
-        :type class_id__lt: int
-        :param class_id__lte: SQL <= comparison, may not work with all column types
-        :type class_id__lte: int
-        :param class_id__in: SQL IN comparison, permits comma-separated values
-        :type class_id__in: int
-        :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type class_id__notin: int
-        :param class_id__contains: SQL @> comparison
-        :type class_id__contains: int
-        :param class_id__notcontains: SQL NOT @> comparison
-        :type class_id__notcontains: int
-        :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type class_id__desc: str
-        :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type class_id__asc: str
-        :param class_name__eq: SQL = comparison
-        :type class_name__eq: str
-        :param class_name__ne: SQL != comparison
-        :type class_name__ne: str
-        :param class_name__gt: SQL > comparison, may not work with all column types
-        :type class_name__gt: str
-        :param class_name__gte: SQL >= comparison, may not work with all column types
-        :type class_name__gte: str
-        :param class_name__lt: SQL < comparison, may not work with all column types
-        :type class_name__lt: str
-        :param class_name__lte: SQL <= comparison, may not work with all column types
-        :type class_name__lte: str
-        :param class_name__in: SQL IN comparison, permits comma-separated values
-        :type class_name__in: str
-        :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
-        :type class_name__notin: str
-        :param class_name__contains: SQL @> comparison
-        :type class_name__contains: str
-        :param class_name__notcontains: SQL NOT @> comparison
-        :type class_name__notcontains: str
-        :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__like: str
-        :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__notlike: str
-        :param class_name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__ilike: str
-        :param class_name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__notilike: str
-        :param class_name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type class_name__desc: str
-        :param class_name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type class_name__asc: str
-        :param started_at__eq: SQL = comparison
-        :type started_at__eq: datetime
-        :param started_at__ne: SQL != comparison
-        :type started_at__ne: datetime
-        :param started_at__gt: SQL > comparison, may not work with all column types
-        :type started_at__gt: datetime
-        :param started_at__gte: SQL >= comparison, may not work with all column types
-        :type started_at__gte: datetime
-        :param started_at__lt: SQL < comparison, may not work with all column types
-        :type started_at__lt: datetime
-        :param started_at__lte: SQL <= comparison, may not work with all column types
-        :type started_at__lte: datetime
-        :param started_at__in: SQL IN comparison, permits comma-separated values
-        :type started_at__in: datetime
-        :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type started_at__notin: datetime
-        :param started_at__contains: SQL @> comparison
-        :type started_at__contains: datetime
-        :param started_at__notcontains: SQL NOT @> comparison
-        :type started_at__notcontains: datetime
-        :param started_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__like: datetime
-        :param started_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notlike: datetime
-        :param started_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__ilike: datetime
-        :param started_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notilike: datetime
-        :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type started_at__desc: str
-        :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type started_at__asc: str
-        :param ended_at__eq: SQL = comparison
-        :type ended_at__eq: datetime
-        :param ended_at__ne: SQL != comparison
-        :type ended_at__ne: datetime
-        :param ended_at__gt: SQL > comparison, may not work with all column types
-        :type ended_at__gt: datetime
-        :param ended_at__gte: SQL >= comparison, may not work with all column types
-        :type ended_at__gte: datetime
-        :param ended_at__lt: SQL < comparison, may not work with all column types
-        :type ended_at__lt: datetime
-        :param ended_at__lte: SQL <= comparison, may not work with all column types
-        :type ended_at__lte: datetime
-        :param ended_at__in: SQL IN comparison, permits comma-separated values
-        :type ended_at__in: datetime
-        :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type ended_at__notin: datetime
-        :param ended_at__contains: SQL @> comparison
-        :type ended_at__contains: datetime
-        :param ended_at__notcontains: SQL NOT @> comparison
-        :type ended_at__notcontains: datetime
-        :param ended_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__like: datetime
-        :param ended_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notlike: datetime
-        :param ended_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__ilike: datetime
-        :param ended_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notilike: datetime
-        :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type ended_at__desc: str
-        :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type ended_at__asc: str
-        :param frame_count__eq: SQL = comparison
-        :type frame_count__eq: int
-        :param frame_count__ne: SQL != comparison
-        :type frame_count__ne: int
-        :param frame_count__gt: SQL > comparison, may not work with all column types
-        :type frame_count__gt: int
-        :param frame_count__gte: SQL >= comparison, may not work with all column types
-        :type frame_count__gte: int
-        :param frame_count__lt: SQL < comparison, may not work with all column types
-        :type frame_count__lt: int
-        :param frame_count__lte: SQL <= comparison, may not work with all column types
-        :type frame_count__lte: int
-        :param frame_count__in: SQL IN comparison, permits comma-separated values
-        :type frame_count__in: int
-        :param frame_count__notin: SQL NOT IN comparison, permits comma-separated values
-        :type frame_count__notin: int
-        :param frame_count__contains: SQL @> comparison
-        :type frame_count__contains: int
-        :param frame_count__notcontains: SQL NOT @> comparison
-        :type frame_count__notcontains: int
-        :param frame_count__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type frame_count__desc: str
-        :param frame_count__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type frame_count__asc: str
-        :param mean_score__eq: SQL = comparison
-        :type mean_score__eq: float
-        :param mean_score__ne: SQL != comparison
-        :type mean_score__ne: float
-        :param mean_score__gt: SQL > comparison, may not work with all column types
-        :type mean_score__gt: float
-        :param mean_score__gte: SQL >= comparison, may not work with all column types
-        :type mean_score__gte: float
-        :param mean_score__lt: SQL < comparison, may not work with all column types
-        :type mean_score__lt: float
-        :param mean_score__lte: SQL <= comparison, may not work with all column types
-        :type mean_score__lte: float
-        :param mean_score__in: SQL IN comparison, permits comma-separated values
-        :type mean_score__in: float
-        :param mean_score__notin: SQL NOT IN comparison, permits comma-separated values
-        :type mean_score__notin: float
-        :param mean_score__contains: SQL @> comparison
-        :type mean_score__contains: float
-        :param mean_score__notcontains: SQL NOT @> comparison
-        :type mean_score__notcontains: float
-        :param mean_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type mean_score__desc: str
-        :param mean_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type mean_score__asc: str
-        :param max_score__eq: SQL = comparison
-        :type max_score__eq: float
-        :param max_score__ne: SQL != comparison
-        :type max_score__ne: float
-        :param max_score__gt: SQL > comparison, may not work with all column types
-        :type max_score__gt: float
-        :param max_score__gte: SQL >= comparison, may not work with all column types
-        :type max_score__gte: float
-        :param max_score__lt: SQL < comparison, may not work with all column types
-        :type max_score__lt: float
-        :param max_score__lte: SQL <= comparison, may not work with all column types
-        :type max_score__lte: float
-        :param max_score__in: SQL IN comparison, permits comma-separated values
-        :type max_score__in: float
-        :param max_score__notin: SQL NOT IN comparison, permits comma-separated values
-        :type max_score__notin: float
-        :param max_score__contains: SQL @> comparison
-        :type max_score__contains: float
-        :param max_score__notcontains: SQL NOT @> comparison
-        :type max_score__notcontains: float
-        :param max_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type max_score__desc: str
-        :param max_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type max_score__asc: str
-        :param centroid__contains: SQL @> comparison
-        :type centroid__contains: object
-        :param centroid__notcontains: SQL NOT @> comparison
-        :type centroid__notcontains: object
-        :param centroid__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type centroid__desc: str
-        :param centroid__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type centroid__asc: str
-        :param bounding_box__contains: SQL @> comparison
-        :type bounding_box__contains: object
-        :param bounding_box__notcontains: SQL NOT @> comparison
-        :type bounding_box__notcontains: object
-        :param bounding_box__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type bounding_box__desc: str
-        :param bounding_box__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type bounding_box__asc: str
-        :param trajectory__contains: SQL @> comparison
-        :type trajectory__contains: object
-        :param trajectory__notcontains: SQL NOT @> comparison
-        :type trajectory__notcontains: object
-        :param trajectory__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type trajectory__desc: str
-        :param trajectory__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type trajectory__asc: str
-        :param is_static__eq: SQL = comparison
-        :type is_static__eq: bool
-        :param is_static__ne: SQL != comparison
-        :type is_static__ne: bool
-        :param is_static__gt: SQL > comparison, may not work with all column types
-        :type is_static__gt: bool
-        :param is_static__gte: SQL >= comparison, may not work with all column types
-        :type is_static__gte: bool
-        :param is_static__lt: SQL < comparison, may not work with all column types
-        :type is_static__lt: bool
-        :param is_static__lte: SQL <= comparison, may not work with all column types
-        :type is_static__lte: bool
-        :param is_static__in: SQL IN comparison, permits comma-separated values
-        :type is_static__in: bool
-        :param is_static__notin: SQL NOT IN comparison, permits comma-separated values
-        :type is_static__notin: bool
-        :param is_static__contains: SQL @> comparison
-        :type is_static__contains: bool
-        :param is_static__notcontains: SQL NOT @> comparison
-        :type is_static__notcontains: bool
-        :param is_static__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type is_static__desc: str
-        :param is_static__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type is_static__asc: str
-        :param status__eq: SQL = comparison
-        :type status__eq: str
-        :param status__ne: SQL != comparison
-        :type status__ne: str
-        :param status__gt: SQL > comparison, may not work with all column types
-        :type status__gt: str
-        :param status__gte: SQL >= comparison, may not work with all column types
-        :type status__gte: str
-        :param status__lt: SQL < comparison, may not work with all column types
-        :type status__lt: str
-        :param status__lte: SQL <= comparison, may not work with all column types
-        :type status__lte: str
-        :param status__in: SQL IN comparison, permits comma-separated values
-        :type status__in: str
-        :param status__notin: SQL NOT IN comparison, permits comma-separated values
-        :type status__notin: str
-        :param status__contains: SQL @> comparison
-        :type status__contains: str
-        :param status__notcontains: SQL NOT @> comparison
-        :type status__notcontains: str
-        :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__like: str
-        :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__notlike: str
-        :param status__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__ilike: str
-        :param status__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__notilike: str
-        :param status__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type status__desc: str
-        :param status__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type status__asc: str
+        :param referenced_by_detection_track_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_track_id__load: str
         :param key__eq: SQL = comparison
         :type key__eq: str
         :param key__ne: SQL != comparison
@@ -2497,30 +1477,294 @@ class TrackApi:
         :type key__in: str
         :param key__notin: SQL NOT IN comparison, permits comma-separated values
         :type key__notin: str
-        :param key__contains: SQL @> comparison
-        :type key__contains: str
-        :param key__notcontains: SQL NOT @> comparison
-        :type key__notcontains: str
-        :param key__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__like: str
-        :param key__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__notlike: str
-        :param key__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__ilike: str
-        :param key__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__notilike: str
-        :param key__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type key__desc: str
         :param key__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type key__asc: str
-        :param referenced_by_detection_track_id_objects__contains: SQL @> comparison
-        :type referenced_by_detection_track_id_objects__contains: object
-        :param referenced_by_detection_track_id_objects__notcontains: SQL NOT @> comparison
-        :type referenced_by_detection_track_id_objects__notcontains: object
-        :param referenced_by_detection_track_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection_track_id_objects__desc: str
-        :param referenced_by_detection_track_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection_track_id_objects__asc: str
+        :param key__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type key__desc: str
+        :param created_at__eq: SQL = comparison
+        :type created_at__eq: datetime
+        :param created_at__ne: SQL != comparison
+        :type created_at__ne: datetime
+        :param created_at__gt: SQL > comparison, may not work with all column types
+        :type created_at__gt: datetime
+        :param created_at__gte: SQL >= comparison, may not work with all column types
+        :type created_at__gte: datetime
+        :param created_at__lt: SQL < comparison, may not work with all column types
+        :type created_at__lt: datetime
+        :param created_at__lte: SQL <= comparison, may not work with all column types
+        :type created_at__lte: datetime
+        :param created_at__in: SQL IN comparison, permits comma-separated values
+        :type created_at__in: datetime
+        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type created_at__notin: datetime
+        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type created_at__asc: str
+        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type created_at__desc: str
+        :param updated_at__eq: SQL = comparison
+        :type updated_at__eq: datetime
+        :param updated_at__ne: SQL != comparison
+        :type updated_at__ne: datetime
+        :param updated_at__gt: SQL > comparison, may not work with all column types
+        :type updated_at__gt: datetime
+        :param updated_at__gte: SQL >= comparison, may not work with all column types
+        :type updated_at__gte: datetime
+        :param updated_at__lt: SQL < comparison, may not work with all column types
+        :type updated_at__lt: datetime
+        :param updated_at__lte: SQL <= comparison, may not work with all column types
+        :type updated_at__lte: datetime
+        :param updated_at__in: SQL IN comparison, permits comma-separated values
+        :type updated_at__in: datetime
+        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type updated_at__notin: datetime
+        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type updated_at__asc: str
+        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type updated_at__desc: str
+        :param deleted_at__eq: SQL = comparison
+        :type deleted_at__eq: datetime
+        :param deleted_at__ne: SQL != comparison
+        :type deleted_at__ne: datetime
+        :param deleted_at__gt: SQL > comparison, may not work with all column types
+        :type deleted_at__gt: datetime
+        :param deleted_at__gte: SQL >= comparison, may not work with all column types
+        :type deleted_at__gte: datetime
+        :param deleted_at__lt: SQL < comparison, may not work with all column types
+        :type deleted_at__lt: datetime
+        :param deleted_at__lte: SQL <= comparison, may not work with all column types
+        :type deleted_at__lte: datetime
+        :param deleted_at__in: SQL IN comparison, permits comma-separated values
+        :type deleted_at__in: datetime
+        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type deleted_at__notin: datetime
+        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isnull: str
+        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isnotnull: str
+        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type deleted_at__asc: str
+        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type deleted_at__desc: str
+        :param camera_id__eq: SQL = comparison
+        :type camera_id__eq: str
+        :param camera_id__ne: SQL != comparison
+        :type camera_id__ne: str
+        :param camera_id__gt: SQL > comparison, may not work with all column types
+        :type camera_id__gt: str
+        :param camera_id__gte: SQL >= comparison, may not work with all column types
+        :type camera_id__gte: str
+        :param camera_id__lt: SQL < comparison, may not work with all column types
+        :type camera_id__lt: str
+        :param camera_id__lte: SQL <= comparison, may not work with all column types
+        :type camera_id__lte: str
+        :param camera_id__in: SQL IN comparison, permits comma-separated values
+        :type camera_id__in: str
+        :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type camera_id__notin: str
+        :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id__asc: str
+        :param camera_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id__desc: str
+        :param video_id__eq: SQL = comparison
+        :type video_id__eq: str
+        :param video_id__ne: SQL != comparison
+        :type video_id__ne: str
+        :param video_id__gt: SQL > comparison, may not work with all column types
+        :type video_id__gt: str
+        :param video_id__gte: SQL >= comparison, may not work with all column types
+        :type video_id__gte: str
+        :param video_id__lt: SQL < comparison, may not work with all column types
+        :type video_id__lt: str
+        :param video_id__lte: SQL <= comparison, may not work with all column types
+        :type video_id__lte: str
+        :param video_id__in: SQL IN comparison, permits comma-separated values
+        :type video_id__in: str
+        :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type video_id__notin: str
+        :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type video_id__asc: str
+        :param video_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type video_id__desc: str
+        :param class_id__eq: SQL = comparison
+        :type class_id__eq: int
+        :param class_id__ne: SQL != comparison
+        :type class_id__ne: int
+        :param class_id__gt: SQL > comparison, may not work with all column types
+        :type class_id__gt: int
+        :param class_id__gte: SQL >= comparison, may not work with all column types
+        :type class_id__gte: int
+        :param class_id__lt: SQL < comparison, may not work with all column types
+        :type class_id__lt: int
+        :param class_id__lte: SQL <= comparison, may not work with all column types
+        :type class_id__lte: int
+        :param class_id__in: SQL IN comparison, permits comma-separated values
+        :type class_id__in: int
+        :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type class_id__notin: int
+        :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type class_id__asc: str
+        :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type class_id__desc: str
+        :param class_name__eq: SQL = comparison
+        :type class_name__eq: str
+        :param class_name__ne: SQL != comparison
+        :type class_name__ne: str
+        :param class_name__in: SQL IN comparison, permits comma-separated values
+        :type class_name__in: str
+        :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
+        :type class_name__notin: str
+        :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__like: str
+        :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__notlike: str
+        :param class_name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__ilike: str
+        :param class_name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__notilike: str
+        :param class_name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type class_name__asc: str
+        :param class_name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type class_name__desc: str
+        :param started_at__eq: SQL = comparison
+        :type started_at__eq: datetime
+        :param started_at__ne: SQL != comparison
+        :type started_at__ne: datetime
+        :param started_at__gt: SQL > comparison, may not work with all column types
+        :type started_at__gt: datetime
+        :param started_at__gte: SQL >= comparison, may not work with all column types
+        :type started_at__gte: datetime
+        :param started_at__lt: SQL < comparison, may not work with all column types
+        :type started_at__lt: datetime
+        :param started_at__lte: SQL <= comparison, may not work with all column types
+        :type started_at__lte: datetime
+        :param started_at__in: SQL IN comparison, permits comma-separated values
+        :type started_at__in: datetime
+        :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type started_at__notin: datetime
+        :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type started_at__asc: str
+        :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type started_at__desc: str
+        :param ended_at__eq: SQL = comparison
+        :type ended_at__eq: datetime
+        :param ended_at__ne: SQL != comparison
+        :type ended_at__ne: datetime
+        :param ended_at__gt: SQL > comparison, may not work with all column types
+        :type ended_at__gt: datetime
+        :param ended_at__gte: SQL >= comparison, may not work with all column types
+        :type ended_at__gte: datetime
+        :param ended_at__lt: SQL < comparison, may not work with all column types
+        :type ended_at__lt: datetime
+        :param ended_at__lte: SQL <= comparison, may not work with all column types
+        :type ended_at__lte: datetime
+        :param ended_at__in: SQL IN comparison, permits comma-separated values
+        :type ended_at__in: datetime
+        :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type ended_at__notin: datetime
+        :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type ended_at__asc: str
+        :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type ended_at__desc: str
+        :param frame_count__eq: SQL = comparison
+        :type frame_count__eq: int
+        :param frame_count__ne: SQL != comparison
+        :type frame_count__ne: int
+        :param frame_count__gt: SQL > comparison, may not work with all column types
+        :type frame_count__gt: int
+        :param frame_count__gte: SQL >= comparison, may not work with all column types
+        :type frame_count__gte: int
+        :param frame_count__lt: SQL < comparison, may not work with all column types
+        :type frame_count__lt: int
+        :param frame_count__lte: SQL <= comparison, may not work with all column types
+        :type frame_count__lte: int
+        :param frame_count__in: SQL IN comparison, permits comma-separated values
+        :type frame_count__in: int
+        :param frame_count__notin: SQL NOT IN comparison, permits comma-separated values
+        :type frame_count__notin: int
+        :param frame_count__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type frame_count__asc: str
+        :param frame_count__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type frame_count__desc: str
+        :param mean_score__eq: SQL = comparison
+        :type mean_score__eq: float
+        :param mean_score__ne: SQL != comparison
+        :type mean_score__ne: float
+        :param mean_score__gt: SQL > comparison, may not work with all column types
+        :type mean_score__gt: float
+        :param mean_score__gte: SQL >= comparison, may not work with all column types
+        :type mean_score__gte: float
+        :param mean_score__lt: SQL < comparison, may not work with all column types
+        :type mean_score__lt: float
+        :param mean_score__lte: SQL <= comparison, may not work with all column types
+        :type mean_score__lte: float
+        :param mean_score__in: SQL IN comparison, permits comma-separated values
+        :type mean_score__in: float
+        :param mean_score__notin: SQL NOT IN comparison, permits comma-separated values
+        :type mean_score__notin: float
+        :param mean_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type mean_score__asc: str
+        :param mean_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type mean_score__desc: str
+        :param max_score__eq: SQL = comparison
+        :type max_score__eq: float
+        :param max_score__ne: SQL != comparison
+        :type max_score__ne: float
+        :param max_score__gt: SQL > comparison, may not work with all column types
+        :type max_score__gt: float
+        :param max_score__gte: SQL >= comparison, may not work with all column types
+        :type max_score__gte: float
+        :param max_score__lt: SQL < comparison, may not work with all column types
+        :type max_score__lt: float
+        :param max_score__lte: SQL <= comparison, may not work with all column types
+        :type max_score__lte: float
+        :param max_score__in: SQL IN comparison, permits comma-separated values
+        :type max_score__in: float
+        :param max_score__notin: SQL NOT IN comparison, permits comma-separated values
+        :type max_score__notin: float
+        :param max_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type max_score__asc: str
+        :param max_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type max_score__desc: str
+        :param trajectory__contains: SQL @> comparison
+        :type trajectory__contains: object
+        :param trajectory__notcontains: SQL NOT @> comparison
+        :type trajectory__notcontains: object
+        :param trajectory__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type trajectory__asc: str
+        :param trajectory__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type trajectory__desc: str
+        :param is_static__eq: SQL = comparison
+        :type is_static__eq: bool
+        :param is_static__ne: SQL != comparison
+        :type is_static__ne: bool
+        :param is_static__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type is_static__isfalse: str
+        :param is_static__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type is_static__istrue: str
+        :param is_static__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type is_static__asc: str
+        :param is_static__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type is_static__desc: str
+        :param status__eq: SQL = comparison
+        :type status__eq: str
+        :param status__ne: SQL != comparison
+        :type status__ne: str
+        :param status__in: SQL IN comparison, permits comma-separated values
+        :type status__in: str
+        :param status__notin: SQL NOT IN comparison, permits comma-separated values
+        :type status__notin: str
+        :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__like: str
+        :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__notlike: str
+        :param status__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__ilike: str
+        :param status__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__notilike: str
+        :param status__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type status__asc: str
+        :param status__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type status__desc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2549,247 +1793,7 @@ class TrackApi:
             depth=depth,
             camera__load=camera__load,
             video__load=video__load,
-            referenced_by_detection__load=referenced_by_detection__load,
-            id__eq=id__eq,
-            id__ne=id__ne,
-            id__gt=id__gt,
-            id__gte=id__gte,
-            id__lt=id__lt,
-            id__lte=id__lte,
-            id__in=id__in,
-            id__notin=id__notin,
-            id__contains=id__contains,
-            id__notcontains=id__notcontains,
-            id__like=id__like,
-            id__notlike=id__notlike,
-            id__ilike=id__ilike,
-            id__notilike=id__notilike,
-            id__desc=id__desc,
-            id__asc=id__asc,
-            created_at__eq=created_at__eq,
-            created_at__ne=created_at__ne,
-            created_at__gt=created_at__gt,
-            created_at__gte=created_at__gte,
-            created_at__lt=created_at__lt,
-            created_at__lte=created_at__lte,
-            created_at__in=created_at__in,
-            created_at__notin=created_at__notin,
-            created_at__contains=created_at__contains,
-            created_at__notcontains=created_at__notcontains,
-            created_at__like=created_at__like,
-            created_at__notlike=created_at__notlike,
-            created_at__ilike=created_at__ilike,
-            created_at__notilike=created_at__notilike,
-            created_at__desc=created_at__desc,
-            created_at__asc=created_at__asc,
-            updated_at__eq=updated_at__eq,
-            updated_at__ne=updated_at__ne,
-            updated_at__gt=updated_at__gt,
-            updated_at__gte=updated_at__gte,
-            updated_at__lt=updated_at__lt,
-            updated_at__lte=updated_at__lte,
-            updated_at__in=updated_at__in,
-            updated_at__notin=updated_at__notin,
-            updated_at__contains=updated_at__contains,
-            updated_at__notcontains=updated_at__notcontains,
-            updated_at__like=updated_at__like,
-            updated_at__notlike=updated_at__notlike,
-            updated_at__ilike=updated_at__ilike,
-            updated_at__notilike=updated_at__notilike,
-            updated_at__desc=updated_at__desc,
-            updated_at__asc=updated_at__asc,
-            deleted_at__eq=deleted_at__eq,
-            deleted_at__ne=deleted_at__ne,
-            deleted_at__gt=deleted_at__gt,
-            deleted_at__gte=deleted_at__gte,
-            deleted_at__lt=deleted_at__lt,
-            deleted_at__lte=deleted_at__lte,
-            deleted_at__in=deleted_at__in,
-            deleted_at__notin=deleted_at__notin,
-            deleted_at__contains=deleted_at__contains,
-            deleted_at__notcontains=deleted_at__notcontains,
-            deleted_at__like=deleted_at__like,
-            deleted_at__notlike=deleted_at__notlike,
-            deleted_at__ilike=deleted_at__ilike,
-            deleted_at__notilike=deleted_at__notilike,
-            deleted_at__desc=deleted_at__desc,
-            deleted_at__asc=deleted_at__asc,
-            camera_id__eq=camera_id__eq,
-            camera_id__ne=camera_id__ne,
-            camera_id__gt=camera_id__gt,
-            camera_id__gte=camera_id__gte,
-            camera_id__lt=camera_id__lt,
-            camera_id__lte=camera_id__lte,
-            camera_id__in=camera_id__in,
-            camera_id__notin=camera_id__notin,
-            camera_id__contains=camera_id__contains,
-            camera_id__notcontains=camera_id__notcontains,
-            camera_id__like=camera_id__like,
-            camera_id__notlike=camera_id__notlike,
-            camera_id__ilike=camera_id__ilike,
-            camera_id__notilike=camera_id__notilike,
-            camera_id__desc=camera_id__desc,
-            camera_id__asc=camera_id__asc,
-            camera_id_object__contains=camera_id_object__contains,
-            camera_id_object__notcontains=camera_id_object__notcontains,
-            camera_id_object__desc=camera_id_object__desc,
-            camera_id_object__asc=camera_id_object__asc,
-            video_id__eq=video_id__eq,
-            video_id__ne=video_id__ne,
-            video_id__gt=video_id__gt,
-            video_id__gte=video_id__gte,
-            video_id__lt=video_id__lt,
-            video_id__lte=video_id__lte,
-            video_id__in=video_id__in,
-            video_id__notin=video_id__notin,
-            video_id__contains=video_id__contains,
-            video_id__notcontains=video_id__notcontains,
-            video_id__like=video_id__like,
-            video_id__notlike=video_id__notlike,
-            video_id__ilike=video_id__ilike,
-            video_id__notilike=video_id__notilike,
-            video_id__desc=video_id__desc,
-            video_id__asc=video_id__asc,
-            video_id_object__contains=video_id_object__contains,
-            video_id_object__notcontains=video_id_object__notcontains,
-            video_id_object__desc=video_id_object__desc,
-            video_id_object__asc=video_id_object__asc,
-            class_id__eq=class_id__eq,
-            class_id__ne=class_id__ne,
-            class_id__gt=class_id__gt,
-            class_id__gte=class_id__gte,
-            class_id__lt=class_id__lt,
-            class_id__lte=class_id__lte,
-            class_id__in=class_id__in,
-            class_id__notin=class_id__notin,
-            class_id__contains=class_id__contains,
-            class_id__notcontains=class_id__notcontains,
-            class_id__desc=class_id__desc,
-            class_id__asc=class_id__asc,
-            class_name__eq=class_name__eq,
-            class_name__ne=class_name__ne,
-            class_name__gt=class_name__gt,
-            class_name__gte=class_name__gte,
-            class_name__lt=class_name__lt,
-            class_name__lte=class_name__lte,
-            class_name__in=class_name__in,
-            class_name__notin=class_name__notin,
-            class_name__contains=class_name__contains,
-            class_name__notcontains=class_name__notcontains,
-            class_name__like=class_name__like,
-            class_name__notlike=class_name__notlike,
-            class_name__ilike=class_name__ilike,
-            class_name__notilike=class_name__notilike,
-            class_name__desc=class_name__desc,
-            class_name__asc=class_name__asc,
-            started_at__eq=started_at__eq,
-            started_at__ne=started_at__ne,
-            started_at__gt=started_at__gt,
-            started_at__gte=started_at__gte,
-            started_at__lt=started_at__lt,
-            started_at__lte=started_at__lte,
-            started_at__in=started_at__in,
-            started_at__notin=started_at__notin,
-            started_at__contains=started_at__contains,
-            started_at__notcontains=started_at__notcontains,
-            started_at__like=started_at__like,
-            started_at__notlike=started_at__notlike,
-            started_at__ilike=started_at__ilike,
-            started_at__notilike=started_at__notilike,
-            started_at__desc=started_at__desc,
-            started_at__asc=started_at__asc,
-            ended_at__eq=ended_at__eq,
-            ended_at__ne=ended_at__ne,
-            ended_at__gt=ended_at__gt,
-            ended_at__gte=ended_at__gte,
-            ended_at__lt=ended_at__lt,
-            ended_at__lte=ended_at__lte,
-            ended_at__in=ended_at__in,
-            ended_at__notin=ended_at__notin,
-            ended_at__contains=ended_at__contains,
-            ended_at__notcontains=ended_at__notcontains,
-            ended_at__like=ended_at__like,
-            ended_at__notlike=ended_at__notlike,
-            ended_at__ilike=ended_at__ilike,
-            ended_at__notilike=ended_at__notilike,
-            ended_at__desc=ended_at__desc,
-            ended_at__asc=ended_at__asc,
-            frame_count__eq=frame_count__eq,
-            frame_count__ne=frame_count__ne,
-            frame_count__gt=frame_count__gt,
-            frame_count__gte=frame_count__gte,
-            frame_count__lt=frame_count__lt,
-            frame_count__lte=frame_count__lte,
-            frame_count__in=frame_count__in,
-            frame_count__notin=frame_count__notin,
-            frame_count__contains=frame_count__contains,
-            frame_count__notcontains=frame_count__notcontains,
-            frame_count__desc=frame_count__desc,
-            frame_count__asc=frame_count__asc,
-            mean_score__eq=mean_score__eq,
-            mean_score__ne=mean_score__ne,
-            mean_score__gt=mean_score__gt,
-            mean_score__gte=mean_score__gte,
-            mean_score__lt=mean_score__lt,
-            mean_score__lte=mean_score__lte,
-            mean_score__in=mean_score__in,
-            mean_score__notin=mean_score__notin,
-            mean_score__contains=mean_score__contains,
-            mean_score__notcontains=mean_score__notcontains,
-            mean_score__desc=mean_score__desc,
-            mean_score__asc=mean_score__asc,
-            max_score__eq=max_score__eq,
-            max_score__ne=max_score__ne,
-            max_score__gt=max_score__gt,
-            max_score__gte=max_score__gte,
-            max_score__lt=max_score__lt,
-            max_score__lte=max_score__lte,
-            max_score__in=max_score__in,
-            max_score__notin=max_score__notin,
-            max_score__contains=max_score__contains,
-            max_score__notcontains=max_score__notcontains,
-            max_score__desc=max_score__desc,
-            max_score__asc=max_score__asc,
-            centroid__contains=centroid__contains,
-            centroid__notcontains=centroid__notcontains,
-            centroid__desc=centroid__desc,
-            centroid__asc=centroid__asc,
-            bounding_box__contains=bounding_box__contains,
-            bounding_box__notcontains=bounding_box__notcontains,
-            bounding_box__desc=bounding_box__desc,
-            bounding_box__asc=bounding_box__asc,
-            trajectory__contains=trajectory__contains,
-            trajectory__notcontains=trajectory__notcontains,
-            trajectory__desc=trajectory__desc,
-            trajectory__asc=trajectory__asc,
-            is_static__eq=is_static__eq,
-            is_static__ne=is_static__ne,
-            is_static__gt=is_static__gt,
-            is_static__gte=is_static__gte,
-            is_static__lt=is_static__lt,
-            is_static__lte=is_static__lte,
-            is_static__in=is_static__in,
-            is_static__notin=is_static__notin,
-            is_static__contains=is_static__contains,
-            is_static__notcontains=is_static__notcontains,
-            is_static__desc=is_static__desc,
-            is_static__asc=is_static__asc,
-            status__eq=status__eq,
-            status__ne=status__ne,
-            status__gt=status__gt,
-            status__gte=status__gte,
-            status__lt=status__lt,
-            status__lte=status__lte,
-            status__in=status__in,
-            status__notin=status__notin,
-            status__contains=status__contains,
-            status__notcontains=status__notcontains,
-            status__like=status__like,
-            status__notlike=status__notlike,
-            status__ilike=status__ilike,
-            status__notilike=status__notilike,
-            status__desc=status__desc,
-            status__asc=status__asc,
+            referenced_by_detection_track_id__load=referenced_by_detection_track_id__load,
             key__eq=key__eq,
             key__ne=key__ne,
             key__gt=key__gt,
@@ -2798,18 +1802,150 @@ class TrackApi:
             key__lte=key__lte,
             key__in=key__in,
             key__notin=key__notin,
-            key__contains=key__contains,
-            key__notcontains=key__notcontains,
-            key__like=key__like,
-            key__notlike=key__notlike,
-            key__ilike=key__ilike,
-            key__notilike=key__notilike,
-            key__desc=key__desc,
             key__asc=key__asc,
-            referenced_by_detection_track_id_objects__contains=referenced_by_detection_track_id_objects__contains,
-            referenced_by_detection_track_id_objects__notcontains=referenced_by_detection_track_id_objects__notcontains,
-            referenced_by_detection_track_id_objects__desc=referenced_by_detection_track_id_objects__desc,
-            referenced_by_detection_track_id_objects__asc=referenced_by_detection_track_id_objects__asc,
+            key__desc=key__desc,
+            created_at__eq=created_at__eq,
+            created_at__ne=created_at__ne,
+            created_at__gt=created_at__gt,
+            created_at__gte=created_at__gte,
+            created_at__lt=created_at__lt,
+            created_at__lte=created_at__lte,
+            created_at__in=created_at__in,
+            created_at__notin=created_at__notin,
+            created_at__asc=created_at__asc,
+            created_at__desc=created_at__desc,
+            updated_at__eq=updated_at__eq,
+            updated_at__ne=updated_at__ne,
+            updated_at__gt=updated_at__gt,
+            updated_at__gte=updated_at__gte,
+            updated_at__lt=updated_at__lt,
+            updated_at__lte=updated_at__lte,
+            updated_at__in=updated_at__in,
+            updated_at__notin=updated_at__notin,
+            updated_at__asc=updated_at__asc,
+            updated_at__desc=updated_at__desc,
+            deleted_at__eq=deleted_at__eq,
+            deleted_at__ne=deleted_at__ne,
+            deleted_at__gt=deleted_at__gt,
+            deleted_at__gte=deleted_at__gte,
+            deleted_at__lt=deleted_at__lt,
+            deleted_at__lte=deleted_at__lte,
+            deleted_at__in=deleted_at__in,
+            deleted_at__notin=deleted_at__notin,
+            deleted_at__isnull=deleted_at__isnull,
+            deleted_at__isnotnull=deleted_at__isnotnull,
+            deleted_at__asc=deleted_at__asc,
+            deleted_at__desc=deleted_at__desc,
+            camera_id__eq=camera_id__eq,
+            camera_id__ne=camera_id__ne,
+            camera_id__gt=camera_id__gt,
+            camera_id__gte=camera_id__gte,
+            camera_id__lt=camera_id__lt,
+            camera_id__lte=camera_id__lte,
+            camera_id__in=camera_id__in,
+            camera_id__notin=camera_id__notin,
+            camera_id__asc=camera_id__asc,
+            camera_id__desc=camera_id__desc,
+            video_id__eq=video_id__eq,
+            video_id__ne=video_id__ne,
+            video_id__gt=video_id__gt,
+            video_id__gte=video_id__gte,
+            video_id__lt=video_id__lt,
+            video_id__lte=video_id__lte,
+            video_id__in=video_id__in,
+            video_id__notin=video_id__notin,
+            video_id__asc=video_id__asc,
+            video_id__desc=video_id__desc,
+            class_id__eq=class_id__eq,
+            class_id__ne=class_id__ne,
+            class_id__gt=class_id__gt,
+            class_id__gte=class_id__gte,
+            class_id__lt=class_id__lt,
+            class_id__lte=class_id__lte,
+            class_id__in=class_id__in,
+            class_id__notin=class_id__notin,
+            class_id__asc=class_id__asc,
+            class_id__desc=class_id__desc,
+            class_name__eq=class_name__eq,
+            class_name__ne=class_name__ne,
+            class_name__in=class_name__in,
+            class_name__notin=class_name__notin,
+            class_name__like=class_name__like,
+            class_name__notlike=class_name__notlike,
+            class_name__ilike=class_name__ilike,
+            class_name__notilike=class_name__notilike,
+            class_name__asc=class_name__asc,
+            class_name__desc=class_name__desc,
+            started_at__eq=started_at__eq,
+            started_at__ne=started_at__ne,
+            started_at__gt=started_at__gt,
+            started_at__gte=started_at__gte,
+            started_at__lt=started_at__lt,
+            started_at__lte=started_at__lte,
+            started_at__in=started_at__in,
+            started_at__notin=started_at__notin,
+            started_at__asc=started_at__asc,
+            started_at__desc=started_at__desc,
+            ended_at__eq=ended_at__eq,
+            ended_at__ne=ended_at__ne,
+            ended_at__gt=ended_at__gt,
+            ended_at__gte=ended_at__gte,
+            ended_at__lt=ended_at__lt,
+            ended_at__lte=ended_at__lte,
+            ended_at__in=ended_at__in,
+            ended_at__notin=ended_at__notin,
+            ended_at__asc=ended_at__asc,
+            ended_at__desc=ended_at__desc,
+            frame_count__eq=frame_count__eq,
+            frame_count__ne=frame_count__ne,
+            frame_count__gt=frame_count__gt,
+            frame_count__gte=frame_count__gte,
+            frame_count__lt=frame_count__lt,
+            frame_count__lte=frame_count__lte,
+            frame_count__in=frame_count__in,
+            frame_count__notin=frame_count__notin,
+            frame_count__asc=frame_count__asc,
+            frame_count__desc=frame_count__desc,
+            mean_score__eq=mean_score__eq,
+            mean_score__ne=mean_score__ne,
+            mean_score__gt=mean_score__gt,
+            mean_score__gte=mean_score__gte,
+            mean_score__lt=mean_score__lt,
+            mean_score__lte=mean_score__lte,
+            mean_score__in=mean_score__in,
+            mean_score__notin=mean_score__notin,
+            mean_score__asc=mean_score__asc,
+            mean_score__desc=mean_score__desc,
+            max_score__eq=max_score__eq,
+            max_score__ne=max_score__ne,
+            max_score__gt=max_score__gt,
+            max_score__gte=max_score__gte,
+            max_score__lt=max_score__lt,
+            max_score__lte=max_score__lte,
+            max_score__in=max_score__in,
+            max_score__notin=max_score__notin,
+            max_score__asc=max_score__asc,
+            max_score__desc=max_score__desc,
+            trajectory__contains=trajectory__contains,
+            trajectory__notcontains=trajectory__notcontains,
+            trajectory__asc=trajectory__asc,
+            trajectory__desc=trajectory__desc,
+            is_static__eq=is_static__eq,
+            is_static__ne=is_static__ne,
+            is_static__isfalse=is_static__isfalse,
+            is_static__istrue=is_static__istrue,
+            is_static__asc=is_static__asc,
+            is_static__desc=is_static__desc,
+            status__eq=status__eq,
+            status__ne=status__ne,
+            status__in=status__in,
+            status__notin=status__notin,
+            status__like=status__like,
+            status__notlike=status__notlike,
+            status__ilike=status__ilike,
+            status__notilike=status__notilike,
+            status__asc=status__asc,
+            status__desc=status__desc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2836,249 +1972,9 @@ class TrackApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
-        camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
-        video__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
-        id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        created_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        created_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        created_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        updated_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        updated_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        updated_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        deleted_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        deleted_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        deleted_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        camera_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        camera_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        camera_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        camera_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        video_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        video_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        video_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        video_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        video_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        video_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
-        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
-        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
-        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
-        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_id__contains: Annotated[Optional[StrictInt], Field(description="SQL @> comparison")] = None,
-        class_id__notcontains: Annotated[Optional[StrictInt], Field(description="SQL NOT @> comparison")] = None,
-        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        class_name__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        class_name__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        class_name__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        class_name__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        class_name__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        class_name__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        started_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        started_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        started_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        started_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        started_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        started_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        started_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        started_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
-        ended_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
-        ended_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
-        ended_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        ended_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
-        ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        ended_at__contains: Annotated[Optional[datetime], Field(description="SQL @> comparison")] = None,
-        ended_at__notcontains: Annotated[Optional[datetime], Field(description="SQL NOT @> comparison")] = None,
-        ended_at__like: Annotated[Optional[datetime], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notlike: Annotated[Optional[datetime], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__ilike: Annotated[Optional[datetime], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__notilike: Annotated[Optional[datetime], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        frame_count__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
-        frame_count__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
-        frame_count__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
-        frame_count__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        frame_count__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
-        frame_count__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        frame_count__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        frame_count__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        frame_count__contains: Annotated[Optional[StrictInt], Field(description="SQL @> comparison")] = None,
-        frame_count__notcontains: Annotated[Optional[StrictInt], Field(description="SQL NOT @> comparison")] = None,
-        frame_count__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        frame_count__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        mean_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
-        mean_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
-        mean_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
-        mean_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        mean_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
-        mean_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        mean_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        mean_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        mean_score__contains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL @> comparison")] = None,
-        mean_score__notcontains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT @> comparison")] = None,
-        mean_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        mean_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        max_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
-        max_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
-        max_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
-        max_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        max_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
-        max_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        max_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        max_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        max_score__contains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL @> comparison")] = None,
-        max_score__notcontains: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT @> comparison")] = None,
-        max_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        max_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        centroid__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        centroid__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        centroid__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        centroid__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        bounding_box__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        bounding_box__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        bounding_box__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        bounding_box__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        trajectory__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        trajectory__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        trajectory__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        trajectory__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        is_static__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
-        is_static__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
-        is_static__gt: Annotated[Optional[StrictBool], Field(description="SQL > comparison, may not work with all column types")] = None,
-        is_static__gte: Annotated[Optional[StrictBool], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        is_static__lt: Annotated[Optional[StrictBool], Field(description="SQL < comparison, may not work with all column types")] = None,
-        is_static__lte: Annotated[Optional[StrictBool], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        is_static__in: Annotated[Optional[StrictBool], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        is_static__notin: Annotated[Optional[StrictBool], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        is_static__contains: Annotated[Optional[StrictBool], Field(description="SQL @> comparison")] = None,
-        is_static__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
-        is_static__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        is_static__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        status__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
-        status__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
-        status__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
-        status__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
-        status__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
-        status__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
-        status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
-        status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        status__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        status__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        video__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_detection_track_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         key__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         key__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         key__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -3087,18 +1983,150 @@ class TrackApi:
         key__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
         key__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
         key__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
-        key__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
-        key__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
-        key__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
-        key__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         key__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection_track_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
-        referenced_by_detection_track_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
-        referenced_by_detection_track_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
-        referenced_by_detection_track_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        key__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        created_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        created_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        created_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        created_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        created_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        created_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        created_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        created_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        created_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        updated_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        updated_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        updated_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        updated_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        updated_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        updated_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        updated_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        updated_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        updated_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        deleted_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        deleted_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        deleted_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        deleted_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        deleted_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        deleted_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        deleted_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        deleted_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        deleted_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        camera_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        camera_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        camera_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        camera_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        camera_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        camera_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        camera_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        camera_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        camera_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        video_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        video_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        video_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        video_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        video_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        video_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        video_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        video_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        video_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_id__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
+        class_id__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
+        class_id__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
+        class_id__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        class_id__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
+        class_id__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        class_id__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        class_id__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        class_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_name__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        class_name__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        class_name__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        class_name__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        class_name__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        class_name__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        class_name__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        started_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        started_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        started_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        started_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        started_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        started_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        started_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        started_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        started_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        started_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        ended_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        ended_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        ended_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        ended_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        ended_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        ended_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        ended_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        ended_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        ended_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        ended_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        frame_count__eq: Annotated[Optional[StrictInt], Field(description="SQL = comparison")] = None,
+        frame_count__ne: Annotated[Optional[StrictInt], Field(description="SQL != comparison")] = None,
+        frame_count__gt: Annotated[Optional[StrictInt], Field(description="SQL > comparison, may not work with all column types")] = None,
+        frame_count__gte: Annotated[Optional[StrictInt], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        frame_count__lt: Annotated[Optional[StrictInt], Field(description="SQL < comparison, may not work with all column types")] = None,
+        frame_count__lte: Annotated[Optional[StrictInt], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        frame_count__in: Annotated[Optional[StrictInt], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        frame_count__notin: Annotated[Optional[StrictInt], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        frame_count__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        frame_count__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        mean_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
+        mean_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
+        mean_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
+        mean_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        mean_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
+        mean_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        mean_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        mean_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        mean_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        mean_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        max_score__eq: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL = comparison")] = None,
+        max_score__ne: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL != comparison")] = None,
+        max_score__gt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL > comparison, may not work with all column types")] = None,
+        max_score__gte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        max_score__lt: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL < comparison, may not work with all column types")] = None,
+        max_score__lte: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        max_score__in: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        max_score__notin: Annotated[Optional[Union[StrictFloat, StrictInt]], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        max_score__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        max_score__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        trajectory__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        trajectory__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        trajectory__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        trajectory__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_static__eq: Annotated[Optional[StrictBool], Field(description="SQL = comparison")] = None,
+        is_static__ne: Annotated[Optional[StrictBool], Field(description="SQL != comparison")] = None,
+        is_static__isfalse: Annotated[Optional[StrictStr], Field(description="SQL IS false comparison, value is ignored (presence of key is sufficient)")] = None,
+        is_static__istrue: Annotated[Optional[StrictStr], Field(description="SQL IS true comparison, value is ignored (presence of key is sufficient)")] = None,
+        is_static__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        is_static__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        status__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        status__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        status__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        status__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        status__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        status__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        status__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -3121,492 +2149,12 @@ class TrackApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
-        :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :param camera__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type camera__load: str
-        :param video__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :param video__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type video__load: str
-        :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection__load: str
-        :param id__eq: SQL = comparison
-        :type id__eq: str
-        :param id__ne: SQL != comparison
-        :type id__ne: str
-        :param id__gt: SQL > comparison, may not work with all column types
-        :type id__gt: str
-        :param id__gte: SQL >= comparison, may not work with all column types
-        :type id__gte: str
-        :param id__lt: SQL < comparison, may not work with all column types
-        :type id__lt: str
-        :param id__lte: SQL <= comparison, may not work with all column types
-        :type id__lte: str
-        :param id__in: SQL IN comparison, permits comma-separated values
-        :type id__in: str
-        :param id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type id__notin: str
-        :param id__contains: SQL @> comparison
-        :type id__contains: str
-        :param id__notcontains: SQL NOT @> comparison
-        :type id__notcontains: str
-        :param id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__like: str
-        :param id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__notlike: str
-        :param id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__ilike: str
-        :param id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type id__notilike: str
-        :param id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type id__desc: str
-        :param id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type id__asc: str
-        :param created_at__eq: SQL = comparison
-        :type created_at__eq: datetime
-        :param created_at__ne: SQL != comparison
-        :type created_at__ne: datetime
-        :param created_at__gt: SQL > comparison, may not work with all column types
-        :type created_at__gt: datetime
-        :param created_at__gte: SQL >= comparison, may not work with all column types
-        :type created_at__gte: datetime
-        :param created_at__lt: SQL < comparison, may not work with all column types
-        :type created_at__lt: datetime
-        :param created_at__lte: SQL <= comparison, may not work with all column types
-        :type created_at__lte: datetime
-        :param created_at__in: SQL IN comparison, permits comma-separated values
-        :type created_at__in: datetime
-        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type created_at__notin: datetime
-        :param created_at__contains: SQL @> comparison
-        :type created_at__contains: datetime
-        :param created_at__notcontains: SQL NOT @> comparison
-        :type created_at__notcontains: datetime
-        :param created_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__like: datetime
-        :param created_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notlike: datetime
-        :param created_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__ilike: datetime
-        :param created_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type created_at__notilike: datetime
-        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type created_at__desc: str
-        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type created_at__asc: str
-        :param updated_at__eq: SQL = comparison
-        :type updated_at__eq: datetime
-        :param updated_at__ne: SQL != comparison
-        :type updated_at__ne: datetime
-        :param updated_at__gt: SQL > comparison, may not work with all column types
-        :type updated_at__gt: datetime
-        :param updated_at__gte: SQL >= comparison, may not work with all column types
-        :type updated_at__gte: datetime
-        :param updated_at__lt: SQL < comparison, may not work with all column types
-        :type updated_at__lt: datetime
-        :param updated_at__lte: SQL <= comparison, may not work with all column types
-        :type updated_at__lte: datetime
-        :param updated_at__in: SQL IN comparison, permits comma-separated values
-        :type updated_at__in: datetime
-        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type updated_at__notin: datetime
-        :param updated_at__contains: SQL @> comparison
-        :type updated_at__contains: datetime
-        :param updated_at__notcontains: SQL NOT @> comparison
-        :type updated_at__notcontains: datetime
-        :param updated_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__like: datetime
-        :param updated_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notlike: datetime
-        :param updated_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__ilike: datetime
-        :param updated_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type updated_at__notilike: datetime
-        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type updated_at__desc: str
-        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type updated_at__asc: str
-        :param deleted_at__eq: SQL = comparison
-        :type deleted_at__eq: datetime
-        :param deleted_at__ne: SQL != comparison
-        :type deleted_at__ne: datetime
-        :param deleted_at__gt: SQL > comparison, may not work with all column types
-        :type deleted_at__gt: datetime
-        :param deleted_at__gte: SQL >= comparison, may not work with all column types
-        :type deleted_at__gte: datetime
-        :param deleted_at__lt: SQL < comparison, may not work with all column types
-        :type deleted_at__lt: datetime
-        :param deleted_at__lte: SQL <= comparison, may not work with all column types
-        :type deleted_at__lte: datetime
-        :param deleted_at__in: SQL IN comparison, permits comma-separated values
-        :type deleted_at__in: datetime
-        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type deleted_at__notin: datetime
-        :param deleted_at__contains: SQL @> comparison
-        :type deleted_at__contains: datetime
-        :param deleted_at__notcontains: SQL NOT @> comparison
-        :type deleted_at__notcontains: datetime
-        :param deleted_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__like: datetime
-        :param deleted_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notlike: datetime
-        :param deleted_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__ilike: datetime
-        :param deleted_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type deleted_at__notilike: datetime
-        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type deleted_at__desc: str
-        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type deleted_at__asc: str
-        :param camera_id__eq: SQL = comparison
-        :type camera_id__eq: str
-        :param camera_id__ne: SQL != comparison
-        :type camera_id__ne: str
-        :param camera_id__gt: SQL > comparison, may not work with all column types
-        :type camera_id__gt: str
-        :param camera_id__gte: SQL >= comparison, may not work with all column types
-        :type camera_id__gte: str
-        :param camera_id__lt: SQL < comparison, may not work with all column types
-        :type camera_id__lt: str
-        :param camera_id__lte: SQL <= comparison, may not work with all column types
-        :type camera_id__lte: str
-        :param camera_id__in: SQL IN comparison, permits comma-separated values
-        :type camera_id__in: str
-        :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type camera_id__notin: str
-        :param camera_id__contains: SQL @> comparison
-        :type camera_id__contains: str
-        :param camera_id__notcontains: SQL NOT @> comparison
-        :type camera_id__notcontains: str
-        :param camera_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__like: str
-        :param camera_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__notlike: str
-        :param camera_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__ilike: str
-        :param camera_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type camera_id__notilike: str
-        :param camera_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type camera_id__desc: str
-        :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type camera_id__asc: str
-        :param camera_id_object__contains: SQL @> comparison
-        :type camera_id_object__contains: object
-        :param camera_id_object__notcontains: SQL NOT @> comparison
-        :type camera_id_object__notcontains: object
-        :param camera_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type camera_id_object__desc: str
-        :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type camera_id_object__asc: str
-        :param video_id__eq: SQL = comparison
-        :type video_id__eq: str
-        :param video_id__ne: SQL != comparison
-        :type video_id__ne: str
-        :param video_id__gt: SQL > comparison, may not work with all column types
-        :type video_id__gt: str
-        :param video_id__gte: SQL >= comparison, may not work with all column types
-        :type video_id__gte: str
-        :param video_id__lt: SQL < comparison, may not work with all column types
-        :type video_id__lt: str
-        :param video_id__lte: SQL <= comparison, may not work with all column types
-        :type video_id__lte: str
-        :param video_id__in: SQL IN comparison, permits comma-separated values
-        :type video_id__in: str
-        :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type video_id__notin: str
-        :param video_id__contains: SQL @> comparison
-        :type video_id__contains: str
-        :param video_id__notcontains: SQL NOT @> comparison
-        :type video_id__notcontains: str
-        :param video_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__like: str
-        :param video_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__notlike: str
-        :param video_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__ilike: str
-        :param video_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type video_id__notilike: str
-        :param video_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type video_id__desc: str
-        :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type video_id__asc: str
-        :param video_id_object__contains: SQL @> comparison
-        :type video_id_object__contains: object
-        :param video_id_object__notcontains: SQL NOT @> comparison
-        :type video_id_object__notcontains: object
-        :param video_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type video_id_object__desc: str
-        :param video_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type video_id_object__asc: str
-        :param class_id__eq: SQL = comparison
-        :type class_id__eq: int
-        :param class_id__ne: SQL != comparison
-        :type class_id__ne: int
-        :param class_id__gt: SQL > comparison, may not work with all column types
-        :type class_id__gt: int
-        :param class_id__gte: SQL >= comparison, may not work with all column types
-        :type class_id__gte: int
-        :param class_id__lt: SQL < comparison, may not work with all column types
-        :type class_id__lt: int
-        :param class_id__lte: SQL <= comparison, may not work with all column types
-        :type class_id__lte: int
-        :param class_id__in: SQL IN comparison, permits comma-separated values
-        :type class_id__in: int
-        :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
-        :type class_id__notin: int
-        :param class_id__contains: SQL @> comparison
-        :type class_id__contains: int
-        :param class_id__notcontains: SQL NOT @> comparison
-        :type class_id__notcontains: int
-        :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type class_id__desc: str
-        :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type class_id__asc: str
-        :param class_name__eq: SQL = comparison
-        :type class_name__eq: str
-        :param class_name__ne: SQL != comparison
-        :type class_name__ne: str
-        :param class_name__gt: SQL > comparison, may not work with all column types
-        :type class_name__gt: str
-        :param class_name__gte: SQL >= comparison, may not work with all column types
-        :type class_name__gte: str
-        :param class_name__lt: SQL < comparison, may not work with all column types
-        :type class_name__lt: str
-        :param class_name__lte: SQL <= comparison, may not work with all column types
-        :type class_name__lte: str
-        :param class_name__in: SQL IN comparison, permits comma-separated values
-        :type class_name__in: str
-        :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
-        :type class_name__notin: str
-        :param class_name__contains: SQL @> comparison
-        :type class_name__contains: str
-        :param class_name__notcontains: SQL NOT @> comparison
-        :type class_name__notcontains: str
-        :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__like: str
-        :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__notlike: str
-        :param class_name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__ilike: str
-        :param class_name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type class_name__notilike: str
-        :param class_name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type class_name__desc: str
-        :param class_name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type class_name__asc: str
-        :param started_at__eq: SQL = comparison
-        :type started_at__eq: datetime
-        :param started_at__ne: SQL != comparison
-        :type started_at__ne: datetime
-        :param started_at__gt: SQL > comparison, may not work with all column types
-        :type started_at__gt: datetime
-        :param started_at__gte: SQL >= comparison, may not work with all column types
-        :type started_at__gte: datetime
-        :param started_at__lt: SQL < comparison, may not work with all column types
-        :type started_at__lt: datetime
-        :param started_at__lte: SQL <= comparison, may not work with all column types
-        :type started_at__lte: datetime
-        :param started_at__in: SQL IN comparison, permits comma-separated values
-        :type started_at__in: datetime
-        :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type started_at__notin: datetime
-        :param started_at__contains: SQL @> comparison
-        :type started_at__contains: datetime
-        :param started_at__notcontains: SQL NOT @> comparison
-        :type started_at__notcontains: datetime
-        :param started_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__like: datetime
-        :param started_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notlike: datetime
-        :param started_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__ilike: datetime
-        :param started_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type started_at__notilike: datetime
-        :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type started_at__desc: str
-        :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type started_at__asc: str
-        :param ended_at__eq: SQL = comparison
-        :type ended_at__eq: datetime
-        :param ended_at__ne: SQL != comparison
-        :type ended_at__ne: datetime
-        :param ended_at__gt: SQL > comparison, may not work with all column types
-        :type ended_at__gt: datetime
-        :param ended_at__gte: SQL >= comparison, may not work with all column types
-        :type ended_at__gte: datetime
-        :param ended_at__lt: SQL < comparison, may not work with all column types
-        :type ended_at__lt: datetime
-        :param ended_at__lte: SQL <= comparison, may not work with all column types
-        :type ended_at__lte: datetime
-        :param ended_at__in: SQL IN comparison, permits comma-separated values
-        :type ended_at__in: datetime
-        :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
-        :type ended_at__notin: datetime
-        :param ended_at__contains: SQL @> comparison
-        :type ended_at__contains: datetime
-        :param ended_at__notcontains: SQL NOT @> comparison
-        :type ended_at__notcontains: datetime
-        :param ended_at__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__like: datetime
-        :param ended_at__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notlike: datetime
-        :param ended_at__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__ilike: datetime
-        :param ended_at__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type ended_at__notilike: datetime
-        :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type ended_at__desc: str
-        :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type ended_at__asc: str
-        :param frame_count__eq: SQL = comparison
-        :type frame_count__eq: int
-        :param frame_count__ne: SQL != comparison
-        :type frame_count__ne: int
-        :param frame_count__gt: SQL > comparison, may not work with all column types
-        :type frame_count__gt: int
-        :param frame_count__gte: SQL >= comparison, may not work with all column types
-        :type frame_count__gte: int
-        :param frame_count__lt: SQL < comparison, may not work with all column types
-        :type frame_count__lt: int
-        :param frame_count__lte: SQL <= comparison, may not work with all column types
-        :type frame_count__lte: int
-        :param frame_count__in: SQL IN comparison, permits comma-separated values
-        :type frame_count__in: int
-        :param frame_count__notin: SQL NOT IN comparison, permits comma-separated values
-        :type frame_count__notin: int
-        :param frame_count__contains: SQL @> comparison
-        :type frame_count__contains: int
-        :param frame_count__notcontains: SQL NOT @> comparison
-        :type frame_count__notcontains: int
-        :param frame_count__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type frame_count__desc: str
-        :param frame_count__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type frame_count__asc: str
-        :param mean_score__eq: SQL = comparison
-        :type mean_score__eq: float
-        :param mean_score__ne: SQL != comparison
-        :type mean_score__ne: float
-        :param mean_score__gt: SQL > comparison, may not work with all column types
-        :type mean_score__gt: float
-        :param mean_score__gte: SQL >= comparison, may not work with all column types
-        :type mean_score__gte: float
-        :param mean_score__lt: SQL < comparison, may not work with all column types
-        :type mean_score__lt: float
-        :param mean_score__lte: SQL <= comparison, may not work with all column types
-        :type mean_score__lte: float
-        :param mean_score__in: SQL IN comparison, permits comma-separated values
-        :type mean_score__in: float
-        :param mean_score__notin: SQL NOT IN comparison, permits comma-separated values
-        :type mean_score__notin: float
-        :param mean_score__contains: SQL @> comparison
-        :type mean_score__contains: float
-        :param mean_score__notcontains: SQL NOT @> comparison
-        :type mean_score__notcontains: float
-        :param mean_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type mean_score__desc: str
-        :param mean_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type mean_score__asc: str
-        :param max_score__eq: SQL = comparison
-        :type max_score__eq: float
-        :param max_score__ne: SQL != comparison
-        :type max_score__ne: float
-        :param max_score__gt: SQL > comparison, may not work with all column types
-        :type max_score__gt: float
-        :param max_score__gte: SQL >= comparison, may not work with all column types
-        :type max_score__gte: float
-        :param max_score__lt: SQL < comparison, may not work with all column types
-        :type max_score__lt: float
-        :param max_score__lte: SQL <= comparison, may not work with all column types
-        :type max_score__lte: float
-        :param max_score__in: SQL IN comparison, permits comma-separated values
-        :type max_score__in: float
-        :param max_score__notin: SQL NOT IN comparison, permits comma-separated values
-        :type max_score__notin: float
-        :param max_score__contains: SQL @> comparison
-        :type max_score__contains: float
-        :param max_score__notcontains: SQL NOT @> comparison
-        :type max_score__notcontains: float
-        :param max_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type max_score__desc: str
-        :param max_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type max_score__asc: str
-        :param centroid__contains: SQL @> comparison
-        :type centroid__contains: object
-        :param centroid__notcontains: SQL NOT @> comparison
-        :type centroid__notcontains: object
-        :param centroid__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type centroid__desc: str
-        :param centroid__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type centroid__asc: str
-        :param bounding_box__contains: SQL @> comparison
-        :type bounding_box__contains: object
-        :param bounding_box__notcontains: SQL NOT @> comparison
-        :type bounding_box__notcontains: object
-        :param bounding_box__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type bounding_box__desc: str
-        :param bounding_box__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type bounding_box__asc: str
-        :param trajectory__contains: SQL @> comparison
-        :type trajectory__contains: object
-        :param trajectory__notcontains: SQL NOT @> comparison
-        :type trajectory__notcontains: object
-        :param trajectory__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type trajectory__desc: str
-        :param trajectory__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type trajectory__asc: str
-        :param is_static__eq: SQL = comparison
-        :type is_static__eq: bool
-        :param is_static__ne: SQL != comparison
-        :type is_static__ne: bool
-        :param is_static__gt: SQL > comparison, may not work with all column types
-        :type is_static__gt: bool
-        :param is_static__gte: SQL >= comparison, may not work with all column types
-        :type is_static__gte: bool
-        :param is_static__lt: SQL < comparison, may not work with all column types
-        :type is_static__lt: bool
-        :param is_static__lte: SQL <= comparison, may not work with all column types
-        :type is_static__lte: bool
-        :param is_static__in: SQL IN comparison, permits comma-separated values
-        :type is_static__in: bool
-        :param is_static__notin: SQL NOT IN comparison, permits comma-separated values
-        :type is_static__notin: bool
-        :param is_static__contains: SQL @> comparison
-        :type is_static__contains: bool
-        :param is_static__notcontains: SQL NOT @> comparison
-        :type is_static__notcontains: bool
-        :param is_static__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type is_static__desc: str
-        :param is_static__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type is_static__asc: str
-        :param status__eq: SQL = comparison
-        :type status__eq: str
-        :param status__ne: SQL != comparison
-        :type status__ne: str
-        :param status__gt: SQL > comparison, may not work with all column types
-        :type status__gt: str
-        :param status__gte: SQL >= comparison, may not work with all column types
-        :type status__gte: str
-        :param status__lt: SQL < comparison, may not work with all column types
-        :type status__lt: str
-        :param status__lte: SQL <= comparison, may not work with all column types
-        :type status__lte: str
-        :param status__in: SQL IN comparison, permits comma-separated values
-        :type status__in: str
-        :param status__notin: SQL NOT IN comparison, permits comma-separated values
-        :type status__notin: str
-        :param status__contains: SQL @> comparison
-        :type status__contains: str
-        :param status__notcontains: SQL NOT @> comparison
-        :type status__notcontains: str
-        :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__like: str
-        :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__notlike: str
-        :param status__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__ilike: str
-        :param status__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type status__notilike: str
-        :param status__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type status__desc: str
-        :param status__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type status__asc: str
+        :param referenced_by_detection_track_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_detection_track_id__load: str
         :param key__eq: SQL = comparison
         :type key__eq: str
         :param key__ne: SQL != comparison
@@ -3623,30 +2171,294 @@ class TrackApi:
         :type key__in: str
         :param key__notin: SQL NOT IN comparison, permits comma-separated values
         :type key__notin: str
-        :param key__contains: SQL @> comparison
-        :type key__contains: str
-        :param key__notcontains: SQL NOT @> comparison
-        :type key__notcontains: str
-        :param key__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__like: str
-        :param key__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__notlike: str
-        :param key__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__ilike: str
-        :param key__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
-        :type key__notilike: str
-        :param key__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type key__desc: str
         :param key__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type key__asc: str
-        :param referenced_by_detection_track_id_objects__contains: SQL @> comparison
-        :type referenced_by_detection_track_id_objects__contains: object
-        :param referenced_by_detection_track_id_objects__notcontains: SQL NOT @> comparison
-        :type referenced_by_detection_track_id_objects__notcontains: object
-        :param referenced_by_detection_track_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection_track_id_objects__desc: str
-        :param referenced_by_detection_track_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
-        :type referenced_by_detection_track_id_objects__asc: str
+        :param key__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type key__desc: str
+        :param created_at__eq: SQL = comparison
+        :type created_at__eq: datetime
+        :param created_at__ne: SQL != comparison
+        :type created_at__ne: datetime
+        :param created_at__gt: SQL > comparison, may not work with all column types
+        :type created_at__gt: datetime
+        :param created_at__gte: SQL >= comparison, may not work with all column types
+        :type created_at__gte: datetime
+        :param created_at__lt: SQL < comparison, may not work with all column types
+        :type created_at__lt: datetime
+        :param created_at__lte: SQL <= comparison, may not work with all column types
+        :type created_at__lte: datetime
+        :param created_at__in: SQL IN comparison, permits comma-separated values
+        :type created_at__in: datetime
+        :param created_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type created_at__notin: datetime
+        :param created_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type created_at__asc: str
+        :param created_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type created_at__desc: str
+        :param updated_at__eq: SQL = comparison
+        :type updated_at__eq: datetime
+        :param updated_at__ne: SQL != comparison
+        :type updated_at__ne: datetime
+        :param updated_at__gt: SQL > comparison, may not work with all column types
+        :type updated_at__gt: datetime
+        :param updated_at__gte: SQL >= comparison, may not work with all column types
+        :type updated_at__gte: datetime
+        :param updated_at__lt: SQL < comparison, may not work with all column types
+        :type updated_at__lt: datetime
+        :param updated_at__lte: SQL <= comparison, may not work with all column types
+        :type updated_at__lte: datetime
+        :param updated_at__in: SQL IN comparison, permits comma-separated values
+        :type updated_at__in: datetime
+        :param updated_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type updated_at__notin: datetime
+        :param updated_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type updated_at__asc: str
+        :param updated_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type updated_at__desc: str
+        :param deleted_at__eq: SQL = comparison
+        :type deleted_at__eq: datetime
+        :param deleted_at__ne: SQL != comparison
+        :type deleted_at__ne: datetime
+        :param deleted_at__gt: SQL > comparison, may not work with all column types
+        :type deleted_at__gt: datetime
+        :param deleted_at__gte: SQL >= comparison, may not work with all column types
+        :type deleted_at__gte: datetime
+        :param deleted_at__lt: SQL < comparison, may not work with all column types
+        :type deleted_at__lt: datetime
+        :param deleted_at__lte: SQL <= comparison, may not work with all column types
+        :type deleted_at__lte: datetime
+        :param deleted_at__in: SQL IN comparison, permits comma-separated values
+        :type deleted_at__in: datetime
+        :param deleted_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type deleted_at__notin: datetime
+        :param deleted_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isnull: str
+        :param deleted_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+        :type deleted_at__isnotnull: str
+        :param deleted_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type deleted_at__asc: str
+        :param deleted_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type deleted_at__desc: str
+        :param camera_id__eq: SQL = comparison
+        :type camera_id__eq: str
+        :param camera_id__ne: SQL != comparison
+        :type camera_id__ne: str
+        :param camera_id__gt: SQL > comparison, may not work with all column types
+        :type camera_id__gt: str
+        :param camera_id__gte: SQL >= comparison, may not work with all column types
+        :type camera_id__gte: str
+        :param camera_id__lt: SQL < comparison, may not work with all column types
+        :type camera_id__lt: str
+        :param camera_id__lte: SQL <= comparison, may not work with all column types
+        :type camera_id__lte: str
+        :param camera_id__in: SQL IN comparison, permits comma-separated values
+        :type camera_id__in: str
+        :param camera_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type camera_id__notin: str
+        :param camera_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type camera_id__asc: str
+        :param camera_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type camera_id__desc: str
+        :param video_id__eq: SQL = comparison
+        :type video_id__eq: str
+        :param video_id__ne: SQL != comparison
+        :type video_id__ne: str
+        :param video_id__gt: SQL > comparison, may not work with all column types
+        :type video_id__gt: str
+        :param video_id__gte: SQL >= comparison, may not work with all column types
+        :type video_id__gte: str
+        :param video_id__lt: SQL < comparison, may not work with all column types
+        :type video_id__lt: str
+        :param video_id__lte: SQL <= comparison, may not work with all column types
+        :type video_id__lte: str
+        :param video_id__in: SQL IN comparison, permits comma-separated values
+        :type video_id__in: str
+        :param video_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type video_id__notin: str
+        :param video_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type video_id__asc: str
+        :param video_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type video_id__desc: str
+        :param class_id__eq: SQL = comparison
+        :type class_id__eq: int
+        :param class_id__ne: SQL != comparison
+        :type class_id__ne: int
+        :param class_id__gt: SQL > comparison, may not work with all column types
+        :type class_id__gt: int
+        :param class_id__gte: SQL >= comparison, may not work with all column types
+        :type class_id__gte: int
+        :param class_id__lt: SQL < comparison, may not work with all column types
+        :type class_id__lt: int
+        :param class_id__lte: SQL <= comparison, may not work with all column types
+        :type class_id__lte: int
+        :param class_id__in: SQL IN comparison, permits comma-separated values
+        :type class_id__in: int
+        :param class_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type class_id__notin: int
+        :param class_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type class_id__asc: str
+        :param class_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type class_id__desc: str
+        :param class_name__eq: SQL = comparison
+        :type class_name__eq: str
+        :param class_name__ne: SQL != comparison
+        :type class_name__ne: str
+        :param class_name__in: SQL IN comparison, permits comma-separated values
+        :type class_name__in: str
+        :param class_name__notin: SQL NOT IN comparison, permits comma-separated values
+        :type class_name__notin: str
+        :param class_name__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__like: str
+        :param class_name__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__notlike: str
+        :param class_name__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__ilike: str
+        :param class_name__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type class_name__notilike: str
+        :param class_name__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type class_name__asc: str
+        :param class_name__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type class_name__desc: str
+        :param started_at__eq: SQL = comparison
+        :type started_at__eq: datetime
+        :param started_at__ne: SQL != comparison
+        :type started_at__ne: datetime
+        :param started_at__gt: SQL > comparison, may not work with all column types
+        :type started_at__gt: datetime
+        :param started_at__gte: SQL >= comparison, may not work with all column types
+        :type started_at__gte: datetime
+        :param started_at__lt: SQL < comparison, may not work with all column types
+        :type started_at__lt: datetime
+        :param started_at__lte: SQL <= comparison, may not work with all column types
+        :type started_at__lte: datetime
+        :param started_at__in: SQL IN comparison, permits comma-separated values
+        :type started_at__in: datetime
+        :param started_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type started_at__notin: datetime
+        :param started_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type started_at__asc: str
+        :param started_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type started_at__desc: str
+        :param ended_at__eq: SQL = comparison
+        :type ended_at__eq: datetime
+        :param ended_at__ne: SQL != comparison
+        :type ended_at__ne: datetime
+        :param ended_at__gt: SQL > comparison, may not work with all column types
+        :type ended_at__gt: datetime
+        :param ended_at__gte: SQL >= comparison, may not work with all column types
+        :type ended_at__gte: datetime
+        :param ended_at__lt: SQL < comparison, may not work with all column types
+        :type ended_at__lt: datetime
+        :param ended_at__lte: SQL <= comparison, may not work with all column types
+        :type ended_at__lte: datetime
+        :param ended_at__in: SQL IN comparison, permits comma-separated values
+        :type ended_at__in: datetime
+        :param ended_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type ended_at__notin: datetime
+        :param ended_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type ended_at__asc: str
+        :param ended_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type ended_at__desc: str
+        :param frame_count__eq: SQL = comparison
+        :type frame_count__eq: int
+        :param frame_count__ne: SQL != comparison
+        :type frame_count__ne: int
+        :param frame_count__gt: SQL > comparison, may not work with all column types
+        :type frame_count__gt: int
+        :param frame_count__gte: SQL >= comparison, may not work with all column types
+        :type frame_count__gte: int
+        :param frame_count__lt: SQL < comparison, may not work with all column types
+        :type frame_count__lt: int
+        :param frame_count__lte: SQL <= comparison, may not work with all column types
+        :type frame_count__lte: int
+        :param frame_count__in: SQL IN comparison, permits comma-separated values
+        :type frame_count__in: int
+        :param frame_count__notin: SQL NOT IN comparison, permits comma-separated values
+        :type frame_count__notin: int
+        :param frame_count__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type frame_count__asc: str
+        :param frame_count__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type frame_count__desc: str
+        :param mean_score__eq: SQL = comparison
+        :type mean_score__eq: float
+        :param mean_score__ne: SQL != comparison
+        :type mean_score__ne: float
+        :param mean_score__gt: SQL > comparison, may not work with all column types
+        :type mean_score__gt: float
+        :param mean_score__gte: SQL >= comparison, may not work with all column types
+        :type mean_score__gte: float
+        :param mean_score__lt: SQL < comparison, may not work with all column types
+        :type mean_score__lt: float
+        :param mean_score__lte: SQL <= comparison, may not work with all column types
+        :type mean_score__lte: float
+        :param mean_score__in: SQL IN comparison, permits comma-separated values
+        :type mean_score__in: float
+        :param mean_score__notin: SQL NOT IN comparison, permits comma-separated values
+        :type mean_score__notin: float
+        :param mean_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type mean_score__asc: str
+        :param mean_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type mean_score__desc: str
+        :param max_score__eq: SQL = comparison
+        :type max_score__eq: float
+        :param max_score__ne: SQL != comparison
+        :type max_score__ne: float
+        :param max_score__gt: SQL > comparison, may not work with all column types
+        :type max_score__gt: float
+        :param max_score__gte: SQL >= comparison, may not work with all column types
+        :type max_score__gte: float
+        :param max_score__lt: SQL < comparison, may not work with all column types
+        :type max_score__lt: float
+        :param max_score__lte: SQL <= comparison, may not work with all column types
+        :type max_score__lte: float
+        :param max_score__in: SQL IN comparison, permits comma-separated values
+        :type max_score__in: float
+        :param max_score__notin: SQL NOT IN comparison, permits comma-separated values
+        :type max_score__notin: float
+        :param max_score__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type max_score__asc: str
+        :param max_score__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type max_score__desc: str
+        :param trajectory__contains: SQL @> comparison
+        :type trajectory__contains: object
+        :param trajectory__notcontains: SQL NOT @> comparison
+        :type trajectory__notcontains: object
+        :param trajectory__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type trajectory__asc: str
+        :param trajectory__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type trajectory__desc: str
+        :param is_static__eq: SQL = comparison
+        :type is_static__eq: bool
+        :param is_static__ne: SQL != comparison
+        :type is_static__ne: bool
+        :param is_static__isfalse: SQL IS false comparison, value is ignored (presence of key is sufficient)
+        :type is_static__isfalse: str
+        :param is_static__istrue: SQL IS true comparison, value is ignored (presence of key is sufficient)
+        :type is_static__istrue: str
+        :param is_static__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type is_static__asc: str
+        :param is_static__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type is_static__desc: str
+        :param status__eq: SQL = comparison
+        :type status__eq: str
+        :param status__ne: SQL != comparison
+        :type status__ne: str
+        :param status__in: SQL IN comparison, permits comma-separated values
+        :type status__in: str
+        :param status__notin: SQL NOT IN comparison, permits comma-separated values
+        :type status__notin: str
+        :param status__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__like: str
+        :param status__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__notlike: str
+        :param status__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__ilike: str
+        :param status__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type status__notilike: str
+        :param status__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type status__asc: str
+        :param status__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type status__desc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -3675,247 +2487,7 @@ class TrackApi:
             depth=depth,
             camera__load=camera__load,
             video__load=video__load,
-            referenced_by_detection__load=referenced_by_detection__load,
-            id__eq=id__eq,
-            id__ne=id__ne,
-            id__gt=id__gt,
-            id__gte=id__gte,
-            id__lt=id__lt,
-            id__lte=id__lte,
-            id__in=id__in,
-            id__notin=id__notin,
-            id__contains=id__contains,
-            id__notcontains=id__notcontains,
-            id__like=id__like,
-            id__notlike=id__notlike,
-            id__ilike=id__ilike,
-            id__notilike=id__notilike,
-            id__desc=id__desc,
-            id__asc=id__asc,
-            created_at__eq=created_at__eq,
-            created_at__ne=created_at__ne,
-            created_at__gt=created_at__gt,
-            created_at__gte=created_at__gte,
-            created_at__lt=created_at__lt,
-            created_at__lte=created_at__lte,
-            created_at__in=created_at__in,
-            created_at__notin=created_at__notin,
-            created_at__contains=created_at__contains,
-            created_at__notcontains=created_at__notcontains,
-            created_at__like=created_at__like,
-            created_at__notlike=created_at__notlike,
-            created_at__ilike=created_at__ilike,
-            created_at__notilike=created_at__notilike,
-            created_at__desc=created_at__desc,
-            created_at__asc=created_at__asc,
-            updated_at__eq=updated_at__eq,
-            updated_at__ne=updated_at__ne,
-            updated_at__gt=updated_at__gt,
-            updated_at__gte=updated_at__gte,
-            updated_at__lt=updated_at__lt,
-            updated_at__lte=updated_at__lte,
-            updated_at__in=updated_at__in,
-            updated_at__notin=updated_at__notin,
-            updated_at__contains=updated_at__contains,
-            updated_at__notcontains=updated_at__notcontains,
-            updated_at__like=updated_at__like,
-            updated_at__notlike=updated_at__notlike,
-            updated_at__ilike=updated_at__ilike,
-            updated_at__notilike=updated_at__notilike,
-            updated_at__desc=updated_at__desc,
-            updated_at__asc=updated_at__asc,
-            deleted_at__eq=deleted_at__eq,
-            deleted_at__ne=deleted_at__ne,
-            deleted_at__gt=deleted_at__gt,
-            deleted_at__gte=deleted_at__gte,
-            deleted_at__lt=deleted_at__lt,
-            deleted_at__lte=deleted_at__lte,
-            deleted_at__in=deleted_at__in,
-            deleted_at__notin=deleted_at__notin,
-            deleted_at__contains=deleted_at__contains,
-            deleted_at__notcontains=deleted_at__notcontains,
-            deleted_at__like=deleted_at__like,
-            deleted_at__notlike=deleted_at__notlike,
-            deleted_at__ilike=deleted_at__ilike,
-            deleted_at__notilike=deleted_at__notilike,
-            deleted_at__desc=deleted_at__desc,
-            deleted_at__asc=deleted_at__asc,
-            camera_id__eq=camera_id__eq,
-            camera_id__ne=camera_id__ne,
-            camera_id__gt=camera_id__gt,
-            camera_id__gte=camera_id__gte,
-            camera_id__lt=camera_id__lt,
-            camera_id__lte=camera_id__lte,
-            camera_id__in=camera_id__in,
-            camera_id__notin=camera_id__notin,
-            camera_id__contains=camera_id__contains,
-            camera_id__notcontains=camera_id__notcontains,
-            camera_id__like=camera_id__like,
-            camera_id__notlike=camera_id__notlike,
-            camera_id__ilike=camera_id__ilike,
-            camera_id__notilike=camera_id__notilike,
-            camera_id__desc=camera_id__desc,
-            camera_id__asc=camera_id__asc,
-            camera_id_object__contains=camera_id_object__contains,
-            camera_id_object__notcontains=camera_id_object__notcontains,
-            camera_id_object__desc=camera_id_object__desc,
-            camera_id_object__asc=camera_id_object__asc,
-            video_id__eq=video_id__eq,
-            video_id__ne=video_id__ne,
-            video_id__gt=video_id__gt,
-            video_id__gte=video_id__gte,
-            video_id__lt=video_id__lt,
-            video_id__lte=video_id__lte,
-            video_id__in=video_id__in,
-            video_id__notin=video_id__notin,
-            video_id__contains=video_id__contains,
-            video_id__notcontains=video_id__notcontains,
-            video_id__like=video_id__like,
-            video_id__notlike=video_id__notlike,
-            video_id__ilike=video_id__ilike,
-            video_id__notilike=video_id__notilike,
-            video_id__desc=video_id__desc,
-            video_id__asc=video_id__asc,
-            video_id_object__contains=video_id_object__contains,
-            video_id_object__notcontains=video_id_object__notcontains,
-            video_id_object__desc=video_id_object__desc,
-            video_id_object__asc=video_id_object__asc,
-            class_id__eq=class_id__eq,
-            class_id__ne=class_id__ne,
-            class_id__gt=class_id__gt,
-            class_id__gte=class_id__gte,
-            class_id__lt=class_id__lt,
-            class_id__lte=class_id__lte,
-            class_id__in=class_id__in,
-            class_id__notin=class_id__notin,
-            class_id__contains=class_id__contains,
-            class_id__notcontains=class_id__notcontains,
-            class_id__desc=class_id__desc,
-            class_id__asc=class_id__asc,
-            class_name__eq=class_name__eq,
-            class_name__ne=class_name__ne,
-            class_name__gt=class_name__gt,
-            class_name__gte=class_name__gte,
-            class_name__lt=class_name__lt,
-            class_name__lte=class_name__lte,
-            class_name__in=class_name__in,
-            class_name__notin=class_name__notin,
-            class_name__contains=class_name__contains,
-            class_name__notcontains=class_name__notcontains,
-            class_name__like=class_name__like,
-            class_name__notlike=class_name__notlike,
-            class_name__ilike=class_name__ilike,
-            class_name__notilike=class_name__notilike,
-            class_name__desc=class_name__desc,
-            class_name__asc=class_name__asc,
-            started_at__eq=started_at__eq,
-            started_at__ne=started_at__ne,
-            started_at__gt=started_at__gt,
-            started_at__gte=started_at__gte,
-            started_at__lt=started_at__lt,
-            started_at__lte=started_at__lte,
-            started_at__in=started_at__in,
-            started_at__notin=started_at__notin,
-            started_at__contains=started_at__contains,
-            started_at__notcontains=started_at__notcontains,
-            started_at__like=started_at__like,
-            started_at__notlike=started_at__notlike,
-            started_at__ilike=started_at__ilike,
-            started_at__notilike=started_at__notilike,
-            started_at__desc=started_at__desc,
-            started_at__asc=started_at__asc,
-            ended_at__eq=ended_at__eq,
-            ended_at__ne=ended_at__ne,
-            ended_at__gt=ended_at__gt,
-            ended_at__gte=ended_at__gte,
-            ended_at__lt=ended_at__lt,
-            ended_at__lte=ended_at__lte,
-            ended_at__in=ended_at__in,
-            ended_at__notin=ended_at__notin,
-            ended_at__contains=ended_at__contains,
-            ended_at__notcontains=ended_at__notcontains,
-            ended_at__like=ended_at__like,
-            ended_at__notlike=ended_at__notlike,
-            ended_at__ilike=ended_at__ilike,
-            ended_at__notilike=ended_at__notilike,
-            ended_at__desc=ended_at__desc,
-            ended_at__asc=ended_at__asc,
-            frame_count__eq=frame_count__eq,
-            frame_count__ne=frame_count__ne,
-            frame_count__gt=frame_count__gt,
-            frame_count__gte=frame_count__gte,
-            frame_count__lt=frame_count__lt,
-            frame_count__lte=frame_count__lte,
-            frame_count__in=frame_count__in,
-            frame_count__notin=frame_count__notin,
-            frame_count__contains=frame_count__contains,
-            frame_count__notcontains=frame_count__notcontains,
-            frame_count__desc=frame_count__desc,
-            frame_count__asc=frame_count__asc,
-            mean_score__eq=mean_score__eq,
-            mean_score__ne=mean_score__ne,
-            mean_score__gt=mean_score__gt,
-            mean_score__gte=mean_score__gte,
-            mean_score__lt=mean_score__lt,
-            mean_score__lte=mean_score__lte,
-            mean_score__in=mean_score__in,
-            mean_score__notin=mean_score__notin,
-            mean_score__contains=mean_score__contains,
-            mean_score__notcontains=mean_score__notcontains,
-            mean_score__desc=mean_score__desc,
-            mean_score__asc=mean_score__asc,
-            max_score__eq=max_score__eq,
-            max_score__ne=max_score__ne,
-            max_score__gt=max_score__gt,
-            max_score__gte=max_score__gte,
-            max_score__lt=max_score__lt,
-            max_score__lte=max_score__lte,
-            max_score__in=max_score__in,
-            max_score__notin=max_score__notin,
-            max_score__contains=max_score__contains,
-            max_score__notcontains=max_score__notcontains,
-            max_score__desc=max_score__desc,
-            max_score__asc=max_score__asc,
-            centroid__contains=centroid__contains,
-            centroid__notcontains=centroid__notcontains,
-            centroid__desc=centroid__desc,
-            centroid__asc=centroid__asc,
-            bounding_box__contains=bounding_box__contains,
-            bounding_box__notcontains=bounding_box__notcontains,
-            bounding_box__desc=bounding_box__desc,
-            bounding_box__asc=bounding_box__asc,
-            trajectory__contains=trajectory__contains,
-            trajectory__notcontains=trajectory__notcontains,
-            trajectory__desc=trajectory__desc,
-            trajectory__asc=trajectory__asc,
-            is_static__eq=is_static__eq,
-            is_static__ne=is_static__ne,
-            is_static__gt=is_static__gt,
-            is_static__gte=is_static__gte,
-            is_static__lt=is_static__lt,
-            is_static__lte=is_static__lte,
-            is_static__in=is_static__in,
-            is_static__notin=is_static__notin,
-            is_static__contains=is_static__contains,
-            is_static__notcontains=is_static__notcontains,
-            is_static__desc=is_static__desc,
-            is_static__asc=is_static__asc,
-            status__eq=status__eq,
-            status__ne=status__ne,
-            status__gt=status__gt,
-            status__gte=status__gte,
-            status__lt=status__lt,
-            status__lte=status__lte,
-            status__in=status__in,
-            status__notin=status__notin,
-            status__contains=status__contains,
-            status__notcontains=status__notcontains,
-            status__like=status__like,
-            status__notlike=status__notlike,
-            status__ilike=status__ilike,
-            status__notilike=status__notilike,
-            status__desc=status__desc,
-            status__asc=status__asc,
+            referenced_by_detection_track_id__load=referenced_by_detection_track_id__load,
             key__eq=key__eq,
             key__ne=key__ne,
             key__gt=key__gt,
@@ -3924,18 +2496,150 @@ class TrackApi:
             key__lte=key__lte,
             key__in=key__in,
             key__notin=key__notin,
-            key__contains=key__contains,
-            key__notcontains=key__notcontains,
-            key__like=key__like,
-            key__notlike=key__notlike,
-            key__ilike=key__ilike,
-            key__notilike=key__notilike,
-            key__desc=key__desc,
             key__asc=key__asc,
-            referenced_by_detection_track_id_objects__contains=referenced_by_detection_track_id_objects__contains,
-            referenced_by_detection_track_id_objects__notcontains=referenced_by_detection_track_id_objects__notcontains,
-            referenced_by_detection_track_id_objects__desc=referenced_by_detection_track_id_objects__desc,
-            referenced_by_detection_track_id_objects__asc=referenced_by_detection_track_id_objects__asc,
+            key__desc=key__desc,
+            created_at__eq=created_at__eq,
+            created_at__ne=created_at__ne,
+            created_at__gt=created_at__gt,
+            created_at__gte=created_at__gte,
+            created_at__lt=created_at__lt,
+            created_at__lte=created_at__lte,
+            created_at__in=created_at__in,
+            created_at__notin=created_at__notin,
+            created_at__asc=created_at__asc,
+            created_at__desc=created_at__desc,
+            updated_at__eq=updated_at__eq,
+            updated_at__ne=updated_at__ne,
+            updated_at__gt=updated_at__gt,
+            updated_at__gte=updated_at__gte,
+            updated_at__lt=updated_at__lt,
+            updated_at__lte=updated_at__lte,
+            updated_at__in=updated_at__in,
+            updated_at__notin=updated_at__notin,
+            updated_at__asc=updated_at__asc,
+            updated_at__desc=updated_at__desc,
+            deleted_at__eq=deleted_at__eq,
+            deleted_at__ne=deleted_at__ne,
+            deleted_at__gt=deleted_at__gt,
+            deleted_at__gte=deleted_at__gte,
+            deleted_at__lt=deleted_at__lt,
+            deleted_at__lte=deleted_at__lte,
+            deleted_at__in=deleted_at__in,
+            deleted_at__notin=deleted_at__notin,
+            deleted_at__isnull=deleted_at__isnull,
+            deleted_at__isnotnull=deleted_at__isnotnull,
+            deleted_at__asc=deleted_at__asc,
+            deleted_at__desc=deleted_at__desc,
+            camera_id__eq=camera_id__eq,
+            camera_id__ne=camera_id__ne,
+            camera_id__gt=camera_id__gt,
+            camera_id__gte=camera_id__gte,
+            camera_id__lt=camera_id__lt,
+            camera_id__lte=camera_id__lte,
+            camera_id__in=camera_id__in,
+            camera_id__notin=camera_id__notin,
+            camera_id__asc=camera_id__asc,
+            camera_id__desc=camera_id__desc,
+            video_id__eq=video_id__eq,
+            video_id__ne=video_id__ne,
+            video_id__gt=video_id__gt,
+            video_id__gte=video_id__gte,
+            video_id__lt=video_id__lt,
+            video_id__lte=video_id__lte,
+            video_id__in=video_id__in,
+            video_id__notin=video_id__notin,
+            video_id__asc=video_id__asc,
+            video_id__desc=video_id__desc,
+            class_id__eq=class_id__eq,
+            class_id__ne=class_id__ne,
+            class_id__gt=class_id__gt,
+            class_id__gte=class_id__gte,
+            class_id__lt=class_id__lt,
+            class_id__lte=class_id__lte,
+            class_id__in=class_id__in,
+            class_id__notin=class_id__notin,
+            class_id__asc=class_id__asc,
+            class_id__desc=class_id__desc,
+            class_name__eq=class_name__eq,
+            class_name__ne=class_name__ne,
+            class_name__in=class_name__in,
+            class_name__notin=class_name__notin,
+            class_name__like=class_name__like,
+            class_name__notlike=class_name__notlike,
+            class_name__ilike=class_name__ilike,
+            class_name__notilike=class_name__notilike,
+            class_name__asc=class_name__asc,
+            class_name__desc=class_name__desc,
+            started_at__eq=started_at__eq,
+            started_at__ne=started_at__ne,
+            started_at__gt=started_at__gt,
+            started_at__gte=started_at__gte,
+            started_at__lt=started_at__lt,
+            started_at__lte=started_at__lte,
+            started_at__in=started_at__in,
+            started_at__notin=started_at__notin,
+            started_at__asc=started_at__asc,
+            started_at__desc=started_at__desc,
+            ended_at__eq=ended_at__eq,
+            ended_at__ne=ended_at__ne,
+            ended_at__gt=ended_at__gt,
+            ended_at__gte=ended_at__gte,
+            ended_at__lt=ended_at__lt,
+            ended_at__lte=ended_at__lte,
+            ended_at__in=ended_at__in,
+            ended_at__notin=ended_at__notin,
+            ended_at__asc=ended_at__asc,
+            ended_at__desc=ended_at__desc,
+            frame_count__eq=frame_count__eq,
+            frame_count__ne=frame_count__ne,
+            frame_count__gt=frame_count__gt,
+            frame_count__gte=frame_count__gte,
+            frame_count__lt=frame_count__lt,
+            frame_count__lte=frame_count__lte,
+            frame_count__in=frame_count__in,
+            frame_count__notin=frame_count__notin,
+            frame_count__asc=frame_count__asc,
+            frame_count__desc=frame_count__desc,
+            mean_score__eq=mean_score__eq,
+            mean_score__ne=mean_score__ne,
+            mean_score__gt=mean_score__gt,
+            mean_score__gte=mean_score__gte,
+            mean_score__lt=mean_score__lt,
+            mean_score__lte=mean_score__lte,
+            mean_score__in=mean_score__in,
+            mean_score__notin=mean_score__notin,
+            mean_score__asc=mean_score__asc,
+            mean_score__desc=mean_score__desc,
+            max_score__eq=max_score__eq,
+            max_score__ne=max_score__ne,
+            max_score__gt=max_score__gt,
+            max_score__gte=max_score__gte,
+            max_score__lt=max_score__lt,
+            max_score__lte=max_score__lte,
+            max_score__in=max_score__in,
+            max_score__notin=max_score__notin,
+            max_score__asc=max_score__asc,
+            max_score__desc=max_score__desc,
+            trajectory__contains=trajectory__contains,
+            trajectory__notcontains=trajectory__notcontains,
+            trajectory__asc=trajectory__asc,
+            trajectory__desc=trajectory__desc,
+            is_static__eq=is_static__eq,
+            is_static__ne=is_static__ne,
+            is_static__isfalse=is_static__isfalse,
+            is_static__istrue=is_static__istrue,
+            is_static__asc=is_static__asc,
+            is_static__desc=is_static__desc,
+            status__eq=status__eq,
+            status__ne=status__ne,
+            status__in=status__in,
+            status__notin=status__notin,
+            status__like=status__like,
+            status__notlike=status__notlike,
+            status__ilike=status__ilike,
+            status__notilike=status__notilike,
+            status__asc=status__asc,
+            status__desc=status__desc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3959,247 +2663,7 @@ class TrackApi:
         depth,
         camera__load,
         video__load,
-        referenced_by_detection__load,
-        id__eq,
-        id__ne,
-        id__gt,
-        id__gte,
-        id__lt,
-        id__lte,
-        id__in,
-        id__notin,
-        id__contains,
-        id__notcontains,
-        id__like,
-        id__notlike,
-        id__ilike,
-        id__notilike,
-        id__desc,
-        id__asc,
-        created_at__eq,
-        created_at__ne,
-        created_at__gt,
-        created_at__gte,
-        created_at__lt,
-        created_at__lte,
-        created_at__in,
-        created_at__notin,
-        created_at__contains,
-        created_at__notcontains,
-        created_at__like,
-        created_at__notlike,
-        created_at__ilike,
-        created_at__notilike,
-        created_at__desc,
-        created_at__asc,
-        updated_at__eq,
-        updated_at__ne,
-        updated_at__gt,
-        updated_at__gte,
-        updated_at__lt,
-        updated_at__lte,
-        updated_at__in,
-        updated_at__notin,
-        updated_at__contains,
-        updated_at__notcontains,
-        updated_at__like,
-        updated_at__notlike,
-        updated_at__ilike,
-        updated_at__notilike,
-        updated_at__desc,
-        updated_at__asc,
-        deleted_at__eq,
-        deleted_at__ne,
-        deleted_at__gt,
-        deleted_at__gte,
-        deleted_at__lt,
-        deleted_at__lte,
-        deleted_at__in,
-        deleted_at__notin,
-        deleted_at__contains,
-        deleted_at__notcontains,
-        deleted_at__like,
-        deleted_at__notlike,
-        deleted_at__ilike,
-        deleted_at__notilike,
-        deleted_at__desc,
-        deleted_at__asc,
-        camera_id__eq,
-        camera_id__ne,
-        camera_id__gt,
-        camera_id__gte,
-        camera_id__lt,
-        camera_id__lte,
-        camera_id__in,
-        camera_id__notin,
-        camera_id__contains,
-        camera_id__notcontains,
-        camera_id__like,
-        camera_id__notlike,
-        camera_id__ilike,
-        camera_id__notilike,
-        camera_id__desc,
-        camera_id__asc,
-        camera_id_object__contains,
-        camera_id_object__notcontains,
-        camera_id_object__desc,
-        camera_id_object__asc,
-        video_id__eq,
-        video_id__ne,
-        video_id__gt,
-        video_id__gte,
-        video_id__lt,
-        video_id__lte,
-        video_id__in,
-        video_id__notin,
-        video_id__contains,
-        video_id__notcontains,
-        video_id__like,
-        video_id__notlike,
-        video_id__ilike,
-        video_id__notilike,
-        video_id__desc,
-        video_id__asc,
-        video_id_object__contains,
-        video_id_object__notcontains,
-        video_id_object__desc,
-        video_id_object__asc,
-        class_id__eq,
-        class_id__ne,
-        class_id__gt,
-        class_id__gte,
-        class_id__lt,
-        class_id__lte,
-        class_id__in,
-        class_id__notin,
-        class_id__contains,
-        class_id__notcontains,
-        class_id__desc,
-        class_id__asc,
-        class_name__eq,
-        class_name__ne,
-        class_name__gt,
-        class_name__gte,
-        class_name__lt,
-        class_name__lte,
-        class_name__in,
-        class_name__notin,
-        class_name__contains,
-        class_name__notcontains,
-        class_name__like,
-        class_name__notlike,
-        class_name__ilike,
-        class_name__notilike,
-        class_name__desc,
-        class_name__asc,
-        started_at__eq,
-        started_at__ne,
-        started_at__gt,
-        started_at__gte,
-        started_at__lt,
-        started_at__lte,
-        started_at__in,
-        started_at__notin,
-        started_at__contains,
-        started_at__notcontains,
-        started_at__like,
-        started_at__notlike,
-        started_at__ilike,
-        started_at__notilike,
-        started_at__desc,
-        started_at__asc,
-        ended_at__eq,
-        ended_at__ne,
-        ended_at__gt,
-        ended_at__gte,
-        ended_at__lt,
-        ended_at__lte,
-        ended_at__in,
-        ended_at__notin,
-        ended_at__contains,
-        ended_at__notcontains,
-        ended_at__like,
-        ended_at__notlike,
-        ended_at__ilike,
-        ended_at__notilike,
-        ended_at__desc,
-        ended_at__asc,
-        frame_count__eq,
-        frame_count__ne,
-        frame_count__gt,
-        frame_count__gte,
-        frame_count__lt,
-        frame_count__lte,
-        frame_count__in,
-        frame_count__notin,
-        frame_count__contains,
-        frame_count__notcontains,
-        frame_count__desc,
-        frame_count__asc,
-        mean_score__eq,
-        mean_score__ne,
-        mean_score__gt,
-        mean_score__gte,
-        mean_score__lt,
-        mean_score__lte,
-        mean_score__in,
-        mean_score__notin,
-        mean_score__contains,
-        mean_score__notcontains,
-        mean_score__desc,
-        mean_score__asc,
-        max_score__eq,
-        max_score__ne,
-        max_score__gt,
-        max_score__gte,
-        max_score__lt,
-        max_score__lte,
-        max_score__in,
-        max_score__notin,
-        max_score__contains,
-        max_score__notcontains,
-        max_score__desc,
-        max_score__asc,
-        centroid__contains,
-        centroid__notcontains,
-        centroid__desc,
-        centroid__asc,
-        bounding_box__contains,
-        bounding_box__notcontains,
-        bounding_box__desc,
-        bounding_box__asc,
-        trajectory__contains,
-        trajectory__notcontains,
-        trajectory__desc,
-        trajectory__asc,
-        is_static__eq,
-        is_static__ne,
-        is_static__gt,
-        is_static__gte,
-        is_static__lt,
-        is_static__lte,
-        is_static__in,
-        is_static__notin,
-        is_static__contains,
-        is_static__notcontains,
-        is_static__desc,
-        is_static__asc,
-        status__eq,
-        status__ne,
-        status__gt,
-        status__gte,
-        status__lt,
-        status__lte,
-        status__in,
-        status__notin,
-        status__contains,
-        status__notcontains,
-        status__like,
-        status__notlike,
-        status__ilike,
-        status__notilike,
-        status__desc,
-        status__asc,
+        referenced_by_detection_track_id__load,
         key__eq,
         key__ne,
         key__gt,
@@ -4208,18 +2672,150 @@ class TrackApi:
         key__lte,
         key__in,
         key__notin,
-        key__contains,
-        key__notcontains,
-        key__like,
-        key__notlike,
-        key__ilike,
-        key__notilike,
-        key__desc,
         key__asc,
-        referenced_by_detection_track_id_objects__contains,
-        referenced_by_detection_track_id_objects__notcontains,
-        referenced_by_detection_track_id_objects__desc,
-        referenced_by_detection_track_id_objects__asc,
+        key__desc,
+        created_at__eq,
+        created_at__ne,
+        created_at__gt,
+        created_at__gte,
+        created_at__lt,
+        created_at__lte,
+        created_at__in,
+        created_at__notin,
+        created_at__asc,
+        created_at__desc,
+        updated_at__eq,
+        updated_at__ne,
+        updated_at__gt,
+        updated_at__gte,
+        updated_at__lt,
+        updated_at__lte,
+        updated_at__in,
+        updated_at__notin,
+        updated_at__asc,
+        updated_at__desc,
+        deleted_at__eq,
+        deleted_at__ne,
+        deleted_at__gt,
+        deleted_at__gte,
+        deleted_at__lt,
+        deleted_at__lte,
+        deleted_at__in,
+        deleted_at__notin,
+        deleted_at__isnull,
+        deleted_at__isnotnull,
+        deleted_at__asc,
+        deleted_at__desc,
+        camera_id__eq,
+        camera_id__ne,
+        camera_id__gt,
+        camera_id__gte,
+        camera_id__lt,
+        camera_id__lte,
+        camera_id__in,
+        camera_id__notin,
+        camera_id__asc,
+        camera_id__desc,
+        video_id__eq,
+        video_id__ne,
+        video_id__gt,
+        video_id__gte,
+        video_id__lt,
+        video_id__lte,
+        video_id__in,
+        video_id__notin,
+        video_id__asc,
+        video_id__desc,
+        class_id__eq,
+        class_id__ne,
+        class_id__gt,
+        class_id__gte,
+        class_id__lt,
+        class_id__lte,
+        class_id__in,
+        class_id__notin,
+        class_id__asc,
+        class_id__desc,
+        class_name__eq,
+        class_name__ne,
+        class_name__in,
+        class_name__notin,
+        class_name__like,
+        class_name__notlike,
+        class_name__ilike,
+        class_name__notilike,
+        class_name__asc,
+        class_name__desc,
+        started_at__eq,
+        started_at__ne,
+        started_at__gt,
+        started_at__gte,
+        started_at__lt,
+        started_at__lte,
+        started_at__in,
+        started_at__notin,
+        started_at__asc,
+        started_at__desc,
+        ended_at__eq,
+        ended_at__ne,
+        ended_at__gt,
+        ended_at__gte,
+        ended_at__lt,
+        ended_at__lte,
+        ended_at__in,
+        ended_at__notin,
+        ended_at__asc,
+        ended_at__desc,
+        frame_count__eq,
+        frame_count__ne,
+        frame_count__gt,
+        frame_count__gte,
+        frame_count__lt,
+        frame_count__lte,
+        frame_count__in,
+        frame_count__notin,
+        frame_count__asc,
+        frame_count__desc,
+        mean_score__eq,
+        mean_score__ne,
+        mean_score__gt,
+        mean_score__gte,
+        mean_score__lt,
+        mean_score__lte,
+        mean_score__in,
+        mean_score__notin,
+        mean_score__asc,
+        mean_score__desc,
+        max_score__eq,
+        max_score__ne,
+        max_score__gt,
+        max_score__gte,
+        max_score__lt,
+        max_score__lte,
+        max_score__in,
+        max_score__notin,
+        max_score__asc,
+        max_score__desc,
+        trajectory__contains,
+        trajectory__notcontains,
+        trajectory__asc,
+        trajectory__desc,
+        is_static__eq,
+        is_static__ne,
+        is_static__isfalse,
+        is_static__istrue,
+        is_static__asc,
+        is_static__desc,
+        status__eq,
+        status__ne,
+        status__in,
+        status__notin,
+        status__like,
+        status__notlike,
+        status__ilike,
+        status__notilike,
+        status__asc,
+        status__desc,
         _request_auth,
         _content_type,
         _headers,
@@ -4241,93 +2837,69 @@ class TrackApi:
         # process the path parameters
         # process the query parameters
         if limit is not None:
-
+            
             _query_params.append(('limit', limit))
-
+            
         if offset is not None:
-
+            
             _query_params.append(('offset', offset))
-
+            
         if depth is not None:
-
+            
             _query_params.append(('depth', depth))
-
+            
         if camera__load is not None:
-
+            
             _query_params.append(('camera__load', camera__load))
-
+            
         if video__load is not None:
-
+            
             _query_params.append(('video__load', video__load))
-
-        if referenced_by_detection__load is not None:
-
-            _query_params.append(('referenced_by_detection__load', referenced_by_detection__load))
-
-        if id__eq is not None:
-
-            _query_params.append(('id__eq', id__eq))
-
-        if id__ne is not None:
-
-            _query_params.append(('id__ne', id__ne))
-
-        if id__gt is not None:
-
-            _query_params.append(('id__gt', id__gt))
-
-        if id__gte is not None:
-
-            _query_params.append(('id__gte', id__gte))
-
-        if id__lt is not None:
-
-            _query_params.append(('id__lt', id__lt))
-
-        if id__lte is not None:
-
-            _query_params.append(('id__lte', id__lte))
-
-        if id__in is not None:
-
-            _query_params.append(('id__in', id__in))
-
-        if id__notin is not None:
-
-            _query_params.append(('id__notin', id__notin))
-
-        if id__contains is not None:
-
-            _query_params.append(('id__contains', id__contains))
-
-        if id__notcontains is not None:
-
-            _query_params.append(('id__notcontains', id__notcontains))
-
-        if id__like is not None:
-
-            _query_params.append(('id__like', id__like))
-
-        if id__notlike is not None:
-
-            _query_params.append(('id__notlike', id__notlike))
-
-        if id__ilike is not None:
-
-            _query_params.append(('id__ilike', id__ilike))
-
-        if id__notilike is not None:
-
-            _query_params.append(('id__notilike', id__notilike))
-
-        if id__desc is not None:
-
-            _query_params.append(('id__desc', id__desc))
-
-        if id__asc is not None:
-
-            _query_params.append(('id__asc', id__asc))
-
+            
+        if referenced_by_detection_track_id__load is not None:
+            
+            _query_params.append(('referenced_by_Detection_TrackID__load', referenced_by_detection_track_id__load))
+            
+        if key__eq is not None:
+            
+            _query_params.append(('key__eq', key__eq))
+            
+        if key__ne is not None:
+            
+            _query_params.append(('key__ne', key__ne))
+            
+        if key__gt is not None:
+            
+            _query_params.append(('key__gt', key__gt))
+            
+        if key__gte is not None:
+            
+            _query_params.append(('key__gte', key__gte))
+            
+        if key__lt is not None:
+            
+            _query_params.append(('key__lt', key__lt))
+            
+        if key__lte is not None:
+            
+            _query_params.append(('key__lte', key__lte))
+            
+        if key__in is not None:
+            
+            _query_params.append(('key__in', key__in))
+            
+        if key__notin is not None:
+            
+            _query_params.append(('key__notin', key__notin))
+            
+        if key__asc is not None:
+            
+            _query_params.append(('key__asc', key__asc))
+            
+        if key__desc is not None:
+            
+            _query_params.append(('key__desc', key__desc))
+            
         if created_at__eq is not None:
             if isinstance(created_at__eq, datetime):
                 _query_params.append(
@@ -4340,7 +2912,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__eq', created_at__eq))
-
+            
         if created_at__ne is not None:
             if isinstance(created_at__ne, datetime):
                 _query_params.append(
@@ -4353,7 +2925,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__ne', created_at__ne))
-
+            
         if created_at__gt is not None:
             if isinstance(created_at__gt, datetime):
                 _query_params.append(
@@ -4366,7 +2938,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__gt', created_at__gt))
-
+            
         if created_at__gte is not None:
             if isinstance(created_at__gte, datetime):
                 _query_params.append(
@@ -4379,7 +2951,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__gte', created_at__gte))
-
+            
         if created_at__lt is not None:
             if isinstance(created_at__lt, datetime):
                 _query_params.append(
@@ -4392,7 +2964,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__lt', created_at__lt))
-
+            
         if created_at__lte is not None:
             if isinstance(created_at__lte, datetime):
                 _query_params.append(
@@ -4405,7 +2977,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__lte', created_at__lte))
-
+            
         if created_at__in is not None:
             if isinstance(created_at__in, datetime):
                 _query_params.append(
@@ -4418,7 +2990,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__in', created_at__in))
-
+            
         if created_at__notin is not None:
             if isinstance(created_at__notin, datetime):
                 _query_params.append(
@@ -4431,93 +3003,15 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('created_at__notin', created_at__notin))
-
-        if created_at__contains is not None:
-            if isinstance(created_at__contains, datetime):
-                _query_params.append(
-                    (
-                        'created_at__contains',
-                        created_at__contains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('created_at__contains', created_at__contains))
-
-        if created_at__notcontains is not None:
-            if isinstance(created_at__notcontains, datetime):
-                _query_params.append(
-                    (
-                        'created_at__notcontains',
-                        created_at__notcontains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('created_at__notcontains', created_at__notcontains))
-
-        if created_at__like is not None:
-            if isinstance(created_at__like, datetime):
-                _query_params.append(
-                    (
-                        'created_at__like',
-                        created_at__like.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('created_at__like', created_at__like))
-
-        if created_at__notlike is not None:
-            if isinstance(created_at__notlike, datetime):
-                _query_params.append(
-                    (
-                        'created_at__notlike',
-                        created_at__notlike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('created_at__notlike', created_at__notlike))
-
-        if created_at__ilike is not None:
-            if isinstance(created_at__ilike, datetime):
-                _query_params.append(
-                    (
-                        'created_at__ilike',
-                        created_at__ilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('created_at__ilike', created_at__ilike))
-
-        if created_at__notilike is not None:
-            if isinstance(created_at__notilike, datetime):
-                _query_params.append(
-                    (
-                        'created_at__notilike',
-                        created_at__notilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('created_at__notilike', created_at__notilike))
-
-        if created_at__desc is not None:
-
-            _query_params.append(('created_at__desc', created_at__desc))
-
+            
         if created_at__asc is not None:
-
+            
             _query_params.append(('created_at__asc', created_at__asc))
-
+            
+        if created_at__desc is not None:
+            
+            _query_params.append(('created_at__desc', created_at__desc))
+            
         if updated_at__eq is not None:
             if isinstance(updated_at__eq, datetime):
                 _query_params.append(
@@ -4530,7 +3024,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__eq', updated_at__eq))
-
+            
         if updated_at__ne is not None:
             if isinstance(updated_at__ne, datetime):
                 _query_params.append(
@@ -4543,7 +3037,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__ne', updated_at__ne))
-
+            
         if updated_at__gt is not None:
             if isinstance(updated_at__gt, datetime):
                 _query_params.append(
@@ -4556,7 +3050,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__gt', updated_at__gt))
-
+            
         if updated_at__gte is not None:
             if isinstance(updated_at__gte, datetime):
                 _query_params.append(
@@ -4569,7 +3063,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__gte', updated_at__gte))
-
+            
         if updated_at__lt is not None:
             if isinstance(updated_at__lt, datetime):
                 _query_params.append(
@@ -4582,7 +3076,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__lt', updated_at__lt))
-
+            
         if updated_at__lte is not None:
             if isinstance(updated_at__lte, datetime):
                 _query_params.append(
@@ -4595,7 +3089,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__lte', updated_at__lte))
-
+            
         if updated_at__in is not None:
             if isinstance(updated_at__in, datetime):
                 _query_params.append(
@@ -4608,7 +3102,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__in', updated_at__in))
-
+            
         if updated_at__notin is not None:
             if isinstance(updated_at__notin, datetime):
                 _query_params.append(
@@ -4621,93 +3115,15 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('updated_at__notin', updated_at__notin))
-
-        if updated_at__contains is not None:
-            if isinstance(updated_at__contains, datetime):
-                _query_params.append(
-                    (
-                        'updated_at__contains',
-                        updated_at__contains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_at__contains', updated_at__contains))
-
-        if updated_at__notcontains is not None:
-            if isinstance(updated_at__notcontains, datetime):
-                _query_params.append(
-                    (
-                        'updated_at__notcontains',
-                        updated_at__notcontains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_at__notcontains', updated_at__notcontains))
-
-        if updated_at__like is not None:
-            if isinstance(updated_at__like, datetime):
-                _query_params.append(
-                    (
-                        'updated_at__like',
-                        updated_at__like.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_at__like', updated_at__like))
-
-        if updated_at__notlike is not None:
-            if isinstance(updated_at__notlike, datetime):
-                _query_params.append(
-                    (
-                        'updated_at__notlike',
-                        updated_at__notlike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_at__notlike', updated_at__notlike))
-
-        if updated_at__ilike is not None:
-            if isinstance(updated_at__ilike, datetime):
-                _query_params.append(
-                    (
-                        'updated_at__ilike',
-                        updated_at__ilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_at__ilike', updated_at__ilike))
-
-        if updated_at__notilike is not None:
-            if isinstance(updated_at__notilike, datetime):
-                _query_params.append(
-                    (
-                        'updated_at__notilike',
-                        updated_at__notilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('updated_at__notilike', updated_at__notilike))
-
-        if updated_at__desc is not None:
-
-            _query_params.append(('updated_at__desc', updated_at__desc))
-
+            
         if updated_at__asc is not None:
-
+            
             _query_params.append(('updated_at__asc', updated_at__asc))
-
+            
+        if updated_at__desc is not None:
+            
+            _query_params.append(('updated_at__desc', updated_at__desc))
+            
         if deleted_at__eq is not None:
             if isinstance(deleted_at__eq, datetime):
                 _query_params.append(
@@ -4720,7 +3136,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__eq', deleted_at__eq))
-
+            
         if deleted_at__ne is not None:
             if isinstance(deleted_at__ne, datetime):
                 _query_params.append(
@@ -4733,7 +3149,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__ne', deleted_at__ne))
-
+            
         if deleted_at__gt is not None:
             if isinstance(deleted_at__gt, datetime):
                 _query_params.append(
@@ -4746,7 +3162,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__gt', deleted_at__gt))
-
+            
         if deleted_at__gte is not None:
             if isinstance(deleted_at__gte, datetime):
                 _query_params.append(
@@ -4759,7 +3175,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__gte', deleted_at__gte))
-
+            
         if deleted_at__lt is not None:
             if isinstance(deleted_at__lt, datetime):
                 _query_params.append(
@@ -4772,7 +3188,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__lt', deleted_at__lt))
-
+            
         if deleted_at__lte is not None:
             if isinstance(deleted_at__lte, datetime):
                 _query_params.append(
@@ -4785,7 +3201,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__lte', deleted_at__lte))
-
+            
         if deleted_at__in is not None:
             if isinstance(deleted_at__in, datetime):
                 _query_params.append(
@@ -4798,7 +3214,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__in', deleted_at__in))
-
+            
         if deleted_at__notin is not None:
             if isinstance(deleted_at__notin, datetime):
                 _query_params.append(
@@ -4811,365 +3227,183 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('deleted_at__notin', deleted_at__notin))
-
-        if deleted_at__contains is not None:
-            if isinstance(deleted_at__contains, datetime):
-                _query_params.append(
-                    (
-                        'deleted_at__contains',
-                        deleted_at__contains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('deleted_at__contains', deleted_at__contains))
-
-        if deleted_at__notcontains is not None:
-            if isinstance(deleted_at__notcontains, datetime):
-                _query_params.append(
-                    (
-                        'deleted_at__notcontains',
-                        deleted_at__notcontains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('deleted_at__notcontains', deleted_at__notcontains))
-
-        if deleted_at__like is not None:
-            if isinstance(deleted_at__like, datetime):
-                _query_params.append(
-                    (
-                        'deleted_at__like',
-                        deleted_at__like.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('deleted_at__like', deleted_at__like))
-
-        if deleted_at__notlike is not None:
-            if isinstance(deleted_at__notlike, datetime):
-                _query_params.append(
-                    (
-                        'deleted_at__notlike',
-                        deleted_at__notlike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('deleted_at__notlike', deleted_at__notlike))
-
-        if deleted_at__ilike is not None:
-            if isinstance(deleted_at__ilike, datetime):
-                _query_params.append(
-                    (
-                        'deleted_at__ilike',
-                        deleted_at__ilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('deleted_at__ilike', deleted_at__ilike))
-
-        if deleted_at__notilike is not None:
-            if isinstance(deleted_at__notilike, datetime):
-                _query_params.append(
-                    (
-                        'deleted_at__notilike',
-                        deleted_at__notilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('deleted_at__notilike', deleted_at__notilike))
-
-        if deleted_at__desc is not None:
-
-            _query_params.append(('deleted_at__desc', deleted_at__desc))
-
+            
+        if deleted_at__isnull is not None:
+            
+            _query_params.append(('deleted_at__isnull', deleted_at__isnull))
+            
+        if deleted_at__isnotnull is not None:
+            
+            _query_params.append(('deleted_at__isnotnull', deleted_at__isnotnull))
+            
         if deleted_at__asc is not None:
-
+            
             _query_params.append(('deleted_at__asc', deleted_at__asc))
-
+            
+        if deleted_at__desc is not None:
+            
+            _query_params.append(('deleted_at__desc', deleted_at__desc))
+            
         if camera_id__eq is not None:
-
+            
             _query_params.append(('camera_id__eq', camera_id__eq))
-
+            
         if camera_id__ne is not None:
-
+            
             _query_params.append(('camera_id__ne', camera_id__ne))
-
+            
         if camera_id__gt is not None:
-
+            
             _query_params.append(('camera_id__gt', camera_id__gt))
-
+            
         if camera_id__gte is not None:
-
+            
             _query_params.append(('camera_id__gte', camera_id__gte))
-
+            
         if camera_id__lt is not None:
-
+            
             _query_params.append(('camera_id__lt', camera_id__lt))
-
+            
         if camera_id__lte is not None:
-
+            
             _query_params.append(('camera_id__lte', camera_id__lte))
-
+            
         if camera_id__in is not None:
-
+            
             _query_params.append(('camera_id__in', camera_id__in))
-
+            
         if camera_id__notin is not None:
-
+            
             _query_params.append(('camera_id__notin', camera_id__notin))
-
-        if camera_id__contains is not None:
-
-            _query_params.append(('camera_id__contains', camera_id__contains))
-
-        if camera_id__notcontains is not None:
-
-            _query_params.append(('camera_id__notcontains', camera_id__notcontains))
-
-        if camera_id__like is not None:
-
-            _query_params.append(('camera_id__like', camera_id__like))
-
-        if camera_id__notlike is not None:
-
-            _query_params.append(('camera_id__notlike', camera_id__notlike))
-
-        if camera_id__ilike is not None:
-
-            _query_params.append(('camera_id__ilike', camera_id__ilike))
-
-        if camera_id__notilike is not None:
-
-            _query_params.append(('camera_id__notilike', camera_id__notilike))
-
-        if camera_id__desc is not None:
-
-            _query_params.append(('camera_id__desc', camera_id__desc))
-
+            
         if camera_id__asc is not None:
-
+            
             _query_params.append(('camera_id__asc', camera_id__asc))
-
-        if camera_id_object__contains is not None:
-
-            _query_params.append(('camera_id_object__contains', camera_id_object__contains))
-
-        if camera_id_object__notcontains is not None:
-
-            _query_params.append(('camera_id_object__notcontains', camera_id_object__notcontains))
-
-        if camera_id_object__desc is not None:
-
-            _query_params.append(('camera_id_object__desc', camera_id_object__desc))
-
-        if camera_id_object__asc is not None:
-
-            _query_params.append(('camera_id_object__asc', camera_id_object__asc))
-
+            
+        if camera_id__desc is not None:
+            
+            _query_params.append(('camera_id__desc', camera_id__desc))
+            
         if video_id__eq is not None:
-
+            
             _query_params.append(('video_id__eq', video_id__eq))
-
+            
         if video_id__ne is not None:
-
+            
             _query_params.append(('video_id__ne', video_id__ne))
-
+            
         if video_id__gt is not None:
-
+            
             _query_params.append(('video_id__gt', video_id__gt))
-
+            
         if video_id__gte is not None:
-
+            
             _query_params.append(('video_id__gte', video_id__gte))
-
+            
         if video_id__lt is not None:
-
+            
             _query_params.append(('video_id__lt', video_id__lt))
-
+            
         if video_id__lte is not None:
-
+            
             _query_params.append(('video_id__lte', video_id__lte))
-
+            
         if video_id__in is not None:
-
+            
             _query_params.append(('video_id__in', video_id__in))
-
+            
         if video_id__notin is not None:
-
+            
             _query_params.append(('video_id__notin', video_id__notin))
-
-        if video_id__contains is not None:
-
-            _query_params.append(('video_id__contains', video_id__contains))
-
-        if video_id__notcontains is not None:
-
-            _query_params.append(('video_id__notcontains', video_id__notcontains))
-
-        if video_id__like is not None:
-
-            _query_params.append(('video_id__like', video_id__like))
-
-        if video_id__notlike is not None:
-
-            _query_params.append(('video_id__notlike', video_id__notlike))
-
-        if video_id__ilike is not None:
-
-            _query_params.append(('video_id__ilike', video_id__ilike))
-
-        if video_id__notilike is not None:
-
-            _query_params.append(('video_id__notilike', video_id__notilike))
-
-        if video_id__desc is not None:
-
-            _query_params.append(('video_id__desc', video_id__desc))
-
+            
         if video_id__asc is not None:
-
+            
             _query_params.append(('video_id__asc', video_id__asc))
-
-        if video_id_object__contains is not None:
-
-            _query_params.append(('video_id_object__contains', video_id_object__contains))
-
-        if video_id_object__notcontains is not None:
-
-            _query_params.append(('video_id_object__notcontains', video_id_object__notcontains))
-
-        if video_id_object__desc is not None:
-
-            _query_params.append(('video_id_object__desc', video_id_object__desc))
-
-        if video_id_object__asc is not None:
-
-            _query_params.append(('video_id_object__asc', video_id_object__asc))
-
+            
+        if video_id__desc is not None:
+            
+            _query_params.append(('video_id__desc', video_id__desc))
+            
         if class_id__eq is not None:
-
+            
             _query_params.append(('class_id__eq', class_id__eq))
-
+            
         if class_id__ne is not None:
-
+            
             _query_params.append(('class_id__ne', class_id__ne))
-
+            
         if class_id__gt is not None:
-
+            
             _query_params.append(('class_id__gt', class_id__gt))
-
+            
         if class_id__gte is not None:
-
+            
             _query_params.append(('class_id__gte', class_id__gte))
-
+            
         if class_id__lt is not None:
-
+            
             _query_params.append(('class_id__lt', class_id__lt))
-
+            
         if class_id__lte is not None:
-
+            
             _query_params.append(('class_id__lte', class_id__lte))
-
+            
         if class_id__in is not None:
-
+            
             _query_params.append(('class_id__in', class_id__in))
-
+            
         if class_id__notin is not None:
-
+            
             _query_params.append(('class_id__notin', class_id__notin))
-
-        if class_id__contains is not None:
-
-            _query_params.append(('class_id__contains', class_id__contains))
-
-        if class_id__notcontains is not None:
-
-            _query_params.append(('class_id__notcontains', class_id__notcontains))
-
-        if class_id__desc is not None:
-
-            _query_params.append(('class_id__desc', class_id__desc))
-
+            
         if class_id__asc is not None:
-
+            
             _query_params.append(('class_id__asc', class_id__asc))
-
+            
+        if class_id__desc is not None:
+            
+            _query_params.append(('class_id__desc', class_id__desc))
+            
         if class_name__eq is not None:
-
+            
             _query_params.append(('class_name__eq', class_name__eq))
-
+            
         if class_name__ne is not None:
-
+            
             _query_params.append(('class_name__ne', class_name__ne))
-
-        if class_name__gt is not None:
-
-            _query_params.append(('class_name__gt', class_name__gt))
-
-        if class_name__gte is not None:
-
-            _query_params.append(('class_name__gte', class_name__gte))
-
-        if class_name__lt is not None:
-
-            _query_params.append(('class_name__lt', class_name__lt))
-
-        if class_name__lte is not None:
-
-            _query_params.append(('class_name__lte', class_name__lte))
-
+            
         if class_name__in is not None:
-
+            
             _query_params.append(('class_name__in', class_name__in))
-
+            
         if class_name__notin is not None:
-
+            
             _query_params.append(('class_name__notin', class_name__notin))
-
-        if class_name__contains is not None:
-
-            _query_params.append(('class_name__contains', class_name__contains))
-
-        if class_name__notcontains is not None:
-
-            _query_params.append(('class_name__notcontains', class_name__notcontains))
-
+            
         if class_name__like is not None:
-
+            
             _query_params.append(('class_name__like', class_name__like))
-
+            
         if class_name__notlike is not None:
-
+            
             _query_params.append(('class_name__notlike', class_name__notlike))
-
+            
         if class_name__ilike is not None:
-
+            
             _query_params.append(('class_name__ilike', class_name__ilike))
-
+            
         if class_name__notilike is not None:
-
+            
             _query_params.append(('class_name__notilike', class_name__notilike))
-
-        if class_name__desc is not None:
-
-            _query_params.append(('class_name__desc', class_name__desc))
-
+            
         if class_name__asc is not None:
-
+            
             _query_params.append(('class_name__asc', class_name__asc))
-
+            
+        if class_name__desc is not None:
+            
+            _query_params.append(('class_name__desc', class_name__desc))
+            
         if started_at__eq is not None:
             if isinstance(started_at__eq, datetime):
                 _query_params.append(
@@ -5182,7 +3416,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__eq', started_at__eq))
-
+            
         if started_at__ne is not None:
             if isinstance(started_at__ne, datetime):
                 _query_params.append(
@@ -5195,7 +3429,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__ne', started_at__ne))
-
+            
         if started_at__gt is not None:
             if isinstance(started_at__gt, datetime):
                 _query_params.append(
@@ -5208,7 +3442,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__gt', started_at__gt))
-
+            
         if started_at__gte is not None:
             if isinstance(started_at__gte, datetime):
                 _query_params.append(
@@ -5221,7 +3455,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__gte', started_at__gte))
-
+            
         if started_at__lt is not None:
             if isinstance(started_at__lt, datetime):
                 _query_params.append(
@@ -5234,7 +3468,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__lt', started_at__lt))
-
+            
         if started_at__lte is not None:
             if isinstance(started_at__lte, datetime):
                 _query_params.append(
@@ -5247,7 +3481,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__lte', started_at__lte))
-
+            
         if started_at__in is not None:
             if isinstance(started_at__in, datetime):
                 _query_params.append(
@@ -5260,7 +3494,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__in', started_at__in))
-
+            
         if started_at__notin is not None:
             if isinstance(started_at__notin, datetime):
                 _query_params.append(
@@ -5273,93 +3507,15 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('started_at__notin', started_at__notin))
-
-        if started_at__contains is not None:
-            if isinstance(started_at__contains, datetime):
-                _query_params.append(
-                    (
-                        'started_at__contains',
-                        started_at__contains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('started_at__contains', started_at__contains))
-
-        if started_at__notcontains is not None:
-            if isinstance(started_at__notcontains, datetime):
-                _query_params.append(
-                    (
-                        'started_at__notcontains',
-                        started_at__notcontains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('started_at__notcontains', started_at__notcontains))
-
-        if started_at__like is not None:
-            if isinstance(started_at__like, datetime):
-                _query_params.append(
-                    (
-                        'started_at__like',
-                        started_at__like.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('started_at__like', started_at__like))
-
-        if started_at__notlike is not None:
-            if isinstance(started_at__notlike, datetime):
-                _query_params.append(
-                    (
-                        'started_at__notlike',
-                        started_at__notlike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('started_at__notlike', started_at__notlike))
-
-        if started_at__ilike is not None:
-            if isinstance(started_at__ilike, datetime):
-                _query_params.append(
-                    (
-                        'started_at__ilike',
-                        started_at__ilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('started_at__ilike', started_at__ilike))
-
-        if started_at__notilike is not None:
-            if isinstance(started_at__notilike, datetime):
-                _query_params.append(
-                    (
-                        'started_at__notilike',
-                        started_at__notilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('started_at__notilike', started_at__notilike))
-
-        if started_at__desc is not None:
-
-            _query_params.append(('started_at__desc', started_at__desc))
-
+            
         if started_at__asc is not None:
-
+            
             _query_params.append(('started_at__asc', started_at__asc))
-
+            
+        if started_at__desc is not None:
+            
+            _query_params.append(('started_at__desc', started_at__desc))
+            
         if ended_at__eq is not None:
             if isinstance(ended_at__eq, datetime):
                 _query_params.append(
@@ -5372,7 +3528,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__eq', ended_at__eq))
-
+            
         if ended_at__ne is not None:
             if isinstance(ended_at__ne, datetime):
                 _query_params.append(
@@ -5385,7 +3541,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__ne', ended_at__ne))
-
+            
         if ended_at__gt is not None:
             if isinstance(ended_at__gt, datetime):
                 _query_params.append(
@@ -5398,7 +3554,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__gt', ended_at__gt))
-
+            
         if ended_at__gte is not None:
             if isinstance(ended_at__gte, datetime):
                 _query_params.append(
@@ -5411,7 +3567,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__gte', ended_at__gte))
-
+            
         if ended_at__lt is not None:
             if isinstance(ended_at__lt, datetime):
                 _query_params.append(
@@ -5424,7 +3580,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__lt', ended_at__lt))
-
+            
         if ended_at__lte is not None:
             if isinstance(ended_at__lte, datetime):
                 _query_params.append(
@@ -5437,7 +3593,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__lte', ended_at__lte))
-
+            
         if ended_at__in is not None:
             if isinstance(ended_at__in, datetime):
                 _query_params.append(
@@ -5450,7 +3606,7 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__in', ended_at__in))
-
+            
         if ended_at__notin is not None:
             if isinstance(ended_at__notin, datetime):
                 _query_params.append(
@@ -5463,477 +3619,215 @@ class TrackApi:
                 )
             else:
                 _query_params.append(('ended_at__notin', ended_at__notin))
-
-        if ended_at__contains is not None:
-            if isinstance(ended_at__contains, datetime):
-                _query_params.append(
-                    (
-                        'ended_at__contains',
-                        ended_at__contains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('ended_at__contains', ended_at__contains))
-
-        if ended_at__notcontains is not None:
-            if isinstance(ended_at__notcontains, datetime):
-                _query_params.append(
-                    (
-                        'ended_at__notcontains',
-                        ended_at__notcontains.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('ended_at__notcontains', ended_at__notcontains))
-
-        if ended_at__like is not None:
-            if isinstance(ended_at__like, datetime):
-                _query_params.append(
-                    (
-                        'ended_at__like',
-                        ended_at__like.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('ended_at__like', ended_at__like))
-
-        if ended_at__notlike is not None:
-            if isinstance(ended_at__notlike, datetime):
-                _query_params.append(
-                    (
-                        'ended_at__notlike',
-                        ended_at__notlike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('ended_at__notlike', ended_at__notlike))
-
-        if ended_at__ilike is not None:
-            if isinstance(ended_at__ilike, datetime):
-                _query_params.append(
-                    (
-                        'ended_at__ilike',
-                        ended_at__ilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('ended_at__ilike', ended_at__ilike))
-
-        if ended_at__notilike is not None:
-            if isinstance(ended_at__notilike, datetime):
-                _query_params.append(
-                    (
-                        'ended_at__notilike',
-                        ended_at__notilike.strftime(
-                            self.api_client.configuration.datetime_format
-                        )
-                    )
-                )
-            else:
-                _query_params.append(('ended_at__notilike', ended_at__notilike))
-
-        if ended_at__desc is not None:
-
-            _query_params.append(('ended_at__desc', ended_at__desc))
-
+            
         if ended_at__asc is not None:
-
+            
             _query_params.append(('ended_at__asc', ended_at__asc))
-
+            
+        if ended_at__desc is not None:
+            
+            _query_params.append(('ended_at__desc', ended_at__desc))
+            
         if frame_count__eq is not None:
-
+            
             _query_params.append(('frame_count__eq', frame_count__eq))
-
+            
         if frame_count__ne is not None:
-
+            
             _query_params.append(('frame_count__ne', frame_count__ne))
-
+            
         if frame_count__gt is not None:
-
+            
             _query_params.append(('frame_count__gt', frame_count__gt))
-
+            
         if frame_count__gte is not None:
-
+            
             _query_params.append(('frame_count__gte', frame_count__gte))
-
+            
         if frame_count__lt is not None:
-
+            
             _query_params.append(('frame_count__lt', frame_count__lt))
-
+            
         if frame_count__lte is not None:
-
+            
             _query_params.append(('frame_count__lte', frame_count__lte))
-
+            
         if frame_count__in is not None:
-
+            
             _query_params.append(('frame_count__in', frame_count__in))
-
+            
         if frame_count__notin is not None:
-
+            
             _query_params.append(('frame_count__notin', frame_count__notin))
-
-        if frame_count__contains is not None:
-
-            _query_params.append(('frame_count__contains', frame_count__contains))
-
-        if frame_count__notcontains is not None:
-
-            _query_params.append(('frame_count__notcontains', frame_count__notcontains))
-
-        if frame_count__desc is not None:
-
-            _query_params.append(('frame_count__desc', frame_count__desc))
-
+            
         if frame_count__asc is not None:
-
+            
             _query_params.append(('frame_count__asc', frame_count__asc))
-
+            
+        if frame_count__desc is not None:
+            
+            _query_params.append(('frame_count__desc', frame_count__desc))
+            
         if mean_score__eq is not None:
-
+            
             _query_params.append(('mean_score__eq', mean_score__eq))
-
+            
         if mean_score__ne is not None:
-
+            
             _query_params.append(('mean_score__ne', mean_score__ne))
-
+            
         if mean_score__gt is not None:
-
+            
             _query_params.append(('mean_score__gt', mean_score__gt))
-
+            
         if mean_score__gte is not None:
-
+            
             _query_params.append(('mean_score__gte', mean_score__gte))
-
+            
         if mean_score__lt is not None:
-
+            
             _query_params.append(('mean_score__lt', mean_score__lt))
-
+            
         if mean_score__lte is not None:
-
+            
             _query_params.append(('mean_score__lte', mean_score__lte))
-
+            
         if mean_score__in is not None:
-
+            
             _query_params.append(('mean_score__in', mean_score__in))
-
+            
         if mean_score__notin is not None:
-
+            
             _query_params.append(('mean_score__notin', mean_score__notin))
-
-        if mean_score__contains is not None:
-
-            _query_params.append(('mean_score__contains', mean_score__contains))
-
-        if mean_score__notcontains is not None:
-
-            _query_params.append(('mean_score__notcontains', mean_score__notcontains))
-
-        if mean_score__desc is not None:
-
-            _query_params.append(('mean_score__desc', mean_score__desc))
-
+            
         if mean_score__asc is not None:
-
+            
             _query_params.append(('mean_score__asc', mean_score__asc))
-
+            
+        if mean_score__desc is not None:
+            
+            _query_params.append(('mean_score__desc', mean_score__desc))
+            
         if max_score__eq is not None:
-
+            
             _query_params.append(('max_score__eq', max_score__eq))
-
+            
         if max_score__ne is not None:
-
+            
             _query_params.append(('max_score__ne', max_score__ne))
-
+            
         if max_score__gt is not None:
-
+            
             _query_params.append(('max_score__gt', max_score__gt))
-
+            
         if max_score__gte is not None:
-
+            
             _query_params.append(('max_score__gte', max_score__gte))
-
+            
         if max_score__lt is not None:
-
+            
             _query_params.append(('max_score__lt', max_score__lt))
-
+            
         if max_score__lte is not None:
-
+            
             _query_params.append(('max_score__lte', max_score__lte))
-
+            
         if max_score__in is not None:
-
+            
             _query_params.append(('max_score__in', max_score__in))
-
+            
         if max_score__notin is not None:
-
+            
             _query_params.append(('max_score__notin', max_score__notin))
-
-        if max_score__contains is not None:
-
-            _query_params.append(('max_score__contains', max_score__contains))
-
-        if max_score__notcontains is not None:
-
-            _query_params.append(('max_score__notcontains', max_score__notcontains))
-
-        if max_score__desc is not None:
-
-            _query_params.append(('max_score__desc', max_score__desc))
-
+            
         if max_score__asc is not None:
-
+            
             _query_params.append(('max_score__asc', max_score__asc))
-
-        if centroid__contains is not None:
-
-            _query_params.append(('centroid__contains', centroid__contains))
-
-        if centroid__notcontains is not None:
-
-            _query_params.append(('centroid__notcontains', centroid__notcontains))
-
-        if centroid__desc is not None:
-
-            _query_params.append(('centroid__desc', centroid__desc))
-
-        if centroid__asc is not None:
-
-            _query_params.append(('centroid__asc', centroid__asc))
-
-        if bounding_box__contains is not None:
-
-            _query_params.append(('bounding_box__contains', bounding_box__contains))
-
-        if bounding_box__notcontains is not None:
-
-            _query_params.append(('bounding_box__notcontains', bounding_box__notcontains))
-
-        if bounding_box__desc is not None:
-
-            _query_params.append(('bounding_box__desc', bounding_box__desc))
-
-        if bounding_box__asc is not None:
-
-            _query_params.append(('bounding_box__asc', bounding_box__asc))
-
+            
+        if max_score__desc is not None:
+            
+            _query_params.append(('max_score__desc', max_score__desc))
+            
         if trajectory__contains is not None:
-
+            
             _query_params.append(('trajectory__contains', trajectory__contains))
-
+            
         if trajectory__notcontains is not None:
-
+            
             _query_params.append(('trajectory__notcontains', trajectory__notcontains))
-
-        if trajectory__desc is not None:
-
-            _query_params.append(('trajectory__desc', trajectory__desc))
-
+            
         if trajectory__asc is not None:
-
+            
             _query_params.append(('trajectory__asc', trajectory__asc))
-
+            
+        if trajectory__desc is not None:
+            
+            _query_params.append(('trajectory__desc', trajectory__desc))
+            
         if is_static__eq is not None:
-
+            
             _query_params.append(('is_static__eq', is_static__eq))
-
+            
         if is_static__ne is not None:
-
+            
             _query_params.append(('is_static__ne', is_static__ne))
-
-        if is_static__gt is not None:
-
-            _query_params.append(('is_static__gt', is_static__gt))
-
-        if is_static__gte is not None:
-
-            _query_params.append(('is_static__gte', is_static__gte))
-
-        if is_static__lt is not None:
-
-            _query_params.append(('is_static__lt', is_static__lt))
-
-        if is_static__lte is not None:
-
-            _query_params.append(('is_static__lte', is_static__lte))
-
-        if is_static__in is not None:
-
-            _query_params.append(('is_static__in', is_static__in))
-
-        if is_static__notin is not None:
-
-            _query_params.append(('is_static__notin', is_static__notin))
-
-        if is_static__contains is not None:
-
-            _query_params.append(('is_static__contains', is_static__contains))
-
-        if is_static__notcontains is not None:
-
-            _query_params.append(('is_static__notcontains', is_static__notcontains))
-
-        if is_static__desc is not None:
-
-            _query_params.append(('is_static__desc', is_static__desc))
-
+            
+        if is_static__isfalse is not None:
+            
+            _query_params.append(('is_static__isfalse', is_static__isfalse))
+            
+        if is_static__istrue is not None:
+            
+            _query_params.append(('is_static__istrue', is_static__istrue))
+            
         if is_static__asc is not None:
-
+            
             _query_params.append(('is_static__asc', is_static__asc))
-
+            
+        if is_static__desc is not None:
+            
+            _query_params.append(('is_static__desc', is_static__desc))
+            
         if status__eq is not None:
-
+            
             _query_params.append(('status__eq', status__eq))
-
+            
         if status__ne is not None:
-
+            
             _query_params.append(('status__ne', status__ne))
-
-        if status__gt is not None:
-
-            _query_params.append(('status__gt', status__gt))
-
-        if status__gte is not None:
-
-            _query_params.append(('status__gte', status__gte))
-
-        if status__lt is not None:
-
-            _query_params.append(('status__lt', status__lt))
-
-        if status__lte is not None:
-
-            _query_params.append(('status__lte', status__lte))
-
+            
         if status__in is not None:
-
+            
             _query_params.append(('status__in', status__in))
-
+            
         if status__notin is not None:
-
+            
             _query_params.append(('status__notin', status__notin))
-
-        if status__contains is not None:
-
-            _query_params.append(('status__contains', status__contains))
-
-        if status__notcontains is not None:
-
-            _query_params.append(('status__notcontains', status__notcontains))
-
+            
         if status__like is not None:
-
+            
             _query_params.append(('status__like', status__like))
-
+            
         if status__notlike is not None:
-
+            
             _query_params.append(('status__notlike', status__notlike))
-
+            
         if status__ilike is not None:
-
+            
             _query_params.append(('status__ilike', status__ilike))
-
+            
         if status__notilike is not None:
-
+            
             _query_params.append(('status__notilike', status__notilike))
-
-        if status__desc is not None:
-
-            _query_params.append(('status__desc', status__desc))
-
+            
         if status__asc is not None:
-
+            
             _query_params.append(('status__asc', status__asc))
-
-        if key__eq is not None:
-
-            _query_params.append(('key__eq', key__eq))
-
-        if key__ne is not None:
-
-            _query_params.append(('key__ne', key__ne))
-
-        if key__gt is not None:
-
-            _query_params.append(('key__gt', key__gt))
-
-        if key__gte is not None:
-
-            _query_params.append(('key__gte', key__gte))
-
-        if key__lt is not None:
-
-            _query_params.append(('key__lt', key__lt))
-
-        if key__lte is not None:
-
-            _query_params.append(('key__lte', key__lte))
-
-        if key__in is not None:
-
-            _query_params.append(('key__in', key__in))
-
-        if key__notin is not None:
-
-            _query_params.append(('key__notin', key__notin))
-
-        if key__contains is not None:
-
-            _query_params.append(('key__contains', key__contains))
-
-        if key__notcontains is not None:
-
-            _query_params.append(('key__notcontains', key__notcontains))
-
-        if key__like is not None:
-
-            _query_params.append(('key__like', key__like))
-
-        if key__notlike is not None:
-
-            _query_params.append(('key__notlike', key__notlike))
-
-        if key__ilike is not None:
-
-            _query_params.append(('key__ilike', key__ilike))
-
-        if key__notilike is not None:
-
-            _query_params.append(('key__notilike', key__notilike))
-
-        if key__desc is not None:
-
-            _query_params.append(('key__desc', key__desc))
-
-        if key__asc is not None:
-
-            _query_params.append(('key__asc', key__asc))
-
-        if referenced_by_detection_track_id_objects__contains is not None:
-
-            _query_params.append(('referenced_by_detection_track_id_objects__contains', referenced_by_detection_track_id_objects__contains))
-
-        if referenced_by_detection_track_id_objects__notcontains is not None:
-
-            _query_params.append(('referenced_by_detection_track_id_objects__notcontains', referenced_by_detection_track_id_objects__notcontains))
-
-        if referenced_by_detection_track_id_objects__desc is not None:
-
-            _query_params.append(('referenced_by_detection_track_id_objects__desc', referenced_by_detection_track_id_objects__desc))
-
-        if referenced_by_detection_track_id_objects__asc is not None:
-
-            _query_params.append(('referenced_by_detection_track_id_objects__asc', referenced_by_detection_track_id_objects__asc))
-
+            
+        if status__desc is not None:
+            
+            _query_params.append(('status__desc', status__desc))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -6216,9 +4110,9 @@ class TrackApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-
+            
             _query_params.append(('depth', depth))
-
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -6502,9 +4396,9 @@ class TrackApi:
         # process the path parameters
         # process the query parameters
         if depth is not None:
-
+            
             _query_params.append(('depth', depth))
-
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter

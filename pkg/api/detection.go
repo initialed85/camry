@@ -169,6 +169,214 @@ func (m *Detection) GetPrimaryKeyColumn() string {
 func (m *Detection) GetPrimaryKeyValue() any {
 	return m.ID
 }
+func (Detection) GetQueryInfo() query.ModelQueryInfo {
+	return query.ModelQueryInfo{
+		TableName:        "detection",
+		PrimaryKeyColumn: "id",
+		Relationships: []query.RelationshipDefinition{
+			{
+				Name:         "video_id",
+				Direction:    query.RelationDirectionOutbound,
+				TargetTable:  "video",
+				LocalColumn:  "video_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityOne,
+			},
+			{
+				Name:         "camera_id",
+				Direction:    query.RelationDirectionOutbound,
+				TargetTable:  "camera",
+				LocalColumn:  "camera_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityOne,
+			},
+			{
+				Name:         "track_id",
+				Direction:    query.RelationDirectionOutbound,
+				TargetTable:  "track",
+				LocalColumn:  "track_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityOne,
+			},
+		},
+		Filters: []query.FilterDefinition{
+			{
+				Name:     "created_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "updated_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "deleted_at",
+				DataType: "timestamp with time zone",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "seen_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "class_id",
+				DataType: "bigint",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "class_name",
+				DataType: "text",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "score",
+				DataType: "double precision",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "video_id",
+				DataType: "uuid",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "camera_id",
+				DataType: "uuid",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "track_id",
+				DataType: "uuid",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+		},
+	}
+}
 
 func (m *Detection) FromItem(item map[string]any) error {
 	if item == nil {
@@ -889,6 +1097,263 @@ func (m *Detection) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, f
 
 	return nil
 }
+func (m *Detection) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
+	var columnName string
+	switch fieldName {
+
+	case "id":
+		columnName = DetectionTableIDColumn
+
+	case "created_at":
+		columnName = DetectionTableCreatedAtColumn
+
+	case "updated_at":
+		columnName = DetectionTableUpdatedAtColumn
+
+	case "deleted_at":
+		columnName = DetectionTableDeletedAtColumn
+
+	case "seen_at":
+		columnName = DetectionTableSeenAtColumn
+
+	case "class_id":
+		columnName = DetectionTableClassIDColumn
+
+	case "class_name":
+		columnName = DetectionTableClassNameColumn
+
+	case "score":
+		columnName = DetectionTableScoreColumn
+
+	case "centroid":
+		columnName = DetectionTableCentroidColumn
+
+	case "bounding_box":
+		columnName = DetectionTableBoundingBoxColumn
+
+	case "video_id":
+		columnName = DetectionTableVideoIDColumn
+
+	case "camera_id":
+		columnName = DetectionTableCameraIDColumn
+
+	case "track_id":
+		columnName = DetectionTableTrackIDColumn
+	default:
+		return fmt.Errorf("unknown field name: %v", fieldName)
+	}
+
+	var columnValue any
+	var err error
+	switch columnName {
+
+	case DetectionTableIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case DetectionTableCreatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case DetectionTableUpdatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case DetectionTableDeletedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case DetectionTableSeenAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case DetectionTableClassIDColumn:
+		columnValue, err = types.FormatInt(value)
+
+	case DetectionTableClassNameColumn:
+		columnValue, err = types.FormatString(value)
+
+	case DetectionTableScoreColumn:
+		columnValue, err = types.FormatFloat(value)
+
+	case DetectionTableCentroidColumn:
+		columnValue, err = types.FormatPoint(value)
+
+	case DetectionTableBoundingBoxColumn:
+		columnValue, err = types.FormatPolygon(value)
+
+	case DetectionTableVideoIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case DetectionTableCameraIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case DetectionTableTrackIDColumn:
+		columnValue, err = types.FormatUUID(value)
+	}
+	if err != nil {
+		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+	}
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err = query.Update(
+		ctx,
+		tx,
+		DetectionTableWithSchema,
+		[]string{columnName},
+		fmt.Sprintf("%v = $$??", DetectionTablePrimaryKeyColumn),
+		[]string{DetectionTablePrimaryKeyColumn},
+		columnValue,
+		m.GetPrimaryKeyValue(),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
+	}
+
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
+
+func (m *Detection) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
+	if len(fields) == 0 {
+		return nil
+	}
+	fieldNames := make([]string, 0, len(fields))
+	for fieldName := range fields {
+		fieldNames = append(fieldNames, fieldName)
+	}
+	sort.Strings(fieldNames)
+
+	columns := make([]string, 0, len(fields))
+	values := make([]any, 0, len(fields)*2)
+
+	for _, fieldName := range fieldNames {
+		value := fields[fieldName]
+		var columnName string
+		switch fieldName {
+
+		case "id":
+			columnName = DetectionTableIDColumn
+
+		case "created_at":
+			columnName = DetectionTableCreatedAtColumn
+
+		case "updated_at":
+			columnName = DetectionTableUpdatedAtColumn
+
+		case "deleted_at":
+			columnName = DetectionTableDeletedAtColumn
+
+		case "seen_at":
+			columnName = DetectionTableSeenAtColumn
+
+		case "class_id":
+			columnName = DetectionTableClassIDColumn
+
+		case "class_name":
+			columnName = DetectionTableClassNameColumn
+
+		case "score":
+			columnName = DetectionTableScoreColumn
+
+		case "centroid":
+			columnName = DetectionTableCentroidColumn
+
+		case "bounding_box":
+			columnName = DetectionTableBoundingBoxColumn
+
+		case "video_id":
+			columnName = DetectionTableVideoIDColumn
+
+		case "camera_id":
+			columnName = DetectionTableCameraIDColumn
+
+		case "track_id":
+			columnName = DetectionTableTrackIDColumn
+		default:
+			return fmt.Errorf("unknown field name: %v", fieldName)
+		}
+
+		var columnValue any
+		var err error
+		switch columnName {
+
+		case DetectionTableIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case DetectionTableCreatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case DetectionTableUpdatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case DetectionTableDeletedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case DetectionTableSeenAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case DetectionTableClassIDColumn:
+			columnValue, err = types.FormatInt(value)
+
+		case DetectionTableClassNameColumn:
+			columnValue, err = types.FormatString(value)
+
+		case DetectionTableScoreColumn:
+			columnValue, err = types.FormatFloat(value)
+
+		case DetectionTableCentroidColumn:
+			columnValue, err = types.FormatPoint(value)
+
+		case DetectionTableBoundingBoxColumn:
+			columnValue, err = types.FormatPolygon(value)
+
+		case DetectionTableVideoIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case DetectionTableCameraIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case DetectionTableTrackIDColumn:
+			columnValue, err = types.FormatUUID(value)
+		}
+		if err != nil {
+			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+		}
+
+		columns = append(columns, columnName)
+		values = append(values, columnValue)
+	}
+	values = append(values, m.GetPrimaryKeyValue())
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err := query.Update(
+		ctx,
+		tx,
+		DetectionTableWithSchema,
+		columns,
+		fmt.Sprintf("%v = $$??", DetectionTablePrimaryKeyColumn),
+		[]string{DetectionTablePrimaryKeyColumn},
+		values...,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update fields: %v", err)
+	}
+
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
 
 func (m *Detection) Delete(ctx context.Context, tx pgx.Tx, hardDeletes ...bool) error {
 	hardDelete := false
@@ -976,12 +1441,13 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 	isLoadQuery := possiblePathValue != nil && len(possiblePathValue.VisitedTableNames) > 0
 
 	shouldLoad := query.ShouldLoad(ctx, DetectionTable) || query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
+	shouldLoad = shouldLoad || query.ShouldLoadFromSelectionTree(ctx, DetectionTable) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
 
-	var ok bool
-	ctx, ok = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", DetectionTable, nil), !isLoadQuery)
-	if !ok && !shouldLoad {
+	var action query.PathAction
+	ctx, action = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", DetectionTable, nil), !isLoadQuery)
+	if (action == query.PathActionCycleDetected || action == query.PathActionDepthExceeded) && !shouldLoad {
 		if config.Debug() {
-			log.Printf("skipping SelectDetection early (query.ShouldLoad(): %v, query.HandleQueryPathGraphCycles(): %v)", shouldLoad, ok)
+			log.Printf("skipping SelectDetection early (query.ShouldLoad(): %v, action: %v)", shouldLoad, action)
 		}
 		return []*Detection{}, 0, 0, 0, 0, nil
 	}
@@ -1038,12 +1504,37 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 		if object == nil {
 			return nil, 0, 0, 0, 0, fmt.Errorf("assertion failed: object unexpectedly nil")
 		}
-
 		if !types.IsZeroUUID(object.VideoID) {
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, object.VideoID), true)
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, object.VideoID), true)
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionOutbound,
+				TableName:   VideoTable,
+				LocalColumn: DetectionTableVideoIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, VideoTable)
-			if ok || shouldLoad {
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected)
+			loadFK := true
+			switch action {
+			case query.PathActionCycleDetected:
+				loadFK = false
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					loadFK = false
+				}
+			case query.PathActionContinue:
+			}
+
+			if loadFK {
 				thisBefore := time.Now()
+
+				where := []string{fmt.Sprintf("%v = $1", VideoTablePrimaryKeyColumn)}
+				values := []any{object.VideoID}
+				if childNode != nil && childNode.Selected {
+					where = []string{fmt.Sprintf("%v = $$??", VideoTablePrimaryKeyColumn)}
+					values = []any{object.VideoID}
+					where = append(where, childNode.Filters.Where...)
+					values = append(values, childNode.Filters.Values...)
+				}
 
 				if config.Debug() {
 					log.Printf("loading SelectDetections->SelectVideo for object.VideoIDObject{%s: %v}", VideoTablePrimaryKeyColumn, object.VideoID)
@@ -1052,8 +1543,8 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 				object.VideoIDObject, _, _, _, _, err = SelectVideo(
 					ctx,
 					tx,
-					fmt.Sprintf("%v = $1", VideoTablePrimaryKeyColumn),
-					object.VideoID,
+					strings.Join(where, "\n    AND "),
+					values...,
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
@@ -1066,12 +1557,37 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 				}
 			}
 		}
-
 		if !types.IsZeroUUID(object.CameraID) {
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID), true)
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID), true)
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionOutbound,
+				TableName:   CameraTable,
+				LocalColumn: DetectionTableCameraIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, CameraTable)
-			if ok || shouldLoad {
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected)
+			loadFK := true
+			switch action {
+			case query.PathActionCycleDetected:
+				loadFK = false
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					loadFK = false
+				}
+			case query.PathActionContinue:
+			}
+
+			if loadFK {
 				thisBefore := time.Now()
+
+				where := []string{fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn)}
+				values := []any{object.CameraID}
+				if childNode != nil && childNode.Selected {
+					where = []string{fmt.Sprintf("%v = $$??", CameraTablePrimaryKeyColumn)}
+					values = []any{object.CameraID}
+					where = append(where, childNode.Filters.Where...)
+					values = append(values, childNode.Filters.Values...)
+				}
 
 				if config.Debug() {
 					log.Printf("loading SelectDetections->SelectCamera for object.CameraIDObject{%s: %v}", CameraTablePrimaryKeyColumn, object.CameraID)
@@ -1080,8 +1596,8 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 				object.CameraIDObject, _, _, _, _, err = SelectCamera(
 					ctx,
 					tx,
-					fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
-					object.CameraID,
+					strings.Join(where, "\n    AND "),
+					values...,
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
@@ -1094,12 +1610,37 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 				}
 			}
 		}
-
 		if !types.IsZeroUUID(object.TrackID) {
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", TrackTable, object.TrackID), true)
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", TrackTable, object.TrackID), true)
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionOutbound,
+				TableName:   TrackTable,
+				LocalColumn: DetectionTableTrackIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, TrackTable)
-			if ok || shouldLoad {
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected)
+			loadFK := true
+			switch action {
+			case query.PathActionCycleDetected:
+				loadFK = false
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					loadFK = false
+				}
+			case query.PathActionContinue:
+			}
+
+			if loadFK {
 				thisBefore := time.Now()
+
+				where := []string{fmt.Sprintf("%v = $1", TrackTablePrimaryKeyColumn)}
+				values := []any{object.TrackID}
+				if childNode != nil && childNode.Selected {
+					where = []string{fmt.Sprintf("%v = $$??", TrackTablePrimaryKeyColumn)}
+					values = []any{object.TrackID}
+					where = append(where, childNode.Filters.Where...)
+					values = append(values, childNode.Filters.Values...)
+				}
 
 				if config.Debug() {
 					log.Printf("loading SelectDetections->SelectTrack for object.TrackIDObject{%s: %v}", TrackTablePrimaryKeyColumn, object.TrackID)
@@ -1108,8 +1649,8 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 				object.TrackIDObject, _, _, _, _, err = SelectTrack(
 					ctx,
 					tx,
-					fmt.Sprintf("%v = $1", TrackTablePrimaryKeyColumn),
-					object.TrackID,
+					strings.Join(where, "\n    AND "),
+					values...,
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
@@ -2001,197 +2542,4 @@ func init() {
 		"/detections",
 		MutateRouterForDetection,
 	)
-}
-func (m *Detection) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
-	var columnName string
-	switch fieldName {
-	case "id":
-		columnName = DetectionTableIDColumn
-	case "created_at":
-		columnName = DetectionTableCreatedAtColumn
-	case "updated_at":
-		columnName = DetectionTableUpdatedAtColumn
-	case "deleted_at":
-		columnName = DetectionTableDeletedAtColumn
-	case "seen_at":
-		columnName = DetectionTableSeenAtColumn
-	case "class_id":
-		columnName = DetectionTableClassIDColumn
-	case "class_name":
-		columnName = DetectionTableClassNameColumn
-	case "score":
-		columnName = DetectionTableScoreColumn
-	case "centroid":
-		columnName = DetectionTableCentroidColumn
-	case "bounding_box":
-		columnName = DetectionTableBoundingBoxColumn
-	case "video_id":
-		columnName = DetectionTableVideoIDColumn
-	case "camera_id":
-		columnName = DetectionTableCameraIDColumn
-	case "track_id":
-		columnName = DetectionTableTrackIDColumn
-
-	default:
-		return fmt.Errorf("unknown field name: %v", fieldName)
-	}
-	var columnValue any
-	var err error
-	switch columnName {
-	case DetectionTableIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case DetectionTableCreatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case DetectionTableUpdatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case DetectionTableDeletedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case DetectionTableSeenAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case DetectionTableClassIDColumn:
-		columnValue, err = types.FormatInt(value)
-	case DetectionTableClassNameColumn:
-		columnValue, err = types.FormatString(value)
-	case DetectionTableScoreColumn:
-		columnValue, err = types.FormatFloat(value)
-	case DetectionTableCentroidColumn:
-		columnValue, err = types.FormatPoint(value)
-	case DetectionTableBoundingBoxColumn:
-		columnValue, err = types.FormatPolygon(value)
-	case DetectionTableVideoIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case DetectionTableCameraIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case DetectionTableTrackIDColumn:
-		columnValue, err = types.FormatUUID(value)
-
-	}
-	if err != nil {
-		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-	}
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err = query.Update(
-		ctx,
-		tx,
-		DetectionTableWithSchema,
-		[]string{columnName},
-		fmt.Sprintf("%v = $$??", DetectionTableIDColumn),
-		[]string{DetectionTableIDColumn},
-		columnValue,
-		m.ID,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
-}
-func (m *Detection) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
-	if len(fields) == 0 {
-		return nil
-	}
-	fieldNames := make([]string, 0, len(fields))
-	for fieldName := range fields {
-		fieldNames = append(fieldNames, fieldName)
-	}
-	sort.Strings(fieldNames)
-	columns := make([]string, 0, len(fields))
-	values := make([]any, 0, len(fields)*2)
-	for _, fieldName := range fieldNames {
-		value := fields[fieldName]
-		var columnName string
-		switch fieldName {
-		case "id":
-			columnName = DetectionTableIDColumn
-		case "created_at":
-			columnName = DetectionTableCreatedAtColumn
-		case "updated_at":
-			columnName = DetectionTableUpdatedAtColumn
-		case "deleted_at":
-			columnName = DetectionTableDeletedAtColumn
-		case "seen_at":
-			columnName = DetectionTableSeenAtColumn
-		case "class_id":
-			columnName = DetectionTableClassIDColumn
-		case "class_name":
-			columnName = DetectionTableClassNameColumn
-		case "score":
-			columnName = DetectionTableScoreColumn
-		case "centroid":
-			columnName = DetectionTableCentroidColumn
-		case "bounding_box":
-			columnName = DetectionTableBoundingBoxColumn
-		case "video_id":
-			columnName = DetectionTableVideoIDColumn
-		case "camera_id":
-			columnName = DetectionTableCameraIDColumn
-		case "track_id":
-			columnName = DetectionTableTrackIDColumn
-
-		default:
-			return fmt.Errorf("unknown field name: %v", fieldName)
-		}
-		var columnValue any
-		var err error
-		switch columnName {
-		case DetectionTableIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case DetectionTableCreatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case DetectionTableUpdatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case DetectionTableDeletedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case DetectionTableSeenAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case DetectionTableClassIDColumn:
-			columnValue, err = types.FormatInt(value)
-		case DetectionTableClassNameColumn:
-			columnValue, err = types.FormatString(value)
-		case DetectionTableScoreColumn:
-			columnValue, err = types.FormatFloat(value)
-		case DetectionTableCentroidColumn:
-			columnValue, err = types.FormatPoint(value)
-		case DetectionTableBoundingBoxColumn:
-			columnValue, err = types.FormatPolygon(value)
-		case DetectionTableVideoIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case DetectionTableCameraIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case DetectionTableTrackIDColumn:
-			columnValue, err = types.FormatUUID(value)
-
-		}
-		if err != nil {
-			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-		}
-		columns = append(columns, columnName)
-		values = append(values, columnValue)
-	}
-	values = append(values, m.ID)
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err := query.Update(
-		ctx,
-		tx,
-		DetectionTableWithSchema,
-		columns,
-		fmt.Sprintf("%v = $$??", DetectionTableIDColumn),
-		[]string{DetectionTableIDColumn},
-		values...,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update fields: %v", err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
 }

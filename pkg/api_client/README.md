@@ -78,34 +78,34 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*CameraAPI* | [**DeleteCamera**](docs/CameraAPI.md#deletecamera) | **Delete** /api/cameras/{primaryKey} |
-*CameraAPI* | [**GetCamera**](docs/CameraAPI.md#getcamera) | **Get** /api/cameras/{primaryKey} |
-*CameraAPI* | [**GetCameras**](docs/CameraAPI.md#getcameras) | **Get** /api/cameras |
-*CameraAPI* | [**PatchCamera**](docs/CameraAPI.md#patchcamera) | **Patch** /api/cameras/{primaryKey} |
-*CameraAPI* | [**PostCameras**](docs/CameraAPI.md#postcameras) | **Post** /api/cameras |
-*CameraAPI* | [**PostCamerasSegmentProducerClaim**](docs/CameraAPI.md#postcamerassegmentproducerclaim) | **Post** /api/cameras/{primaryKey}/segment-producer-claim |
-*CameraAPI* | [**PostCamerasStreamProducerClaim**](docs/CameraAPI.md#postcamerasstreamproducerclaim) | **Post** /api/cameras/{primaryKey}/stream-producer-claim |
-*DetectionAPI* | [**DeleteDetection**](docs/DetectionAPI.md#deletedetection) | **Delete** /api/detections/{primaryKey} |
-*DetectionAPI* | [**GetDetection**](docs/DetectionAPI.md#getdetection) | **Get** /api/detections/{primaryKey} |
-*DetectionAPI* | [**GetDetections**](docs/DetectionAPI.md#getdetections) | **Get** /api/detections |
-*DetectionAPI* | [**PatchDetection**](docs/DetectionAPI.md#patchdetection) | **Patch** /api/detections/{primaryKey} |
-*DetectionAPI* | [**PostDetections**](docs/DetectionAPI.md#postdetections) | **Post** /api/detections |
-*ObjectDetectorClaimVideoAPI* | [**PostObjectDetectorClaimVideos**](docs/ObjectDetectorClaimVideoAPI.md#postobjectdetectorclaimvideos) | **Post** /api/object-detector-claim-video |
-*ObjectTrackerClaimVideoAPI* | [**PostObjectTrackerClaimVideos**](docs/ObjectTrackerClaimVideoAPI.md#postobjecttrackerclaimvideos) | **Post** /api/object-tracker-claim-video |
-*SegmentProducerClaimCameraAPI* | [**PostSegmentProducerClaimCameras**](docs/SegmentProducerClaimCameraAPI.md#postsegmentproducerclaimcameras) | **Post** /api/segment-producer-claim-camera |
-*StreamProducerClaimCameraAPI* | [**PostStreamProducerClaimCameras**](docs/StreamProducerClaimCameraAPI.md#poststreamproducerclaimcameras) | **Post** /api/stream-producer-claim-camera |
-*TrackAPI* | [**DeleteTrack**](docs/TrackAPI.md#deletetrack) | **Delete** /api/tracks/{primaryKey} |
-*TrackAPI* | [**GetTrack**](docs/TrackAPI.md#gettrack) | **Get** /api/tracks/{primaryKey} |
-*TrackAPI* | [**GetTracks**](docs/TrackAPI.md#gettracks) | **Get** /api/tracks |
-*TrackAPI* | [**PatchTrack**](docs/TrackAPI.md#patchtrack) | **Patch** /api/tracks/{primaryKey} |
-*TrackAPI* | [**PostTracks**](docs/TrackAPI.md#posttracks) | **Post** /api/tracks |
-*VideoAPI* | [**DeleteVideo**](docs/VideoAPI.md#deletevideo) | **Delete** /api/videos/{primaryKey} |
-*VideoAPI* | [**GetVideo**](docs/VideoAPI.md#getvideo) | **Get** /api/videos/{primaryKey} |
-*VideoAPI* | [**GetVideos**](docs/VideoAPI.md#getvideos) | **Get** /api/videos |
-*VideoAPI* | [**PatchVideo**](docs/VideoAPI.md#patchvideo) | **Patch** /api/videos/{primaryKey} |
-*VideoAPI* | [**PostVideos**](docs/VideoAPI.md#postvideos) | **Post** /api/videos |
-*VideoAPI* | [**PostVideosObjectDetectorClaim**](docs/VideoAPI.md#postvideosobjectdetectorclaim) | **Post** /api/videos/{primaryKey}/object-detector-claim |
-*VideoAPI* | [**PostVideosObjectTrackerClaim**](docs/VideoAPI.md#postvideosobjecttrackerclaim) | **Post** /api/videos/{primaryKey}/object-tracker-claim |
+*CameraAPI* | [**DeleteCamera**](docs/CameraAPI.md#deletecamera) | **Delete** /api/cameras/{primaryKey} | 
+*CameraAPI* | [**GetCamera**](docs/CameraAPI.md#getcamera) | **Get** /api/cameras/{primaryKey} | 
+*CameraAPI* | [**GetCameras**](docs/CameraAPI.md#getcameras) | **Get** /api/cameras | 
+*CameraAPI* | [**PatchCamera**](docs/CameraAPI.md#patchcamera) | **Patch** /api/cameras/{primaryKey} | 
+*CameraAPI* | [**PostCameras**](docs/CameraAPI.md#postcameras) | **Post** /api/cameras | 
+*CameraAPI* | [**PostCamerasSegmentProducerClaim**](docs/CameraAPI.md#postcamerassegmentproducerclaim) | **Post** /api/cameras/{primaryKey}/segment-producer-claim | 
+*CameraAPI* | [**PostCamerasStreamProducerClaim**](docs/CameraAPI.md#postcamerasstreamproducerclaim) | **Post** /api/cameras/{primaryKey}/stream-producer-claim | 
+*DetectionAPI* | [**DeleteDetection**](docs/DetectionAPI.md#deletedetection) | **Delete** /api/detections/{primaryKey} | 
+*DetectionAPI* | [**GetDetection**](docs/DetectionAPI.md#getdetection) | **Get** /api/detections/{primaryKey} | 
+*DetectionAPI* | [**GetDetections**](docs/DetectionAPI.md#getdetections) | **Get** /api/detections | 
+*DetectionAPI* | [**PatchDetection**](docs/DetectionAPI.md#patchdetection) | **Patch** /api/detections/{primaryKey} | 
+*DetectionAPI* | [**PostDetections**](docs/DetectionAPI.md#postdetections) | **Post** /api/detections | 
+*ObjectDetectorClaimVideoAPI* | [**PostObjectDetectorClaimVideos**](docs/ObjectDetectorClaimVideoAPI.md#postobjectdetectorclaimvideos) | **Post** /api/object-detector-claim-video | 
+*ObjectTrackerClaimVideoAPI* | [**PostObjectTrackerClaimVideos**](docs/ObjectTrackerClaimVideoAPI.md#postobjecttrackerclaimvideos) | **Post** /api/object-tracker-claim-video | 
+*SegmentProducerClaimCameraAPI* | [**PostSegmentProducerClaimCameras**](docs/SegmentProducerClaimCameraAPI.md#postsegmentproducerclaimcameras) | **Post** /api/segment-producer-claim-camera | 
+*StreamProducerClaimCameraAPI* | [**PostStreamProducerClaimCameras**](docs/StreamProducerClaimCameraAPI.md#poststreamproducerclaimcameras) | **Post** /api/stream-producer-claim-camera | 
+*TrackAPI* | [**DeleteTrack**](docs/TrackAPI.md#deletetrack) | **Delete** /api/tracks/{primaryKey} | 
+*TrackAPI* | [**GetTrack**](docs/TrackAPI.md#gettrack) | **Get** /api/tracks/{primaryKey} | 
+*TrackAPI* | [**GetTracks**](docs/TrackAPI.md#gettracks) | **Get** /api/tracks | 
+*TrackAPI* | [**PatchTrack**](docs/TrackAPI.md#patchtrack) | **Patch** /api/tracks/{primaryKey} | 
+*TrackAPI* | [**PostTracks**](docs/TrackAPI.md#posttracks) | **Post** /api/tracks | 
+*VideoAPI* | [**DeleteVideo**](docs/VideoAPI.md#deletevideo) | **Delete** /api/videos/{primaryKey} | 
+*VideoAPI* | [**GetVideo**](docs/VideoAPI.md#getvideo) | **Get** /api/videos/{primaryKey} | 
+*VideoAPI* | [**GetVideos**](docs/VideoAPI.md#getvideos) | **Get** /api/videos | 
+*VideoAPI* | [**PatchVideo**](docs/VideoAPI.md#patchvideo) | **Patch** /api/videos/{primaryKey} | 
+*VideoAPI* | [**PostVideos**](docs/VideoAPI.md#postvideos) | **Post** /api/videos | 
+*VideoAPI* | [**PostVideosObjectDetectorClaim**](docs/VideoAPI.md#postvideosobjectdetectorclaim) | **Post** /api/videos/{primaryKey}/object-detector-claim | 
+*VideoAPI* | [**PostVideosObjectTrackerClaim**](docs/VideoAPI.md#postvideosobjecttrackerclaim) | **Post** /api/videos/{primaryKey}/object-tracker-claim | 
 
 
 ## Documentation For Models

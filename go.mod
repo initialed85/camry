@@ -2,14 +2,12 @@ module github.com/initialed85/camry
 
 go 1.26.0
 
-// replace github.com/initialed85/djangolang => ../djangolang
-
 require (
 	github.com/cridenour/go-postgis v1.0.1
 	github.com/go-chi/chi/v5 v5.3.2
 	github.com/gomodule/redigo v1.9.3
 	github.com/google/uuid v1.6.0
-	github.com/initialed85/djangolang v0.1.37
+	github.com/initialed85/djangolang v0.1.44
 	github.com/jackc/pgx/v5 v5.11.0
 	github.com/stretchr/testify v1.11.1
 	gopkg.in/yaml.v2 v2.4.0

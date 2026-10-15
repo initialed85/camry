@@ -4,22 +4,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BoundingBox** | Pointer to [**[]ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional]
-**CameraId** | Pointer to **string** |  | [optional]
-**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional]
-**Centroid** | Pointer to [**ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional]
-**ClassId** | Pointer to **int64** |  | [optional]
-**ClassName** | Pointer to **string** |  | [optional]
-**CreatedAt** | Pointer to **time.Time** |  | [optional]
-**DeletedAt** | Pointer to **time.Time** |  | [optional]
-**Id** | Pointer to **string** |  | [optional]
-**Score** | Pointer to **float64** |  | [optional]
-**SeenAt** | Pointer to **time.Time** |  | [optional]
-**TrackId** | Pointer to **string** |  | [optional]
-**TrackIdObject** | Pointer to [**Track**](Track.md) |  | [optional]
-**UpdatedAt** | Pointer to **time.Time** |  | [optional]
-**VideoId** | Pointer to **string** |  | [optional]
-**VideoIdObject** | Pointer to [**Video**](Video.md) |  | [optional]
+**BoundingBox** | Pointer to [**[]ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional] 
+**CameraId** | Pointer to **string** |  | [optional] 
+**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional] 
+**Centroid** | Pointer to [**ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional] 
+**ClassId** | Pointer to **int64** |  | [optional] 
+**ClassName** | Pointer to **string** |  | [optional] 
+**CreatedAt** | Pointer to **time.Time** |  | [optional] 
+**DeletedAt** | Pointer to **time.Time** |  | [optional] 
+**Id** | Pointer to **string** |  | [optional] 
+**Score** | Pointer to **float64** |  | [optional] 
+**SeenAt** | Pointer to **time.Time** |  | [optional] 
+**TrackId** | Pointer to **string** |  | [optional] 
+**TrackIdObject** | Pointer to [**Track**](Track.md) |  | [optional] 
+**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
+**VideoId** | Pointer to **string** |  | [optional] 
+**VideoIdObject** | Pointer to [**Video**](Video.md) |  | [optional] 
 
 ## Methods
 

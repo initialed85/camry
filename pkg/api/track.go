@@ -32,6 +32,7 @@ import (
 
 type Track struct {
 	ID                                  uuid.UUID     `json:"id"`
+	Key                                 uuid.UUID     `json:"key"`
 	CreatedAt                           time.Time     `json:"created_at"`
 	UpdatedAt                           time.Time     `json:"updated_at"`
 	DeletedAt                           *time.Time    `json:"deleted_at"`
@@ -51,7 +52,6 @@ type Track struct {
 	Trajectory                          any           `json:"trajectory"`
 	IsStatic                            bool          `json:"is_static"`
 	Status                              string        `json:"status"`
-	Key                                 uuid.UUID     `json:"key"`
 	ReferencedByDetectionTrackIDObjects []*Detection  `json:"referenced_by_detection_track_id_objects"`
 }
 
@@ -63,6 +63,7 @@ var TrackTableNamespaceID int32 = 1337 + 4
 
 var (
 	TrackTableIDColumn          = "id"
+	TrackTableKeyColumn         = "key"
 	TrackTableCreatedAtColumn   = "created_at"
 	TrackTableUpdatedAtColumn   = "updated_at"
 	TrackTableDeletedAtColumn   = "deleted_at"
@@ -80,11 +81,11 @@ var (
 	TrackTableTrajectoryColumn  = "trajectory"
 	TrackTableIsStaticColumn    = "is_static"
 	TrackTableStatusColumn      = "status"
-	TrackTableKeyColumn         = "key"
 )
 
 var (
 	TrackTableIDColumnWithTypeCast          = `"id" AS id`
+	TrackTableKeyColumnWithTypeCast         = `"key" AS key`
 	TrackTableCreatedAtColumnWithTypeCast   = `"created_at" AS created_at`
 	TrackTableUpdatedAtColumnWithTypeCast   = `"updated_at" AS updated_at`
 	TrackTableDeletedAtColumnWithTypeCast   = `"deleted_at" AS deleted_at`
@@ -102,11 +103,11 @@ var (
 	TrackTableTrajectoryColumnWithTypeCast  = `"trajectory" AS trajectory`
 	TrackTableIsStaticColumnWithTypeCast    = `"is_static" AS is_static`
 	TrackTableStatusColumnWithTypeCast      = `"status" AS status`
-	TrackTableKeyColumnWithTypeCast         = `"key" AS key`
 )
 
 var TrackTableColumns = []string{
 	TrackTableIDColumn,
+	TrackTableKeyColumn,
 	TrackTableCreatedAtColumn,
 	TrackTableUpdatedAtColumn,
 	TrackTableDeletedAtColumn,
@@ -124,11 +125,11 @@ var TrackTableColumns = []string{
 	TrackTableTrajectoryColumn,
 	TrackTableIsStaticColumn,
 	TrackTableStatusColumn,
-	TrackTableKeyColumn,
 }
 
 var TrackTableColumnsWithTypeCasts = []string{
 	TrackTableIDColumnWithTypeCast,
+	TrackTableKeyColumnWithTypeCast,
 	TrackTableCreatedAtColumnWithTypeCast,
 	TrackTableUpdatedAtColumnWithTypeCast,
 	TrackTableDeletedAtColumnWithTypeCast,
@@ -146,7 +147,6 @@ var TrackTableColumnsWithTypeCasts = []string{
 	TrackTableTrajectoryColumnWithTypeCast,
 	TrackTableIsStaticColumnWithTypeCast,
 	TrackTableStatusColumnWithTypeCast,
-	TrackTableKeyColumnWithTypeCast,
 }
 
 var TrackIntrospectedTable *introspect.Table
@@ -199,6 +199,304 @@ func (m *Track) GetPrimaryKeyColumn() string {
 func (m *Track) GetPrimaryKeyValue() any {
 	return m.ID
 }
+func (Track) GetQueryInfo() query.ModelQueryInfo {
+	return query.ModelQueryInfo{
+		TableName:        "track",
+		PrimaryKeyColumn: "id",
+		Relationships: []query.RelationshipDefinition{
+			{
+				Name:         "camera_id",
+				Direction:    query.RelationDirectionOutbound,
+				TargetTable:  "camera",
+				LocalColumn:  "camera_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityOne,
+			},
+			{
+				Name:         "video_id",
+				Direction:    query.RelationDirectionOutbound,
+				TargetTable:  "video",
+				LocalColumn:  "video_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityOne,
+			},
+			{
+				Name:         "referenced_by_Detection_TrackID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "detection",
+				LocalColumn:  "track_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
+			},
+		},
+		Filters: []query.FilterDefinition{
+			{
+				Name:     "key",
+				DataType: "uuid",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "created_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "updated_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "deleted_at",
+				DataType: "timestamp with time zone",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "camera_id",
+				DataType: "uuid",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "video_id",
+				DataType: "uuid",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "class_id",
+				DataType: "bigint",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "class_name",
+				DataType: "text",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "started_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "ended_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "frame_count",
+				DataType: "integer",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "mean_score",
+				DataType: "double precision",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "max_score",
+				DataType: "double precision",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "trajectory",
+				DataType: "jsonb",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpContains,
+					query.FilterOpNotContains,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "is_static",
+				DataType: "boolean",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIsFalse,
+					query.FilterOpIsTrue,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "status",
+				DataType: "text",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+		},
+	}
+}
 
 func (m *Track) FromItem(item map[string]any) error {
 	if item == nil {
@@ -245,6 +543,25 @@ func (m *Track) FromItem(item map[string]any) error {
 			}
 
 			m.ID = temp2
+
+		case "key":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseUUID(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(uuid.UUID)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uukey.UUID", temp1))
+				}
+			}
+
+			m.Key = temp2
 
 		case "created_at":
 			if v == nil {
@@ -569,25 +886,6 @@ func (m *Track) FromItem(item map[string]any) error {
 
 			m.Status = temp2
 
-		case "key":
-			if v == nil {
-				continue
-			}
-
-			temp1, err := types.ParseUUID(v)
-			if err != nil {
-				return wrapError(k, v, err)
-			}
-
-			temp2, ok := temp1.(uuid.UUID)
-			if !ok {
-				if temp1 != nil {
-					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uukey.UUID", temp1))
-				}
-			}
-
-			m.Key = temp2
-
 		}
 	}
 
@@ -634,6 +932,7 @@ func (m *Track) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	}
 
 	m.ID = o.ID
+	m.Key = o.Key
 	m.CreatedAt = o.CreatedAt
 	m.UpdatedAt = o.UpdatedAt
 	m.DeletedAt = o.DeletedAt
@@ -653,7 +952,6 @@ func (m *Track) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	m.Trajectory = o.Trajectory
 	m.IsStatic = o.IsStatic
 	m.Status = o.Status
-	m.Key = o.Key
 	m.ReferencedByDetectionTrackIDObjects = o.ReferencedByDetectionTrackIDObjects
 
 	return nil
@@ -669,6 +967,17 @@ func (m *Track) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, forc
 		v, err := types.FormatUUID(m.ID)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.ID; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroUUID(m.Key) || slices.Contains(forceSetValuesForFields, TrackTableKeyColumn) || isRequired(TrackTableColumnLookup, TrackTableKeyColumn) {
+		columns = append(columns, TrackTableKeyColumn)
+
+		v, err := types.FormatUUID(m.Key)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.Key; %v", err)
 		}
 
 		values = append(values, v)
@@ -861,17 +1170,6 @@ func (m *Track) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, forc
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroUUID(m.Key) || slices.Contains(forceSetValuesForFields, TrackTableKeyColumn) || isRequired(TrackTableColumnLookup, TrackTableKeyColumn) {
-		columns = append(columns, TrackTableKeyColumn)
-
-		v, err := types.FormatUUID(m.Key)
-		if err != nil {
-			return nil, nil, fmt.Errorf("failed to handle m.Key; %v", err)
-		}
-
-		values = append(values, v)
-	}
-
 	return columns, values, nil
 }
 
@@ -940,6 +1238,17 @@ func (m *Track) Insert(ctx context.Context, tx pgx.Tx, setPrimaryKey bool, setZe
 func (m *Track) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, forceSetValuesForFields ...string) error {
 	columns := make([]string, 0)
 	values := make([]any, 0)
+
+	if setZeroValues || !types.IsZeroUUID(m.Key) || slices.Contains(forceSetValuesForFields, TrackTableKeyColumn) {
+		columns = append(columns, TrackTableKeyColumn)
+
+		v, err := types.FormatUUID(m.Key)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.Key; %v", err)
+		}
+
+		values = append(values, v)
+	}
 
 	if setZeroValues || !types.IsZeroTime(m.CreatedAt) || slices.Contains(forceSetValuesForFields, TrackTableCreatedAtColumn) {
 		columns = append(columns, TrackTableCreatedAtColumn)
@@ -1128,17 +1437,6 @@ func (m *Track) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		values = append(values, v)
 	}
 
-	if setZeroValues || !types.IsZeroUUID(m.Key) || slices.Contains(forceSetValuesForFields, TrackTableKeyColumn) {
-		columns = append(columns, TrackTableKeyColumn)
-
-		v, err := types.FormatUUID(m.Key)
-		if err != nil {
-			return fmt.Errorf("failed to handle m.Key; %v", err)
-		}
-
-		values = append(values, v)
-	}
-
 	v, err := types.FormatUUID(m.ID)
 	if err != nil {
 		return fmt.Errorf("failed to handle m.ID; %v", err)
@@ -1165,6 +1463,335 @@ func (m *Track) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 	}
 
 	err = m.Reload(ctx, tx, slices.Contains(forceSetValuesForFields, "deleted_at"))
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
+func (m *Track) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
+	var columnName string
+	switch fieldName {
+
+	case "id":
+		columnName = TrackTableIDColumn
+
+	case "key":
+		columnName = TrackTableKeyColumn
+
+	case "created_at":
+		columnName = TrackTableCreatedAtColumn
+
+	case "updated_at":
+		columnName = TrackTableUpdatedAtColumn
+
+	case "deleted_at":
+		columnName = TrackTableDeletedAtColumn
+
+	case "camera_id":
+		columnName = TrackTableCameraIDColumn
+
+	case "video_id":
+		columnName = TrackTableVideoIDColumn
+
+	case "class_id":
+		columnName = TrackTableClassIDColumn
+
+	case "class_name":
+		columnName = TrackTableClassNameColumn
+
+	case "started_at":
+		columnName = TrackTableStartedAtColumn
+
+	case "ended_at":
+		columnName = TrackTableEndedAtColumn
+
+	case "frame_count":
+		columnName = TrackTableFrameCountColumn
+
+	case "mean_score":
+		columnName = TrackTableMeanScoreColumn
+
+	case "max_score":
+		columnName = TrackTableMaxScoreColumn
+
+	case "centroid":
+		columnName = TrackTableCentroidColumn
+
+	case "bounding_box":
+		columnName = TrackTableBoundingBoxColumn
+
+	case "trajectory":
+		columnName = TrackTableTrajectoryColumn
+
+	case "is_static":
+		columnName = TrackTableIsStaticColumn
+
+	case "status":
+		columnName = TrackTableStatusColumn
+	default:
+		return fmt.Errorf("unknown field name: %v", fieldName)
+	}
+
+	var columnValue any
+	var err error
+	switch columnName {
+
+	case TrackTableIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case TrackTableKeyColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case TrackTableCreatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case TrackTableUpdatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case TrackTableDeletedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case TrackTableCameraIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case TrackTableVideoIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case TrackTableClassIDColumn:
+		columnValue, err = types.FormatInt(value)
+
+	case TrackTableClassNameColumn:
+		columnValue, err = types.FormatString(value)
+
+	case TrackTableStartedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case TrackTableEndedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case TrackTableFrameCountColumn:
+		columnValue, err = types.FormatInt(value)
+
+	case TrackTableMeanScoreColumn:
+		columnValue, err = types.FormatFloat(value)
+
+	case TrackTableMaxScoreColumn:
+		columnValue, err = types.FormatFloat(value)
+
+	case TrackTableCentroidColumn:
+		columnValue, err = types.FormatPoint(value)
+
+	case TrackTableBoundingBoxColumn:
+		columnValue, err = types.FormatPolygon(value)
+
+	case TrackTableTrajectoryColumn:
+		columnValue, err = types.FormatJSON(value)
+
+	case TrackTableIsStaticColumn:
+		columnValue, err = types.FormatBool(value)
+
+	case TrackTableStatusColumn:
+		columnValue, err = types.FormatString(value)
+	}
+	if err != nil {
+		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+	}
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err = query.Update(
+		ctx,
+		tx,
+		TrackTableWithSchema,
+		[]string{columnName},
+		fmt.Sprintf("%v = $$??", TrackTablePrimaryKeyColumn),
+		[]string{TrackTablePrimaryKeyColumn},
+		columnValue,
+		m.GetPrimaryKeyValue(),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
+	}
+
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
+
+func (m *Track) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
+	if len(fields) == 0 {
+		return nil
+	}
+	fieldNames := make([]string, 0, len(fields))
+	for fieldName := range fields {
+		fieldNames = append(fieldNames, fieldName)
+	}
+	sort.Strings(fieldNames)
+
+	columns := make([]string, 0, len(fields))
+	values := make([]any, 0, len(fields)*2)
+
+	for _, fieldName := range fieldNames {
+		value := fields[fieldName]
+		var columnName string
+		switch fieldName {
+
+		case "id":
+			columnName = TrackTableIDColumn
+
+		case "key":
+			columnName = TrackTableKeyColumn
+
+		case "created_at":
+			columnName = TrackTableCreatedAtColumn
+
+		case "updated_at":
+			columnName = TrackTableUpdatedAtColumn
+
+		case "deleted_at":
+			columnName = TrackTableDeletedAtColumn
+
+		case "camera_id":
+			columnName = TrackTableCameraIDColumn
+
+		case "video_id":
+			columnName = TrackTableVideoIDColumn
+
+		case "class_id":
+			columnName = TrackTableClassIDColumn
+
+		case "class_name":
+			columnName = TrackTableClassNameColumn
+
+		case "started_at":
+			columnName = TrackTableStartedAtColumn
+
+		case "ended_at":
+			columnName = TrackTableEndedAtColumn
+
+		case "frame_count":
+			columnName = TrackTableFrameCountColumn
+
+		case "mean_score":
+			columnName = TrackTableMeanScoreColumn
+
+		case "max_score":
+			columnName = TrackTableMaxScoreColumn
+
+		case "centroid":
+			columnName = TrackTableCentroidColumn
+
+		case "bounding_box":
+			columnName = TrackTableBoundingBoxColumn
+
+		case "trajectory":
+			columnName = TrackTableTrajectoryColumn
+
+		case "is_static":
+			columnName = TrackTableIsStaticColumn
+
+		case "status":
+			columnName = TrackTableStatusColumn
+		default:
+			return fmt.Errorf("unknown field name: %v", fieldName)
+		}
+
+		var columnValue any
+		var err error
+		switch columnName {
+
+		case TrackTableIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case TrackTableKeyColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case TrackTableCreatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case TrackTableUpdatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case TrackTableDeletedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case TrackTableCameraIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case TrackTableVideoIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case TrackTableClassIDColumn:
+			columnValue, err = types.FormatInt(value)
+
+		case TrackTableClassNameColumn:
+			columnValue, err = types.FormatString(value)
+
+		case TrackTableStartedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case TrackTableEndedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case TrackTableFrameCountColumn:
+			columnValue, err = types.FormatInt(value)
+
+		case TrackTableMeanScoreColumn:
+			columnValue, err = types.FormatFloat(value)
+
+		case TrackTableMaxScoreColumn:
+			columnValue, err = types.FormatFloat(value)
+
+		case TrackTableCentroidColumn:
+			columnValue, err = types.FormatPoint(value)
+
+		case TrackTableBoundingBoxColumn:
+			columnValue, err = types.FormatPolygon(value)
+
+		case TrackTableTrajectoryColumn:
+			columnValue, err = types.FormatJSON(value)
+
+		case TrackTableIsStaticColumn:
+			columnValue, err = types.FormatBool(value)
+
+		case TrackTableStatusColumn:
+			columnValue, err = types.FormatString(value)
+		}
+		if err != nil {
+			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+		}
+
+		columns = append(columns, columnName)
+		values = append(values, columnValue)
+	}
+	values = append(values, m.GetPrimaryKeyValue())
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err := query.Update(
+		ctx,
+		tx,
+		TrackTableWithSchema,
+		columns,
+		fmt.Sprintf("%v = $$??", TrackTablePrimaryKeyColumn),
+		[]string{TrackTablePrimaryKeyColumn},
+		values...,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update fields: %v", err)
+	}
+
+	err = m.Reload(ctx, tx, false)
 	if err != nil {
 		return fmt.Errorf("failed to reload after update")
 	}
@@ -1258,12 +1885,13 @@ func SelectTracks(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 	isLoadQuery := possiblePathValue != nil && len(possiblePathValue.VisitedTableNames) > 0
 
 	shouldLoad := query.ShouldLoad(ctx, TrackTable) || query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", TrackTable))
+	shouldLoad = shouldLoad || query.ShouldLoadFromSelectionTree(ctx, TrackTable) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", TrackTable))
 
-	var ok bool
-	ctx, ok = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", TrackTable, nil), !isLoadQuery)
-	if !ok && !shouldLoad {
+	var action query.PathAction
+	ctx, action = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", TrackTable, nil), !isLoadQuery)
+	if (action == query.PathActionCycleDetected || action == query.PathActionDepthExceeded) && !shouldLoad {
 		if config.Debug() {
-			log.Printf("skipping SelectTrack early (query.ShouldLoad(): %v, query.HandleQueryPathGraphCycles(): %v)", shouldLoad, ok)
+			log.Printf("skipping SelectTrack early (query.ShouldLoad(): %v, action: %v)", shouldLoad, action)
 		}
 		return []*Track{}, 0, 0, 0, 0, nil
 	}
@@ -1320,12 +1948,37 @@ func SelectTracks(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 		if object == nil {
 			return nil, 0, 0, 0, 0, fmt.Errorf("assertion failed: object unexpectedly nil")
 		}
-
 		if !types.IsZeroUUID(object.CameraID) {
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID), true)
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID), true)
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionOutbound,
+				TableName:   CameraTable,
+				LocalColumn: TrackTableCameraIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, CameraTable)
-			if ok || shouldLoad {
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected)
+			loadFK := true
+			switch action {
+			case query.PathActionCycleDetected:
+				loadFK = false
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					loadFK = false
+				}
+			case query.PathActionContinue:
+			}
+
+			if loadFK {
 				thisBefore := time.Now()
+
+				where := []string{fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn)}
+				values := []any{object.CameraID}
+				if childNode != nil && childNode.Selected {
+					where = []string{fmt.Sprintf("%v = $$??", CameraTablePrimaryKeyColumn)}
+					values = []any{object.CameraID}
+					where = append(where, childNode.Filters.Where...)
+					values = append(values, childNode.Filters.Values...)
+				}
 
 				if config.Debug() {
 					log.Printf("loading SelectTracks->SelectCamera for object.CameraIDObject{%s: %v}", CameraTablePrimaryKeyColumn, object.CameraID)
@@ -1334,8 +1987,8 @@ func SelectTracks(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				object.CameraIDObject, _, _, _, _, err = SelectCamera(
 					ctx,
 					tx,
-					fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
-					object.CameraID,
+					strings.Join(where, "\n    AND "),
+					values...,
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
@@ -1348,12 +2001,37 @@ func SelectTracks(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				}
 			}
 		}
-
 		if !types.IsZeroUUID(object.VideoID) {
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, object.VideoID), true)
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, object.VideoID), true)
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionOutbound,
+				TableName:   VideoTable,
+				LocalColumn: TrackTableVideoIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, VideoTable)
-			if ok || shouldLoad {
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected)
+			loadFK := true
+			switch action {
+			case query.PathActionCycleDetected:
+				loadFK = false
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					loadFK = false
+				}
+			case query.PathActionContinue:
+			}
+
+			if loadFK {
 				thisBefore := time.Now()
+
+				where := []string{fmt.Sprintf("%v = $1", VideoTablePrimaryKeyColumn)}
+				values := []any{object.VideoID}
+				if childNode != nil && childNode.Selected {
+					where = []string{fmt.Sprintf("%v = $$??", VideoTablePrimaryKeyColumn)}
+					values = []any{object.VideoID}
+					where = append(where, childNode.Filters.Where...)
+					values = append(values, childNode.Filters.Values...)
+				}
 
 				if config.Debug() {
 					log.Printf("loading SelectTracks->SelectVideo for object.VideoIDObject{%s: %v}", VideoTablePrimaryKeyColumn, object.VideoID)
@@ -1362,8 +2040,8 @@ func SelectTracks(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				object.VideoIDObject, _, _, _, _, err = SelectVideo(
 					ctx,
 					tx,
-					fmt.Sprintf("%v = $1", VideoTablePrimaryKeyColumn),
-					object.VideoID,
+					strings.Join(where, "\n    AND "),
+					values...,
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
@@ -1376,36 +2054,51 @@ func SelectTracks(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				}
 			}
 		}
-
 		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   DetectionTable,
+				LocalColumn: DetectionTableTrackIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", DetectionTable, object.GetPrimaryKeyValue()), true)
-			if ok || shouldLoad {
-				thisBefore := time.Now()
-
-				if config.Debug() {
-					log.Printf("loading SelectTracks->SelectDetections for object.ReferencedByDetectionTrackIDObjects")
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", DetectionTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
 				}
-
-				object.ReferencedByDetectionTrackIDObjects, _, _, _, _, err = SelectDetections(
-					ctx,
-					tx,
-					fmt.Sprintf("%v = $1", DetectionTableTrackIDColumn),
-					nil,
-					nil,
-					nil,
-					object.GetPrimaryKeyValue(),
-				)
-				if err != nil {
-					if !errors.Is(err, sql.ErrNoRows) {
-						return err
-					}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
 				}
+			}
 
-				if config.Debug() {
-					log.Printf("loaded SelectTracks->SelectDetections for object.ReferencedByDetectionTrackIDObjects in %s", time.Since(thisBefore))
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectTracks->SelectDetections for object.ReferencedByDetectionTrackIDObjects")
+			}
+
+			object.ReferencedByDetectionTrackIDObjects, _, _, _, _, err = SelectDetections(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", DetectionTableTrackIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
 				}
+			}
 
+			if config.Debug() {
+				log.Printf("loaded SelectTracks->SelectDetections for object.ReferencedByDetectionTrackIDObjects in %s", time.Since(thisBefore))
 			}
 
 			return nil
@@ -2292,245 +2985,4 @@ func init() {
 		"/tracks",
 		MutateRouterForTrack,
 	)
-}
-func (m *Track) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
-	var columnName string
-	switch fieldName {
-	case "id":
-		columnName = TrackTableIDColumn
-	case "created_at":
-		columnName = TrackTableCreatedAtColumn
-	case "updated_at":
-		columnName = TrackTableUpdatedAtColumn
-	case "deleted_at":
-		columnName = TrackTableDeletedAtColumn
-	case "camera_id":
-		columnName = TrackTableCameraIDColumn
-	case "video_id":
-		columnName = TrackTableVideoIDColumn
-	case "class_id":
-		columnName = TrackTableClassIDColumn
-	case "class_name":
-		columnName = TrackTableClassNameColumn
-	case "started_at":
-		columnName = TrackTableStartedAtColumn
-	case "ended_at":
-		columnName = TrackTableEndedAtColumn
-	case "frame_count":
-		columnName = TrackTableFrameCountColumn
-	case "mean_score":
-		columnName = TrackTableMeanScoreColumn
-	case "max_score":
-		columnName = TrackTableMaxScoreColumn
-	case "centroid":
-		columnName = TrackTableCentroidColumn
-	case "bounding_box":
-		columnName = TrackTableBoundingBoxColumn
-	case "trajectory":
-		columnName = TrackTableTrajectoryColumn
-	case "is_static":
-		columnName = TrackTableIsStaticColumn
-	case "status":
-		columnName = TrackTableStatusColumn
-	case "key":
-		columnName = TrackTableKeyColumn
-
-	default:
-		return fmt.Errorf("unknown field name: %v", fieldName)
-	}
-	var columnValue any
-	var err error
-	switch columnName {
-	case TrackTableIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case TrackTableCreatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case TrackTableUpdatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case TrackTableDeletedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case TrackTableCameraIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case TrackTableVideoIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case TrackTableClassIDColumn:
-		columnValue, err = types.FormatInt(value)
-	case TrackTableClassNameColumn:
-		columnValue, err = types.FormatString(value)
-	case TrackTableStartedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case TrackTableEndedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case TrackTableFrameCountColumn:
-		columnValue, err = types.FormatInt(value)
-	case TrackTableMeanScoreColumn:
-		columnValue, err = types.FormatFloat(value)
-	case TrackTableMaxScoreColumn:
-		columnValue, err = types.FormatFloat(value)
-	case TrackTableCentroidColumn:
-		columnValue, err = types.FormatPoint(value)
-	case TrackTableBoundingBoxColumn:
-		columnValue, err = types.FormatPolygon(value)
-	case TrackTableTrajectoryColumn:
-		columnValue, err = types.FormatJSON(value)
-	case TrackTableIsStaticColumn:
-		columnValue, err = types.FormatBool(value)
-	case TrackTableStatusColumn:
-		columnValue, err = types.FormatString(value)
-	case TrackTableKeyColumn:
-		columnValue, err = types.FormatUUID(value)
-
-	}
-	if err != nil {
-		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-	}
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err = query.Update(
-		ctx,
-		tx,
-		TrackTableWithSchema,
-		[]string{columnName},
-		fmt.Sprintf("%v = $$??", TrackTableIDColumn),
-		[]string{TrackTableIDColumn},
-		columnValue,
-		m.ID,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
-}
-func (m *Track) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
-	if len(fields) == 0 {
-		return nil
-	}
-	fieldNames := make([]string, 0, len(fields))
-	for fieldName := range fields {
-		fieldNames = append(fieldNames, fieldName)
-	}
-	sort.Strings(fieldNames)
-	columns := make([]string, 0, len(fields))
-	values := make([]any, 0, len(fields)*2)
-	for _, fieldName := range fieldNames {
-		value := fields[fieldName]
-		var columnName string
-		switch fieldName {
-		case "id":
-			columnName = TrackTableIDColumn
-		case "created_at":
-			columnName = TrackTableCreatedAtColumn
-		case "updated_at":
-			columnName = TrackTableUpdatedAtColumn
-		case "deleted_at":
-			columnName = TrackTableDeletedAtColumn
-		case "camera_id":
-			columnName = TrackTableCameraIDColumn
-		case "video_id":
-			columnName = TrackTableVideoIDColumn
-		case "class_id":
-			columnName = TrackTableClassIDColumn
-		case "class_name":
-			columnName = TrackTableClassNameColumn
-		case "started_at":
-			columnName = TrackTableStartedAtColumn
-		case "ended_at":
-			columnName = TrackTableEndedAtColumn
-		case "frame_count":
-			columnName = TrackTableFrameCountColumn
-		case "mean_score":
-			columnName = TrackTableMeanScoreColumn
-		case "max_score":
-			columnName = TrackTableMaxScoreColumn
-		case "centroid":
-			columnName = TrackTableCentroidColumn
-		case "bounding_box":
-			columnName = TrackTableBoundingBoxColumn
-		case "trajectory":
-			columnName = TrackTableTrajectoryColumn
-		case "is_static":
-			columnName = TrackTableIsStaticColumn
-		case "status":
-			columnName = TrackTableStatusColumn
-		case "key":
-			columnName = TrackTableKeyColumn
-
-		default:
-			return fmt.Errorf("unknown field name: %v", fieldName)
-		}
-		var columnValue any
-		var err error
-		switch columnName {
-		case TrackTableIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case TrackTableCreatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case TrackTableUpdatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case TrackTableDeletedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case TrackTableCameraIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case TrackTableVideoIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case TrackTableClassIDColumn:
-			columnValue, err = types.FormatInt(value)
-		case TrackTableClassNameColumn:
-			columnValue, err = types.FormatString(value)
-		case TrackTableStartedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case TrackTableEndedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case TrackTableFrameCountColumn:
-			columnValue, err = types.FormatInt(value)
-		case TrackTableMeanScoreColumn:
-			columnValue, err = types.FormatFloat(value)
-		case TrackTableMaxScoreColumn:
-			columnValue, err = types.FormatFloat(value)
-		case TrackTableCentroidColumn:
-			columnValue, err = types.FormatPoint(value)
-		case TrackTableBoundingBoxColumn:
-			columnValue, err = types.FormatPolygon(value)
-		case TrackTableTrajectoryColumn:
-			columnValue, err = types.FormatJSON(value)
-		case TrackTableIsStaticColumn:
-			columnValue, err = types.FormatBool(value)
-		case TrackTableStatusColumn:
-			columnValue, err = types.FormatString(value)
-		case TrackTableKeyColumn:
-			columnValue, err = types.FormatUUID(value)
-
-		}
-		if err != nil {
-			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-		}
-		columns = append(columns, columnName)
-		values = append(values, columnValue)
-	}
-	values = append(values, m.ID)
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err := query.Update(
-		ctx,
-		tx,
-		TrackTableWithSchema,
-		columns,
-		fmt.Sprintf("%v = $$??", TrackTableIDColumn),
-		[]string{TrackTableIDColumn},
-		values...,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update fields: %v", err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
 }

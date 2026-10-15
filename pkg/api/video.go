@@ -50,6 +50,7 @@ type Video struct {
 	DetectionSummary                    any            `json:"detection_summary"`
 	IsLowRes                            bool           `json:"is_low_res"`
 	TrackSummary                        any            `json:"track_summary"`
+	OverlayOffsetMs                     *int64         `json:"overlay_offset_ms"`
 	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
 	ReferencedByTrackVideoIDObjects     []*Track       `json:"referenced_by_track_video_id_objects"`
 }
@@ -78,6 +79,7 @@ var (
 	VideoTableDetectionSummaryColumn           = "detection_summary"
 	VideoTableIsLowResColumn                   = "is_low_res"
 	VideoTableTrackSummaryColumn               = "track_summary"
+	VideoTableOverlayOffsetMsColumn            = "overlay_offset_ms"
 )
 
 var (
@@ -98,6 +100,7 @@ var (
 	VideoTableDetectionSummaryColumnWithTypeCast           = `"detection_summary" AS detection_summary`
 	VideoTableIsLowResColumnWithTypeCast                   = `"is_low_res" AS is_low_res`
 	VideoTableTrackSummaryColumnWithTypeCast               = `"track_summary" AS track_summary`
+	VideoTableOverlayOffsetMsColumnWithTypeCast            = `"overlay_offset_ms" AS overlay_offset_ms`
 )
 
 var VideoTableColumns = []string{
@@ -118,6 +121,7 @@ var VideoTableColumns = []string{
 	VideoTableDetectionSummaryColumn,
 	VideoTableIsLowResColumn,
 	VideoTableTrackSummaryColumn,
+	VideoTableOverlayOffsetMsColumn,
 }
 
 var VideoTableColumnsWithTypeCasts = []string{
@@ -138,6 +142,7 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableDetectionSummaryColumnWithTypeCast,
 	VideoTableIsLowResColumnWithTypeCast,
 	VideoTableTrackSummaryColumnWithTypeCast,
+	VideoTableOverlayOffsetMsColumnWithTypeCast,
 }
 
 var VideoIntrospectedTable *introspect.Table
@@ -199,6 +204,327 @@ func (m *Video) GetPrimaryKeyColumn() string {
 
 func (m *Video) GetPrimaryKeyValue() any {
 	return m.ID
+}
+func (Video) GetQueryInfo() query.ModelQueryInfo {
+	return query.ModelQueryInfo{
+		TableName:        "video",
+		PrimaryKeyColumn: "id",
+		Relationships: []query.RelationshipDefinition{
+			{
+				Name:         "camera_id",
+				Direction:    query.RelationDirectionOutbound,
+				TargetTable:  "camera",
+				LocalColumn:  "camera_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityOne,
+			},
+			{
+				Name:         "referenced_by_Detection_VideoID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "detection",
+				LocalColumn:  "video_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
+			},
+			{
+				Name:         "referenced_by_Track_VideoID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "track",
+				LocalColumn:  "video_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
+			},
+		},
+		Filters: []query.FilterDefinition{
+			{
+				Name:     "created_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "updated_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "deleted_at",
+				DataType: "timestamp with time zone",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "file_name",
+				DataType: "text",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "started_at",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "ended_at",
+				DataType: "timestamp with time zone",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "duration",
+				DataType: "interval",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "file_size",
+				DataType: "double precision",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "thumbnail_name",
+				DataType: "text",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "status",
+				DataType: "text",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpLike,
+					query.FilterOpNotLike,
+					query.FilterOpILike,
+					query.FilterOpNotILike,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "object_detector_claimed_until",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "object_tracker_claimed_until",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "camera_id",
+				DataType: "uuid",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "detection_summary",
+				DataType: "jsonb",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpContains,
+					query.FilterOpNotContains,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "is_low_res",
+				DataType: "boolean",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpIsFalse,
+					query.FilterOpIsTrue,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "track_summary",
+				DataType: "jsonb",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpContains,
+					query.FilterOpNotContains,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "overlay_offset_ms",
+				DataType: "integer",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+		},
+	}
 }
 
 func (m *Video) FromItem(item map[string]any) error {
@@ -551,6 +877,25 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.TrackSummary = temp2
 
+		case "overlay_offset_ms":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseInt(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(int64)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuoverlay_offset_ms.UUID", temp1))
+				}
+			}
+
+			m.OverlayOffsetMs = &temp2
+
 		}
 	}
 
@@ -614,6 +959,7 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	m.DetectionSummary = o.DetectionSummary
 	m.IsLowRes = o.IsLowRes
 	m.TrackSummary = o.TrackSummary
+	m.OverlayOffsetMs = o.OverlayOffsetMs
 	m.ReferencedByDetectionVideoIDObjects = o.ReferencedByDetectionVideoIDObjects
 	m.ReferencedByTrackVideoIDObjects = o.ReferencedByTrackVideoIDObjects
 
@@ -806,6 +1152,17 @@ func (m *Video) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, forc
 		v, err := types.FormatJSON(m.TrackSummary)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.TrackSummary; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroInt(m.OverlayOffsetMs) || slices.Contains(forceSetValuesForFields, VideoTableOverlayOffsetMsColumn) || isRequired(VideoTableColumnLookup, VideoTableOverlayOffsetMsColumn) {
+		columns = append(columns, VideoTableOverlayOffsetMsColumn)
+
+		v, err := types.FormatInt(m.OverlayOffsetMs)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.OverlayOffsetMs; %v", err)
 		}
 
 		values = append(values, v)
@@ -1056,6 +1413,17 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		values = append(values, v)
 	}
 
+	if setZeroValues || !types.IsZeroInt(m.OverlayOffsetMs) || slices.Contains(forceSetValuesForFields, VideoTableOverlayOffsetMsColumn) {
+		columns = append(columns, VideoTableOverlayOffsetMsColumn)
+
+		v, err := types.FormatInt(m.OverlayOffsetMs)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.OverlayOffsetMs; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
 	v, err := types.FormatUUID(m.ID)
 	if err != nil {
 		return fmt.Errorf("failed to handle m.ID; %v", err)
@@ -1082,6 +1450,323 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 	}
 
 	err = m.Reload(ctx, tx, slices.Contains(forceSetValuesForFields, "deleted_at"))
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
+func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
+	var columnName string
+	switch fieldName {
+
+	case "id":
+		columnName = VideoTableIDColumn
+
+	case "created_at":
+		columnName = VideoTableCreatedAtColumn
+
+	case "updated_at":
+		columnName = VideoTableUpdatedAtColumn
+
+	case "deleted_at":
+		columnName = VideoTableDeletedAtColumn
+
+	case "file_name":
+		columnName = VideoTableFileNameColumn
+
+	case "started_at":
+		columnName = VideoTableStartedAtColumn
+
+	case "ended_at":
+		columnName = VideoTableEndedAtColumn
+
+	case "duration":
+		columnName = VideoTableDurationColumn
+
+	case "file_size":
+		columnName = VideoTableFileSizeColumn
+
+	case "thumbnail_name":
+		columnName = VideoTableThumbnailNameColumn
+
+	case "status":
+		columnName = VideoTableStatusColumn
+
+	case "object_detector_claimed_until":
+		columnName = VideoTableObjectDetectorClaimedUntilColumn
+
+	case "object_tracker_claimed_until":
+		columnName = VideoTableObjectTrackerClaimedUntilColumn
+
+	case "camera_id":
+		columnName = VideoTableCameraIDColumn
+
+	case "detection_summary":
+		columnName = VideoTableDetectionSummaryColumn
+
+	case "is_low_res":
+		columnName = VideoTableIsLowResColumn
+
+	case "track_summary":
+		columnName = VideoTableTrackSummaryColumn
+
+	case "overlay_offset_ms":
+		columnName = VideoTableOverlayOffsetMsColumn
+	default:
+		return fmt.Errorf("unknown field name: %v", fieldName)
+	}
+
+	var columnValue any
+	var err error
+	switch columnName {
+
+	case VideoTableIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case VideoTableCreatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableUpdatedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableDeletedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableFileNameColumn:
+		columnValue, err = types.FormatString(value)
+
+	case VideoTableStartedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableEndedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableDurationColumn:
+		columnValue, err = types.FormatDuration(value)
+
+	case VideoTableFileSizeColumn:
+		columnValue, err = types.FormatFloat(value)
+
+	case VideoTableThumbnailNameColumn:
+		columnValue, err = types.FormatString(value)
+
+	case VideoTableStatusColumn:
+		columnValue, err = types.FormatString(value)
+
+	case VideoTableObjectDetectorClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableObjectTrackerClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableCameraIDColumn:
+		columnValue, err = types.FormatUUID(value)
+
+	case VideoTableDetectionSummaryColumn:
+		columnValue, err = types.FormatJSON(value)
+
+	case VideoTableIsLowResColumn:
+		columnValue, err = types.FormatBool(value)
+
+	case VideoTableTrackSummaryColumn:
+		columnValue, err = types.FormatJSON(value)
+
+	case VideoTableOverlayOffsetMsColumn:
+		columnValue, err = types.FormatInt(value)
+	}
+	if err != nil {
+		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+	}
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err = query.Update(
+		ctx,
+		tx,
+		VideoTableWithSchema,
+		[]string{columnName},
+		fmt.Sprintf("%v = $$??", VideoTablePrimaryKeyColumn),
+		[]string{VideoTablePrimaryKeyColumn},
+		columnValue,
+		m.GetPrimaryKeyValue(),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
+	}
+
+	err = m.Reload(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to reload after update")
+	}
+
+	return nil
+}
+
+func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
+	if len(fields) == 0 {
+		return nil
+	}
+	fieldNames := make([]string, 0, len(fields))
+	for fieldName := range fields {
+		fieldNames = append(fieldNames, fieldName)
+	}
+	sort.Strings(fieldNames)
+
+	columns := make([]string, 0, len(fields))
+	values := make([]any, 0, len(fields)*2)
+
+	for _, fieldName := range fieldNames {
+		value := fields[fieldName]
+		var columnName string
+		switch fieldName {
+
+		case "id":
+			columnName = VideoTableIDColumn
+
+		case "created_at":
+			columnName = VideoTableCreatedAtColumn
+
+		case "updated_at":
+			columnName = VideoTableUpdatedAtColumn
+
+		case "deleted_at":
+			columnName = VideoTableDeletedAtColumn
+
+		case "file_name":
+			columnName = VideoTableFileNameColumn
+
+		case "started_at":
+			columnName = VideoTableStartedAtColumn
+
+		case "ended_at":
+			columnName = VideoTableEndedAtColumn
+
+		case "duration":
+			columnName = VideoTableDurationColumn
+
+		case "file_size":
+			columnName = VideoTableFileSizeColumn
+
+		case "thumbnail_name":
+			columnName = VideoTableThumbnailNameColumn
+
+		case "status":
+			columnName = VideoTableStatusColumn
+
+		case "object_detector_claimed_until":
+			columnName = VideoTableObjectDetectorClaimedUntilColumn
+
+		case "object_tracker_claimed_until":
+			columnName = VideoTableObjectTrackerClaimedUntilColumn
+
+		case "camera_id":
+			columnName = VideoTableCameraIDColumn
+
+		case "detection_summary":
+			columnName = VideoTableDetectionSummaryColumn
+
+		case "is_low_res":
+			columnName = VideoTableIsLowResColumn
+
+		case "track_summary":
+			columnName = VideoTableTrackSummaryColumn
+
+		case "overlay_offset_ms":
+			columnName = VideoTableOverlayOffsetMsColumn
+		default:
+			return fmt.Errorf("unknown field name: %v", fieldName)
+		}
+
+		var columnValue any
+		var err error
+		switch columnName {
+
+		case VideoTableIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case VideoTableCreatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableUpdatedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableDeletedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableFileNameColumn:
+			columnValue, err = types.FormatString(value)
+
+		case VideoTableStartedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableEndedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableDurationColumn:
+			columnValue, err = types.FormatDuration(value)
+
+		case VideoTableFileSizeColumn:
+			columnValue, err = types.FormatFloat(value)
+
+		case VideoTableThumbnailNameColumn:
+			columnValue, err = types.FormatString(value)
+
+		case VideoTableStatusColumn:
+			columnValue, err = types.FormatString(value)
+
+		case VideoTableObjectDetectorClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableObjectTrackerClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableCameraIDColumn:
+			columnValue, err = types.FormatUUID(value)
+
+		case VideoTableDetectionSummaryColumn:
+			columnValue, err = types.FormatJSON(value)
+
+		case VideoTableIsLowResColumn:
+			columnValue, err = types.FormatBool(value)
+
+		case VideoTableTrackSummaryColumn:
+			columnValue, err = types.FormatJSON(value)
+
+		case VideoTableOverlayOffsetMsColumn:
+			columnValue, err = types.FormatInt(value)
+		}
+		if err != nil {
+			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
+		}
+
+		columns = append(columns, columnName)
+		values = append(values, columnValue)
+	}
+	values = append(values, m.GetPrimaryKeyValue())
+
+	ctx, cleanup := query.WithQueryID(ctx)
+	defer cleanup()
+
+	ctx = query.WithMaxDepth(ctx, nil)
+
+	_, err := query.Update(
+		ctx,
+		tx,
+		VideoTableWithSchema,
+		columns,
+		fmt.Sprintf("%v = $$??", VideoTablePrimaryKeyColumn),
+		[]string{VideoTablePrimaryKeyColumn},
+		values...,
+	)
+	if err != nil {
+		return fmt.Errorf("failed to update fields: %v", err)
+	}
+
+	err = m.Reload(ctx, tx, false)
 	if err != nil {
 		return fmt.Errorf("failed to reload after update")
 	}
@@ -1233,12 +1918,13 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 	isLoadQuery := possiblePathValue != nil && len(possiblePathValue.VisitedTableNames) > 0
 
 	shouldLoad := query.ShouldLoad(ctx, VideoTable) || query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", VideoTable))
+	shouldLoad = shouldLoad || query.ShouldLoadFromSelectionTree(ctx, VideoTable) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", VideoTable))
 
-	var ok bool
-	ctx, ok = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, nil), !isLoadQuery)
-	if !ok && !shouldLoad {
+	var action query.PathAction
+	ctx, action = query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", VideoTable, nil), !isLoadQuery)
+	if (action == query.PathActionCycleDetected || action == query.PathActionDepthExceeded) && !shouldLoad {
 		if config.Debug() {
-			log.Printf("skipping SelectVideo early (query.ShouldLoad(): %v, query.HandleQueryPathGraphCycles(): %v)", shouldLoad, ok)
+			log.Printf("skipping SelectVideo early (query.ShouldLoad(): %v, action: %v)", shouldLoad, action)
 		}
 		return []*Video{}, 0, 0, 0, 0, nil
 	}
@@ -1295,12 +1981,37 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 		if object == nil {
 			return nil, 0, 0, 0, 0, fmt.Errorf("assertion failed: object unexpectedly nil")
 		}
-
 		if !types.IsZeroUUID(object.CameraID) {
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID), true)
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", CameraTable, object.CameraID), true)
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionOutbound,
+				TableName:   CameraTable,
+				LocalColumn: VideoTableCameraIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, CameraTable)
-			if ok || shouldLoad {
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected)
+			loadFK := true
+			switch action {
+			case query.PathActionCycleDetected:
+				loadFK = false
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					loadFK = false
+				}
+			case query.PathActionContinue:
+			}
+
+			if loadFK {
 				thisBefore := time.Now()
+
+				where := []string{fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn)}
+				values := []any{object.CameraID}
+				if childNode != nil && childNode.Selected {
+					where = []string{fmt.Sprintf("%v = $$??", CameraTablePrimaryKeyColumn)}
+					values = []any{object.CameraID}
+					where = append(where, childNode.Filters.Where...)
+					values = append(values, childNode.Filters.Values...)
+				}
 
 				if config.Debug() {
 					log.Printf("loading SelectVideos->SelectCamera for object.CameraIDObject{%s: %v}", CameraTablePrimaryKeyColumn, object.CameraID)
@@ -1309,8 +2020,8 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				object.CameraIDObject, _, _, _, _, err = SelectCamera(
 					ctx,
 					tx,
-					fmt.Sprintf("%v = $1", CameraTablePrimaryKeyColumn),
-					object.CameraID,
+					strings.Join(where, "\n    AND "),
+					values...,
 				)
 				if err != nil {
 					if !errors.Is(err, sql.ErrNoRows) {
@@ -1323,36 +2034,51 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				}
 			}
 		}
-
 		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   DetectionTable,
+				LocalColumn: DetectionTableVideoIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", DetectionTable, object.GetPrimaryKeyValue()), true)
-			if ok || shouldLoad {
-				thisBefore := time.Now()
-
-				if config.Debug() {
-					log.Printf("loading SelectVideos->SelectDetections for object.ReferencedByDetectionVideoIDObjects")
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", DetectionTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", DetectionTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
 				}
-
-				object.ReferencedByDetectionVideoIDObjects, _, _, _, _, err = SelectDetections(
-					ctx,
-					tx,
-					fmt.Sprintf("%v = $1", DetectionTableVideoIDColumn),
-					nil,
-					nil,
-					nil,
-					object.GetPrimaryKeyValue(),
-				)
-				if err != nil {
-					if !errors.Is(err, sql.ErrNoRows) {
-						return err
-					}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
 				}
+			}
 
-				if config.Debug() {
-					log.Printf("loaded SelectVideos->SelectDetections for object.ReferencedByDetectionVideoIDObjects in %s", time.Since(thisBefore))
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectVideos->SelectDetections for object.ReferencedByDetectionVideoIDObjects")
+			}
+
+			object.ReferencedByDetectionVideoIDObjects, _, _, _, _, err = SelectDetections(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", DetectionTableVideoIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
 				}
+			}
 
+			if config.Debug() {
+				log.Printf("loaded SelectVideos->SelectDetections for object.ReferencedByDetectionVideoIDObjects in %s", time.Since(thisBefore))
 			}
 
 			return nil
@@ -1362,34 +2088,50 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 		}
 
 		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   TrackTable,
+				LocalColumn: TrackTableVideoIDColumn,
+			})
 			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", TrackTable))
-			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", TrackTable, object.GetPrimaryKeyValue()), true)
-			if ok || shouldLoad {
-				thisBefore := time.Now()
-
-				if config.Debug() {
-					log.Printf("loading SelectVideos->SelectTracks for object.ReferencedByTrackVideoIDObjects")
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", TrackTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", TrackTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
 				}
-
-				object.ReferencedByTrackVideoIDObjects, _, _, _, _, err = SelectTracks(
-					ctx,
-					tx,
-					fmt.Sprintf("%v = $1", TrackTableVideoIDColumn),
-					nil,
-					nil,
-					nil,
-					object.GetPrimaryKeyValue(),
-				)
-				if err != nil {
-					if !errors.Is(err, sql.ErrNoRows) {
-						return err
-					}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
 				}
+			}
 
-				if config.Debug() {
-					log.Printf("loaded SelectVideos->SelectTracks for object.ReferencedByTrackVideoIDObjects in %s", time.Since(thisBefore))
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectVideos->SelectTracks for object.ReferencedByTrackVideoIDObjects")
+			}
+
+			object.ReferencedByTrackVideoIDObjects, _, _, _, _, err = SelectTracks(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", TrackTableVideoIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
 				}
+			}
 
+			if config.Debug() {
+				log.Printf("loaded SelectVideos->SelectTracks for object.ReferencedByTrackVideoIDObjects in %s", time.Since(thisBefore))
 			}
 
 			return nil
@@ -2710,229 +3452,4 @@ func init() {
 		"/videos",
 		MutateRouterForVideo,
 	)
-}
-func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, value any) error {
-	var columnName string
-	switch fieldName {
-	case "id":
-		columnName = VideoTableIDColumn
-	case "created_at":
-		columnName = VideoTableCreatedAtColumn
-	case "updated_at":
-		columnName = VideoTableUpdatedAtColumn
-	case "deleted_at":
-		columnName = VideoTableDeletedAtColumn
-	case "file_name":
-		columnName = VideoTableFileNameColumn
-	case "started_at":
-		columnName = VideoTableStartedAtColumn
-	case "ended_at":
-		columnName = VideoTableEndedAtColumn
-	case "duration":
-		columnName = VideoTableDurationColumn
-	case "file_size":
-		columnName = VideoTableFileSizeColumn
-	case "thumbnail_name":
-		columnName = VideoTableThumbnailNameColumn
-	case "status":
-		columnName = VideoTableStatusColumn
-	case "object_detector_claimed_until":
-		columnName = VideoTableObjectDetectorClaimedUntilColumn
-	case "object_tracker_claimed_until":
-		columnName = VideoTableObjectTrackerClaimedUntilColumn
-	case "camera_id":
-		columnName = VideoTableCameraIDColumn
-	case "detection_summary":
-		columnName = VideoTableDetectionSummaryColumn
-	case "is_low_res":
-		columnName = VideoTableIsLowResColumn
-	case "track_summary":
-		columnName = VideoTableTrackSummaryColumn
-
-	default:
-		return fmt.Errorf("unknown field name: %v", fieldName)
-	}
-	var columnValue any
-	var err error
-	switch columnName {
-	case VideoTableIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case VideoTableCreatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case VideoTableUpdatedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case VideoTableDeletedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case VideoTableFileNameColumn:
-		columnValue, err = types.FormatString(value)
-	case VideoTableStartedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case VideoTableEndedAtColumn:
-		columnValue, err = types.FormatTime(value)
-	case VideoTableDurationColumn:
-		columnValue, err = types.FormatDuration(value)
-	case VideoTableFileSizeColumn:
-		columnValue, err = types.FormatFloat(value)
-	case VideoTableThumbnailNameColumn:
-		columnValue, err = types.FormatString(value)
-	case VideoTableStatusColumn:
-		columnValue, err = types.FormatString(value)
-	case VideoTableObjectDetectorClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value)
-	case VideoTableObjectTrackerClaimedUntilColumn:
-		columnValue, err = types.FormatTime(value)
-	case VideoTableCameraIDColumn:
-		columnValue, err = types.FormatUUID(value)
-	case VideoTableDetectionSummaryColumn:
-		columnValue, err = types.FormatJSON(value)
-	case VideoTableIsLowResColumn:
-		columnValue, err = types.FormatBool(value)
-	case VideoTableTrackSummaryColumn:
-		columnValue, err = types.FormatJSON(value)
-
-	}
-	if err != nil {
-		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-	}
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err = query.Update(
-		ctx,
-		tx,
-		VideoTableWithSchema,
-		[]string{columnName},
-		fmt.Sprintf("%v = $$??", VideoTableIDColumn),
-		[]string{VideoTableIDColumn},
-		columnValue,
-		m.ID,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update field %v: %v", fieldName, err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
-}
-func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]any) error {
-	if len(fields) == 0 {
-		return nil
-	}
-	fieldNames := make([]string, 0, len(fields))
-	for fieldName := range fields {
-		fieldNames = append(fieldNames, fieldName)
-	}
-	sort.Strings(fieldNames)
-	columns := make([]string, 0, len(fields))
-	values := make([]any, 0, len(fields)*2)
-	for _, fieldName := range fieldNames {
-		value := fields[fieldName]
-		var columnName string
-		switch fieldName {
-		case "id":
-			columnName = VideoTableIDColumn
-		case "created_at":
-			columnName = VideoTableCreatedAtColumn
-		case "updated_at":
-			columnName = VideoTableUpdatedAtColumn
-		case "deleted_at":
-			columnName = VideoTableDeletedAtColumn
-		case "file_name":
-			columnName = VideoTableFileNameColumn
-		case "started_at":
-			columnName = VideoTableStartedAtColumn
-		case "ended_at":
-			columnName = VideoTableEndedAtColumn
-		case "duration":
-			columnName = VideoTableDurationColumn
-		case "file_size":
-			columnName = VideoTableFileSizeColumn
-		case "thumbnail_name":
-			columnName = VideoTableThumbnailNameColumn
-		case "status":
-			columnName = VideoTableStatusColumn
-		case "object_detector_claimed_until":
-			columnName = VideoTableObjectDetectorClaimedUntilColumn
-		case "object_tracker_claimed_until":
-			columnName = VideoTableObjectTrackerClaimedUntilColumn
-		case "camera_id":
-			columnName = VideoTableCameraIDColumn
-		case "detection_summary":
-			columnName = VideoTableDetectionSummaryColumn
-		case "is_low_res":
-			columnName = VideoTableIsLowResColumn
-		case "track_summary":
-			columnName = VideoTableTrackSummaryColumn
-
-		default:
-			return fmt.Errorf("unknown field name: %v", fieldName)
-		}
-		var columnValue any
-		var err error
-		switch columnName {
-		case VideoTableIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case VideoTableCreatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case VideoTableUpdatedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case VideoTableDeletedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case VideoTableFileNameColumn:
-			columnValue, err = types.FormatString(value)
-		case VideoTableStartedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case VideoTableEndedAtColumn:
-			columnValue, err = types.FormatTime(value)
-		case VideoTableDurationColumn:
-			columnValue, err = types.FormatDuration(value)
-		case VideoTableFileSizeColumn:
-			columnValue, err = types.FormatFloat(value)
-		case VideoTableThumbnailNameColumn:
-			columnValue, err = types.FormatString(value)
-		case VideoTableStatusColumn:
-			columnValue, err = types.FormatString(value)
-		case VideoTableObjectDetectorClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value)
-		case VideoTableObjectTrackerClaimedUntilColumn:
-			columnValue, err = types.FormatTime(value)
-		case VideoTableCameraIDColumn:
-			columnValue, err = types.FormatUUID(value)
-		case VideoTableDetectionSummaryColumn:
-			columnValue, err = types.FormatJSON(value)
-		case VideoTableIsLowResColumn:
-			columnValue, err = types.FormatBool(value)
-		case VideoTableTrackSummaryColumn:
-			columnValue, err = types.FormatJSON(value)
-
-		}
-		if err != nil {
-			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
-		}
-		columns = append(columns, columnName)
-		values = append(values, columnValue)
-	}
-	values = append(values, m.ID)
-	ctx, cleanup := query.WithQueryID(ctx)
-	defer cleanup()
-	ctx = query.WithMaxDepth(ctx, nil)
-	_, err := query.Update(
-		ctx,
-		tx,
-		VideoTableWithSchema,
-		columns,
-		fmt.Sprintf("%v = $$??", VideoTableIDColumn),
-		[]string{VideoTableIDColumn},
-		values...,
-	)
-	if err != nil {
-		return fmt.Errorf("failed to update fields: %v", err)
-	}
-	err = m.Reload(ctx, tx, false)
-	if err != nil {
-		return fmt.Errorf("failed to reload after update")
-	}
-	return nil
 }
