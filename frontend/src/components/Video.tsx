@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "../api";
 import { components } from "../api/api";
-import { cameraOverlayOffsetMs, OverlayMode } from "../helpers";
+import { OverlayMode } from "../helpers";
 import VideoJS from "./VideoJS";
 
 type Detection = components["schemas"]["Detection"];
@@ -115,21 +115,20 @@ export function Video(props: VideoProps) {
   const lowResVideo = lowResVideosData?.objects?.[0];
   const detectionVideo = lowResVideo || props.video;
   const detectionVideoId = detectionVideo.id || "";
-  // Detection timestamps are absolute wall-clock times, stamped from the
-  // low-resolution row the detector read. Matched segments line up frame for
-  // frame across the two resolutions, so the anchor is that row's start plus
-  // the measured per-camera content offset. The high-resolution row's start
-  // carries the segment writer's open jitter - up to 2.2s of it.
+  // The detector correlates the high-resolution recording against the
+  // low-resolution recording its detections came from and stores the offset it
+  // ended up using on the row: the measured content offset, or the camera's
+  // constant when the scene had nothing moving to align. A row that carries its
+  // own detections needs no offset: both timelines are the same recorder.
+  const overlayOffsetMs = lowResVideo?.overlay_offset_ms ?? 0;
   const playbackVideoStartedAtRef = useRef(
-    Date.parse(detectionVideo.started_at || "") +
-      cameraOverlayOffsetMs(detectionVideo.camera_id),
+    Date.parse(detectionVideo.started_at || "") + overlayOffsetMs,
   );
 
   useEffect(() => {
     playbackVideoStartedAtRef.current =
-      Date.parse(detectionVideo.started_at || "") +
-      cameraOverlayOffsetMs(detectionVideo.camera_id);
-  }, [detectionVideo.started_at, detectionVideo.camera_id]);
+      Date.parse(detectionVideo.started_at || "") + overlayOffsetMs;
+  }, [detectionVideo.started_at, overlayOffsetMs]);
 
   const { isLoading, error, data } = useQuery(
     "get",
