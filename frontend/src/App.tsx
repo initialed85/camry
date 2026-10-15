@@ -161,10 +161,15 @@ function App() {
         flexDirection: "column",
         borderRadius: "none",
         boxShadow: "md",
-        height: "100%",
+        height: "100vh",
+        boxSizing: "border-box",
+        "@supports (height: 100dvh)": {
+          height: "100dvh",
+        },
+        overflow: "hidden",
       }}
     >
-      <Grid container sx={{ pb: 1 }}>
+      <Grid container sx={{ pb: 1, flexShrink: 0 }}>
         <Grid
           xs={11}
           sx={{
@@ -205,7 +210,10 @@ function App() {
           <ModeToggle responsive={responsive} />
         </Grid>
       </Grid>
-      <Grid container sx={{ pb: 1, display: "flex", justifyContent: "center" }}>
+      <Grid
+        container
+        sx={{ pb: 1, flexShrink: 0, display: "flex", justifyContent: "center" }}
+      >
         <DateSlider
           responsive={responsive}
           date={startedAtGt}
@@ -213,17 +221,25 @@ function App() {
         />
       </Grid>
 
-      <VideoTable
-        responsive={responsive}
-        portrait={portrait}
-        windowWidth={windowWidth}
-        windowHeight={windowHeight}
-        cameraId={cameraId}
-        startedAtGt={startedAtGt}
-        startedAtLte={startedAtLte}
-        classNameFilter={classNameFilter}
-        overlayMode={overlayMode}
-      />
+      <Box
+        sx={{
+          flex: 1,
+          minHeight: 0,
+          overflow: "auto",
+        }}
+      >
+        <VideoTable
+          responsive={responsive}
+          portrait={portrait}
+          windowWidth={windowWidth}
+          windowHeight={windowHeight}
+          cameraId={cameraId}
+          startedAtGt={startedAtGt}
+          startedAtLte={startedAtLte}
+          classNameFilter={classNameFilter}
+          overlayMode={overlayMode}
+        />
+      </Box>
     </Sheet>
   );
 }
