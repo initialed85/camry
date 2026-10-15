@@ -4,24 +4,26 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CameraId** | Pointer to **string** |  | [optional] 
-**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional] 
-**CreatedAt** | Pointer to **time.Time** |  | [optional] 
-**DeletedAt** | Pointer to **time.Time** |  | [optional] 
-**DetectionSummary** | Pointer to **interface{}** |  | [optional] 
-**Duration** | Pointer to **int64** |  | [optional] 
-**EndedAt** | Pointer to **time.Time** |  | [optional] 
-**FileName** | Pointer to **string** |  | [optional] 
-**FileSize** | Pointer to **float64** |  | [optional] 
-**Id** | Pointer to **string** |  | [optional] 
-**IsLowRes** | Pointer to **bool** |  | [optional] 
-**ObjectDetectorClaimedUntil** | Pointer to **time.Time** |  | [optional] 
-**ObjectTrackerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
-**ReferencedByDetectionVideoIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
-**StartedAt** | Pointer to **time.Time** |  | [optional] 
-**Status** | Pointer to **string** |  | [optional] 
-**ThumbnailName** | Pointer to **string** |  | [optional] 
-**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
+**CameraId** | Pointer to **string** |  | [optional]
+**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional]
+**CreatedAt** | Pointer to **time.Time** |  | [optional]
+**DeletedAt** | Pointer to **time.Time** |  | [optional]
+**DetectionSummary** | Pointer to **interface{}** |  | [optional]
+**Duration** | Pointer to **int64** |  | [optional]
+**EndedAt** | Pointer to **time.Time** |  | [optional]
+**FileName** | Pointer to **string** |  | [optional]
+**FileSize** | Pointer to **float64** |  | [optional]
+**Id** | Pointer to **string** |  | [optional]
+**IsLowRes** | Pointer to **bool** |  | [optional]
+**ObjectDetectorClaimedUntil** | Pointer to **time.Time** |  | [optional]
+**ObjectTrackerClaimedUntil** | Pointer to **time.Time** |  | [optional]
+**ReferencedByDetectionVideoIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional]
+**ReferencedByTrackVideoIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional]
+**StartedAt** | Pointer to **time.Time** |  | [optional]
+**Status** | Pointer to **string** |  | [optional]
+**ThumbnailName** | Pointer to **string** |  | [optional]
+**TrackSummary** | Pointer to **interface{}** |  | [optional]
+**UpdatedAt** | Pointer to **time.Time** |  | [optional]
 
 ## Methods
 
@@ -402,6 +404,31 @@ SetReferencedByDetectionVideoIdObjects sets ReferencedByDetectionVideoIdObjects 
 
 HasReferencedByDetectionVideoIdObjects returns a boolean if a field has been set.
 
+### GetReferencedByTrackVideoIdObjects
+
+`func (o *Video) GetReferencedByTrackVideoIdObjects() []Track`
+
+GetReferencedByTrackVideoIdObjects returns the ReferencedByTrackVideoIdObjects field if non-nil, zero value otherwise.
+
+### GetReferencedByTrackVideoIdObjectsOk
+
+`func (o *Video) GetReferencedByTrackVideoIdObjectsOk() (*[]Track, bool)`
+
+GetReferencedByTrackVideoIdObjectsOk returns a tuple with the ReferencedByTrackVideoIdObjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReferencedByTrackVideoIdObjects
+
+`func (o *Video) SetReferencedByTrackVideoIdObjects(v []Track)`
+
+SetReferencedByTrackVideoIdObjects sets ReferencedByTrackVideoIdObjects field to given value.
+
+### HasReferencedByTrackVideoIdObjects
+
+`func (o *Video) HasReferencedByTrackVideoIdObjects() bool`
+
+HasReferencedByTrackVideoIdObjects returns a boolean if a field has been set.
+
 ### GetStartedAt
 
 `func (o *Video) GetStartedAt() time.Time`
@@ -477,6 +504,41 @@ SetThumbnailName sets ThumbnailName field to given value.
 
 HasThumbnailName returns a boolean if a field has been set.
 
+### GetTrackSummary
+
+`func (o *Video) GetTrackSummary() interface{}`
+
+GetTrackSummary returns the TrackSummary field if non-nil, zero value otherwise.
+
+### GetTrackSummaryOk
+
+`func (o *Video) GetTrackSummaryOk() (*interface{}, bool)`
+
+GetTrackSummaryOk returns a tuple with the TrackSummary field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrackSummary
+
+`func (o *Video) SetTrackSummary(v interface{})`
+
+SetTrackSummary sets TrackSummary field to given value.
+
+### HasTrackSummary
+
+`func (o *Video) HasTrackSummary() bool`
+
+HasTrackSummary returns a boolean if a field has been set.
+
+### SetTrackSummaryNil
+
+`func (o *Video) SetTrackSummaryNil(b bool)`
+
+ SetTrackSummaryNil sets the value for TrackSummary to be an explicit nil
+
+### UnsetTrackSummary
+`func (o *Video) UnsetTrackSummary()`
+
+UnsetTrackSummary ensures that no value is present for TrackSummary, not even an explicit nil
 ### GetUpdatedAt
 
 `func (o *Video) GetUpdatedAt() time.Time`

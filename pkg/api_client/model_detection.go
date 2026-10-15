@@ -31,6 +31,8 @@ type Detection struct {
 	Id *string `json:"id,omitempty"`
 	Score *float64 `json:"score,omitempty"`
 	SeenAt *time.Time `json:"seen_at,omitempty"`
+	TrackId *string `json:"track_id,omitempty"`
+	TrackIdObject *Track `json:"track_id_object,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 	VideoId *string `json:"video_id,omitempty"`
 	VideoIdObject *Video `json:"video_id_object,omitempty"`
@@ -405,6 +407,70 @@ func (o *Detection) SetSeenAt(v time.Time) {
 	o.SeenAt = &v
 }
 
+// GetTrackId returns the TrackId field value if set, zero value otherwise.
+func (o *Detection) GetTrackId() string {
+	if o == nil || IsNil(o.TrackId) {
+		var ret string
+		return ret
+	}
+	return *o.TrackId
+}
+
+// GetTrackIdOk returns a tuple with the TrackId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Detection) GetTrackIdOk() (*string, bool) {
+	if o == nil || IsNil(o.TrackId) {
+		return nil, false
+	}
+	return o.TrackId, true
+}
+
+// HasTrackId returns a boolean if a field has been set.
+func (o *Detection) HasTrackId() bool {
+	if o != nil && !IsNil(o.TrackId) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrackId gets a reference to the given string and assigns it to the TrackId field.
+func (o *Detection) SetTrackId(v string) {
+	o.TrackId = &v
+}
+
+// GetTrackIdObject returns the TrackIdObject field value if set, zero value otherwise.
+func (o *Detection) GetTrackIdObject() Track {
+	if o == nil || IsNil(o.TrackIdObject) {
+		var ret Track
+		return ret
+	}
+	return *o.TrackIdObject
+}
+
+// GetTrackIdObjectOk returns a tuple with the TrackIdObject field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Detection) GetTrackIdObjectOk() (*Track, bool) {
+	if o == nil || IsNil(o.TrackIdObject) {
+		return nil, false
+	}
+	return o.TrackIdObject, true
+}
+
+// HasTrackIdObject returns a boolean if a field has been set.
+func (o *Detection) HasTrackIdObject() bool {
+	if o != nil && !IsNil(o.TrackIdObject) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrackIdObject gets a reference to the given Track and assigns it to the TrackIdObject field.
+func (o *Detection) SetTrackIdObject(v Track) {
+	o.TrackIdObject = &v
+}
+
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *Detection) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
@@ -543,6 +609,12 @@ func (o Detection) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SeenAt) {
 		toSerialize["seen_at"] = o.SeenAt
+	}
+	if !IsNil(o.TrackId) {
+		toSerialize["track_id"] = o.TrackId
+	}
+	if !IsNil(o.TrackIdObject) {
+		toSerialize["track_id_object"] = o.TrackIdObject
 	}
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updated_at"] = o.UpdatedAt

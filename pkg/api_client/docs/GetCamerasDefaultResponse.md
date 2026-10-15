@@ -4,9 +4,9 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**Error** | **[]string** |  | 
-**Status** | **int32** |  | 
-**Success** | **bool** |  | 
+**Error** | **[]string** |  |
+**Status** | **int32** |  |
+**Success** | **bool** |  |
 
 ## Methods
 

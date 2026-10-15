@@ -32,6 +32,7 @@ type ApiPostObjectTrackerClaimVideosRequest struct {
 	depth *int32
 	cameraLoad *string
 	referencedByDetectionLoad *string
+	referencedByTrackLoad *string
 	idEq *string
 	idNe *string
 	idGt *string
@@ -268,10 +269,18 @@ type ApiPostObjectTrackerClaimVideosRequest struct {
 	isLowResNotcontains *bool
 	isLowResDesc *string
 	isLowResAsc *string
+	trackSummaryContains *interface{}
+	trackSummaryNotcontains *interface{}
+	trackSummaryDesc *string
+	trackSummaryAsc *string
 	referencedByDetectionVideoIdObjectsContains *interface{}
 	referencedByDetectionVideoIdObjectsNotcontains *interface{}
 	referencedByDetectionVideoIdObjectsDesc *string
 	referencedByDetectionVideoIdObjectsAsc *string
+	referencedByTrackVideoIdObjectsContains *interface{}
+	referencedByTrackVideoIdObjectsNotcontains *interface{}
+	referencedByTrackVideoIdObjectsDesc *string
+	referencedByTrackVideoIdObjectsAsc *string
 }
 
 func (r ApiPostObjectTrackerClaimVideosRequest) VideoObjectTrackerClaimRequest(videoObjectTrackerClaimRequest VideoObjectTrackerClaimRequest) ApiPostObjectTrackerClaimVideosRequest {
@@ -306,6 +315,12 @@ func (r ApiPostObjectTrackerClaimVideosRequest) CameraLoad(cameraLoad string) Ap
 // load the given indirectly related objects, value is ignored (presence of key is sufficient)
 func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByDetectionLoad(referencedByDetectionLoad string) ApiPostObjectTrackerClaimVideosRequest {
 	r.referencedByDetectionLoad = &referencedByDetectionLoad
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByTrackLoad(referencedByTrackLoad string) ApiPostObjectTrackerClaimVideosRequest {
+	r.referencedByTrackLoad = &referencedByTrackLoad
 	return r
 }
 
@@ -1726,6 +1741,30 @@ func (r ApiPostObjectTrackerClaimVideosRequest) IsLowResAsc(isLowResAsc string) 
 }
 
 // SQL @&gt; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) TrackSummaryContains(trackSummaryContains interface{}) ApiPostObjectTrackerClaimVideosRequest {
+	r.trackSummaryContains = &trackSummaryContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) TrackSummaryNotcontains(trackSummaryNotcontains interface{}) ApiPostObjectTrackerClaimVideosRequest {
+	r.trackSummaryNotcontains = &trackSummaryNotcontains
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectTrackerClaimVideosRequest) TrackSummaryDesc(trackSummaryDesc string) ApiPostObjectTrackerClaimVideosRequest {
+	r.trackSummaryDesc = &trackSummaryDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectTrackerClaimVideosRequest) TrackSummaryAsc(trackSummaryAsc string) ApiPostObjectTrackerClaimVideosRequest {
+	r.trackSummaryAsc = &trackSummaryAsc
+	return r
+}
+
+// SQL @&gt; comparison
 func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByDetectionVideoIdObjectsContains(referencedByDetectionVideoIdObjectsContains interface{}) ApiPostObjectTrackerClaimVideosRequest {
 	r.referencedByDetectionVideoIdObjectsContains = &referencedByDetectionVideoIdObjectsContains
 	return r
@@ -1746,6 +1785,30 @@ func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByDetectionVideoIdObje
 // SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
 func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByDetectionVideoIdObjectsAsc(referencedByDetectionVideoIdObjectsAsc string) ApiPostObjectTrackerClaimVideosRequest {
 	r.referencedByDetectionVideoIdObjectsAsc = &referencedByDetectionVideoIdObjectsAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByTrackVideoIdObjectsContains(referencedByTrackVideoIdObjectsContains interface{}) ApiPostObjectTrackerClaimVideosRequest {
+	r.referencedByTrackVideoIdObjectsContains = &referencedByTrackVideoIdObjectsContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByTrackVideoIdObjectsNotcontains(referencedByTrackVideoIdObjectsNotcontains interface{}) ApiPostObjectTrackerClaimVideosRequest {
+	r.referencedByTrackVideoIdObjectsNotcontains = &referencedByTrackVideoIdObjectsNotcontains
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByTrackVideoIdObjectsDesc(referencedByTrackVideoIdObjectsDesc string) ApiPostObjectTrackerClaimVideosRequest {
+	r.referencedByTrackVideoIdObjectsDesc = &referencedByTrackVideoIdObjectsDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectTrackerClaimVideosRequest) ReferencedByTrackVideoIdObjectsAsc(referencedByTrackVideoIdObjectsAsc string) ApiPostObjectTrackerClaimVideosRequest {
+	r.referencedByTrackVideoIdObjectsAsc = &referencedByTrackVideoIdObjectsAsc
 	return r
 }
 
@@ -1804,6 +1867,9 @@ func (a *ObjectTrackerClaimVideoAPIService) PostObjectTrackerClaimVideosExecute(
 	}
 	if r.referencedByDetectionLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection__load", r.referencedByDetectionLoad, "")
+	}
+	if r.referencedByTrackLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track__load", r.referencedByTrackLoad, "")
 	}
 	if r.idEq != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")
@@ -2513,6 +2579,18 @@ func (a *ObjectTrackerClaimVideoAPIService) PostObjectTrackerClaimVideosExecute(
 	if r.isLowResAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "is_low_res__asc", r.isLowResAsc, "")
 	}
+	if r.trackSummaryContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_summary__contains", r.trackSummaryContains, "")
+	}
+	if r.trackSummaryNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_summary__notcontains", r.trackSummaryNotcontains, "")
+	}
+	if r.trackSummaryDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_summary__desc", r.trackSummaryDesc, "")
+	}
+	if r.trackSummaryAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_summary__asc", r.trackSummaryAsc, "")
+	}
 	if r.referencedByDetectionVideoIdObjectsContains != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_video_id_objects__contains", r.referencedByDetectionVideoIdObjectsContains, "")
 	}
@@ -2524,6 +2602,18 @@ func (a *ObjectTrackerClaimVideoAPIService) PostObjectTrackerClaimVideosExecute(
 	}
 	if r.referencedByDetectionVideoIdObjectsAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_video_id_objects__asc", r.referencedByDetectionVideoIdObjectsAsc, "")
+	}
+	if r.referencedByTrackVideoIdObjectsContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_video_id_objects__contains", r.referencedByTrackVideoIdObjectsContains, "")
+	}
+	if r.referencedByTrackVideoIdObjectsNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_video_id_objects__notcontains", r.referencedByTrackVideoIdObjectsNotcontains, "")
+	}
+	if r.referencedByTrackVideoIdObjectsDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_video_id_objects__desc", r.referencedByTrackVideoIdObjectsDesc, "")
+	}
+	if r.referencedByTrackVideoIdObjectsAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_video_id_objects__asc", r.referencedByTrackVideoIdObjectsAsc, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}

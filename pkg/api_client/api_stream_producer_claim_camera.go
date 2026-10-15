@@ -31,6 +31,7 @@ type ApiPostStreamProducerClaimCamerasRequest struct {
 	offset *int32
 	depth *int32
 	referencedByDetectionLoad *string
+	referencedByTrackLoad *string
 	referencedByVideoLoad *string
 	idEq *string
 	idNe *string
@@ -196,6 +197,10 @@ type ApiPostStreamProducerClaimCamerasRequest struct {
 	referencedByDetectionCameraIdObjectsNotcontains *interface{}
 	referencedByDetectionCameraIdObjectsDesc *string
 	referencedByDetectionCameraIdObjectsAsc *string
+	referencedByTrackCameraIdObjectsContains *interface{}
+	referencedByTrackCameraIdObjectsNotcontains *interface{}
+	referencedByTrackCameraIdObjectsDesc *string
+	referencedByTrackCameraIdObjectsAsc *string
 	referencedByVideoCameraIdObjectsContains *interface{}
 	referencedByVideoCameraIdObjectsNotcontains *interface{}
 	referencedByVideoCameraIdObjectsDesc *string
@@ -228,6 +233,12 @@ func (r ApiPostStreamProducerClaimCamerasRequest) Depth(depth int32) ApiPostStre
 // load the given indirectly related objects, value is ignored (presence of key is sufficient)
 func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByDetectionLoad(referencedByDetectionLoad string) ApiPostStreamProducerClaimCamerasRequest {
 	r.referencedByDetectionLoad = &referencedByDetectionLoad
+	return r
+}
+
+// load the given indirectly related objects, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByTrackLoad(referencedByTrackLoad string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByTrackLoad = &referencedByTrackLoad
 	return r
 }
 
@@ -1222,6 +1233,30 @@ func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByDetectionCameraIdO
 }
 
 // SQL @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByTrackCameraIdObjectsContains(referencedByTrackCameraIdObjectsContains interface{}) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByTrackCameraIdObjectsContains = &referencedByTrackCameraIdObjectsContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByTrackCameraIdObjectsNotcontains(referencedByTrackCameraIdObjectsNotcontains interface{}) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByTrackCameraIdObjectsNotcontains = &referencedByTrackCameraIdObjectsNotcontains
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByTrackCameraIdObjectsDesc(referencedByTrackCameraIdObjectsDesc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByTrackCameraIdObjectsDesc = &referencedByTrackCameraIdObjectsDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByTrackCameraIdObjectsAsc(referencedByTrackCameraIdObjectsAsc string) ApiPostStreamProducerClaimCamerasRequest {
+	r.referencedByTrackCameraIdObjectsAsc = &referencedByTrackCameraIdObjectsAsc
+	return r
+}
+
+// SQL @&gt; comparison
 func (r ApiPostStreamProducerClaimCamerasRequest) ReferencedByVideoCameraIdObjectsContains(referencedByVideoCameraIdObjectsContains interface{}) ApiPostStreamProducerClaimCamerasRequest {
 	r.referencedByVideoCameraIdObjectsContains = &referencedByVideoCameraIdObjectsContains
 	return r
@@ -1297,6 +1332,9 @@ func (a *StreamProducerClaimCameraAPIService) PostStreamProducerClaimCamerasExec
 	}
 	if r.referencedByDetectionLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection__load", r.referencedByDetectionLoad, "")
+	}
+	if r.referencedByTrackLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track__load", r.referencedByTrackLoad, "")
 	}
 	if r.referencedByVideoLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video__load", r.referencedByVideoLoad, "")
@@ -1792,6 +1830,18 @@ func (a *StreamProducerClaimCameraAPIService) PostStreamProducerClaimCamerasExec
 	}
 	if r.referencedByDetectionCameraIdObjectsAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_detection_camera_id_objects__asc", r.referencedByDetectionCameraIdObjectsAsc, "")
+	}
+	if r.referencedByTrackCameraIdObjectsContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_camera_id_objects__contains", r.referencedByTrackCameraIdObjectsContains, "")
+	}
+	if r.referencedByTrackCameraIdObjectsNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_camera_id_objects__notcontains", r.referencedByTrackCameraIdObjectsNotcontains, "")
+	}
+	if r.referencedByTrackCameraIdObjectsDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_camera_id_objects__desc", r.referencedByTrackCameraIdObjectsDesc, "")
+	}
+	if r.referencedByTrackCameraIdObjectsAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_track_camera_id_objects__asc", r.referencedByTrackCameraIdObjectsAsc, "")
 	}
 	if r.referencedByVideoCameraIdObjectsContains != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_video_camera_id_objects__contains", r.referencedByVideoCameraIdObjectsContains, "")

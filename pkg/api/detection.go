@@ -45,6 +45,8 @@ type Detection struct {
 	VideoIDObject  *Video        `json:"video_id_object"`
 	CameraID       uuid.UUID     `json:"camera_id"`
 	CameraIDObject *Camera       `json:"camera_id_object"`
+	TrackID        *uuid.UUID    `json:"track_id"`
+	TrackIDObject  *Track        `json:"track_id_object"`
 }
 
 var DetectionTable = "detection"
@@ -66,6 +68,7 @@ var (
 	DetectionTableBoundingBoxColumn = "bounding_box"
 	DetectionTableVideoIDColumn     = "video_id"
 	DetectionTableCameraIDColumn    = "camera_id"
+	DetectionTableTrackIDColumn     = "track_id"
 )
 
 var (
@@ -81,6 +84,7 @@ var (
 	DetectionTableBoundingBoxColumnWithTypeCast = `"bounding_box" AS bounding_box`
 	DetectionTableVideoIDColumnWithTypeCast     = `"video_id" AS video_id`
 	DetectionTableCameraIDColumnWithTypeCast    = `"camera_id" AS camera_id`
+	DetectionTableTrackIDColumnWithTypeCast     = `"track_id" AS track_id`
 )
 
 var DetectionTableColumns = []string{
@@ -96,6 +100,7 @@ var DetectionTableColumns = []string{
 	DetectionTableBoundingBoxColumn,
 	DetectionTableVideoIDColumn,
 	DetectionTableCameraIDColumn,
+	DetectionTableTrackIDColumn,
 }
 
 var DetectionTableColumnsWithTypeCasts = []string{
@@ -111,6 +116,7 @@ var DetectionTableColumnsWithTypeCasts = []string{
 	DetectionTableBoundingBoxColumnWithTypeCast,
 	DetectionTableVideoIDColumnWithTypeCast,
 	DetectionTableCameraIDColumnWithTypeCast,
+	DetectionTableTrackIDColumnWithTypeCast,
 }
 
 var DetectionIntrospectedTable *introspect.Table
@@ -419,6 +425,25 @@ func (m *Detection) FromItem(item map[string]any) error {
 
 			m.CameraID = temp2
 
+		case "track_id":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseUUID(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(uuid.UUID)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uutrack_id.UUID", temp1))
+				}
+			}
+
+			m.TrackID = &temp2
+
 		}
 	}
 
@@ -478,6 +503,8 @@ func (m *Detection) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bo
 	m.VideoIDObject = o.VideoIDObject
 	m.CameraID = o.CameraID
 	m.CameraIDObject = o.CameraIDObject
+	m.TrackID = o.TrackID
+	m.TrackIDObject = o.TrackIDObject
 
 	return nil
 }
@@ -613,6 +640,17 @@ func (m *Detection) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, 
 		v, err := types.FormatUUID(m.CameraID)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.CameraID; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroUUID(m.TrackID) || slices.Contains(forceSetValuesForFields, DetectionTableTrackIDColumn) || isRequired(DetectionTableColumnLookup, DetectionTableTrackIDColumn) {
+		columns = append(columns, DetectionTableTrackIDColumn)
+
+		v, err := types.FormatUUID(m.TrackID)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.TrackID; %v", err)
 		}
 
 		values = append(values, v)
@@ -803,6 +841,17 @@ func (m *Detection) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, f
 		v, err := types.FormatUUID(m.CameraID)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.CameraID; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroUUID(m.TrackID) || slices.Contains(forceSetValuesForFields, DetectionTableTrackIDColumn) {
+		columns = append(columns, DetectionTableTrackIDColumn)
+
+		v, err := types.FormatUUID(m.TrackID)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.TrackID; %v", err)
 		}
 
 		values = append(values, v)
@@ -1042,6 +1091,34 @@ func SelectDetections(ctx context.Context, tx pgx.Tx, where string, orderBy *str
 
 				if config.Debug() {
 					log.Printf("loaded SelectDetections->SelectCamera for object.CameraIDObject in %s", time.Since(thisBefore))
+				}
+			}
+		}
+
+		if !types.IsZeroUUID(object.TrackID) {
+			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("%s{%v}", TrackTable, object.TrackID), true)
+			shouldLoad := query.ShouldLoad(ctx, TrackTable)
+			if ok || shouldLoad {
+				thisBefore := time.Now()
+
+				if config.Debug() {
+					log.Printf("loading SelectDetections->SelectTrack for object.TrackIDObject{%s: %v}", TrackTablePrimaryKeyColumn, object.TrackID)
+				}
+
+				object.TrackIDObject, _, _, _, _, err = SelectTrack(
+					ctx,
+					tx,
+					fmt.Sprintf("%v = $1", TrackTablePrimaryKeyColumn),
+					object.TrackID,
+				)
+				if err != nil {
+					if !errors.Is(err, sql.ErrNoRows) {
+						return nil, 0, 0, 0, 0, err
+					}
+				}
+
+				if config.Debug() {
+					log.Printf("loaded SelectDetections->SelectTrack for object.TrackIDObject in %s", time.Since(thisBefore))
 				}
 			}
 		}
@@ -1952,6 +2029,8 @@ func (m *Detection) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string
 		columnName = DetectionTableVideoIDColumn
 	case "camera_id":
 		columnName = DetectionTableCameraIDColumn
+	case "track_id":
+		columnName = DetectionTableTrackIDColumn
 
 	default:
 		return fmt.Errorf("unknown field name: %v", fieldName)
@@ -1982,6 +2061,8 @@ func (m *Detection) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string
 	case DetectionTableVideoIDColumn:
 		columnValue, err = types.FormatUUID(value)
 	case DetectionTableCameraIDColumn:
+		columnValue, err = types.FormatUUID(value)
+	case DetectionTableTrackIDColumn:
 		columnValue, err = types.FormatUUID(value)
 
 	}
@@ -2049,6 +2130,8 @@ func (m *Detection) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[stri
 			columnName = DetectionTableVideoIDColumn
 		case "camera_id":
 			columnName = DetectionTableCameraIDColumn
+		case "track_id":
+			columnName = DetectionTableTrackIDColumn
 
 		default:
 			return fmt.Errorf("unknown field name: %v", fieldName)
@@ -2079,6 +2162,8 @@ func (m *Detection) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[stri
 		case DetectionTableVideoIDColumn:
 			columnValue, err = types.FormatUUID(value)
 		case DetectionTableCameraIDColumn:
+			columnValue, err = types.FormatUUID(value)
+		case DetectionTableTrackIDColumn:
 			columnValue, err = types.FormatUUID(value)
 
 		}

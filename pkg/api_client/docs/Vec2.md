@@ -4,8 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**X** | Pointer to **float64** |  | [optional] 
-**Y** | Pointer to **float64** |  | [optional] 
+**X** | Pointer to **float64** |  | [optional]
+**Y** | Pointer to **float64** |  | [optional]
 
 ## Methods
 

@@ -274,9 +274,9 @@ class DetectionApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -539,9 +539,9 @@ class DetectionApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -586,6 +586,7 @@ class DetectionApi:
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         video__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
+        track__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -754,6 +755,26 @@ class DetectionApi:
         camera_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        track_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        track_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        track_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        track_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        track_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        track_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        track_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        track_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
+        track_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
+        track_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        track_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        track_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -780,6 +801,8 @@ class DetectionApi:
         :type video__load: str
         :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
         :type camera__load: str
+        :param track__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :type track__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -1116,6 +1139,46 @@ class DetectionApi:
         :type camera_id_object__desc: str
         :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id_object__asc: str
+        :param track_id__eq: SQL = comparison
+        :type track_id__eq: str
+        :param track_id__ne: SQL != comparison
+        :type track_id__ne: str
+        :param track_id__gt: SQL > comparison, may not work with all column types
+        :type track_id__gt: str
+        :param track_id__gte: SQL >= comparison, may not work with all column types
+        :type track_id__gte: str
+        :param track_id__lt: SQL < comparison, may not work with all column types
+        :type track_id__lt: str
+        :param track_id__lte: SQL <= comparison, may not work with all column types
+        :type track_id__lte: str
+        :param track_id__in: SQL IN comparison, permits comma-separated values
+        :type track_id__in: str
+        :param track_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type track_id__notin: str
+        :param track_id__contains: SQL @> comparison
+        :type track_id__contains: str
+        :param track_id__notcontains: SQL NOT @> comparison
+        :type track_id__notcontains: str
+        :param track_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__like: str
+        :param track_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__notlike: str
+        :param track_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__ilike: str
+        :param track_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__notilike: str
+        :param track_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_id__desc: str
+        :param track_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_id__asc: str
+        :param track_id_object__contains: SQL @> comparison
+        :type track_id_object__contains: object
+        :param track_id_object__notcontains: SQL NOT @> comparison
+        :type track_id_object__notcontains: object
+        :param track_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_id_object__desc: str
+        :param track_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_id_object__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1144,6 +1207,7 @@ class DetectionApi:
             depth=depth,
             video__load=video__load,
             camera__load=camera__load,
+            track__load=track__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -1312,6 +1376,26 @@ class DetectionApi:
             camera_id_object__notcontains=camera_id_object__notcontains,
             camera_id_object__desc=camera_id_object__desc,
             camera_id_object__asc=camera_id_object__asc,
+            track_id__eq=track_id__eq,
+            track_id__ne=track_id__ne,
+            track_id__gt=track_id__gt,
+            track_id__gte=track_id__gte,
+            track_id__lt=track_id__lt,
+            track_id__lte=track_id__lte,
+            track_id__in=track_id__in,
+            track_id__notin=track_id__notin,
+            track_id__contains=track_id__contains,
+            track_id__notcontains=track_id__notcontains,
+            track_id__like=track_id__like,
+            track_id__notlike=track_id__notlike,
+            track_id__ilike=track_id__ilike,
+            track_id__notilike=track_id__notilike,
+            track_id__desc=track_id__desc,
+            track_id__asc=track_id__asc,
+            track_id_object__contains=track_id_object__contains,
+            track_id_object__notcontains=track_id_object__notcontains,
+            track_id_object__desc=track_id_object__desc,
+            track_id_object__asc=track_id_object__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1340,6 +1424,7 @@ class DetectionApi:
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         video__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
+        track__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -1508,6 +1593,26 @@ class DetectionApi:
         camera_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        track_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        track_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        track_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        track_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        track_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        track_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        track_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        track_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
+        track_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
+        track_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        track_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        track_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1534,6 +1639,8 @@ class DetectionApi:
         :type video__load: str
         :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
         :type camera__load: str
+        :param track__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :type track__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -1870,6 +1977,46 @@ class DetectionApi:
         :type camera_id_object__desc: str
         :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id_object__asc: str
+        :param track_id__eq: SQL = comparison
+        :type track_id__eq: str
+        :param track_id__ne: SQL != comparison
+        :type track_id__ne: str
+        :param track_id__gt: SQL > comparison, may not work with all column types
+        :type track_id__gt: str
+        :param track_id__gte: SQL >= comparison, may not work with all column types
+        :type track_id__gte: str
+        :param track_id__lt: SQL < comparison, may not work with all column types
+        :type track_id__lt: str
+        :param track_id__lte: SQL <= comparison, may not work with all column types
+        :type track_id__lte: str
+        :param track_id__in: SQL IN comparison, permits comma-separated values
+        :type track_id__in: str
+        :param track_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type track_id__notin: str
+        :param track_id__contains: SQL @> comparison
+        :type track_id__contains: str
+        :param track_id__notcontains: SQL NOT @> comparison
+        :type track_id__notcontains: str
+        :param track_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__like: str
+        :param track_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__notlike: str
+        :param track_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__ilike: str
+        :param track_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__notilike: str
+        :param track_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_id__desc: str
+        :param track_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_id__asc: str
+        :param track_id_object__contains: SQL @> comparison
+        :type track_id_object__contains: object
+        :param track_id_object__notcontains: SQL NOT @> comparison
+        :type track_id_object__notcontains: object
+        :param track_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_id_object__desc: str
+        :param track_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_id_object__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1898,6 +2045,7 @@ class DetectionApi:
             depth=depth,
             video__load=video__load,
             camera__load=camera__load,
+            track__load=track__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -2066,6 +2214,26 @@ class DetectionApi:
             camera_id_object__notcontains=camera_id_object__notcontains,
             camera_id_object__desc=camera_id_object__desc,
             camera_id_object__asc=camera_id_object__asc,
+            track_id__eq=track_id__eq,
+            track_id__ne=track_id__ne,
+            track_id__gt=track_id__gt,
+            track_id__gte=track_id__gte,
+            track_id__lt=track_id__lt,
+            track_id__lte=track_id__lte,
+            track_id__in=track_id__in,
+            track_id__notin=track_id__notin,
+            track_id__contains=track_id__contains,
+            track_id__notcontains=track_id__notcontains,
+            track_id__like=track_id__like,
+            track_id__notlike=track_id__notlike,
+            track_id__ilike=track_id__ilike,
+            track_id__notilike=track_id__notilike,
+            track_id__desc=track_id__desc,
+            track_id__asc=track_id__asc,
+            track_id_object__contains=track_id_object__contains,
+            track_id_object__notcontains=track_id_object__notcontains,
+            track_id_object__desc=track_id_object__desc,
+            track_id_object__asc=track_id_object__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2094,6 +2262,7 @@ class DetectionApi:
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         video__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
+        track__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -2262,6 +2431,26 @@ class DetectionApi:
         camera_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         camera_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         camera_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
+        track_id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
+        track_id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
+        track_id__gte: Annotated[Optional[StrictStr], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        track_id__lt: Annotated[Optional[StrictStr], Field(description="SQL < comparison, may not work with all column types")] = None,
+        track_id__lte: Annotated[Optional[StrictStr], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        track_id__in: Annotated[Optional[StrictStr], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        track_id__notin: Annotated[Optional[StrictStr], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        track_id__contains: Annotated[Optional[StrictStr], Field(description="SQL @> comparison")] = None,
+        track_id__notcontains: Annotated[Optional[StrictStr], Field(description="SQL NOT @> comparison")] = None,
+        track_id__like: Annotated[Optional[StrictStr], Field(description="SQL LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__notlike: Annotated[Optional[StrictStr], Field(description="SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__ilike: Annotated[Optional[StrictStr], Field(description="SQL ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__notilike: Annotated[Optional[StrictStr], Field(description="SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %")] = None,
+        track_id__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id_object__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        track_id_object__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        track_id_object__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_id_object__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2288,6 +2477,8 @@ class DetectionApi:
         :type video__load: str
         :param camera__load: load the given directly related object, value is ignored (presence of key is sufficient)
         :type camera__load: str
+        :param track__load: load the given directly related object, value is ignored (presence of key is sufficient)
+        :type track__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -2624,6 +2815,46 @@ class DetectionApi:
         :type camera_id_object__desc: str
         :param camera_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type camera_id_object__asc: str
+        :param track_id__eq: SQL = comparison
+        :type track_id__eq: str
+        :param track_id__ne: SQL != comparison
+        :type track_id__ne: str
+        :param track_id__gt: SQL > comparison, may not work with all column types
+        :type track_id__gt: str
+        :param track_id__gte: SQL >= comparison, may not work with all column types
+        :type track_id__gte: str
+        :param track_id__lt: SQL < comparison, may not work with all column types
+        :type track_id__lt: str
+        :param track_id__lte: SQL <= comparison, may not work with all column types
+        :type track_id__lte: str
+        :param track_id__in: SQL IN comparison, permits comma-separated values
+        :type track_id__in: str
+        :param track_id__notin: SQL NOT IN comparison, permits comma-separated values
+        :type track_id__notin: str
+        :param track_id__contains: SQL @> comparison
+        :type track_id__contains: str
+        :param track_id__notcontains: SQL NOT @> comparison
+        :type track_id__notcontains: str
+        :param track_id__like: SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__like: str
+        :param track_id__notlike: SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__notlike: str
+        :param track_id__ilike: SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__ilike: str
+        :param track_id__notilike: SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+        :type track_id__notilike: str
+        :param track_id__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_id__desc: str
+        :param track_id__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_id__asc: str
+        :param track_id_object__contains: SQL @> comparison
+        :type track_id_object__contains: object
+        :param track_id_object__notcontains: SQL NOT @> comparison
+        :type track_id_object__notcontains: object
+        :param track_id_object__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_id_object__desc: str
+        :param track_id_object__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_id_object__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2652,6 +2883,7 @@ class DetectionApi:
             depth=depth,
             video__load=video__load,
             camera__load=camera__load,
+            track__load=track__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -2820,6 +3052,26 @@ class DetectionApi:
             camera_id_object__notcontains=camera_id_object__notcontains,
             camera_id_object__desc=camera_id_object__desc,
             camera_id_object__asc=camera_id_object__asc,
+            track_id__eq=track_id__eq,
+            track_id__ne=track_id__ne,
+            track_id__gt=track_id__gt,
+            track_id__gte=track_id__gte,
+            track_id__lt=track_id__lt,
+            track_id__lte=track_id__lte,
+            track_id__in=track_id__in,
+            track_id__notin=track_id__notin,
+            track_id__contains=track_id__contains,
+            track_id__notcontains=track_id__notcontains,
+            track_id__like=track_id__like,
+            track_id__notlike=track_id__notlike,
+            track_id__ilike=track_id__ilike,
+            track_id__notilike=track_id__notilike,
+            track_id__desc=track_id__desc,
+            track_id__asc=track_id__asc,
+            track_id_object__contains=track_id_object__contains,
+            track_id_object__notcontains=track_id_object__notcontains,
+            track_id_object__desc=track_id_object__desc,
+            track_id_object__asc=track_id_object__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2843,6 +3095,7 @@ class DetectionApi:
         depth,
         video__load,
         camera__load,
+        track__load,
         id__eq,
         id__ne,
         id__gt,
@@ -3011,6 +3264,26 @@ class DetectionApi:
         camera_id_object__notcontains,
         camera_id_object__desc,
         camera_id_object__asc,
+        track_id__eq,
+        track_id__ne,
+        track_id__gt,
+        track_id__gte,
+        track_id__lt,
+        track_id__lte,
+        track_id__in,
+        track_id__notin,
+        track_id__contains,
+        track_id__notcontains,
+        track_id__like,
+        track_id__notlike,
+        track_id__ilike,
+        track_id__notilike,
+        track_id__desc,
+        track_id__asc,
+        track_id_object__contains,
+        track_id_object__notcontains,
+        track_id_object__desc,
+        track_id_object__asc,
         _request_auth,
         _content_type,
         _headers,
@@ -3032,89 +3305,93 @@ class DetectionApi:
         # process the path parameters
         # process the query parameters
         if limit is not None:
-            
+
             _query_params.append(('limit', limit))
-            
+
         if offset is not None:
-            
+
             _query_params.append(('offset', offset))
-            
+
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         if video__load is not None:
-            
+
             _query_params.append(('video__load', video__load))
-            
+
         if camera__load is not None:
-            
+
             _query_params.append(('camera__load', camera__load))
-            
+
+        if track__load is not None:
+
+            _query_params.append(('track__load', track__load))
+
         if id__eq is not None:
-            
+
             _query_params.append(('id__eq', id__eq))
-            
+
         if id__ne is not None:
-            
+
             _query_params.append(('id__ne', id__ne))
-            
+
         if id__gt is not None:
-            
+
             _query_params.append(('id__gt', id__gt))
-            
+
         if id__gte is not None:
-            
+
             _query_params.append(('id__gte', id__gte))
-            
+
         if id__lt is not None:
-            
+
             _query_params.append(('id__lt', id__lt))
-            
+
         if id__lte is not None:
-            
+
             _query_params.append(('id__lte', id__lte))
-            
+
         if id__in is not None:
-            
+
             _query_params.append(('id__in', id__in))
-            
+
         if id__notin is not None:
-            
+
             _query_params.append(('id__notin', id__notin))
-            
+
         if id__contains is not None:
-            
+
             _query_params.append(('id__contains', id__contains))
-            
+
         if id__notcontains is not None:
-            
+
             _query_params.append(('id__notcontains', id__notcontains))
-            
+
         if id__like is not None:
-            
+
             _query_params.append(('id__like', id__like))
-            
+
         if id__notlike is not None:
-            
+
             _query_params.append(('id__notlike', id__notlike))
-            
+
         if id__ilike is not None:
-            
+
             _query_params.append(('id__ilike', id__ilike))
-            
+
         if id__notilike is not None:
-            
+
             _query_params.append(('id__notilike', id__notilike))
-            
+
         if id__desc is not None:
-            
+
             _query_params.append(('id__desc', id__desc))
-            
+
         if id__asc is not None:
-            
+
             _query_params.append(('id__asc', id__asc))
-            
+
         if created_at__eq is not None:
             if isinstance(created_at__eq, datetime):
                 _query_params.append(
@@ -3127,7 +3404,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__eq', created_at__eq))
-            
+
         if created_at__ne is not None:
             if isinstance(created_at__ne, datetime):
                 _query_params.append(
@@ -3140,7 +3417,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__ne', created_at__ne))
-            
+
         if created_at__gt is not None:
             if isinstance(created_at__gt, datetime):
                 _query_params.append(
@@ -3153,7 +3430,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__gt', created_at__gt))
-            
+
         if created_at__gte is not None:
             if isinstance(created_at__gte, datetime):
                 _query_params.append(
@@ -3166,7 +3443,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__gte', created_at__gte))
-            
+
         if created_at__lt is not None:
             if isinstance(created_at__lt, datetime):
                 _query_params.append(
@@ -3179,7 +3456,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__lt', created_at__lt))
-            
+
         if created_at__lte is not None:
             if isinstance(created_at__lte, datetime):
                 _query_params.append(
@@ -3192,7 +3469,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__lte', created_at__lte))
-            
+
         if created_at__in is not None:
             if isinstance(created_at__in, datetime):
                 _query_params.append(
@@ -3205,7 +3482,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__in', created_at__in))
-            
+
         if created_at__notin is not None:
             if isinstance(created_at__notin, datetime):
                 _query_params.append(
@@ -3218,7 +3495,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__notin', created_at__notin))
-            
+
         if created_at__contains is not None:
             if isinstance(created_at__contains, datetime):
                 _query_params.append(
@@ -3231,7 +3508,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__contains', created_at__contains))
-            
+
         if created_at__notcontains is not None:
             if isinstance(created_at__notcontains, datetime):
                 _query_params.append(
@@ -3244,7 +3521,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__notcontains', created_at__notcontains))
-            
+
         if created_at__like is not None:
             if isinstance(created_at__like, datetime):
                 _query_params.append(
@@ -3257,7 +3534,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__like', created_at__like))
-            
+
         if created_at__notlike is not None:
             if isinstance(created_at__notlike, datetime):
                 _query_params.append(
@@ -3270,7 +3547,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__notlike', created_at__notlike))
-            
+
         if created_at__ilike is not None:
             if isinstance(created_at__ilike, datetime):
                 _query_params.append(
@@ -3283,7 +3560,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__ilike', created_at__ilike))
-            
+
         if created_at__notilike is not None:
             if isinstance(created_at__notilike, datetime):
                 _query_params.append(
@@ -3296,15 +3573,15 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('created_at__notilike', created_at__notilike))
-            
+
         if created_at__desc is not None:
-            
+
             _query_params.append(('created_at__desc', created_at__desc))
-            
+
         if created_at__asc is not None:
-            
+
             _query_params.append(('created_at__asc', created_at__asc))
-            
+
         if updated_at__eq is not None:
             if isinstance(updated_at__eq, datetime):
                 _query_params.append(
@@ -3317,7 +3594,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__eq', updated_at__eq))
-            
+
         if updated_at__ne is not None:
             if isinstance(updated_at__ne, datetime):
                 _query_params.append(
@@ -3330,7 +3607,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__ne', updated_at__ne))
-            
+
         if updated_at__gt is not None:
             if isinstance(updated_at__gt, datetime):
                 _query_params.append(
@@ -3343,7 +3620,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__gt', updated_at__gt))
-            
+
         if updated_at__gte is not None:
             if isinstance(updated_at__gte, datetime):
                 _query_params.append(
@@ -3356,7 +3633,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__gte', updated_at__gte))
-            
+
         if updated_at__lt is not None:
             if isinstance(updated_at__lt, datetime):
                 _query_params.append(
@@ -3369,7 +3646,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__lt', updated_at__lt))
-            
+
         if updated_at__lte is not None:
             if isinstance(updated_at__lte, datetime):
                 _query_params.append(
@@ -3382,7 +3659,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__lte', updated_at__lte))
-            
+
         if updated_at__in is not None:
             if isinstance(updated_at__in, datetime):
                 _query_params.append(
@@ -3395,7 +3672,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__in', updated_at__in))
-            
+
         if updated_at__notin is not None:
             if isinstance(updated_at__notin, datetime):
                 _query_params.append(
@@ -3408,7 +3685,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__notin', updated_at__notin))
-            
+
         if updated_at__contains is not None:
             if isinstance(updated_at__contains, datetime):
                 _query_params.append(
@@ -3421,7 +3698,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__contains', updated_at__contains))
-            
+
         if updated_at__notcontains is not None:
             if isinstance(updated_at__notcontains, datetime):
                 _query_params.append(
@@ -3434,7 +3711,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__notcontains', updated_at__notcontains))
-            
+
         if updated_at__like is not None:
             if isinstance(updated_at__like, datetime):
                 _query_params.append(
@@ -3447,7 +3724,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__like', updated_at__like))
-            
+
         if updated_at__notlike is not None:
             if isinstance(updated_at__notlike, datetime):
                 _query_params.append(
@@ -3460,7 +3737,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__notlike', updated_at__notlike))
-            
+
         if updated_at__ilike is not None:
             if isinstance(updated_at__ilike, datetime):
                 _query_params.append(
@@ -3473,7 +3750,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__ilike', updated_at__ilike))
-            
+
         if updated_at__notilike is not None:
             if isinstance(updated_at__notilike, datetime):
                 _query_params.append(
@@ -3486,15 +3763,15 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('updated_at__notilike', updated_at__notilike))
-            
+
         if updated_at__desc is not None:
-            
+
             _query_params.append(('updated_at__desc', updated_at__desc))
-            
+
         if updated_at__asc is not None:
-            
+
             _query_params.append(('updated_at__asc', updated_at__asc))
-            
+
         if deleted_at__eq is not None:
             if isinstance(deleted_at__eq, datetime):
                 _query_params.append(
@@ -3507,7 +3784,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__eq', deleted_at__eq))
-            
+
         if deleted_at__ne is not None:
             if isinstance(deleted_at__ne, datetime):
                 _query_params.append(
@@ -3520,7 +3797,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__ne', deleted_at__ne))
-            
+
         if deleted_at__gt is not None:
             if isinstance(deleted_at__gt, datetime):
                 _query_params.append(
@@ -3533,7 +3810,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__gt', deleted_at__gt))
-            
+
         if deleted_at__gte is not None:
             if isinstance(deleted_at__gte, datetime):
                 _query_params.append(
@@ -3546,7 +3823,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__gte', deleted_at__gte))
-            
+
         if deleted_at__lt is not None:
             if isinstance(deleted_at__lt, datetime):
                 _query_params.append(
@@ -3559,7 +3836,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__lt', deleted_at__lt))
-            
+
         if deleted_at__lte is not None:
             if isinstance(deleted_at__lte, datetime):
                 _query_params.append(
@@ -3572,7 +3849,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__lte', deleted_at__lte))
-            
+
         if deleted_at__in is not None:
             if isinstance(deleted_at__in, datetime):
                 _query_params.append(
@@ -3585,7 +3862,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__in', deleted_at__in))
-            
+
         if deleted_at__notin is not None:
             if isinstance(deleted_at__notin, datetime):
                 _query_params.append(
@@ -3598,7 +3875,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__notin', deleted_at__notin))
-            
+
         if deleted_at__contains is not None:
             if isinstance(deleted_at__contains, datetime):
                 _query_params.append(
@@ -3611,7 +3888,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__contains', deleted_at__contains))
-            
+
         if deleted_at__notcontains is not None:
             if isinstance(deleted_at__notcontains, datetime):
                 _query_params.append(
@@ -3624,7 +3901,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__notcontains', deleted_at__notcontains))
-            
+
         if deleted_at__like is not None:
             if isinstance(deleted_at__like, datetime):
                 _query_params.append(
@@ -3637,7 +3914,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__like', deleted_at__like))
-            
+
         if deleted_at__notlike is not None:
             if isinstance(deleted_at__notlike, datetime):
                 _query_params.append(
@@ -3650,7 +3927,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__notlike', deleted_at__notlike))
-            
+
         if deleted_at__ilike is not None:
             if isinstance(deleted_at__ilike, datetime):
                 _query_params.append(
@@ -3663,7 +3940,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__ilike', deleted_at__ilike))
-            
+
         if deleted_at__notilike is not None:
             if isinstance(deleted_at__notilike, datetime):
                 _query_params.append(
@@ -3676,15 +3953,15 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('deleted_at__notilike', deleted_at__notilike))
-            
+
         if deleted_at__desc is not None:
-            
+
             _query_params.append(('deleted_at__desc', deleted_at__desc))
-            
+
         if deleted_at__asc is not None:
-            
+
             _query_params.append(('deleted_at__asc', deleted_at__asc))
-            
+
         if seen_at__eq is not None:
             if isinstance(seen_at__eq, datetime):
                 _query_params.append(
@@ -3697,7 +3974,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__eq', seen_at__eq))
-            
+
         if seen_at__ne is not None:
             if isinstance(seen_at__ne, datetime):
                 _query_params.append(
@@ -3710,7 +3987,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__ne', seen_at__ne))
-            
+
         if seen_at__gt is not None:
             if isinstance(seen_at__gt, datetime):
                 _query_params.append(
@@ -3723,7 +4000,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__gt', seen_at__gt))
-            
+
         if seen_at__gte is not None:
             if isinstance(seen_at__gte, datetime):
                 _query_params.append(
@@ -3736,7 +4013,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__gte', seen_at__gte))
-            
+
         if seen_at__lt is not None:
             if isinstance(seen_at__lt, datetime):
                 _query_params.append(
@@ -3749,7 +4026,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__lt', seen_at__lt))
-            
+
         if seen_at__lte is not None:
             if isinstance(seen_at__lte, datetime):
                 _query_params.append(
@@ -3762,7 +4039,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__lte', seen_at__lte))
-            
+
         if seen_at__in is not None:
             if isinstance(seen_at__in, datetime):
                 _query_params.append(
@@ -3775,7 +4052,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__in', seen_at__in))
-            
+
         if seen_at__notin is not None:
             if isinstance(seen_at__notin, datetime):
                 _query_params.append(
@@ -3788,7 +4065,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__notin', seen_at__notin))
-            
+
         if seen_at__contains is not None:
             if isinstance(seen_at__contains, datetime):
                 _query_params.append(
@@ -3801,7 +4078,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__contains', seen_at__contains))
-            
+
         if seen_at__notcontains is not None:
             if isinstance(seen_at__notcontains, datetime):
                 _query_params.append(
@@ -3814,7 +4091,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__notcontains', seen_at__notcontains))
-            
+
         if seen_at__like is not None:
             if isinstance(seen_at__like, datetime):
                 _query_params.append(
@@ -3827,7 +4104,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__like', seen_at__like))
-            
+
         if seen_at__notlike is not None:
             if isinstance(seen_at__notlike, datetime):
                 _query_params.append(
@@ -3840,7 +4117,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__notlike', seen_at__notlike))
-            
+
         if seen_at__ilike is not None:
             if isinstance(seen_at__ilike, datetime):
                 _query_params.append(
@@ -3853,7 +4130,7 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__ilike', seen_at__ilike))
-            
+
         if seen_at__notilike is not None:
             if isinstance(seen_at__notilike, datetime):
                 _query_params.append(
@@ -3866,367 +4143,447 @@ class DetectionApi:
                 )
             else:
                 _query_params.append(('seen_at__notilike', seen_at__notilike))
-            
+
         if seen_at__desc is not None:
-            
+
             _query_params.append(('seen_at__desc', seen_at__desc))
-            
+
         if seen_at__asc is not None:
-            
+
             _query_params.append(('seen_at__asc', seen_at__asc))
-            
+
         if class_id__eq is not None:
-            
+
             _query_params.append(('class_id__eq', class_id__eq))
-            
+
         if class_id__ne is not None:
-            
+
             _query_params.append(('class_id__ne', class_id__ne))
-            
+
         if class_id__gt is not None:
-            
+
             _query_params.append(('class_id__gt', class_id__gt))
-            
+
         if class_id__gte is not None:
-            
+
             _query_params.append(('class_id__gte', class_id__gte))
-            
+
         if class_id__lt is not None:
-            
+
             _query_params.append(('class_id__lt', class_id__lt))
-            
+
         if class_id__lte is not None:
-            
+
             _query_params.append(('class_id__lte', class_id__lte))
-            
+
         if class_id__in is not None:
-            
+
             _query_params.append(('class_id__in', class_id__in))
-            
+
         if class_id__notin is not None:
-            
+
             _query_params.append(('class_id__notin', class_id__notin))
-            
+
         if class_id__contains is not None:
-            
+
             _query_params.append(('class_id__contains', class_id__contains))
-            
+
         if class_id__notcontains is not None:
-            
+
             _query_params.append(('class_id__notcontains', class_id__notcontains))
-            
+
         if class_id__desc is not None:
-            
+
             _query_params.append(('class_id__desc', class_id__desc))
-            
+
         if class_id__asc is not None:
-            
+
             _query_params.append(('class_id__asc', class_id__asc))
-            
+
         if class_name__eq is not None:
-            
+
             _query_params.append(('class_name__eq', class_name__eq))
-            
+
         if class_name__ne is not None:
-            
+
             _query_params.append(('class_name__ne', class_name__ne))
-            
+
         if class_name__gt is not None:
-            
+
             _query_params.append(('class_name__gt', class_name__gt))
-            
+
         if class_name__gte is not None:
-            
+
             _query_params.append(('class_name__gte', class_name__gte))
-            
+
         if class_name__lt is not None:
-            
+
             _query_params.append(('class_name__lt', class_name__lt))
-            
+
         if class_name__lte is not None:
-            
+
             _query_params.append(('class_name__lte', class_name__lte))
-            
+
         if class_name__in is not None:
-            
+
             _query_params.append(('class_name__in', class_name__in))
-            
+
         if class_name__notin is not None:
-            
+
             _query_params.append(('class_name__notin', class_name__notin))
-            
+
         if class_name__contains is not None:
-            
+
             _query_params.append(('class_name__contains', class_name__contains))
-            
+
         if class_name__notcontains is not None:
-            
+
             _query_params.append(('class_name__notcontains', class_name__notcontains))
-            
+
         if class_name__like is not None:
-            
+
             _query_params.append(('class_name__like', class_name__like))
-            
+
         if class_name__notlike is not None:
-            
+
             _query_params.append(('class_name__notlike', class_name__notlike))
-            
+
         if class_name__ilike is not None:
-            
+
             _query_params.append(('class_name__ilike', class_name__ilike))
-            
+
         if class_name__notilike is not None:
-            
+
             _query_params.append(('class_name__notilike', class_name__notilike))
-            
+
         if class_name__desc is not None:
-            
+
             _query_params.append(('class_name__desc', class_name__desc))
-            
+
         if class_name__asc is not None:
-            
+
             _query_params.append(('class_name__asc', class_name__asc))
-            
+
         if score__eq is not None:
-            
+
             _query_params.append(('score__eq', score__eq))
-            
+
         if score__ne is not None:
-            
+
             _query_params.append(('score__ne', score__ne))
-            
+
         if score__gt is not None:
-            
+
             _query_params.append(('score__gt', score__gt))
-            
+
         if score__gte is not None:
-            
+
             _query_params.append(('score__gte', score__gte))
-            
+
         if score__lt is not None:
-            
+
             _query_params.append(('score__lt', score__lt))
-            
+
         if score__lte is not None:
-            
+
             _query_params.append(('score__lte', score__lte))
-            
+
         if score__in is not None:
-            
+
             _query_params.append(('score__in', score__in))
-            
+
         if score__notin is not None:
-            
+
             _query_params.append(('score__notin', score__notin))
-            
+
         if score__contains is not None:
-            
+
             _query_params.append(('score__contains', score__contains))
-            
+
         if score__notcontains is not None:
-            
+
             _query_params.append(('score__notcontains', score__notcontains))
-            
+
         if score__desc is not None:
-            
+
             _query_params.append(('score__desc', score__desc))
-            
+
         if score__asc is not None:
-            
+
             _query_params.append(('score__asc', score__asc))
-            
+
         if centroid__contains is not None:
-            
+
             _query_params.append(('centroid__contains', centroid__contains))
-            
+
         if centroid__notcontains is not None:
-            
+
             _query_params.append(('centroid__notcontains', centroid__notcontains))
-            
+
         if centroid__desc is not None:
-            
+
             _query_params.append(('centroid__desc', centroid__desc))
-            
+
         if centroid__asc is not None:
-            
+
             _query_params.append(('centroid__asc', centroid__asc))
-            
+
         if bounding_box__contains is not None:
-            
+
             _query_params.append(('bounding_box__contains', bounding_box__contains))
-            
+
         if bounding_box__notcontains is not None:
-            
+
             _query_params.append(('bounding_box__notcontains', bounding_box__notcontains))
-            
+
         if bounding_box__desc is not None:
-            
+
             _query_params.append(('bounding_box__desc', bounding_box__desc))
-            
+
         if bounding_box__asc is not None:
-            
+
             _query_params.append(('bounding_box__asc', bounding_box__asc))
-            
+
         if video_id__eq is not None:
-            
+
             _query_params.append(('video_id__eq', video_id__eq))
-            
+
         if video_id__ne is not None:
-            
+
             _query_params.append(('video_id__ne', video_id__ne))
-            
+
         if video_id__gt is not None:
-            
+
             _query_params.append(('video_id__gt', video_id__gt))
-            
+
         if video_id__gte is not None:
-            
+
             _query_params.append(('video_id__gte', video_id__gte))
-            
+
         if video_id__lt is not None:
-            
+
             _query_params.append(('video_id__lt', video_id__lt))
-            
+
         if video_id__lte is not None:
-            
+
             _query_params.append(('video_id__lte', video_id__lte))
-            
+
         if video_id__in is not None:
-            
+
             _query_params.append(('video_id__in', video_id__in))
-            
+
         if video_id__notin is not None:
-            
+
             _query_params.append(('video_id__notin', video_id__notin))
-            
+
         if video_id__contains is not None:
-            
+
             _query_params.append(('video_id__contains', video_id__contains))
-            
+
         if video_id__notcontains is not None:
-            
+
             _query_params.append(('video_id__notcontains', video_id__notcontains))
-            
+
         if video_id__like is not None:
-            
+
             _query_params.append(('video_id__like', video_id__like))
-            
+
         if video_id__notlike is not None:
-            
+
             _query_params.append(('video_id__notlike', video_id__notlike))
-            
+
         if video_id__ilike is not None:
-            
+
             _query_params.append(('video_id__ilike', video_id__ilike))
-            
+
         if video_id__notilike is not None:
-            
+
             _query_params.append(('video_id__notilike', video_id__notilike))
-            
+
         if video_id__desc is not None:
-            
+
             _query_params.append(('video_id__desc', video_id__desc))
-            
+
         if video_id__asc is not None:
-            
+
             _query_params.append(('video_id__asc', video_id__asc))
-            
+
         if video_id_object__contains is not None:
-            
+
             _query_params.append(('video_id_object__contains', video_id_object__contains))
-            
+
         if video_id_object__notcontains is not None:
-            
+
             _query_params.append(('video_id_object__notcontains', video_id_object__notcontains))
-            
+
         if video_id_object__desc is not None:
-            
+
             _query_params.append(('video_id_object__desc', video_id_object__desc))
-            
+
         if video_id_object__asc is not None:
-            
+
             _query_params.append(('video_id_object__asc', video_id_object__asc))
-            
+
         if camera_id__eq is not None:
-            
+
             _query_params.append(('camera_id__eq', camera_id__eq))
-            
+
         if camera_id__ne is not None:
-            
+
             _query_params.append(('camera_id__ne', camera_id__ne))
-            
+
         if camera_id__gt is not None:
-            
+
             _query_params.append(('camera_id__gt', camera_id__gt))
-            
+
         if camera_id__gte is not None:
-            
+
             _query_params.append(('camera_id__gte', camera_id__gte))
-            
+
         if camera_id__lt is not None:
-            
+
             _query_params.append(('camera_id__lt', camera_id__lt))
-            
+
         if camera_id__lte is not None:
-            
+
             _query_params.append(('camera_id__lte', camera_id__lte))
-            
+
         if camera_id__in is not None:
-            
+
             _query_params.append(('camera_id__in', camera_id__in))
-            
+
         if camera_id__notin is not None:
-            
+
             _query_params.append(('camera_id__notin', camera_id__notin))
-            
+
         if camera_id__contains is not None:
-            
+
             _query_params.append(('camera_id__contains', camera_id__contains))
-            
+
         if camera_id__notcontains is not None:
-            
+
             _query_params.append(('camera_id__notcontains', camera_id__notcontains))
-            
+
         if camera_id__like is not None:
-            
+
             _query_params.append(('camera_id__like', camera_id__like))
-            
+
         if camera_id__notlike is not None:
-            
+
             _query_params.append(('camera_id__notlike', camera_id__notlike))
-            
+
         if camera_id__ilike is not None:
-            
+
             _query_params.append(('camera_id__ilike', camera_id__ilike))
-            
+
         if camera_id__notilike is not None:
-            
+
             _query_params.append(('camera_id__notilike', camera_id__notilike))
-            
+
         if camera_id__desc is not None:
-            
+
             _query_params.append(('camera_id__desc', camera_id__desc))
-            
+
         if camera_id__asc is not None:
-            
+
             _query_params.append(('camera_id__asc', camera_id__asc))
-            
+
         if camera_id_object__contains is not None:
-            
+
             _query_params.append(('camera_id_object__contains', camera_id_object__contains))
-            
+
         if camera_id_object__notcontains is not None:
-            
+
             _query_params.append(('camera_id_object__notcontains', camera_id_object__notcontains))
-            
+
         if camera_id_object__desc is not None:
-            
+
             _query_params.append(('camera_id_object__desc', camera_id_object__desc))
-            
+
         if camera_id_object__asc is not None:
-            
+
             _query_params.append(('camera_id_object__asc', camera_id_object__asc))
-            
+
+        if track_id__eq is not None:
+
+            _query_params.append(('track_id__eq', track_id__eq))
+
+        if track_id__ne is not None:
+
+            _query_params.append(('track_id__ne', track_id__ne))
+
+        if track_id__gt is not None:
+
+            _query_params.append(('track_id__gt', track_id__gt))
+
+        if track_id__gte is not None:
+
+            _query_params.append(('track_id__gte', track_id__gte))
+
+        if track_id__lt is not None:
+
+            _query_params.append(('track_id__lt', track_id__lt))
+
+        if track_id__lte is not None:
+
+            _query_params.append(('track_id__lte', track_id__lte))
+
+        if track_id__in is not None:
+
+            _query_params.append(('track_id__in', track_id__in))
+
+        if track_id__notin is not None:
+
+            _query_params.append(('track_id__notin', track_id__notin))
+
+        if track_id__contains is not None:
+
+            _query_params.append(('track_id__contains', track_id__contains))
+
+        if track_id__notcontains is not None:
+
+            _query_params.append(('track_id__notcontains', track_id__notcontains))
+
+        if track_id__like is not None:
+
+            _query_params.append(('track_id__like', track_id__like))
+
+        if track_id__notlike is not None:
+
+            _query_params.append(('track_id__notlike', track_id__notlike))
+
+        if track_id__ilike is not None:
+
+            _query_params.append(('track_id__ilike', track_id__ilike))
+
+        if track_id__notilike is not None:
+
+            _query_params.append(('track_id__notilike', track_id__notilike))
+
+        if track_id__desc is not None:
+
+            _query_params.append(('track_id__desc', track_id__desc))
+
+        if track_id__asc is not None:
+
+            _query_params.append(('track_id__asc', track_id__asc))
+
+        if track_id_object__contains is not None:
+
+            _query_params.append(('track_id_object__contains', track_id_object__contains))
+
+        if track_id_object__notcontains is not None:
+
+            _query_params.append(('track_id_object__notcontains', track_id_object__notcontains))
+
+        if track_id_object__desc is not None:
+
+            _query_params.append(('track_id_object__desc', track_id_object__desc))
+
+        if track_id_object__asc is not None:
+
+            _query_params.append(('track_id_object__asc', track_id_object__asc))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4509,9 +4866,9 @@ class DetectionApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4795,9 +5152,9 @@ class DetectionApi:
         # process the path parameters
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter

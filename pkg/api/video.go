@@ -49,14 +49,16 @@ type Video struct {
 	CameraIDObject                      *Camera        `json:"camera_id_object"`
 	DetectionSummary                    any            `json:"detection_summary"`
 	IsLowRes                            bool           `json:"is_low_res"`
+	TrackSummary                        any            `json:"track_summary"`
 	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
+	ReferencedByTrackVideoIDObjects     []*Track       `json:"referenced_by_track_video_id_objects"`
 }
 
 var VideoTable = "video"
 
 var VideoTableWithSchema = fmt.Sprintf("%s.%s", schema, VideoTable)
 
-var VideoTableNamespaceID int32 = 1337 + 4
+var VideoTableNamespaceID int32 = 1337 + 5
 
 var (
 	VideoTableIDColumn                         = "id"
@@ -75,6 +77,7 @@ var (
 	VideoTableCameraIDColumn                   = "camera_id"
 	VideoTableDetectionSummaryColumn           = "detection_summary"
 	VideoTableIsLowResColumn                   = "is_low_res"
+	VideoTableTrackSummaryColumn               = "track_summary"
 )
 
 var (
@@ -94,6 +97,7 @@ var (
 	VideoTableCameraIDColumnWithTypeCast                   = `"camera_id" AS camera_id`
 	VideoTableDetectionSummaryColumnWithTypeCast           = `"detection_summary" AS detection_summary`
 	VideoTableIsLowResColumnWithTypeCast                   = `"is_low_res" AS is_low_res`
+	VideoTableTrackSummaryColumnWithTypeCast               = `"track_summary" AS track_summary`
 )
 
 var VideoTableColumns = []string{
@@ -113,6 +117,7 @@ var VideoTableColumns = []string{
 	VideoTableCameraIDColumn,
 	VideoTableDetectionSummaryColumn,
 	VideoTableIsLowResColumn,
+	VideoTableTrackSummaryColumn,
 }
 
 var VideoTableColumnsWithTypeCasts = []string{
@@ -132,6 +137,7 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableCameraIDColumnWithTypeCast,
 	VideoTableDetectionSummaryColumnWithTypeCast,
 	VideoTableIsLowResColumnWithTypeCast,
+	VideoTableTrackSummaryColumnWithTypeCast,
 }
 
 var VideoIntrospectedTable *introspect.Table
@@ -526,6 +532,25 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.IsLowRes = temp2
 
+		case "track_summary":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseJSON(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1, true
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uutrack_summary.UUID", temp1))
+				}
+			}
+
+			m.TrackSummary = temp2
+
 		}
 	}
 
@@ -588,7 +613,9 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	m.CameraIDObject = o.CameraIDObject
 	m.DetectionSummary = o.DetectionSummary
 	m.IsLowRes = o.IsLowRes
+	m.TrackSummary = o.TrackSummary
 	m.ReferencedByDetectionVideoIDObjects = o.ReferencedByDetectionVideoIDObjects
+	m.ReferencedByTrackVideoIDObjects = o.ReferencedByTrackVideoIDObjects
 
 	return nil
 }
@@ -768,6 +795,17 @@ func (m *Video) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, forc
 		v, err := types.FormatBool(m.IsLowRes)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.IsLowRes; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.TrackSummary) || slices.Contains(forceSetValuesForFields, VideoTableTrackSummaryColumn) || isRequired(VideoTableColumnLookup, VideoTableTrackSummaryColumn) {
+		columns = append(columns, VideoTableTrackSummaryColumn)
+
+		v, err := types.FormatJSON(m.TrackSummary)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.TrackSummary; %v", err)
 		}
 
 		values = append(values, v)
@@ -1002,6 +1040,17 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		v, err := types.FormatBool(m.IsLowRes)
 		if err != nil {
 			return fmt.Errorf("failed to handle m.IsLowRes; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.TrackSummary) || slices.Contains(forceSetValuesForFields, VideoTableTrackSummaryColumn) {
+		columns = append(columns, VideoTableTrackSummaryColumn)
+
+		v, err := types.FormatJSON(m.TrackSummary)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.TrackSummary; %v", err)
 		}
 
 		values = append(values, v)
@@ -1302,6 +1351,43 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 
 				if config.Debug() {
 					log.Printf("loaded SelectVideos->SelectDetections for object.ReferencedByDetectionVideoIDObjects in %s", time.Since(thisBefore))
+				}
+
+			}
+
+			return nil
+		}()
+		if err != nil {
+			return nil, 0, 0, 0, 0, err
+		}
+
+		err = func() error {
+			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", TrackTable))
+			ctx, ok := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", TrackTable, object.GetPrimaryKeyValue()), true)
+			if ok || shouldLoad {
+				thisBefore := time.Now()
+
+				if config.Debug() {
+					log.Printf("loading SelectVideos->SelectTracks for object.ReferencedByTrackVideoIDObjects")
+				}
+
+				object.ReferencedByTrackVideoIDObjects, _, _, _, _, err = SelectTracks(
+					ctx,
+					tx,
+					fmt.Sprintf("%v = $1", TrackTableVideoIDColumn),
+					nil,
+					nil,
+					nil,
+					object.GetPrimaryKeyValue(),
+				)
+				if err != nil {
+					if !errors.Is(err, sql.ErrNoRows) {
+						return err
+					}
+				}
+
+				if config.Debug() {
+					log.Printf("loaded SelectVideos->SelectTracks for object.ReferencedByTrackVideoIDObjects in %s", time.Since(thisBefore))
 				}
 
 			}
@@ -2660,6 +2746,8 @@ func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, va
 		columnName = VideoTableDetectionSummaryColumn
 	case "is_low_res":
 		columnName = VideoTableIsLowResColumn
+	case "track_summary":
+		columnName = VideoTableTrackSummaryColumn
 
 	default:
 		return fmt.Errorf("unknown field name: %v", fieldName)
@@ -2699,6 +2787,8 @@ func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, va
 		columnValue, err = types.FormatJSON(value)
 	case VideoTableIsLowResColumn:
 		columnValue, err = types.FormatBool(value)
+	case VideoTableTrackSummaryColumn:
+		columnValue, err = types.FormatJSON(value)
 
 	}
 	if err != nil {
@@ -2773,6 +2863,8 @@ func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]a
 			columnName = VideoTableDetectionSummaryColumn
 		case "is_low_res":
 			columnName = VideoTableIsLowResColumn
+		case "track_summary":
+			columnName = VideoTableTrackSummaryColumn
 
 		default:
 			return fmt.Errorf("unknown field name: %v", fieldName)
@@ -2812,6 +2904,8 @@ func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]a
 			columnValue, err = types.FormatJSON(value)
 		case VideoTableIsLowResColumn:
 			columnValue, err = types.FormatBool(value)
+		case VideoTableTrackSummaryColumn:
+			columnValue, err = types.FormatJSON(value)
 
 		}
 		if err != nil {

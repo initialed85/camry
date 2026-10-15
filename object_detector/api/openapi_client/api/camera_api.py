@@ -276,9 +276,9 @@ class CameraApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -541,9 +541,9 @@ class CameraApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -587,6 +587,7 @@ class CameraApi:
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
@@ -752,6 +753,10 @@ class CameraApi:
         referenced_by_detection_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        referenced_by_track_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        referenced_by_track_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_video_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -780,6 +785,8 @@ class CameraApi:
         :type depth: int
         :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_detection__load: str
+        :param referenced_by_track__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_track__load: str
         :param referenced_by_video__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_video__load: str
         :param id__eq: SQL = comparison
@@ -1110,6 +1117,14 @@ class CameraApi:
         :type referenced_by_detection_camera_id_objects__desc: str
         :param referenced_by_detection_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__asc: str
+        :param referenced_by_track_camera_id_objects__contains: SQL @> comparison
+        :type referenced_by_track_camera_id_objects__contains: object
+        :param referenced_by_track_camera_id_objects__notcontains: SQL NOT @> comparison
+        :type referenced_by_track_camera_id_objects__notcontains: object
+        :param referenced_by_track_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_camera_id_objects__desc: str
+        :param referenced_by_track_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_camera_id_objects__asc: str
         :param referenced_by_video_camera_id_objects__contains: SQL @> comparison
         :type referenced_by_video_camera_id_objects__contains: object
         :param referenced_by_video_camera_id_objects__notcontains: SQL NOT @> comparison
@@ -1145,6 +1160,7 @@ class CameraApi:
             offset=offset,
             depth=depth,
             referenced_by_detection__load=referenced_by_detection__load,
+            referenced_by_track__load=referenced_by_track__load,
             referenced_by_video__load=referenced_by_video__load,
             id__eq=id__eq,
             id__ne=id__ne,
@@ -1310,6 +1326,10 @@ class CameraApi:
             referenced_by_detection_camera_id_objects__notcontains=referenced_by_detection_camera_id_objects__notcontains,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
             referenced_by_detection_camera_id_objects__asc=referenced_by_detection_camera_id_objects__asc,
+            referenced_by_track_camera_id_objects__contains=referenced_by_track_camera_id_objects__contains,
+            referenced_by_track_camera_id_objects__notcontains=referenced_by_track_camera_id_objects__notcontains,
+            referenced_by_track_camera_id_objects__desc=referenced_by_track_camera_id_objects__desc,
+            referenced_by_track_camera_id_objects__asc=referenced_by_track_camera_id_objects__asc,
             referenced_by_video_camera_id_objects__contains=referenced_by_video_camera_id_objects__contains,
             referenced_by_video_camera_id_objects__notcontains=referenced_by_video_camera_id_objects__notcontains,
             referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
@@ -1341,6 +1361,7 @@ class CameraApi:
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
@@ -1506,6 +1527,10 @@ class CameraApi:
         referenced_by_detection_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        referenced_by_track_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        referenced_by_track_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_video_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -1534,6 +1559,8 @@ class CameraApi:
         :type depth: int
         :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_detection__load: str
+        :param referenced_by_track__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_track__load: str
         :param referenced_by_video__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_video__load: str
         :param id__eq: SQL = comparison
@@ -1864,6 +1891,14 @@ class CameraApi:
         :type referenced_by_detection_camera_id_objects__desc: str
         :param referenced_by_detection_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__asc: str
+        :param referenced_by_track_camera_id_objects__contains: SQL @> comparison
+        :type referenced_by_track_camera_id_objects__contains: object
+        :param referenced_by_track_camera_id_objects__notcontains: SQL NOT @> comparison
+        :type referenced_by_track_camera_id_objects__notcontains: object
+        :param referenced_by_track_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_camera_id_objects__desc: str
+        :param referenced_by_track_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_camera_id_objects__asc: str
         :param referenced_by_video_camera_id_objects__contains: SQL @> comparison
         :type referenced_by_video_camera_id_objects__contains: object
         :param referenced_by_video_camera_id_objects__notcontains: SQL NOT @> comparison
@@ -1899,6 +1934,7 @@ class CameraApi:
             offset=offset,
             depth=depth,
             referenced_by_detection__load=referenced_by_detection__load,
+            referenced_by_track__load=referenced_by_track__load,
             referenced_by_video__load=referenced_by_video__load,
             id__eq=id__eq,
             id__ne=id__ne,
@@ -2064,6 +2100,10 @@ class CameraApi:
             referenced_by_detection_camera_id_objects__notcontains=referenced_by_detection_camera_id_objects__notcontains,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
             referenced_by_detection_camera_id_objects__asc=referenced_by_detection_camera_id_objects__asc,
+            referenced_by_track_camera_id_objects__contains=referenced_by_track_camera_id_objects__contains,
+            referenced_by_track_camera_id_objects__notcontains=referenced_by_track_camera_id_objects__notcontains,
+            referenced_by_track_camera_id_objects__desc=referenced_by_track_camera_id_objects__desc,
+            referenced_by_track_camera_id_objects__asc=referenced_by_track_camera_id_objects__asc,
             referenced_by_video_camera_id_objects__contains=referenced_by_video_camera_id_objects__contains,
             referenced_by_video_camera_id_objects__notcontains=referenced_by_video_camera_id_objects__notcontains,
             referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
@@ -2095,6 +2135,7 @@ class CameraApi:
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
@@ -2260,6 +2301,10 @@ class CameraApi:
         referenced_by_detection_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        referenced_by_track_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        referenced_by_track_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_camera_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video_camera_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_video_camera_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_video_camera_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
@@ -2288,6 +2333,8 @@ class CameraApi:
         :type depth: int
         :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_detection__load: str
+        :param referenced_by_track__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_track__load: str
         :param referenced_by_video__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_video__load: str
         :param id__eq: SQL = comparison
@@ -2618,6 +2665,14 @@ class CameraApi:
         :type referenced_by_detection_camera_id_objects__desc: str
         :param referenced_by_detection_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id_objects__asc: str
+        :param referenced_by_track_camera_id_objects__contains: SQL @> comparison
+        :type referenced_by_track_camera_id_objects__contains: object
+        :param referenced_by_track_camera_id_objects__notcontains: SQL NOT @> comparison
+        :type referenced_by_track_camera_id_objects__notcontains: object
+        :param referenced_by_track_camera_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_camera_id_objects__desc: str
+        :param referenced_by_track_camera_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_camera_id_objects__asc: str
         :param referenced_by_video_camera_id_objects__contains: SQL @> comparison
         :type referenced_by_video_camera_id_objects__contains: object
         :param referenced_by_video_camera_id_objects__notcontains: SQL NOT @> comparison
@@ -2653,6 +2708,7 @@ class CameraApi:
             offset=offset,
             depth=depth,
             referenced_by_detection__load=referenced_by_detection__load,
+            referenced_by_track__load=referenced_by_track__load,
             referenced_by_video__load=referenced_by_video__load,
             id__eq=id__eq,
             id__ne=id__ne,
@@ -2818,6 +2874,10 @@ class CameraApi:
             referenced_by_detection_camera_id_objects__notcontains=referenced_by_detection_camera_id_objects__notcontains,
             referenced_by_detection_camera_id_objects__desc=referenced_by_detection_camera_id_objects__desc,
             referenced_by_detection_camera_id_objects__asc=referenced_by_detection_camera_id_objects__asc,
+            referenced_by_track_camera_id_objects__contains=referenced_by_track_camera_id_objects__contains,
+            referenced_by_track_camera_id_objects__notcontains=referenced_by_track_camera_id_objects__notcontains,
+            referenced_by_track_camera_id_objects__desc=referenced_by_track_camera_id_objects__desc,
+            referenced_by_track_camera_id_objects__asc=referenced_by_track_camera_id_objects__asc,
             referenced_by_video_camera_id_objects__contains=referenced_by_video_camera_id_objects__contains,
             referenced_by_video_camera_id_objects__notcontains=referenced_by_video_camera_id_objects__notcontains,
             referenced_by_video_camera_id_objects__desc=referenced_by_video_camera_id_objects__desc,
@@ -2844,6 +2904,7 @@ class CameraApi:
         offset,
         depth,
         referenced_by_detection__load,
+        referenced_by_track__load,
         referenced_by_video__load,
         id__eq,
         id__ne,
@@ -3009,6 +3070,10 @@ class CameraApi:
         referenced_by_detection_camera_id_objects__notcontains,
         referenced_by_detection_camera_id_objects__desc,
         referenced_by_detection_camera_id_objects__asc,
+        referenced_by_track_camera_id_objects__contains,
+        referenced_by_track_camera_id_objects__notcontains,
+        referenced_by_track_camera_id_objects__desc,
+        referenced_by_track_camera_id_objects__asc,
         referenced_by_video_camera_id_objects__contains,
         referenced_by_video_camera_id_objects__notcontains,
         referenced_by_video_camera_id_objects__desc,
@@ -3034,89 +3099,93 @@ class CameraApi:
         # process the path parameters
         # process the query parameters
         if limit is not None:
-            
+
             _query_params.append(('limit', limit))
-            
+
         if offset is not None:
-            
+
             _query_params.append(('offset', offset))
-            
+
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         if referenced_by_detection__load is not None:
-            
+
             _query_params.append(('referenced_by_detection__load', referenced_by_detection__load))
-            
+
+        if referenced_by_track__load is not None:
+
+            _query_params.append(('referenced_by_track__load', referenced_by_track__load))
+
         if referenced_by_video__load is not None:
-            
+
             _query_params.append(('referenced_by_video__load', referenced_by_video__load))
-            
+
         if id__eq is not None:
-            
+
             _query_params.append(('id__eq', id__eq))
-            
+
         if id__ne is not None:
-            
+
             _query_params.append(('id__ne', id__ne))
-            
+
         if id__gt is not None:
-            
+
             _query_params.append(('id__gt', id__gt))
-            
+
         if id__gte is not None:
-            
+
             _query_params.append(('id__gte', id__gte))
-            
+
         if id__lt is not None:
-            
+
             _query_params.append(('id__lt', id__lt))
-            
+
         if id__lte is not None:
-            
+
             _query_params.append(('id__lte', id__lte))
-            
+
         if id__in is not None:
-            
+
             _query_params.append(('id__in', id__in))
-            
+
         if id__notin is not None:
-            
+
             _query_params.append(('id__notin', id__notin))
-            
+
         if id__contains is not None:
-            
+
             _query_params.append(('id__contains', id__contains))
-            
+
         if id__notcontains is not None:
-            
+
             _query_params.append(('id__notcontains', id__notcontains))
-            
+
         if id__like is not None:
-            
+
             _query_params.append(('id__like', id__like))
-            
+
         if id__notlike is not None:
-            
+
             _query_params.append(('id__notlike', id__notlike))
-            
+
         if id__ilike is not None:
-            
+
             _query_params.append(('id__ilike', id__ilike))
-            
+
         if id__notilike is not None:
-            
+
             _query_params.append(('id__notilike', id__notilike))
-            
+
         if id__desc is not None:
-            
+
             _query_params.append(('id__desc', id__desc))
-            
+
         if id__asc is not None:
-            
+
             _query_params.append(('id__asc', id__asc))
-            
+
         if created_at__eq is not None:
             if isinstance(created_at__eq, datetime):
                 _query_params.append(
@@ -3129,7 +3198,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__eq', created_at__eq))
-            
+
         if created_at__ne is not None:
             if isinstance(created_at__ne, datetime):
                 _query_params.append(
@@ -3142,7 +3211,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__ne', created_at__ne))
-            
+
         if created_at__gt is not None:
             if isinstance(created_at__gt, datetime):
                 _query_params.append(
@@ -3155,7 +3224,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__gt', created_at__gt))
-            
+
         if created_at__gte is not None:
             if isinstance(created_at__gte, datetime):
                 _query_params.append(
@@ -3168,7 +3237,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__gte', created_at__gte))
-            
+
         if created_at__lt is not None:
             if isinstance(created_at__lt, datetime):
                 _query_params.append(
@@ -3181,7 +3250,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__lt', created_at__lt))
-            
+
         if created_at__lte is not None:
             if isinstance(created_at__lte, datetime):
                 _query_params.append(
@@ -3194,7 +3263,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__lte', created_at__lte))
-            
+
         if created_at__in is not None:
             if isinstance(created_at__in, datetime):
                 _query_params.append(
@@ -3207,7 +3276,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__in', created_at__in))
-            
+
         if created_at__notin is not None:
             if isinstance(created_at__notin, datetime):
                 _query_params.append(
@@ -3220,7 +3289,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__notin', created_at__notin))
-            
+
         if created_at__contains is not None:
             if isinstance(created_at__contains, datetime):
                 _query_params.append(
@@ -3233,7 +3302,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__contains', created_at__contains))
-            
+
         if created_at__notcontains is not None:
             if isinstance(created_at__notcontains, datetime):
                 _query_params.append(
@@ -3246,7 +3315,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__notcontains', created_at__notcontains))
-            
+
         if created_at__like is not None:
             if isinstance(created_at__like, datetime):
                 _query_params.append(
@@ -3259,7 +3328,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__like', created_at__like))
-            
+
         if created_at__notlike is not None:
             if isinstance(created_at__notlike, datetime):
                 _query_params.append(
@@ -3272,7 +3341,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__notlike', created_at__notlike))
-            
+
         if created_at__ilike is not None:
             if isinstance(created_at__ilike, datetime):
                 _query_params.append(
@@ -3285,7 +3354,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__ilike', created_at__ilike))
-            
+
         if created_at__notilike is not None:
             if isinstance(created_at__notilike, datetime):
                 _query_params.append(
@@ -3298,15 +3367,15 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('created_at__notilike', created_at__notilike))
-            
+
         if created_at__desc is not None:
-            
+
             _query_params.append(('created_at__desc', created_at__desc))
-            
+
         if created_at__asc is not None:
-            
+
             _query_params.append(('created_at__asc', created_at__asc))
-            
+
         if updated_at__eq is not None:
             if isinstance(updated_at__eq, datetime):
                 _query_params.append(
@@ -3319,7 +3388,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__eq', updated_at__eq))
-            
+
         if updated_at__ne is not None:
             if isinstance(updated_at__ne, datetime):
                 _query_params.append(
@@ -3332,7 +3401,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__ne', updated_at__ne))
-            
+
         if updated_at__gt is not None:
             if isinstance(updated_at__gt, datetime):
                 _query_params.append(
@@ -3345,7 +3414,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__gt', updated_at__gt))
-            
+
         if updated_at__gte is not None:
             if isinstance(updated_at__gte, datetime):
                 _query_params.append(
@@ -3358,7 +3427,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__gte', updated_at__gte))
-            
+
         if updated_at__lt is not None:
             if isinstance(updated_at__lt, datetime):
                 _query_params.append(
@@ -3371,7 +3440,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__lt', updated_at__lt))
-            
+
         if updated_at__lte is not None:
             if isinstance(updated_at__lte, datetime):
                 _query_params.append(
@@ -3384,7 +3453,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__lte', updated_at__lte))
-            
+
         if updated_at__in is not None:
             if isinstance(updated_at__in, datetime):
                 _query_params.append(
@@ -3397,7 +3466,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__in', updated_at__in))
-            
+
         if updated_at__notin is not None:
             if isinstance(updated_at__notin, datetime):
                 _query_params.append(
@@ -3410,7 +3479,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__notin', updated_at__notin))
-            
+
         if updated_at__contains is not None:
             if isinstance(updated_at__contains, datetime):
                 _query_params.append(
@@ -3423,7 +3492,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__contains', updated_at__contains))
-            
+
         if updated_at__notcontains is not None:
             if isinstance(updated_at__notcontains, datetime):
                 _query_params.append(
@@ -3436,7 +3505,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__notcontains', updated_at__notcontains))
-            
+
         if updated_at__like is not None:
             if isinstance(updated_at__like, datetime):
                 _query_params.append(
@@ -3449,7 +3518,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__like', updated_at__like))
-            
+
         if updated_at__notlike is not None:
             if isinstance(updated_at__notlike, datetime):
                 _query_params.append(
@@ -3462,7 +3531,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__notlike', updated_at__notlike))
-            
+
         if updated_at__ilike is not None:
             if isinstance(updated_at__ilike, datetime):
                 _query_params.append(
@@ -3475,7 +3544,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__ilike', updated_at__ilike))
-            
+
         if updated_at__notilike is not None:
             if isinstance(updated_at__notilike, datetime):
                 _query_params.append(
@@ -3488,15 +3557,15 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('updated_at__notilike', updated_at__notilike))
-            
+
         if updated_at__desc is not None:
-            
+
             _query_params.append(('updated_at__desc', updated_at__desc))
-            
+
         if updated_at__asc is not None:
-            
+
             _query_params.append(('updated_at__asc', updated_at__asc))
-            
+
         if deleted_at__eq is not None:
             if isinstance(deleted_at__eq, datetime):
                 _query_params.append(
@@ -3509,7 +3578,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__eq', deleted_at__eq))
-            
+
         if deleted_at__ne is not None:
             if isinstance(deleted_at__ne, datetime):
                 _query_params.append(
@@ -3522,7 +3591,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__ne', deleted_at__ne))
-            
+
         if deleted_at__gt is not None:
             if isinstance(deleted_at__gt, datetime):
                 _query_params.append(
@@ -3535,7 +3604,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__gt', deleted_at__gt))
-            
+
         if deleted_at__gte is not None:
             if isinstance(deleted_at__gte, datetime):
                 _query_params.append(
@@ -3548,7 +3617,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__gte', deleted_at__gte))
-            
+
         if deleted_at__lt is not None:
             if isinstance(deleted_at__lt, datetime):
                 _query_params.append(
@@ -3561,7 +3630,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__lt', deleted_at__lt))
-            
+
         if deleted_at__lte is not None:
             if isinstance(deleted_at__lte, datetime):
                 _query_params.append(
@@ -3574,7 +3643,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__lte', deleted_at__lte))
-            
+
         if deleted_at__in is not None:
             if isinstance(deleted_at__in, datetime):
                 _query_params.append(
@@ -3587,7 +3656,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__in', deleted_at__in))
-            
+
         if deleted_at__notin is not None:
             if isinstance(deleted_at__notin, datetime):
                 _query_params.append(
@@ -3600,7 +3669,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__notin', deleted_at__notin))
-            
+
         if deleted_at__contains is not None:
             if isinstance(deleted_at__contains, datetime):
                 _query_params.append(
@@ -3613,7 +3682,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__contains', deleted_at__contains))
-            
+
         if deleted_at__notcontains is not None:
             if isinstance(deleted_at__notcontains, datetime):
                 _query_params.append(
@@ -3626,7 +3695,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__notcontains', deleted_at__notcontains))
-            
+
         if deleted_at__like is not None:
             if isinstance(deleted_at__like, datetime):
                 _query_params.append(
@@ -3639,7 +3708,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__like', deleted_at__like))
-            
+
         if deleted_at__notlike is not None:
             if isinstance(deleted_at__notlike, datetime):
                 _query_params.append(
@@ -3652,7 +3721,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__notlike', deleted_at__notlike))
-            
+
         if deleted_at__ilike is not None:
             if isinstance(deleted_at__ilike, datetime):
                 _query_params.append(
@@ -3665,7 +3734,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__ilike', deleted_at__ilike))
-            
+
         if deleted_at__notilike is not None:
             if isinstance(deleted_at__notilike, datetime):
                 _query_params.append(
@@ -3678,143 +3747,143 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('deleted_at__notilike', deleted_at__notilike))
-            
+
         if deleted_at__desc is not None:
-            
+
             _query_params.append(('deleted_at__desc', deleted_at__desc))
-            
+
         if deleted_at__asc is not None:
-            
+
             _query_params.append(('deleted_at__asc', deleted_at__asc))
-            
+
         if name__eq is not None:
-            
+
             _query_params.append(('name__eq', name__eq))
-            
+
         if name__ne is not None:
-            
+
             _query_params.append(('name__ne', name__ne))
-            
+
         if name__gt is not None:
-            
+
             _query_params.append(('name__gt', name__gt))
-            
+
         if name__gte is not None:
-            
+
             _query_params.append(('name__gte', name__gte))
-            
+
         if name__lt is not None:
-            
+
             _query_params.append(('name__lt', name__lt))
-            
+
         if name__lte is not None:
-            
+
             _query_params.append(('name__lte', name__lte))
-            
+
         if name__in is not None:
-            
+
             _query_params.append(('name__in', name__in))
-            
+
         if name__notin is not None:
-            
+
             _query_params.append(('name__notin', name__notin))
-            
+
         if name__contains is not None:
-            
+
             _query_params.append(('name__contains', name__contains))
-            
+
         if name__notcontains is not None:
-            
+
             _query_params.append(('name__notcontains', name__notcontains))
-            
+
         if name__like is not None:
-            
+
             _query_params.append(('name__like', name__like))
-            
+
         if name__notlike is not None:
-            
+
             _query_params.append(('name__notlike', name__notlike))
-            
+
         if name__ilike is not None:
-            
+
             _query_params.append(('name__ilike', name__ilike))
-            
+
         if name__notilike is not None:
-            
+
             _query_params.append(('name__notilike', name__notilike))
-            
+
         if name__desc is not None:
-            
+
             _query_params.append(('name__desc', name__desc))
-            
+
         if name__asc is not None:
-            
+
             _query_params.append(('name__asc', name__asc))
-            
+
         if stream_url__eq is not None:
-            
+
             _query_params.append(('stream_url__eq', stream_url__eq))
-            
+
         if stream_url__ne is not None:
-            
+
             _query_params.append(('stream_url__ne', stream_url__ne))
-            
+
         if stream_url__gt is not None:
-            
+
             _query_params.append(('stream_url__gt', stream_url__gt))
-            
+
         if stream_url__gte is not None:
-            
+
             _query_params.append(('stream_url__gte', stream_url__gte))
-            
+
         if stream_url__lt is not None:
-            
+
             _query_params.append(('stream_url__lt', stream_url__lt))
-            
+
         if stream_url__lte is not None:
-            
+
             _query_params.append(('stream_url__lte', stream_url__lte))
-            
+
         if stream_url__in is not None:
-            
+
             _query_params.append(('stream_url__in', stream_url__in))
-            
+
         if stream_url__notin is not None:
-            
+
             _query_params.append(('stream_url__notin', stream_url__notin))
-            
+
         if stream_url__contains is not None:
-            
+
             _query_params.append(('stream_url__contains', stream_url__contains))
-            
+
         if stream_url__notcontains is not None:
-            
+
             _query_params.append(('stream_url__notcontains', stream_url__notcontains))
-            
+
         if stream_url__like is not None:
-            
+
             _query_params.append(('stream_url__like', stream_url__like))
-            
+
         if stream_url__notlike is not None:
-            
+
             _query_params.append(('stream_url__notlike', stream_url__notlike))
-            
+
         if stream_url__ilike is not None:
-            
+
             _query_params.append(('stream_url__ilike', stream_url__ilike))
-            
+
         if stream_url__notilike is not None:
-            
+
             _query_params.append(('stream_url__notilike', stream_url__notilike))
-            
+
         if stream_url__desc is not None:
-            
+
             _query_params.append(('stream_url__desc', stream_url__desc))
-            
+
         if stream_url__asc is not None:
-            
+
             _query_params.append(('stream_url__asc', stream_url__asc))
-            
+
         if last_seen__eq is not None:
             if isinstance(last_seen__eq, datetime):
                 _query_params.append(
@@ -3827,7 +3896,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__eq', last_seen__eq))
-            
+
         if last_seen__ne is not None:
             if isinstance(last_seen__ne, datetime):
                 _query_params.append(
@@ -3840,7 +3909,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__ne', last_seen__ne))
-            
+
         if last_seen__gt is not None:
             if isinstance(last_seen__gt, datetime):
                 _query_params.append(
@@ -3853,7 +3922,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__gt', last_seen__gt))
-            
+
         if last_seen__gte is not None:
             if isinstance(last_seen__gte, datetime):
                 _query_params.append(
@@ -3866,7 +3935,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__gte', last_seen__gte))
-            
+
         if last_seen__lt is not None:
             if isinstance(last_seen__lt, datetime):
                 _query_params.append(
@@ -3879,7 +3948,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__lt', last_seen__lt))
-            
+
         if last_seen__lte is not None:
             if isinstance(last_seen__lte, datetime):
                 _query_params.append(
@@ -3892,7 +3961,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__lte', last_seen__lte))
-            
+
         if last_seen__in is not None:
             if isinstance(last_seen__in, datetime):
                 _query_params.append(
@@ -3905,7 +3974,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__in', last_seen__in))
-            
+
         if last_seen__notin is not None:
             if isinstance(last_seen__notin, datetime):
                 _query_params.append(
@@ -3918,7 +3987,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__notin', last_seen__notin))
-            
+
         if last_seen__contains is not None:
             if isinstance(last_seen__contains, datetime):
                 _query_params.append(
@@ -3931,7 +4000,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__contains', last_seen__contains))
-            
+
         if last_seen__notcontains is not None:
             if isinstance(last_seen__notcontains, datetime):
                 _query_params.append(
@@ -3944,7 +4013,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__notcontains', last_seen__notcontains))
-            
+
         if last_seen__like is not None:
             if isinstance(last_seen__like, datetime):
                 _query_params.append(
@@ -3957,7 +4026,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__like', last_seen__like))
-            
+
         if last_seen__notlike is not None:
             if isinstance(last_seen__notlike, datetime):
                 _query_params.append(
@@ -3970,7 +4039,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__notlike', last_seen__notlike))
-            
+
         if last_seen__ilike is not None:
             if isinstance(last_seen__ilike, datetime):
                 _query_params.append(
@@ -3983,7 +4052,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__ilike', last_seen__ilike))
-            
+
         if last_seen__notilike is not None:
             if isinstance(last_seen__notilike, datetime):
                 _query_params.append(
@@ -3996,15 +4065,15 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('last_seen__notilike', last_seen__notilike))
-            
+
         if last_seen__desc is not None:
-            
+
             _query_params.append(('last_seen__desc', last_seen__desc))
-            
+
         if last_seen__asc is not None:
-            
+
             _query_params.append(('last_seen__asc', last_seen__asc))
-            
+
         if segment_producer_claimed_until__eq is not None:
             if isinstance(segment_producer_claimed_until__eq, datetime):
                 _query_params.append(
@@ -4017,7 +4086,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__eq', segment_producer_claimed_until__eq))
-            
+
         if segment_producer_claimed_until__ne is not None:
             if isinstance(segment_producer_claimed_until__ne, datetime):
                 _query_params.append(
@@ -4030,7 +4099,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__ne', segment_producer_claimed_until__ne))
-            
+
         if segment_producer_claimed_until__gt is not None:
             if isinstance(segment_producer_claimed_until__gt, datetime):
                 _query_params.append(
@@ -4043,7 +4112,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__gt', segment_producer_claimed_until__gt))
-            
+
         if segment_producer_claimed_until__gte is not None:
             if isinstance(segment_producer_claimed_until__gte, datetime):
                 _query_params.append(
@@ -4056,7 +4125,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__gte', segment_producer_claimed_until__gte))
-            
+
         if segment_producer_claimed_until__lt is not None:
             if isinstance(segment_producer_claimed_until__lt, datetime):
                 _query_params.append(
@@ -4069,7 +4138,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__lt', segment_producer_claimed_until__lt))
-            
+
         if segment_producer_claimed_until__lte is not None:
             if isinstance(segment_producer_claimed_until__lte, datetime):
                 _query_params.append(
@@ -4082,7 +4151,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__lte', segment_producer_claimed_until__lte))
-            
+
         if segment_producer_claimed_until__in is not None:
             if isinstance(segment_producer_claimed_until__in, datetime):
                 _query_params.append(
@@ -4095,7 +4164,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__in', segment_producer_claimed_until__in))
-            
+
         if segment_producer_claimed_until__notin is not None:
             if isinstance(segment_producer_claimed_until__notin, datetime):
                 _query_params.append(
@@ -4108,7 +4177,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__notin', segment_producer_claimed_until__notin))
-            
+
         if segment_producer_claimed_until__contains is not None:
             if isinstance(segment_producer_claimed_until__contains, datetime):
                 _query_params.append(
@@ -4121,7 +4190,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__contains', segment_producer_claimed_until__contains))
-            
+
         if segment_producer_claimed_until__notcontains is not None:
             if isinstance(segment_producer_claimed_until__notcontains, datetime):
                 _query_params.append(
@@ -4134,7 +4203,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__notcontains', segment_producer_claimed_until__notcontains))
-            
+
         if segment_producer_claimed_until__like is not None:
             if isinstance(segment_producer_claimed_until__like, datetime):
                 _query_params.append(
@@ -4147,7 +4216,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__like', segment_producer_claimed_until__like))
-            
+
         if segment_producer_claimed_until__notlike is not None:
             if isinstance(segment_producer_claimed_until__notlike, datetime):
                 _query_params.append(
@@ -4160,7 +4229,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__notlike', segment_producer_claimed_until__notlike))
-            
+
         if segment_producer_claimed_until__ilike is not None:
             if isinstance(segment_producer_claimed_until__ilike, datetime):
                 _query_params.append(
@@ -4173,7 +4242,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__ilike', segment_producer_claimed_until__ilike))
-            
+
         if segment_producer_claimed_until__notilike is not None:
             if isinstance(segment_producer_claimed_until__notilike, datetime):
                 _query_params.append(
@@ -4186,15 +4255,15 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('segment_producer_claimed_until__notilike', segment_producer_claimed_until__notilike))
-            
+
         if segment_producer_claimed_until__desc is not None:
-            
+
             _query_params.append(('segment_producer_claimed_until__desc', segment_producer_claimed_until__desc))
-            
+
         if segment_producer_claimed_until__asc is not None:
-            
+
             _query_params.append(('segment_producer_claimed_until__asc', segment_producer_claimed_until__asc))
-            
+
         if stream_producer_claimed_until__eq is not None:
             if isinstance(stream_producer_claimed_until__eq, datetime):
                 _query_params.append(
@@ -4207,7 +4276,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__eq', stream_producer_claimed_until__eq))
-            
+
         if stream_producer_claimed_until__ne is not None:
             if isinstance(stream_producer_claimed_until__ne, datetime):
                 _query_params.append(
@@ -4220,7 +4289,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__ne', stream_producer_claimed_until__ne))
-            
+
         if stream_producer_claimed_until__gt is not None:
             if isinstance(stream_producer_claimed_until__gt, datetime):
                 _query_params.append(
@@ -4233,7 +4302,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__gt', stream_producer_claimed_until__gt))
-            
+
         if stream_producer_claimed_until__gte is not None:
             if isinstance(stream_producer_claimed_until__gte, datetime):
                 _query_params.append(
@@ -4246,7 +4315,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__gte', stream_producer_claimed_until__gte))
-            
+
         if stream_producer_claimed_until__lt is not None:
             if isinstance(stream_producer_claimed_until__lt, datetime):
                 _query_params.append(
@@ -4259,7 +4328,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__lt', stream_producer_claimed_until__lt))
-            
+
         if stream_producer_claimed_until__lte is not None:
             if isinstance(stream_producer_claimed_until__lte, datetime):
                 _query_params.append(
@@ -4272,7 +4341,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__lte', stream_producer_claimed_until__lte))
-            
+
         if stream_producer_claimed_until__in is not None:
             if isinstance(stream_producer_claimed_until__in, datetime):
                 _query_params.append(
@@ -4285,7 +4354,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__in', stream_producer_claimed_until__in))
-            
+
         if stream_producer_claimed_until__notin is not None:
             if isinstance(stream_producer_claimed_until__notin, datetime):
                 _query_params.append(
@@ -4298,7 +4367,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__notin', stream_producer_claimed_until__notin))
-            
+
         if stream_producer_claimed_until__contains is not None:
             if isinstance(stream_producer_claimed_until__contains, datetime):
                 _query_params.append(
@@ -4311,7 +4380,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__contains', stream_producer_claimed_until__contains))
-            
+
         if stream_producer_claimed_until__notcontains is not None:
             if isinstance(stream_producer_claimed_until__notcontains, datetime):
                 _query_params.append(
@@ -4324,7 +4393,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__notcontains', stream_producer_claimed_until__notcontains))
-            
+
         if stream_producer_claimed_until__like is not None:
             if isinstance(stream_producer_claimed_until__like, datetime):
                 _query_params.append(
@@ -4337,7 +4406,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__like', stream_producer_claimed_until__like))
-            
+
         if stream_producer_claimed_until__notlike is not None:
             if isinstance(stream_producer_claimed_until__notlike, datetime):
                 _query_params.append(
@@ -4350,7 +4419,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__notlike', stream_producer_claimed_until__notlike))
-            
+
         if stream_producer_claimed_until__ilike is not None:
             if isinstance(stream_producer_claimed_until__ilike, datetime):
                 _query_params.append(
@@ -4363,7 +4432,7 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__ilike', stream_producer_claimed_until__ilike))
-            
+
         if stream_producer_claimed_until__notilike is not None:
             if isinstance(stream_producer_claimed_until__notilike, datetime):
                 _query_params.append(
@@ -4376,111 +4445,127 @@ class CameraApi:
                 )
             else:
                 _query_params.append(('stream_producer_claimed_until__notilike', stream_producer_claimed_until__notilike))
-            
+
         if stream_producer_claimed_until__desc is not None:
-            
+
             _query_params.append(('stream_producer_claimed_until__desc', stream_producer_claimed_until__desc))
-            
+
         if stream_producer_claimed_until__asc is not None:
-            
+
             _query_params.append(('stream_producer_claimed_until__asc', stream_producer_claimed_until__asc))
-            
+
         if low_res_stream_url__eq is not None:
-            
+
             _query_params.append(('low_res_stream_url__eq', low_res_stream_url__eq))
-            
+
         if low_res_stream_url__ne is not None:
-            
+
             _query_params.append(('low_res_stream_url__ne', low_res_stream_url__ne))
-            
+
         if low_res_stream_url__gt is not None:
-            
+
             _query_params.append(('low_res_stream_url__gt', low_res_stream_url__gt))
-            
+
         if low_res_stream_url__gte is not None:
-            
+
             _query_params.append(('low_res_stream_url__gte', low_res_stream_url__gte))
-            
+
         if low_res_stream_url__lt is not None:
-            
+
             _query_params.append(('low_res_stream_url__lt', low_res_stream_url__lt))
-            
+
         if low_res_stream_url__lte is not None:
-            
+
             _query_params.append(('low_res_stream_url__lte', low_res_stream_url__lte))
-            
+
         if low_res_stream_url__in is not None:
-            
+
             _query_params.append(('low_res_stream_url__in', low_res_stream_url__in))
-            
+
         if low_res_stream_url__notin is not None:
-            
+
             _query_params.append(('low_res_stream_url__notin', low_res_stream_url__notin))
-            
+
         if low_res_stream_url__contains is not None:
-            
+
             _query_params.append(('low_res_stream_url__contains', low_res_stream_url__contains))
-            
+
         if low_res_stream_url__notcontains is not None:
-            
+
             _query_params.append(('low_res_stream_url__notcontains', low_res_stream_url__notcontains))
-            
+
         if low_res_stream_url__like is not None:
-            
+
             _query_params.append(('low_res_stream_url__like', low_res_stream_url__like))
-            
+
         if low_res_stream_url__notlike is not None:
-            
+
             _query_params.append(('low_res_stream_url__notlike', low_res_stream_url__notlike))
-            
+
         if low_res_stream_url__ilike is not None:
-            
+
             _query_params.append(('low_res_stream_url__ilike', low_res_stream_url__ilike))
-            
+
         if low_res_stream_url__notilike is not None:
-            
+
             _query_params.append(('low_res_stream_url__notilike', low_res_stream_url__notilike))
-            
+
         if low_res_stream_url__desc is not None:
-            
+
             _query_params.append(('low_res_stream_url__desc', low_res_stream_url__desc))
-            
+
         if low_res_stream_url__asc is not None:
-            
+
             _query_params.append(('low_res_stream_url__asc', low_res_stream_url__asc))
-            
+
         if referenced_by_detection_camera_id_objects__contains is not None:
-            
+
             _query_params.append(('referenced_by_detection_camera_id_objects__contains', referenced_by_detection_camera_id_objects__contains))
-            
+
         if referenced_by_detection_camera_id_objects__notcontains is not None:
-            
+
             _query_params.append(('referenced_by_detection_camera_id_objects__notcontains', referenced_by_detection_camera_id_objects__notcontains))
-            
+
         if referenced_by_detection_camera_id_objects__desc is not None:
-            
+
             _query_params.append(('referenced_by_detection_camera_id_objects__desc', referenced_by_detection_camera_id_objects__desc))
-            
+
         if referenced_by_detection_camera_id_objects__asc is not None:
-            
+
             _query_params.append(('referenced_by_detection_camera_id_objects__asc', referenced_by_detection_camera_id_objects__asc))
-            
+
+        if referenced_by_track_camera_id_objects__contains is not None:
+
+            _query_params.append(('referenced_by_track_camera_id_objects__contains', referenced_by_track_camera_id_objects__contains))
+
+        if referenced_by_track_camera_id_objects__notcontains is not None:
+
+            _query_params.append(('referenced_by_track_camera_id_objects__notcontains', referenced_by_track_camera_id_objects__notcontains))
+
+        if referenced_by_track_camera_id_objects__desc is not None:
+
+            _query_params.append(('referenced_by_track_camera_id_objects__desc', referenced_by_track_camera_id_objects__desc))
+
+        if referenced_by_track_camera_id_objects__asc is not None:
+
+            _query_params.append(('referenced_by_track_camera_id_objects__asc', referenced_by_track_camera_id_objects__asc))
+
         if referenced_by_video_camera_id_objects__contains is not None:
-            
+
             _query_params.append(('referenced_by_video_camera_id_objects__contains', referenced_by_video_camera_id_objects__contains))
-            
+
         if referenced_by_video_camera_id_objects__notcontains is not None:
-            
+
             _query_params.append(('referenced_by_video_camera_id_objects__notcontains', referenced_by_video_camera_id_objects__notcontains))
-            
+
         if referenced_by_video_camera_id_objects__desc is not None:
-            
+
             _query_params.append(('referenced_by_video_camera_id_objects__desc', referenced_by_video_camera_id_objects__desc))
-            
+
         if referenced_by_video_camera_id_objects__asc is not None:
-            
+
             _query_params.append(('referenced_by_video_camera_id_objects__asc', referenced_by_video_camera_id_objects__asc))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4763,9 +4848,9 @@ class CameraApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -5049,9 +5134,9 @@ class CameraApi:
         # process the path parameters
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -5349,9 +5434,9 @@ class CameraApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -5649,9 +5734,9 @@ class CameraApi:
             _path_params['primaryKey'] = primary_key
         # process the query parameters
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         # process the header parameters
         # process the form parameters
         # process the body parameter

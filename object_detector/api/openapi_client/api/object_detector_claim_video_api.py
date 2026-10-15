@@ -50,6 +50,7 @@ class ObjectDetectorClaimVideoApi:
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -286,10 +287,18 @@ class ObjectDetectorClaimVideoApi:
         is_low_res__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
         is_low_res__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         is_low_res__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_summary__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        track_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        track_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        referenced_by_track_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        referenced_by_track_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -318,6 +327,8 @@ class ObjectDetectorClaimVideoApi:
         :type camera__load: str
         :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_detection__load: str
+        :param referenced_by_track__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_track__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -790,6 +801,14 @@ class ObjectDetectorClaimVideoApi:
         :type is_low_res__desc: str
         :param is_low_res__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type is_low_res__asc: str
+        :param track_summary__contains: SQL @> comparison
+        :type track_summary__contains: object
+        :param track_summary__notcontains: SQL NOT @> comparison
+        :type track_summary__notcontains: object
+        :param track_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_summary__desc: str
+        :param track_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_summary__asc: str
         :param referenced_by_detection_video_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_video_id_objects__contains: object
         :param referenced_by_detection_video_id_objects__notcontains: SQL NOT @> comparison
@@ -798,6 +817,14 @@ class ObjectDetectorClaimVideoApi:
         :type referenced_by_detection_video_id_objects__desc: str
         :param referenced_by_detection_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_video_id_objects__asc: str
+        :param referenced_by_track_video_id_objects__contains: SQL @> comparison
+        :type referenced_by_track_video_id_objects__contains: object
+        :param referenced_by_track_video_id_objects__notcontains: SQL NOT @> comparison
+        :type referenced_by_track_video_id_objects__notcontains: object
+        :param referenced_by_track_video_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_video_id_objects__desc: str
+        :param referenced_by_track_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_video_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -827,6 +854,7 @@ class ObjectDetectorClaimVideoApi:
             depth=depth,
             camera__load=camera__load,
             referenced_by_detection__load=referenced_by_detection__load,
+            referenced_by_track__load=referenced_by_track__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -1063,10 +1091,18 @@ class ObjectDetectorClaimVideoApi:
             is_low_res__notcontains=is_low_res__notcontains,
             is_low_res__desc=is_low_res__desc,
             is_low_res__asc=is_low_res__asc,
+            track_summary__contains=track_summary__contains,
+            track_summary__notcontains=track_summary__notcontains,
+            track_summary__desc=track_summary__desc,
+            track_summary__asc=track_summary__asc,
             referenced_by_detection_video_id_objects__contains=referenced_by_detection_video_id_objects__contains,
             referenced_by_detection_video_id_objects__notcontains=referenced_by_detection_video_id_objects__notcontains,
             referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
             referenced_by_detection_video_id_objects__asc=referenced_by_detection_video_id_objects__asc,
+            referenced_by_track_video_id_objects__contains=referenced_by_track_video_id_objects__contains,
+            referenced_by_track_video_id_objects__notcontains=referenced_by_track_video_id_objects__notcontains,
+            referenced_by_track_video_id_objects__desc=referenced_by_track_video_id_objects__desc,
+            referenced_by_track_video_id_objects__asc=referenced_by_track_video_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1096,6 +1132,7 @@ class ObjectDetectorClaimVideoApi:
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -1332,10 +1369,18 @@ class ObjectDetectorClaimVideoApi:
         is_low_res__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
         is_low_res__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         is_low_res__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_summary__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        track_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        track_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        referenced_by_track_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        referenced_by_track_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1364,6 +1409,8 @@ class ObjectDetectorClaimVideoApi:
         :type camera__load: str
         :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_detection__load: str
+        :param referenced_by_track__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_track__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -1836,6 +1883,14 @@ class ObjectDetectorClaimVideoApi:
         :type is_low_res__desc: str
         :param is_low_res__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type is_low_res__asc: str
+        :param track_summary__contains: SQL @> comparison
+        :type track_summary__contains: object
+        :param track_summary__notcontains: SQL NOT @> comparison
+        :type track_summary__notcontains: object
+        :param track_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_summary__desc: str
+        :param track_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_summary__asc: str
         :param referenced_by_detection_video_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_video_id_objects__contains: object
         :param referenced_by_detection_video_id_objects__notcontains: SQL NOT @> comparison
@@ -1844,6 +1899,14 @@ class ObjectDetectorClaimVideoApi:
         :type referenced_by_detection_video_id_objects__desc: str
         :param referenced_by_detection_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_video_id_objects__asc: str
+        :param referenced_by_track_video_id_objects__contains: SQL @> comparison
+        :type referenced_by_track_video_id_objects__contains: object
+        :param referenced_by_track_video_id_objects__notcontains: SQL NOT @> comparison
+        :type referenced_by_track_video_id_objects__notcontains: object
+        :param referenced_by_track_video_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_video_id_objects__desc: str
+        :param referenced_by_track_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_video_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1873,6 +1936,7 @@ class ObjectDetectorClaimVideoApi:
             depth=depth,
             camera__load=camera__load,
             referenced_by_detection__load=referenced_by_detection__load,
+            referenced_by_track__load=referenced_by_track__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -2109,10 +2173,18 @@ class ObjectDetectorClaimVideoApi:
             is_low_res__notcontains=is_low_res__notcontains,
             is_low_res__desc=is_low_res__desc,
             is_low_res__asc=is_low_res__asc,
+            track_summary__contains=track_summary__contains,
+            track_summary__notcontains=track_summary__notcontains,
+            track_summary__desc=track_summary__desc,
+            track_summary__asc=track_summary__asc,
             referenced_by_detection_video_id_objects__contains=referenced_by_detection_video_id_objects__contains,
             referenced_by_detection_video_id_objects__notcontains=referenced_by_detection_video_id_objects__notcontains,
             referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
             referenced_by_detection_video_id_objects__asc=referenced_by_detection_video_id_objects__asc,
+            referenced_by_track_video_id_objects__contains=referenced_by_track_video_id_objects__contains,
+            referenced_by_track_video_id_objects__notcontains=referenced_by_track_video_id_objects__notcontains,
+            referenced_by_track_video_id_objects__desc=referenced_by_track_video_id_objects__desc,
+            referenced_by_track_video_id_objects__asc=referenced_by_track_video_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2142,6 +2214,7 @@ class ObjectDetectorClaimVideoApi:
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given directly related object, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track__load: Annotated[Optional[StrictStr], Field(description="load the given indirectly related objects, value is ignored (presence of key is sufficient)")] = None,
         id__eq: Annotated[Optional[StrictStr], Field(description="SQL = comparison")] = None,
         id__ne: Annotated[Optional[StrictStr], Field(description="SQL != comparison")] = None,
         id__gt: Annotated[Optional[StrictStr], Field(description="SQL > comparison, may not work with all column types")] = None,
@@ -2378,10 +2451,18 @@ class ObjectDetectorClaimVideoApi:
         is_low_res__notcontains: Annotated[Optional[StrictBool], Field(description="SQL NOT @> comparison")] = None,
         is_low_res__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         is_low_res__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_summary__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        track_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        track_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        track_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
         referenced_by_detection_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
         referenced_by_detection_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_video_id_objects__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        referenced_by_track_video_id_objects__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        referenced_by_track_video_id_objects__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_track_video_id_objects__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2410,6 +2491,8 @@ class ObjectDetectorClaimVideoApi:
         :type camera__load: str
         :param referenced_by_detection__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
         :type referenced_by_detection__load: str
+        :param referenced_by_track__load: load the given indirectly related objects, value is ignored (presence of key is sufficient)
+        :type referenced_by_track__load: str
         :param id__eq: SQL = comparison
         :type id__eq: str
         :param id__ne: SQL != comparison
@@ -2882,6 +2965,14 @@ class ObjectDetectorClaimVideoApi:
         :type is_low_res__desc: str
         :param is_low_res__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type is_low_res__asc: str
+        :param track_summary__contains: SQL @> comparison
+        :type track_summary__contains: object
+        :param track_summary__notcontains: SQL NOT @> comparison
+        :type track_summary__notcontains: object
+        :param track_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type track_summary__desc: str
+        :param track_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type track_summary__asc: str
         :param referenced_by_detection_video_id_objects__contains: SQL @> comparison
         :type referenced_by_detection_video_id_objects__contains: object
         :param referenced_by_detection_video_id_objects__notcontains: SQL NOT @> comparison
@@ -2890,6 +2981,14 @@ class ObjectDetectorClaimVideoApi:
         :type referenced_by_detection_video_id_objects__desc: str
         :param referenced_by_detection_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_video_id_objects__asc: str
+        :param referenced_by_track_video_id_objects__contains: SQL @> comparison
+        :type referenced_by_track_video_id_objects__contains: object
+        :param referenced_by_track_video_id_objects__notcontains: SQL NOT @> comparison
+        :type referenced_by_track_video_id_objects__notcontains: object
+        :param referenced_by_track_video_id_objects__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_video_id_objects__desc: str
+        :param referenced_by_track_video_id_objects__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type referenced_by_track_video_id_objects__asc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2919,6 +3018,7 @@ class ObjectDetectorClaimVideoApi:
             depth=depth,
             camera__load=camera__load,
             referenced_by_detection__load=referenced_by_detection__load,
+            referenced_by_track__load=referenced_by_track__load,
             id__eq=id__eq,
             id__ne=id__ne,
             id__gt=id__gt,
@@ -3155,10 +3255,18 @@ class ObjectDetectorClaimVideoApi:
             is_low_res__notcontains=is_low_res__notcontains,
             is_low_res__desc=is_low_res__desc,
             is_low_res__asc=is_low_res__asc,
+            track_summary__contains=track_summary__contains,
+            track_summary__notcontains=track_summary__notcontains,
+            track_summary__desc=track_summary__desc,
+            track_summary__asc=track_summary__asc,
             referenced_by_detection_video_id_objects__contains=referenced_by_detection_video_id_objects__contains,
             referenced_by_detection_video_id_objects__notcontains=referenced_by_detection_video_id_objects__notcontains,
             referenced_by_detection_video_id_objects__desc=referenced_by_detection_video_id_objects__desc,
             referenced_by_detection_video_id_objects__asc=referenced_by_detection_video_id_objects__asc,
+            referenced_by_track_video_id_objects__contains=referenced_by_track_video_id_objects__contains,
+            referenced_by_track_video_id_objects__notcontains=referenced_by_track_video_id_objects__notcontains,
+            referenced_by_track_video_id_objects__desc=referenced_by_track_video_id_objects__desc,
+            referenced_by_track_video_id_objects__asc=referenced_by_track_video_id_objects__asc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -3183,6 +3291,7 @@ class ObjectDetectorClaimVideoApi:
         depth,
         camera__load,
         referenced_by_detection__load,
+        referenced_by_track__load,
         id__eq,
         id__ne,
         id__gt,
@@ -3419,10 +3528,18 @@ class ObjectDetectorClaimVideoApi:
         is_low_res__notcontains,
         is_low_res__desc,
         is_low_res__asc,
+        track_summary__contains,
+        track_summary__notcontains,
+        track_summary__desc,
+        track_summary__asc,
         referenced_by_detection_video_id_objects__contains,
         referenced_by_detection_video_id_objects__notcontains,
         referenced_by_detection_video_id_objects__desc,
         referenced_by_detection_video_id_objects__asc,
+        referenced_by_track_video_id_objects__contains,
+        referenced_by_track_video_id_objects__notcontains,
+        referenced_by_track_video_id_objects__desc,
+        referenced_by_track_video_id_objects__asc,
         _request_auth,
         _content_type,
         _headers,
@@ -3444,89 +3561,93 @@ class ObjectDetectorClaimVideoApi:
         # process the path parameters
         # process the query parameters
         if limit is not None:
-            
+
             _query_params.append(('limit', limit))
-            
+
         if offset is not None:
-            
+
             _query_params.append(('offset', offset))
-            
+
         if depth is not None:
-            
+
             _query_params.append(('depth', depth))
-            
+
         if camera__load is not None:
-            
+
             _query_params.append(('camera__load', camera__load))
-            
+
         if referenced_by_detection__load is not None:
-            
+
             _query_params.append(('referenced_by_detection__load', referenced_by_detection__load))
-            
+
+        if referenced_by_track__load is not None:
+
+            _query_params.append(('referenced_by_track__load', referenced_by_track__load))
+
         if id__eq is not None:
-            
+
             _query_params.append(('id__eq', id__eq))
-            
+
         if id__ne is not None:
-            
+
             _query_params.append(('id__ne', id__ne))
-            
+
         if id__gt is not None:
-            
+
             _query_params.append(('id__gt', id__gt))
-            
+
         if id__gte is not None:
-            
+
             _query_params.append(('id__gte', id__gte))
-            
+
         if id__lt is not None:
-            
+
             _query_params.append(('id__lt', id__lt))
-            
+
         if id__lte is not None:
-            
+
             _query_params.append(('id__lte', id__lte))
-            
+
         if id__in is not None:
-            
+
             _query_params.append(('id__in', id__in))
-            
+
         if id__notin is not None:
-            
+
             _query_params.append(('id__notin', id__notin))
-            
+
         if id__contains is not None:
-            
+
             _query_params.append(('id__contains', id__contains))
-            
+
         if id__notcontains is not None:
-            
+
             _query_params.append(('id__notcontains', id__notcontains))
-            
+
         if id__like is not None:
-            
+
             _query_params.append(('id__like', id__like))
-            
+
         if id__notlike is not None:
-            
+
             _query_params.append(('id__notlike', id__notlike))
-            
+
         if id__ilike is not None:
-            
+
             _query_params.append(('id__ilike', id__ilike))
-            
+
         if id__notilike is not None:
-            
+
             _query_params.append(('id__notilike', id__notilike))
-            
+
         if id__desc is not None:
-            
+
             _query_params.append(('id__desc', id__desc))
-            
+
         if id__asc is not None:
-            
+
             _query_params.append(('id__asc', id__asc))
-            
+
         if created_at__eq is not None:
             if isinstance(created_at__eq, datetime):
                 _query_params.append(
@@ -3539,7 +3660,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__eq', created_at__eq))
-            
+
         if created_at__ne is not None:
             if isinstance(created_at__ne, datetime):
                 _query_params.append(
@@ -3552,7 +3673,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__ne', created_at__ne))
-            
+
         if created_at__gt is not None:
             if isinstance(created_at__gt, datetime):
                 _query_params.append(
@@ -3565,7 +3686,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__gt', created_at__gt))
-            
+
         if created_at__gte is not None:
             if isinstance(created_at__gte, datetime):
                 _query_params.append(
@@ -3578,7 +3699,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__gte', created_at__gte))
-            
+
         if created_at__lt is not None:
             if isinstance(created_at__lt, datetime):
                 _query_params.append(
@@ -3591,7 +3712,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__lt', created_at__lt))
-            
+
         if created_at__lte is not None:
             if isinstance(created_at__lte, datetime):
                 _query_params.append(
@@ -3604,7 +3725,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__lte', created_at__lte))
-            
+
         if created_at__in is not None:
             if isinstance(created_at__in, datetime):
                 _query_params.append(
@@ -3617,7 +3738,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__in', created_at__in))
-            
+
         if created_at__notin is not None:
             if isinstance(created_at__notin, datetime):
                 _query_params.append(
@@ -3630,7 +3751,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__notin', created_at__notin))
-            
+
         if created_at__contains is not None:
             if isinstance(created_at__contains, datetime):
                 _query_params.append(
@@ -3643,7 +3764,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__contains', created_at__contains))
-            
+
         if created_at__notcontains is not None:
             if isinstance(created_at__notcontains, datetime):
                 _query_params.append(
@@ -3656,7 +3777,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__notcontains', created_at__notcontains))
-            
+
         if created_at__like is not None:
             if isinstance(created_at__like, datetime):
                 _query_params.append(
@@ -3669,7 +3790,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__like', created_at__like))
-            
+
         if created_at__notlike is not None:
             if isinstance(created_at__notlike, datetime):
                 _query_params.append(
@@ -3682,7 +3803,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__notlike', created_at__notlike))
-            
+
         if created_at__ilike is not None:
             if isinstance(created_at__ilike, datetime):
                 _query_params.append(
@@ -3695,7 +3816,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__ilike', created_at__ilike))
-            
+
         if created_at__notilike is not None:
             if isinstance(created_at__notilike, datetime):
                 _query_params.append(
@@ -3708,15 +3829,15 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('created_at__notilike', created_at__notilike))
-            
+
         if created_at__desc is not None:
-            
+
             _query_params.append(('created_at__desc', created_at__desc))
-            
+
         if created_at__asc is not None:
-            
+
             _query_params.append(('created_at__asc', created_at__asc))
-            
+
         if updated_at__eq is not None:
             if isinstance(updated_at__eq, datetime):
                 _query_params.append(
@@ -3729,7 +3850,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__eq', updated_at__eq))
-            
+
         if updated_at__ne is not None:
             if isinstance(updated_at__ne, datetime):
                 _query_params.append(
@@ -3742,7 +3863,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__ne', updated_at__ne))
-            
+
         if updated_at__gt is not None:
             if isinstance(updated_at__gt, datetime):
                 _query_params.append(
@@ -3755,7 +3876,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__gt', updated_at__gt))
-            
+
         if updated_at__gte is not None:
             if isinstance(updated_at__gte, datetime):
                 _query_params.append(
@@ -3768,7 +3889,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__gte', updated_at__gte))
-            
+
         if updated_at__lt is not None:
             if isinstance(updated_at__lt, datetime):
                 _query_params.append(
@@ -3781,7 +3902,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__lt', updated_at__lt))
-            
+
         if updated_at__lte is not None:
             if isinstance(updated_at__lte, datetime):
                 _query_params.append(
@@ -3794,7 +3915,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__lte', updated_at__lte))
-            
+
         if updated_at__in is not None:
             if isinstance(updated_at__in, datetime):
                 _query_params.append(
@@ -3807,7 +3928,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__in', updated_at__in))
-            
+
         if updated_at__notin is not None:
             if isinstance(updated_at__notin, datetime):
                 _query_params.append(
@@ -3820,7 +3941,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__notin', updated_at__notin))
-            
+
         if updated_at__contains is not None:
             if isinstance(updated_at__contains, datetime):
                 _query_params.append(
@@ -3833,7 +3954,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__contains', updated_at__contains))
-            
+
         if updated_at__notcontains is not None:
             if isinstance(updated_at__notcontains, datetime):
                 _query_params.append(
@@ -3846,7 +3967,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__notcontains', updated_at__notcontains))
-            
+
         if updated_at__like is not None:
             if isinstance(updated_at__like, datetime):
                 _query_params.append(
@@ -3859,7 +3980,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__like', updated_at__like))
-            
+
         if updated_at__notlike is not None:
             if isinstance(updated_at__notlike, datetime):
                 _query_params.append(
@@ -3872,7 +3993,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__notlike', updated_at__notlike))
-            
+
         if updated_at__ilike is not None:
             if isinstance(updated_at__ilike, datetime):
                 _query_params.append(
@@ -3885,7 +4006,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__ilike', updated_at__ilike))
-            
+
         if updated_at__notilike is not None:
             if isinstance(updated_at__notilike, datetime):
                 _query_params.append(
@@ -3898,15 +4019,15 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('updated_at__notilike', updated_at__notilike))
-            
+
         if updated_at__desc is not None:
-            
+
             _query_params.append(('updated_at__desc', updated_at__desc))
-            
+
         if updated_at__asc is not None:
-            
+
             _query_params.append(('updated_at__asc', updated_at__asc))
-            
+
         if deleted_at__eq is not None:
             if isinstance(deleted_at__eq, datetime):
                 _query_params.append(
@@ -3919,7 +4040,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__eq', deleted_at__eq))
-            
+
         if deleted_at__ne is not None:
             if isinstance(deleted_at__ne, datetime):
                 _query_params.append(
@@ -3932,7 +4053,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__ne', deleted_at__ne))
-            
+
         if deleted_at__gt is not None:
             if isinstance(deleted_at__gt, datetime):
                 _query_params.append(
@@ -3945,7 +4066,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__gt', deleted_at__gt))
-            
+
         if deleted_at__gte is not None:
             if isinstance(deleted_at__gte, datetime):
                 _query_params.append(
@@ -3958,7 +4079,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__gte', deleted_at__gte))
-            
+
         if deleted_at__lt is not None:
             if isinstance(deleted_at__lt, datetime):
                 _query_params.append(
@@ -3971,7 +4092,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__lt', deleted_at__lt))
-            
+
         if deleted_at__lte is not None:
             if isinstance(deleted_at__lte, datetime):
                 _query_params.append(
@@ -3984,7 +4105,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__lte', deleted_at__lte))
-            
+
         if deleted_at__in is not None:
             if isinstance(deleted_at__in, datetime):
                 _query_params.append(
@@ -3997,7 +4118,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__in', deleted_at__in))
-            
+
         if deleted_at__notin is not None:
             if isinstance(deleted_at__notin, datetime):
                 _query_params.append(
@@ -4010,7 +4131,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__notin', deleted_at__notin))
-            
+
         if deleted_at__contains is not None:
             if isinstance(deleted_at__contains, datetime):
                 _query_params.append(
@@ -4023,7 +4144,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__contains', deleted_at__contains))
-            
+
         if deleted_at__notcontains is not None:
             if isinstance(deleted_at__notcontains, datetime):
                 _query_params.append(
@@ -4036,7 +4157,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__notcontains', deleted_at__notcontains))
-            
+
         if deleted_at__like is not None:
             if isinstance(deleted_at__like, datetime):
                 _query_params.append(
@@ -4049,7 +4170,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__like', deleted_at__like))
-            
+
         if deleted_at__notlike is not None:
             if isinstance(deleted_at__notlike, datetime):
                 _query_params.append(
@@ -4062,7 +4183,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__notlike', deleted_at__notlike))
-            
+
         if deleted_at__ilike is not None:
             if isinstance(deleted_at__ilike, datetime):
                 _query_params.append(
@@ -4075,7 +4196,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__ilike', deleted_at__ilike))
-            
+
         if deleted_at__notilike is not None:
             if isinstance(deleted_at__notilike, datetime):
                 _query_params.append(
@@ -4088,79 +4209,79 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('deleted_at__notilike', deleted_at__notilike))
-            
+
         if deleted_at__desc is not None:
-            
+
             _query_params.append(('deleted_at__desc', deleted_at__desc))
-            
+
         if deleted_at__asc is not None:
-            
+
             _query_params.append(('deleted_at__asc', deleted_at__asc))
-            
+
         if file_name__eq is not None:
-            
+
             _query_params.append(('file_name__eq', file_name__eq))
-            
+
         if file_name__ne is not None:
-            
+
             _query_params.append(('file_name__ne', file_name__ne))
-            
+
         if file_name__gt is not None:
-            
+
             _query_params.append(('file_name__gt', file_name__gt))
-            
+
         if file_name__gte is not None:
-            
+
             _query_params.append(('file_name__gte', file_name__gte))
-            
+
         if file_name__lt is not None:
-            
+
             _query_params.append(('file_name__lt', file_name__lt))
-            
+
         if file_name__lte is not None:
-            
+
             _query_params.append(('file_name__lte', file_name__lte))
-            
+
         if file_name__in is not None:
-            
+
             _query_params.append(('file_name__in', file_name__in))
-            
+
         if file_name__notin is not None:
-            
+
             _query_params.append(('file_name__notin', file_name__notin))
-            
+
         if file_name__contains is not None:
-            
+
             _query_params.append(('file_name__contains', file_name__contains))
-            
+
         if file_name__notcontains is not None:
-            
+
             _query_params.append(('file_name__notcontains', file_name__notcontains))
-            
+
         if file_name__like is not None:
-            
+
             _query_params.append(('file_name__like', file_name__like))
-            
+
         if file_name__notlike is not None:
-            
+
             _query_params.append(('file_name__notlike', file_name__notlike))
-            
+
         if file_name__ilike is not None:
-            
+
             _query_params.append(('file_name__ilike', file_name__ilike))
-            
+
         if file_name__notilike is not None:
-            
+
             _query_params.append(('file_name__notilike', file_name__notilike))
-            
+
         if file_name__desc is not None:
-            
+
             _query_params.append(('file_name__desc', file_name__desc))
-            
+
         if file_name__asc is not None:
-            
+
             _query_params.append(('file_name__asc', file_name__asc))
-            
+
         if started_at__eq is not None:
             if isinstance(started_at__eq, datetime):
                 _query_params.append(
@@ -4173,7 +4294,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__eq', started_at__eq))
-            
+
         if started_at__ne is not None:
             if isinstance(started_at__ne, datetime):
                 _query_params.append(
@@ -4186,7 +4307,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__ne', started_at__ne))
-            
+
         if started_at__gt is not None:
             if isinstance(started_at__gt, datetime):
                 _query_params.append(
@@ -4199,7 +4320,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__gt', started_at__gt))
-            
+
         if started_at__gte is not None:
             if isinstance(started_at__gte, datetime):
                 _query_params.append(
@@ -4212,7 +4333,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__gte', started_at__gte))
-            
+
         if started_at__lt is not None:
             if isinstance(started_at__lt, datetime):
                 _query_params.append(
@@ -4225,7 +4346,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__lt', started_at__lt))
-            
+
         if started_at__lte is not None:
             if isinstance(started_at__lte, datetime):
                 _query_params.append(
@@ -4238,7 +4359,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__lte', started_at__lte))
-            
+
         if started_at__in is not None:
             if isinstance(started_at__in, datetime):
                 _query_params.append(
@@ -4251,7 +4372,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__in', started_at__in))
-            
+
         if started_at__notin is not None:
             if isinstance(started_at__notin, datetime):
                 _query_params.append(
@@ -4264,7 +4385,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__notin', started_at__notin))
-            
+
         if started_at__contains is not None:
             if isinstance(started_at__contains, datetime):
                 _query_params.append(
@@ -4277,7 +4398,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__contains', started_at__contains))
-            
+
         if started_at__notcontains is not None:
             if isinstance(started_at__notcontains, datetime):
                 _query_params.append(
@@ -4290,7 +4411,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__notcontains', started_at__notcontains))
-            
+
         if started_at__like is not None:
             if isinstance(started_at__like, datetime):
                 _query_params.append(
@@ -4303,7 +4424,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__like', started_at__like))
-            
+
         if started_at__notlike is not None:
             if isinstance(started_at__notlike, datetime):
                 _query_params.append(
@@ -4316,7 +4437,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__notlike', started_at__notlike))
-            
+
         if started_at__ilike is not None:
             if isinstance(started_at__ilike, datetime):
                 _query_params.append(
@@ -4329,7 +4450,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__ilike', started_at__ilike))
-            
+
         if started_at__notilike is not None:
             if isinstance(started_at__notilike, datetime):
                 _query_params.append(
@@ -4342,15 +4463,15 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('started_at__notilike', started_at__notilike))
-            
+
         if started_at__desc is not None:
-            
+
             _query_params.append(('started_at__desc', started_at__desc))
-            
+
         if started_at__asc is not None:
-            
+
             _query_params.append(('started_at__asc', started_at__asc))
-            
+
         if ended_at__eq is not None:
             if isinstance(ended_at__eq, datetime):
                 _query_params.append(
@@ -4363,7 +4484,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__eq', ended_at__eq))
-            
+
         if ended_at__ne is not None:
             if isinstance(ended_at__ne, datetime):
                 _query_params.append(
@@ -4376,7 +4497,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__ne', ended_at__ne))
-            
+
         if ended_at__gt is not None:
             if isinstance(ended_at__gt, datetime):
                 _query_params.append(
@@ -4389,7 +4510,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__gt', ended_at__gt))
-            
+
         if ended_at__gte is not None:
             if isinstance(ended_at__gte, datetime):
                 _query_params.append(
@@ -4402,7 +4523,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__gte', ended_at__gte))
-            
+
         if ended_at__lt is not None:
             if isinstance(ended_at__lt, datetime):
                 _query_params.append(
@@ -4415,7 +4536,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__lt', ended_at__lt))
-            
+
         if ended_at__lte is not None:
             if isinstance(ended_at__lte, datetime):
                 _query_params.append(
@@ -4428,7 +4549,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__lte', ended_at__lte))
-            
+
         if ended_at__in is not None:
             if isinstance(ended_at__in, datetime):
                 _query_params.append(
@@ -4441,7 +4562,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__in', ended_at__in))
-            
+
         if ended_at__notin is not None:
             if isinstance(ended_at__notin, datetime):
                 _query_params.append(
@@ -4454,7 +4575,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__notin', ended_at__notin))
-            
+
         if ended_at__contains is not None:
             if isinstance(ended_at__contains, datetime):
                 _query_params.append(
@@ -4467,7 +4588,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__contains', ended_at__contains))
-            
+
         if ended_at__notcontains is not None:
             if isinstance(ended_at__notcontains, datetime):
                 _query_params.append(
@@ -4480,7 +4601,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__notcontains', ended_at__notcontains))
-            
+
         if ended_at__like is not None:
             if isinstance(ended_at__like, datetime):
                 _query_params.append(
@@ -4493,7 +4614,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__like', ended_at__like))
-            
+
         if ended_at__notlike is not None:
             if isinstance(ended_at__notlike, datetime):
                 _query_params.append(
@@ -4506,7 +4627,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__notlike', ended_at__notlike))
-            
+
         if ended_at__ilike is not None:
             if isinstance(ended_at__ilike, datetime):
                 _query_params.append(
@@ -4519,7 +4640,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__ilike', ended_at__ilike))
-            
+
         if ended_at__notilike is not None:
             if isinstance(ended_at__notilike, datetime):
                 _query_params.append(
@@ -4532,239 +4653,239 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('ended_at__notilike', ended_at__notilike))
-            
+
         if ended_at__desc is not None:
-            
+
             _query_params.append(('ended_at__desc', ended_at__desc))
-            
+
         if ended_at__asc is not None:
-            
+
             _query_params.append(('ended_at__asc', ended_at__asc))
-            
+
         if duration__eq is not None:
-            
+
             _query_params.append(('duration__eq', duration__eq))
-            
+
         if duration__ne is not None:
-            
+
             _query_params.append(('duration__ne', duration__ne))
-            
+
         if duration__gt is not None:
-            
+
             _query_params.append(('duration__gt', duration__gt))
-            
+
         if duration__gte is not None:
-            
+
             _query_params.append(('duration__gte', duration__gte))
-            
+
         if duration__lt is not None:
-            
+
             _query_params.append(('duration__lt', duration__lt))
-            
+
         if duration__lte is not None:
-            
+
             _query_params.append(('duration__lte', duration__lte))
-            
+
         if duration__in is not None:
-            
+
             _query_params.append(('duration__in', duration__in))
-            
+
         if duration__notin is not None:
-            
+
             _query_params.append(('duration__notin', duration__notin))
-            
+
         if duration__contains is not None:
-            
+
             _query_params.append(('duration__contains', duration__contains))
-            
+
         if duration__notcontains is not None:
-            
+
             _query_params.append(('duration__notcontains', duration__notcontains))
-            
+
         if duration__desc is not None:
-            
+
             _query_params.append(('duration__desc', duration__desc))
-            
+
         if duration__asc is not None:
-            
+
             _query_params.append(('duration__asc', duration__asc))
-            
+
         if file_size__eq is not None:
-            
+
             _query_params.append(('file_size__eq', file_size__eq))
-            
+
         if file_size__ne is not None:
-            
+
             _query_params.append(('file_size__ne', file_size__ne))
-            
+
         if file_size__gt is not None:
-            
+
             _query_params.append(('file_size__gt', file_size__gt))
-            
+
         if file_size__gte is not None:
-            
+
             _query_params.append(('file_size__gte', file_size__gte))
-            
+
         if file_size__lt is not None:
-            
+
             _query_params.append(('file_size__lt', file_size__lt))
-            
+
         if file_size__lte is not None:
-            
+
             _query_params.append(('file_size__lte', file_size__lte))
-            
+
         if file_size__in is not None:
-            
+
             _query_params.append(('file_size__in', file_size__in))
-            
+
         if file_size__notin is not None:
-            
+
             _query_params.append(('file_size__notin', file_size__notin))
-            
+
         if file_size__contains is not None:
-            
+
             _query_params.append(('file_size__contains', file_size__contains))
-            
+
         if file_size__notcontains is not None:
-            
+
             _query_params.append(('file_size__notcontains', file_size__notcontains))
-            
+
         if file_size__desc is not None:
-            
+
             _query_params.append(('file_size__desc', file_size__desc))
-            
+
         if file_size__asc is not None:
-            
+
             _query_params.append(('file_size__asc', file_size__asc))
-            
+
         if thumbnail_name__eq is not None:
-            
+
             _query_params.append(('thumbnail_name__eq', thumbnail_name__eq))
-            
+
         if thumbnail_name__ne is not None:
-            
+
             _query_params.append(('thumbnail_name__ne', thumbnail_name__ne))
-            
+
         if thumbnail_name__gt is not None:
-            
+
             _query_params.append(('thumbnail_name__gt', thumbnail_name__gt))
-            
+
         if thumbnail_name__gte is not None:
-            
+
             _query_params.append(('thumbnail_name__gte', thumbnail_name__gte))
-            
+
         if thumbnail_name__lt is not None:
-            
+
             _query_params.append(('thumbnail_name__lt', thumbnail_name__lt))
-            
+
         if thumbnail_name__lte is not None:
-            
+
             _query_params.append(('thumbnail_name__lte', thumbnail_name__lte))
-            
+
         if thumbnail_name__in is not None:
-            
+
             _query_params.append(('thumbnail_name__in', thumbnail_name__in))
-            
+
         if thumbnail_name__notin is not None:
-            
+
             _query_params.append(('thumbnail_name__notin', thumbnail_name__notin))
-            
+
         if thumbnail_name__contains is not None:
-            
+
             _query_params.append(('thumbnail_name__contains', thumbnail_name__contains))
-            
+
         if thumbnail_name__notcontains is not None:
-            
+
             _query_params.append(('thumbnail_name__notcontains', thumbnail_name__notcontains))
-            
+
         if thumbnail_name__like is not None:
-            
+
             _query_params.append(('thumbnail_name__like', thumbnail_name__like))
-            
+
         if thumbnail_name__notlike is not None:
-            
+
             _query_params.append(('thumbnail_name__notlike', thumbnail_name__notlike))
-            
+
         if thumbnail_name__ilike is not None:
-            
+
             _query_params.append(('thumbnail_name__ilike', thumbnail_name__ilike))
-            
+
         if thumbnail_name__notilike is not None:
-            
+
             _query_params.append(('thumbnail_name__notilike', thumbnail_name__notilike))
-            
+
         if thumbnail_name__desc is not None:
-            
+
             _query_params.append(('thumbnail_name__desc', thumbnail_name__desc))
-            
+
         if thumbnail_name__asc is not None:
-            
+
             _query_params.append(('thumbnail_name__asc', thumbnail_name__asc))
-            
+
         if status__eq is not None:
-            
+
             _query_params.append(('status__eq', status__eq))
-            
+
         if status__ne is not None:
-            
+
             _query_params.append(('status__ne', status__ne))
-            
+
         if status__gt is not None:
-            
+
             _query_params.append(('status__gt', status__gt))
-            
+
         if status__gte is not None:
-            
+
             _query_params.append(('status__gte', status__gte))
-            
+
         if status__lt is not None:
-            
+
             _query_params.append(('status__lt', status__lt))
-            
+
         if status__lte is not None:
-            
+
             _query_params.append(('status__lte', status__lte))
-            
+
         if status__in is not None:
-            
+
             _query_params.append(('status__in', status__in))
-            
+
         if status__notin is not None:
-            
+
             _query_params.append(('status__notin', status__notin))
-            
+
         if status__contains is not None:
-            
+
             _query_params.append(('status__contains', status__contains))
-            
+
         if status__notcontains is not None:
-            
+
             _query_params.append(('status__notcontains', status__notcontains))
-            
+
         if status__like is not None:
-            
+
             _query_params.append(('status__like', status__like))
-            
+
         if status__notlike is not None:
-            
+
             _query_params.append(('status__notlike', status__notlike))
-            
+
         if status__ilike is not None:
-            
+
             _query_params.append(('status__ilike', status__ilike))
-            
+
         if status__notilike is not None:
-            
+
             _query_params.append(('status__notilike', status__notilike))
-            
+
         if status__desc is not None:
-            
+
             _query_params.append(('status__desc', status__desc))
-            
+
         if status__asc is not None:
-            
+
             _query_params.append(('status__asc', status__asc))
-            
+
         if object_detector_claimed_until__eq is not None:
             if isinstance(object_detector_claimed_until__eq, datetime):
                 _query_params.append(
@@ -4777,7 +4898,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__eq', object_detector_claimed_until__eq))
-            
+
         if object_detector_claimed_until__ne is not None:
             if isinstance(object_detector_claimed_until__ne, datetime):
                 _query_params.append(
@@ -4790,7 +4911,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__ne', object_detector_claimed_until__ne))
-            
+
         if object_detector_claimed_until__gt is not None:
             if isinstance(object_detector_claimed_until__gt, datetime):
                 _query_params.append(
@@ -4803,7 +4924,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__gt', object_detector_claimed_until__gt))
-            
+
         if object_detector_claimed_until__gte is not None:
             if isinstance(object_detector_claimed_until__gte, datetime):
                 _query_params.append(
@@ -4816,7 +4937,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__gte', object_detector_claimed_until__gte))
-            
+
         if object_detector_claimed_until__lt is not None:
             if isinstance(object_detector_claimed_until__lt, datetime):
                 _query_params.append(
@@ -4829,7 +4950,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__lt', object_detector_claimed_until__lt))
-            
+
         if object_detector_claimed_until__lte is not None:
             if isinstance(object_detector_claimed_until__lte, datetime):
                 _query_params.append(
@@ -4842,7 +4963,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__lte', object_detector_claimed_until__lte))
-            
+
         if object_detector_claimed_until__in is not None:
             if isinstance(object_detector_claimed_until__in, datetime):
                 _query_params.append(
@@ -4855,7 +4976,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__in', object_detector_claimed_until__in))
-            
+
         if object_detector_claimed_until__notin is not None:
             if isinstance(object_detector_claimed_until__notin, datetime):
                 _query_params.append(
@@ -4868,7 +4989,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__notin', object_detector_claimed_until__notin))
-            
+
         if object_detector_claimed_until__contains is not None:
             if isinstance(object_detector_claimed_until__contains, datetime):
                 _query_params.append(
@@ -4881,7 +5002,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__contains', object_detector_claimed_until__contains))
-            
+
         if object_detector_claimed_until__notcontains is not None:
             if isinstance(object_detector_claimed_until__notcontains, datetime):
                 _query_params.append(
@@ -4894,7 +5015,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__notcontains', object_detector_claimed_until__notcontains))
-            
+
         if object_detector_claimed_until__like is not None:
             if isinstance(object_detector_claimed_until__like, datetime):
                 _query_params.append(
@@ -4907,7 +5028,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__like', object_detector_claimed_until__like))
-            
+
         if object_detector_claimed_until__notlike is not None:
             if isinstance(object_detector_claimed_until__notlike, datetime):
                 _query_params.append(
@@ -4920,7 +5041,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__notlike', object_detector_claimed_until__notlike))
-            
+
         if object_detector_claimed_until__ilike is not None:
             if isinstance(object_detector_claimed_until__ilike, datetime):
                 _query_params.append(
@@ -4933,7 +5054,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__ilike', object_detector_claimed_until__ilike))
-            
+
         if object_detector_claimed_until__notilike is not None:
             if isinstance(object_detector_claimed_until__notilike, datetime):
                 _query_params.append(
@@ -4946,15 +5067,15 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_detector_claimed_until__notilike', object_detector_claimed_until__notilike))
-            
+
         if object_detector_claimed_until__desc is not None:
-            
+
             _query_params.append(('object_detector_claimed_until__desc', object_detector_claimed_until__desc))
-            
+
         if object_detector_claimed_until__asc is not None:
-            
+
             _query_params.append(('object_detector_claimed_until__asc', object_detector_claimed_until__asc))
-            
+
         if object_tracker_claimed_until__eq is not None:
             if isinstance(object_tracker_claimed_until__eq, datetime):
                 _query_params.append(
@@ -4967,7 +5088,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__eq', object_tracker_claimed_until__eq))
-            
+
         if object_tracker_claimed_until__ne is not None:
             if isinstance(object_tracker_claimed_until__ne, datetime):
                 _query_params.append(
@@ -4980,7 +5101,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__ne', object_tracker_claimed_until__ne))
-            
+
         if object_tracker_claimed_until__gt is not None:
             if isinstance(object_tracker_claimed_until__gt, datetime):
                 _query_params.append(
@@ -4993,7 +5114,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__gt', object_tracker_claimed_until__gt))
-            
+
         if object_tracker_claimed_until__gte is not None:
             if isinstance(object_tracker_claimed_until__gte, datetime):
                 _query_params.append(
@@ -5006,7 +5127,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__gte', object_tracker_claimed_until__gte))
-            
+
         if object_tracker_claimed_until__lt is not None:
             if isinstance(object_tracker_claimed_until__lt, datetime):
                 _query_params.append(
@@ -5019,7 +5140,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__lt', object_tracker_claimed_until__lt))
-            
+
         if object_tracker_claimed_until__lte is not None:
             if isinstance(object_tracker_claimed_until__lte, datetime):
                 _query_params.append(
@@ -5032,7 +5153,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__lte', object_tracker_claimed_until__lte))
-            
+
         if object_tracker_claimed_until__in is not None:
             if isinstance(object_tracker_claimed_until__in, datetime):
                 _query_params.append(
@@ -5045,7 +5166,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__in', object_tracker_claimed_until__in))
-            
+
         if object_tracker_claimed_until__notin is not None:
             if isinstance(object_tracker_claimed_until__notin, datetime):
                 _query_params.append(
@@ -5058,7 +5179,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__notin', object_tracker_claimed_until__notin))
-            
+
         if object_tracker_claimed_until__contains is not None:
             if isinstance(object_tracker_claimed_until__contains, datetime):
                 _query_params.append(
@@ -5071,7 +5192,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__contains', object_tracker_claimed_until__contains))
-            
+
         if object_tracker_claimed_until__notcontains is not None:
             if isinstance(object_tracker_claimed_until__notcontains, datetime):
                 _query_params.append(
@@ -5084,7 +5205,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__notcontains', object_tracker_claimed_until__notcontains))
-            
+
         if object_tracker_claimed_until__like is not None:
             if isinstance(object_tracker_claimed_until__like, datetime):
                 _query_params.append(
@@ -5097,7 +5218,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__like', object_tracker_claimed_until__like))
-            
+
         if object_tracker_claimed_until__notlike is not None:
             if isinstance(object_tracker_claimed_until__notlike, datetime):
                 _query_params.append(
@@ -5110,7 +5231,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__notlike', object_tracker_claimed_until__notlike))
-            
+
         if object_tracker_claimed_until__ilike is not None:
             if isinstance(object_tracker_claimed_until__ilike, datetime):
                 _query_params.append(
@@ -5123,7 +5244,7 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__ilike', object_tracker_claimed_until__ilike))
-            
+
         if object_tracker_claimed_until__notilike is not None:
             if isinstance(object_tracker_claimed_until__notilike, datetime):
                 _query_params.append(
@@ -5136,175 +5257,207 @@ class ObjectDetectorClaimVideoApi:
                 )
             else:
                 _query_params.append(('object_tracker_claimed_until__notilike', object_tracker_claimed_until__notilike))
-            
+
         if object_tracker_claimed_until__desc is not None:
-            
+
             _query_params.append(('object_tracker_claimed_until__desc', object_tracker_claimed_until__desc))
-            
+
         if object_tracker_claimed_until__asc is not None:
-            
+
             _query_params.append(('object_tracker_claimed_until__asc', object_tracker_claimed_until__asc))
-            
+
         if camera_id__eq is not None:
-            
+
             _query_params.append(('camera_id__eq', camera_id__eq))
-            
+
         if camera_id__ne is not None:
-            
+
             _query_params.append(('camera_id__ne', camera_id__ne))
-            
+
         if camera_id__gt is not None:
-            
+
             _query_params.append(('camera_id__gt', camera_id__gt))
-            
+
         if camera_id__gte is not None:
-            
+
             _query_params.append(('camera_id__gte', camera_id__gte))
-            
+
         if camera_id__lt is not None:
-            
+
             _query_params.append(('camera_id__lt', camera_id__lt))
-            
+
         if camera_id__lte is not None:
-            
+
             _query_params.append(('camera_id__lte', camera_id__lte))
-            
+
         if camera_id__in is not None:
-            
+
             _query_params.append(('camera_id__in', camera_id__in))
-            
+
         if camera_id__notin is not None:
-            
+
             _query_params.append(('camera_id__notin', camera_id__notin))
-            
+
         if camera_id__contains is not None:
-            
+
             _query_params.append(('camera_id__contains', camera_id__contains))
-            
+
         if camera_id__notcontains is not None:
-            
+
             _query_params.append(('camera_id__notcontains', camera_id__notcontains))
-            
+
         if camera_id__like is not None:
-            
+
             _query_params.append(('camera_id__like', camera_id__like))
-            
+
         if camera_id__notlike is not None:
-            
+
             _query_params.append(('camera_id__notlike', camera_id__notlike))
-            
+
         if camera_id__ilike is not None:
-            
+
             _query_params.append(('camera_id__ilike', camera_id__ilike))
-            
+
         if camera_id__notilike is not None:
-            
+
             _query_params.append(('camera_id__notilike', camera_id__notilike))
-            
+
         if camera_id__desc is not None:
-            
+
             _query_params.append(('camera_id__desc', camera_id__desc))
-            
+
         if camera_id__asc is not None:
-            
+
             _query_params.append(('camera_id__asc', camera_id__asc))
-            
+
         if camera_id_object__contains is not None:
-            
+
             _query_params.append(('camera_id_object__contains', camera_id_object__contains))
-            
+
         if camera_id_object__notcontains is not None:
-            
+
             _query_params.append(('camera_id_object__notcontains', camera_id_object__notcontains))
-            
+
         if camera_id_object__desc is not None:
-            
+
             _query_params.append(('camera_id_object__desc', camera_id_object__desc))
-            
+
         if camera_id_object__asc is not None:
-            
+
             _query_params.append(('camera_id_object__asc', camera_id_object__asc))
-            
+
         if detection_summary__contains is not None:
-            
+
             _query_params.append(('detection_summary__contains', detection_summary__contains))
-            
+
         if detection_summary__notcontains is not None:
-            
+
             _query_params.append(('detection_summary__notcontains', detection_summary__notcontains))
-            
+
         if detection_summary__desc is not None:
-            
+
             _query_params.append(('detection_summary__desc', detection_summary__desc))
-            
+
         if detection_summary__asc is not None:
-            
+
             _query_params.append(('detection_summary__asc', detection_summary__asc))
-            
+
         if is_low_res__eq is not None:
-            
+
             _query_params.append(('is_low_res__eq', is_low_res__eq))
-            
+
         if is_low_res__ne is not None:
-            
+
             _query_params.append(('is_low_res__ne', is_low_res__ne))
-            
+
         if is_low_res__gt is not None:
-            
+
             _query_params.append(('is_low_res__gt', is_low_res__gt))
-            
+
         if is_low_res__gte is not None:
-            
+
             _query_params.append(('is_low_res__gte', is_low_res__gte))
-            
+
         if is_low_res__lt is not None:
-            
+
             _query_params.append(('is_low_res__lt', is_low_res__lt))
-            
+
         if is_low_res__lte is not None:
-            
+
             _query_params.append(('is_low_res__lte', is_low_res__lte))
-            
+
         if is_low_res__in is not None:
-            
+
             _query_params.append(('is_low_res__in', is_low_res__in))
-            
+
         if is_low_res__notin is not None:
-            
+
             _query_params.append(('is_low_res__notin', is_low_res__notin))
-            
+
         if is_low_res__contains is not None:
-            
+
             _query_params.append(('is_low_res__contains', is_low_res__contains))
-            
+
         if is_low_res__notcontains is not None:
-            
+
             _query_params.append(('is_low_res__notcontains', is_low_res__notcontains))
-            
+
         if is_low_res__desc is not None:
-            
+
             _query_params.append(('is_low_res__desc', is_low_res__desc))
-            
+
         if is_low_res__asc is not None:
-            
+
             _query_params.append(('is_low_res__asc', is_low_res__asc))
-            
+
+        if track_summary__contains is not None:
+
+            _query_params.append(('track_summary__contains', track_summary__contains))
+
+        if track_summary__notcontains is not None:
+
+            _query_params.append(('track_summary__notcontains', track_summary__notcontains))
+
+        if track_summary__desc is not None:
+
+            _query_params.append(('track_summary__desc', track_summary__desc))
+
+        if track_summary__asc is not None:
+
+            _query_params.append(('track_summary__asc', track_summary__asc))
+
         if referenced_by_detection_video_id_objects__contains is not None:
-            
+
             _query_params.append(('referenced_by_detection_video_id_objects__contains', referenced_by_detection_video_id_objects__contains))
-            
+
         if referenced_by_detection_video_id_objects__notcontains is not None:
-            
+
             _query_params.append(('referenced_by_detection_video_id_objects__notcontains', referenced_by_detection_video_id_objects__notcontains))
-            
+
         if referenced_by_detection_video_id_objects__desc is not None:
-            
+
             _query_params.append(('referenced_by_detection_video_id_objects__desc', referenced_by_detection_video_id_objects__desc))
-            
+
         if referenced_by_detection_video_id_objects__asc is not None:
-            
+
             _query_params.append(('referenced_by_detection_video_id_objects__asc', referenced_by_detection_video_id_objects__asc))
-            
+
+        if referenced_by_track_video_id_objects__contains is not None:
+
+            _query_params.append(('referenced_by_track_video_id_objects__contains', referenced_by_track_video_id_objects__contains))
+
+        if referenced_by_track_video_id_objects__notcontains is not None:
+
+            _query_params.append(('referenced_by_track_video_id_objects__notcontains', referenced_by_track_video_id_objects__notcontains))
+
+        if referenced_by_track_video_id_objects__desc is not None:
+
+            _query_params.append(('referenced_by_track_video_id_objects__desc', referenced_by_track_video_id_objects__desc))
+
+        if referenced_by_track_video_id_objects__asc is not None:
+
+            _query_params.append(('referenced_by_track_video_id_objects__asc', referenced_by_track_video_id_objects__asc))
+
         # process the header parameters
         # process the form parameters
         # process the body parameter

@@ -23,6 +23,7 @@ from openapi_client.api.object_detector_claim_video_api import ObjectDetectorCla
 from openapi_client.api.object_tracker_claim_video_api import ObjectTrackerClaimVideoApi
 from openapi_client.api.segment_producer_claim_camera_api import SegmentProducerClaimCameraApi
 from openapi_client.api.stream_producer_claim_camera_api import StreamProducerClaimCameraApi
+from openapi_client.api.track_api import TrackApi
 from openapi_client.api.video_api import VideoApi
 
 # import ApiClient
@@ -45,7 +46,9 @@ from openapi_client.models.detection import Detection
 from openapi_client.models.get_cameras_default_response import GetCamerasDefaultResponse
 from openapi_client.models.response_with_generic_of_camera import ResponseWithGenericOfCamera
 from openapi_client.models.response_with_generic_of_detection import ResponseWithGenericOfDetection
+from openapi_client.models.response_with_generic_of_track import ResponseWithGenericOfTrack
 from openapi_client.models.response_with_generic_of_video import ResponseWithGenericOfVideo
+from openapi_client.models.track import Track
 from openapi_client.models.vec2 import Vec2
 from openapi_client.models.video import Video
 from openapi_client.models.video_object_detector_claim_request import VideoObjectDetectorClaimRequest

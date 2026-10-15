@@ -41,11 +41,13 @@ class Video(BaseModel):
     object_detector_claimed_until: Optional[datetime] = None
     object_tracker_claimed_until: Optional[datetime] = None
     referenced_by_detection_video_id_objects: Optional[List[Detection]] = None
+    referenced_by_track_video_id_objects: Optional[List[Track]] = None
     started_at: Optional[datetime] = None
     status: Optional[StrictStr] = None
     thumbnail_name: Optional[StrictStr] = None
+    track_summary: Optional[Any] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "detection_summary", "duration", "ended_at", "file_name", "file_size", "id", "is_low_res", "object_detector_claimed_until", "object_tracker_claimed_until", "referenced_by_detection_video_id_objects", "started_at", "status", "thumbnail_name", "updated_at"]
+    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "detection_summary", "duration", "ended_at", "file_name", "file_size", "id", "is_low_res", "object_detector_claimed_until", "object_tracker_claimed_until", "referenced_by_detection_video_id_objects", "referenced_by_track_video_id_objects", "started_at", "status", "thumbnail_name", "track_summary", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,10 +98,22 @@ class Video(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['referenced_by_detection_video_id_objects'] = _items
+        # override the default output from pydantic by calling `to_dict()` of each item in referenced_by_track_video_id_objects (list)
+        _items = []
+        if self.referenced_by_track_video_id_objects:
+            for _item in self.referenced_by_track_video_id_objects:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['referenced_by_track_video_id_objects'] = _items
         # set to None if detection_summary (nullable) is None
         # and model_fields_set contains the field
         if self.detection_summary is None and "detection_summary" in self.model_fields_set:
             _dict['detection_summary'] = None
+
+        # set to None if track_summary (nullable) is None
+        # and model_fields_set contains the field
+        if self.track_summary is None and "track_summary" in self.model_fields_set:
+            _dict['track_summary'] = None
 
         return _dict
 
@@ -127,15 +141,18 @@ class Video(BaseModel):
             "object_detector_claimed_until": obj.get("object_detector_claimed_until"),
             "object_tracker_claimed_until": obj.get("object_tracker_claimed_until"),
             "referenced_by_detection_video_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_video_id_objects"]] if obj.get("referenced_by_detection_video_id_objects") is not None else None,
+            "referenced_by_track_video_id_objects": [Track.from_dict(_item) for _item in obj["referenced_by_track_video_id_objects"]] if obj.get("referenced_by_track_video_id_objects") is not None else None,
             "started_at": obj.get("started_at"),
             "status": obj.get("status"),
             "thumbnail_name": obj.get("thumbnail_name"),
+            "track_summary": obj.get("track_summary"),
             "updated_at": obj.get("updated_at")
         })
         return _obj
 
 from openapi_client.models.camera import Camera
 from openapi_client.models.detection import Detection
+from openapi_client.models.track import Track
 # TODO: Rewrite to not use raise_errors
 Video.model_rebuild(raise_errors=False)
 

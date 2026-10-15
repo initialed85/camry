@@ -27,6 +27,7 @@ type Camera struct {
 	LowResStreamUrl *string `json:"low_res_stream_url,omitempty"`
 	Name *string `json:"name,omitempty"`
 	ReferencedByDetectionCameraIdObjects []Detection `json:"referenced_by_detection_camera_id_objects,omitempty"`
+	ReferencedByTrackCameraIdObjects []Track `json:"referenced_by_track_camera_id_objects,omitempty"`
 	ReferencedByVideoCameraIdObjects []Video `json:"referenced_by_video_camera_id_objects,omitempty"`
 	SegmentProducerClaimedUntil *time.Time `json:"segment_producer_claimed_until,omitempty"`
 	StreamProducerClaimedUntil *time.Time `json:"stream_producer_claimed_until,omitempty"`
@@ -275,6 +276,38 @@ func (o *Camera) SetReferencedByDetectionCameraIdObjects(v []Detection) {
 	o.ReferencedByDetectionCameraIdObjects = v
 }
 
+// GetReferencedByTrackCameraIdObjects returns the ReferencedByTrackCameraIdObjects field value if set, zero value otherwise.
+func (o *Camera) GetReferencedByTrackCameraIdObjects() []Track {
+	if o == nil || IsNil(o.ReferencedByTrackCameraIdObjects) {
+		var ret []Track
+		return ret
+	}
+	return o.ReferencedByTrackCameraIdObjects
+}
+
+// GetReferencedByTrackCameraIdObjectsOk returns a tuple with the ReferencedByTrackCameraIdObjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Camera) GetReferencedByTrackCameraIdObjectsOk() ([]Track, bool) {
+	if o == nil || IsNil(o.ReferencedByTrackCameraIdObjects) {
+		return nil, false
+	}
+	return o.ReferencedByTrackCameraIdObjects, true
+}
+
+// HasReferencedByTrackCameraIdObjects returns a boolean if a field has been set.
+func (o *Camera) HasReferencedByTrackCameraIdObjects() bool {
+	if o != nil && !IsNil(o.ReferencedByTrackCameraIdObjects) {
+		return true
+	}
+
+	return false
+}
+
+// SetReferencedByTrackCameraIdObjects gets a reference to the given []Track and assigns it to the ReferencedByTrackCameraIdObjects field.
+func (o *Camera) SetReferencedByTrackCameraIdObjects(v []Track) {
+	o.ReferencedByTrackCameraIdObjects = v
+}
+
 // GetReferencedByVideoCameraIdObjects returns the ReferencedByVideoCameraIdObjects field value if set, zero value otherwise.
 func (o *Camera) GetReferencedByVideoCameraIdObjects() []Video {
 	if o == nil || IsNil(o.ReferencedByVideoCameraIdObjects) {
@@ -465,6 +498,9 @@ func (o Camera) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ReferencedByDetectionCameraIdObjects) {
 		toSerialize["referenced_by_detection_camera_id_objects"] = o.ReferencedByDetectionCameraIdObjects
+	}
+	if !IsNil(o.ReferencedByTrackCameraIdObjects) {
+		toSerialize["referenced_by_track_camera_id_objects"] = o.ReferencedByTrackCameraIdObjects
 	}
 	if !IsNil(o.ReferencedByVideoCameraIdObjects) {
 		toSerialize["referenced_by_video_camera_id_objects"] = o.ReferencedByVideoCameraIdObjects

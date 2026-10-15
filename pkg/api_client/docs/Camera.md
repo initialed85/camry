@@ -4,18 +4,19 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**CreatedAt** | Pointer to **time.Time** |  | [optional] 
-**DeletedAt** | Pointer to **time.Time** |  | [optional] 
-**Id** | Pointer to **string** |  | [optional] 
-**LastSeen** | Pointer to **time.Time** |  | [optional] 
-**LowResStreamUrl** | Pointer to **string** |  | [optional] 
-**Name** | Pointer to **string** |  | [optional] 
-**ReferencedByDetectionCameraIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
-**ReferencedByVideoCameraIdObjects** | Pointer to [**[]Video**](Video.md) |  | [optional] 
-**SegmentProducerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
-**StreamProducerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
-**StreamUrl** | Pointer to **string** |  | [optional] 
-**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
+**CreatedAt** | Pointer to **time.Time** |  | [optional]
+**DeletedAt** | Pointer to **time.Time** |  | [optional]
+**Id** | Pointer to **string** |  | [optional]
+**LastSeen** | Pointer to **time.Time** |  | [optional]
+**LowResStreamUrl** | Pointer to **string** |  | [optional]
+**Name** | Pointer to **string** |  | [optional]
+**ReferencedByDetectionCameraIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional]
+**ReferencedByTrackCameraIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional]
+**ReferencedByVideoCameraIdObjects** | Pointer to [**[]Video**](Video.md) |  | [optional]
+**SegmentProducerClaimedUntil** | Pointer to **time.Time** |  | [optional]
+**StreamProducerClaimedUntil** | Pointer to **time.Time** |  | [optional]
+**StreamUrl** | Pointer to **string** |  | [optional]
+**UpdatedAt** | Pointer to **time.Time** |  | [optional]
 
 ## Methods
 
@@ -210,6 +211,31 @@ SetReferencedByDetectionCameraIdObjects sets ReferencedByDetectionCameraIdObject
 `func (o *Camera) HasReferencedByDetectionCameraIdObjects() bool`
 
 HasReferencedByDetectionCameraIdObjects returns a boolean if a field has been set.
+
+### GetReferencedByTrackCameraIdObjects
+
+`func (o *Camera) GetReferencedByTrackCameraIdObjects() []Track`
+
+GetReferencedByTrackCameraIdObjects returns the ReferencedByTrackCameraIdObjects field if non-nil, zero value otherwise.
+
+### GetReferencedByTrackCameraIdObjectsOk
+
+`func (o *Camera) GetReferencedByTrackCameraIdObjectsOk() (*[]Track, bool)`
+
+GetReferencedByTrackCameraIdObjectsOk returns a tuple with the ReferencedByTrackCameraIdObjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReferencedByTrackCameraIdObjects
+
+`func (o *Camera) SetReferencedByTrackCameraIdObjects(v []Track)`
+
+SetReferencedByTrackCameraIdObjects sets ReferencedByTrackCameraIdObjects field to given value.
+
+### HasReferencedByTrackCameraIdObjects
+
+`func (o *Camera) HasReferencedByTrackCameraIdObjects() bool`
+
+HasReferencedByTrackCameraIdObjects returns a boolean if a field has been set.
 
 ### GetReferencedByVideoCameraIdObjects
 

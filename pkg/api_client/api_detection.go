@@ -251,6 +251,7 @@ type ApiGetDetectionsRequest struct {
 	depth *int32
 	videoLoad *string
 	cameraLoad *string
+	trackLoad *string
 	idEq *string
 	idNe *string
 	idGt *string
@@ -419,6 +420,26 @@ type ApiGetDetectionsRequest struct {
 	cameraIdObjectNotcontains *interface{}
 	cameraIdObjectDesc *string
 	cameraIdObjectAsc *string
+	trackIdEq *string
+	trackIdNe *string
+	trackIdGt *string
+	trackIdGte *string
+	trackIdLt *string
+	trackIdLte *string
+	trackIdIn *string
+	trackIdNotin *string
+	trackIdContains *string
+	trackIdNotcontains *string
+	trackIdLike *string
+	trackIdNotlike *string
+	trackIdIlike *string
+	trackIdNotilike *string
+	trackIdDesc *string
+	trackIdAsc *string
+	trackIdObjectContains *interface{}
+	trackIdObjectNotcontains *interface{}
+	trackIdObjectDesc *string
+	trackIdObjectAsc *string
 }
 
 // SQL LIMIT operator
@@ -448,6 +469,12 @@ func (r ApiGetDetectionsRequest) VideoLoad(videoLoad string) ApiGetDetectionsReq
 // load the given directly related object, value is ignored (presence of key is sufficient)
 func (r ApiGetDetectionsRequest) CameraLoad(cameraLoad string) ApiGetDetectionsRequest {
 	r.cameraLoad = &cameraLoad
+	return r
+}
+
+// load the given directly related object, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) TrackLoad(trackLoad string) ApiGetDetectionsRequest {
+	r.trackLoad = &trackLoad
 	return r
 }
 
@@ -1459,6 +1486,126 @@ func (r ApiGetDetectionsRequest) CameraIdObjectAsc(cameraIdObjectAsc string) Api
 	return r
 }
 
+// SQL &#x3D; comparison
+func (r ApiGetDetectionsRequest) TrackIdEq(trackIdEq string) ApiGetDetectionsRequest {
+	r.trackIdEq = &trackIdEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetDetectionsRequest) TrackIdNe(trackIdNe string) ApiGetDetectionsRequest {
+	r.trackIdNe = &trackIdNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetDetectionsRequest) TrackIdGt(trackIdGt string) ApiGetDetectionsRequest {
+	r.trackIdGt = &trackIdGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetDetectionsRequest) TrackIdGte(trackIdGte string) ApiGetDetectionsRequest {
+	r.trackIdGte = &trackIdGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetDetectionsRequest) TrackIdLt(trackIdLt string) ApiGetDetectionsRequest {
+	r.trackIdLt = &trackIdLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetDetectionsRequest) TrackIdLte(trackIdLte string) ApiGetDetectionsRequest {
+	r.trackIdLte = &trackIdLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetDetectionsRequest) TrackIdIn(trackIdIn string) ApiGetDetectionsRequest {
+	r.trackIdIn = &trackIdIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetDetectionsRequest) TrackIdNotin(trackIdNotin string) ApiGetDetectionsRequest {
+	r.trackIdNotin = &trackIdNotin
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) TrackIdContains(trackIdContains string) ApiGetDetectionsRequest {
+	r.trackIdContains = &trackIdContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) TrackIdNotcontains(trackIdNotcontains string) ApiGetDetectionsRequest {
+	r.trackIdNotcontains = &trackIdNotcontains
+	return r
+}
+
+// SQL LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetDetectionsRequest) TrackIdLike(trackIdLike string) ApiGetDetectionsRequest {
+	r.trackIdLike = &trackIdLike
+	return r
+}
+
+// SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetDetectionsRequest) TrackIdNotlike(trackIdNotlike string) ApiGetDetectionsRequest {
+	r.trackIdNotlike = &trackIdNotlike
+	return r
+}
+
+// SQL ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetDetectionsRequest) TrackIdIlike(trackIdIlike string) ApiGetDetectionsRequest {
+	r.trackIdIlike = &trackIdIlike
+	return r
+}
+
+// SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %
+func (r ApiGetDetectionsRequest) TrackIdNotilike(trackIdNotilike string) ApiGetDetectionsRequest {
+	r.trackIdNotilike = &trackIdNotilike
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) TrackIdDesc(trackIdDesc string) ApiGetDetectionsRequest {
+	r.trackIdDesc = &trackIdDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) TrackIdAsc(trackIdAsc string) ApiGetDetectionsRequest {
+	r.trackIdAsc = &trackIdAsc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetDetectionsRequest) TrackIdObjectContains(trackIdObjectContains interface{}) ApiGetDetectionsRequest {
+	r.trackIdObjectContains = &trackIdObjectContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetDetectionsRequest) TrackIdObjectNotcontains(trackIdObjectNotcontains interface{}) ApiGetDetectionsRequest {
+	r.trackIdObjectNotcontains = &trackIdObjectNotcontains
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) TrackIdObjectDesc(trackIdObjectDesc string) ApiGetDetectionsRequest {
+	r.trackIdObjectDesc = &trackIdObjectDesc
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetDetectionsRequest) TrackIdObjectAsc(trackIdObjectAsc string) ApiGetDetectionsRequest {
+	r.trackIdObjectAsc = &trackIdObjectAsc
+	return r
+}
+
 func (r ApiGetDetectionsRequest) Execute() (*ResponseWithGenericOfDetection, *http.Response, error) {
 	return r.ApiService.GetDetectionsExecute(r)
 }
@@ -1511,6 +1658,9 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.cameraLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera__load", r.cameraLoad, "")
+	}
+	if r.trackLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track__load", r.trackLoad, "")
 	}
 	if r.idEq != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "id__eq", r.idEq, "")
@@ -2015,6 +2165,66 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 	}
 	if r.cameraIdObjectAsc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera_id_object__asc", r.cameraIdObjectAsc, "")
+	}
+	if r.trackIdEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__eq", r.trackIdEq, "")
+	}
+	if r.trackIdNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__ne", r.trackIdNe, "")
+	}
+	if r.trackIdGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__gt", r.trackIdGt, "")
+	}
+	if r.trackIdGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__gte", r.trackIdGte, "")
+	}
+	if r.trackIdLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__lt", r.trackIdLt, "")
+	}
+	if r.trackIdLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__lte", r.trackIdLte, "")
+	}
+	if r.trackIdIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__in", r.trackIdIn, "")
+	}
+	if r.trackIdNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__notin", r.trackIdNotin, "")
+	}
+	if r.trackIdContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__contains", r.trackIdContains, "")
+	}
+	if r.trackIdNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__notcontains", r.trackIdNotcontains, "")
+	}
+	if r.trackIdLike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__like", r.trackIdLike, "")
+	}
+	if r.trackIdNotlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__notlike", r.trackIdNotlike, "")
+	}
+	if r.trackIdIlike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__ilike", r.trackIdIlike, "")
+	}
+	if r.trackIdNotilike != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__notilike", r.trackIdNotilike, "")
+	}
+	if r.trackIdDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__desc", r.trackIdDesc, "")
+	}
+	if r.trackIdAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id__asc", r.trackIdAsc, "")
+	}
+	if r.trackIdObjectContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id_object__contains", r.trackIdObjectContains, "")
+	}
+	if r.trackIdObjectNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id_object__notcontains", r.trackIdObjectNotcontains, "")
+	}
+	if r.trackIdObjectDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id_object__desc", r.trackIdObjectDesc, "")
+	}
+	if r.trackIdObjectAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "track_id_object__asc", r.trackIdObjectAsc, "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

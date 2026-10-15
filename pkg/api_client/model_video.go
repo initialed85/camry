@@ -34,9 +34,11 @@ type Video struct {
 	ObjectDetectorClaimedUntil *time.Time `json:"object_detector_claimed_until,omitempty"`
 	ObjectTrackerClaimedUntil *time.Time `json:"object_tracker_claimed_until,omitempty"`
 	ReferencedByDetectionVideoIdObjects []Detection `json:"referenced_by_detection_video_id_objects,omitempty"`
+	ReferencedByTrackVideoIdObjects []Track `json:"referenced_by_track_video_id_objects,omitempty"`
 	StartedAt *time.Time `json:"started_at,omitempty"`
 	Status *string `json:"status,omitempty"`
 	ThumbnailName *string `json:"thumbnail_name,omitempty"`
+	TrackSummary interface{} `json:"track_summary,omitempty"`
 	UpdatedAt *time.Time `json:"updated_at,omitempty"`
 }
 
@@ -506,6 +508,38 @@ func (o *Video) SetReferencedByDetectionVideoIdObjects(v []Detection) {
 	o.ReferencedByDetectionVideoIdObjects = v
 }
 
+// GetReferencedByTrackVideoIdObjects returns the ReferencedByTrackVideoIdObjects field value if set, zero value otherwise.
+func (o *Video) GetReferencedByTrackVideoIdObjects() []Track {
+	if o == nil || IsNil(o.ReferencedByTrackVideoIdObjects) {
+		var ret []Track
+		return ret
+	}
+	return o.ReferencedByTrackVideoIdObjects
+}
+
+// GetReferencedByTrackVideoIdObjectsOk returns a tuple with the ReferencedByTrackVideoIdObjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Video) GetReferencedByTrackVideoIdObjectsOk() ([]Track, bool) {
+	if o == nil || IsNil(o.ReferencedByTrackVideoIdObjects) {
+		return nil, false
+	}
+	return o.ReferencedByTrackVideoIdObjects, true
+}
+
+// HasReferencedByTrackVideoIdObjects returns a boolean if a field has been set.
+func (o *Video) HasReferencedByTrackVideoIdObjects() bool {
+	if o != nil && !IsNil(o.ReferencedByTrackVideoIdObjects) {
+		return true
+	}
+
+	return false
+}
+
+// SetReferencedByTrackVideoIdObjects gets a reference to the given []Track and assigns it to the ReferencedByTrackVideoIdObjects field.
+func (o *Video) SetReferencedByTrackVideoIdObjects(v []Track) {
+	o.ReferencedByTrackVideoIdObjects = v
+}
+
 // GetStartedAt returns the StartedAt field value if set, zero value otherwise.
 func (o *Video) GetStartedAt() time.Time {
 	if o == nil || IsNil(o.StartedAt) {
@@ -602,6 +636,39 @@ func (o *Video) SetThumbnailName(v string) {
 	o.ThumbnailName = &v
 }
 
+// GetTrackSummary returns the TrackSummary field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Video) GetTrackSummary() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.TrackSummary
+}
+
+// GetTrackSummaryOk returns a tuple with the TrackSummary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Video) GetTrackSummaryOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.TrackSummary) {
+		return nil, false
+	}
+	return &o.TrackSummary, true
+}
+
+// HasTrackSummary returns a boolean if a field has been set.
+func (o *Video) HasTrackSummary() bool {
+	if o != nil && !IsNil(o.TrackSummary) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrackSummary gets a reference to the given interface{} and assigns it to the TrackSummary field.
+func (o *Video) SetTrackSummary(v interface{}) {
+	o.TrackSummary = v
+}
+
 // GetUpdatedAt returns the UpdatedAt field value if set, zero value otherwise.
 func (o *Video) GetUpdatedAt() time.Time {
 	if o == nil || IsNil(o.UpdatedAt) {
@@ -686,6 +753,9 @@ func (o Video) ToMap() (map[string]interface{}, error) {
 	if !IsNil(o.ReferencedByDetectionVideoIdObjects) {
 		toSerialize["referenced_by_detection_video_id_objects"] = o.ReferencedByDetectionVideoIdObjects
 	}
+	if !IsNil(o.ReferencedByTrackVideoIdObjects) {
+		toSerialize["referenced_by_track_video_id_objects"] = o.ReferencedByTrackVideoIdObjects
+	}
 	if !IsNil(o.StartedAt) {
 		toSerialize["started_at"] = o.StartedAt
 	}
@@ -694,6 +764,9 @@ func (o Video) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.ThumbnailName) {
 		toSerialize["thumbnail_name"] = o.ThumbnailName
+	}
+	if o.TrackSummary != nil {
+		toSerialize["track_summary"] = o.TrackSummary
 	}
 	if !IsNil(o.UpdatedAt) {
 		toSerialize["updated_at"] = o.UpdatedAt

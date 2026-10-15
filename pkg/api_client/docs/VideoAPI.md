@@ -4,13 +4,13 @@ All URIs are relative to *http://localhost*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**DeleteVideo**](VideoAPI.md#DeleteVideo) | **Delete** /api/videos/{primaryKey} | 
-[**GetVideo**](VideoAPI.md#GetVideo) | **Get** /api/videos/{primaryKey} | 
-[**GetVideos**](VideoAPI.md#GetVideos) | **Get** /api/videos | 
-[**PatchVideo**](VideoAPI.md#PatchVideo) | **Patch** /api/videos/{primaryKey} | 
-[**PostVideos**](VideoAPI.md#PostVideos) | **Post** /api/videos | 
-[**PostVideosObjectDetectorClaim**](VideoAPI.md#PostVideosObjectDetectorClaim) | **Post** /api/videos/{primaryKey}/object-detector-claim | 
-[**PostVideosObjectTrackerClaim**](VideoAPI.md#PostVideosObjectTrackerClaim) | **Post** /api/videos/{primaryKey}/object-tracker-claim | 
+[**DeleteVideo**](VideoAPI.md#DeleteVideo) | **Delete** /api/videos/{primaryKey} |
+[**GetVideo**](VideoAPI.md#GetVideo) | **Get** /api/videos/{primaryKey} |
+[**GetVideos**](VideoAPI.md#GetVideos) | **Get** /api/videos |
+[**PatchVideo**](VideoAPI.md#PatchVideo) | **Patch** /api/videos/{primaryKey} |
+[**PostVideos**](VideoAPI.md#PostVideos) | **Post** /api/videos |
+[**PostVideosObjectDetectorClaim**](VideoAPI.md#PostVideosObjectDetectorClaim) | **Post** /api/videos/{primaryKey}/object-detector-claim |
+[**PostVideosObjectTrackerClaim**](VideoAPI.md#PostVideosObjectTrackerClaim) | **Post** /api/videos/{primaryKey}/object-tracker-claim |
 
 
 
@@ -52,7 +52,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**primaryKey** | **string** | Path parameter primaryKey | 
+**primaryKey** | **string** | Path parameter primaryKey |
 
 ### Other Parameters
 
@@ -62,7 +62,7 @@ Other parameters are passed through a pointer to a apiDeleteVideoRequest struct 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **depth** | **int64** | Query parameter depth | 
+ **depth** | **int64** | Query parameter depth |
 
 ### Return type
 
@@ -122,7 +122,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**primaryKey** | **string** | Path parameter primaryKey | 
+**primaryKey** | **string** | Path parameter primaryKey |
 
 ### Other Parameters
 
@@ -132,7 +132,7 @@ Other parameters are passed through a pointer to a apiGetVideoRequest struct via
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **depth** | **int64** | Query parameter depth | 
+ **depth** | **int64** | Query parameter depth |
 
 ### Return type
 
@@ -154,7 +154,7 @@ No authorization required
 
 ## GetVideos
 
-> ResponseWithGenericOfVideo GetVideos(ctx).Limit(limit).Offset(offset).Depth(depth).CameraLoad(cameraLoad).ReferencedByDetectionLoad(referencedByDetectionLoad).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdContains(idContains).IdNotcontains(idNotcontains).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtContains(createdAtContains).CreatedAtNotcontains(createdAtNotcontains).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtContains(updatedAtContains).UpdatedAtNotcontains(updatedAtNotcontains).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtContains(deletedAtContains).DeletedAtNotcontains(deletedAtNotcontains).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).FileNameEq(fileNameEq).FileNameNe(fileNameNe).FileNameGt(fileNameGt).FileNameGte(fileNameGte).FileNameLt(fileNameLt).FileNameLte(fileNameLte).FileNameIn(fileNameIn).FileNameNotin(fileNameNotin).FileNameContains(fileNameContains).FileNameNotcontains(fileNameNotcontains).FileNameLike(fileNameLike).FileNameNotlike(fileNameNotlike).FileNameIlike(fileNameIlike).FileNameNotilike(fileNameNotilike).FileNameDesc(fileNameDesc).FileNameAsc(fileNameAsc).StartedAtEq(startedAtEq).StartedAtNe(startedAtNe).StartedAtGt(startedAtGt).StartedAtGte(startedAtGte).StartedAtLt(startedAtLt).StartedAtLte(startedAtLte).StartedAtIn(startedAtIn).StartedAtNotin(startedAtNotin).StartedAtContains(startedAtContains).StartedAtNotcontains(startedAtNotcontains).StartedAtLike(startedAtLike).StartedAtNotlike(startedAtNotlike).StartedAtIlike(startedAtIlike).StartedAtNotilike(startedAtNotilike).StartedAtDesc(startedAtDesc).StartedAtAsc(startedAtAsc).EndedAtEq(endedAtEq).EndedAtNe(endedAtNe).EndedAtGt(endedAtGt).EndedAtGte(endedAtGte).EndedAtLt(endedAtLt).EndedAtLte(endedAtLte).EndedAtIn(endedAtIn).EndedAtNotin(endedAtNotin).EndedAtContains(endedAtContains).EndedAtNotcontains(endedAtNotcontains).EndedAtLike(endedAtLike).EndedAtNotlike(endedAtNotlike).EndedAtIlike(endedAtIlike).EndedAtNotilike(endedAtNotilike).EndedAtDesc(endedAtDesc).EndedAtAsc(endedAtAsc).DurationEq(durationEq).DurationNe(durationNe).DurationGt(durationGt).DurationGte(durationGte).DurationLt(durationLt).DurationLte(durationLte).DurationIn(durationIn).DurationNotin(durationNotin).DurationContains(durationContains).DurationNotcontains(durationNotcontains).DurationDesc(durationDesc).DurationAsc(durationAsc).FileSizeEq(fileSizeEq).FileSizeNe(fileSizeNe).FileSizeGt(fileSizeGt).FileSizeGte(fileSizeGte).FileSizeLt(fileSizeLt).FileSizeLte(fileSizeLte).FileSizeIn(fileSizeIn).FileSizeNotin(fileSizeNotin).FileSizeContains(fileSizeContains).FileSizeNotcontains(fileSizeNotcontains).FileSizeDesc(fileSizeDesc).FileSizeAsc(fileSizeAsc).ThumbnailNameEq(thumbnailNameEq).ThumbnailNameNe(thumbnailNameNe).ThumbnailNameGt(thumbnailNameGt).ThumbnailNameGte(thumbnailNameGte).ThumbnailNameLt(thumbnailNameLt).ThumbnailNameLte(thumbnailNameLte).ThumbnailNameIn(thumbnailNameIn).ThumbnailNameNotin(thumbnailNameNotin).ThumbnailNameContains(thumbnailNameContains).ThumbnailNameNotcontains(thumbnailNameNotcontains).ThumbnailNameLike(thumbnailNameLike).ThumbnailNameNotlike(thumbnailNameNotlike).ThumbnailNameIlike(thumbnailNameIlike).ThumbnailNameNotilike(thumbnailNameNotilike).ThumbnailNameDesc(thumbnailNameDesc).ThumbnailNameAsc(thumbnailNameAsc).StatusEq(statusEq).StatusNe(statusNe).StatusGt(statusGt).StatusGte(statusGte).StatusLt(statusLt).StatusLte(statusLte).StatusIn(statusIn).StatusNotin(statusNotin).StatusContains(statusContains).StatusNotcontains(statusNotcontains).StatusLike(statusLike).StatusNotlike(statusNotlike).StatusIlike(statusIlike).StatusNotilike(statusNotilike).StatusDesc(statusDesc).StatusAsc(statusAsc).ObjectDetectorClaimedUntilEq(objectDetectorClaimedUntilEq).ObjectDetectorClaimedUntilNe(objectDetectorClaimedUntilNe).ObjectDetectorClaimedUntilGt(objectDetectorClaimedUntilGt).ObjectDetectorClaimedUntilGte(objectDetectorClaimedUntilGte).ObjectDetectorClaimedUntilLt(objectDetectorClaimedUntilLt).ObjectDetectorClaimedUntilLte(objectDetectorClaimedUntilLte).ObjectDetectorClaimedUntilIn(objectDetectorClaimedUntilIn).ObjectDetectorClaimedUntilNotin(objectDetectorClaimedUntilNotin).ObjectDetectorClaimedUntilContains(objectDetectorClaimedUntilContains).ObjectDetectorClaimedUntilNotcontains(objectDetectorClaimedUntilNotcontains).ObjectDetectorClaimedUntilLike(objectDetectorClaimedUntilLike).ObjectDetectorClaimedUntilNotlike(objectDetectorClaimedUntilNotlike).ObjectDetectorClaimedUntilIlike(objectDetectorClaimedUntilIlike).ObjectDetectorClaimedUntilNotilike(objectDetectorClaimedUntilNotilike).ObjectDetectorClaimedUntilDesc(objectDetectorClaimedUntilDesc).ObjectDetectorClaimedUntilAsc(objectDetectorClaimedUntilAsc).ObjectTrackerClaimedUntilEq(objectTrackerClaimedUntilEq).ObjectTrackerClaimedUntilNe(objectTrackerClaimedUntilNe).ObjectTrackerClaimedUntilGt(objectTrackerClaimedUntilGt).ObjectTrackerClaimedUntilGte(objectTrackerClaimedUntilGte).ObjectTrackerClaimedUntilLt(objectTrackerClaimedUntilLt).ObjectTrackerClaimedUntilLte(objectTrackerClaimedUntilLte).ObjectTrackerClaimedUntilIn(objectTrackerClaimedUntilIn).ObjectTrackerClaimedUntilNotin(objectTrackerClaimedUntilNotin).ObjectTrackerClaimedUntilContains(objectTrackerClaimedUntilContains).ObjectTrackerClaimedUntilNotcontains(objectTrackerClaimedUntilNotcontains).ObjectTrackerClaimedUntilLike(objectTrackerClaimedUntilLike).ObjectTrackerClaimedUntilNotlike(objectTrackerClaimedUntilNotlike).ObjectTrackerClaimedUntilIlike(objectTrackerClaimedUntilIlike).ObjectTrackerClaimedUntilNotilike(objectTrackerClaimedUntilNotilike).ObjectTrackerClaimedUntilDesc(objectTrackerClaimedUntilDesc).ObjectTrackerClaimedUntilAsc(objectTrackerClaimedUntilAsc).CameraIdEq(cameraIdEq).CameraIdNe(cameraIdNe).CameraIdGt(cameraIdGt).CameraIdGte(cameraIdGte).CameraIdLt(cameraIdLt).CameraIdLte(cameraIdLte).CameraIdIn(cameraIdIn).CameraIdNotin(cameraIdNotin).CameraIdContains(cameraIdContains).CameraIdNotcontains(cameraIdNotcontains).CameraIdLike(cameraIdLike).CameraIdNotlike(cameraIdNotlike).CameraIdIlike(cameraIdIlike).CameraIdNotilike(cameraIdNotilike).CameraIdDesc(cameraIdDesc).CameraIdAsc(cameraIdAsc).CameraIdObjectContains(cameraIdObjectContains).CameraIdObjectNotcontains(cameraIdObjectNotcontains).CameraIdObjectDesc(cameraIdObjectDesc).CameraIdObjectAsc(cameraIdObjectAsc).DetectionSummaryContains(detectionSummaryContains).DetectionSummaryNotcontains(detectionSummaryNotcontains).DetectionSummaryDesc(detectionSummaryDesc).DetectionSummaryAsc(detectionSummaryAsc).IsLowResEq(isLowResEq).IsLowResNe(isLowResNe).IsLowResGt(isLowResGt).IsLowResGte(isLowResGte).IsLowResLt(isLowResLt).IsLowResLte(isLowResLte).IsLowResIn(isLowResIn).IsLowResNotin(isLowResNotin).IsLowResContains(isLowResContains).IsLowResNotcontains(isLowResNotcontains).IsLowResDesc(isLowResDesc).IsLowResAsc(isLowResAsc).ReferencedByDetectionVideoIdObjectsContains(referencedByDetectionVideoIdObjectsContains).ReferencedByDetectionVideoIdObjectsNotcontains(referencedByDetectionVideoIdObjectsNotcontains).ReferencedByDetectionVideoIdObjectsDesc(referencedByDetectionVideoIdObjectsDesc).ReferencedByDetectionVideoIdObjectsAsc(referencedByDetectionVideoIdObjectsAsc).Execute()
+> ResponseWithGenericOfVideo GetVideos(ctx).Limit(limit).Offset(offset).Depth(depth).CameraLoad(cameraLoad).ReferencedByDetectionLoad(referencedByDetectionLoad).ReferencedByTrackLoad(referencedByTrackLoad).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdContains(idContains).IdNotcontains(idNotcontains).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtContains(createdAtContains).CreatedAtNotcontains(createdAtNotcontains).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtContains(updatedAtContains).UpdatedAtNotcontains(updatedAtNotcontains).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtContains(deletedAtContains).DeletedAtNotcontains(deletedAtNotcontains).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).FileNameEq(fileNameEq).FileNameNe(fileNameNe).FileNameGt(fileNameGt).FileNameGte(fileNameGte).FileNameLt(fileNameLt).FileNameLte(fileNameLte).FileNameIn(fileNameIn).FileNameNotin(fileNameNotin).FileNameContains(fileNameContains).FileNameNotcontains(fileNameNotcontains).FileNameLike(fileNameLike).FileNameNotlike(fileNameNotlike).FileNameIlike(fileNameIlike).FileNameNotilike(fileNameNotilike).FileNameDesc(fileNameDesc).FileNameAsc(fileNameAsc).StartedAtEq(startedAtEq).StartedAtNe(startedAtNe).StartedAtGt(startedAtGt).StartedAtGte(startedAtGte).StartedAtLt(startedAtLt).StartedAtLte(startedAtLte).StartedAtIn(startedAtIn).StartedAtNotin(startedAtNotin).StartedAtContains(startedAtContains).StartedAtNotcontains(startedAtNotcontains).StartedAtLike(startedAtLike).StartedAtNotlike(startedAtNotlike).StartedAtIlike(startedAtIlike).StartedAtNotilike(startedAtNotilike).StartedAtDesc(startedAtDesc).StartedAtAsc(startedAtAsc).EndedAtEq(endedAtEq).EndedAtNe(endedAtNe).EndedAtGt(endedAtGt).EndedAtGte(endedAtGte).EndedAtLt(endedAtLt).EndedAtLte(endedAtLte).EndedAtIn(endedAtIn).EndedAtNotin(endedAtNotin).EndedAtContains(endedAtContains).EndedAtNotcontains(endedAtNotcontains).EndedAtLike(endedAtLike).EndedAtNotlike(endedAtNotlike).EndedAtIlike(endedAtIlike).EndedAtNotilike(endedAtNotilike).EndedAtDesc(endedAtDesc).EndedAtAsc(endedAtAsc).DurationEq(durationEq).DurationNe(durationNe).DurationGt(durationGt).DurationGte(durationGte).DurationLt(durationLt).DurationLte(durationLte).DurationIn(durationIn).DurationNotin(durationNotin).DurationContains(durationContains).DurationNotcontains(durationNotcontains).DurationDesc(durationDesc).DurationAsc(durationAsc).FileSizeEq(fileSizeEq).FileSizeNe(fileSizeNe).FileSizeGt(fileSizeGt).FileSizeGte(fileSizeGte).FileSizeLt(fileSizeLt).FileSizeLte(fileSizeLte).FileSizeIn(fileSizeIn).FileSizeNotin(fileSizeNotin).FileSizeContains(fileSizeContains).FileSizeNotcontains(fileSizeNotcontains).FileSizeDesc(fileSizeDesc).FileSizeAsc(fileSizeAsc).ThumbnailNameEq(thumbnailNameEq).ThumbnailNameNe(thumbnailNameNe).ThumbnailNameGt(thumbnailNameGt).ThumbnailNameGte(thumbnailNameGte).ThumbnailNameLt(thumbnailNameLt).ThumbnailNameLte(thumbnailNameLte).ThumbnailNameIn(thumbnailNameIn).ThumbnailNameNotin(thumbnailNameNotin).ThumbnailNameContains(thumbnailNameContains).ThumbnailNameNotcontains(thumbnailNameNotcontains).ThumbnailNameLike(thumbnailNameLike).ThumbnailNameNotlike(thumbnailNameNotlike).ThumbnailNameIlike(thumbnailNameIlike).ThumbnailNameNotilike(thumbnailNameNotilike).ThumbnailNameDesc(thumbnailNameDesc).ThumbnailNameAsc(thumbnailNameAsc).StatusEq(statusEq).StatusNe(statusNe).StatusGt(statusGt).StatusGte(statusGte).StatusLt(statusLt).StatusLte(statusLte).StatusIn(statusIn).StatusNotin(statusNotin).StatusContains(statusContains).StatusNotcontains(statusNotcontains).StatusLike(statusLike).StatusNotlike(statusNotlike).StatusIlike(statusIlike).StatusNotilike(statusNotilike).StatusDesc(statusDesc).StatusAsc(statusAsc).ObjectDetectorClaimedUntilEq(objectDetectorClaimedUntilEq).ObjectDetectorClaimedUntilNe(objectDetectorClaimedUntilNe).ObjectDetectorClaimedUntilGt(objectDetectorClaimedUntilGt).ObjectDetectorClaimedUntilGte(objectDetectorClaimedUntilGte).ObjectDetectorClaimedUntilLt(objectDetectorClaimedUntilLt).ObjectDetectorClaimedUntilLte(objectDetectorClaimedUntilLte).ObjectDetectorClaimedUntilIn(objectDetectorClaimedUntilIn).ObjectDetectorClaimedUntilNotin(objectDetectorClaimedUntilNotin).ObjectDetectorClaimedUntilContains(objectDetectorClaimedUntilContains).ObjectDetectorClaimedUntilNotcontains(objectDetectorClaimedUntilNotcontains).ObjectDetectorClaimedUntilLike(objectDetectorClaimedUntilLike).ObjectDetectorClaimedUntilNotlike(objectDetectorClaimedUntilNotlike).ObjectDetectorClaimedUntilIlike(objectDetectorClaimedUntilIlike).ObjectDetectorClaimedUntilNotilike(objectDetectorClaimedUntilNotilike).ObjectDetectorClaimedUntilDesc(objectDetectorClaimedUntilDesc).ObjectDetectorClaimedUntilAsc(objectDetectorClaimedUntilAsc).ObjectTrackerClaimedUntilEq(objectTrackerClaimedUntilEq).ObjectTrackerClaimedUntilNe(objectTrackerClaimedUntilNe).ObjectTrackerClaimedUntilGt(objectTrackerClaimedUntilGt).ObjectTrackerClaimedUntilGte(objectTrackerClaimedUntilGte).ObjectTrackerClaimedUntilLt(objectTrackerClaimedUntilLt).ObjectTrackerClaimedUntilLte(objectTrackerClaimedUntilLte).ObjectTrackerClaimedUntilIn(objectTrackerClaimedUntilIn).ObjectTrackerClaimedUntilNotin(objectTrackerClaimedUntilNotin).ObjectTrackerClaimedUntilContains(objectTrackerClaimedUntilContains).ObjectTrackerClaimedUntilNotcontains(objectTrackerClaimedUntilNotcontains).ObjectTrackerClaimedUntilLike(objectTrackerClaimedUntilLike).ObjectTrackerClaimedUntilNotlike(objectTrackerClaimedUntilNotlike).ObjectTrackerClaimedUntilIlike(objectTrackerClaimedUntilIlike).ObjectTrackerClaimedUntilNotilike(objectTrackerClaimedUntilNotilike).ObjectTrackerClaimedUntilDesc(objectTrackerClaimedUntilDesc).ObjectTrackerClaimedUntilAsc(objectTrackerClaimedUntilAsc).CameraIdEq(cameraIdEq).CameraIdNe(cameraIdNe).CameraIdGt(cameraIdGt).CameraIdGte(cameraIdGte).CameraIdLt(cameraIdLt).CameraIdLte(cameraIdLte).CameraIdIn(cameraIdIn).CameraIdNotin(cameraIdNotin).CameraIdContains(cameraIdContains).CameraIdNotcontains(cameraIdNotcontains).CameraIdLike(cameraIdLike).CameraIdNotlike(cameraIdNotlike).CameraIdIlike(cameraIdIlike).CameraIdNotilike(cameraIdNotilike).CameraIdDesc(cameraIdDesc).CameraIdAsc(cameraIdAsc).CameraIdObjectContains(cameraIdObjectContains).CameraIdObjectNotcontains(cameraIdObjectNotcontains).CameraIdObjectDesc(cameraIdObjectDesc).CameraIdObjectAsc(cameraIdObjectAsc).DetectionSummaryContains(detectionSummaryContains).DetectionSummaryNotcontains(detectionSummaryNotcontains).DetectionSummaryDesc(detectionSummaryDesc).DetectionSummaryAsc(detectionSummaryAsc).IsLowResEq(isLowResEq).IsLowResNe(isLowResNe).IsLowResGt(isLowResGt).IsLowResGte(isLowResGte).IsLowResLt(isLowResLt).IsLowResLte(isLowResLte).IsLowResIn(isLowResIn).IsLowResNotin(isLowResNotin).IsLowResContains(isLowResContains).IsLowResNotcontains(isLowResNotcontains).IsLowResDesc(isLowResDesc).IsLowResAsc(isLowResAsc).TrackSummaryContains(trackSummaryContains).TrackSummaryNotcontains(trackSummaryNotcontains).TrackSummaryDesc(trackSummaryDesc).TrackSummaryAsc(trackSummaryAsc).ReferencedByDetectionVideoIdObjectsContains(referencedByDetectionVideoIdObjectsContains).ReferencedByDetectionVideoIdObjectsNotcontains(referencedByDetectionVideoIdObjectsNotcontains).ReferencedByDetectionVideoIdObjectsDesc(referencedByDetectionVideoIdObjectsDesc).ReferencedByDetectionVideoIdObjectsAsc(referencedByDetectionVideoIdObjectsAsc).ReferencedByTrackVideoIdObjectsContains(referencedByTrackVideoIdObjectsContains).ReferencedByTrackVideoIdObjectsNotcontains(referencedByTrackVideoIdObjectsNotcontains).ReferencedByTrackVideoIdObjectsDesc(referencedByTrackVideoIdObjectsDesc).ReferencedByTrackVideoIdObjectsAsc(referencedByTrackVideoIdObjectsAsc).Execute()
 
 
 
@@ -177,6 +177,7 @@ func main() {
 	depth := int32(56) // int32 | Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) (optional)
 	cameraLoad := "cameraLoad_example" // string | load the given directly related object, value is ignored (presence of key is sufficient) (optional)
 	referencedByDetectionLoad := "referencedByDetectionLoad_example" // string | load the given indirectly related objects, value is ignored (presence of key is sufficient) (optional)
+	referencedByTrackLoad := "referencedByTrackLoad_example" // string | load the given indirectly related objects, value is ignored (presence of key is sufficient) (optional)
 	idEq := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL = comparison (optional)
 	idNe := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL != comparison (optional)
 	idGt := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | SQL > comparison, may not work with all column types (optional)
@@ -413,14 +414,22 @@ func main() {
 	isLowResNotcontains := true // bool | SQL NOT @> comparison (optional)
 	isLowResDesc := "isLowResDesc_example" // string | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) (optional)
 	isLowResAsc := "isLowResAsc_example" // string | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) (optional)
+	trackSummaryContains := TODO // interface{} | SQL @> comparison (optional)
+	trackSummaryNotcontains := TODO // interface{} | SQL NOT @> comparison (optional)
+	trackSummaryDesc := "trackSummaryDesc_example" // string | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) (optional)
+	trackSummaryAsc := "trackSummaryAsc_example" // string | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) (optional)
 	referencedByDetectionVideoIdObjectsContains := TODO // interface{} | SQL @> comparison (optional)
 	referencedByDetectionVideoIdObjectsNotcontains := TODO // interface{} | SQL NOT @> comparison (optional)
 	referencedByDetectionVideoIdObjectsDesc := "referencedByDetectionVideoIdObjectsDesc_example" // string | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) (optional)
 	referencedByDetectionVideoIdObjectsAsc := "referencedByDetectionVideoIdObjectsAsc_example" // string | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) (optional)
+	referencedByTrackVideoIdObjectsContains := TODO // interface{} | SQL @> comparison (optional)
+	referencedByTrackVideoIdObjectsNotcontains := TODO // interface{} | SQL NOT @> comparison (optional)
+	referencedByTrackVideoIdObjectsDesc := "referencedByTrackVideoIdObjectsDesc_example" // string | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) (optional)
+	referencedByTrackVideoIdObjectsAsc := "referencedByTrackVideoIdObjectsAsc_example" // string | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.VideoAPI.GetVideos(context.Background()).Limit(limit).Offset(offset).Depth(depth).CameraLoad(cameraLoad).ReferencedByDetectionLoad(referencedByDetectionLoad).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdContains(idContains).IdNotcontains(idNotcontains).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtContains(createdAtContains).CreatedAtNotcontains(createdAtNotcontains).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtContains(updatedAtContains).UpdatedAtNotcontains(updatedAtNotcontains).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtContains(deletedAtContains).DeletedAtNotcontains(deletedAtNotcontains).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).FileNameEq(fileNameEq).FileNameNe(fileNameNe).FileNameGt(fileNameGt).FileNameGte(fileNameGte).FileNameLt(fileNameLt).FileNameLte(fileNameLte).FileNameIn(fileNameIn).FileNameNotin(fileNameNotin).FileNameContains(fileNameContains).FileNameNotcontains(fileNameNotcontains).FileNameLike(fileNameLike).FileNameNotlike(fileNameNotlike).FileNameIlike(fileNameIlike).FileNameNotilike(fileNameNotilike).FileNameDesc(fileNameDesc).FileNameAsc(fileNameAsc).StartedAtEq(startedAtEq).StartedAtNe(startedAtNe).StartedAtGt(startedAtGt).StartedAtGte(startedAtGte).StartedAtLt(startedAtLt).StartedAtLte(startedAtLte).StartedAtIn(startedAtIn).StartedAtNotin(startedAtNotin).StartedAtContains(startedAtContains).StartedAtNotcontains(startedAtNotcontains).StartedAtLike(startedAtLike).StartedAtNotlike(startedAtNotlike).StartedAtIlike(startedAtIlike).StartedAtNotilike(startedAtNotilike).StartedAtDesc(startedAtDesc).StartedAtAsc(startedAtAsc).EndedAtEq(endedAtEq).EndedAtNe(endedAtNe).EndedAtGt(endedAtGt).EndedAtGte(endedAtGte).EndedAtLt(endedAtLt).EndedAtLte(endedAtLte).EndedAtIn(endedAtIn).EndedAtNotin(endedAtNotin).EndedAtContains(endedAtContains).EndedAtNotcontains(endedAtNotcontains).EndedAtLike(endedAtLike).EndedAtNotlike(endedAtNotlike).EndedAtIlike(endedAtIlike).EndedAtNotilike(endedAtNotilike).EndedAtDesc(endedAtDesc).EndedAtAsc(endedAtAsc).DurationEq(durationEq).DurationNe(durationNe).DurationGt(durationGt).DurationGte(durationGte).DurationLt(durationLt).DurationLte(durationLte).DurationIn(durationIn).DurationNotin(durationNotin).DurationContains(durationContains).DurationNotcontains(durationNotcontains).DurationDesc(durationDesc).DurationAsc(durationAsc).FileSizeEq(fileSizeEq).FileSizeNe(fileSizeNe).FileSizeGt(fileSizeGt).FileSizeGte(fileSizeGte).FileSizeLt(fileSizeLt).FileSizeLte(fileSizeLte).FileSizeIn(fileSizeIn).FileSizeNotin(fileSizeNotin).FileSizeContains(fileSizeContains).FileSizeNotcontains(fileSizeNotcontains).FileSizeDesc(fileSizeDesc).FileSizeAsc(fileSizeAsc).ThumbnailNameEq(thumbnailNameEq).ThumbnailNameNe(thumbnailNameNe).ThumbnailNameGt(thumbnailNameGt).ThumbnailNameGte(thumbnailNameGte).ThumbnailNameLt(thumbnailNameLt).ThumbnailNameLte(thumbnailNameLte).ThumbnailNameIn(thumbnailNameIn).ThumbnailNameNotin(thumbnailNameNotin).ThumbnailNameContains(thumbnailNameContains).ThumbnailNameNotcontains(thumbnailNameNotcontains).ThumbnailNameLike(thumbnailNameLike).ThumbnailNameNotlike(thumbnailNameNotlike).ThumbnailNameIlike(thumbnailNameIlike).ThumbnailNameNotilike(thumbnailNameNotilike).ThumbnailNameDesc(thumbnailNameDesc).ThumbnailNameAsc(thumbnailNameAsc).StatusEq(statusEq).StatusNe(statusNe).StatusGt(statusGt).StatusGte(statusGte).StatusLt(statusLt).StatusLte(statusLte).StatusIn(statusIn).StatusNotin(statusNotin).StatusContains(statusContains).StatusNotcontains(statusNotcontains).StatusLike(statusLike).StatusNotlike(statusNotlike).StatusIlike(statusIlike).StatusNotilike(statusNotilike).StatusDesc(statusDesc).StatusAsc(statusAsc).ObjectDetectorClaimedUntilEq(objectDetectorClaimedUntilEq).ObjectDetectorClaimedUntilNe(objectDetectorClaimedUntilNe).ObjectDetectorClaimedUntilGt(objectDetectorClaimedUntilGt).ObjectDetectorClaimedUntilGte(objectDetectorClaimedUntilGte).ObjectDetectorClaimedUntilLt(objectDetectorClaimedUntilLt).ObjectDetectorClaimedUntilLte(objectDetectorClaimedUntilLte).ObjectDetectorClaimedUntilIn(objectDetectorClaimedUntilIn).ObjectDetectorClaimedUntilNotin(objectDetectorClaimedUntilNotin).ObjectDetectorClaimedUntilContains(objectDetectorClaimedUntilContains).ObjectDetectorClaimedUntilNotcontains(objectDetectorClaimedUntilNotcontains).ObjectDetectorClaimedUntilLike(objectDetectorClaimedUntilLike).ObjectDetectorClaimedUntilNotlike(objectDetectorClaimedUntilNotlike).ObjectDetectorClaimedUntilIlike(objectDetectorClaimedUntilIlike).ObjectDetectorClaimedUntilNotilike(objectDetectorClaimedUntilNotilike).ObjectDetectorClaimedUntilDesc(objectDetectorClaimedUntilDesc).ObjectDetectorClaimedUntilAsc(objectDetectorClaimedUntilAsc).ObjectTrackerClaimedUntilEq(objectTrackerClaimedUntilEq).ObjectTrackerClaimedUntilNe(objectTrackerClaimedUntilNe).ObjectTrackerClaimedUntilGt(objectTrackerClaimedUntilGt).ObjectTrackerClaimedUntilGte(objectTrackerClaimedUntilGte).ObjectTrackerClaimedUntilLt(objectTrackerClaimedUntilLt).ObjectTrackerClaimedUntilLte(objectTrackerClaimedUntilLte).ObjectTrackerClaimedUntilIn(objectTrackerClaimedUntilIn).ObjectTrackerClaimedUntilNotin(objectTrackerClaimedUntilNotin).ObjectTrackerClaimedUntilContains(objectTrackerClaimedUntilContains).ObjectTrackerClaimedUntilNotcontains(objectTrackerClaimedUntilNotcontains).ObjectTrackerClaimedUntilLike(objectTrackerClaimedUntilLike).ObjectTrackerClaimedUntilNotlike(objectTrackerClaimedUntilNotlike).ObjectTrackerClaimedUntilIlike(objectTrackerClaimedUntilIlike).ObjectTrackerClaimedUntilNotilike(objectTrackerClaimedUntilNotilike).ObjectTrackerClaimedUntilDesc(objectTrackerClaimedUntilDesc).ObjectTrackerClaimedUntilAsc(objectTrackerClaimedUntilAsc).CameraIdEq(cameraIdEq).CameraIdNe(cameraIdNe).CameraIdGt(cameraIdGt).CameraIdGte(cameraIdGte).CameraIdLt(cameraIdLt).CameraIdLte(cameraIdLte).CameraIdIn(cameraIdIn).CameraIdNotin(cameraIdNotin).CameraIdContains(cameraIdContains).CameraIdNotcontains(cameraIdNotcontains).CameraIdLike(cameraIdLike).CameraIdNotlike(cameraIdNotlike).CameraIdIlike(cameraIdIlike).CameraIdNotilike(cameraIdNotilike).CameraIdDesc(cameraIdDesc).CameraIdAsc(cameraIdAsc).CameraIdObjectContains(cameraIdObjectContains).CameraIdObjectNotcontains(cameraIdObjectNotcontains).CameraIdObjectDesc(cameraIdObjectDesc).CameraIdObjectAsc(cameraIdObjectAsc).DetectionSummaryContains(detectionSummaryContains).DetectionSummaryNotcontains(detectionSummaryNotcontains).DetectionSummaryDesc(detectionSummaryDesc).DetectionSummaryAsc(detectionSummaryAsc).IsLowResEq(isLowResEq).IsLowResNe(isLowResNe).IsLowResGt(isLowResGt).IsLowResGte(isLowResGte).IsLowResLt(isLowResLt).IsLowResLte(isLowResLte).IsLowResIn(isLowResIn).IsLowResNotin(isLowResNotin).IsLowResContains(isLowResContains).IsLowResNotcontains(isLowResNotcontains).IsLowResDesc(isLowResDesc).IsLowResAsc(isLowResAsc).ReferencedByDetectionVideoIdObjectsContains(referencedByDetectionVideoIdObjectsContains).ReferencedByDetectionVideoIdObjectsNotcontains(referencedByDetectionVideoIdObjectsNotcontains).ReferencedByDetectionVideoIdObjectsDesc(referencedByDetectionVideoIdObjectsDesc).ReferencedByDetectionVideoIdObjectsAsc(referencedByDetectionVideoIdObjectsAsc).Execute()
+	resp, r, err := apiClient.VideoAPI.GetVideos(context.Background()).Limit(limit).Offset(offset).Depth(depth).CameraLoad(cameraLoad).ReferencedByDetectionLoad(referencedByDetectionLoad).ReferencedByTrackLoad(referencedByTrackLoad).IdEq(idEq).IdNe(idNe).IdGt(idGt).IdGte(idGte).IdLt(idLt).IdLte(idLte).IdIn(idIn).IdNotin(idNotin).IdContains(idContains).IdNotcontains(idNotcontains).IdLike(idLike).IdNotlike(idNotlike).IdIlike(idIlike).IdNotilike(idNotilike).IdDesc(idDesc).IdAsc(idAsc).CreatedAtEq(createdAtEq).CreatedAtNe(createdAtNe).CreatedAtGt(createdAtGt).CreatedAtGte(createdAtGte).CreatedAtLt(createdAtLt).CreatedAtLte(createdAtLte).CreatedAtIn(createdAtIn).CreatedAtNotin(createdAtNotin).CreatedAtContains(createdAtContains).CreatedAtNotcontains(createdAtNotcontains).CreatedAtLike(createdAtLike).CreatedAtNotlike(createdAtNotlike).CreatedAtIlike(createdAtIlike).CreatedAtNotilike(createdAtNotilike).CreatedAtDesc(createdAtDesc).CreatedAtAsc(createdAtAsc).UpdatedAtEq(updatedAtEq).UpdatedAtNe(updatedAtNe).UpdatedAtGt(updatedAtGt).UpdatedAtGte(updatedAtGte).UpdatedAtLt(updatedAtLt).UpdatedAtLte(updatedAtLte).UpdatedAtIn(updatedAtIn).UpdatedAtNotin(updatedAtNotin).UpdatedAtContains(updatedAtContains).UpdatedAtNotcontains(updatedAtNotcontains).UpdatedAtLike(updatedAtLike).UpdatedAtNotlike(updatedAtNotlike).UpdatedAtIlike(updatedAtIlike).UpdatedAtNotilike(updatedAtNotilike).UpdatedAtDesc(updatedAtDesc).UpdatedAtAsc(updatedAtAsc).DeletedAtEq(deletedAtEq).DeletedAtNe(deletedAtNe).DeletedAtGt(deletedAtGt).DeletedAtGte(deletedAtGte).DeletedAtLt(deletedAtLt).DeletedAtLte(deletedAtLte).DeletedAtIn(deletedAtIn).DeletedAtNotin(deletedAtNotin).DeletedAtContains(deletedAtContains).DeletedAtNotcontains(deletedAtNotcontains).DeletedAtLike(deletedAtLike).DeletedAtNotlike(deletedAtNotlike).DeletedAtIlike(deletedAtIlike).DeletedAtNotilike(deletedAtNotilike).DeletedAtDesc(deletedAtDesc).DeletedAtAsc(deletedAtAsc).FileNameEq(fileNameEq).FileNameNe(fileNameNe).FileNameGt(fileNameGt).FileNameGte(fileNameGte).FileNameLt(fileNameLt).FileNameLte(fileNameLte).FileNameIn(fileNameIn).FileNameNotin(fileNameNotin).FileNameContains(fileNameContains).FileNameNotcontains(fileNameNotcontains).FileNameLike(fileNameLike).FileNameNotlike(fileNameNotlike).FileNameIlike(fileNameIlike).FileNameNotilike(fileNameNotilike).FileNameDesc(fileNameDesc).FileNameAsc(fileNameAsc).StartedAtEq(startedAtEq).StartedAtNe(startedAtNe).StartedAtGt(startedAtGt).StartedAtGte(startedAtGte).StartedAtLt(startedAtLt).StartedAtLte(startedAtLte).StartedAtIn(startedAtIn).StartedAtNotin(startedAtNotin).StartedAtContains(startedAtContains).StartedAtNotcontains(startedAtNotcontains).StartedAtLike(startedAtLike).StartedAtNotlike(startedAtNotlike).StartedAtIlike(startedAtIlike).StartedAtNotilike(startedAtNotilike).StartedAtDesc(startedAtDesc).StartedAtAsc(startedAtAsc).EndedAtEq(endedAtEq).EndedAtNe(endedAtNe).EndedAtGt(endedAtGt).EndedAtGte(endedAtGte).EndedAtLt(endedAtLt).EndedAtLte(endedAtLte).EndedAtIn(endedAtIn).EndedAtNotin(endedAtNotin).EndedAtContains(endedAtContains).EndedAtNotcontains(endedAtNotcontains).EndedAtLike(endedAtLike).EndedAtNotlike(endedAtNotlike).EndedAtIlike(endedAtIlike).EndedAtNotilike(endedAtNotilike).EndedAtDesc(endedAtDesc).EndedAtAsc(endedAtAsc).DurationEq(durationEq).DurationNe(durationNe).DurationGt(durationGt).DurationGte(durationGte).DurationLt(durationLt).DurationLte(durationLte).DurationIn(durationIn).DurationNotin(durationNotin).DurationContains(durationContains).DurationNotcontains(durationNotcontains).DurationDesc(durationDesc).DurationAsc(durationAsc).FileSizeEq(fileSizeEq).FileSizeNe(fileSizeNe).FileSizeGt(fileSizeGt).FileSizeGte(fileSizeGte).FileSizeLt(fileSizeLt).FileSizeLte(fileSizeLte).FileSizeIn(fileSizeIn).FileSizeNotin(fileSizeNotin).FileSizeContains(fileSizeContains).FileSizeNotcontains(fileSizeNotcontains).FileSizeDesc(fileSizeDesc).FileSizeAsc(fileSizeAsc).ThumbnailNameEq(thumbnailNameEq).ThumbnailNameNe(thumbnailNameNe).ThumbnailNameGt(thumbnailNameGt).ThumbnailNameGte(thumbnailNameGte).ThumbnailNameLt(thumbnailNameLt).ThumbnailNameLte(thumbnailNameLte).ThumbnailNameIn(thumbnailNameIn).ThumbnailNameNotin(thumbnailNameNotin).ThumbnailNameContains(thumbnailNameContains).ThumbnailNameNotcontains(thumbnailNameNotcontains).ThumbnailNameLike(thumbnailNameLike).ThumbnailNameNotlike(thumbnailNameNotlike).ThumbnailNameIlike(thumbnailNameIlike).ThumbnailNameNotilike(thumbnailNameNotilike).ThumbnailNameDesc(thumbnailNameDesc).ThumbnailNameAsc(thumbnailNameAsc).StatusEq(statusEq).StatusNe(statusNe).StatusGt(statusGt).StatusGte(statusGte).StatusLt(statusLt).StatusLte(statusLte).StatusIn(statusIn).StatusNotin(statusNotin).StatusContains(statusContains).StatusNotcontains(statusNotcontains).StatusLike(statusLike).StatusNotlike(statusNotlike).StatusIlike(statusIlike).StatusNotilike(statusNotilike).StatusDesc(statusDesc).StatusAsc(statusAsc).ObjectDetectorClaimedUntilEq(objectDetectorClaimedUntilEq).ObjectDetectorClaimedUntilNe(objectDetectorClaimedUntilNe).ObjectDetectorClaimedUntilGt(objectDetectorClaimedUntilGt).ObjectDetectorClaimedUntilGte(objectDetectorClaimedUntilGte).ObjectDetectorClaimedUntilLt(objectDetectorClaimedUntilLt).ObjectDetectorClaimedUntilLte(objectDetectorClaimedUntilLte).ObjectDetectorClaimedUntilIn(objectDetectorClaimedUntilIn).ObjectDetectorClaimedUntilNotin(objectDetectorClaimedUntilNotin).ObjectDetectorClaimedUntilContains(objectDetectorClaimedUntilContains).ObjectDetectorClaimedUntilNotcontains(objectDetectorClaimedUntilNotcontains).ObjectDetectorClaimedUntilLike(objectDetectorClaimedUntilLike).ObjectDetectorClaimedUntilNotlike(objectDetectorClaimedUntilNotlike).ObjectDetectorClaimedUntilIlike(objectDetectorClaimedUntilIlike).ObjectDetectorClaimedUntilNotilike(objectDetectorClaimedUntilNotilike).ObjectDetectorClaimedUntilDesc(objectDetectorClaimedUntilDesc).ObjectDetectorClaimedUntilAsc(objectDetectorClaimedUntilAsc).ObjectTrackerClaimedUntilEq(objectTrackerClaimedUntilEq).ObjectTrackerClaimedUntilNe(objectTrackerClaimedUntilNe).ObjectTrackerClaimedUntilGt(objectTrackerClaimedUntilGt).ObjectTrackerClaimedUntilGte(objectTrackerClaimedUntilGte).ObjectTrackerClaimedUntilLt(objectTrackerClaimedUntilLt).ObjectTrackerClaimedUntilLte(objectTrackerClaimedUntilLte).ObjectTrackerClaimedUntilIn(objectTrackerClaimedUntilIn).ObjectTrackerClaimedUntilNotin(objectTrackerClaimedUntilNotin).ObjectTrackerClaimedUntilContains(objectTrackerClaimedUntilContains).ObjectTrackerClaimedUntilNotcontains(objectTrackerClaimedUntilNotcontains).ObjectTrackerClaimedUntilLike(objectTrackerClaimedUntilLike).ObjectTrackerClaimedUntilNotlike(objectTrackerClaimedUntilNotlike).ObjectTrackerClaimedUntilIlike(objectTrackerClaimedUntilIlike).ObjectTrackerClaimedUntilNotilike(objectTrackerClaimedUntilNotilike).ObjectTrackerClaimedUntilDesc(objectTrackerClaimedUntilDesc).ObjectTrackerClaimedUntilAsc(objectTrackerClaimedUntilAsc).CameraIdEq(cameraIdEq).CameraIdNe(cameraIdNe).CameraIdGt(cameraIdGt).CameraIdGte(cameraIdGte).CameraIdLt(cameraIdLt).CameraIdLte(cameraIdLte).CameraIdIn(cameraIdIn).CameraIdNotin(cameraIdNotin).CameraIdContains(cameraIdContains).CameraIdNotcontains(cameraIdNotcontains).CameraIdLike(cameraIdLike).CameraIdNotlike(cameraIdNotlike).CameraIdIlike(cameraIdIlike).CameraIdNotilike(cameraIdNotilike).CameraIdDesc(cameraIdDesc).CameraIdAsc(cameraIdAsc).CameraIdObjectContains(cameraIdObjectContains).CameraIdObjectNotcontains(cameraIdObjectNotcontains).CameraIdObjectDesc(cameraIdObjectDesc).CameraIdObjectAsc(cameraIdObjectAsc).DetectionSummaryContains(detectionSummaryContains).DetectionSummaryNotcontains(detectionSummaryNotcontains).DetectionSummaryDesc(detectionSummaryDesc).DetectionSummaryAsc(detectionSummaryAsc).IsLowResEq(isLowResEq).IsLowResNe(isLowResNe).IsLowResGt(isLowResGt).IsLowResGte(isLowResGte).IsLowResLt(isLowResLt).IsLowResLte(isLowResLte).IsLowResIn(isLowResIn).IsLowResNotin(isLowResNotin).IsLowResContains(isLowResContains).IsLowResNotcontains(isLowResNotcontains).IsLowResDesc(isLowResDesc).IsLowResAsc(isLowResAsc).TrackSummaryContains(trackSummaryContains).TrackSummaryNotcontains(trackSummaryNotcontains).TrackSummaryDesc(trackSummaryDesc).TrackSummaryAsc(trackSummaryAsc).ReferencedByDetectionVideoIdObjectsContains(referencedByDetectionVideoIdObjectsContains).ReferencedByDetectionVideoIdObjectsNotcontains(referencedByDetectionVideoIdObjectsNotcontains).ReferencedByDetectionVideoIdObjectsDesc(referencedByDetectionVideoIdObjectsDesc).ReferencedByDetectionVideoIdObjectsAsc(referencedByDetectionVideoIdObjectsAsc).ReferencedByTrackVideoIdObjectsContains(referencedByTrackVideoIdObjectsContains).ReferencedByTrackVideoIdObjectsNotcontains(referencedByTrackVideoIdObjectsNotcontains).ReferencedByTrackVideoIdObjectsDesc(referencedByTrackVideoIdObjectsDesc).ReferencedByTrackVideoIdObjectsAsc(referencedByTrackVideoIdObjectsAsc).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `VideoAPI.GetVideos``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -441,251 +450,260 @@ Other parameters are passed through a pointer to a apiGetVideosRequest struct vi
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **limit** | **int32** | SQL LIMIT operator | 
- **offset** | **int32** | SQL OFFSET operator | 
- **depth** | **int32** | Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) | 
- **cameraLoad** | **string** | load the given directly related object, value is ignored (presence of key is sufficient) | 
- **referencedByDetectionLoad** | **string** | load the given indirectly related objects, value is ignored (presence of key is sufficient) | 
- **idEq** | **string** | SQL &#x3D; comparison | 
- **idNe** | **string** | SQL !&#x3D; comparison | 
- **idGt** | **string** | SQL &gt; comparison, may not work with all column types | 
- **idGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **idLt** | **string** | SQL &lt; comparison, may not work with all column types | 
- **idLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **idIn** | **string** | SQL IN comparison, permits comma-separated values | 
- **idNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
- **idContains** | **string** | SQL @&gt; comparison | 
- **idNotcontains** | **string** | SQL NOT @&gt; comparison | 
- **idLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **idNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **idIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **idNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **idDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **idAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **createdAtEq** | **time.Time** | SQL &#x3D; comparison | 
- **createdAtNe** | **time.Time** | SQL !&#x3D; comparison | 
- **createdAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types | 
- **createdAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **createdAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types | 
- **createdAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **createdAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
- **createdAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
- **createdAtContains** | **time.Time** | SQL @&gt; comparison | 
- **createdAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
- **createdAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **createdAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **createdAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **createdAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **createdAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **createdAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **updatedAtEq** | **time.Time** | SQL &#x3D; comparison | 
- **updatedAtNe** | **time.Time** | SQL !&#x3D; comparison | 
- **updatedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types | 
- **updatedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **updatedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types | 
- **updatedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **updatedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
- **updatedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
- **updatedAtContains** | **time.Time** | SQL @&gt; comparison | 
- **updatedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
- **updatedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **updatedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **updatedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **updatedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **updatedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **updatedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **deletedAtEq** | **time.Time** | SQL &#x3D; comparison | 
- **deletedAtNe** | **time.Time** | SQL !&#x3D; comparison | 
- **deletedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types | 
- **deletedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **deletedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types | 
- **deletedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **deletedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
- **deletedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
- **deletedAtContains** | **time.Time** | SQL @&gt; comparison | 
- **deletedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
- **deletedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **deletedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **deletedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **deletedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **deletedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **deletedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **fileNameEq** | **string** | SQL &#x3D; comparison | 
- **fileNameNe** | **string** | SQL !&#x3D; comparison | 
- **fileNameGt** | **string** | SQL &gt; comparison, may not work with all column types | 
- **fileNameGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **fileNameLt** | **string** | SQL &lt; comparison, may not work with all column types | 
- **fileNameLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **fileNameIn** | **string** | SQL IN comparison, permits comma-separated values | 
- **fileNameNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
- **fileNameContains** | **string** | SQL @&gt; comparison | 
- **fileNameNotcontains** | **string** | SQL NOT @&gt; comparison | 
- **fileNameLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **fileNameNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **fileNameIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **fileNameNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **fileNameDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **fileNameAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **startedAtEq** | **time.Time** | SQL &#x3D; comparison | 
- **startedAtNe** | **time.Time** | SQL !&#x3D; comparison | 
- **startedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types | 
- **startedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **startedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types | 
- **startedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **startedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
- **startedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
- **startedAtContains** | **time.Time** | SQL @&gt; comparison | 
- **startedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
- **startedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **startedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **startedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **startedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **startedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **startedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **endedAtEq** | **time.Time** | SQL &#x3D; comparison | 
- **endedAtNe** | **time.Time** | SQL !&#x3D; comparison | 
- **endedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types | 
- **endedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **endedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types | 
- **endedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **endedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
- **endedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
- **endedAtContains** | **time.Time** | SQL @&gt; comparison | 
- **endedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
- **endedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **endedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **endedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **endedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **endedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **endedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **durationEq** | **int64** | SQL &#x3D; comparison | 
- **durationNe** | **int64** | SQL !&#x3D; comparison | 
- **durationGt** | **int64** | SQL &gt; comparison, may not work with all column types | 
- **durationGte** | **int64** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **durationLt** | **int64** | SQL &lt; comparison, may not work with all column types | 
- **durationLte** | **int64** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **durationIn** | **int64** | SQL IN comparison, permits comma-separated values | 
- **durationNotin** | **int64** | SQL NOT IN comparison, permits comma-separated values | 
- **durationContains** | **int64** | SQL @&gt; comparison | 
- **durationNotcontains** | **int64** | SQL NOT @&gt; comparison | 
- **durationDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **durationAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **fileSizeEq** | **float64** | SQL &#x3D; comparison | 
- **fileSizeNe** | **float64** | SQL !&#x3D; comparison | 
- **fileSizeGt** | **float64** | SQL &gt; comparison, may not work with all column types | 
- **fileSizeGte** | **float64** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **fileSizeLt** | **float64** | SQL &lt; comparison, may not work with all column types | 
- **fileSizeLte** | **float64** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **fileSizeIn** | **float64** | SQL IN comparison, permits comma-separated values | 
- **fileSizeNotin** | **float64** | SQL NOT IN comparison, permits comma-separated values | 
- **fileSizeContains** | **float64** | SQL @&gt; comparison | 
- **fileSizeNotcontains** | **float64** | SQL NOT @&gt; comparison | 
- **fileSizeDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **fileSizeAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **thumbnailNameEq** | **string** | SQL &#x3D; comparison | 
- **thumbnailNameNe** | **string** | SQL !&#x3D; comparison | 
- **thumbnailNameGt** | **string** | SQL &gt; comparison, may not work with all column types | 
- **thumbnailNameGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **thumbnailNameLt** | **string** | SQL &lt; comparison, may not work with all column types | 
- **thumbnailNameLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **thumbnailNameIn** | **string** | SQL IN comparison, permits comma-separated values | 
- **thumbnailNameNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
- **thumbnailNameContains** | **string** | SQL @&gt; comparison | 
- **thumbnailNameNotcontains** | **string** | SQL NOT @&gt; comparison | 
- **thumbnailNameLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **thumbnailNameNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **thumbnailNameIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **thumbnailNameNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **thumbnailNameDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **thumbnailNameAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **statusEq** | **string** | SQL &#x3D; comparison | 
- **statusNe** | **string** | SQL !&#x3D; comparison | 
- **statusGt** | **string** | SQL &gt; comparison, may not work with all column types | 
- **statusGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **statusLt** | **string** | SQL &lt; comparison, may not work with all column types | 
- **statusLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **statusIn** | **string** | SQL IN comparison, permits comma-separated values | 
- **statusNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
- **statusContains** | **string** | SQL @&gt; comparison | 
- **statusNotcontains** | **string** | SQL NOT @&gt; comparison | 
- **statusLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **statusNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **statusIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **statusNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **statusDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **statusAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **objectDetectorClaimedUntilEq** | **time.Time** | SQL &#x3D; comparison | 
- **objectDetectorClaimedUntilNe** | **time.Time** | SQL !&#x3D; comparison | 
- **objectDetectorClaimedUntilGt** | **time.Time** | SQL &gt; comparison, may not work with all column types | 
- **objectDetectorClaimedUntilGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **objectDetectorClaimedUntilLt** | **time.Time** | SQL &lt; comparison, may not work with all column types | 
- **objectDetectorClaimedUntilLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **objectDetectorClaimedUntilIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
- **objectDetectorClaimedUntilNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
- **objectDetectorClaimedUntilContains** | **time.Time** | SQL @&gt; comparison | 
- **objectDetectorClaimedUntilNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
- **objectDetectorClaimedUntilLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectDetectorClaimedUntilNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectDetectorClaimedUntilIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectDetectorClaimedUntilNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectDetectorClaimedUntilDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **objectDetectorClaimedUntilAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **objectTrackerClaimedUntilEq** | **time.Time** | SQL &#x3D; comparison | 
- **objectTrackerClaimedUntilNe** | **time.Time** | SQL !&#x3D; comparison | 
- **objectTrackerClaimedUntilGt** | **time.Time** | SQL &gt; comparison, may not work with all column types | 
- **objectTrackerClaimedUntilGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **objectTrackerClaimedUntilLt** | **time.Time** | SQL &lt; comparison, may not work with all column types | 
- **objectTrackerClaimedUntilLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **objectTrackerClaimedUntilIn** | **time.Time** | SQL IN comparison, permits comma-separated values | 
- **objectTrackerClaimedUntilNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values | 
- **objectTrackerClaimedUntilContains** | **time.Time** | SQL @&gt; comparison | 
- **objectTrackerClaimedUntilNotcontains** | **time.Time** | SQL NOT @&gt; comparison | 
- **objectTrackerClaimedUntilLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectTrackerClaimedUntilNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectTrackerClaimedUntilIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectTrackerClaimedUntilNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **objectTrackerClaimedUntilDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **objectTrackerClaimedUntilAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **cameraIdEq** | **string** | SQL &#x3D; comparison | 
- **cameraIdNe** | **string** | SQL !&#x3D; comparison | 
- **cameraIdGt** | **string** | SQL &gt; comparison, may not work with all column types | 
- **cameraIdGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **cameraIdLt** | **string** | SQL &lt; comparison, may not work with all column types | 
- **cameraIdLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **cameraIdIn** | **string** | SQL IN comparison, permits comma-separated values | 
- **cameraIdNotin** | **string** | SQL NOT IN comparison, permits comma-separated values | 
- **cameraIdContains** | **string** | SQL @&gt; comparison | 
- **cameraIdNotcontains** | **string** | SQL NOT @&gt; comparison | 
- **cameraIdLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **cameraIdNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % | 
- **cameraIdIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **cameraIdNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % | 
- **cameraIdDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **cameraIdAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **cameraIdObjectContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison | 
- **cameraIdObjectNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison | 
- **cameraIdObjectDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **cameraIdObjectAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **detectionSummaryContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison | 
- **detectionSummaryNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison | 
- **detectionSummaryDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **detectionSummaryAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **isLowResEq** | **bool** | SQL &#x3D; comparison | 
- **isLowResNe** | **bool** | SQL !&#x3D; comparison | 
- **isLowResGt** | **bool** | SQL &gt; comparison, may not work with all column types | 
- **isLowResGte** | **bool** | SQL &gt;&#x3D; comparison, may not work with all column types | 
- **isLowResLt** | **bool** | SQL &lt; comparison, may not work with all column types | 
- **isLowResLte** | **bool** | SQL &lt;&#x3D; comparison, may not work with all column types | 
- **isLowResIn** | **bool** | SQL IN comparison, permits comma-separated values | 
- **isLowResNotin** | **bool** | SQL NOT IN comparison, permits comma-separated values | 
- **isLowResContains** | **bool** | SQL @&gt; comparison | 
- **isLowResNotcontains** | **bool** | SQL NOT @&gt; comparison | 
- **isLowResDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **isLowResAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
- **referencedByDetectionVideoIdObjectsContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison | 
- **referencedByDetectionVideoIdObjectsNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison | 
- **referencedByDetectionVideoIdObjectsDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) | 
- **referencedByDetectionVideoIdObjectsAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) | 
+ **limit** | **int32** | SQL LIMIT operator |
+ **offset** | **int32** | SQL OFFSET operator |
+ **depth** | **int32** | Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc) |
+ **cameraLoad** | **string** | load the given directly related object, value is ignored (presence of key is sufficient) |
+ **referencedByDetectionLoad** | **string** | load the given indirectly related objects, value is ignored (presence of key is sufficient) |
+ **referencedByTrackLoad** | **string** | load the given indirectly related objects, value is ignored (presence of key is sufficient) |
+ **idEq** | **string** | SQL &#x3D; comparison |
+ **idNe** | **string** | SQL !&#x3D; comparison |
+ **idGt** | **string** | SQL &gt; comparison, may not work with all column types |
+ **idGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **idLt** | **string** | SQL &lt; comparison, may not work with all column types |
+ **idLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **idIn** | **string** | SQL IN comparison, permits comma-separated values |
+ **idNotin** | **string** | SQL NOT IN comparison, permits comma-separated values |
+ **idContains** | **string** | SQL @&gt; comparison |
+ **idNotcontains** | **string** | SQL NOT @&gt; comparison |
+ **idLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **idNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **idIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **idNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **idDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **idAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **createdAtEq** | **time.Time** | SQL &#x3D; comparison |
+ **createdAtNe** | **time.Time** | SQL !&#x3D; comparison |
+ **createdAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types |
+ **createdAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **createdAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types |
+ **createdAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **createdAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values |
+ **createdAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values |
+ **createdAtContains** | **time.Time** | SQL @&gt; comparison |
+ **createdAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison |
+ **createdAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **createdAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **createdAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **createdAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **createdAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **createdAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **updatedAtEq** | **time.Time** | SQL &#x3D; comparison |
+ **updatedAtNe** | **time.Time** | SQL !&#x3D; comparison |
+ **updatedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types |
+ **updatedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **updatedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types |
+ **updatedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **updatedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values |
+ **updatedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values |
+ **updatedAtContains** | **time.Time** | SQL @&gt; comparison |
+ **updatedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison |
+ **updatedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **updatedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **updatedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **updatedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **updatedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **updatedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **deletedAtEq** | **time.Time** | SQL &#x3D; comparison |
+ **deletedAtNe** | **time.Time** | SQL !&#x3D; comparison |
+ **deletedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types |
+ **deletedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **deletedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types |
+ **deletedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **deletedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values |
+ **deletedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values |
+ **deletedAtContains** | **time.Time** | SQL @&gt; comparison |
+ **deletedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison |
+ **deletedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **deletedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **deletedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **deletedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **deletedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **deletedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **fileNameEq** | **string** | SQL &#x3D; comparison |
+ **fileNameNe** | **string** | SQL !&#x3D; comparison |
+ **fileNameGt** | **string** | SQL &gt; comparison, may not work with all column types |
+ **fileNameGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **fileNameLt** | **string** | SQL &lt; comparison, may not work with all column types |
+ **fileNameLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **fileNameIn** | **string** | SQL IN comparison, permits comma-separated values |
+ **fileNameNotin** | **string** | SQL NOT IN comparison, permits comma-separated values |
+ **fileNameContains** | **string** | SQL @&gt; comparison |
+ **fileNameNotcontains** | **string** | SQL NOT @&gt; comparison |
+ **fileNameLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **fileNameNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **fileNameIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **fileNameNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **fileNameDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **fileNameAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **startedAtEq** | **time.Time** | SQL &#x3D; comparison |
+ **startedAtNe** | **time.Time** | SQL !&#x3D; comparison |
+ **startedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types |
+ **startedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **startedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types |
+ **startedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **startedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values |
+ **startedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values |
+ **startedAtContains** | **time.Time** | SQL @&gt; comparison |
+ **startedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison |
+ **startedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **startedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **startedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **startedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **startedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **startedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **endedAtEq** | **time.Time** | SQL &#x3D; comparison |
+ **endedAtNe** | **time.Time** | SQL !&#x3D; comparison |
+ **endedAtGt** | **time.Time** | SQL &gt; comparison, may not work with all column types |
+ **endedAtGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **endedAtLt** | **time.Time** | SQL &lt; comparison, may not work with all column types |
+ **endedAtLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **endedAtIn** | **time.Time** | SQL IN comparison, permits comma-separated values |
+ **endedAtNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values |
+ **endedAtContains** | **time.Time** | SQL @&gt; comparison |
+ **endedAtNotcontains** | **time.Time** | SQL NOT @&gt; comparison |
+ **endedAtLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **endedAtNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **endedAtIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **endedAtNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **endedAtDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **endedAtAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **durationEq** | **int64** | SQL &#x3D; comparison |
+ **durationNe** | **int64** | SQL !&#x3D; comparison |
+ **durationGt** | **int64** | SQL &gt; comparison, may not work with all column types |
+ **durationGte** | **int64** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **durationLt** | **int64** | SQL &lt; comparison, may not work with all column types |
+ **durationLte** | **int64** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **durationIn** | **int64** | SQL IN comparison, permits comma-separated values |
+ **durationNotin** | **int64** | SQL NOT IN comparison, permits comma-separated values |
+ **durationContains** | **int64** | SQL @&gt; comparison |
+ **durationNotcontains** | **int64** | SQL NOT @&gt; comparison |
+ **durationDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **durationAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **fileSizeEq** | **float64** | SQL &#x3D; comparison |
+ **fileSizeNe** | **float64** | SQL !&#x3D; comparison |
+ **fileSizeGt** | **float64** | SQL &gt; comparison, may not work with all column types |
+ **fileSizeGte** | **float64** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **fileSizeLt** | **float64** | SQL &lt; comparison, may not work with all column types |
+ **fileSizeLte** | **float64** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **fileSizeIn** | **float64** | SQL IN comparison, permits comma-separated values |
+ **fileSizeNotin** | **float64** | SQL NOT IN comparison, permits comma-separated values |
+ **fileSizeContains** | **float64** | SQL @&gt; comparison |
+ **fileSizeNotcontains** | **float64** | SQL NOT @&gt; comparison |
+ **fileSizeDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **fileSizeAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **thumbnailNameEq** | **string** | SQL &#x3D; comparison |
+ **thumbnailNameNe** | **string** | SQL !&#x3D; comparison |
+ **thumbnailNameGt** | **string** | SQL &gt; comparison, may not work with all column types |
+ **thumbnailNameGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **thumbnailNameLt** | **string** | SQL &lt; comparison, may not work with all column types |
+ **thumbnailNameLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **thumbnailNameIn** | **string** | SQL IN comparison, permits comma-separated values |
+ **thumbnailNameNotin** | **string** | SQL NOT IN comparison, permits comma-separated values |
+ **thumbnailNameContains** | **string** | SQL @&gt; comparison |
+ **thumbnailNameNotcontains** | **string** | SQL NOT @&gt; comparison |
+ **thumbnailNameLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **thumbnailNameNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **thumbnailNameIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **thumbnailNameNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **thumbnailNameDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **thumbnailNameAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **statusEq** | **string** | SQL &#x3D; comparison |
+ **statusNe** | **string** | SQL !&#x3D; comparison |
+ **statusGt** | **string** | SQL &gt; comparison, may not work with all column types |
+ **statusGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **statusLt** | **string** | SQL &lt; comparison, may not work with all column types |
+ **statusLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **statusIn** | **string** | SQL IN comparison, permits comma-separated values |
+ **statusNotin** | **string** | SQL NOT IN comparison, permits comma-separated values |
+ **statusContains** | **string** | SQL @&gt; comparison |
+ **statusNotcontains** | **string** | SQL NOT @&gt; comparison |
+ **statusLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **statusNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **statusIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **statusNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **statusDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **statusAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **objectDetectorClaimedUntilEq** | **time.Time** | SQL &#x3D; comparison |
+ **objectDetectorClaimedUntilNe** | **time.Time** | SQL !&#x3D; comparison |
+ **objectDetectorClaimedUntilGt** | **time.Time** | SQL &gt; comparison, may not work with all column types |
+ **objectDetectorClaimedUntilGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **objectDetectorClaimedUntilLt** | **time.Time** | SQL &lt; comparison, may not work with all column types |
+ **objectDetectorClaimedUntilLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **objectDetectorClaimedUntilIn** | **time.Time** | SQL IN comparison, permits comma-separated values |
+ **objectDetectorClaimedUntilNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values |
+ **objectDetectorClaimedUntilContains** | **time.Time** | SQL @&gt; comparison |
+ **objectDetectorClaimedUntilNotcontains** | **time.Time** | SQL NOT @&gt; comparison |
+ **objectDetectorClaimedUntilLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectDetectorClaimedUntilNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectDetectorClaimedUntilIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectDetectorClaimedUntilNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectDetectorClaimedUntilDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **objectDetectorClaimedUntilAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **objectTrackerClaimedUntilEq** | **time.Time** | SQL &#x3D; comparison |
+ **objectTrackerClaimedUntilNe** | **time.Time** | SQL !&#x3D; comparison |
+ **objectTrackerClaimedUntilGt** | **time.Time** | SQL &gt; comparison, may not work with all column types |
+ **objectTrackerClaimedUntilGte** | **time.Time** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **objectTrackerClaimedUntilLt** | **time.Time** | SQL &lt; comparison, may not work with all column types |
+ **objectTrackerClaimedUntilLte** | **time.Time** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **objectTrackerClaimedUntilIn** | **time.Time** | SQL IN comparison, permits comma-separated values |
+ **objectTrackerClaimedUntilNotin** | **time.Time** | SQL NOT IN comparison, permits comma-separated values |
+ **objectTrackerClaimedUntilContains** | **time.Time** | SQL @&gt; comparison |
+ **objectTrackerClaimedUntilNotcontains** | **time.Time** | SQL NOT @&gt; comparison |
+ **objectTrackerClaimedUntilLike** | **time.Time** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectTrackerClaimedUntilNotlike** | **time.Time** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectTrackerClaimedUntilIlike** | **time.Time** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectTrackerClaimedUntilNotilike** | **time.Time** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **objectTrackerClaimedUntilDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **objectTrackerClaimedUntilAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **cameraIdEq** | **string** | SQL &#x3D; comparison |
+ **cameraIdNe** | **string** | SQL !&#x3D; comparison |
+ **cameraIdGt** | **string** | SQL &gt; comparison, may not work with all column types |
+ **cameraIdGte** | **string** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **cameraIdLt** | **string** | SQL &lt; comparison, may not work with all column types |
+ **cameraIdLte** | **string** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **cameraIdIn** | **string** | SQL IN comparison, permits comma-separated values |
+ **cameraIdNotin** | **string** | SQL NOT IN comparison, permits comma-separated values |
+ **cameraIdContains** | **string** | SQL @&gt; comparison |
+ **cameraIdNotcontains** | **string** | SQL NOT @&gt; comparison |
+ **cameraIdLike** | **string** | SQL LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **cameraIdNotlike** | **string** | SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % |
+ **cameraIdIlike** | **string** | SQL ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **cameraIdNotilike** | **string** | SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % |
+ **cameraIdDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **cameraIdAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **cameraIdObjectContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison |
+ **cameraIdObjectNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison |
+ **cameraIdObjectDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **cameraIdObjectAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **detectionSummaryContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison |
+ **detectionSummaryNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison |
+ **detectionSummaryDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **detectionSummaryAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **isLowResEq** | **bool** | SQL &#x3D; comparison |
+ **isLowResNe** | **bool** | SQL !&#x3D; comparison |
+ **isLowResGt** | **bool** | SQL &gt; comparison, may not work with all column types |
+ **isLowResGte** | **bool** | SQL &gt;&#x3D; comparison, may not work with all column types |
+ **isLowResLt** | **bool** | SQL &lt; comparison, may not work with all column types |
+ **isLowResLte** | **bool** | SQL &lt;&#x3D; comparison, may not work with all column types |
+ **isLowResIn** | **bool** | SQL IN comparison, permits comma-separated values |
+ **isLowResNotin** | **bool** | SQL NOT IN comparison, permits comma-separated values |
+ **isLowResContains** | **bool** | SQL @&gt; comparison |
+ **isLowResNotcontains** | **bool** | SQL NOT @&gt; comparison |
+ **isLowResDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **isLowResAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **trackSummaryContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison |
+ **trackSummaryNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison |
+ **trackSummaryDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **trackSummaryAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **referencedByDetectionVideoIdObjectsContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison |
+ **referencedByDetectionVideoIdObjectsNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison |
+ **referencedByDetectionVideoIdObjectsDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **referencedByDetectionVideoIdObjectsAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
+ **referencedByTrackVideoIdObjectsContains** | [**interface{}**](interface{}.md) | SQL @&gt; comparison |
+ **referencedByTrackVideoIdObjectsNotcontains** | [**interface{}**](interface{}.md) | SQL NOT @&gt; comparison |
+ **referencedByTrackVideoIdObjectsDesc** | **string** | SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) |
+ **referencedByTrackVideoIdObjectsAsc** | **string** | SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) |
 
 ### Return type
 
@@ -725,7 +743,7 @@ import (
 
 func main() {
 	primaryKey := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Path parameter primaryKey
-	video := *openapiclient.NewVideo() // Video | 
+	video := *openapiclient.NewVideo() // Video |
 	depth := int64(789) // int64 | Query parameter depth (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -746,7 +764,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**primaryKey** | **string** | Path parameter primaryKey | 
+**primaryKey** | **string** | Path parameter primaryKey |
 
 ### Other Parameters
 
@@ -756,8 +774,8 @@ Other parameters are passed through a pointer to a apiPatchVideoRequest struct v
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **video** | [**Video**](Video.md) |  | 
- **depth** | **int64** | Query parameter depth | 
+ **video** | [**Video**](Video.md) |  |
+ **depth** | **int64** | Query parameter depth |
 
 ### Return type
 
@@ -796,7 +814,7 @@ import (
 )
 
 func main() {
-	video := []openapiclient.Video{*openapiclient.NewVideo()} // []Video | 
+	video := []openapiclient.Video{*openapiclient.NewVideo()} // []Video |
 	depth := int64(789) // int64 | Query parameter depth (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -822,8 +840,8 @@ Other parameters are passed through a pointer to a apiPostVideosRequest struct v
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **video** | [**[]Video**](Video.md) |  | 
- **depth** | **int64** | Query parameter depth | 
+ **video** | [**[]Video**](Video.md) |  |
+ **depth** | **int64** | Query parameter depth |
 
 ### Return type
 
@@ -863,7 +881,7 @@ import (
 
 func main() {
 	primaryKey := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Path parameter primaryKey
-	videoObjectDetectorClaimRequest := *openapiclient.NewVideoObjectDetectorClaimRequest() // VideoObjectDetectorClaimRequest | 
+	videoObjectDetectorClaimRequest := *openapiclient.NewVideoObjectDetectorClaimRequest() // VideoObjectDetectorClaimRequest |
 	depth := int64(789) // int64 | Query parameter depth (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -884,7 +902,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**primaryKey** | **string** | Path parameter primaryKey | 
+**primaryKey** | **string** | Path parameter primaryKey |
 
 ### Other Parameters
 
@@ -894,8 +912,8 @@ Other parameters are passed through a pointer to a apiPostVideosObjectDetectorCl
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **videoObjectDetectorClaimRequest** | [**VideoObjectDetectorClaimRequest**](VideoObjectDetectorClaimRequest.md) |  | 
- **depth** | **int64** | Query parameter depth | 
+ **videoObjectDetectorClaimRequest** | [**VideoObjectDetectorClaimRequest**](VideoObjectDetectorClaimRequest.md) |  |
+ **depth** | **int64** | Query parameter depth |
 
 ### Return type
 
@@ -935,7 +953,7 @@ import (
 
 func main() {
 	primaryKey := "38400000-8cf0-11bd-b23e-10b96e4ef00d" // string | Path parameter primaryKey
-	videoObjectTrackerClaimRequest := *openapiclient.NewVideoObjectTrackerClaimRequest() // VideoObjectTrackerClaimRequest | 
+	videoObjectTrackerClaimRequest := *openapiclient.NewVideoObjectTrackerClaimRequest() // VideoObjectTrackerClaimRequest |
 	depth := int64(789) // int64 | Query parameter depth (optional)
 
 	configuration := openapiclient.NewConfiguration()
@@ -956,7 +974,7 @@ func main() {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 **ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**primaryKey** | **string** | Path parameter primaryKey | 
+**primaryKey** | **string** | Path parameter primaryKey |
 
 ### Other Parameters
 
@@ -966,8 +984,8 @@ Other parameters are passed through a pointer to a apiPostVideosObjectTrackerCla
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
 
- **videoObjectTrackerClaimRequest** | [**VideoObjectTrackerClaimRequest**](VideoObjectTrackerClaimRequest.md) |  | 
- **depth** | **int64** | Query parameter depth | 
+ **videoObjectTrackerClaimRequest** | [**VideoObjectTrackerClaimRequest**](VideoObjectTrackerClaimRequest.md) |  |
+ **depth** | **int64** | Query parameter depth |
 
 ### Return type
 

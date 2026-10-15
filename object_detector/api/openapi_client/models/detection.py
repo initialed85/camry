@@ -39,10 +39,12 @@ class Detection(BaseModel):
     id: Optional[StrictStr] = None
     score: Optional[Union[StrictFloat, StrictInt]] = None
     seen_at: Optional[datetime] = None
+    track_id: Optional[StrictStr] = None
+    track_id_object: Optional[Track] = None
     updated_at: Optional[datetime] = None
     video_id: Optional[StrictStr] = None
     video_id_object: Optional[Video] = None
-    __properties: ClassVar[List[str]] = ["bounding_box", "camera_id", "camera_id_object", "centroid", "class_id", "class_name", "created_at", "deleted_at", "id", "score", "seen_at", "updated_at", "video_id", "video_id_object"]
+    __properties: ClassVar[List[str]] = ["bounding_box", "camera_id", "camera_id_object", "centroid", "class_id", "class_name", "created_at", "deleted_at", "id", "score", "seen_at", "track_id", "track_id_object", "updated_at", "video_id", "video_id_object"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -96,6 +98,9 @@ class Detection(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of centroid
         if self.centroid:
             _dict['centroid'] = self.centroid.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of track_id_object
+        if self.track_id_object:
+            _dict['track_id_object'] = self.track_id_object.to_dict()
         # override the default output from pydantic by calling `to_dict()` of video_id_object
         if self.video_id_object:
             _dict['video_id_object'] = self.video_id_object.to_dict()
@@ -122,6 +127,8 @@ class Detection(BaseModel):
             "id": obj.get("id"),
             "score": obj.get("score"),
             "seen_at": obj.get("seen_at"),
+            "track_id": obj.get("track_id"),
+            "track_id_object": Track.from_dict(obj["track_id_object"]) if obj.get("track_id_object") is not None else None,
             "updated_at": obj.get("updated_at"),
             "video_id": obj.get("video_id"),
             "video_id_object": Video.from_dict(obj["video_id_object"]) if obj.get("video_id_object") is not None else None
@@ -129,6 +136,7 @@ class Detection(BaseModel):
         return _obj
 
 from openapi_client.models.camera import Camera
+from openapi_client.models.track import Track
 from openapi_client.models.video import Video
 # TODO: Rewrite to not use raise_errors
 Detection.model_rebuild(raise_errors=False)

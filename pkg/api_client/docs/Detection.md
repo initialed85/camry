@@ -4,20 +4,22 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**BoundingBox** | Pointer to [**[]ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional] 
-**CameraId** | Pointer to **string** |  | [optional] 
-**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional] 
-**Centroid** | Pointer to [**ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional] 
-**ClassId** | Pointer to **int64** |  | [optional] 
-**ClassName** | Pointer to **string** |  | [optional] 
-**CreatedAt** | Pointer to **time.Time** |  | [optional] 
-**DeletedAt** | Pointer to **time.Time** |  | [optional] 
-**Id** | Pointer to **string** |  | [optional] 
-**Score** | Pointer to **float64** |  | [optional] 
-**SeenAt** | Pointer to **time.Time** |  | [optional] 
-**UpdatedAt** | Pointer to **time.Time** |  | [optional] 
-**VideoId** | Pointer to **string** |  | [optional] 
-**VideoIdObject** | Pointer to [**Video**](Video.md) |  | [optional] 
+**BoundingBox** | Pointer to [**[]ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional]
+**CameraId** | Pointer to **string** |  | [optional]
+**CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional]
+**Centroid** | Pointer to [**ArrayOfVec2Inner**](ArrayOfVec2Inner.md) |  | [optional]
+**ClassId** | Pointer to **int64** |  | [optional]
+**ClassName** | Pointer to **string** |  | [optional]
+**CreatedAt** | Pointer to **time.Time** |  | [optional]
+**DeletedAt** | Pointer to **time.Time** |  | [optional]
+**Id** | Pointer to **string** |  | [optional]
+**Score** | Pointer to **float64** |  | [optional]
+**SeenAt** | Pointer to **time.Time** |  | [optional]
+**TrackId** | Pointer to **string** |  | [optional]
+**TrackIdObject** | Pointer to [**Track**](Track.md) |  | [optional]
+**UpdatedAt** | Pointer to **time.Time** |  | [optional]
+**VideoId** | Pointer to **string** |  | [optional]
+**VideoIdObject** | Pointer to [**Video**](Video.md) |  | [optional]
 
 ## Methods
 
@@ -312,6 +314,56 @@ SetSeenAt sets SeenAt field to given value.
 `func (o *Detection) HasSeenAt() bool`
 
 HasSeenAt returns a boolean if a field has been set.
+
+### GetTrackId
+
+`func (o *Detection) GetTrackId() string`
+
+GetTrackId returns the TrackId field if non-nil, zero value otherwise.
+
+### GetTrackIdOk
+
+`func (o *Detection) GetTrackIdOk() (*string, bool)`
+
+GetTrackIdOk returns a tuple with the TrackId field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrackId
+
+`func (o *Detection) SetTrackId(v string)`
+
+SetTrackId sets TrackId field to given value.
+
+### HasTrackId
+
+`func (o *Detection) HasTrackId() bool`
+
+HasTrackId returns a boolean if a field has been set.
+
+### GetTrackIdObject
+
+`func (o *Detection) GetTrackIdObject() Track`
+
+GetTrackIdObject returns the TrackIdObject field if non-nil, zero value otherwise.
+
+### GetTrackIdObjectOk
+
+`func (o *Detection) GetTrackIdObjectOk() (*Track, bool)`
+
+GetTrackIdObjectOk returns a tuple with the TrackIdObject field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrackIdObject
+
+`func (o *Detection) SetTrackIdObject(v Track)`
+
+SetTrackIdObject sets TrackIdObject field to given value.
+
+### HasTrackIdObject
+
+`func (o *Detection) HasTrackIdObject() bool`
+
+HasTrackIdObject returns a boolean if a field has been set.
 
 ### GetUpdatedAt
 

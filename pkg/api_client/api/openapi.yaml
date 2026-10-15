@@ -51,6 +51,15 @@ paths:
           \ (presence of key is sufficient)"
         explode: true
         in: query
+        name: referenced_by_track__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
         name: referenced_by_video__load
         required: false
         schema:
@@ -1529,6 +1538,38 @@ paths:
       - description: SQL @> comparison
         explode: true
         in: query
+        name: referenced_by_track_camera_id_objects__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
         name: referenced_by_video_camera_id_objects__contains
         required: false
         schema: {}
@@ -1846,6 +1887,15 @@ paths:
         explode: true
         in: query
         name: camera__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given directly related object, value is ignored (presence\
+          \ of key is sufficient)"
+        explode: true
+        in: query
+        name: track__load
         required: false
         schema:
           type: string
@@ -3364,6 +3414,186 @@ paths:
         schema:
           type: string
         style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: track_id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: track_id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: track_id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: track_id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: track_id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: track_id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: track_id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: track_id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: track_id__contains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: track_id__notcontains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: track_id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: track_id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: track_id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: track_id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: track_id_object__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: track_id_object__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_id_object__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_id_object__asc
+        required: false
+        schema:
+          type: string
+        style: form
       responses:
         "200":
           content:
@@ -3570,6 +3800,15 @@ paths:
         schema:
           type: string
         style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track__load
+        required: false
+        schema:
+          type: string
+        style: form
       - description: SQL = comparison
         explode: true
         in: query
@@ -5685,6 +5924,38 @@ paths:
       - description: SQL @> comparison
         explode: true
         in: query
+        name: track_summary__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: track_summary__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_summary__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_summary__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
         name: referenced_by_detection_video_id_objects__contains
         required: false
         schema: {}
@@ -5710,6 +5981,38 @@ paths:
         explode: true
         in: query
         name: referenced_by_detection_video_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__asc
         required: false
         schema:
           type: string
@@ -5786,6 +6089,15 @@ paths:
         schema:
           type: string
         style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track__load
+        required: false
+        schema:
+          type: string
+        style: form
       - description: SQL = comparison
         explode: true
         in: query
@@ -7901,6 +8213,38 @@ paths:
       - description: SQL @> comparison
         explode: true
         in: query
+        name: track_summary__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: track_summary__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_summary__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_summary__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
         name: referenced_by_detection_video_id_objects__contains
         required: false
         schema: {}
@@ -7926,6 +8270,38 @@ paths:
         explode: true
         in: query
         name: referenced_by_detection_video_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__asc
         required: false
         schema:
           type: string
@@ -7989,6 +8365,15 @@ paths:
         explode: true
         in: query
         name: referenced_by_detection__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track__load
         required: false
         schema:
           type: string
@@ -9468,6 +9853,38 @@ paths:
         explode: true
         in: query
         name: referenced_by_detection_camera_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__asc
         required: false
         schema:
           type: string
@@ -9571,6 +9988,15 @@ paths:
           \ (presence of key is sufficient)"
         explode: true
         in: query
+        name: referenced_by_track__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
         name: referenced_by_video__load
         required: false
         schema:
@@ -11049,6 +11475,38 @@ paths:
       - description: SQL @> comparison
         explode: true
         in: query
+        name: referenced_by_track_camera_id_objects__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_camera_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
         name: referenced_by_video_camera_id_objects__contains
         required: false
         schema: {}
@@ -11099,6 +11557,2543 @@ paths:
           description: PostStreamProducerClaimCameras failure
       tags:
       - StreamProducerClaimCamera
+  /api/tracks:
+    get:
+      operationId: GetTracks
+      parameters:
+      - description: SQL LIMIT operator
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: SQL OFFSET operator
+        explode: true
+        in: query
+        name: offset
+        required: false
+        schema:
+          format: int32
+          type: integer
+        style: form
+      - description: |-
+          Max recursion depth for loading foreign objects; default = 1
+
+          (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: "load the given directly related object, value is ignored (presence\
+          \ of key is sufficient)"
+        explode: true
+        in: query
+        name: camera__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given directly related object, value is ignored (presence\
+          \ of key is sufficient)"
+        explode: true
+        in: query
+        name: video__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: id__contains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: id__notcontains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: created_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: created_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: created_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: created_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: created_at__contains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: created_at__notcontains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: created_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: created_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: updated_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: updated_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: updated_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: updated_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: updated_at__contains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: updated_at__notcontains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: updated_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: updated_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: deleted_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: deleted_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: deleted_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: deleted_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: deleted_at__contains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: deleted_at__notcontains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: deleted_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: deleted_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: camera_id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: camera_id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: camera_id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: camera_id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: camera_id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: camera_id__contains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: camera_id__notcontains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: camera_id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: camera_id_object__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: camera_id_object__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id_object__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: camera_id_object__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: video_id__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: video_id__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: video_id__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: video_id__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: video_id__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: video_id__contains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: video_id__notcontains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: video_id__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: video_id_object__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: video_id_object__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id_object__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: video_id_object__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: class_id__eq
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: class_id__ne
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__gt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__gte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__lt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_id__lte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_id__in
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_id__notin
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: class_id__contains
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: class_id__notcontains
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_id__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_id__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: class_name__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: class_name__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: class_name__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_name__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: class_name__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: class_name__contains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: class_name__notcontains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: class_name__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_name__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: class_name__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: started_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: started_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: started_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: started_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: started_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: started_at__contains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: started_at__notcontains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: started_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: started_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: started_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: ended_at__eq
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: ended_at__ne
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__gt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__gte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__lt
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: ended_at__lte
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: ended_at__in
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: ended_at__notin
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: ended_at__contains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: ended_at__notcontains
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__like
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__notlike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__ilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: ended_at__notilike
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: ended_at__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: ended_at__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: frame_count__eq
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: frame_count__ne
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: frame_count__gt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: frame_count__gte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: frame_count__lt
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: frame_count__lte
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: frame_count__in
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: frame_count__notin
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: frame_count__contains
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: frame_count__notcontains
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: frame_count__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: frame_count__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: mean_score__eq
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: mean_score__ne
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: mean_score__gt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: mean_score__gte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: mean_score__lt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: mean_score__lte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: mean_score__in
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: mean_score__notin
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: mean_score__contains
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: mean_score__notcontains
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: mean_score__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: mean_score__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: max_score__eq
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: max_score__ne
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: max_score__gt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: max_score__gte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: max_score__lt
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: max_score__lte
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: max_score__in
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: max_score__notin
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: max_score__contains
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: max_score__notcontains
+        required: false
+        schema:
+          format: double
+          type: number
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: max_score__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: max_score__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: centroid__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: centroid__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: centroid__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: centroid__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: bounding_box__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: bounding_box__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: bounding_box__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: bounding_box__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: trajectory__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: trajectory__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: trajectory__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: trajectory__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: is_static__eq
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: is_static__ne
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_static__gt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_static__gte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_static__lt
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: is_static__lte
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_static__in
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: is_static__notin
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: is_static__contains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: is_static__notcontains
+        required: false
+        schema:
+          type: boolean
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_static__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: is_static__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: status__eq
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: status__ne
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__gt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__gte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__lt
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: status__lte
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: status__in
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: status__notin
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: status__contains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: status__notcontains
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__like
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__notlike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__ilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: status__notilike
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: status__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: status__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL = comparison
+        explode: true
+        in: query
+        name: key__eq
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL != comparison
+        explode: true
+        in: query
+        name: key__ne
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL > comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: key__gt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL >= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: key__gte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL < comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: key__lt
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL <= comparison, may not work with all column types"
+        explode: true
+        in: query
+        name: key__lte
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: key__in
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT IN comparison, permits comma-separated values"
+        explode: true
+        in: query
+        name: key__notin
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: key__contains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: key__notcontains
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: key__like
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: key__notlike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: key__ilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed\
+          \ with %"
+        explode: true
+        in: query
+        name: key__notilike
+        required: false
+        schema:
+          format: uuid
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: key__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: key__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: referenced_by_detection_track_id_objects__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: referenced_by_detection_track_id_objects__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_track_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_detection_track_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfTrack'
+          description: GetTracks success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetTracks failure
+      tags:
+      - Track
+    post:
+      operationId: PostTracks
+      parameters:
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArrayOfNullableTrack'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfTrack'
+          description: PostTracks success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PostTracks failure
+      tags:
+      - Track
+  /api/tracks/{primaryKey}:
+    delete:
+      operationId: DeleteTrack
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "204":
+          description: DeleteTrack success
+        default:
+          description: DeleteTrack failure
+      tags:
+      - Track
+    get:
+      operationId: GetTrack
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfTrack'
+          description: GetTrack success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: GetTrack failure
+      tags:
+      - Track
+    patch:
+      operationId: PatchTrack
+      parameters:
+      - description: Path parameter primaryKey
+        explode: false
+        in: path
+        name: primaryKey
+        required: true
+        schema:
+          format: uuid
+          type: string
+        style: simple
+      - description: Query parameter depth
+        explode: true
+        in: query
+        name: depth
+        required: false
+        schema:
+          format: int64
+          type: integer
+        style: form
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Track'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseWithGenericOfTrack'
+          description: PatchTrack success
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCameras_default_response'
+          description: PatchTrack failure
+      tags:
+      - Track
   /api/videos:
     get:
       operationId: GetVideos
@@ -11146,6 +14141,15 @@ paths:
         explode: true
         in: query
         name: referenced_by_detection__load
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "load the given indirectly related objects, value is ignored\
+          \ (presence of key is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track__load
         required: false
         schema:
           type: string
@@ -13265,6 +16269,38 @@ paths:
       - description: SQL @> comparison
         explode: true
         in: query
+        name: track_summary__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: track_summary__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_summary__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: track_summary__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
         name: referenced_by_detection_video_id_objects__contains
         required: false
         schema: {}
@@ -13290,6 +16326,38 @@ paths:
         explode: true
         in: query
         name: referenced_by_detection_video_id_objects__asc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: SQL @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__contains
+        required: false
+        schema: {}
+        style: form
+      - description: SQL NOT @> comparison
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__notcontains
+        required: false
+        schema: {}
+        style: form
+      - description: "SQL ORDER BY _ DESC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__desc
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: "SQL ORDER BY _ ASC clause, value is ignored (presence of key\
+          \ is sufficient)"
+        explode: true
+        in: query
+        name: referenced_by_track_video_id_objects__asc
         required: false
         schema:
           type: string
@@ -13548,6 +16616,11 @@ components:
         $ref: '#/components/schemas/Detection'
       type: array
       nullable: true
+    ArrayOfNullableTrack:
+      items:
+        $ref: '#/components/schemas/Track'
+      type: array
+      nullable: true
     ArrayOfNullableVideo:
       items:
         $ref: '#/components/schemas/Video'
@@ -13566,11 +16639,61 @@ components:
     Camera:
       example:
         last_seen: 2000-01-23T04:56:07.000+00:00
-        updated_at: 2000-01-23T04:56:07.000+00:00
         low_res_stream_url: low_res_stream_url
-        name: name
         created_at: 2000-01-23T04:56:07.000+00:00
         stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+        referenced_by_video_camera_id_objects:
+        - camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          track_summary: ""
+          referenced_by_track_video_id_objects:
+          - null
+          - null
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 7.386281948385884
+          duration: 4
+          is_low_res: true
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        - camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          track_summary: ""
+          referenced_by_track_video_id_objects:
+          - null
+          - null
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 7.386281948385884
+          duration: 4
+          is_low_res: true
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        deleted_at: 2000-01-23T04:56:07.000+00:00
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         referenced_by_detection_camera_id_objects:
         - camera_id_object: null
@@ -13588,6 +16711,62 @@ components:
           centroid:
             X: 1.4658129805029452
             "Y": 5.962133916683182
+          track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          track_id_object:
+            camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            status: status
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           class_name: class_name
           video_id_object:
@@ -13595,10 +16774,14 @@ components:
             file_name: file_name
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
             deleted_at: 2000-01-23T04:56:07.000+00:00
             detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
+            file_size: 7.386281948385884
+            duration: 4
             is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
@@ -13628,6 +16811,62 @@ components:
           centroid:
             X: 1.4658129805029452
             "Y": 5.962133916683182
+          track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          track_id_object:
+            camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            status: status
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           class_name: class_name
           video_id_object:
@@ -13635,10 +16874,14 @@ components:
             file_name: file_name
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
             deleted_at: 2000-01-23T04:56:07.000+00:00
             detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
+            file_size: 7.386281948385884
+            duration: 4
             is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
@@ -13653,48 +16896,115 @@ components:
             status: status
           seen_at: 2000-01-23T04:56:07.000+00:00
           video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-        referenced_by_video_camera_id_objects:
+        referenced_by_track_camera_id_objects:
         - camera_id_object: null
-          file_name: file_name
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 7
+          frame_count: 9
           camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           created_at: 2000-01-23T04:56:07.000+00:00
           deleted_at: 2000-01-23T04:56:07.000+00:00
-          detection_summary: ""
-          file_size: 9.301444243932576
-          duration: 7
-          is_low_res: true
-          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
-          referenced_by_detection_video_id_objects:
+          trajectory: ""
+          referenced_by_detection_track_id_objects:
           - null
           - null
           updated_at: 2000-01-23T04:56:07.000+00:00
-          thumbnail_name: thumbnail_name
-          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          is_static: true
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          max_score: 3.616076749251911
           started_at: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          mean_score: 2.027123023002322
+          class_name: class_name
           ended_at: 2000-01-23T04:56:07.000+00:00
+          key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
           status: status
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         - camera_id_object: null
-          file_name: file_name
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 7
+          frame_count: 9
           camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           created_at: 2000-01-23T04:56:07.000+00:00
           deleted_at: 2000-01-23T04:56:07.000+00:00
-          detection_summary: ""
-          file_size: 9.301444243932576
-          duration: 7
-          is_low_res: true
-          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
-          referenced_by_detection_video_id_objects:
+          trajectory: ""
+          referenced_by_detection_track_id_objects:
           - null
           - null
           updated_at: 2000-01-23T04:56:07.000+00:00
-          thumbnail_name: thumbnail_name
-          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          is_static: true
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          max_score: 3.616076749251911
           started_at: 2000-01-23T04:56:07.000+00:00
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          mean_score: 2.027123023002322
+          class_name: class_name
           ended_at: 2000-01-23T04:56:07.000+00:00
+          key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
           status: status
-        deleted_at: 2000-01-23T04:56:07.000+00:00
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         segment_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
         stream_url: stream_url
       properties:
@@ -13717,6 +17027,11 @@ components:
         referenced_by_detection_camera_id_objects:
           items:
             $ref: '#/components/schemas/Detection'
+          type: array
+          nullable: true
+        referenced_by_track_camera_id_objects:
+          items:
+            $ref: '#/components/schemas/Track'
           type: array
           nullable: true
         referenced_by_video_camera_id_objects:
@@ -13774,6 +17089,62 @@ components:
         centroid:
           X: 1.4658129805029452
           "Y": 5.962133916683182
+        track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        track_id_object:
+          camera_id_object: null
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 7
+          frame_count: 9
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          trajectory: ""
+          referenced_by_detection_track_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          is_static: true
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          max_score: 3.616076749251911
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          mean_score: 2.027123023002322
+          class_name: class_name
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          status: status
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         class_name: class_name
         video_id_object:
@@ -13781,10 +17152,14 @@ components:
           file_name: file_name
           camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           created_at: 2000-01-23T04:56:07.000+00:00
+          track_summary: ""
+          referenced_by_track_video_id_objects:
+          - null
+          - null
           deleted_at: 2000-01-23T04:56:07.000+00:00
           detection_summary: ""
-          file_size: 9.301444243932576
-          duration: 7
+          file_size: 7.386281948385884
+          duration: 4
           is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
@@ -13832,6 +17207,11 @@ components:
         seen_at:
           format: date-time
           type: string
+        track_id:
+          format: uuid
+          type: string
+        track_id_object:
+          $ref: '#/components/schemas/Track'
         updated_at:
           format: date-time
           type: string
@@ -13844,20 +17224,72 @@ components:
       $ref: '#/components/schemas/Camera'
     NullableDetection:
       $ref: '#/components/schemas/Detection'
+    NullableTrack:
+      $ref: '#/components/schemas/Track'
     NullableVideo:
       $ref: '#/components/schemas/Video'
     ResponseWithGenericOfCamera:
       example:
-        offset: 3
+        offset: 1
         success: true
-        total_count: 4
+        total_count: 1
         objects:
         - last_seen: 2000-01-23T04:56:07.000+00:00
-          updated_at: 2000-01-23T04:56:07.000+00:00
           low_res_stream_url: low_res_stream_url
-          name: name
           created_at: 2000-01-23T04:56:07.000+00:00
           stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_video_camera_id_objects:
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           referenced_by_detection_camera_id_objects:
           - camera_id_object: null
@@ -13875,6 +17307,62 @@ components:
             centroid:
               X: 1.4658129805029452
               "Y": 5.962133916683182
+            track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            track_id_object:
+              camera_id_object: null
+              bounding_box:
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              class_id: 7
+              frame_count: 9
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              trajectory: ""
+              referenced_by_detection_track_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              is_static: true
+              centroid:
+                X: 1.4658129805029452
+                "Y": 5.962133916683182
+              max_score: 3.616076749251911
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              mean_score: 2.027123023002322
+              class_name: class_name
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              video_id_object:
+                camera_id_object: null
+                file_name: file_name
+                camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                created_at: 2000-01-23T04:56:07.000+00:00
+                track_summary: ""
+                referenced_by_track_video_id_objects:
+                - null
+                - null
+                deleted_at: 2000-01-23T04:56:07.000+00:00
+                detection_summary: ""
+                file_size: 7.386281948385884
+                duration: 4
+                is_low_res: true
+                object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+                referenced_by_detection_video_id_objects:
+                - null
+                - null
+                updated_at: 2000-01-23T04:56:07.000+00:00
+                thumbnail_name: thumbnail_name
+                object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+                started_at: 2000-01-23T04:56:07.000+00:00
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                ended_at: 2000-01-23T04:56:07.000+00:00
+                status: status
+              status: status
+              video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             class_name: class_name
             video_id_object:
@@ -13882,10 +17370,14 @@ components:
               file_name: file_name
               camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
               created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
               deleted_at: 2000-01-23T04:56:07.000+00:00
               detection_summary: ""
-              file_size: 9.301444243932576
-              duration: 7
+              file_size: 7.386281948385884
+              duration: 4
               is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
@@ -13915,6 +17407,62 @@ components:
             centroid:
               X: 1.4658129805029452
               "Y": 5.962133916683182
+            track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            track_id_object:
+              camera_id_object: null
+              bounding_box:
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              class_id: 7
+              frame_count: 9
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              trajectory: ""
+              referenced_by_detection_track_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              is_static: true
+              centroid:
+                X: 1.4658129805029452
+                "Y": 5.962133916683182
+              max_score: 3.616076749251911
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              mean_score: 2.027123023002322
+              class_name: class_name
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              video_id_object:
+                camera_id_object: null
+                file_name: file_name
+                camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                created_at: 2000-01-23T04:56:07.000+00:00
+                track_summary: ""
+                referenced_by_track_video_id_objects:
+                - null
+                - null
+                deleted_at: 2000-01-23T04:56:07.000+00:00
+                detection_summary: ""
+                file_size: 7.386281948385884
+                duration: 4
+                is_low_res: true
+                object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+                referenced_by_detection_video_id_objects:
+                - null
+                - null
+                updated_at: 2000-01-23T04:56:07.000+00:00
+                thumbnail_name: thumbnail_name
+                object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+                started_at: 2000-01-23T04:56:07.000+00:00
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                ended_at: 2000-01-23T04:56:07.000+00:00
+                status: status
+              status: status
+              video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             class_name: class_name
             video_id_object:
@@ -13922,10 +17470,14 @@ components:
               file_name: file_name
               camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
               created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
               deleted_at: 2000-01-23T04:56:07.000+00:00
               detection_summary: ""
-              file_size: 9.301444243932576
-              duration: 7
+              file_size: 7.386281948385884
+              duration: 4
               is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
@@ -13940,56 +17492,173 @@ components:
               status: status
             seen_at: 2000-01-23T04:56:07.000+00:00
             video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          referenced_by_video_camera_id_objects:
+          referenced_by_track_camera_id_objects:
           - camera_id_object: null
-            file_name: file_name
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
             deleted_at: 2000-01-23T04:56:07.000+00:00
-            detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
-            is_low_res: true
-            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
-            referenced_by_detection_video_id_objects:
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
             - null
             - null
             updated_at: 2000-01-23T04:56:07.000+00:00
-            thumbnail_name: thumbnail_name
-            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
             started_at: 2000-01-23T04:56:07.000+00:00
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
             ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
             status: status
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           - camera_id_object: null
-            file_name: file_name
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
             deleted_at: 2000-01-23T04:56:07.000+00:00
-            detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
-            is_low_res: true
-            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
-            referenced_by_detection_video_id_objects:
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
             - null
             - null
             updated_at: 2000-01-23T04:56:07.000+00:00
-            thumbnail_name: thumbnail_name
-            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
             started_at: 2000-01-23T04:56:07.000+00:00
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
             ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
             status: status
-          deleted_at: 2000-01-23T04:56:07.000+00:00
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           segment_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
           stream_url: stream_url
         - last_seen: 2000-01-23T04:56:07.000+00:00
-          updated_at: 2000-01-23T04:56:07.000+00:00
           low_res_stream_url: low_res_stream_url
-          name: name
           created_at: 2000-01-23T04:56:07.000+00:00
           stream_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_video_camera_id_objects:
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          - camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           referenced_by_detection_camera_id_objects:
           - camera_id_object: null
@@ -14007,6 +17676,62 @@ components:
             centroid:
               X: 1.4658129805029452
               "Y": 5.962133916683182
+            track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            track_id_object:
+              camera_id_object: null
+              bounding_box:
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              class_id: 7
+              frame_count: 9
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              trajectory: ""
+              referenced_by_detection_track_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              is_static: true
+              centroid:
+                X: 1.4658129805029452
+                "Y": 5.962133916683182
+              max_score: 3.616076749251911
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              mean_score: 2.027123023002322
+              class_name: class_name
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              video_id_object:
+                camera_id_object: null
+                file_name: file_name
+                camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                created_at: 2000-01-23T04:56:07.000+00:00
+                track_summary: ""
+                referenced_by_track_video_id_objects:
+                - null
+                - null
+                deleted_at: 2000-01-23T04:56:07.000+00:00
+                detection_summary: ""
+                file_size: 7.386281948385884
+                duration: 4
+                is_low_res: true
+                object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+                referenced_by_detection_video_id_objects:
+                - null
+                - null
+                updated_at: 2000-01-23T04:56:07.000+00:00
+                thumbnail_name: thumbnail_name
+                object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+                started_at: 2000-01-23T04:56:07.000+00:00
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                ended_at: 2000-01-23T04:56:07.000+00:00
+                status: status
+              status: status
+              video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             class_name: class_name
             video_id_object:
@@ -14014,10 +17739,14 @@ components:
               file_name: file_name
               camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
               created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
               deleted_at: 2000-01-23T04:56:07.000+00:00
               detection_summary: ""
-              file_size: 9.301444243932576
-              duration: 7
+              file_size: 7.386281948385884
+              duration: 4
               is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
@@ -14047,6 +17776,62 @@ components:
             centroid:
               X: 1.4658129805029452
               "Y": 5.962133916683182
+            track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            track_id_object:
+              camera_id_object: null
+              bounding_box:
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              - X: 1.4658129805029452
+                "Y": 5.962133916683182
+              class_id: 7
+              frame_count: 9
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              trajectory: ""
+              referenced_by_detection_track_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              is_static: true
+              centroid:
+                X: 1.4658129805029452
+                "Y": 5.962133916683182
+              max_score: 3.616076749251911
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              mean_score: 2.027123023002322
+              class_name: class_name
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              video_id_object:
+                camera_id_object: null
+                file_name: file_name
+                camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                created_at: 2000-01-23T04:56:07.000+00:00
+                track_summary: ""
+                referenced_by_track_video_id_objects:
+                - null
+                - null
+                deleted_at: 2000-01-23T04:56:07.000+00:00
+                detection_summary: ""
+                file_size: 7.386281948385884
+                duration: 4
+                is_low_res: true
+                object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+                referenced_by_detection_video_id_objects:
+                - null
+                - null
+                updated_at: 2000-01-23T04:56:07.000+00:00
+                thumbnail_name: thumbnail_name
+                object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+                started_at: 2000-01-23T04:56:07.000+00:00
+                id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+                ended_at: 2000-01-23T04:56:07.000+00:00
+                status: status
+              status: status
+              video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             class_name: class_name
             video_id_object:
@@ -14054,10 +17839,14 @@ components:
               file_name: file_name
               camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
               created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
               deleted_at: 2000-01-23T04:56:07.000+00:00
               detection_summary: ""
-              file_size: 9.301444243932576
-              duration: 7
+              file_size: 7.386281948385884
+              duration: 4
               is_low_res: true
               object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
               referenced_by_detection_video_id_objects:
@@ -14072,48 +17861,115 @@ components:
               status: status
             seen_at: 2000-01-23T04:56:07.000+00:00
             video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
-          referenced_by_video_camera_id_objects:
+          referenced_by_track_camera_id_objects:
           - camera_id_object: null
-            file_name: file_name
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
             deleted_at: 2000-01-23T04:56:07.000+00:00
-            detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
-            is_low_res: true
-            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
-            referenced_by_detection_video_id_objects:
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
             - null
             - null
             updated_at: 2000-01-23T04:56:07.000+00:00
-            thumbnail_name: thumbnail_name
-            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
             started_at: 2000-01-23T04:56:07.000+00:00
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
             ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
             status: status
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           - camera_id_object: null
-            file_name: file_name
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
             deleted_at: 2000-01-23T04:56:07.000+00:00
-            detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
-            is_low_res: true
-            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
-            referenced_by_detection_video_id_objects:
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
             - null
             - null
             updated_at: 2000-01-23T04:56:07.000+00:00
-            thumbnail_name: thumbnail_name
-            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
             started_at: 2000-01-23T04:56:07.000+00:00
             id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
             ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
             status: status
-          deleted_at: 2000-01-23T04:56:07.000+00:00
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           segment_producer_claimed_until: 2000-01-23T04:56:07.000+00:00
           stream_url: stream_url
         count: 0
@@ -14121,7 +17977,7 @@ components:
         error:
         - error
         - error
-        status: 2
+        status: 1
       properties:
         count:
           format: int64
@@ -14171,6 +18027,62 @@ components:
           centroid:
             X: 1.4658129805029452
             "Y": 5.962133916683182
+          track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          track_id_object:
+            camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            status: status
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           class_name: class_name
           video_id_object:
@@ -14178,10 +18090,14 @@ components:
             file_name: file_name
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
             deleted_at: 2000-01-23T04:56:07.000+00:00
             detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
+            file_size: 7.386281948385884
+            duration: 4
             is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
@@ -14211,6 +18127,62 @@ components:
           centroid:
             X: 1.4658129805029452
             "Y": 5.962133916683182
+          track_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          track_id_object:
+            camera_id_object: null
+            bounding_box:
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            - X: 1.4658129805029452
+              "Y": 5.962133916683182
+            class_id: 7
+            frame_count: 9
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            trajectory: ""
+            referenced_by_detection_track_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            is_static: true
+            centroid:
+              X: 1.4658129805029452
+              "Y": 5.962133916683182
+            max_score: 3.616076749251911
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            mean_score: 2.027123023002322
+            class_name: class_name
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            video_id_object:
+              camera_id_object: null
+              file_name: file_name
+              camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              created_at: 2000-01-23T04:56:07.000+00:00
+              track_summary: ""
+              referenced_by_track_video_id_objects:
+              - null
+              - null
+              deleted_at: 2000-01-23T04:56:07.000+00:00
+              detection_summary: ""
+              file_size: 7.386281948385884
+              duration: 4
+              is_low_res: true
+              object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+              referenced_by_detection_video_id_objects:
+              - null
+              - null
+              updated_at: 2000-01-23T04:56:07.000+00:00
+              thumbnail_name: thumbnail_name
+              object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+              started_at: 2000-01-23T04:56:07.000+00:00
+              id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+              ended_at: 2000-01-23T04:56:07.000+00:00
+              status: status
+            status: status
+            video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           class_name: class_name
           video_id_object:
@@ -14218,10 +18190,14 @@ components:
             file_name: file_name
             camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
             created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
             deleted_at: 2000-01-23T04:56:07.000+00:00
             detection_summary: ""
-            file_size: 9.301444243932576
-            duration: 7
+            file_size: 7.386281948385884
+            duration: 4
             is_low_res: true
             object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
             referenced_by_detection_video_id_objects:
@@ -14270,6 +18246,154 @@ components:
         total_count:
           format: int64
           type: integer
+    ResponseWithGenericOfTrack:
+      example:
+        offset: 1
+        success: true
+        total_count: 5
+        objects:
+        - camera_id_object: null
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 7
+          frame_count: 9
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          trajectory: ""
+          referenced_by_detection_track_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          is_static: true
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          max_score: 3.616076749251911
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          mean_score: 2.027123023002322
+          class_name: class_name
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          status: status
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        - camera_id_object: null
+          bounding_box:
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          - X: 1.4658129805029452
+            "Y": 5.962133916683182
+          class_id: 7
+          frame_count: 9
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          trajectory: ""
+          referenced_by_detection_track_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          is_static: true
+          centroid:
+            X: 1.4658129805029452
+            "Y": 5.962133916683182
+          max_score: 3.616076749251911
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          mean_score: 2.027123023002322
+          class_name: class_name
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          video_id_object:
+            camera_id_object: null
+            file_name: file_name
+            camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            created_at: 2000-01-23T04:56:07.000+00:00
+            track_summary: ""
+            referenced_by_track_video_id_objects:
+            - null
+            - null
+            deleted_at: 2000-01-23T04:56:07.000+00:00
+            detection_summary: ""
+            file_size: 7.386281948385884
+            duration: 4
+            is_low_res: true
+            object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+            referenced_by_detection_video_id_objects:
+            - null
+            - null
+            updated_at: 2000-01-23T04:56:07.000+00:00
+            thumbnail_name: thumbnail_name
+            object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+            started_at: 2000-01-23T04:56:07.000+00:00
+            id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+            ended_at: 2000-01-23T04:56:07.000+00:00
+            status: status
+          status: status
+          video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        count: 0
+        limit: 6
+        error:
+        - error
+        - error
+        status: 5
+      properties:
+        count:
+          format: int64
+          type: integer
+        error:
+          items:
+            type: string
+          type: array
+          nullable: true
+        limit:
+          format: int64
+          type: integer
+        objects:
+          items:
+            $ref: '#/components/schemas/Track'
+          type: array
+          nullable: true
+        offset:
+          format: int64
+          type: integer
+        status:
+          format: int64
+          type: integer
+        success:
+          type: boolean
+        total_count:
+          format: int64
+          type: integer
     ResponseWithGenericOfVideo:
       example:
         offset: 1
@@ -14280,10 +18404,14 @@ components:
           file_name: file_name
           camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           created_at: 2000-01-23T04:56:07.000+00:00
+          track_summary: ""
+          referenced_by_track_video_id_objects:
+          - null
+          - null
           deleted_at: 2000-01-23T04:56:07.000+00:00
           detection_summary: ""
-          file_size: 9.301444243932576
-          duration: 7
+          file_size: 7.386281948385884
+          duration: 4
           is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
@@ -14300,10 +18428,14 @@ components:
           file_name: file_name
           camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
           created_at: 2000-01-23T04:56:07.000+00:00
+          track_summary: ""
+          referenced_by_track_video_id_objects:
+          - null
+          - null
           deleted_at: 2000-01-23T04:56:07.000+00:00
           detection_summary: ""
-          file_size: 9.301444243932576
-          duration: 7
+          file_size: 7.386281948385884
+          duration: 4
           is_low_res: true
           object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
           referenced_by_detection_video_id_objects:
@@ -14350,6 +18482,125 @@ components:
         total_count:
           format: int64
           type: integer
+    Track:
+      example:
+        camera_id_object: null
+        bounding_box:
+        - X: 1.4658129805029452
+          "Y": 5.962133916683182
+        - X: 1.4658129805029452
+          "Y": 5.962133916683182
+        class_id: 7
+        frame_count: 9
+        camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        created_at: 2000-01-23T04:56:07.000+00:00
+        deleted_at: 2000-01-23T04:56:07.000+00:00
+        trajectory: ""
+        referenced_by_detection_track_id_objects:
+        - null
+        - null
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        is_static: true
+        centroid:
+          X: 1.4658129805029452
+          "Y": 5.962133916683182
+        max_score: 3.616076749251911
+        started_at: 2000-01-23T04:56:07.000+00:00
+        id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        mean_score: 2.027123023002322
+        class_name: class_name
+        ended_at: 2000-01-23T04:56:07.000+00:00
+        key: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+        video_id_object:
+          camera_id_object: null
+          file_name: file_name
+          camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          created_at: 2000-01-23T04:56:07.000+00:00
+          track_summary: ""
+          referenced_by_track_video_id_objects:
+          - null
+          - null
+          deleted_at: 2000-01-23T04:56:07.000+00:00
+          detection_summary: ""
+          file_size: 7.386281948385884
+          duration: 4
+          is_low_res: true
+          object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
+          referenced_by_detection_video_id_objects:
+          - null
+          - null
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          thumbnail_name: thumbnail_name
+          object_detector_claimed_until: 2000-01-23T04:56:07.000+00:00
+          started_at: 2000-01-23T04:56:07.000+00:00
+          id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+          ended_at: 2000-01-23T04:56:07.000+00:00
+          status: status
+        status: status
+        video_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
+      properties:
+        bounding_box:
+          items:
+            $ref: '#/components/schemas/ArrayOfVec2_inner'
+          type: array
+          nullable: true
+        camera_id:
+          format: uuid
+          type: string
+        camera_id_object:
+          $ref: '#/components/schemas/Camera'
+        centroid:
+          $ref: '#/components/schemas/ArrayOfVec2_inner'
+        class_id:
+          format: int64
+          type: integer
+        class_name:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        deleted_at:
+          format: date-time
+          type: string
+        ended_at:
+          format: date-time
+          type: string
+        frame_count:
+          format: int64
+          type: integer
+        id:
+          format: uuid
+          type: string
+        is_static:
+          type: boolean
+        key:
+          format: uuid
+          type: string
+        max_score:
+          format: double
+          type: number
+        mean_score:
+          format: double
+          type: number
+        referenced_by_detection_track_id_objects:
+          items:
+            $ref: '#/components/schemas/Detection'
+          type: array
+          nullable: true
+        started_at:
+          format: date-time
+          type: string
+        status:
+          type: string
+        trajectory: {}
+        updated_at:
+          format: date-time
+          type: string
+        video_id:
+          format: uuid
+          type: string
+        video_id_object:
+          $ref: '#/components/schemas/Video'
     Vec2:
       properties:
         X:
@@ -14364,10 +18615,14 @@ components:
         file_name: file_name
         camera_id: 046b6c7f-0b8a-43b9-b35d-6489e6daee91
         created_at: 2000-01-23T04:56:07.000+00:00
+        track_summary: ""
+        referenced_by_track_video_id_objects:
+        - null
+        - null
         deleted_at: 2000-01-23T04:56:07.000+00:00
         detection_summary: ""
-        file_size: 9.301444243932576
-        duration: 7
+        file_size: 7.386281948385884
+        duration: 4
         is_low_res: true
         object_tracker_claimed_until: 2000-01-23T04:56:07.000+00:00
         referenced_by_detection_video_id_objects:
@@ -14420,6 +18675,11 @@ components:
             $ref: '#/components/schemas/Detection'
           type: array
           nullable: true
+        referenced_by_track_video_id_objects:
+          items:
+            $ref: '#/components/schemas/Track'
+          type: array
+          nullable: true
         started_at:
           format: date-time
           type: string
@@ -14427,6 +18687,7 @@ components:
           type: string
         thumbnail_name:
           type: string
+        track_summary: {}
         updated_at:
           format: date-time
           type: string
@@ -14458,7 +18719,7 @@ components:
         error:
         - error
         - error
-        status: 7
+        status: 6
       properties:
         error:
           items:
