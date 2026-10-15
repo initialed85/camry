@@ -1,5 +1,6 @@
 ultralytics==8.4.160
 opencv-python==5.0.0.93
+onnxruntime==1.31.0
 pydantic==2.13.5
 pytz==2026.3.post1
 python-dateutil==2.9.0.post0
