@@ -23,12 +23,18 @@ sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)), "api"))
 
 from .api.openapi_client import ArrayOfVec2Inner, Detection, Track, Video
 from .object_detector import (
+    OVERLAY_MEASURE_FPS,
+    OVERLAY_MEASURE_SECONDS,
     TRACK_SEED_LIMIT,
     ApiSink,
     FixtureSink,
+    TrackedObject,
     Tracker,
     do,
     load_fixture_videos,
+    measure_content_offset_ms,
+    measure_sample,
+    pick_measure_window,
     seed_from_track,
     summarise_tracks,
     track_model,
@@ -299,6 +305,20 @@ class DetectorTest(unittest.TestCase):
         self.assertEqual([video.id for video in videos], ["id-0", "id-1"])
         self.assertEqual([video.file_name for video in videos], ["video-0.mp4", "video-1.mp4"])
 
+    def test_camera_overlay_offset_is_read_once_and_cached(self):
+        camera_api = MagicMock()
+        camera_api.get_camera.return_value = MagicMock(objects=[MagicMock(overlay_offset_ms=-400)])
+        sink = ApiSink(MagicMock(), MagicMock(), MagicMock(), camera_api)
+
+        self.assertEqual(sink.camera_overlay_offset_ms("cam-id"), -400)
+        self.assertEqual(sink.camera_overlay_offset_ms("cam-id"), -400)
+        self.assertEqual(camera_api.get_camera.call_count, 1)
+
+    def test_missing_camera_api_leaves_the_offset_unset(self):
+        sink = ApiSink(MagicMock(), MagicMock(), MagicMock())
+
+        self.assertIsNone(sink.camera_overlay_offset_ms("cam-id"))
+
 
 class TrackingTest(unittest.TestCase):
     """The tracker's own behaviour: noise gates, identity, continuity, determinism."""
@@ -470,6 +490,144 @@ class TrackingTest(unittest.TestCase):
 
         self.assertEqual({item["class_name"] for item in summary}, {"person", "car"})
         self.assertTrue(all(item["count"] == 1 for item in summary))
+
+
+def moving_pattern_frames(count: int, shift: int) -> np.ndarray:
+    frames = np.zeros((count, 90, 160), dtype=np.float64)
+
+    for i in range(count):
+        x = min(140, max(0, i + shift))
+        frames[i, 30:50, x : x + 20] = 255.0
+
+    return frames
+
+
+class OverlayOffsetTest(unittest.TestCase):
+    def test_recovers_a_shifted_content_offset(self):
+        # high[i] is the scene at frame i, low[i] is the scene five frames later,
+        # so high[i] matches low[i - 5].
+        high = moving_pattern_frames(120, 0)
+        low = moving_pattern_frames(120, 5)
+
+        self.assertEqual(measure_content_offset_ms(high, low), -500)
+
+    def test_an_alignment_outside_the_search_window_is_not_reported(self):
+        # 25 frames is 2.5 s, past the 2 s the search covers: the best score
+        # sits at the edge, which is the window running out, not a match.
+        high = moving_pattern_frames(120, 0)
+        low = moving_pattern_frames(120, 25)
+
+        self.assertIsNone(measure_content_offset_ms(high, low))
+
+    def test_an_alignment_beyond_the_frame_alignment_band_is_not_reported(self):
+        # 12 frames is inside the 2 s search, so the score finds it, but the
+        # paired streams are frame-aligned: a 1.2 s correction is the camera's
+        # clock lag shared by both streams, not something the overlay can fix.
+        high = moving_pattern_frames(120, 0)
+        low = moving_pattern_frames(120, 12)
+
+        self.assertIsNone(measure_content_offset_ms(high, low))
+
+    def test_a_static_scene_is_not_measurable(self):
+        frames = np.full((120, 90, 160), 42.0)
+
+        self.assertIsNone(measure_content_offset_ms(frames, frames.copy()))
+
+    def test_a_scene_with_no_structure_is_not_measurable(self):
+        rng = np.random.default_rng(7)
+        high = rng.random((120, 90, 160)) * 255
+        low = rng.random((120, 90, 160)) * 255
+
+        self.assertIsNone(measure_content_offset_ms(high, low))
+
+    @staticmethod
+    def tracked_box(track_id: str, frame_index: int) -> Detection:
+        ms = frame_index * 50.0
+        detection = Detection(
+            class_id=0,
+            class_name="person",
+            score=0.8,
+            seen_at=started_at + datetime.timedelta(milliseconds=ms),
+            bounding_box=[
+                ArrayOfVec2Inner(X=x, Y=y)
+                for x, y in [
+                    (frame_index, 10),
+                    (frame_index + 20, 10),
+                    (frame_index + 20, 60),
+                    (frame_index, 60),
+                    (frame_index, 10),
+                ]
+            ],
+            centroid=ArrayOfVec2Inner(X=frame_index + 10, Y=35),
+            video_id="v-id",
+            camera_id="cam-id",
+        )
+        detection.track_id = track_id
+
+        return detection
+
+    @staticmethod
+    def moving_track(track_id: str = "t1", is_static: bool = False) -> TrackedObject:
+        return TrackedObject(
+            id=track_id,
+            camera_id="cam-id",
+            video_id="v-id",
+            class_id=0,
+            class_name="person",
+            first_seen=started_at,
+            last_seen=started_at,
+            hits=10,
+            age=0,
+            bbox=(0.0, 10.0, 20.0, 60.0),
+            centroid=(10.0, 35.0),
+            first_centroid=(10.0, 35.0),
+            is_static=is_static,
+        )
+
+    @staticmethod
+    def frames_with_motion(moving: range, total: int) -> list[tuple[float, list[Detection]]]:
+        return [
+            (index * 50.0, [OverlayOffsetTest.tracked_box("t1", index)] if index in moving else [])
+            for index in range(total)
+        ]
+
+    def test_the_measure_window_lands_on_the_moving_objects(self):
+        # 1,200 frames at 20 fps, motion only in frames 600-699: the 12 s window
+        # that contains all of it starts 240 - 100 frames earlier.
+        frames = self.frames_with_motion(range(600, 700), 1200)
+
+        self.assertEqual(pick_measure_window(frames, [self.moving_track()], 20.0), 460)
+
+    def test_a_window_needs_enough_moving_frames_to_be_worth_measuring(self):
+        frames = self.frames_with_motion(range(600, 615), 1200)
+
+        self.assertIsNone(pick_measure_window(frames, [self.moving_track()], 20.0))
+
+    def test_a_scene_of_only_static_objects_has_no_window(self):
+        frames = self.frames_with_motion(range(600, 700), 1200)
+
+        self.assertIsNone(pick_measure_window(frames, [self.moving_track(is_static=True)], 20.0))
+
+    def test_measure_sample_starts_where_it_is_told_to(self):
+        path = os.path.join(tempfile.mkdtemp(), "sample.mp4")
+        writer = cv2.VideoWriter(path, int.from_bytes(b"mp4v", "little"), 20.0, (160, 90))
+
+        self.assertTrue(writer.isOpened())
+
+        for index in range(400):
+            writer.write(np.full((90, 160, 3), 30 if index < 100 else 220, dtype=np.uint8))
+
+        writer.release()
+
+        first_half = measure_sample(path, 0)
+        second_half = measure_sample(path, 100)
+
+        if first_half is None or second_half is None:
+            self.fail("measure_sample returned no frames")
+
+        self.assertLess(float(first_half[0].mean()), 100.0)
+        self.assertGreater(float(second_half[0].mean()), 150.0)
+        self.assertLessEqual(len(second_half), OVERLAY_MEASURE_SECONDS * OVERLAY_MEASURE_FPS + 1)
 
 
 if __name__ == "__main__":

@@ -9,6 +9,7 @@ import traceback
 import uuid
 
 import cv2
+import numpy as np
 
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple, cast
@@ -28,6 +29,7 @@ from .api.openapi_client import (
     VideoObjectDetectorClaimRequest,
     TrackApi,
     Track,
+    CameraApi,
 )
 
 debug = os.getenv("DEBUG", "") == "1"
@@ -58,6 +60,25 @@ TRACK_MATCH_SCORE = float(os.getenv("TRACK_MATCH_SCORE", "0.45"))
 # Tracks seen this recently are carried across a segment boundary, so a person
 # who walks across two segments keeps one identity.
 TRACK_CONTINUITY_SECONDS = int(os.getenv("TRACK_CONTINUITY_SECONDS", "120"))
+
+# The high-resolution recording and the low-resolution recording it is detected
+# from are two encoders on two paths, so their frames are not the same instant.
+# The detector aligns them by correlating the first seconds of both files and
+# stores the offset on the row. A scene with nothing moving in it says nothing,
+# so the measurement is gated on how much the best alignment beats zero offset.
+OVERLAY_MEASURE_SECONDS = int(os.getenv("OVERLAY_MEASURE_SECONDS", "12"))
+OVERLAY_MEASURE_FPS = int(os.getenv("OVERLAY_MEASURE_FPS", "10"))
+OVERLAY_MEASURE_MAX_OFFSET_SECONDS = int(os.getenv("OVERLAY_MEASURE_MAX_OFFSET_SECONDS", "2"))
+OVERLAY_MEASURE_MIN_RATIO = float(os.getenv("OVERLAY_MEASURE_MIN_RATIO", "0.85"))
+OVERLAY_MEASURE_MIN_SCORE = float(os.getenv("OVERLAY_MEASURE_MIN_SCORE", "0.3"))
+OVERLAY_MEASURE_MIN_OVERLAP_FRAMES = int(os.getenv("OVERLAY_MEASURE_MIN_OVERLAP_FRAMES", "30"))
+OVERLAY_MEASURE_MIN_MOVING_FRAMES = int(os.getenv("OVERLAY_MEASURE_MIN_MOVING_FRAMES", "20"))
+# The paired streams are frame-aligned, so a real overlay offset is a fraction of
+# a frame. Anything larger is the camera's own clock lag, which both streams share
+# and the overlay cannot correct, so it must not be written into the row.
+OVERLAY_MEASURE_MAX_ACCEPT_MS = int(os.getenv("OVERLAY_MEASURE_MAX_ACCEPT_MS", "500"))
+OVERLAY_MEASURE_WIDTH = 160
+OVERLAY_MEASURE_HEIGHT = 90
 
 # A track that moves less than this fraction of the frame diagonal is static.
 TRACK_STATIC_DISPLACEMENT = float(os.getenv("TRACK_STATIC_DISPLACEMENT", "0.06"))
@@ -91,12 +112,24 @@ class Sink:
     def recent_tracks(self, video: Video, window_seconds: int) -> list["Seed"]:
         return []
 
+    def camera_overlay_offset_ms(self, camera_id: Optional[str]) -> Optional[int]:
+        """The camera's standing offset, used when this segment could not be measured."""
+        return None
+
 
 class ApiSink(Sink):
-    def __init__(self, video_api: VideoApi, detection_api: DetectionApi, track_api: TrackApi) -> None:
+    def __init__(
+        self,
+        video_api: VideoApi,
+        detection_api: DetectionApi,
+        track_api: TrackApi,
+        camera_api: Optional[CameraApi] = None,
+    ) -> None:
         self.video_api = video_api
         self.detection_api = detection_api
         self.track_api = track_api
+        self.camera_api = camera_api
+        self.camera_overlay_offsets: dict[str, Optional[int]] = {}
 
     def find_high_res_video(self, video: Video, file_name: str) -> Optional[Video]:
         # The detector intentionally claims the low-resolution recording, but
@@ -239,6 +272,27 @@ class ApiSink(Sink):
             for track in (response.objects or [])
             if track.key and track.id
         }
+
+    def camera_overlay_offset_ms(self, camera_id: Optional[str]) -> Optional[int]:
+        if not camera_id:
+            return None
+
+        if camera_id in self.camera_overlay_offsets:
+            return self.camera_overlay_offsets[camera_id]
+
+        offset_ms: Optional[int] = None
+
+        if self.camera_api is not None:
+            try:
+                response = self.camera_api.get_camera(primary_key=camera_id, _request_timeout=API_TIMEOUT)
+                cameras = getattr(response, "objects", None) or []
+                offset_ms = cameras[0].overlay_offset_ms if cameras else None
+            except Exception as e:
+                print(f"could not load overlay offset for camera {camera_id}: {e}")
+
+        self.camera_overlay_offsets[camera_id] = offset_ms
+
+        return offset_ms
 
     def recent_tracks(self, video: Video, window_seconds: int) -> list["Seed"]:
         if not video.camera_id or not video.started_at:
@@ -430,6 +484,10 @@ def handle_video(sink: Sink, video: Video, source_path: str) -> None:
         f"{video_file_name[:-len('_low_res.mp4')]}.mp4" if video_file_name.endswith("_low_res.mp4") else None
     )
 
+    overlay_offset_ms: Optional[int] = None
+    high_res_path = os.path.join(source_path, high_res_file_name) if high_res_file_name is not None else None
+    high_res_exists = high_res_path is not None and os.path.exists(high_res_path)
+
     sink.patch_video(
         video,
         Video(status="detecting"),
@@ -452,6 +510,20 @@ def handle_video(sink: Sink, video: Video, source_path: str) -> None:
         tracker.update(video, frame_ms, frame_detections)
 
     tracks = tracker.emit()
+
+    # Measured after tracking so the window can sit on the moving objects: a
+    # static stretch of two encoders carries no alignment signal at all.
+    if high_res_exists and high_res_path is not None:
+        fps = handled_frame_count / (video.duration / 1_000_000_000) if video.duration else 0.0
+        start_frame = pick_measure_window(detections_by_frame, tracks, fps)
+
+        if start_frame is not None:
+            overlay_offset_ms = measure_overlay_offset_ms(
+                high_res_path, os.path.join(source_path, video_file_name), start_frame
+            )
+
+    if overlay_offset_ms is None:
+        overlay_offset_ms = sink.camera_overlay_offset_ms(video.camera_id)
 
     detections = [detection for _, frame_detections in detections_by_frame for detection in frame_detections]
 
@@ -485,6 +557,7 @@ def handle_video(sink: Sink, video: Video, source_path: str) -> None:
         status="needs tracking",
         detection_summary=detection_summary,
         track_summary=track_summary,
+        overlay_offset_ms=overlay_offset_ms,
         object_tracker_claimed_until=datetime.datetime.now().replace(tzinfo=UTC),
     )
 
@@ -496,7 +569,7 @@ def handle_video(sink: Sink, video: Video, source_path: str) -> None:
     after = datetime.datetime.now()
 
     print(
-        f"{video.file_name} handled in {after - before} (summarise took {after - before_summarise}, request took {after - before_request})"
+        f"{video.file_name} handled in {after - before} (summarise took {after - before_summarise}, request took {after - before_request}, overlay offset {overlay_offset_ms})"
     )
 
 
@@ -594,6 +667,127 @@ def infer(
         cap.release()
 
     return detections_by_frame, handled_frame_count, frame_width, frame_height
+
+
+def measure_sample(path: str, start_frame: int = 0) -> Optional[np.ndarray]:
+    capture = cv2.VideoCapture(path)
+
+    if not capture.isOpened():
+        return None
+
+    source_fps = capture.get(cv2.CAP_PROP_FPS)
+
+    if not source_fps or source_fps <= 0:
+        source_fps = float(OVERLAY_MEASURE_FPS)
+
+    step = max(1, int(round(source_fps / OVERLAY_MEASURE_FPS)))
+    frames: List[np.ndarray] = []
+
+    # Frames are counted out, not seeked to: frame seeking is not dependable
+    # across decoders, and decoding the skipped frames is cheap.
+    for index in range(start_frame + OVERLAY_MEASURE_SECONDS * int(source_fps) + step):
+        ok, frame = capture.read()
+
+        if not ok:
+            break
+
+        if index < start_frame:
+            continue
+
+        if (index - start_frame) % step == 0:
+            resized = cv2.resize(frame, (OVERLAY_MEASURE_WIDTH, OVERLAY_MEASURE_HEIGHT))
+            frames.append(cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY).astype(np.float64))
+
+    capture.release()
+
+    if len(frames) < OVERLAY_MEASURE_SECONDS * OVERLAY_MEASURE_FPS // 2:
+        return None
+
+    return np.array(frames)
+
+
+def correlation_score(high: np.ndarray, low: np.ndarray, offset_frames: int) -> float:
+    start = max(0, -offset_frames)
+    end = min(high.shape[0], low.shape[0] - offset_frames)
+
+    if end - start < OVERLAY_MEASURE_MIN_OVERLAP_FRAMES:
+        return float("inf")
+
+    return float(np.mean([abs(high[i] - low[i + offset_frames]).mean() for i in range(start, end)]))
+
+
+def measure_content_offset_ms(high: np.ndarray, low: np.ndarray) -> Optional[int]:
+    max_frames = OVERLAY_MEASURE_MAX_OFFSET_SECONDS * OVERLAY_MEASURE_FPS
+    scores = [correlation_score(high, low, offset) for offset in range(-max_frames, max_frames + 1)]
+    best_index = int(np.argmin(scores))
+    best = scores[best_index]
+    direct = scores[max_frames]
+
+    # A best at the edge of the search is the search running out of room, not a
+    # match: the real alignment is outside what this measures.
+    if best_index == 0 or best_index == len(scores) - 1:
+        return None
+
+    if direct < OVERLAY_MEASURE_MIN_SCORE or best >= direct * OVERLAY_MEASURE_MIN_RATIO:
+        return None
+
+    offset_ms = int(round((best_index - max_frames) * 1000 / OVERLAY_MEASURE_FPS))
+    if abs(offset_ms) > OVERLAY_MEASURE_MAX_ACCEPT_MS:
+        return None
+
+    return offset_ms
+
+
+def measure_overlay_offset_ms(high_path: str, low_path: str, start_frame: int = 0) -> Optional[int]:
+    high = measure_sample(high_path, start_frame)
+    low = measure_sample(low_path, start_frame)
+
+    if high is None or low is None:
+        return None
+
+    return measure_content_offset_ms(high, low)
+
+
+def pick_measure_window(
+    detections_by_frame: list[tuple[float, list[Detection]]],
+    tracks: list["TrackedObject"],
+    fps: float,
+) -> Optional[int]:
+    # An empty scene has no correlation to find, so the window is chosen where
+    # the tracked moving objects actually are, not where the file starts.
+    moving_ids = {track.id for track in tracks if not track.is_static}
+
+    if not moving_ids or fps <= 0:
+        return None
+
+    moving = [
+        1 if any(detection.track_id in moving_ids for detection in frame_detections) else 0
+        for _, frame_detections in detections_by_frame
+    ]
+
+    window = int(OVERLAY_MEASURE_SECONDS * fps)
+
+    if window <= 0 or window > len(moving):
+        window = len(moving)
+
+    if window <= 0:
+        return None
+
+    total = sum(moving[:window])
+    best_start = 0
+    running = total
+
+    for start in range(1, len(moving) - window + 1):
+        running += moving[start + window - 1] - moving[start - 1]
+
+        if running > total:
+            total = running
+            best_start = start
+
+    if total < OVERLAY_MEASURE_MIN_MOVING_FRAMES:
+        return None
+
+    return best_start
 
 
 def add_detections(
@@ -1252,8 +1446,9 @@ def run():
     detection_api = DetectionApi(api_client)
     track_api = TrackApi(api_client)
     custom_api = ObjectDetectorClaimVideoApi(api_client)
+    camera_api = CameraApi(api_client)
 
-    sink = ApiSink(video_api, detection_api, track_api)
+    sink = ApiSink(video_api, detection_api, track_api, camera_api)
 
     while 1:
         try:
