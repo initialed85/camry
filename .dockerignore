@@ -1,0 +1,16 @@
+.git
+.github
+**/__pycache__
+**/.venv
+**/node_modules
+frontend/build
+fixtures
+media
+object_detector_v2/target
+object_detector_v2/*.weights
+PLAN.md
+tmp/*
+!tmp/api
+!tmp/segment-producer
+!tmp/fix-thumbnails
+!tmp/stream-producer
