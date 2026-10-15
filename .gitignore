@@ -7,3 +7,5 @@ tmp/
 **/.openapi-generator
 **/api/docs/
 cmd/api/api
+fixtures/
+yolo26n.onnx
