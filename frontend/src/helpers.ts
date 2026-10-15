@@ -40,7 +40,50 @@ export const getDateString = (date: Date): string => {
 };
 
 export const truncateDate = (date: Date): Date => {
-  const s = getDateString(date);
+  return parseDate(`${getDateString(date)}T00:00:00${getOffsetSuffix()}`);
+};
 
-  return parseDate(`${s}T00:00:00${getOffsetSuffix()}`);
+export const overlayModeKey = "camry.overlayMode.v1";
+
+// The high-res and low-res segment writers open their recorders a second or two
+// apart, so the two rows' started_at values are not the content clock. Frame
+// cross-correlation of matched segments (10 fps, 12 s windows, 18 pairs) shows
+// the media timelines line up frame-for-frame, and the residual is a per-camera
+// constant: Driveway -0.8s, Front Door -0.7s, Side Gate -0.1s.
+const cameraOverlayOffsetsMs: Record<string, number> = {
+  "85aead5a-e9d8-49d8-a091-03f737342c34": -800, // Driveway
+  "4f03400f-6be0-4d3e-b205-da65478dbd46": -700, // Front Door
+  "326da5dd-8a6a-4534-9598-effeb03abe61": -100, // Side Gate
+};
+
+export const cameraOverlayOffsetMs = (cameraId?: string | null): number =>
+  cameraOverlayOffsetsMs[cameraId || ""] ?? 0;
+
+export type OverlayMode = {
+  showDetections: boolean;
+  showObjects: boolean;
+};
+
+export const defaultOverlayMode: OverlayMode = {
+  showDetections: true,
+  showObjects: false,
+};
+
+export const readOverlayMode = (): OverlayMode => {
+  const raw = localStorage.getItem(overlayModeKey);
+
+  if (!raw) {
+    return defaultOverlayMode;
+  }
+
+  try {
+    const parsed = JSON.parse(raw);
+
+    return {
+      showDetections: parsed?.showDetections !== false,
+      showObjects: parsed?.showObjects === true,
+    };
+  } catch {
+    return defaultOverlayMode;
+  }
 };

@@ -1,12 +1,26 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "../api";
 import { components } from "../api/api";
+import { cameraOverlayOffsetMs, OverlayMode } from "../helpers";
 import VideoJS from "./VideoJS";
 
 type Detection = components["schemas"]["Detection"];
+type Track = components["schemas"]["Track"];
 
 type EnrichedDetection = Detection & {
   timestampMilliseconds: number;
+};
+
+type TrajectorySample = {
+  seen_at?: string;
+  x?: number;
+  y?: number;
+  bbox?: number[];
+};
+
+type TrackSample = {
+  track: Track;
+  sample: TrajectorySample;
 };
 
 type FrameDimensions = {
@@ -72,6 +86,7 @@ export interface VideoProps {
   video: components["schemas"]["Video"];
   width: number;
   height: number;
+  overlayMode: OverlayMode;
 }
 
 export function Video(props: VideoProps) {
@@ -100,19 +115,21 @@ export function Video(props: VideoProps) {
   const lowResVideo = lowResVideosData?.objects?.[0];
   const detectionVideo = lowResVideo || props.video;
   const detectionVideoId = detectionVideo.id || "";
-  // Detection timestamps are absolute wall-clock times. Playback time starts
-  // at zero for the high-resolution source, so anchor them to that source's
-  // recorded start rather than the low-resolution detector source. The two
-  // segment writers can start a few hundred milliseconds apart.
+  // Detection timestamps are absolute wall-clock times, stamped from the
+  // low-resolution row the detector read. Matched segments line up frame for
+  // frame across the two resolutions, so the anchor is that row's start plus
+  // the measured per-camera content offset. The high-resolution row's start
+  // carries the segment writer's open jitter - up to 2.2s of it.
   const playbackVideoStartedAtRef = useRef(
-    Date.parse(props.video.started_at || ""),
+    Date.parse(detectionVideo.started_at || "") +
+      cameraOverlayOffsetMs(detectionVideo.camera_id),
   );
 
   useEffect(() => {
-    playbackVideoStartedAtRef.current = Date.parse(
-      props.video.started_at || "",
-    );
-  }, [props.video.started_at]);
+    playbackVideoStartedAtRef.current =
+      Date.parse(detectionVideo.started_at || "") +
+      cameraOverlayOffsetMs(detectionVideo.camera_id);
+  }, [detectionVideo.started_at, detectionVideo.camera_id]);
 
   const { isLoading, error, data } = useQuery(
     "get",
@@ -125,6 +142,22 @@ export function Video(props: VideoProps) {
     {
       enabled:
         Boolean(detectionVideoId) &&
+        (!shouldFindLowResVideo || !isLowResVideoLoading),
+    },
+  );
+
+  const { data: tracksData, isLoading: isTracksLoading } = useQuery(
+    "get",
+    "/api/tracks",
+    {
+      params: {
+        query: { video_id__eq: detectionVideoId, limit: 10_000 },
+      },
+    },
+    {
+      enabled:
+        Boolean(detectionVideoId) &&
+        props.overlayMode.showObjects &&
         (!shouldFindLowResVideo || !isLowResVideoLoading),
     },
   );
@@ -150,8 +183,42 @@ export function Video(props: VideoProps) {
     new Map(),
   );
   const detectionTimestampsRef = useRef<number[]>([]);
+  const tracksByTimestampRef = useRef<Map<number, TrackSample[]>>(new Map());
+  const trackTimestampsRef = useRef<number[]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const readyRef = useRef(false);
+  const overlayModeRef = useRef(props.overlayMode);
+
+  // video.js keeps the callback it was created with, so the draw loop reads
+  // the toggles through a ref to pick up changes during playback.
+  useEffect(() => {
+    overlayModeRef.current = props.overlayMode;
+  }, [props.overlayMode]);
+
+  useEffect(() => {
+    const tracksByTimestamp = new Map<number, TrackSample[]>();
+
+    const tracks: Track[] = tracksData?.objects || [];
+    tracks.forEach((track: Track) => {
+      const samples = (track.trajectory as TrajectorySample[]) || [];
+
+      samples.forEach((sample: TrajectorySample) => {
+        const timestampMilliseconds = Date.parse(sample?.seen_at || "");
+        if (!Number.isFinite(timestampMilliseconds)) {
+          return;
+        }
+
+        const frameSamples = tracksByTimestamp.get(timestampMilliseconds) || [];
+        frameSamples.push({ track, sample });
+        tracksByTimestamp.set(timestampMilliseconds, frameSamples);
+      });
+    });
+
+    tracksByTimestampRef.current = tracksByTimestamp;
+    trackTimestampsRef.current = Array.from(tracksByTimestamp.keys()).sort(
+      (a, b) => a - b,
+    );
+  }, [tracksData?.objects]);
 
   useEffect(() => {
     const detectionsByTimestamp = new Map<number, EnrichedDetection[]>();
@@ -227,10 +294,14 @@ export function Video(props: VideoProps) {
 
   // Wait for the low-res metadata before starting playback so the first
   // rendered frame uses the right coordinate system rather than jumping later.
+  // Only the first render waits: the overlay needs its coordinate system and,
+  // in objects mode, its tracks before playback starts. Toggling a layer later
+  // must not tear the player down mid-playback.
   if (
     isLoading ||
     (shouldFindLowResVideo && isLowResVideoLoading) ||
-    (lowResVideo?.file_name && !lowResDimensions)
+    (lowResVideo?.file_name && !lowResDimensions) ||
+    (!readyRef.current && props.overlayMode.showObjects && isTracksLoading)
   ) {
     return lowResMetadataVideo;
   }
@@ -350,95 +421,166 @@ export function Video(props: VideoProps) {
           // detection on every animation frame. This matters for busy videos
           // with thousands of boxes and avoids burst/freeze behavior caused by
           // main-thread work competing with video playback.
-          const targetDetectionTimestamp =
+          const targetTimestamp =
             playbackVideoStartedAt + relativeTimeMilliseconds;
-          const matchedTimestamp = findClosestTimestamp(
-            detectionTimestampsRef.current,
-            targetDetectionTimestamp,
-          );
-          if (
-            matchedTimestamp === undefined ||
-            Math.abs(matchedTimestamp - targetDetectionTimestamp) >
-              detectionFrameMatchWindowMilliseconds
-          ) {
-            return;
+          const overlay = overlayModeRef.current;
+
+          if (overlay.showDetections) {
+            const matchedTimestamp = findClosestTimestamp(
+              detectionTimestampsRef.current,
+              targetTimestamp,
+            );
+            const matchedDetections =
+              matchedTimestamp === undefined ||
+              Math.abs(matchedTimestamp - targetTimestamp) >
+                detectionFrameMatchWindowMilliseconds
+                ? []
+                : detectionsByTimestampRef.current.get(matchedTimestamp) || [];
+            matchedDetections.forEach((detection: EnrichedDetection) => {
+              const topLeft = detection.bounding_box?.[0];
+              const bottomRight = detection.bounding_box?.[2];
+              const centroid = detection.centroid;
+
+              if (topLeft?.X === undefined || topLeft?.Y === undefined) {
+                return;
+              }
+
+              if (
+                bottomRight?.X === undefined ||
+                bottomRight?.Y === undefined
+              ) {
+                return;
+              }
+
+              if (centroid?.X === undefined || centroid?.Y === undefined) {
+                return;
+              }
+
+              if (detection?.score === undefined) {
+                return;
+              }
+
+              const lineWidth = 4 * visualScaleX;
+              const textOffsetX = 6 * visualScaleX;
+              const textOffsetY = 6 * visualScaleY;
+              const centroidRadius = 9 * visualScaleX;
+
+              const topLeftX = topLeft.X * coordinateScaleX;
+              const topLeftY = topLeft.Y * coordinateScaleY;
+
+              const bottomRightX = bottomRight.X * coordinateScaleX;
+              const bottomRightY = bottomRight.Y * coordinateScaleY;
+
+              const centroidX = centroid.X * coordinateScaleX;
+              const centroidY = centroid.Y * coordinateScaleY;
+
+              const grad = ctx.createLinearGradient(
+                topLeftX,
+                topLeftY,
+                bottomRightX,
+                bottomRightY,
+              );
+              grad.addColorStop(0.0, `rgba(255, 31, 31, 1.0)`);
+              grad.addColorStop(0.2, `rgba(255, 255, 31, 1.0)`);
+              grad.addColorStop(0.6, `rgba(31, 255, 31, 1.0)`);
+              grad.addColorStop(0.8, `rgba(255, 31, 255, 1.0)`);
+              grad.addColorStop(1.0, `rgba(31, 31, 255, 1.0)`);
+
+              ctx.lineWidth = lineWidth;
+              ctx.strokeStyle = grad;
+
+              ctx.fillStyle = `rgba(255, 255, 255, 0.99)`;
+              ctx.font = `${32 * visualScaleX}px monospace`;
+              ctx.textAlign = "left";
+              ctx.textRendering = "optimizeLegibility";
+
+              ctx.fillText(
+                `${detection.class_name} @ ${detection.score.toFixed(2)}`,
+                topLeftX + textOffsetX,
+                bottomRightY - textOffsetY,
+              );
+
+              ctx.strokeRect(
+                topLeftX,
+                topLeftY,
+                Math.abs(bottomRightX - topLeftX),
+                Math.abs(bottomRightY - topLeftY),
+              );
+
+              ctx.strokeStyle = `rgba(255, 255, 255, 0.99)`;
+              ctx.beginPath();
+              ctx.arc(centroidX, centroidY, centroidRadius, 0, Math.PI * 2);
+              ctx.stroke();
+            });
           }
 
-          const matchedDetections =
-            detectionsByTimestampRef.current.get(matchedTimestamp) || [];
-          matchedDetections.forEach((detection: EnrichedDetection) => {
-            const topLeft = detection.bounding_box?.[0];
-            const bottomRight = detection.bounding_box?.[2];
-            const centroid = detection.centroid;
-
-            if (topLeft?.X === undefined || topLeft?.Y === undefined) {
-              return;
-            }
-
-            if (bottomRight?.X === undefined || bottomRight?.Y === undefined) {
-              return;
-            }
-
-            if (centroid?.X === undefined || centroid?.Y === undefined) {
-              return;
-            }
-
-            if (detection?.score === undefined) {
-              return;
-            }
-
-            const lineWidth = 4 * visualScaleX;
-            const textOffsetX = 6 * visualScaleX;
-            const textOffsetY = 6 * visualScaleY;
-            const centroidRadius = 9 * visualScaleX;
-
-            const topLeftX = topLeft.X * coordinateScaleX;
-            const topLeftY = topLeft.Y * coordinateScaleY;
-
-            const bottomRightX = bottomRight.X * coordinateScaleX;
-            const bottomRightY = bottomRight.Y * coordinateScaleY;
-
-            const centroidX = centroid.X * coordinateScaleX;
-            const centroidY = centroid.Y * coordinateScaleY;
-
-            const grad = ctx.createLinearGradient(
-              topLeftX,
-              topLeftY,
-              bottomRightX,
-              bottomRightY,
+          // Tracked objects draw on top of raw detections: the box is the
+          // object's widest sighting, so a person stays readable in a crowd.
+          if (overlay.showObjects) {
+            const matchedTrackTimestamp = findClosestTimestamp(
+              trackTimestampsRef.current,
+              targetTimestamp,
             );
-            grad.addColorStop(0.0, `rgba(255, 31, 31, 1.0)`);
-            grad.addColorStop(0.2, `rgba(255, 255, 31, 1.0)`);
-            grad.addColorStop(0.6, `rgba(31, 255, 31, 1.0)`);
-            grad.addColorStop(0.8, `rgba(255, 31, 255, 1.0)`);
-            grad.addColorStop(1.0, `rgba(31, 31, 255, 1.0)`);
+            const matchedSamples =
+              matchedTrackTimestamp === undefined ||
+              Math.abs(matchedTrackTimestamp - targetTimestamp) >
+                detectionFrameMatchWindowMilliseconds
+                ? []
+                : tracksByTimestampRef.current.get(matchedTrackTimestamp) || [];
 
-            ctx.lineWidth = lineWidth;
-            ctx.strokeStyle = grad;
+            matchedSamples.forEach(({ track, sample }: TrackSample) => {
+              const bbox = sample.bbox || [];
 
-            ctx.fillStyle = `rgba(255, 255, 255, 0.99)`;
-            ctx.font = `${32 * visualScaleX}px monospace`;
-            ctx.textAlign = "left";
-            ctx.textRendering = "optimizeLegibility";
+              if (bbox.length < 4) {
+                return;
+              }
 
-            ctx.fillText(
-              `${detection.class_name} @ ${detection.score.toFixed(2)}`,
-              topLeftX + textOffsetX,
-              bottomRightY - textOffsetY,
-            );
+              const [x0, y0, x1, y1] = bbox;
+              const lineWidth = 4 * visualScaleX;
+              const textOffsetX = 6 * visualScaleX;
+              const centroidRadius = 6 * visualScaleX;
 
-            ctx.strokeRect(
-              topLeftX,
-              topLeftY,
-              Math.abs(bottomRightX - topLeftX),
-              Math.abs(bottomRightY - topLeftY),
-            );
+              const topLeftX = x0 * coordinateScaleX;
+              const topLeftY = y0 * coordinateScaleY;
+              const bottomRightX = x1 * coordinateScaleX;
+              const bottomRightY = y1 * coordinateScaleY;
 
-            ctx.strokeStyle = `rgba(255, 255, 255, 0.99)`;
-            ctx.beginPath();
-            ctx.arc(centroidX, centroidY, centroidRadius, 0, Math.PI * 2);
-            ctx.stroke();
-          });
+              ctx.lineWidth = lineWidth;
+              ctx.strokeStyle = track.is_static
+                ? `rgba(140, 170, 255, 0.9)`
+                : `rgba(0, 220, 255, 1)`;
+
+              ctx.strokeRect(
+                topLeftX,
+                topLeftY,
+                Math.abs(bottomRightX - topLeftX),
+                Math.abs(bottomRightY - topLeftY),
+              );
+
+              ctx.fillStyle = `rgba(255, 255, 255, 0.99)`;
+              ctx.font = `${32 * visualScaleX}px monospace`;
+              ctx.textAlign = "left";
+              ctx.textRendering = "optimizeLegibility";
+
+              ctx.fillText(
+                `${track.class_name} #${(track.key || track.id || "").slice(0, 4)} @ ${(track.mean_score || 0).toFixed(2)}`,
+                topLeftX + textOffsetX,
+                topLeftY + 32 * visualScaleY,
+              );
+
+              if (sample.x !== undefined && sample.y !== undefined) {
+                ctx.beginPath();
+                ctx.arc(
+                  sample.x * coordinateScaleX,
+                  sample.y * coordinateScaleY,
+                  centroidRadius,
+                  0,
+                  Math.PI * 2,
+                );
+                ctx.stroke();
+              }
+            });
+          }
         }}
       />
     </>

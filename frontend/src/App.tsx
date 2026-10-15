@@ -12,7 +12,13 @@ import ModeToggle from "./components/ModeToggle";
 import StreamDropdownMenu from "./components/StreamDropdownMenu";
 import { VideoTable } from "./components/VideoTable";
 import { dateSliderStepMillis, responsiveWidth } from "./config";
-import { parseDate } from "./helpers";
+import {
+  OverlayMode,
+  overlayModeKey,
+  parseDate,
+  readOverlayMode,
+} from "./helpers";
+import OverlayToggle from "./components/OverlayToggle";
 
 function App() {
   // TODO: for future reference
@@ -46,6 +52,12 @@ function App() {
   );
 
   const [classNameFilter, setClassNameFilter] = useState<string>("");
+
+  const [overlayMode, setOverlayMode] = useState<OverlayMode>(readOverlayMode);
+
+  useEffect(() => {
+    localStorage.setItem(overlayModeKey, JSON.stringify(overlayMode));
+  }, [overlayMode]);
 
   // undefined means the initial /api/custom/auth check has not answered yet.
   const [authenticated, setAuthenticated] = useState<boolean | undefined>(
@@ -185,6 +197,11 @@ function App() {
           />
         </Grid>
         <Grid xs={1} sx={{ display: "flex", justifyContent: "end", pr: 0.5 }}>
+          <OverlayToggle
+            responsive={responsive}
+            mode={overlayMode}
+            setMode={setOverlayMode}
+          />
           <ModeToggle responsive={responsive} />
         </Grid>
       </Grid>
@@ -205,6 +222,7 @@ function App() {
         startedAtGt={startedAtGt}
         startedAtLte={startedAtLte}
         classNameFilter={classNameFilter}
+        overlayMode={overlayMode}
       />
     </Sheet>
   );

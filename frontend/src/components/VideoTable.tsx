@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { clientForReactQuery, useQuery } from "../api";
 import { components } from "../api/api";
-import { getDateString } from "../helpers";
+import { getDateString, OverlayMode } from "../helpers";
 import { Video } from "./Video";
 
 const defaultLimit = 10;
@@ -52,6 +52,7 @@ export interface VideoTableProps {
   startedAtGt: string | undefined;
   startedAtLte: string | undefined;
   classNameFilter: string;
+  overlayMode: OverlayMode;
 }
 
 export function VideoTable(props: VideoTableProps) {
@@ -75,6 +76,16 @@ export function VideoTable(props: VideoTableProps) {
     : allCamerasData?.objects?.length || 1;
 
   const detectionFilter = parseDetectionFilter(props.classNameFilter);
+  // In objects mode the row is described by its tracked objects, so the class
+  // filter has to read the track summary rather than the raw detection counts.
+  const summariesOf = (video: components["schemas"]["Video"]) =>
+    ((props.overlayMode.showObjects
+      ? video?.track_summary
+      : video?.detection_summary) as any[] | null) || [];
+  const scoreOf = (summary: any) =>
+    typeof summary?.mean_score === "number"
+      ? summary.mean_score
+      : summary?.average_score;
   // Numeric confidence thresholds are applied client-side because the API
   // only supports JSON containment on detection_summary. Fetch a larger batch
   // so a high threshold does not make the search appear empty one page at a time.
@@ -97,9 +108,14 @@ export function VideoTable(props: VideoTableProps) {
         params: {
           query: {
             camera_id__eq: props.cameraId || undefined,
-            detection_summary__contains: detectionFilter.className
-              ? JSON.stringify([{ class_name: detectionFilter.className }])
-              : undefined,
+            detection_summary__contains:
+              detectionFilter.className && !props.overlayMode.showObjects
+                ? JSON.stringify([{ class_name: detectionFilter.className }])
+                : undefined,
+            track_summary__contains:
+              detectionFilter.className && props.overlayMode.showObjects
+                ? JSON.stringify([{ class_name: detectionFilter.className }])
+                : undefined,
             // TODO: skipping this means we can keep infinitely scrolling back forever, I think
             // started_at__gt: props.startedAtGt && props.startedAtGt,
             started_at__lte: props.startedAtLte && props.startedAtLte,
@@ -269,17 +285,16 @@ export function VideoTable(props: VideoTableProps) {
             videosData?.objects
               ?.filter((video) => {
                 if (detectionFilter.className) {
-                  const detectionSummaries =
-                    (video?.detection_summary as any[] | null) || [];
+                  const summaries = summariesOf(video);
 
-                  return detectionSummaries.some((detectionSummary: any) => {
+                  return summaries.some((summary: any) => {
                     const classMatches = (
-                      detectionSummary.class_name as string
+                      summary.class_name as string
                     ).includes(detectionFilter.className);
                     const scoreMatches =
                       detectionFilter.minimumAverageScore === undefined ||
-                      (typeof detectionSummary.average_score === "number" &&
-                        detectionSummary.average_score >=
+                      (typeof scoreOf(summary) === "number" &&
+                        scoreOf(summary) >=
                           detectionFilter.minimumAverageScore);
                     return classMatches && scoreMatches;
                   });
@@ -384,15 +399,8 @@ export function VideoTable(props: VideoTableProps) {
                     </Tooltip>
                   );
                 } else if (video?.status === "needs tracking") {
-                  classNames = (video?.detection_summary as [])
-                    .filter((detectionSummary: any) => {
-                      // if (
-                      //   detectionSummary.average_score < 0.5 ||
-                      //   detectionSummary.detected_frame_count < 8
-                      // ) {
-                      //   return false;
-                      // }
-
+                  classNames = summariesOf(video)
+                    .filter((summary: any) => {
                       return true;
                     })
                     .map((x: any) => {
@@ -410,7 +418,7 @@ export function VideoTable(props: VideoTableProps) {
                                   : undefined,
                             }}
                           >
-                            {x.class_name} @ {x.average_score.toFixed(2)} <br />
+                            {x.class_name} @ {scoreOf(x).toFixed(2)} <br />
                           </span>
                         );
                       }
@@ -428,8 +436,13 @@ export function VideoTable(props: VideoTableProps) {
                                 : undefined,
                           }}
                         >
-                          {x.class_name} @ {x.average_score.toFixed(2)} (over{" "}
-                          {x.detected_frame_count} frames)
+                          {props.overlayMode.showObjects
+                            ? `${x.class_name} x${x.count} @ ${scoreOf(
+                                x,
+                              ).toFixed(2)} (${x.frame_count} frames)`
+                            : `${x.class_name} @ ${scoreOf(x).toFixed(
+                                2,
+                              )} (over ${x.detected_frame_count} frames)`}
                           <br />
                         </span>
                       );
@@ -551,6 +564,7 @@ export function VideoTable(props: VideoTableProps) {
               video={currentVideo}
               width={desiredWidth}
               height={desiredHeight}
+              overlayMode={props.overlayMode}
             />
           )}
         </ModalDialog>
