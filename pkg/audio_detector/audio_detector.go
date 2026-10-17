@@ -124,8 +124,9 @@ func claimVideo(ctx context.Context, db *pgxpool.Pool, settings Settings) (*api.
 	}()
 
 	orderBy := fmt.Sprintf(
-		"%s ASC, %s ASC",
+		"%s ASC, %s ASC, %s ASC",
 		api.VideoTableAudioDetectorClaimedUntilColumn,
+		api.VideoTableStartedAtColumn,
 		api.VideoTableIDColumn,
 	)
 
