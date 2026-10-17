@@ -14,3 +14,4 @@ tmp/*
 !tmp/segment-producer
 !tmp/fix-thumbnails
 !tmp/stream-producer
+!tmp/audio-detector
