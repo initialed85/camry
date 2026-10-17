@@ -220,7 +220,7 @@ func (a *VideoAPIService) GetVideoExecute(r ApiGetVideoRequest) (*ResponseWithGe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -250,6 +250,7 @@ type ApiGetVideosRequest struct {
 	offset *int32
 	depth *int32
 	cameraLoad *string
+	referencedByAudioEventVideoIDLoad *string
 	referencedByDetectionVideoIDLoad *string
 	referencedByTrackVideoIDLoad *string
 	createdAtEq *time.Time
@@ -420,6 +421,36 @@ type ApiGetVideosRequest struct {
 	overlayOffsetMsIsnotnull *string
 	overlayOffsetMsAsc *string
 	overlayOffsetMsDesc *string
+	audioDetectorClaimedUntilEq *time.Time
+	audioDetectorClaimedUntilNe *time.Time
+	audioDetectorClaimedUntilGt *time.Time
+	audioDetectorClaimedUntilGte *time.Time
+	audioDetectorClaimedUntilLt *time.Time
+	audioDetectorClaimedUntilLte *time.Time
+	audioDetectorClaimedUntilIn *time.Time
+	audioDetectorClaimedUntilNotin *time.Time
+	audioDetectorClaimedUntilAsc *string
+	audioDetectorClaimedUntilDesc *string
+	audioDetectedAtEq *time.Time
+	audioDetectedAtNe *time.Time
+	audioDetectedAtGt *time.Time
+	audioDetectedAtGte *time.Time
+	audioDetectedAtLt *time.Time
+	audioDetectedAtLte *time.Time
+	audioDetectedAtIn *time.Time
+	audioDetectedAtNotin *time.Time
+	audioDetectedAtIsnull *string
+	audioDetectedAtIsnotnull *string
+	audioDetectedAtAsc *string
+	audioDetectedAtDesc *string
+	audioProfileContains *interface{}
+	audioProfileNotcontains *interface{}
+	audioProfileAsc *string
+	audioProfileDesc *string
+	audioSummaryContains *interface{}
+	audioSummaryNotcontains *interface{}
+	audioSummaryAsc *string
+	audioSummaryDesc *string
 }
 
 // SQL LIMIT operator
@@ -443,6 +474,12 @@ func (r ApiGetVideosRequest) Depth(depth int32) ApiGetVideosRequest {
 // load the given outbound relationship, value is ignored (presence of key is sufficient)
 func (r ApiGetVideosRequest) CameraLoad(cameraLoad string) ApiGetVideosRequest {
 	r.cameraLoad = &cameraLoad
+	return r
+}
+
+// load the given inbound relationship, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) ReferencedByAudioEventVideoIDLoad(referencedByAudioEventVideoIDLoad string) ApiGetVideosRequest {
+	r.referencedByAudioEventVideoIDLoad = &referencedByAudioEventVideoIDLoad
 	return r
 }
 
@@ -1466,6 +1503,186 @@ func (r ApiGetVideosRequest) OverlayOffsetMsDesc(overlayOffsetMsDesc string) Api
 	return r
 }
 
+// SQL &#x3D; comparison
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilEq(audioDetectorClaimedUntilEq time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilEq = &audioDetectorClaimedUntilEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilNe(audioDetectorClaimedUntilNe time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilNe = &audioDetectorClaimedUntilNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilGt(audioDetectorClaimedUntilGt time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilGt = &audioDetectorClaimedUntilGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilGte(audioDetectorClaimedUntilGte time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilGte = &audioDetectorClaimedUntilGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilLt(audioDetectorClaimedUntilLt time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilLt = &audioDetectorClaimedUntilLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilLte(audioDetectorClaimedUntilLte time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilLte = &audioDetectorClaimedUntilLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilIn(audioDetectorClaimedUntilIn time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilIn = &audioDetectorClaimedUntilIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilNotin(audioDetectorClaimedUntilNotin time.Time) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilNotin = &audioDetectorClaimedUntilNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilAsc(audioDetectorClaimedUntilAsc string) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilAsc = &audioDetectorClaimedUntilAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioDetectorClaimedUntilDesc(audioDetectorClaimedUntilDesc string) ApiGetVideosRequest {
+	r.audioDetectorClaimedUntilDesc = &audioDetectorClaimedUntilDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiGetVideosRequest) AudioDetectedAtEq(audioDetectedAtEq time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtEq = &audioDetectedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiGetVideosRequest) AudioDetectedAtNe(audioDetectedAtNe time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtNe = &audioDetectedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectedAtGt(audioDetectedAtGt time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtGt = &audioDetectedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectedAtGte(audioDetectedAtGte time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtGte = &audioDetectedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectedAtLt(audioDetectedAtLt time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtLt = &audioDetectedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiGetVideosRequest) AudioDetectedAtLte(audioDetectedAtLte time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtLte = &audioDetectedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiGetVideosRequest) AudioDetectedAtIn(audioDetectedAtIn time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtIn = &audioDetectedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiGetVideosRequest) AudioDetectedAtNotin(audioDetectedAtNotin time.Time) ApiGetVideosRequest {
+	r.audioDetectedAtNotin = &audioDetectedAtNotin
+	return r
+}
+
+// SQL IS null comparison, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioDetectedAtIsnull(audioDetectedAtIsnull string) ApiGetVideosRequest {
+	r.audioDetectedAtIsnull = &audioDetectedAtIsnull
+	return r
+}
+
+// SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioDetectedAtIsnotnull(audioDetectedAtIsnotnull string) ApiGetVideosRequest {
+	r.audioDetectedAtIsnotnull = &audioDetectedAtIsnotnull
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioDetectedAtAsc(audioDetectedAtAsc string) ApiGetVideosRequest {
+	r.audioDetectedAtAsc = &audioDetectedAtAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioDetectedAtDesc(audioDetectedAtDesc string) ApiGetVideosRequest {
+	r.audioDetectedAtDesc = &audioDetectedAtDesc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetVideosRequest) AudioProfileContains(audioProfileContains interface{}) ApiGetVideosRequest {
+	r.audioProfileContains = &audioProfileContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetVideosRequest) AudioProfileNotcontains(audioProfileNotcontains interface{}) ApiGetVideosRequest {
+	r.audioProfileNotcontains = &audioProfileNotcontains
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioProfileAsc(audioProfileAsc string) ApiGetVideosRequest {
+	r.audioProfileAsc = &audioProfileAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioProfileDesc(audioProfileDesc string) ApiGetVideosRequest {
+	r.audioProfileDesc = &audioProfileDesc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiGetVideosRequest) AudioSummaryContains(audioSummaryContains interface{}) ApiGetVideosRequest {
+	r.audioSummaryContains = &audioSummaryContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiGetVideosRequest) AudioSummaryNotcontains(audioSummaryNotcontains interface{}) ApiGetVideosRequest {
+	r.audioSummaryNotcontains = &audioSummaryNotcontains
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioSummaryAsc(audioSummaryAsc string) ApiGetVideosRequest {
+	r.audioSummaryAsc = &audioSummaryAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiGetVideosRequest) AudioSummaryDesc(audioSummaryDesc string) ApiGetVideosRequest {
+	r.audioSummaryDesc = &audioSummaryDesc
+	return r
+}
+
 func (r ApiGetVideosRequest) Execute() (*ResponseWithGenericOfVideo, *http.Response, error) {
 	return r.ApiService.GetVideosExecute(r)
 }
@@ -1515,6 +1732,9 @@ func (a *VideoAPIService) GetVideosExecute(r ApiGetVideosRequest) (*ResponseWith
 	}
 	if r.cameraLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera__load", r.cameraLoad, "")
+	}
+	if r.referencedByAudioEventVideoIDLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_AudioEvent_VideoID__load", r.referencedByAudioEventVideoIDLoad, "")
 	}
 	if r.referencedByDetectionVideoIDLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_Detection_VideoID__load", r.referencedByDetectionVideoIDLoad, "")
@@ -2026,6 +2246,96 @@ func (a *VideoAPIService) GetVideosExecute(r ApiGetVideosRequest) (*ResponseWith
 	if r.overlayOffsetMsDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "overlay_offset_ms__desc", r.overlayOffsetMsDesc, "")
 	}
+	if r.audioDetectorClaimedUntilEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__eq", r.audioDetectorClaimedUntilEq, "")
+	}
+	if r.audioDetectorClaimedUntilNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__ne", r.audioDetectorClaimedUntilNe, "")
+	}
+	if r.audioDetectorClaimedUntilGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__gt", r.audioDetectorClaimedUntilGt, "")
+	}
+	if r.audioDetectorClaimedUntilGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__gte", r.audioDetectorClaimedUntilGte, "")
+	}
+	if r.audioDetectorClaimedUntilLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__lt", r.audioDetectorClaimedUntilLt, "")
+	}
+	if r.audioDetectorClaimedUntilLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__lte", r.audioDetectorClaimedUntilLte, "")
+	}
+	if r.audioDetectorClaimedUntilIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__in", r.audioDetectorClaimedUntilIn, "")
+	}
+	if r.audioDetectorClaimedUntilNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__notin", r.audioDetectorClaimedUntilNotin, "")
+	}
+	if r.audioDetectorClaimedUntilAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__asc", r.audioDetectorClaimedUntilAsc, "")
+	}
+	if r.audioDetectorClaimedUntilDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__desc", r.audioDetectorClaimedUntilDesc, "")
+	}
+	if r.audioDetectedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__eq", r.audioDetectedAtEq, "")
+	}
+	if r.audioDetectedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__ne", r.audioDetectedAtNe, "")
+	}
+	if r.audioDetectedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__gt", r.audioDetectedAtGt, "")
+	}
+	if r.audioDetectedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__gte", r.audioDetectedAtGte, "")
+	}
+	if r.audioDetectedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__lt", r.audioDetectedAtLt, "")
+	}
+	if r.audioDetectedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__lte", r.audioDetectedAtLte, "")
+	}
+	if r.audioDetectedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__in", r.audioDetectedAtIn, "")
+	}
+	if r.audioDetectedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__notin", r.audioDetectedAtNotin, "")
+	}
+	if r.audioDetectedAtIsnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__isnull", r.audioDetectedAtIsnull, "")
+	}
+	if r.audioDetectedAtIsnotnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__isnotnull", r.audioDetectedAtIsnotnull, "")
+	}
+	if r.audioDetectedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__asc", r.audioDetectedAtAsc, "")
+	}
+	if r.audioDetectedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__desc", r.audioDetectedAtDesc, "")
+	}
+	if r.audioProfileContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__contains", r.audioProfileContains, "")
+	}
+	if r.audioProfileNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__notcontains", r.audioProfileNotcontains, "")
+	}
+	if r.audioProfileAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__asc", r.audioProfileAsc, "")
+	}
+	if r.audioProfileDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__desc", r.audioProfileDesc, "")
+	}
+	if r.audioSummaryContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__contains", r.audioSummaryContains, "")
+	}
+	if r.audioSummaryNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__notcontains", r.audioSummaryNotcontains, "")
+	}
+	if r.audioSummaryAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__asc", r.audioSummaryAsc, "")
+	}
+	if r.audioSummaryDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__desc", r.audioSummaryDesc, "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 
@@ -2065,7 +2375,7 @@ func (a *VideoAPIService) GetVideosExecute(r ApiGetVideosRequest) (*ResponseWith
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2195,7 +2505,7 @@ func (a *VideoAPIService) PatchVideoExecute(r ApiPatchVideoRequest) (*ResponseWi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2321,7 +2631,137 @@ func (a *VideoAPIService) PostVideosExecute(r ApiPostVideosRequest) (*ResponseWi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	err = a.client.decode(&localVarReturnValue, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+	if err != nil {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: err.Error(),
+		}
+		return localVarReturnValue, localVarHTTPResponse, newErr
+	}
+
+	return localVarReturnValue, localVarHTTPResponse, nil
+}
+
+type ApiPostVideosAudioDetectorClaimRequest struct {
+	ctx context.Context
+	ApiService *VideoAPIService
+	primaryKey string
+	videoAudioDetectorClaimRequest *VideoAudioDetectorClaimRequest
+	depth *int64
+}
+
+func (r ApiPostVideosAudioDetectorClaimRequest) VideoAudioDetectorClaimRequest(videoAudioDetectorClaimRequest VideoAudioDetectorClaimRequest) ApiPostVideosAudioDetectorClaimRequest {
+	r.videoAudioDetectorClaimRequest = &videoAudioDetectorClaimRequest
+	return r
+}
+
+// Query parameter depth
+func (r ApiPostVideosAudioDetectorClaimRequest) Depth(depth int64) ApiPostVideosAudioDetectorClaimRequest {
+	r.depth = &depth
+	return r
+}
+
+func (r ApiPostVideosAudioDetectorClaimRequest) Execute() (*ResponseWithGenericOfVideo, *http.Response, error) {
+	return r.ApiService.PostVideosAudioDetectorClaimExecute(r)
+}
+
+/*
+PostVideosAudioDetectorClaim Method for PostVideosAudioDetectorClaim
+
+ @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
+ @param primaryKey Path parameter primaryKey
+ @return ApiPostVideosAudioDetectorClaimRequest
+*/
+func (a *VideoAPIService) PostVideosAudioDetectorClaim(ctx context.Context, primaryKey string) ApiPostVideosAudioDetectorClaimRequest {
+	return ApiPostVideosAudioDetectorClaimRequest{
+		ApiService: a,
+		ctx: ctx,
+		primaryKey: primaryKey,
+	}
+}
+
+// Execute executes the request
+//  @return ResponseWithGenericOfVideo
+func (a *VideoAPIService) PostVideosAudioDetectorClaimExecute(r ApiPostVideosAudioDetectorClaimRequest) (*ResponseWithGenericOfVideo, *http.Response, error) {
+	var (
+		localVarHTTPMethod   = http.MethodPost
+		localVarPostBody     interface{}
+		formFiles            []formFile
+		localVarReturnValue  *ResponseWithGenericOfVideo
+	)
+
+	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "VideoAPIService.PostVideosAudioDetectorClaim")
+	if err != nil {
+		return localVarReturnValue, nil, &GenericOpenAPIError{error: err.Error()}
+	}
+
+	localVarPath := localBasePath + "/api/videos/{primaryKey}/audio-detector-claim"
+	localVarPath = strings.Replace(localVarPath, "{"+"primaryKey"+"}", url.PathEscape(parameterValueToString(r.primaryKey, "primaryKey")), -1)
+
+	localVarHeaderParams := make(map[string]string)
+	localVarQueryParams := url.Values{}
+	localVarFormParams := url.Values{}
+	if r.videoAudioDetectorClaimRequest == nil {
+		return localVarReturnValue, nil, reportError("videoAudioDetectorClaimRequest is required and must be specified")
+	}
+
+	if r.depth != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
+	}
+	// to determine the Content-Type header
+	localVarHTTPContentTypes := []string{"application/json"}
+
+	// set Content-Type header
+	localVarHTTPContentType := selectHeaderContentType(localVarHTTPContentTypes)
+	if localVarHTTPContentType != "" {
+		localVarHeaderParams["Content-Type"] = localVarHTTPContentType
+	}
+
+	// to determine the Accept header
+	localVarHTTPHeaderAccepts := []string{"application/json"}
+
+	// set Accept header
+	localVarHTTPHeaderAccept := selectHeaderAccept(localVarHTTPHeaderAccepts)
+	if localVarHTTPHeaderAccept != "" {
+		localVarHeaderParams["Accept"] = localVarHTTPHeaderAccept
+	}
+	// body params
+	localVarPostBody = r.videoAudioDetectorClaimRequest
+	req, err := a.client.prepareRequest(r.ctx, localVarPath, localVarHTTPMethod, localVarPostBody, localVarHeaderParams, localVarQueryParams, localVarFormParams, formFiles)
+	if err != nil {
+		return localVarReturnValue, nil, err
+	}
+
+	localVarHTTPResponse, err := a.client.callAPI(req)
+	if err != nil || localVarHTTPResponse == nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	localVarBody, err := io.ReadAll(localVarHTTPResponse.Body)
+	localVarHTTPResponse.Body.Close()
+	localVarHTTPResponse.Body = io.NopCloser(bytes.NewBuffer(localVarBody))
+	if err != nil {
+		return localVarReturnValue, localVarHTTPResponse, err
+	}
+
+	if localVarHTTPResponse.StatusCode >= 300 {
+		newErr := &GenericOpenAPIError{
+			body:  localVarBody,
+			error: localVarHTTPResponse.Status,
+		}
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2451,7 +2891,7 @@ func (a *VideoAPIService) PostVideosObjectDetectorClaimExecute(r ApiPostVideosOb
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2581,7 +3021,7 @@ func (a *VideoAPIService) PostVideosObjectTrackerClaimExecute(r ApiPostVideosObj
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

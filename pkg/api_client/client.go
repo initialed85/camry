@@ -49,6 +49,10 @@ type APIClient struct {
 
 	// API Services
 
+	AudioDetectorClaimVideoAPI *AudioDetectorClaimVideoAPIService
+
+	AudioEventAPI *AudioEventAPIService
+
 	CameraAPI *CameraAPIService
 
 	DetectionAPI *DetectionAPIService
@@ -82,6 +86,8 @@ func NewAPIClient(cfg *Configuration) *APIClient {
 	c.common.client = c
 
 	// API Services
+	c.AudioDetectorClaimVideoAPI = (*AudioDetectorClaimVideoAPIService)(&c.common)
+	c.AudioEventAPI = (*AudioEventAPIService)(&c.common)
 	c.CameraAPI = (*CameraAPIService)(&c.common)
 	c.DetectionAPI = (*DetectionAPIService)(&c.common)
 	c.ObjectDetectorClaimVideoAPI = (*ObjectDetectorClaimVideoAPIService)(&c.common)

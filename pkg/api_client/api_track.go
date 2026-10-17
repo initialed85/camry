@@ -220,7 +220,7 @@ func (a *TrackAPIService) GetTrackExecute(r ApiGetTrackRequest) (*ResponseWithGe
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1905,7 +1905,7 @@ func (a *TrackAPIService) GetTracksExecute(r ApiGetTracksRequest) (*ResponseWith
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2035,7 +2035,7 @@ func (a *TrackAPIService) PatchTrackExecute(r ApiPatchTrackRequest) (*ResponseWi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -2161,7 +2161,7 @@ func (a *TrackAPIService) PostTracksExecute(r ApiPostTracksRequest) (*ResponseWi
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

@@ -31,6 +31,7 @@ type ApiPostObjectDetectorClaimVideosRequest struct {
 	offset *int32
 	depth *int32
 	cameraLoad *string
+	referencedByAudioEventVideoIDLoad *string
 	referencedByDetectionVideoIDLoad *string
 	referencedByTrackVideoIDLoad *string
 	createdAtEq *time.Time
@@ -201,6 +202,36 @@ type ApiPostObjectDetectorClaimVideosRequest struct {
 	overlayOffsetMsIsnotnull *string
 	overlayOffsetMsAsc *string
 	overlayOffsetMsDesc *string
+	audioDetectorClaimedUntilEq *time.Time
+	audioDetectorClaimedUntilNe *time.Time
+	audioDetectorClaimedUntilGt *time.Time
+	audioDetectorClaimedUntilGte *time.Time
+	audioDetectorClaimedUntilLt *time.Time
+	audioDetectorClaimedUntilLte *time.Time
+	audioDetectorClaimedUntilIn *time.Time
+	audioDetectorClaimedUntilNotin *time.Time
+	audioDetectorClaimedUntilAsc *string
+	audioDetectorClaimedUntilDesc *string
+	audioDetectedAtEq *time.Time
+	audioDetectedAtNe *time.Time
+	audioDetectedAtGt *time.Time
+	audioDetectedAtGte *time.Time
+	audioDetectedAtLt *time.Time
+	audioDetectedAtLte *time.Time
+	audioDetectedAtIn *time.Time
+	audioDetectedAtNotin *time.Time
+	audioDetectedAtIsnull *string
+	audioDetectedAtIsnotnull *string
+	audioDetectedAtAsc *string
+	audioDetectedAtDesc *string
+	audioProfileContains *interface{}
+	audioProfileNotcontains *interface{}
+	audioProfileAsc *string
+	audioProfileDesc *string
+	audioSummaryContains *interface{}
+	audioSummaryNotcontains *interface{}
+	audioSummaryAsc *string
+	audioSummaryDesc *string
 }
 
 func (r ApiPostObjectDetectorClaimVideosRequest) VideoObjectDetectorClaimRequest(videoObjectDetectorClaimRequest VideoObjectDetectorClaimRequest) ApiPostObjectDetectorClaimVideosRequest {
@@ -229,6 +260,12 @@ func (r ApiPostObjectDetectorClaimVideosRequest) Depth(depth int32) ApiPostObjec
 // load the given outbound relationship, value is ignored (presence of key is sufficient)
 func (r ApiPostObjectDetectorClaimVideosRequest) CameraLoad(cameraLoad string) ApiPostObjectDetectorClaimVideosRequest {
 	r.cameraLoad = &cameraLoad
+	return r
+}
+
+// load the given inbound relationship, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) ReferencedByAudioEventVideoIDLoad(referencedByAudioEventVideoIDLoad string) ApiPostObjectDetectorClaimVideosRequest {
+	r.referencedByAudioEventVideoIDLoad = &referencedByAudioEventVideoIDLoad
 	return r
 }
 
@@ -1252,6 +1289,186 @@ func (r ApiPostObjectDetectorClaimVideosRequest) OverlayOffsetMsDesc(overlayOffs
 	return r
 }
 
+// SQL &#x3D; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilEq(audioDetectorClaimedUntilEq time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilEq = &audioDetectorClaimedUntilEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilNe(audioDetectorClaimedUntilNe time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilNe = &audioDetectorClaimedUntilNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilGt(audioDetectorClaimedUntilGt time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilGt = &audioDetectorClaimedUntilGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilGte(audioDetectorClaimedUntilGte time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilGte = &audioDetectorClaimedUntilGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilLt(audioDetectorClaimedUntilLt time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilLt = &audioDetectorClaimedUntilLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilLte(audioDetectorClaimedUntilLte time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilLte = &audioDetectorClaimedUntilLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilIn(audioDetectorClaimedUntilIn time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilIn = &audioDetectorClaimedUntilIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilNotin(audioDetectorClaimedUntilNotin time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilNotin = &audioDetectorClaimedUntilNotin
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilAsc(audioDetectorClaimedUntilAsc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilAsc = &audioDetectorClaimedUntilAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectorClaimedUntilDesc(audioDetectorClaimedUntilDesc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectorClaimedUntilDesc = &audioDetectorClaimedUntilDesc
+	return r
+}
+
+// SQL &#x3D; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtEq(audioDetectedAtEq time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtEq = &audioDetectedAtEq
+	return r
+}
+
+// SQL !&#x3D; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtNe(audioDetectedAtNe time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtNe = &audioDetectedAtNe
+	return r
+}
+
+// SQL &gt; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtGt(audioDetectedAtGt time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtGt = &audioDetectedAtGt
+	return r
+}
+
+// SQL &gt;&#x3D; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtGte(audioDetectedAtGte time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtGte = &audioDetectedAtGte
+	return r
+}
+
+// SQL &lt; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtLt(audioDetectedAtLt time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtLt = &audioDetectedAtLt
+	return r
+}
+
+// SQL &lt;&#x3D; comparison, may not work with all column types
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtLte(audioDetectedAtLte time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtLte = &audioDetectedAtLte
+	return r
+}
+
+// SQL IN comparison, permits comma-separated values
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtIn(audioDetectedAtIn time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtIn = &audioDetectedAtIn
+	return r
+}
+
+// SQL NOT IN comparison, permits comma-separated values
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtNotin(audioDetectedAtNotin time.Time) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtNotin = &audioDetectedAtNotin
+	return r
+}
+
+// SQL IS null comparison, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtIsnull(audioDetectedAtIsnull string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtIsnull = &audioDetectedAtIsnull
+	return r
+}
+
+// SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtIsnotnull(audioDetectedAtIsnotnull string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtIsnotnull = &audioDetectedAtIsnotnull
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtAsc(audioDetectedAtAsc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtAsc = &audioDetectedAtAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioDetectedAtDesc(audioDetectedAtDesc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioDetectedAtDesc = &audioDetectedAtDesc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioProfileContains(audioProfileContains interface{}) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioProfileContains = &audioProfileContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioProfileNotcontains(audioProfileNotcontains interface{}) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioProfileNotcontains = &audioProfileNotcontains
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioProfileAsc(audioProfileAsc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioProfileAsc = &audioProfileAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioProfileDesc(audioProfileDesc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioProfileDesc = &audioProfileDesc
+	return r
+}
+
+// SQL @&gt; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioSummaryContains(audioSummaryContains interface{}) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioSummaryContains = &audioSummaryContains
+	return r
+}
+
+// SQL NOT @&gt; comparison
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioSummaryNotcontains(audioSummaryNotcontains interface{}) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioSummaryNotcontains = &audioSummaryNotcontains
+	return r
+}
+
+// SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioSummaryAsc(audioSummaryAsc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioSummaryAsc = &audioSummaryAsc
+	return r
+}
+
+// SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+func (r ApiPostObjectDetectorClaimVideosRequest) AudioSummaryDesc(audioSummaryDesc string) ApiPostObjectDetectorClaimVideosRequest {
+	r.audioSummaryDesc = &audioSummaryDesc
+	return r
+}
+
 func (r ApiPostObjectDetectorClaimVideosRequest) Execute() (*ResponseWithGenericOfVideo, *http.Response, error) {
 	return r.ApiService.PostObjectDetectorClaimVideosExecute(r)
 }
@@ -1304,6 +1521,9 @@ func (a *ObjectDetectorClaimVideoAPIService) PostObjectDetectorClaimVideosExecut
 	}
 	if r.cameraLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "camera__load", r.cameraLoad, "")
+	}
+	if r.referencedByAudioEventVideoIDLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_AudioEvent_VideoID__load", r.referencedByAudioEventVideoIDLoad, "")
 	}
 	if r.referencedByDetectionVideoIDLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_Detection_VideoID__load", r.referencedByDetectionVideoIDLoad, "")
@@ -1815,6 +2035,96 @@ func (a *ObjectDetectorClaimVideoAPIService) PostObjectDetectorClaimVideosExecut
 	if r.overlayOffsetMsDesc != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "overlay_offset_ms__desc", r.overlayOffsetMsDesc, "")
 	}
+	if r.audioDetectorClaimedUntilEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__eq", r.audioDetectorClaimedUntilEq, "")
+	}
+	if r.audioDetectorClaimedUntilNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__ne", r.audioDetectorClaimedUntilNe, "")
+	}
+	if r.audioDetectorClaimedUntilGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__gt", r.audioDetectorClaimedUntilGt, "")
+	}
+	if r.audioDetectorClaimedUntilGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__gte", r.audioDetectorClaimedUntilGte, "")
+	}
+	if r.audioDetectorClaimedUntilLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__lt", r.audioDetectorClaimedUntilLt, "")
+	}
+	if r.audioDetectorClaimedUntilLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__lte", r.audioDetectorClaimedUntilLte, "")
+	}
+	if r.audioDetectorClaimedUntilIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__in", r.audioDetectorClaimedUntilIn, "")
+	}
+	if r.audioDetectorClaimedUntilNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__notin", r.audioDetectorClaimedUntilNotin, "")
+	}
+	if r.audioDetectorClaimedUntilAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__asc", r.audioDetectorClaimedUntilAsc, "")
+	}
+	if r.audioDetectorClaimedUntilDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detector_claimed_until__desc", r.audioDetectorClaimedUntilDesc, "")
+	}
+	if r.audioDetectedAtEq != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__eq", r.audioDetectedAtEq, "")
+	}
+	if r.audioDetectedAtNe != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__ne", r.audioDetectedAtNe, "")
+	}
+	if r.audioDetectedAtGt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__gt", r.audioDetectedAtGt, "")
+	}
+	if r.audioDetectedAtGte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__gte", r.audioDetectedAtGte, "")
+	}
+	if r.audioDetectedAtLt != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__lt", r.audioDetectedAtLt, "")
+	}
+	if r.audioDetectedAtLte != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__lte", r.audioDetectedAtLte, "")
+	}
+	if r.audioDetectedAtIn != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__in", r.audioDetectedAtIn, "")
+	}
+	if r.audioDetectedAtNotin != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__notin", r.audioDetectedAtNotin, "")
+	}
+	if r.audioDetectedAtIsnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__isnull", r.audioDetectedAtIsnull, "")
+	}
+	if r.audioDetectedAtIsnotnull != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__isnotnull", r.audioDetectedAtIsnotnull, "")
+	}
+	if r.audioDetectedAtAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__asc", r.audioDetectedAtAsc, "")
+	}
+	if r.audioDetectedAtDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_detected_at__desc", r.audioDetectedAtDesc, "")
+	}
+	if r.audioProfileContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__contains", r.audioProfileContains, "")
+	}
+	if r.audioProfileNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__notcontains", r.audioProfileNotcontains, "")
+	}
+	if r.audioProfileAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__asc", r.audioProfileAsc, "")
+	}
+	if r.audioProfileDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_profile__desc", r.audioProfileDesc, "")
+	}
+	if r.audioSummaryContains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__contains", r.audioSummaryContains, "")
+	}
+	if r.audioSummaryNotcontains != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__notcontains", r.audioSummaryNotcontains, "")
+	}
+	if r.audioSummaryAsc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__asc", r.audioSummaryAsc, "")
+	}
+	if r.audioSummaryDesc != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "audio_summary__desc", r.audioSummaryDesc, "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{"application/json"}
 
@@ -1856,7 +2166,7 @@ func (a *ObjectDetectorClaimVideoAPIService) PostObjectDetectorClaimVideosExecut
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

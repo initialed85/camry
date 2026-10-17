@@ -32,34 +32,39 @@ import (
 )
 
 type Video struct {
-	ID                                  uuid.UUID      `json:"id"`
-	CreatedAt                           time.Time      `json:"created_at"`
-	UpdatedAt                           time.Time      `json:"updated_at"`
-	DeletedAt                           *time.Time     `json:"deleted_at"`
-	FileName                            string         `json:"file_name"`
-	StartedAt                           time.Time      `json:"started_at"`
-	EndedAt                             *time.Time     `json:"ended_at"`
-	Duration                            *time.Duration `json:"duration"`
-	FileSize                            *float64       `json:"file_size"`
-	ThumbnailName                       *string        `json:"thumbnail_name"`
-	Status                              *string        `json:"status"`
-	ObjectDetectorClaimedUntil          time.Time      `json:"object_detector_claimed_until"`
-	ObjectTrackerClaimedUntil           time.Time      `json:"object_tracker_claimed_until"`
-	CameraID                            uuid.UUID      `json:"camera_id"`
-	CameraIDObject                      *Camera        `json:"camera_id_object"`
-	DetectionSummary                    any            `json:"detection_summary"`
-	IsLowRes                            bool           `json:"is_low_res"`
-	TrackSummary                        any            `json:"track_summary"`
-	OverlayOffsetMs                     *int64         `json:"overlay_offset_ms"`
-	ReferencedByDetectionVideoIDObjects []*Detection   `json:"referenced_by_detection_video_id_objects"`
-	ReferencedByTrackVideoIDObjects     []*Track       `json:"referenced_by_track_video_id_objects"`
+	ID                                   uuid.UUID      `json:"id"`
+	CreatedAt                            time.Time      `json:"created_at"`
+	UpdatedAt                            time.Time      `json:"updated_at"`
+	DeletedAt                            *time.Time     `json:"deleted_at"`
+	FileName                             string         `json:"file_name"`
+	StartedAt                            time.Time      `json:"started_at"`
+	EndedAt                              *time.Time     `json:"ended_at"`
+	Duration                             *time.Duration `json:"duration"`
+	FileSize                             *float64       `json:"file_size"`
+	ThumbnailName                        *string        `json:"thumbnail_name"`
+	Status                               *string        `json:"status"`
+	ObjectDetectorClaimedUntil           time.Time      `json:"object_detector_claimed_until"`
+	ObjectTrackerClaimedUntil            time.Time      `json:"object_tracker_claimed_until"`
+	CameraID                             uuid.UUID      `json:"camera_id"`
+	CameraIDObject                       *Camera        `json:"camera_id_object"`
+	DetectionSummary                     any            `json:"detection_summary"`
+	IsLowRes                             bool           `json:"is_low_res"`
+	TrackSummary                         any            `json:"track_summary"`
+	OverlayOffsetMs                      *int64         `json:"overlay_offset_ms"`
+	AudioDetectorClaimedUntil            time.Time      `json:"audio_detector_claimed_until"`
+	AudioDetectedAt                      *time.Time     `json:"audio_detected_at"`
+	AudioProfile                         any            `json:"audio_profile"`
+	AudioSummary                         any            `json:"audio_summary"`
+	ReferencedByAudioEventVideoIDObjects []*AudioEvent  `json:"referenced_by_audio_event_video_id_objects"`
+	ReferencedByDetectionVideoIDObjects  []*Detection   `json:"referenced_by_detection_video_id_objects"`
+	ReferencedByTrackVideoIDObjects      []*Track       `json:"referenced_by_track_video_id_objects"`
 }
 
 var VideoTable = "video"
 
 var VideoTableWithSchema = fmt.Sprintf("%s.%s", schema, VideoTable)
 
-var VideoTableNamespaceID int32 = 1337 + 5
+var VideoTableNamespaceID int32 = 1337 + 6
 
 var (
 	VideoTableIDColumn                         = "id"
@@ -80,6 +85,10 @@ var (
 	VideoTableIsLowResColumn                   = "is_low_res"
 	VideoTableTrackSummaryColumn               = "track_summary"
 	VideoTableOverlayOffsetMsColumn            = "overlay_offset_ms"
+	VideoTableAudioDetectorClaimedUntilColumn  = "audio_detector_claimed_until"
+	VideoTableAudioDetectedAtColumn            = "audio_detected_at"
+	VideoTableAudioProfileColumn               = "audio_profile"
+	VideoTableAudioSummaryColumn               = "audio_summary"
 )
 
 var (
@@ -101,6 +110,10 @@ var (
 	VideoTableIsLowResColumnWithTypeCast                   = `"is_low_res" AS is_low_res`
 	VideoTableTrackSummaryColumnWithTypeCast               = `"track_summary" AS track_summary`
 	VideoTableOverlayOffsetMsColumnWithTypeCast            = `"overlay_offset_ms" AS overlay_offset_ms`
+	VideoTableAudioDetectorClaimedUntilColumnWithTypeCast  = `"audio_detector_claimed_until" AS audio_detector_claimed_until`
+	VideoTableAudioDetectedAtColumnWithTypeCast            = `"audio_detected_at" AS audio_detected_at`
+	VideoTableAudioProfileColumnWithTypeCast               = `"audio_profile" AS audio_profile`
+	VideoTableAudioSummaryColumnWithTypeCast               = `"audio_summary" AS audio_summary`
 )
 
 var VideoTableColumns = []string{
@@ -122,6 +135,10 @@ var VideoTableColumns = []string{
 	VideoTableIsLowResColumn,
 	VideoTableTrackSummaryColumn,
 	VideoTableOverlayOffsetMsColumn,
+	VideoTableAudioDetectorClaimedUntilColumn,
+	VideoTableAudioDetectedAtColumn,
+	VideoTableAudioProfileColumn,
+	VideoTableAudioSummaryColumn,
 }
 
 var VideoTableColumnsWithTypeCasts = []string{
@@ -143,6 +160,10 @@ var VideoTableColumnsWithTypeCasts = []string{
 	VideoTableIsLowResColumnWithTypeCast,
 	VideoTableTrackSummaryColumnWithTypeCast,
 	VideoTableOverlayOffsetMsColumnWithTypeCast,
+	VideoTableAudioDetectorClaimedUntilColumnWithTypeCast,
+	VideoTableAudioDetectedAtColumnWithTypeCast,
+	VideoTableAudioProfileColumnWithTypeCast,
+	VideoTableAudioSummaryColumnWithTypeCast,
 }
 
 var VideoIntrospectedTable *introspect.Table
@@ -182,6 +203,11 @@ type VideoObjectTrackerClaimRequest struct {
 	TimeoutSeconds float64   `json:"timeout_seconds"`
 }
 
+type VideoAudioDetectorClaimRequest struct {
+	Until          time.Time `json:"until"`
+	TimeoutSeconds float64   `json:"timeout_seconds"`
+}
+
 /*
 TODO: find a way to not need this- there is a piece in the templating logic
 that uses goimports but pending where the code is built, it may resolve
@@ -217,6 +243,14 @@ func (Video) GetQueryInfo() query.ModelQueryInfo {
 				LocalColumn:  "camera_id",
 				TargetColumn: "id",
 				Cardinality:  query.RelationCardinalityOne,
+			},
+			{
+				Name:         "referenced_by_AudioEvent_VideoID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "audio_event",
+				LocalColumn:  "video_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
 			},
 			{
 				Name:         "referenced_by_Detection_VideoID",
@@ -519,6 +553,64 @@ func (Video) GetQueryInfo() query.ModelQueryInfo {
 					query.FilterOpNotIn,
 					query.FilterOpIsNull,
 					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "audio_detector_claimed_until",
+				DataType: "timestamp with time zone",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "audio_detected_at",
+				DataType: "timestamp with time zone",
+				Nullable: true,
+				Operators: []query.FilterOperator{
+					query.FilterOpEq,
+					query.FilterOpNe,
+					query.FilterOpGt,
+					query.FilterOpGte,
+					query.FilterOpLt,
+					query.FilterOpLte,
+					query.FilterOpIn,
+					query.FilterOpNotIn,
+					query.FilterOpIsNull,
+					query.FilterOpIsNotNull,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "audio_profile",
+				DataType: "jsonb",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpContains,
+					query.FilterOpNotContains,
+					query.FilterOpAsc,
+					query.FilterOpDesc,
+				},
+			},
+			{
+				Name:     "audio_summary",
+				DataType: "jsonb",
+				Nullable: false,
+				Operators: []query.FilterOperator{
+					query.FilterOpContains,
+					query.FilterOpNotContains,
 					query.FilterOpAsc,
 					query.FilterOpDesc,
 				},
@@ -896,6 +988,82 @@ func (m *Video) FromItem(item map[string]any) error {
 
 			m.OverlayOffsetMs = &temp2
 
+		case "audio_detector_claimed_until":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseTime(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Time)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuaudio_detector_claimed_until.UUID", temp1))
+				}
+			}
+
+			m.AudioDetectorClaimedUntil = temp2
+
+		case "audio_detected_at":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseTime(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1.(time.Time)
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuaudio_detected_at.UUID", temp1))
+				}
+			}
+
+			m.AudioDetectedAt = &temp2
+
+		case "audio_profile":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseJSON(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1, true
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuaudio_profile.UUID", temp1))
+				}
+			}
+
+			m.AudioProfile = temp2
+
+		case "audio_summary":
+			if v == nil {
+				continue
+			}
+
+			temp1, err := types.ParseJSON(v)
+			if err != nil {
+				return wrapError(k, v, err)
+			}
+
+			temp2, ok := temp1, true
+			if !ok {
+				if temp1 != nil {
+					return wrapError(k, v, fmt.Errorf("failed to cast %#+v to uuaudio_summary.UUID", temp1))
+				}
+			}
+
+			m.AudioSummary = temp2
+
 		}
 	}
 
@@ -960,6 +1128,11 @@ func (m *Video) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool) 
 	m.IsLowRes = o.IsLowRes
 	m.TrackSummary = o.TrackSummary
 	m.OverlayOffsetMs = o.OverlayOffsetMs
+	m.AudioDetectorClaimedUntil = o.AudioDetectorClaimedUntil
+	m.AudioDetectedAt = o.AudioDetectedAt
+	m.AudioProfile = o.AudioProfile
+	m.AudioSummary = o.AudioSummary
+	m.ReferencedByAudioEventVideoIDObjects = o.ReferencedByAudioEventVideoIDObjects
 	m.ReferencedByDetectionVideoIDObjects = o.ReferencedByDetectionVideoIDObjects
 	m.ReferencedByTrackVideoIDObjects = o.ReferencedByTrackVideoIDObjects
 
@@ -1163,6 +1336,50 @@ func (m *Video) GetColumnsAndValues(setPrimaryKey bool, setZeroValues bool, forc
 		v, err := types.FormatInt(m.OverlayOffsetMs)
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to handle m.OverlayOffsetMs; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.AudioDetectorClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableAudioDetectorClaimedUntilColumn) || isRequired(VideoTableColumnLookup, VideoTableAudioDetectorClaimedUntilColumn) {
+		columns = append(columns, VideoTableAudioDetectorClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.AudioDetectorClaimedUntil)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.AudioDetectorClaimedUntil; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.AudioDetectedAt) || slices.Contains(forceSetValuesForFields, VideoTableAudioDetectedAtColumn) || isRequired(VideoTableColumnLookup, VideoTableAudioDetectedAtColumn) {
+		columns = append(columns, VideoTableAudioDetectedAtColumn)
+
+		v, err := types.FormatTime(m.AudioDetectedAt)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.AudioDetectedAt; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.AudioProfile) || slices.Contains(forceSetValuesForFields, VideoTableAudioProfileColumn) || isRequired(VideoTableColumnLookup, VideoTableAudioProfileColumn) {
+		columns = append(columns, VideoTableAudioProfileColumn)
+
+		v, err := types.FormatJSON(m.AudioProfile)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.AudioProfile; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.AudioSummary) || slices.Contains(forceSetValuesForFields, VideoTableAudioSummaryColumn) || isRequired(VideoTableColumnLookup, VideoTableAudioSummaryColumn) {
+		columns = append(columns, VideoTableAudioSummaryColumn)
+
+		v, err := types.FormatJSON(m.AudioSummary)
+		if err != nil {
+			return nil, nil, fmt.Errorf("failed to handle m.AudioSummary; %v", err)
 		}
 
 		values = append(values, v)
@@ -1424,6 +1641,50 @@ func (m *Video) Update(ctx context.Context, tx pgx.Tx, setZeroValues bool, force
 		values = append(values, v)
 	}
 
+	if setZeroValues || !types.IsZeroTime(m.AudioDetectorClaimedUntil) || slices.Contains(forceSetValuesForFields, VideoTableAudioDetectorClaimedUntilColumn) {
+		columns = append(columns, VideoTableAudioDetectorClaimedUntilColumn)
+
+		v, err := types.FormatTime(m.AudioDetectorClaimedUntil)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.AudioDetectorClaimedUntil; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroTime(m.AudioDetectedAt) || slices.Contains(forceSetValuesForFields, VideoTableAudioDetectedAtColumn) {
+		columns = append(columns, VideoTableAudioDetectedAtColumn)
+
+		v, err := types.FormatTime(m.AudioDetectedAt)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.AudioDetectedAt; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.AudioProfile) || slices.Contains(forceSetValuesForFields, VideoTableAudioProfileColumn) {
+		columns = append(columns, VideoTableAudioProfileColumn)
+
+		v, err := types.FormatJSON(m.AudioProfile)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.AudioProfile; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
+	if setZeroValues || !types.IsZeroJSON(m.AudioSummary) || slices.Contains(forceSetValuesForFields, VideoTableAudioSummaryColumn) {
+		columns = append(columns, VideoTableAudioSummaryColumn)
+
+		v, err := types.FormatJSON(m.AudioSummary)
+		if err != nil {
+			return fmt.Errorf("failed to handle m.AudioSummary; %v", err)
+		}
+
+		values = append(values, v)
+	}
+
 	v, err := types.FormatUUID(m.ID)
 	if err != nil {
 		return fmt.Errorf("failed to handle m.ID; %v", err)
@@ -1513,6 +1774,18 @@ func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, va
 
 	case "overlay_offset_ms":
 		columnName = VideoTableOverlayOffsetMsColumn
+
+	case "audio_detector_claimed_until":
+		columnName = VideoTableAudioDetectorClaimedUntilColumn
+
+	case "audio_detected_at":
+		columnName = VideoTableAudioDetectedAtColumn
+
+	case "audio_profile":
+		columnName = VideoTableAudioProfileColumn
+
+	case "audio_summary":
+		columnName = VideoTableAudioSummaryColumn
 	default:
 		return fmt.Errorf("unknown field name: %v", fieldName)
 	}
@@ -1574,6 +1847,18 @@ func (m *Video) UpdateField(ctx context.Context, tx pgx.Tx, fieldName string, va
 
 	case VideoTableOverlayOffsetMsColumn:
 		columnValue, err = types.FormatInt(value)
+
+	case VideoTableAudioDetectorClaimedUntilColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableAudioDetectedAtColumn:
+		columnValue, err = types.FormatTime(value)
+
+	case VideoTableAudioProfileColumn:
+		columnValue, err = types.FormatJSON(value)
+
+	case VideoTableAudioSummaryColumn:
+		columnValue, err = types.FormatJSON(value)
 	}
 	if err != nil {
 		return fmt.Errorf("failed to format value for %v; %v", columnName, err)
@@ -1677,6 +1962,18 @@ func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]a
 
 		case "overlay_offset_ms":
 			columnName = VideoTableOverlayOffsetMsColumn
+
+		case "audio_detector_claimed_until":
+			columnName = VideoTableAudioDetectorClaimedUntilColumn
+
+		case "audio_detected_at":
+			columnName = VideoTableAudioDetectedAtColumn
+
+		case "audio_profile":
+			columnName = VideoTableAudioProfileColumn
+
+		case "audio_summary":
+			columnName = VideoTableAudioSummaryColumn
 		default:
 			return fmt.Errorf("unknown field name: %v", fieldName)
 		}
@@ -1738,6 +2035,18 @@ func (m *Video) UpdateFields(ctx context.Context, tx pgx.Tx, fields map[string]a
 
 		case VideoTableOverlayOffsetMsColumn:
 			columnValue, err = types.FormatInt(value)
+
+		case VideoTableAudioDetectorClaimedUntilColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableAudioDetectedAtColumn:
+			columnValue, err = types.FormatTime(value)
+
+		case VideoTableAudioProfileColumn:
+			columnValue, err = types.FormatJSON(value)
+
+		case VideoTableAudioSummaryColumn:
+			columnValue, err = types.FormatJSON(value)
 		}
 		if err != nil {
 			return fmt.Errorf("failed to format value for %v; %v", columnName, err)
@@ -1891,6 +2200,35 @@ func (m *Video) ObjectTrackerClaim(ctx context.Context, tx pgx.Tx, until time.Ti
 	return nil
 }
 
+func (m *Video) AudioDetectorClaim(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration) error {
+	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
+	if err != nil {
+		return fmt.Errorf("failed to claim (advisory lock): %s", err.Error())
+	}
+
+	_, _, _, _, _, err = SelectVideo(
+		ctx,
+		tx,
+		fmt.Sprintf(
+			"%s = $$?? AND (audio_detector_claimed_until IS null OR audio_detector_claimed_until < now())",
+			VideoTablePrimaryKeyColumn,
+		),
+		m.GetPrimaryKeyValue(),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to claim (select): %s", err.Error())
+	}
+
+	m.AudioDetectorClaimedUntil = until
+
+	err = m.Update(ctx, tx, false)
+	if err != nil {
+		return fmt.Errorf("failed to claim (update): %s", err.Error())
+	}
+
+	return nil
+}
+
 func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string, limit *int, offset *int, values ...any) ([]*Video, int64, int64, int64, int64, error) {
 	before := time.Now()
 
@@ -2034,6 +2372,59 @@ func SelectVideos(ctx context.Context, tx pgx.Tx, where string, orderBy *string,
 				}
 			}
 		}
+		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   AudioEventTable,
+				LocalColumn: AudioEventTableVideoIDColumn,
+			})
+			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", AudioEventTable))
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", AudioEventTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", AudioEventTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
+				}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
+				}
+			}
+
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectVideos->SelectAudioEvents for object.ReferencedByAudioEventVideoIDObjects")
+			}
+
+			object.ReferencedByAudioEventVideoIDObjects, _, _, _, _, err = SelectAudioEvents(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", AudioEventTableVideoIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
+				}
+			}
+
+			if config.Debug() {
+				log.Printf("loaded SelectVideos->SelectAudioEvents for object.ReferencedByAudioEventVideoIDObjects in %s", time.Since(thisBefore))
+			}
+
+			return nil
+		}()
+		if err != nil {
+			return nil, 0, 0, 0, 0, err
+		}
+
 		err = func() error {
 			childNode := query.GetSelectionNode(ctx, query.RelationKey{
 				Direction:   query.RelationDirectionInbound,
@@ -2336,6 +2727,53 @@ func ObjectTrackerClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, ti
 	m = ms[0]
 
 	m.ObjectTrackerClaimedUntil = until
+
+	err = m.Update(ctx, tx, false)
+	if err != nil {
+		return nil, fmt.Errorf("failed to claim: %s", err.Error())
+	}
+
+	return m, nil
+}
+
+func AudioDetectorClaimVideo(ctx context.Context, tx pgx.Tx, until time.Time, timeout time.Duration, where string, orderBy *string, values ...any) (*Video, error) {
+	m := &Video{}
+
+	err := m.AdvisoryLockWithRetries(ctx, tx, math.MinInt32, timeout, time.Second*1)
+	if err != nil {
+		return nil, fmt.Errorf("failed to claim: %s", err.Error())
+	}
+
+	if strings.TrimSpace(where) != "" {
+		where += " AND\n"
+	}
+
+	where += "    (audio_detector_claimed_until IS null OR audio_detector_claimed_until < now())"
+
+	if orderBy == nil {
+		orderBy = helpers.Ptr("audio_detector_claimed_until ASC, ID ASC")
+	}
+
+	ms, _, _, _, _, err := SelectVideos(
+		ctx,
+		tx,
+		where,
+		orderBy,
+		helpers.Ptr(1),
+		nil,
+		values...,
+	)
+	if err != nil {
+		return nil, fmt.Errorf("failed to claim: %s", err.Error())
+	}
+
+	if len(ms) == 0 {
+		return nil, nil
+	}
+
+	m = ms[0]
+
+	m.AudioDetectorClaimedUntil = until
 
 	err = m.Update(ctx, tx, false)
 	if err != nil {
@@ -2975,6 +3413,176 @@ func MutateRouterForVideo(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool,
 			panic(err)
 		}
 		r.Post(postHandlerForObjectTrackerClaimOne.FullPath, postHandlerForObjectTrackerClaimOne.ServeHTTP)
+	}()
+
+	func() {
+		postHandlerForAudioDetectorClaim, err := getHTTPHandler(
+			http.MethodPost,
+			"/audio-detector-claim-video",
+			http.StatusOK,
+			func(
+				ctx context.Context,
+				pathParams server.EmptyPathParams,
+				queryParams map[string]any,
+				req VideoAudioDetectorClaimRequest,
+				rawReq any,
+			) (server.Response[Video], error) {
+				tx, err := db.Begin(ctx)
+				if err != nil {
+					return server.Response[Video]{}, err
+				}
+
+				defer func() {
+					_ = tx.Rollback(ctx)
+				}()
+
+				arguments, err := server.GetSelectManyArguments(ctx, queryParams, VideoIntrospectedTable, nil, nil)
+				if err != nil {
+					return server.Response[Video]{}, err
+				}
+
+				object, err := AudioDetectorClaimVideo(ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000), arguments.Where, arguments.OrderBy, arguments.Values...)
+				if err != nil {
+					return server.Response[Video]{}, err
+				}
+
+				count := int64(0)
+
+				totalCount := int64(0)
+
+				limit := int64(0)
+
+				offset := int64(0)
+
+				if object == nil {
+					return server.Response[Video]{
+						Status:     http.StatusOK,
+						Success:    true,
+						Error:      nil,
+						Objects:    []*Video{},
+						Count:      count,
+						TotalCount: totalCount,
+						Limit:      limit,
+						Offset:     offset,
+					}, nil
+				}
+
+				err = tx.Commit(ctx)
+				if err != nil {
+					return server.Response[Video]{}, err
+				}
+
+				return server.Response[Video]{
+					Status:     http.StatusOK,
+					Success:    true,
+					Error:      nil,
+					Objects:    []*Video{object},
+					Count:      count,
+					TotalCount: totalCount,
+					Limit:      limit,
+					Offset:     offset,
+				}, nil
+			},
+			Video{},
+			VideoIntrospectedTable,
+		)
+		if err != nil {
+			panic(err)
+		}
+		r.Post(postHandlerForAudioDetectorClaim.FullPath, postHandlerForAudioDetectorClaim.ServeHTTP)
+
+		postHandlerForAudioDetectorClaimOne, err := getHTTPHandler(
+			http.MethodPost,
+			"/videos/{primaryKey}/audio-detector-claim",
+			http.StatusOK,
+			func(
+				ctx context.Context,
+				pathParams VideoOnePathParams,
+				queryParams VideoLoadQueryParams,
+				req VideoAudioDetectorClaimRequest,
+				rawReq any,
+			) (server.Response[Video], error) {
+				before := time.Now()
+
+				redisConn := redisPool.Get()
+				defer func() {
+					_ = redisConn.Close()
+				}()
+
+				arguments, err := server.GetSelectOneArguments(ctx, queryParams.Depth, VideoIntrospectedTable, pathParams.PrimaryKey, nil, nil)
+				if err != nil {
+					if config.Debug() {
+						log.Printf("request failed in %s %s path: %#+v query: %#+v req: %#+v", time.Since(before), http.MethodGet, pathParams, queryParams, req)
+					}
+
+					return server.Response[Video]{}, err
+				}
+
+				/* note: deliberately no attempt at a cache hit */
+
+				var object *Video
+				var count int64
+				var totalCount int64
+
+				err = func() error {
+					tx, err := db.Begin(arguments.Ctx)
+					if err != nil {
+						return err
+					}
+
+					defer func() {
+						_ = tx.Rollback(arguments.Ctx)
+					}()
+
+					object, count, totalCount, _, _, err = SelectVideo(arguments.Ctx, tx, arguments.Where, arguments.Values...)
+					if err != nil {
+						return fmt.Errorf("failed to select object to claim: %s", err.Error())
+					}
+
+					err = object.AudioDetectorClaim(arguments.Ctx, tx, req.Until, time.Millisecond*time.Duration(req.TimeoutSeconds*1000))
+					if err != nil {
+						return err
+					}
+
+					err = tx.Commit(arguments.Ctx)
+					if err != nil {
+						return err
+					}
+
+					return nil
+				}()
+				if err != nil {
+					if config.Debug() {
+						log.Printf("request failed in %s %s path: %#+v query: %#+v req: %#+v", time.Since(before), http.MethodGet, pathParams, queryParams, req)
+					}
+
+					return server.Response[Video]{}, err
+				}
+
+				limit := int64(0)
+
+				offset := int64(0)
+
+				response := server.Response[Video]{
+					Status:     http.StatusOK,
+					Success:    true,
+					Error:      nil,
+					Objects:    []*Video{object},
+					Count:      count,
+					TotalCount: totalCount,
+					Limit:      limit,
+					Offset:     offset,
+				}
+
+				return response, nil
+			},
+			Video{},
+			VideoIntrospectedTable,
+		)
+		if err != nil {
+			panic(err)
+		}
+		r.Post(postHandlerForAudioDetectorClaimOne.FullPath, postHandlerForAudioDetectorClaimOne.ServeHTTP)
 	}()
 
 	func() {

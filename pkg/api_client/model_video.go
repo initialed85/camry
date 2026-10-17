@@ -20,6 +20,10 @@ var _ MappedNullable = &Video{}
 
 // Video struct for Video
 type Video struct {
+	AudioDetectedAt *time.Time `json:"audio_detected_at,omitempty"`
+	AudioDetectorClaimedUntil *time.Time `json:"audio_detector_claimed_until,omitempty"`
+	AudioProfile interface{} `json:"audio_profile,omitempty"`
+	AudioSummary interface{} `json:"audio_summary,omitempty"`
 	CameraId *string `json:"camera_id,omitempty"`
 	CameraIdObject *Camera `json:"camera_id_object,omitempty"`
 	CreatedAt *time.Time `json:"created_at,omitempty"`
@@ -34,6 +38,7 @@ type Video struct {
 	ObjectDetectorClaimedUntil *time.Time `json:"object_detector_claimed_until,omitempty"`
 	ObjectTrackerClaimedUntil *time.Time `json:"object_tracker_claimed_until,omitempty"`
 	OverlayOffsetMs *int64 `json:"overlay_offset_ms,omitempty"`
+	ReferencedByAudioEventVideoIdObjects []AudioEvent `json:"referenced_by_audio_event_video_id_objects,omitempty"`
 	ReferencedByDetectionVideoIdObjects []Detection `json:"referenced_by_detection_video_id_objects,omitempty"`
 	ReferencedByTrackVideoIdObjects []Track `json:"referenced_by_track_video_id_objects,omitempty"`
 	StartedAt *time.Time `json:"started_at,omitempty"`
@@ -58,6 +63,136 @@ func NewVideo() *Video {
 func NewVideoWithDefaults() *Video {
 	this := Video{}
 	return &this
+}
+
+// GetAudioDetectedAt returns the AudioDetectedAt field value if set, zero value otherwise.
+func (o *Video) GetAudioDetectedAt() time.Time {
+	if o == nil || IsNil(o.AudioDetectedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.AudioDetectedAt
+}
+
+// GetAudioDetectedAtOk returns a tuple with the AudioDetectedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Video) GetAudioDetectedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.AudioDetectedAt) {
+		return nil, false
+	}
+	return o.AudioDetectedAt, true
+}
+
+// HasAudioDetectedAt returns a boolean if a field has been set.
+func (o *Video) HasAudioDetectedAt() bool {
+	if o != nil && !IsNil(o.AudioDetectedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudioDetectedAt gets a reference to the given time.Time and assigns it to the AudioDetectedAt field.
+func (o *Video) SetAudioDetectedAt(v time.Time) {
+	o.AudioDetectedAt = &v
+}
+
+// GetAudioDetectorClaimedUntil returns the AudioDetectorClaimedUntil field value if set, zero value otherwise.
+func (o *Video) GetAudioDetectorClaimedUntil() time.Time {
+	if o == nil || IsNil(o.AudioDetectorClaimedUntil) {
+		var ret time.Time
+		return ret
+	}
+	return *o.AudioDetectorClaimedUntil
+}
+
+// GetAudioDetectorClaimedUntilOk returns a tuple with the AudioDetectorClaimedUntil field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Video) GetAudioDetectorClaimedUntilOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.AudioDetectorClaimedUntil) {
+		return nil, false
+	}
+	return o.AudioDetectorClaimedUntil, true
+}
+
+// HasAudioDetectorClaimedUntil returns a boolean if a field has been set.
+func (o *Video) HasAudioDetectorClaimedUntil() bool {
+	if o != nil && !IsNil(o.AudioDetectorClaimedUntil) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudioDetectorClaimedUntil gets a reference to the given time.Time and assigns it to the AudioDetectorClaimedUntil field.
+func (o *Video) SetAudioDetectorClaimedUntil(v time.Time) {
+	o.AudioDetectorClaimedUntil = &v
+}
+
+// GetAudioProfile returns the AudioProfile field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Video) GetAudioProfile() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.AudioProfile
+}
+
+// GetAudioProfileOk returns a tuple with the AudioProfile field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Video) GetAudioProfileOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.AudioProfile) {
+		return nil, false
+	}
+	return &o.AudioProfile, true
+}
+
+// HasAudioProfile returns a boolean if a field has been set.
+func (o *Video) HasAudioProfile() bool {
+	if o != nil && !IsNil(o.AudioProfile) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudioProfile gets a reference to the given interface{} and assigns it to the AudioProfile field.
+func (o *Video) SetAudioProfile(v interface{}) {
+	o.AudioProfile = v
+}
+
+// GetAudioSummary returns the AudioSummary field value if set, zero value otherwise (both if not set or set to explicit null).
+func (o *Video) GetAudioSummary() interface{} {
+	if o == nil {
+		var ret interface{}
+		return ret
+	}
+	return o.AudioSummary
+}
+
+// GetAudioSummaryOk returns a tuple with the AudioSummary field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+// NOTE: If the value is an explicit nil, `nil, true` will be returned
+func (o *Video) GetAudioSummaryOk() (*interface{}, bool) {
+	if o == nil || IsNil(o.AudioSummary) {
+		return nil, false
+	}
+	return &o.AudioSummary, true
+}
+
+// HasAudioSummary returns a boolean if a field has been set.
+func (o *Video) HasAudioSummary() bool {
+	if o != nil && !IsNil(o.AudioSummary) {
+		return true
+	}
+
+	return false
+}
+
+// SetAudioSummary gets a reference to the given interface{} and assigns it to the AudioSummary field.
+func (o *Video) SetAudioSummary(v interface{}) {
+	o.AudioSummary = v
 }
 
 // GetCameraId returns the CameraId field value if set, zero value otherwise.
@@ -509,6 +644,38 @@ func (o *Video) SetOverlayOffsetMs(v int64) {
 	o.OverlayOffsetMs = &v
 }
 
+// GetReferencedByAudioEventVideoIdObjects returns the ReferencedByAudioEventVideoIdObjects field value if set, zero value otherwise.
+func (o *Video) GetReferencedByAudioEventVideoIdObjects() []AudioEvent {
+	if o == nil || IsNil(o.ReferencedByAudioEventVideoIdObjects) {
+		var ret []AudioEvent
+		return ret
+	}
+	return o.ReferencedByAudioEventVideoIdObjects
+}
+
+// GetReferencedByAudioEventVideoIdObjectsOk returns a tuple with the ReferencedByAudioEventVideoIdObjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Video) GetReferencedByAudioEventVideoIdObjectsOk() ([]AudioEvent, bool) {
+	if o == nil || IsNil(o.ReferencedByAudioEventVideoIdObjects) {
+		return nil, false
+	}
+	return o.ReferencedByAudioEventVideoIdObjects, true
+}
+
+// HasReferencedByAudioEventVideoIdObjects returns a boolean if a field has been set.
+func (o *Video) HasReferencedByAudioEventVideoIdObjects() bool {
+	if o != nil && !IsNil(o.ReferencedByAudioEventVideoIdObjects) {
+		return true
+	}
+
+	return false
+}
+
+// SetReferencedByAudioEventVideoIdObjects gets a reference to the given []AudioEvent and assigns it to the ReferencedByAudioEventVideoIdObjects field.
+func (o *Video) SetReferencedByAudioEventVideoIdObjects(v []AudioEvent) {
+	o.ReferencedByAudioEventVideoIdObjects = v
+}
+
 // GetReferencedByDetectionVideoIdObjects returns the ReferencedByDetectionVideoIdObjects field value if set, zero value otherwise.
 func (o *Video) GetReferencedByDetectionVideoIdObjects() []Detection {
 	if o == nil || IsNil(o.ReferencedByDetectionVideoIdObjects) {
@@ -744,6 +911,18 @@ func (o Video) MarshalJSON() ([]byte, error) {
 
 func (o Video) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
+	if !IsNil(o.AudioDetectedAt) {
+		toSerialize["audio_detected_at"] = o.AudioDetectedAt
+	}
+	if !IsNil(o.AudioDetectorClaimedUntil) {
+		toSerialize["audio_detector_claimed_until"] = o.AudioDetectorClaimedUntil
+	}
+	if o.AudioProfile != nil {
+		toSerialize["audio_profile"] = o.AudioProfile
+	}
+	if o.AudioSummary != nil {
+		toSerialize["audio_summary"] = o.AudioSummary
+	}
 	if !IsNil(o.CameraId) {
 		toSerialize["camera_id"] = o.CameraId
 	}
@@ -785,6 +964,9 @@ func (o Video) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OverlayOffsetMs) {
 		toSerialize["overlay_offset_ms"] = o.OverlayOffsetMs
+	}
+	if !IsNil(o.ReferencedByAudioEventVideoIdObjects) {
+		toSerialize["referenced_by_audio_event_video_id_objects"] = o.ReferencedByAudioEventVideoIdObjects
 	}
 	if !IsNil(o.ReferencedByDetectionVideoIdObjects) {
 		toSerialize["referenced_by_detection_video_id_objects"] = o.ReferencedByDetectionVideoIdObjects

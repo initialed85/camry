@@ -4,6 +4,54 @@
  */
 
 export interface paths {
+  "/api/audio-detector-claim-video": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostAudioDetectorClaimVideos"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/audio-events": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetAudioEvents"];
+    put?: never;
+    post: operations["PostAudioEvents"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/api/audio-events/{primaryKey}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get: operations["GetAudioEvent"];
+    put?: never;
+    post?: never;
+    delete: operations["DeleteAudioEvent"];
+    options?: never;
+    head?: never;
+    patch: operations["PatchAudioEvent"];
+    trace?: never;
+  };
   "/api/cameras": {
     parameters: {
       query?: never;
@@ -228,6 +276,22 @@ export interface paths {
     patch: operations["PatchVideo"];
     trace?: never;
   };
+  "/api/videos/{primaryKey}/audio-detector-claim": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    get?: never;
+    put?: never;
+    post: operations["PostVideosAudioDetectorClaim"];
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/videos/{primaryKey}/object-detector-claim": {
     parameters: {
       query?: never;
@@ -265,6 +329,7 @@ export type webhooks = Record<string, never>;
 export interface components {
   schemas: {
     Any: unknown;
+    ArrayOfNullableAudioEvent: components["schemas"]["AudioEvent"][] | null;
     ArrayOfNullableCamera: components["schemas"]["Camera"][] | null;
     ArrayOfNullableDetection: components["schemas"]["Detection"][] | null;
     ArrayOfNullableTrack: components["schemas"]["Track"][] | null;
@@ -278,6 +343,44 @@ export interface components {
           Y?: number;
         }[]
       | null;
+    AudioEvent: {
+      /** Format: uuid */
+      camera_id?: string;
+      camera_id_object?: components["schemas"]["Camera"];
+      /** Format: date-time */
+      created_at?: string;
+      /** Format: double */
+      crest_db?: number;
+      /** Format: date-time */
+      deleted_at?: string;
+      /** Format: int64 */
+      duration_ms?: number;
+      /** Format: date-time */
+      ended_at?: string;
+      /** Format: double */
+      floor_dbfs?: number;
+      /** Format: uuid */
+      id?: string;
+      kind?: string;
+      /** Format: int64 */
+      offset_ms?: number;
+      /** Format: double */
+      peak_dbfs?: number;
+      /** Format: double */
+      prominence_db?: number;
+      /** Format: double */
+      rms_dbfs?: number;
+      /** Format: double */
+      score?: number;
+      /** Format: date-time */
+      seen_at?: string;
+      spectral?: unknown;
+      /** Format: date-time */
+      updated_at?: string;
+      /** Format: uuid */
+      video_id?: string;
+      video_id_object?: components["schemas"]["Video"];
+    };
     Camera: {
       /** Format: date-time */
       created_at?: string;
@@ -291,6 +394,9 @@ export interface components {
       name?: string;
       /** Format: int64 */
       overlay_offset_ms?: number;
+      referenced_by_audio_event_camera_id_objects?:
+        | components["schemas"]["AudioEvent"][]
+        | null;
       referenced_by_detection_camera_id_objects?:
         | components["schemas"]["Detection"][]
         | null;
@@ -360,10 +466,26 @@ export interface components {
       video_id?: string;
       video_id_object?: components["schemas"]["Video"];
     };
+    NullableAudioEvent: components["schemas"]["AudioEvent"];
     NullableCamera: components["schemas"]["Camera"];
     NullableDetection: components["schemas"]["Detection"];
     NullableTrack: components["schemas"]["Track"];
     NullableVideo: components["schemas"]["Video"];
+    ResponseWithGenericOfAudioEvent: {
+      /** Format: int64 */
+      count?: number;
+      error?: string[] | null;
+      /** Format: int64 */
+      limit?: number;
+      objects?: components["schemas"]["AudioEvent"][] | null;
+      /** Format: int64 */
+      offset?: number;
+      /** Format: int64 */
+      status?: number;
+      success?: boolean;
+      /** Format: int64 */
+      total_count?: number;
+    };
     ResponseWithGenericOfCamera: {
       /** Format: int64 */
       count?: number;
@@ -482,6 +604,12 @@ export interface components {
       Y?: number;
     };
     Video: {
+      /** Format: date-time */
+      audio_detected_at?: string;
+      /** Format: date-time */
+      audio_detector_claimed_until?: string;
+      audio_profile?: unknown;
+      audio_summary?: unknown;
       /** Format: uuid */
       camera_id?: string;
       camera_id_object?: components["schemas"]["Camera"];
@@ -506,6 +634,9 @@ export interface components {
       object_tracker_claimed_until?: string;
       /** Format: int64 */
       overlay_offset_ms?: number;
+      referenced_by_audio_event_video_id_objects?:
+        | components["schemas"]["AudioEvent"][]
+        | null;
       referenced_by_detection_video_id_objects?:
         | components["schemas"]["Detection"][]
         | null;
@@ -519,6 +650,12 @@ export interface components {
       track_summary?: unknown;
       /** Format: date-time */
       updated_at?: string;
+    };
+    VideoAudioDetectorClaimRequest: {
+      /** Format: double */
+      timeout_seconds?: number;
+      /** Format: date-time */
+      until?: string;
     };
     VideoObjectDetectorClaimRequest: {
       /** Format: double */
@@ -541,6 +678,992 @@ export interface components {
 }
 export type $defs = Record<string, never>;
 export interface operations {
+  PostAudioDetectorClaimVideos: {
+    parameters: {
+      query?: {
+        /** @description SQL LIMIT operator */
+        limit?: number;
+        /** @description SQL OFFSET operator */
+        offset?: number;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
+        /** @description load the given outbound relationship, value is ignored (presence of key is sufficient) */
+        camera__load?: string;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_AudioEvent_VideoID__load?: string;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_Detection_VideoID__load?: string;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_Track_VideoID__load?: string;
+        /** @description SQL = comparison */
+        created_at__eq?: string;
+        /** @description SQL != comparison */
+        created_at__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        created_at__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        created_at__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        created_at__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        created_at__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        created_at__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        created_at__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        created_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        created_at__desc?: string;
+        /** @description SQL = comparison */
+        updated_at__eq?: string;
+        /** @description SQL != comparison */
+        updated_at__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        updated_at__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        updated_at__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        updated_at__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        updated_at__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        updated_at__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        updated_at__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        updated_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        updated_at__desc?: string;
+        /** @description SQL = comparison */
+        deleted_at__eq?: string | null;
+        /** @description SQL != comparison */
+        deleted_at__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        deleted_at__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        deleted_at__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        deleted_at__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        deleted_at__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        deleted_at__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        deleted_at__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        deleted_at__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        deleted_at__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        deleted_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        deleted_at__desc?: string;
+        /** @description SQL = comparison */
+        file_name__eq?: string;
+        /** @description SQL != comparison */
+        file_name__ne?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        file_name__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        file_name__notin?: string;
+        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
+        file_name__like?: string;
+        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
+        file_name__notlike?: string;
+        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        file_name__ilike?: string;
+        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        file_name__notilike?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        file_name__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        file_name__desc?: string;
+        /** @description SQL = comparison */
+        started_at__eq?: string;
+        /** @description SQL != comparison */
+        started_at__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        started_at__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        started_at__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        started_at__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        started_at__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        started_at__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        started_at__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        started_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        started_at__desc?: string;
+        /** @description SQL = comparison */
+        ended_at__eq?: string | null;
+        /** @description SQL != comparison */
+        ended_at__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        ended_at__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        ended_at__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        ended_at__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        ended_at__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        ended_at__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        ended_at__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        ended_at__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        ended_at__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        ended_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        ended_at__desc?: string;
+        /** @description SQL = comparison */
+        duration__eq?: string | null;
+        /** @description SQL != comparison */
+        duration__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        duration__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        duration__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        duration__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        duration__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        duration__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        duration__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        duration__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        duration__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        duration__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        duration__desc?: string;
+        /** @description SQL = comparison */
+        file_size__eq?: number | null;
+        /** @description SQL != comparison */
+        file_size__ne?: number | null;
+        /** @description SQL > comparison, may not work with all column types */
+        file_size__gt?: number | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        file_size__gte?: number | null;
+        /** @description SQL < comparison, may not work with all column types */
+        file_size__lt?: number | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        file_size__lte?: number | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        file_size__in?: number | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        file_size__notin?: number | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        file_size__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        file_size__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        file_size__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        file_size__desc?: string;
+        /** @description SQL = comparison */
+        thumbnail_name__eq?: string | null;
+        /** @description SQL != comparison */
+        thumbnail_name__ne?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        thumbnail_name__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        thumbnail_name__notin?: string | null;
+        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__like?: string | null;
+        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__notlike?: string | null;
+        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__ilike?: string | null;
+        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        thumbnail_name__notilike?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        thumbnail_name__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        thumbnail_name__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        thumbnail_name__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        thumbnail_name__desc?: string;
+        /** @description SQL = comparison */
+        status__eq?: string | null;
+        /** @description SQL != comparison */
+        status__ne?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        status__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        status__notin?: string | null;
+        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
+        status__like?: string | null;
+        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
+        status__notlike?: string | null;
+        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        status__ilike?: string | null;
+        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        status__notilike?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        status__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        status__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        status__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        status__desc?: string;
+        /** @description SQL = comparison */
+        object_detector_claimed_until__eq?: string;
+        /** @description SQL != comparison */
+        object_detector_claimed_until__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        object_detector_claimed_until__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        object_detector_claimed_until__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        object_detector_claimed_until__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        object_detector_claimed_until__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        object_detector_claimed_until__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        object_detector_claimed_until__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        object_detector_claimed_until__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        object_detector_claimed_until__desc?: string;
+        /** @description SQL = comparison */
+        object_tracker_claimed_until__eq?: string;
+        /** @description SQL != comparison */
+        object_tracker_claimed_until__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        object_tracker_claimed_until__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        object_tracker_claimed_until__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        object_tracker_claimed_until__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        object_tracker_claimed_until__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        object_tracker_claimed_until__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        object_tracker_claimed_until__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        object_tracker_claimed_until__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        object_tracker_claimed_until__desc?: string;
+        /** @description SQL = comparison */
+        camera_id__eq?: string;
+        /** @description SQL != comparison */
+        camera_id__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        camera_id__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        camera_id__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        camera_id__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        camera_id__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        camera_id__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        camera_id__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        camera_id__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        camera_id__desc?: string;
+        /** @description SQL @> comparison */
+        detection_summary__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        detection_summary__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        detection_summary__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        detection_summary__desc?: string;
+        /** @description SQL = comparison */
+        is_low_res__eq?: boolean;
+        /** @description SQL != comparison */
+        is_low_res__ne?: boolean;
+        /** @description SQL IS false comparison, value is ignored (presence of key is sufficient) */
+        is_low_res__isfalse?: string;
+        /** @description SQL IS true comparison, value is ignored (presence of key is sufficient) */
+        is_low_res__istrue?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        is_low_res__desc?: string;
+        /** @description SQL @> comparison */
+        track_summary__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        track_summary__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        track_summary__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        track_summary__desc?: string;
+        /** @description SQL = comparison */
+        overlay_offset_ms__eq?: number | null;
+        /** @description SQL != comparison */
+        overlay_offset_ms__ne?: number | null;
+        /** @description SQL > comparison, may not work with all column types */
+        overlay_offset_ms__gt?: number | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        overlay_offset_ms__gte?: number | null;
+        /** @description SQL < comparison, may not work with all column types */
+        overlay_offset_ms__lt?: number | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        overlay_offset_ms__lte?: number | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        overlay_offset_ms__in?: number | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        overlay_offset_ms__notin?: number | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        overlay_offset_ms__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        overlay_offset_ms__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        overlay_offset_ms__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        overlay_offset_ms__desc?: string;
+        /** @description SQL = comparison */
+        audio_detector_claimed_until__eq?: string;
+        /** @description SQL != comparison */
+        audio_detector_claimed_until__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detector_claimed_until__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detector_claimed_until__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detector_claimed_until__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detector_claimed_until__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__desc?: string;
+        /** @description SQL = comparison */
+        audio_detected_at__eq?: string | null;
+        /** @description SQL != comparison */
+        audio_detected_at__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detected_at__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detected_at__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detected_at__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detected_at__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detected_at__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detected_at__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__desc?: string;
+        /** @description SQL @> comparison */
+        audio_profile__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_profile__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__desc?: string;
+        /** @description SQL @> comparison */
+        audio_summary__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_summary__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__desc?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["VideoAudioDetectorClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostAudioDetectorClaimVideos success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
+        };
+      };
+      /** @description PostAudioDetectorClaimVideos failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  GetAudioEvents: {
+    parameters: {
+      query?: {
+        /** @description SQL LIMIT operator */
+        limit?: number;
+        /** @description SQL OFFSET operator */
+        offset?: number;
+        /** @description Max recursion depth for loading foreign objects; default = 1
+         *
+         *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
+        depth?: number;
+        /** @description load the given outbound relationship, value is ignored (presence of key is sufficient) */
+        camera__load?: string;
+        /** @description load the given outbound relationship, value is ignored (presence of key is sufficient) */
+        video__load?: string;
+        /** @description SQL = comparison */
+        created_at__eq?: string;
+        /** @description SQL != comparison */
+        created_at__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        created_at__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        created_at__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        created_at__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        created_at__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        created_at__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        created_at__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        created_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        created_at__desc?: string;
+        /** @description SQL = comparison */
+        updated_at__eq?: string;
+        /** @description SQL != comparison */
+        updated_at__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        updated_at__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        updated_at__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        updated_at__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        updated_at__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        updated_at__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        updated_at__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        updated_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        updated_at__desc?: string;
+        /** @description SQL = comparison */
+        deleted_at__eq?: string | null;
+        /** @description SQL != comparison */
+        deleted_at__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        deleted_at__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        deleted_at__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        deleted_at__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        deleted_at__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        deleted_at__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        deleted_at__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        deleted_at__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        deleted_at__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        deleted_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        deleted_at__desc?: string;
+        /** @description SQL = comparison */
+        camera_id__eq?: string;
+        /** @description SQL != comparison */
+        camera_id__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        camera_id__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        camera_id__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        camera_id__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        camera_id__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        camera_id__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        camera_id__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        camera_id__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        camera_id__desc?: string;
+        /** @description SQL = comparison */
+        video_id__eq?: string;
+        /** @description SQL != comparison */
+        video_id__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        video_id__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        video_id__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        video_id__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        video_id__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        video_id__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        video_id__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        video_id__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        video_id__desc?: string;
+        /** @description SQL = comparison */
+        seen_at__eq?: string;
+        /** @description SQL != comparison */
+        seen_at__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        seen_at__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        seen_at__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        seen_at__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        seen_at__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        seen_at__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        seen_at__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        seen_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        seen_at__desc?: string;
+        /** @description SQL = comparison */
+        offset_ms__eq?: number;
+        /** @description SQL != comparison */
+        offset_ms__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        offset_ms__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        offset_ms__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        offset_ms__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        offset_ms__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        offset_ms__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        offset_ms__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        offset_ms__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        offset_ms__desc?: string;
+        /** @description SQL = comparison */
+        ended_at__eq?: string;
+        /** @description SQL != comparison */
+        ended_at__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        ended_at__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        ended_at__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        ended_at__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        ended_at__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        ended_at__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        ended_at__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        ended_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        ended_at__desc?: string;
+        /** @description SQL = comparison */
+        duration_ms__eq?: number;
+        /** @description SQL != comparison */
+        duration_ms__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        duration_ms__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        duration_ms__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        duration_ms__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        duration_ms__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        duration_ms__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        duration_ms__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        duration_ms__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        duration_ms__desc?: string;
+        /** @description SQL = comparison */
+        kind__eq?: string;
+        /** @description SQL != comparison */
+        kind__ne?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        kind__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        kind__notin?: string;
+        /** @description SQL LIKE comparison, value is implicitly prefixed and suffixed with % */
+        kind__like?: string;
+        /** @description SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with % */
+        kind__notlike?: string;
+        /** @description SQL ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        kind__ilike?: string;
+        /** @description SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with % */
+        kind__notilike?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        kind__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        kind__desc?: string;
+        /** @description SQL = comparison */
+        rms_dbfs__eq?: number;
+        /** @description SQL != comparison */
+        rms_dbfs__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        rms_dbfs__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        rms_dbfs__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        rms_dbfs__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        rms_dbfs__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        rms_dbfs__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        rms_dbfs__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        rms_dbfs__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        rms_dbfs__desc?: string;
+        /** @description SQL = comparison */
+        peak_dbfs__eq?: number;
+        /** @description SQL != comparison */
+        peak_dbfs__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        peak_dbfs__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        peak_dbfs__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        peak_dbfs__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        peak_dbfs__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        peak_dbfs__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        peak_dbfs__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        peak_dbfs__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        peak_dbfs__desc?: string;
+        /** @description SQL = comparison */
+        floor_dbfs__eq?: number;
+        /** @description SQL != comparison */
+        floor_dbfs__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        floor_dbfs__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        floor_dbfs__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        floor_dbfs__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        floor_dbfs__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        floor_dbfs__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        floor_dbfs__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        floor_dbfs__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        floor_dbfs__desc?: string;
+        /** @description SQL = comparison */
+        prominence_db__eq?: number;
+        /** @description SQL != comparison */
+        prominence_db__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        prominence_db__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        prominence_db__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        prominence_db__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        prominence_db__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        prominence_db__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        prominence_db__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        prominence_db__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        prominence_db__desc?: string;
+        /** @description SQL = comparison */
+        crest_db__eq?: number;
+        /** @description SQL != comparison */
+        crest_db__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        crest_db__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        crest_db__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        crest_db__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        crest_db__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        crest_db__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        crest_db__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        crest_db__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        crest_db__desc?: string;
+        /** @description SQL = comparison */
+        score__eq?: number;
+        /** @description SQL != comparison */
+        score__ne?: number;
+        /** @description SQL > comparison, may not work with all column types */
+        score__gt?: number;
+        /** @description SQL >= comparison, may not work with all column types */
+        score__gte?: number;
+        /** @description SQL < comparison, may not work with all column types */
+        score__lt?: number;
+        /** @description SQL <= comparison, may not work with all column types */
+        score__lte?: number;
+        /** @description SQL IN comparison, permits comma-separated values */
+        score__in?: number;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        score__notin?: number;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        score__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        score__desc?: string;
+        /** @description SQL @> comparison */
+        spectral__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        spectral__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        spectral__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        spectral__desc?: string;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description GetAudioEvents success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfAudioEvent"];
+        };
+      };
+      /** @description GetAudioEvents failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostAudioEvents: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["ArrayOfNullableAudioEvent"];
+      };
+    };
+    responses: {
+      /** @description PostAudioEvents success */
+      201: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfAudioEvent"];
+        };
+      };
+      /** @description PostAudioEvents failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  GetAudioEvent: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description GetAudioEvent success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfAudioEvent"];
+        };
+      };
+      /** @description GetAudioEvent failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  DeleteAudioEvent: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
+      cookie?: never;
+    };
+    requestBody?: never;
+    responses: {
+      /** @description DeleteAudioEvent success */
+      204: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+      /** @description DeleteAudioEvent failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content?: never;
+      };
+    };
+  };
+  PatchAudioEvent: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["AudioEvent"];
+      };
+    };
+    responses: {
+      /** @description PatchAudioEvent success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfAudioEvent"];
+        };
+      };
+      /** @description PatchAudioEvent failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
   GetCameras: {
     parameters: {
       query?: {
@@ -552,6 +1675,8 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_AudioEvent_CameraID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Detection_CameraID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
@@ -1469,6 +2594,8 @@ export interface operations {
         /** @description load the given outbound relationship, value is ignored (presence of key is sufficient) */
         camera__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_AudioEvent_VideoID__load?: string;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Detection_VideoID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Track_VideoID__load?: string;
@@ -1808,6 +2935,66 @@ export interface operations {
         overlay_offset_ms__asc?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         overlay_offset_ms__desc?: string;
+        /** @description SQL = comparison */
+        audio_detector_claimed_until__eq?: string;
+        /** @description SQL != comparison */
+        audio_detector_claimed_until__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detector_claimed_until__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detector_claimed_until__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detector_claimed_until__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detector_claimed_until__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__desc?: string;
+        /** @description SQL = comparison */
+        audio_detected_at__eq?: string | null;
+        /** @description SQL != comparison */
+        audio_detected_at__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detected_at__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detected_at__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detected_at__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detected_at__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detected_at__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detected_at__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__desc?: string;
+        /** @description SQL @> comparison */
+        audio_profile__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_profile__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__desc?: string;
+        /** @description SQL @> comparison */
+        audio_summary__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_summary__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__desc?: string;
       };
       header?: never;
       path?: never;
@@ -1858,6 +3045,8 @@ export interface operations {
         /** @description load the given outbound relationship, value is ignored (presence of key is sufficient) */
         camera__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_AudioEvent_VideoID__load?: string;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Detection_VideoID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Track_VideoID__load?: string;
@@ -2197,6 +3386,66 @@ export interface operations {
         overlay_offset_ms__asc?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         overlay_offset_ms__desc?: string;
+        /** @description SQL = comparison */
+        audio_detector_claimed_until__eq?: string;
+        /** @description SQL != comparison */
+        audio_detector_claimed_until__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detector_claimed_until__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detector_claimed_until__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detector_claimed_until__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detector_claimed_until__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__desc?: string;
+        /** @description SQL = comparison */
+        audio_detected_at__eq?: string | null;
+        /** @description SQL != comparison */
+        audio_detected_at__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detected_at__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detected_at__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detected_at__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detected_at__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detected_at__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detected_at__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__desc?: string;
+        /** @description SQL @> comparison */
+        audio_profile__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_profile__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__desc?: string;
+        /** @description SQL @> comparison */
+        audio_summary__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_summary__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__desc?: string;
       };
       header?: never;
       path?: never;
@@ -2244,6 +3493,8 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_AudioEvent_CameraID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Detection_CameraID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
@@ -2505,6 +3756,8 @@ export interface operations {
          *
          *     (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc) */
         depth?: number;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_AudioEvent_CameraID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Detection_CameraID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
@@ -3278,6 +4531,8 @@ export interface operations {
         /** @description load the given outbound relationship, value is ignored (presence of key is sufficient) */
         camera__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
+        referenced_by_AudioEvent_VideoID__load?: string;
+        /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Detection_VideoID__load?: string;
         /** @description load the given inbound relationship, value is ignored (presence of key is sufficient) */
         referenced_by_Track_VideoID__load?: string;
@@ -3617,6 +4872,66 @@ export interface operations {
         overlay_offset_ms__asc?: string;
         /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
         overlay_offset_ms__desc?: string;
+        /** @description SQL = comparison */
+        audio_detector_claimed_until__eq?: string;
+        /** @description SQL != comparison */
+        audio_detector_claimed_until__ne?: string;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detector_claimed_until__gt?: string;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detector_claimed_until__gte?: string;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detector_claimed_until__lt?: string;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detector_claimed_until__lte?: string;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__in?: string;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detector_claimed_until__notin?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detector_claimed_until__desc?: string;
+        /** @description SQL = comparison */
+        audio_detected_at__eq?: string | null;
+        /** @description SQL != comparison */
+        audio_detected_at__ne?: string | null;
+        /** @description SQL > comparison, may not work with all column types */
+        audio_detected_at__gt?: string | null;
+        /** @description SQL >= comparison, may not work with all column types */
+        audio_detected_at__gte?: string | null;
+        /** @description SQL < comparison, may not work with all column types */
+        audio_detected_at__lt?: string | null;
+        /** @description SQL <= comparison, may not work with all column types */
+        audio_detected_at__lte?: string | null;
+        /** @description SQL IN comparison, permits comma-separated values */
+        audio_detected_at__in?: string | null;
+        /** @description SQL NOT IN comparison, permits comma-separated values */
+        audio_detected_at__notin?: string | null;
+        /** @description SQL IS null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnull?: string;
+        /** @description SQL IS NOT null comparison, value is ignored (presence of key is sufficient) */
+        audio_detected_at__isnotnull?: string;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_detected_at__desc?: string;
+        /** @description SQL @> comparison */
+        audio_profile__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_profile__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_profile__desc?: string;
+        /** @description SQL @> comparison */
+        audio_summary__contains?: unknown;
+        /** @description SQL NOT @> comparison */
+        audio_summary__notcontains?: unknown;
+        /** @description SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__asc?: string;
+        /** @description SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient) */
+        audio_summary__desc?: string;
       };
       header?: never;
       path?: never;
@@ -3790,6 +5105,50 @@ export interface operations {
         };
       };
       /** @description PatchVideo failure */
+      default: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": {
+            error: string[];
+            /** Format: int32 */
+            status: number;
+            success: boolean;
+          };
+        };
+      };
+    };
+  };
+  PostVideosAudioDetectorClaim: {
+    parameters: {
+      query?: {
+        /** @description Query parameter depth */
+        depth?: number;
+      };
+      header?: never;
+      path: {
+        /** @description Path parameter primaryKey */
+        primaryKey: string;
+      };
+      cookie?: never;
+    };
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["VideoAudioDetectorClaimRequest"];
+      };
+    };
+    responses: {
+      /** @description PostVideosAudioDetectorClaim success */
+      200: {
+        headers: {
+          [name: string]: unknown;
+        };
+        content: {
+          "application/json": components["schemas"]["ResponseWithGenericOfVideo"];
+        };
+      };
+      /** @description PostVideosAudioDetectorClaim failure */
       default: {
         headers: {
           [name: string]: unknown;

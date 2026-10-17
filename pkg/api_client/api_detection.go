@@ -220,7 +220,7 @@ func (a *DetectionAPIService) GetDetectionExecute(r ApiGetDetectionRequest) (*Re
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1425,7 +1425,7 @@ func (a *DetectionAPIService) GetDetectionsExecute(r ApiGetDetectionsRequest) (*
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1555,7 +1555,7 @@ func (a *DetectionAPIService) PatchDetectionExecute(r ApiPatchDetectionRequest) 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1681,7 +1681,7 @@ func (a *DetectionAPIService) PostDetectionsExecute(r ApiPostDetectionsRequest) 
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

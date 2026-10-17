@@ -17,6 +17,8 @@
 __version__ = "1.0.0"
 
 # import apis into sdk package
+from openapi_client.api.audio_detector_claim_video_api import AudioDetectorClaimVideoApi
+from openapi_client.api.audio_event_api import AudioEventApi
 from openapi_client.api.camera_api import CameraApi
 from openapi_client.api.detection_api import DetectionApi
 from openapi_client.api.object_detector_claim_video_api import ObjectDetectorClaimVideoApi
@@ -39,11 +41,13 @@ from openapi_client.exceptions import ApiException
 
 # import models into sdk package
 from openapi_client.models.array_of_vec2_inner import ArrayOfVec2Inner
+from openapi_client.models.audio_event import AudioEvent
 from openapi_client.models.camera import Camera
 from openapi_client.models.camera_segment_producer_claim_request import CameraSegmentProducerClaimRequest
 from openapi_client.models.camera_stream_producer_claim_request import CameraStreamProducerClaimRequest
 from openapi_client.models.detection import Detection
-from openapi_client.models.get_cameras_default_response import GetCamerasDefaultResponse
+from openapi_client.models.post_audio_detector_claim_videos_default_response import PostAudioDetectorClaimVideosDefaultResponse
+from openapi_client.models.response_with_generic_of_audio_event import ResponseWithGenericOfAudioEvent
 from openapi_client.models.response_with_generic_of_camera import ResponseWithGenericOfCamera
 from openapi_client.models.response_with_generic_of_detection import ResponseWithGenericOfDetection
 from openapi_client.models.response_with_generic_of_track import ResponseWithGenericOfTrack
@@ -51,5 +55,6 @@ from openapi_client.models.response_with_generic_of_video import ResponseWithGen
 from openapi_client.models.track import Track
 from openapi_client.models.vec2 import Vec2
 from openapi_client.models.video import Video
+from openapi_client.models.video_audio_detector_claim_request import VideoAudioDetectorClaimRequest
 from openapi_client.models.video_object_detector_claim_request import VideoObjectDetectorClaimRequest
 from openapi_client.models.video_object_tracker_claim_request import VideoObjectTrackerClaimRequest

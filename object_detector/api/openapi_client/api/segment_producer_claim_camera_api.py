@@ -48,6 +48,7 @@ class SegmentProducerClaimCameraApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        referenced_by_audio_event_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_track_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
@@ -179,6 +180,8 @@ class SegmentProducerClaimCameraApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
+        :param referenced_by_audio_event_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_audio_event_camera_id__load: str
         :param referenced_by_detection_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id__load: str
         :param referenced_by_track_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
@@ -420,6 +423,7 @@ class SegmentProducerClaimCameraApi:
             limit=limit,
             offset=offset,
             depth=depth,
+            referenced_by_audio_event_camera_id__load=referenced_by_audio_event_camera_id__load,
             referenced_by_detection_camera_id__load=referenced_by_detection_camera_id__load,
             referenced_by_track_camera_id__load=referenced_by_track_camera_id__load,
             referenced_by_video_camera_id__load=referenced_by_video_camera_id__load,
@@ -554,6 +558,7 @@ class SegmentProducerClaimCameraApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        referenced_by_audio_event_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_track_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
@@ -685,6 +690,8 @@ class SegmentProducerClaimCameraApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
+        :param referenced_by_audio_event_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_audio_event_camera_id__load: str
         :param referenced_by_detection_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id__load: str
         :param referenced_by_track_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
@@ -926,6 +933,7 @@ class SegmentProducerClaimCameraApi:
             limit=limit,
             offset=offset,
             depth=depth,
+            referenced_by_audio_event_camera_id__load=referenced_by_audio_event_camera_id__load,
             referenced_by_detection_camera_id__load=referenced_by_detection_camera_id__load,
             referenced_by_track_camera_id__load=referenced_by_track_camera_id__load,
             referenced_by_video_camera_id__load=referenced_by_video_camera_id__load,
@@ -1060,6 +1068,7 @@ class SegmentProducerClaimCameraApi:
         limit: Annotated[Optional[StrictInt], Field(description="SQL LIMIT operator")] = None,
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
+        referenced_by_audio_event_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_track_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_video_camera_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
@@ -1191,6 +1200,8 @@ class SegmentProducerClaimCameraApi:
         :type offset: int
         :param depth: Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)
         :type depth: int
+        :param referenced_by_audio_event_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_audio_event_camera_id__load: str
         :param referenced_by_detection_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_camera_id__load: str
         :param referenced_by_track_camera_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
@@ -1432,6 +1443,7 @@ class SegmentProducerClaimCameraApi:
             limit=limit,
             offset=offset,
             depth=depth,
+            referenced_by_audio_event_camera_id__load=referenced_by_audio_event_camera_id__load,
             referenced_by_detection_camera_id__load=referenced_by_detection_camera_id__load,
             referenced_by_track_camera_id__load=referenced_by_track_camera_id__load,
             referenced_by_video_camera_id__load=referenced_by_video_camera_id__load,
@@ -1561,6 +1573,7 @@ class SegmentProducerClaimCameraApi:
         limit,
         offset,
         depth,
+        referenced_by_audio_event_camera_id__load,
         referenced_by_detection_camera_id__load,
         referenced_by_track_camera_id__load,
         referenced_by_video_camera_id__load,
@@ -1699,6 +1712,10 @@ class SegmentProducerClaimCameraApi:
         if depth is not None:
             
             _query_params.append(('depth', depth))
+            
+        if referenced_by_audio_event_camera_id__load is not None:
+            
+            _query_params.append(('referenced_by_AudioEvent_CameraID__load', referenced_by_audio_event_camera_id__load))
             
         if referenced_by_detection_camera_id__load is not None:
             

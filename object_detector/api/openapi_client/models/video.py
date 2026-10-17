@@ -27,6 +27,10 @@ class Video(BaseModel):
     """
     Video
     """ # noqa: E501
+    audio_detected_at: Optional[datetime] = None
+    audio_detector_claimed_until: Optional[datetime] = None
+    audio_profile: Optional[Any] = None
+    audio_summary: Optional[Any] = None
     camera_id: Optional[StrictStr] = None
     camera_id_object: Optional[Camera] = None
     created_at: Optional[datetime] = None
@@ -41,6 +45,7 @@ class Video(BaseModel):
     object_detector_claimed_until: Optional[datetime] = None
     object_tracker_claimed_until: Optional[datetime] = None
     overlay_offset_ms: Optional[StrictInt] = None
+    referenced_by_audio_event_video_id_objects: Optional[List[AudioEvent]] = None
     referenced_by_detection_video_id_objects: Optional[List[Detection]] = None
     referenced_by_track_video_id_objects: Optional[List[Track]] = None
     started_at: Optional[datetime] = None
@@ -48,7 +53,7 @@ class Video(BaseModel):
     thumbnail_name: Optional[StrictStr] = None
     track_summary: Optional[Any] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["camera_id", "camera_id_object", "created_at", "deleted_at", "detection_summary", "duration", "ended_at", "file_name", "file_size", "id", "is_low_res", "object_detector_claimed_until", "object_tracker_claimed_until", "overlay_offset_ms", "referenced_by_detection_video_id_objects", "referenced_by_track_video_id_objects", "started_at", "status", "thumbnail_name", "track_summary", "updated_at"]
+    __properties: ClassVar[List[str]] = ["audio_detected_at", "audio_detector_claimed_until", "audio_profile", "audio_summary", "camera_id", "camera_id_object", "created_at", "deleted_at", "detection_summary", "duration", "ended_at", "file_name", "file_size", "id", "is_low_res", "object_detector_claimed_until", "object_tracker_claimed_until", "overlay_offset_ms", "referenced_by_audio_event_video_id_objects", "referenced_by_detection_video_id_objects", "referenced_by_track_video_id_objects", "started_at", "status", "thumbnail_name", "track_summary", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -92,6 +97,13 @@ class Video(BaseModel):
         # override the default output from pydantic by calling `to_dict()` of camera_id_object
         if self.camera_id_object:
             _dict['camera_id_object'] = self.camera_id_object.to_dict()
+        # override the default output from pydantic by calling `to_dict()` of each item in referenced_by_audio_event_video_id_objects (list)
+        _items = []
+        if self.referenced_by_audio_event_video_id_objects:
+            for _item in self.referenced_by_audio_event_video_id_objects:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['referenced_by_audio_event_video_id_objects'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in referenced_by_detection_video_id_objects (list)
         _items = []
         if self.referenced_by_detection_video_id_objects:
@@ -106,6 +118,16 @@ class Video(BaseModel):
                 if _item:
                     _items.append(_item.to_dict())
             _dict['referenced_by_track_video_id_objects'] = _items
+        # set to None if audio_profile (nullable) is None
+        # and model_fields_set contains the field
+        if self.audio_profile is None and "audio_profile" in self.model_fields_set:
+            _dict['audio_profile'] = None
+
+        # set to None if audio_summary (nullable) is None
+        # and model_fields_set contains the field
+        if self.audio_summary is None and "audio_summary" in self.model_fields_set:
+            _dict['audio_summary'] = None
+
         # set to None if detection_summary (nullable) is None
         # and model_fields_set contains the field
         if self.detection_summary is None and "detection_summary" in self.model_fields_set:
@@ -128,6 +150,10 @@ class Video(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
+            "audio_detected_at": obj.get("audio_detected_at"),
+            "audio_detector_claimed_until": obj.get("audio_detector_claimed_until"),
+            "audio_profile": obj.get("audio_profile"),
+            "audio_summary": obj.get("audio_summary"),
             "camera_id": obj.get("camera_id"),
             "camera_id_object": Camera.from_dict(obj["camera_id_object"]) if obj.get("camera_id_object") is not None else None,
             "created_at": obj.get("created_at"),
@@ -142,6 +168,7 @@ class Video(BaseModel):
             "object_detector_claimed_until": obj.get("object_detector_claimed_until"),
             "object_tracker_claimed_until": obj.get("object_tracker_claimed_until"),
             "overlay_offset_ms": obj.get("overlay_offset_ms"),
+            "referenced_by_audio_event_video_id_objects": [AudioEvent.from_dict(_item) for _item in obj["referenced_by_audio_event_video_id_objects"]] if obj.get("referenced_by_audio_event_video_id_objects") is not None else None,
             "referenced_by_detection_video_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_video_id_objects"]] if obj.get("referenced_by_detection_video_id_objects") is not None else None,
             "referenced_by_track_video_id_objects": [Track.from_dict(_item) for _item in obj["referenced_by_track_video_id_objects"]] if obj.get("referenced_by_track_video_id_objects") is not None else None,
             "started_at": obj.get("started_at"),
@@ -152,6 +179,7 @@ class Video(BaseModel):
         })
         return _obj
 
+from openapi_client.models.audio_event import AudioEvent
 from openapi_client.models.camera import Camera
 from openapi_client.models.detection import Detection
 from openapi_client.models.track import Track

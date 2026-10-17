@@ -78,6 +78,12 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*AudioDetectorClaimVideoAPI* | [**PostAudioDetectorClaimVideos**](docs/AudioDetectorClaimVideoAPI.md#postaudiodetectorclaimvideos) | **Post** /api/audio-detector-claim-video | 
+*AudioEventAPI* | [**DeleteAudioEvent**](docs/AudioEventAPI.md#deleteaudioevent) | **Delete** /api/audio-events/{primaryKey} | 
+*AudioEventAPI* | [**GetAudioEvent**](docs/AudioEventAPI.md#getaudioevent) | **Get** /api/audio-events/{primaryKey} | 
+*AudioEventAPI* | [**GetAudioEvents**](docs/AudioEventAPI.md#getaudioevents) | **Get** /api/audio-events | 
+*AudioEventAPI* | [**PatchAudioEvent**](docs/AudioEventAPI.md#patchaudioevent) | **Patch** /api/audio-events/{primaryKey} | 
+*AudioEventAPI* | [**PostAudioEvents**](docs/AudioEventAPI.md#postaudioevents) | **Post** /api/audio-events | 
 *CameraAPI* | [**DeleteCamera**](docs/CameraAPI.md#deletecamera) | **Delete** /api/cameras/{primaryKey} | 
 *CameraAPI* | [**GetCamera**](docs/CameraAPI.md#getcamera) | **Get** /api/cameras/{primaryKey} | 
 *CameraAPI* | [**GetCameras**](docs/CameraAPI.md#getcameras) | **Get** /api/cameras | 
@@ -104,6 +110,7 @@ Class | Method | HTTP request | Description
 *VideoAPI* | [**GetVideos**](docs/VideoAPI.md#getvideos) | **Get** /api/videos | 
 *VideoAPI* | [**PatchVideo**](docs/VideoAPI.md#patchvideo) | **Patch** /api/videos/{primaryKey} | 
 *VideoAPI* | [**PostVideos**](docs/VideoAPI.md#postvideos) | **Post** /api/videos | 
+*VideoAPI* | [**PostVideosAudioDetectorClaim**](docs/VideoAPI.md#postvideosaudiodetectorclaim) | **Post** /api/videos/{primaryKey}/audio-detector-claim | 
 *VideoAPI* | [**PostVideosObjectDetectorClaim**](docs/VideoAPI.md#postvideosobjectdetectorclaim) | **Post** /api/videos/{primaryKey}/object-detector-claim | 
 *VideoAPI* | [**PostVideosObjectTrackerClaim**](docs/VideoAPI.md#postvideosobjecttrackerclaim) | **Post** /api/videos/{primaryKey}/object-tracker-claim | 
 
@@ -111,11 +118,13 @@ Class | Method | HTTP request | Description
 ## Documentation For Models
 
  - [ArrayOfVec2Inner](docs/ArrayOfVec2Inner.md)
+ - [AudioEvent](docs/AudioEvent.md)
  - [Camera](docs/Camera.md)
  - [CameraSegmentProducerClaimRequest](docs/CameraSegmentProducerClaimRequest.md)
  - [CameraStreamProducerClaimRequest](docs/CameraStreamProducerClaimRequest.md)
  - [Detection](docs/Detection.md)
- - [GetCamerasDefaultResponse](docs/GetCamerasDefaultResponse.md)
+ - [PostAudioDetectorClaimVideosDefaultResponse](docs/PostAudioDetectorClaimVideosDefaultResponse.md)
+ - [ResponseWithGenericOfAudioEvent](docs/ResponseWithGenericOfAudioEvent.md)
  - [ResponseWithGenericOfCamera](docs/ResponseWithGenericOfCamera.md)
  - [ResponseWithGenericOfDetection](docs/ResponseWithGenericOfDetection.md)
  - [ResponseWithGenericOfTrack](docs/ResponseWithGenericOfTrack.md)
@@ -123,6 +132,7 @@ Class | Method | HTTP request | Description
  - [Track](docs/Track.md)
  - [Vec2](docs/Vec2.md)
  - [Video](docs/Video.md)
+ - [VideoAudioDetectorClaimRequest](docs/VideoAudioDetectorClaimRequest.md)
  - [VideoObjectDetectorClaimRequest](docs/VideoObjectDetectorClaimRequest.md)
  - [VideoObjectTrackerClaimRequest](docs/VideoObjectTrackerClaimRequest.md)
 

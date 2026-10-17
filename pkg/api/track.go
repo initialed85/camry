@@ -59,7 +59,7 @@ var TrackTable = "track"
 
 var TrackTableWithSchema = fmt.Sprintf("%s.%s", schema, TrackTable)
 
-var TrackTableNamespaceID int32 = 1337 + 4
+var TrackTableNamespaceID int32 = 1337 + 5
 
 var (
 	TrackTableIDColumn          = "id"

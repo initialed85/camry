@@ -4,6 +4,10 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
+**AudioDetectedAt** | Pointer to **time.Time** |  | [optional] 
+**AudioDetectorClaimedUntil** | Pointer to **time.Time** |  | [optional] 
+**AudioProfile** | Pointer to **interface{}** |  | [optional] 
+**AudioSummary** | Pointer to **interface{}** |  | [optional] 
 **CameraId** | Pointer to **string** |  | [optional] 
 **CameraIdObject** | Pointer to [**Camera**](Camera.md) |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
@@ -18,6 +22,7 @@ Name | Type | Description | Notes
 **ObjectDetectorClaimedUntil** | Pointer to **time.Time** |  | [optional] 
 **ObjectTrackerClaimedUntil** | Pointer to **time.Time** |  | [optional] 
 **OverlayOffsetMs** | Pointer to **int64** |  | [optional] 
+**ReferencedByAudioEventVideoIdObjects** | Pointer to [**[]AudioEvent**](AudioEvent.md) |  | [optional] 
 **ReferencedByDetectionVideoIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
 **ReferencedByTrackVideoIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional] 
 **StartedAt** | Pointer to **time.Time** |  | [optional] 
@@ -45,6 +50,126 @@ NewVideoWithDefaults instantiates a new Video object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
+### GetAudioDetectedAt
+
+`func (o *Video) GetAudioDetectedAt() time.Time`
+
+GetAudioDetectedAt returns the AudioDetectedAt field if non-nil, zero value otherwise.
+
+### GetAudioDetectedAtOk
+
+`func (o *Video) GetAudioDetectedAtOk() (*time.Time, bool)`
+
+GetAudioDetectedAtOk returns a tuple with the AudioDetectedAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAudioDetectedAt
+
+`func (o *Video) SetAudioDetectedAt(v time.Time)`
+
+SetAudioDetectedAt sets AudioDetectedAt field to given value.
+
+### HasAudioDetectedAt
+
+`func (o *Video) HasAudioDetectedAt() bool`
+
+HasAudioDetectedAt returns a boolean if a field has been set.
+
+### GetAudioDetectorClaimedUntil
+
+`func (o *Video) GetAudioDetectorClaimedUntil() time.Time`
+
+GetAudioDetectorClaimedUntil returns the AudioDetectorClaimedUntil field if non-nil, zero value otherwise.
+
+### GetAudioDetectorClaimedUntilOk
+
+`func (o *Video) GetAudioDetectorClaimedUntilOk() (*time.Time, bool)`
+
+GetAudioDetectorClaimedUntilOk returns a tuple with the AudioDetectorClaimedUntil field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAudioDetectorClaimedUntil
+
+`func (o *Video) SetAudioDetectorClaimedUntil(v time.Time)`
+
+SetAudioDetectorClaimedUntil sets AudioDetectorClaimedUntil field to given value.
+
+### HasAudioDetectorClaimedUntil
+
+`func (o *Video) HasAudioDetectorClaimedUntil() bool`
+
+HasAudioDetectorClaimedUntil returns a boolean if a field has been set.
+
+### GetAudioProfile
+
+`func (o *Video) GetAudioProfile() interface{}`
+
+GetAudioProfile returns the AudioProfile field if non-nil, zero value otherwise.
+
+### GetAudioProfileOk
+
+`func (o *Video) GetAudioProfileOk() (*interface{}, bool)`
+
+GetAudioProfileOk returns a tuple with the AudioProfile field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAudioProfile
+
+`func (o *Video) SetAudioProfile(v interface{})`
+
+SetAudioProfile sets AudioProfile field to given value.
+
+### HasAudioProfile
+
+`func (o *Video) HasAudioProfile() bool`
+
+HasAudioProfile returns a boolean if a field has been set.
+
+### SetAudioProfileNil
+
+`func (o *Video) SetAudioProfileNil(b bool)`
+
+ SetAudioProfileNil sets the value for AudioProfile to be an explicit nil
+
+### UnsetAudioProfile
+`func (o *Video) UnsetAudioProfile()`
+
+UnsetAudioProfile ensures that no value is present for AudioProfile, not even an explicit nil
+### GetAudioSummary
+
+`func (o *Video) GetAudioSummary() interface{}`
+
+GetAudioSummary returns the AudioSummary field if non-nil, zero value otherwise.
+
+### GetAudioSummaryOk
+
+`func (o *Video) GetAudioSummaryOk() (*interface{}, bool)`
+
+GetAudioSummaryOk returns a tuple with the AudioSummary field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetAudioSummary
+
+`func (o *Video) SetAudioSummary(v interface{})`
+
+SetAudioSummary sets AudioSummary field to given value.
+
+### HasAudioSummary
+
+`func (o *Video) HasAudioSummary() bool`
+
+HasAudioSummary returns a boolean if a field has been set.
+
+### SetAudioSummaryNil
+
+`func (o *Video) SetAudioSummaryNil(b bool)`
+
+ SetAudioSummaryNil sets the value for AudioSummary to be an explicit nil
+
+### UnsetAudioSummary
+`func (o *Video) UnsetAudioSummary()`
+
+UnsetAudioSummary ensures that no value is present for AudioSummary, not even an explicit nil
 ### GetCameraId
 
 `func (o *Video) GetCameraId() string`
@@ -404,6 +529,31 @@ SetOverlayOffsetMs sets OverlayOffsetMs field to given value.
 `func (o *Video) HasOverlayOffsetMs() bool`
 
 HasOverlayOffsetMs returns a boolean if a field has been set.
+
+### GetReferencedByAudioEventVideoIdObjects
+
+`func (o *Video) GetReferencedByAudioEventVideoIdObjects() []AudioEvent`
+
+GetReferencedByAudioEventVideoIdObjects returns the ReferencedByAudioEventVideoIdObjects field if non-nil, zero value otherwise.
+
+### GetReferencedByAudioEventVideoIdObjectsOk
+
+`func (o *Video) GetReferencedByAudioEventVideoIdObjectsOk() (*[]AudioEvent, bool)`
+
+GetReferencedByAudioEventVideoIdObjectsOk returns a tuple with the ReferencedByAudioEventVideoIdObjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReferencedByAudioEventVideoIdObjects
+
+`func (o *Video) SetReferencedByAudioEventVideoIdObjects(v []AudioEvent)`
+
+SetReferencedByAudioEventVideoIdObjects sets ReferencedByAudioEventVideoIdObjects field to given value.
+
+### HasReferencedByAudioEventVideoIdObjects
+
+`func (o *Video) HasReferencedByAudioEventVideoIdObjects() bool`
+
+HasReferencedByAudioEventVideoIdObjects returns a boolean if a field has been set.
 
 ### GetReferencedByDetectionVideoIdObjects
 

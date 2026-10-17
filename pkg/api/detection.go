@@ -53,7 +53,7 @@ var DetectionTable = "detection"
 
 var DetectionTableWithSchema = fmt.Sprintf("%s.%s", schema, DetectionTable)
 
-var DetectionTableNamespaceID int32 = 1337 + 2
+var DetectionTableNamespaceID int32 = 1337 + 3
 
 var (
 	DetectionTableIDColumn          = "id"

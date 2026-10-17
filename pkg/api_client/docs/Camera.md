@@ -11,6 +11,7 @@ Name | Type | Description | Notes
 **LowResStreamUrl** | Pointer to **string** |  | [optional] 
 **Name** | Pointer to **string** |  | [optional] 
 **OverlayOffsetMs** | Pointer to **int64** |  | [optional] 
+**ReferencedByAudioEventCameraIdObjects** | Pointer to [**[]AudioEvent**](AudioEvent.md) |  | [optional] 
 **ReferencedByDetectionCameraIdObjects** | Pointer to [**[]Detection**](Detection.md) |  | [optional] 
 **ReferencedByTrackCameraIdObjects** | Pointer to [**[]Track**](Track.md) |  | [optional] 
 **ReferencedByVideoCameraIdObjects** | Pointer to [**[]Video**](Video.md) |  | [optional] 
@@ -212,6 +213,31 @@ SetOverlayOffsetMs sets OverlayOffsetMs field to given value.
 `func (o *Camera) HasOverlayOffsetMs() bool`
 
 HasOverlayOffsetMs returns a boolean if a field has been set.
+
+### GetReferencedByAudioEventCameraIdObjects
+
+`func (o *Camera) GetReferencedByAudioEventCameraIdObjects() []AudioEvent`
+
+GetReferencedByAudioEventCameraIdObjects returns the ReferencedByAudioEventCameraIdObjects field if non-nil, zero value otherwise.
+
+### GetReferencedByAudioEventCameraIdObjectsOk
+
+`func (o *Camera) GetReferencedByAudioEventCameraIdObjectsOk() (*[]AudioEvent, bool)`
+
+GetReferencedByAudioEventCameraIdObjectsOk returns a tuple with the ReferencedByAudioEventCameraIdObjects field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReferencedByAudioEventCameraIdObjects
+
+`func (o *Camera) SetReferencedByAudioEventCameraIdObjects(v []AudioEvent)`
+
+SetReferencedByAudioEventCameraIdObjects sets ReferencedByAudioEventCameraIdObjects field to given value.
+
+### HasReferencedByAudioEventCameraIdObjects
+
+`func (o *Camera) HasReferencedByAudioEventCameraIdObjects() bool`
+
+HasReferencedByAudioEventCameraIdObjects returns a boolean if a field has been set.
 
 ### GetReferencedByDetectionCameraIdObjects
 

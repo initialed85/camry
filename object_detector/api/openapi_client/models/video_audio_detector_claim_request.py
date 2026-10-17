@@ -17,19 +17,19 @@ import pprint
 import re  # noqa: F401
 import json
 
-from pydantic import BaseModel, ConfigDict, StrictBool, StrictInt, StrictStr
-from typing import Any, ClassVar, Dict, List
+from datetime import datetime
+from pydantic import BaseModel, ConfigDict, StrictFloat, StrictInt
+from typing import Any, ClassVar, Dict, List, Optional, Union
 from typing import Optional, Set
 from typing_extensions import Self
 
-class GetCamerasDefaultResponse(BaseModel):
+class VideoAudioDetectorClaimRequest(BaseModel):
     """
-    GetCamerasDefaultResponse
+    VideoAudioDetectorClaimRequest
     """ # noqa: E501
-    error: List[StrictStr]
-    status: StrictInt
-    success: StrictBool
-    __properties: ClassVar[List[str]] = ["error", "status", "success"]
+    timeout_seconds: Optional[Union[StrictFloat, StrictInt]] = None
+    until: Optional[datetime] = None
+    __properties: ClassVar[List[str]] = ["timeout_seconds", "until"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -49,7 +49,7 @@ class GetCamerasDefaultResponse(BaseModel):
 
     @classmethod
     def from_json(cls, json_str: str) -> Optional[Self]:
-        """Create an instance of GetCamerasDefaultResponse from a JSON string"""
+        """Create an instance of VideoAudioDetectorClaimRequest from a JSON string"""
         return cls.from_dict(json.loads(json_str))
 
     def to_dict(self) -> Dict[str, Any]:
@@ -74,7 +74,7 @@ class GetCamerasDefaultResponse(BaseModel):
 
     @classmethod
     def from_dict(cls, obj: Optional[Dict[str, Any]]) -> Optional[Self]:
-        """Create an instance of GetCamerasDefaultResponse from a dict"""
+        """Create an instance of VideoAudioDetectorClaimRequest from a dict"""
         if obj is None:
             return None
 
@@ -82,9 +82,8 @@ class GetCamerasDefaultResponse(BaseModel):
             return cls.model_validate(obj)
 
         _obj = cls.model_validate({
-            "error": obj.get("error"),
-            "status": obj.get("status"),
-            "success": obj.get("success")
+            "timeout_seconds": obj.get("timeout_seconds"),
+            "until": obj.get("until")
         })
         return _obj
 

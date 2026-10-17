@@ -27,6 +27,7 @@ type Camera struct {
 	LowResStreamUrl *string `json:"low_res_stream_url,omitempty"`
 	Name *string `json:"name,omitempty"`
 	OverlayOffsetMs *int64 `json:"overlay_offset_ms,omitempty"`
+	ReferencedByAudioEventCameraIdObjects []AudioEvent `json:"referenced_by_audio_event_camera_id_objects,omitempty"`
 	ReferencedByDetectionCameraIdObjects []Detection `json:"referenced_by_detection_camera_id_objects,omitempty"`
 	ReferencedByTrackCameraIdObjects []Track `json:"referenced_by_track_camera_id_objects,omitempty"`
 	ReferencedByVideoCameraIdObjects []Video `json:"referenced_by_video_camera_id_objects,omitempty"`
@@ -275,6 +276,38 @@ func (o *Camera) HasOverlayOffsetMs() bool {
 // SetOverlayOffsetMs gets a reference to the given int64 and assigns it to the OverlayOffsetMs field.
 func (o *Camera) SetOverlayOffsetMs(v int64) {
 	o.OverlayOffsetMs = &v
+}
+
+// GetReferencedByAudioEventCameraIdObjects returns the ReferencedByAudioEventCameraIdObjects field value if set, zero value otherwise.
+func (o *Camera) GetReferencedByAudioEventCameraIdObjects() []AudioEvent {
+	if o == nil || IsNil(o.ReferencedByAudioEventCameraIdObjects) {
+		var ret []AudioEvent
+		return ret
+	}
+	return o.ReferencedByAudioEventCameraIdObjects
+}
+
+// GetReferencedByAudioEventCameraIdObjectsOk returns a tuple with the ReferencedByAudioEventCameraIdObjects field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Camera) GetReferencedByAudioEventCameraIdObjectsOk() ([]AudioEvent, bool) {
+	if o == nil || IsNil(o.ReferencedByAudioEventCameraIdObjects) {
+		return nil, false
+	}
+	return o.ReferencedByAudioEventCameraIdObjects, true
+}
+
+// HasReferencedByAudioEventCameraIdObjects returns a boolean if a field has been set.
+func (o *Camera) HasReferencedByAudioEventCameraIdObjects() bool {
+	if o != nil && !IsNil(o.ReferencedByAudioEventCameraIdObjects) {
+		return true
+	}
+
+	return false
+}
+
+// SetReferencedByAudioEventCameraIdObjects gets a reference to the given []AudioEvent and assigns it to the ReferencedByAudioEventCameraIdObjects field.
+func (o *Camera) SetReferencedByAudioEventCameraIdObjects(v []AudioEvent) {
+	o.ReferencedByAudioEventCameraIdObjects = v
 }
 
 // GetReferencedByDetectionCameraIdObjects returns the ReferencedByDetectionCameraIdObjects field value if set, zero value otherwise.
@@ -531,6 +564,9 @@ func (o Camera) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.OverlayOffsetMs) {
 		toSerialize["overlay_offset_ms"] = o.OverlayOffsetMs
+	}
+	if !IsNil(o.ReferencedByAudioEventCameraIdObjects) {
+		toSerialize["referenced_by_audio_event_camera_id_objects"] = o.ReferencedByAudioEventCameraIdObjects
 	}
 	if !IsNil(o.ReferencedByDetectionCameraIdObjects) {
 		toSerialize["referenced_by_detection_camera_id_objects"] = o.ReferencedByDetectionCameraIdObjects

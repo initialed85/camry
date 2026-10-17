@@ -34,6 +34,7 @@ class Camera(BaseModel):
     low_res_stream_url: Optional[StrictStr] = None
     name: Optional[StrictStr] = None
     overlay_offset_ms: Optional[StrictInt] = None
+    referenced_by_audio_event_camera_id_objects: Optional[List[AudioEvent]] = None
     referenced_by_detection_camera_id_objects: Optional[List[Detection]] = None
     referenced_by_track_camera_id_objects: Optional[List[Track]] = None
     referenced_by_video_camera_id_objects: Optional[List[Video]] = None
@@ -41,7 +42,7 @@ class Camera(BaseModel):
     stream_producer_claimed_until: Optional[datetime] = None
     stream_url: Optional[StrictStr] = None
     updated_at: Optional[datetime] = None
-    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "low_res_stream_url", "name", "overlay_offset_ms", "referenced_by_detection_camera_id_objects", "referenced_by_track_camera_id_objects", "referenced_by_video_camera_id_objects", "segment_producer_claimed_until", "stream_producer_claimed_until", "stream_url", "updated_at"]
+    __properties: ClassVar[List[str]] = ["created_at", "deleted_at", "id", "last_seen", "low_res_stream_url", "name", "overlay_offset_ms", "referenced_by_audio_event_camera_id_objects", "referenced_by_detection_camera_id_objects", "referenced_by_track_camera_id_objects", "referenced_by_video_camera_id_objects", "segment_producer_claimed_until", "stream_producer_claimed_until", "stream_url", "updated_at"]
 
     model_config = ConfigDict(
         populate_by_name=True,
@@ -82,6 +83,13 @@ class Camera(BaseModel):
             exclude=excluded_fields,
             exclude_none=True,
         )
+        # override the default output from pydantic by calling `to_dict()` of each item in referenced_by_audio_event_camera_id_objects (list)
+        _items = []
+        if self.referenced_by_audio_event_camera_id_objects:
+            for _item in self.referenced_by_audio_event_camera_id_objects:
+                if _item:
+                    _items.append(_item.to_dict())
+            _dict['referenced_by_audio_event_camera_id_objects'] = _items
         # override the default output from pydantic by calling `to_dict()` of each item in referenced_by_detection_camera_id_objects (list)
         _items = []
         if self.referenced_by_detection_camera_id_objects:
@@ -122,6 +130,7 @@ class Camera(BaseModel):
             "low_res_stream_url": obj.get("low_res_stream_url"),
             "name": obj.get("name"),
             "overlay_offset_ms": obj.get("overlay_offset_ms"),
+            "referenced_by_audio_event_camera_id_objects": [AudioEvent.from_dict(_item) for _item in obj["referenced_by_audio_event_camera_id_objects"]] if obj.get("referenced_by_audio_event_camera_id_objects") is not None else None,
             "referenced_by_detection_camera_id_objects": [Detection.from_dict(_item) for _item in obj["referenced_by_detection_camera_id_objects"]] if obj.get("referenced_by_detection_camera_id_objects") is not None else None,
             "referenced_by_track_camera_id_objects": [Track.from_dict(_item) for _item in obj["referenced_by_track_camera_id_objects"]] if obj.get("referenced_by_track_camera_id_objects") is not None else None,
             "referenced_by_video_camera_id_objects": [Video.from_dict(_item) for _item in obj["referenced_by_video_camera_id_objects"]] if obj.get("referenced_by_video_camera_id_objects") is not None else None,
@@ -132,6 +141,7 @@ class Camera(BaseModel):
         })
         return _obj
 
+from openapi_client.models.audio_event import AudioEvent
 from openapi_client.models.detection import Detection
 from openapi_client.models.track import Track
 from openapi_client.models.video import Video

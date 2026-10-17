@@ -220,7 +220,7 @@ func (a *CameraAPIService) GetCameraExecute(r ApiGetCameraRequest) (*ResponseWit
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -249,6 +249,7 @@ type ApiGetCamerasRequest struct {
 	limit *int32
 	offset *int32
 	depth *int32
+	referencedByAudioEventCameraIDLoad *string
 	referencedByDetectionCameraIDLoad *string
 	referencedByTrackCameraIDLoad *string
 	referencedByVideoCameraIDLoad *string
@@ -373,6 +374,12 @@ func (r ApiGetCamerasRequest) Offset(offset int32) ApiGetCamerasRequest {
 // Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc)
 func (r ApiGetCamerasRequest) Depth(depth int32) ApiGetCamerasRequest {
 	r.depth = &depth
+	return r
+}
+
+// load the given inbound relationship, value is ignored (presence of key is sufficient)
+func (r ApiGetCamerasRequest) ReferencedByAudioEventCameraIDLoad(referencedByAudioEventCameraIDLoad string) ApiGetCamerasRequest {
+	r.referencedByAudioEventCameraIDLoad = &referencedByAudioEventCameraIDLoad
 	return r
 }
 
@@ -1065,6 +1072,9 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 	if r.depth != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
 	}
+	if r.referencedByAudioEventCameraIDLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_AudioEvent_CameraID__load", r.referencedByAudioEventCameraIDLoad, "")
+	}
 	if r.referencedByDetectionCameraIDLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_Detection_CameraID__load", r.referencedByDetectionCameraIDLoad, "")
 	}
@@ -1425,7 +1435,7 @@ func (a *CameraAPIService) GetCamerasExecute(r ApiGetCamerasRequest) (*ResponseW
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1555,7 +1565,7 @@ func (a *CameraAPIService) PatchCameraExecute(r ApiPatchCameraRequest) (*Respons
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1681,7 +1691,7 @@ func (a *CameraAPIService) PostCamerasExecute(r ApiPostCamerasRequest) (*Respons
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1811,7 +1821,7 @@ func (a *CameraAPIService) PostCamerasSegmentProducerClaimExecute(r ApiPostCamer
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()
@@ -1941,7 +1951,7 @@ func (a *CameraAPIService) PostCamerasStreamProducerClaimExecute(r ApiPostCamera
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

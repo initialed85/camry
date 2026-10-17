@@ -32,27 +32,28 @@ import (
 )
 
 type Camera struct {
-	ID                                   uuid.UUID    `json:"id"`
-	CreatedAt                            time.Time    `json:"created_at"`
-	UpdatedAt                            time.Time    `json:"updated_at"`
-	DeletedAt                            *time.Time   `json:"deleted_at"`
-	Name                                 string       `json:"name"`
-	StreamURL                            string       `json:"stream_url"`
-	LastSeen                             time.Time    `json:"last_seen"`
-	SegmentProducerClaimedUntil          time.Time    `json:"segment_producer_claimed_until"`
-	StreamProducerClaimedUntil           time.Time    `json:"stream_producer_claimed_until"`
-	LowResStreamURL                      *string      `json:"low_res_stream_url"`
-	OverlayOffsetMs                      int64        `json:"overlay_offset_ms"`
-	ReferencedByDetectionCameraIDObjects []*Detection `json:"referenced_by_detection_camera_id_objects"`
-	ReferencedByTrackCameraIDObjects     []*Track     `json:"referenced_by_track_camera_id_objects"`
-	ReferencedByVideoCameraIDObjects     []*Video     `json:"referenced_by_video_camera_id_objects"`
+	ID                                    uuid.UUID     `json:"id"`
+	CreatedAt                             time.Time     `json:"created_at"`
+	UpdatedAt                             time.Time     `json:"updated_at"`
+	DeletedAt                             *time.Time    `json:"deleted_at"`
+	Name                                  string        `json:"name"`
+	StreamURL                             string        `json:"stream_url"`
+	LastSeen                              time.Time     `json:"last_seen"`
+	SegmentProducerClaimedUntil           time.Time     `json:"segment_producer_claimed_until"`
+	StreamProducerClaimedUntil            time.Time     `json:"stream_producer_claimed_until"`
+	LowResStreamURL                       *string       `json:"low_res_stream_url"`
+	OverlayOffsetMs                       int64         `json:"overlay_offset_ms"`
+	ReferencedByAudioEventCameraIDObjects []*AudioEvent `json:"referenced_by_audio_event_camera_id_objects"`
+	ReferencedByDetectionCameraIDObjects  []*Detection  `json:"referenced_by_detection_camera_id_objects"`
+	ReferencedByTrackCameraIDObjects      []*Track      `json:"referenced_by_track_camera_id_objects"`
+	ReferencedByVideoCameraIDObjects      []*Video      `json:"referenced_by_video_camera_id_objects"`
 }
 
 var CameraTable = "camera"
 
 var CameraTableWithSchema = fmt.Sprintf("%s.%s", schema, CameraTable)
 
-var CameraTableNamespaceID int32 = 1337 + 1
+var CameraTableNamespaceID int32 = 1337 + 2
 
 var (
 	CameraTableIDColumn                          = "id"
@@ -175,6 +176,14 @@ func (Camera) GetQueryInfo() query.ModelQueryInfo {
 		TableName:        "camera",
 		PrimaryKeyColumn: "id",
 		Relationships: []query.RelationshipDefinition{
+			{
+				Name:         "referenced_by_AudioEvent_CameraID",
+				Direction:    query.RelationDirectionInbound,
+				TargetTable:  "audio_event",
+				LocalColumn:  "camera_id",
+				TargetColumn: "id",
+				Cardinality:  query.RelationCardinalityMany,
+			},
 			{
 				Name:         "referenced_by_Detection_CameraID",
 				Direction:    query.RelationDirectionInbound,
@@ -671,6 +680,7 @@ func (m *Camera) Reload(ctx context.Context, tx pgx.Tx, includeDeleteds ...bool)
 	m.StreamProducerClaimedUntil = o.StreamProducerClaimedUntil
 	m.LowResStreamURL = o.LowResStreamURL
 	m.OverlayOffsetMs = o.OverlayOffsetMs
+	m.ReferencedByAudioEventCameraIDObjects = o.ReferencedByAudioEventCameraIDObjects
 	m.ReferencedByDetectionCameraIDObjects = o.ReferencedByDetectionCameraIDObjects
 	m.ReferencedByTrackCameraIDObjects = o.ReferencedByTrackCameraIDObjects
 	m.ReferencedByVideoCameraIDObjects = o.ReferencedByVideoCameraIDObjects
@@ -1455,6 +1465,59 @@ func SelectCameras(ctx context.Context, tx pgx.Tx, where string, orderBy *string
 		if object == nil {
 			return nil, 0, 0, 0, 0, fmt.Errorf("assertion failed: object unexpectedly nil")
 		}
+		err = func() error {
+			childNode := query.GetSelectionNode(ctx, query.RelationKey{
+				Direction:   query.RelationDirectionInbound,
+				TableName:   AudioEventTable,
+				LocalColumn: AudioEventTableCameraIDColumn,
+			})
+			shouldLoad := query.ShouldLoad(ctx, fmt.Sprintf("referenced_by_%s", AudioEventTable))
+			shouldLoad = shouldLoad || (childNode != nil && childNode.Selected) || query.ShouldLoadFromSelectionTree(ctx, fmt.Sprintf("referenced_by_%s", AudioEventTable))
+			ctx, action := query.HandleQueryPathGraphCycles(ctx, fmt.Sprintf("__ReferencedBy__%s{%v}", AudioEventTable, object.GetPrimaryKeyValue()), true)
+			switch action {
+			case query.PathActionCycleDetected:
+				return nil
+			case query.PathActionDepthExceeded:
+				if !shouldLoad {
+					return nil
+				}
+			case query.PathActionContinue:
+				if query.HasSelectionTree(ctx) && !shouldLoad {
+					return nil
+				}
+			}
+
+			thisBefore := time.Now()
+
+			if config.Debug() {
+				log.Printf("loading SelectCameras->SelectAudioEvents for object.ReferencedByAudioEventCameraIDObjects")
+			}
+
+			object.ReferencedByAudioEventCameraIDObjects, _, _, _, _, err = SelectAudioEvents(
+				ctx,
+				tx,
+				fmt.Sprintf("%v = $1", AudioEventTableCameraIDColumn),
+				nil,
+				nil,
+				nil,
+				object.GetPrimaryKeyValue(),
+			)
+			if err != nil {
+				if !errors.Is(err, sql.ErrNoRows) {
+					return err
+				}
+			}
+
+			if config.Debug() {
+				log.Printf("loaded SelectCameras->SelectAudioEvents for object.ReferencedByAudioEventCameraIDObjects in %s", time.Since(thisBefore))
+			}
+
+			return nil
+		}()
+		if err != nil {
+			return nil, 0, 0, 0, 0, err
+		}
+
 		err = func() error {
 			childNode := query.GetSelectionNode(ctx, query.RelationKey{
 				Direction:   query.RelationDirectionInbound,

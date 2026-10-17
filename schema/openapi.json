@@ -9,6 +9,14 @@
       "Any": {
         "nullable": true
       },
+      "ArrayOfNullableAudioEvent": {
+        "type": "array",
+        "nullable": true,
+        "items": {
+          "$ref": "#/components/schemas/AudioEvent",
+          "nullable": true
+        }
+      },
       "ArrayOfNullableCamera": {
         "type": "array",
         "nullable": true,
@@ -65,6 +73,89 @@
           }
         }
       },
+      "AudioEvent": {
+        "type": "object",
+        "properties": {
+          "camera_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "camera_id_object": {
+            "$ref": "#/components/schemas/Camera",
+            "nullable": true
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "crest_db": {
+            "type": "number",
+            "format": "double"
+          },
+          "deleted_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "duration_ms": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "ended_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "floor_dbfs": {
+            "type": "number",
+            "format": "double"
+          },
+          "id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "kind": {
+            "type": "string"
+          },
+          "offset_ms": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "peak_dbfs": {
+            "type": "number",
+            "format": "double"
+          },
+          "prominence_db": {
+            "type": "number",
+            "format": "double"
+          },
+          "rms_dbfs": {
+            "type": "number",
+            "format": "double"
+          },
+          "score": {
+            "type": "number",
+            "format": "double"
+          },
+          "seen_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "spectral": {
+            "nullable": true
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "video_id": {
+            "type": "string",
+            "format": "uuid"
+          },
+          "video_id_object": {
+            "$ref": "#/components/schemas/Video",
+            "nullable": true
+          }
+        }
+      },
       "Camera": {
         "type": "object",
         "properties": {
@@ -93,6 +184,14 @@
           "overlay_offset_ms": {
             "type": "integer",
             "format": "int64"
+          },
+          "referenced_by_audio_event_camera_id_objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AudioEvent",
+              "nullable": true
+            }
           },
           "referenced_by_detection_camera_id_objects": {
             "type": "array",
@@ -251,6 +350,10 @@
           }
         }
       },
+      "NullableAudioEvent": {
+        "$ref": "#/components/schemas/AudioEvent",
+        "nullable": true
+      },
       "NullableCamera": {
         "$ref": "#/components/schemas/Camera",
         "nullable": true
@@ -266,6 +369,49 @@
       "NullableVideo": {
         "$ref": "#/components/schemas/Video",
         "nullable": true
+      },
+      "ResponseWithGenericOfAudioEvent": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "error": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
+          },
+          "limit": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AudioEvent",
+              "nullable": true
+            }
+          },
+          "offset": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "status": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "total_count": {
+            "type": "integer",
+            "format": "int64"
+          }
+        }
       },
       "ResponseWithGenericOfCamera": {
         "type": "object",
@@ -570,6 +716,20 @@
       "Video": {
         "type": "object",
         "properties": {
+          "audio_detected_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "audio_detector_claimed_until": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "audio_profile": {
+            "nullable": true
+          },
+          "audio_summary": {
+            "nullable": true
+          },
           "camera_id": {
             "type": "string",
             "format": "uuid"
@@ -623,6 +783,14 @@
             "type": "integer",
             "format": "int64"
           },
+          "referenced_by_audio_event_video_id_objects": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/AudioEvent",
+              "nullable": true
+            }
+          },
           "referenced_by_detection_video_id_objects": {
             "type": "array",
             "nullable": true,
@@ -658,6 +826,19 @@
           }
         }
       },
+      "VideoAudioDetectorClaimRequest": {
+        "type": "object",
+        "properties": {
+          "timeout_seconds": {
+            "type": "number",
+            "format": "double"
+          },
+          "until": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "VideoObjectDetectorClaimRequest": {
         "type": "object",
         "properties": {
@@ -687,6 +868,3974 @@
     }
   },
   "paths": {
+    "/api/audio-detector-claim-video": {
+      "post": {
+        "tags": [
+          "AudioDetectorClaimVideo"
+        ],
+        "operationId": "PostAudioDetectorClaimVideos",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "SQL LIMIT operator"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "SQL OFFSET operator"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+          },
+          {
+            "name": "camera__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given outbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_AudioEvent_VideoID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_Detection_VideoID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "referenced_by_Track_VideoID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "created_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "created_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "created_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "created_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "created_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "created_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "updated_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "updated_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "updated_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "updated_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "updated_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "updated_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "deleted_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "deleted_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "deleted_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "deleted_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_name__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "file_name__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "file_name__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "file_name__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "file_name__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_name__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_name__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_name__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "file_name__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_name__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "started_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "started_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "started_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "started_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "started_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "started_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "started_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "started_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "started_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "started_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "ended_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "ended_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "ended_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "ended_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "ended_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "ended_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "ended_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "ended_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "duration__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "duration__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "duration__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "duration__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "duration__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "duration__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "duration__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "duration__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "duration__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "duration__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "duration__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "duration__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "file_size__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "file_size__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "file_size__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "file_size__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "file_size__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "file_size__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "file_size__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "file_size__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "file_size__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "thumbnail_name__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "thumbnail_name__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "thumbnail_name__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "thumbnail_name__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "thumbnail_name__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "thumbnail_name__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "thumbnail_name__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "thumbnail_name__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "thumbnail_name__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "thumbnail_name__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "thumbnail_name__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "thumbnail_name__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "status__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "status__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "status__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "status__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "status__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "status__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "status__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "status__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            },
+            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "status__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "status__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "status__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "status__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "object_detector_claimed_until__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "object_detector_claimed_until__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "object_detector_claimed_until__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "object_detector_claimed_until__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "object_detector_claimed_until__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "object_detector_claimed_until__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "object_detector_claimed_until__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "object_detector_claimed_until__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "object_detector_claimed_until__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "object_detector_claimed_until__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "object_tracker_claimed_until__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "object_tracker_claimed_until__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "object_tracker_claimed_until__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "object_tracker_claimed_until__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "object_tracker_claimed_until__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "object_tracker_claimed_until__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "object_tracker_claimed_until__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "object_tracker_claimed_until__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "object_tracker_claimed_until__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "object_tracker_claimed_until__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "camera_id__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "camera_id__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "camera_id__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "camera_id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "detection_summary__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "detection_summary__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "detection_summary__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "detection_summary__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "is_low_res__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "is_low_res__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "is_low_res__isfalse",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS false comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "is_low_res__istrue",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS true comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "is_low_res__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "is_low_res__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "track_summary__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "track_summary__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "track_summary__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "track_summary__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "overlay_offset_ms__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "overlay_offset_ms__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "overlay_offset_ms__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "overlay_offset_ms__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "overlay_offset_ms__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "overlay_offset_ms__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "overlay_offset_ms__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "overlay_offset_ms__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "overlay_offset_ms__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "overlay_offset_ms__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "overlay_offset_ms__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "overlay_offset_ms__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detected_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detected_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoAudioDetectorClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostAudioDetectorClaimVideos success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostAudioDetectorClaimVideos failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audio-events": {
+      "get": {
+        "tags": [
+          "AudioEvent"
+        ],
+        "operationId": "GetAudioEvents",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "SQL LIMIT operator"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "description": "SQL OFFSET operator"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+          },
+          {
+            "name": "camera__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given outbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "video__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given outbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "created_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "created_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "created_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "created_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "created_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "created_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "created_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "updated_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "updated_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "updated_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "updated_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "updated_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "updated_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "updated_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "deleted_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "deleted_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "deleted_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "deleted_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "deleted_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "deleted_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "camera_id__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "camera_id__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "camera_id__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "camera_id__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "camera_id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "camera_id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "video_id__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "video_id__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "video_id__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "video_id__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "video_id__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "video_id__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "video_id__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "video_id__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "video_id__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "video_id__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "seen_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "seen_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "seen_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "seen_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "seen_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "seen_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "seen_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "seen_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "seen_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "seen_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "offset_ms__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "offset_ms__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "offset_ms__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "offset_ms__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "offset_ms__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "offset_ms__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "offset_ms__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "offset_ms__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "offset_ms__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "offset_ms__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "ended_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "ended_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "ended_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "ended_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "ended_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "ended_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "ended_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "duration_ms__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "duration_ms__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "duration_ms__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "duration_ms__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "duration_ms__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "duration_ms__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "duration_ms__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "duration_ms__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "duration_ms__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "duration_ms__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "kind__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "kind__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "kind__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "kind__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "kind__like",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "kind__notlike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT LIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "kind__ilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "kind__notilike",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL NOT ILIKE comparison, value is implicitly prefixed and suffixed with %"
+          },
+          {
+            "name": "kind__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "kind__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "rms_dbfs__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "rms_dbfs__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "rms_dbfs__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "rms_dbfs__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "rms_dbfs__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "rms_dbfs__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "rms_dbfs__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "rms_dbfs__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "rms_dbfs__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "rms_dbfs__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "peak_dbfs__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "peak_dbfs__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "peak_dbfs__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "peak_dbfs__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "peak_dbfs__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "peak_dbfs__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "peak_dbfs__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "peak_dbfs__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "peak_dbfs__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "peak_dbfs__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "floor_dbfs__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "floor_dbfs__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "floor_dbfs__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "floor_dbfs__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "floor_dbfs__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "floor_dbfs__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "floor_dbfs__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "floor_dbfs__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "floor_dbfs__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "floor_dbfs__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "prominence_db__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "prominence_db__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "prominence_db__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "prominence_db__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "prominence_db__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "prominence_db__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "prominence_db__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "prominence_db__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "prominence_db__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "prominence_db__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "crest_db__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "crest_db__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "crest_db__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "crest_db__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "crest_db__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "crest_db__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "crest_db__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "crest_db__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "crest_db__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "crest_db__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "score__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "score__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "score__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "score__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "score__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "score__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "score__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "score__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "number"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "score__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "score__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "spectral__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "spectral__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "spectral__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "spectral__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GetAudioEvents success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfAudioEvent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "GetAudioEvents failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AudioEvent"
+        ],
+        "operationId": "PostAudioEvents",
+        "parameters": [
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ArrayOfNullableAudioEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "PostAudioEvents success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfAudioEvent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostAudioEvents failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/audio-events/{primaryKey}": {
+      "get": {
+        "tags": [
+          "AudioEvent"
+        ],
+        "operationId": "GetAudioEvent",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "GetAudioEvent success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfAudioEvent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "GetAudioEvent failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "AudioEvent"
+        ],
+        "operationId": "PatchAudioEvent",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AudioEvent"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PatchAudioEvent success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfAudioEvent"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PatchAudioEvent failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "AudioEvent"
+        ],
+        "operationId": "DeleteAudioEvent",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "DeleteAudioEvent success"
+          },
+          "default": {
+            "description": "DeleteAudioEvent failure"
+          }
+        }
+      }
+    },
     "/api/cameras": {
       "get": {
         "tags": [
@@ -722,6 +4871,15 @@
               "type": "integer"
             },
             "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+          },
+          {
+            "name": "referenced_by_AudioEvent_CameraID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "referenced_by_Detection_CameraID__load",
@@ -3637,6 +7795,15 @@
             "description": "load the given outbound relationship, value is ignored (presence of key is sufficient)"
           },
           {
+            "name": "referenced_by_AudioEvent_VideoID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "referenced_by_Detection_VideoID__load",
             "in": "query",
             "required": false,
@@ -5279,6 +9446,300 @@
           },
           {
             "name": "overlay_offset_ms__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detected_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detected_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__desc",
             "in": "query",
             "required": false,
             "schema": {
@@ -5387,6 +9848,15 @@
             "description": "load the given outbound relationship, value is ignored (presence of key is sufficient)"
           },
           {
+            "name": "referenced_by_AudioEvent_VideoID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "referenced_by_Detection_VideoID__load",
             "in": "query",
             "required": false,
@@ -7035,6 +11505,300 @@
               "type": "string"
             },
             "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detected_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detected_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
           }
         ],
         "requestBody": {
@@ -7126,6 +11890,15 @@
               "type": "integer"
             },
             "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+          },
+          {
+            "name": "referenced_by_AudioEvent_CameraID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "referenced_by_Detection_CameraID__load",
@@ -8244,6 +13017,15 @@
               "type": "integer"
             },
             "description": "Max recursion depth for loading foreign objects; default = 1\n\n(0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)"
+          },
+          {
+            "name": "referenced_by_AudioEvent_CameraID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
           },
           {
             "name": "referenced_by_Detection_CameraID__load",
@@ -11179,6 +15961,15 @@
             "description": "load the given outbound relationship, value is ignored (presence of key is sufficient)"
           },
           {
+            "name": "referenced_by_AudioEvent_VideoID__load",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "load the given inbound relationship, value is ignored (presence of key is sufficient)"
+          },
+          {
             "name": "referenced_by_Detection_VideoID__load",
             "in": "query",
             "required": false,
@@ -12827,6 +17618,300 @@
               "type": "string"
             },
             "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detector_claimed_until__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detector_claimed_until__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detector_claimed_until__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detector_claimed_until__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__eq",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL = comparison"
+          },
+          {
+            "name": "audio_detected_at__ne",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL != comparison"
+          },
+          {
+            "name": "audio_detected_at__gt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__gte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003e= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lt",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__lte",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL \u003c= comparison, may not work with all column types"
+          },
+          {
+            "name": "audio_detected_at__in",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__notin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            },
+            "description": "SQL NOT IN comparison, permits comma-separated values"
+          },
+          {
+            "name": "audio_detected_at__isnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__isnotnull",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL IS NOT null comparison, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_detected_at__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_profile__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_profile__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__contains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__notcontains",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "nullable": true
+            },
+            "description": "SQL NOT @\u003e comparison"
+          },
+          {
+            "name": "audio_summary__asc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)"
+          },
+          {
+            "name": "audio_summary__desc",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "description": "SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)"
           }
         ],
         "responses": {
@@ -13127,6 +18212,88 @@
           },
           "default": {
             "description": "DeleteVideo failure"
+          }
+        }
+      }
+    },
+    "/api/videos/{primaryKey}/audio-detector-claim": {
+      "post": {
+        "tags": [
+          "Video"
+        ],
+        "operationId": "PostVideosAudioDetectorClaim",
+        "parameters": [
+          {
+            "name": "primaryKey",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            },
+            "description": "Path parameter primaryKey"
+          },
+          {
+            "name": "depth",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "description": "Query parameter depth"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VideoAudioDetectorClaimRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "PostVideosAudioDetectorClaim success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseWithGenericOfVideo"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "PostVideosAudioDetectorClaim failure",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "array",
+                      "items": {
+                        "type": "string"
+                      }
+                    },
+                    "status": {
+                      "type": "integer",
+                      "format": "int32"
+                    },
+                    "success": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "status",
+                    "success",
+                    "error"
+                  ]
+                }
+              }
+            }
           }
         }
       }

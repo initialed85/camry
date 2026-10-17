@@ -30,6 +30,7 @@ type ApiPostSegmentProducerClaimCamerasRequest struct {
 	limit *int32
 	offset *int32
 	depth *int32
+	referencedByAudioEventCameraIDLoad *string
 	referencedByDetectionCameraIDLoad *string
 	referencedByTrackCameraIDLoad *string
 	referencedByVideoCameraIDLoad *string
@@ -159,6 +160,12 @@ func (r ApiPostSegmentProducerClaimCamerasRequest) Offset(offset int32) ApiPostS
 // Max recursion depth for loading foreign objects; default &#x3D; 1  (0 &#x3D; recurse until graph cycle detected, 1 &#x3D; this object only, 2 &#x3D; this object + neighbours, 3 &#x3D; this object + neighbours + their neighbours... etc)
 func (r ApiPostSegmentProducerClaimCamerasRequest) Depth(depth int32) ApiPostSegmentProducerClaimCamerasRequest {
 	r.depth = &depth
+	return r
+}
+
+// load the given inbound relationship, value is ignored (presence of key is sufficient)
+func (r ApiPostSegmentProducerClaimCamerasRequest) ReferencedByAudioEventCameraIDLoad(referencedByAudioEventCameraIDLoad string) ApiPostSegmentProducerClaimCamerasRequest {
+	r.referencedByAudioEventCameraIDLoad = &referencedByAudioEventCameraIDLoad
 	return r
 }
 
@@ -854,6 +861,9 @@ func (a *SegmentProducerClaimCameraAPIService) PostSegmentProducerClaimCamerasEx
 	if r.depth != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "depth", r.depth, "")
 	}
+	if r.referencedByAudioEventCameraIDLoad != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_AudioEvent_CameraID__load", r.referencedByAudioEventCameraIDLoad, "")
+	}
 	if r.referencedByDetectionCameraIDLoad != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "referenced_by_Detection_CameraID__load", r.referencedByDetectionCameraIDLoad, "")
 	}
@@ -1216,7 +1226,7 @@ func (a *SegmentProducerClaimCameraAPIService) PostSegmentProducerClaimCamerasEx
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
 		}
-			var v GetCamerasDefaultResponse
+			var v PostAudioDetectorClaimVideosDefaultResponse
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
 				newErr.error = err.Error()

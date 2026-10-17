@@ -1,6 +1,8 @@
 # flake8: noqa
 
 # import apis into api package
+from openapi_client.api.audio_detector_claim_video_api import AudioDetectorClaimVideoApi
+from openapi_client.api.audio_event_api import AudioEventApi
 from openapi_client.api.camera_api import CameraApi
 from openapi_client.api.detection_api import DetectionApi
 from openapi_client.api.object_detector_claim_video_api import ObjectDetectorClaimVideoApi

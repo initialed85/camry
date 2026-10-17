@@ -22,6 +22,7 @@ from typing import Any, List, Optional, Union
 from typing_extensions import Annotated
 from openapi_client.models.response_with_generic_of_video import ResponseWithGenericOfVideo
 from openapi_client.models.video import Video
+from openapi_client.models.video_audio_detector_claim_request import VideoAudioDetectorClaimRequest
 from openapi_client.models.video_object_detector_claim_request import VideoObjectDetectorClaimRequest
 from openapi_client.models.video_object_tracker_claim_request import VideoObjectTrackerClaimRequest
 
@@ -587,6 +588,7 @@ class VideoApi:
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_audio_event_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_track_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -757,6 +759,36 @@ class VideoApi:
         overlay_offset_ms__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
         overlay_offset_ms__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         overlay_offset_ms__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detector_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        audio_detector_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        audio_detector_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        audio_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        audio_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        audio_detected_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        audio_detected_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        audio_detected_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        audio_detected_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        audio_detected_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        audio_detected_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        audio_detected_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        audio_detected_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_profile__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        audio_profile__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        audio_profile__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_profile__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_summary__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        audio_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        audio_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -781,6 +813,8 @@ class VideoApi:
         :type depth: int
         :param camera__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type camera__load: str
+        :param referenced_by_audio_event_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_audio_event_video_id__load: str
         :param referenced_by_detection_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_video_id__load: str
         :param referenced_by_track_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
@@ -1121,6 +1155,66 @@ class VideoApi:
         :type overlay_offset_ms__asc: str
         :param overlay_offset_ms__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type overlay_offset_ms__desc: str
+        :param audio_detector_claimed_until__eq: SQL = comparison
+        :type audio_detector_claimed_until__eq: datetime
+        :param audio_detector_claimed_until__ne: SQL != comparison
+        :type audio_detector_claimed_until__ne: datetime
+        :param audio_detector_claimed_until__gt: SQL > comparison, may not work with all column types
+        :type audio_detector_claimed_until__gt: datetime
+        :param audio_detector_claimed_until__gte: SQL >= comparison, may not work with all column types
+        :type audio_detector_claimed_until__gte: datetime
+        :param audio_detector_claimed_until__lt: SQL < comparison, may not work with all column types
+        :type audio_detector_claimed_until__lt: datetime
+        :param audio_detector_claimed_until__lte: SQL <= comparison, may not work with all column types
+        :type audio_detector_claimed_until__lte: datetime
+        :param audio_detector_claimed_until__in: SQL IN comparison, permits comma-separated values
+        :type audio_detector_claimed_until__in: datetime
+        :param audio_detector_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
+        :type audio_detector_claimed_until__notin: datetime
+        :param audio_detector_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_detector_claimed_until__asc: str
+        :param audio_detector_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_detector_claimed_until__desc: str
+        :param audio_detected_at__eq: SQL = comparison
+        :type audio_detected_at__eq: datetime
+        :param audio_detected_at__ne: SQL != comparison
+        :type audio_detected_at__ne: datetime
+        :param audio_detected_at__gt: SQL > comparison, may not work with all column types
+        :type audio_detected_at__gt: datetime
+        :param audio_detected_at__gte: SQL >= comparison, may not work with all column types
+        :type audio_detected_at__gte: datetime
+        :param audio_detected_at__lt: SQL < comparison, may not work with all column types
+        :type audio_detected_at__lt: datetime
+        :param audio_detected_at__lte: SQL <= comparison, may not work with all column types
+        :type audio_detected_at__lte: datetime
+        :param audio_detected_at__in: SQL IN comparison, permits comma-separated values
+        :type audio_detected_at__in: datetime
+        :param audio_detected_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type audio_detected_at__notin: datetime
+        :param audio_detected_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__isnull: str
+        :param audio_detected_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__isnotnull: str
+        :param audio_detected_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__asc: str
+        :param audio_detected_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__desc: str
+        :param audio_profile__contains: SQL @> comparison
+        :type audio_profile__contains: object
+        :param audio_profile__notcontains: SQL NOT @> comparison
+        :type audio_profile__notcontains: object
+        :param audio_profile__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_profile__asc: str
+        :param audio_profile__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_profile__desc: str
+        :param audio_summary__contains: SQL @> comparison
+        :type audio_summary__contains: object
+        :param audio_summary__notcontains: SQL NOT @> comparison
+        :type audio_summary__notcontains: object
+        :param audio_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_summary__asc: str
+        :param audio_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_summary__desc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1148,6 +1242,7 @@ class VideoApi:
             offset=offset,
             depth=depth,
             camera__load=camera__load,
+            referenced_by_audio_event_video_id__load=referenced_by_audio_event_video_id__load,
             referenced_by_detection_video_id__load=referenced_by_detection_video_id__load,
             referenced_by_track_video_id__load=referenced_by_track_video_id__load,
             created_at__eq=created_at__eq,
@@ -1318,6 +1413,36 @@ class VideoApi:
             overlay_offset_ms__isnotnull=overlay_offset_ms__isnotnull,
             overlay_offset_ms__asc=overlay_offset_ms__asc,
             overlay_offset_ms__desc=overlay_offset_ms__desc,
+            audio_detector_claimed_until__eq=audio_detector_claimed_until__eq,
+            audio_detector_claimed_until__ne=audio_detector_claimed_until__ne,
+            audio_detector_claimed_until__gt=audio_detector_claimed_until__gt,
+            audio_detector_claimed_until__gte=audio_detector_claimed_until__gte,
+            audio_detector_claimed_until__lt=audio_detector_claimed_until__lt,
+            audio_detector_claimed_until__lte=audio_detector_claimed_until__lte,
+            audio_detector_claimed_until__in=audio_detector_claimed_until__in,
+            audio_detector_claimed_until__notin=audio_detector_claimed_until__notin,
+            audio_detector_claimed_until__asc=audio_detector_claimed_until__asc,
+            audio_detector_claimed_until__desc=audio_detector_claimed_until__desc,
+            audio_detected_at__eq=audio_detected_at__eq,
+            audio_detected_at__ne=audio_detected_at__ne,
+            audio_detected_at__gt=audio_detected_at__gt,
+            audio_detected_at__gte=audio_detected_at__gte,
+            audio_detected_at__lt=audio_detected_at__lt,
+            audio_detected_at__lte=audio_detected_at__lte,
+            audio_detected_at__in=audio_detected_at__in,
+            audio_detected_at__notin=audio_detected_at__notin,
+            audio_detected_at__isnull=audio_detected_at__isnull,
+            audio_detected_at__isnotnull=audio_detected_at__isnotnull,
+            audio_detected_at__asc=audio_detected_at__asc,
+            audio_detected_at__desc=audio_detected_at__desc,
+            audio_profile__contains=audio_profile__contains,
+            audio_profile__notcontains=audio_profile__notcontains,
+            audio_profile__asc=audio_profile__asc,
+            audio_profile__desc=audio_profile__desc,
+            audio_summary__contains=audio_summary__contains,
+            audio_summary__notcontains=audio_summary__notcontains,
+            audio_summary__asc=audio_summary__asc,
+            audio_summary__desc=audio_summary__desc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -1345,6 +1470,7 @@ class VideoApi:
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_audio_event_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_track_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -1515,6 +1641,36 @@ class VideoApi:
         overlay_offset_ms__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
         overlay_offset_ms__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         overlay_offset_ms__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detector_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        audio_detector_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        audio_detector_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        audio_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        audio_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        audio_detected_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        audio_detected_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        audio_detected_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        audio_detected_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        audio_detected_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        audio_detected_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        audio_detected_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        audio_detected_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_profile__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        audio_profile__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        audio_profile__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_profile__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_summary__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        audio_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        audio_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -1539,6 +1695,8 @@ class VideoApi:
         :type depth: int
         :param camera__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type camera__load: str
+        :param referenced_by_audio_event_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_audio_event_video_id__load: str
         :param referenced_by_detection_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_video_id__load: str
         :param referenced_by_track_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
@@ -1879,6 +2037,66 @@ class VideoApi:
         :type overlay_offset_ms__asc: str
         :param overlay_offset_ms__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type overlay_offset_ms__desc: str
+        :param audio_detector_claimed_until__eq: SQL = comparison
+        :type audio_detector_claimed_until__eq: datetime
+        :param audio_detector_claimed_until__ne: SQL != comparison
+        :type audio_detector_claimed_until__ne: datetime
+        :param audio_detector_claimed_until__gt: SQL > comparison, may not work with all column types
+        :type audio_detector_claimed_until__gt: datetime
+        :param audio_detector_claimed_until__gte: SQL >= comparison, may not work with all column types
+        :type audio_detector_claimed_until__gte: datetime
+        :param audio_detector_claimed_until__lt: SQL < comparison, may not work with all column types
+        :type audio_detector_claimed_until__lt: datetime
+        :param audio_detector_claimed_until__lte: SQL <= comparison, may not work with all column types
+        :type audio_detector_claimed_until__lte: datetime
+        :param audio_detector_claimed_until__in: SQL IN comparison, permits comma-separated values
+        :type audio_detector_claimed_until__in: datetime
+        :param audio_detector_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
+        :type audio_detector_claimed_until__notin: datetime
+        :param audio_detector_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_detector_claimed_until__asc: str
+        :param audio_detector_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_detector_claimed_until__desc: str
+        :param audio_detected_at__eq: SQL = comparison
+        :type audio_detected_at__eq: datetime
+        :param audio_detected_at__ne: SQL != comparison
+        :type audio_detected_at__ne: datetime
+        :param audio_detected_at__gt: SQL > comparison, may not work with all column types
+        :type audio_detected_at__gt: datetime
+        :param audio_detected_at__gte: SQL >= comparison, may not work with all column types
+        :type audio_detected_at__gte: datetime
+        :param audio_detected_at__lt: SQL < comparison, may not work with all column types
+        :type audio_detected_at__lt: datetime
+        :param audio_detected_at__lte: SQL <= comparison, may not work with all column types
+        :type audio_detected_at__lte: datetime
+        :param audio_detected_at__in: SQL IN comparison, permits comma-separated values
+        :type audio_detected_at__in: datetime
+        :param audio_detected_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type audio_detected_at__notin: datetime
+        :param audio_detected_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__isnull: str
+        :param audio_detected_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__isnotnull: str
+        :param audio_detected_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__asc: str
+        :param audio_detected_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__desc: str
+        :param audio_profile__contains: SQL @> comparison
+        :type audio_profile__contains: object
+        :param audio_profile__notcontains: SQL NOT @> comparison
+        :type audio_profile__notcontains: object
+        :param audio_profile__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_profile__asc: str
+        :param audio_profile__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_profile__desc: str
+        :param audio_summary__contains: SQL @> comparison
+        :type audio_summary__contains: object
+        :param audio_summary__notcontains: SQL NOT @> comparison
+        :type audio_summary__notcontains: object
+        :param audio_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_summary__asc: str
+        :param audio_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_summary__desc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -1906,6 +2124,7 @@ class VideoApi:
             offset=offset,
             depth=depth,
             camera__load=camera__load,
+            referenced_by_audio_event_video_id__load=referenced_by_audio_event_video_id__load,
             referenced_by_detection_video_id__load=referenced_by_detection_video_id__load,
             referenced_by_track_video_id__load=referenced_by_track_video_id__load,
             created_at__eq=created_at__eq,
@@ -2076,6 +2295,36 @@ class VideoApi:
             overlay_offset_ms__isnotnull=overlay_offset_ms__isnotnull,
             overlay_offset_ms__asc=overlay_offset_ms__asc,
             overlay_offset_ms__desc=overlay_offset_ms__desc,
+            audio_detector_claimed_until__eq=audio_detector_claimed_until__eq,
+            audio_detector_claimed_until__ne=audio_detector_claimed_until__ne,
+            audio_detector_claimed_until__gt=audio_detector_claimed_until__gt,
+            audio_detector_claimed_until__gte=audio_detector_claimed_until__gte,
+            audio_detector_claimed_until__lt=audio_detector_claimed_until__lt,
+            audio_detector_claimed_until__lte=audio_detector_claimed_until__lte,
+            audio_detector_claimed_until__in=audio_detector_claimed_until__in,
+            audio_detector_claimed_until__notin=audio_detector_claimed_until__notin,
+            audio_detector_claimed_until__asc=audio_detector_claimed_until__asc,
+            audio_detector_claimed_until__desc=audio_detector_claimed_until__desc,
+            audio_detected_at__eq=audio_detected_at__eq,
+            audio_detected_at__ne=audio_detected_at__ne,
+            audio_detected_at__gt=audio_detected_at__gt,
+            audio_detected_at__gte=audio_detected_at__gte,
+            audio_detected_at__lt=audio_detected_at__lt,
+            audio_detected_at__lte=audio_detected_at__lte,
+            audio_detected_at__in=audio_detected_at__in,
+            audio_detected_at__notin=audio_detected_at__notin,
+            audio_detected_at__isnull=audio_detected_at__isnull,
+            audio_detected_at__isnotnull=audio_detected_at__isnotnull,
+            audio_detected_at__asc=audio_detected_at__asc,
+            audio_detected_at__desc=audio_detected_at__desc,
+            audio_profile__contains=audio_profile__contains,
+            audio_profile__notcontains=audio_profile__notcontains,
+            audio_profile__asc=audio_profile__asc,
+            audio_profile__desc=audio_profile__desc,
+            audio_summary__contains=audio_summary__contains,
+            audio_summary__notcontains=audio_summary__notcontains,
+            audio_summary__asc=audio_summary__asc,
+            audio_summary__desc=audio_summary__desc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2103,6 +2352,7 @@ class VideoApi:
         offset: Annotated[Optional[StrictInt], Field(description="SQL OFFSET operator")] = None,
         depth: Annotated[Optional[StrictInt], Field(description="Max recursion depth for loading foreign objects; default = 1  (0 = recurse until graph cycle detected, 1 = this object only, 2 = this object + neighbours, 3 = this object + neighbours + their neighbours... etc)")] = None,
         camera__load: Annotated[Optional[StrictStr], Field(description="load the given outbound relationship, value is ignored (presence of key is sufficient)")] = None,
+        referenced_by_audio_event_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_detection_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         referenced_by_track_video_id__load: Annotated[Optional[StrictStr], Field(description="load the given inbound relationship, value is ignored (presence of key is sufficient)")] = None,
         created_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
@@ -2273,6 +2523,36 @@ class VideoApi:
         overlay_offset_ms__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
         overlay_offset_ms__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
         overlay_offset_ms__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detector_claimed_until__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        audio_detector_claimed_until__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        audio_detector_claimed_until__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        audio_detector_claimed_until__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        audio_detector_claimed_until__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        audio_detector_claimed_until__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detector_claimed_until__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__eq: Annotated[Optional[datetime], Field(description="SQL = comparison")] = None,
+        audio_detected_at__ne: Annotated[Optional[datetime], Field(description="SQL != comparison")] = None,
+        audio_detected_at__gt: Annotated[Optional[datetime], Field(description="SQL > comparison, may not work with all column types")] = None,
+        audio_detected_at__gte: Annotated[Optional[datetime], Field(description="SQL >= comparison, may not work with all column types")] = None,
+        audio_detected_at__lt: Annotated[Optional[datetime], Field(description="SQL < comparison, may not work with all column types")] = None,
+        audio_detected_at__lte: Annotated[Optional[datetime], Field(description="SQL <= comparison, may not work with all column types")] = None,
+        audio_detected_at__in: Annotated[Optional[datetime], Field(description="SQL IN comparison, permits comma-separated values")] = None,
+        audio_detected_at__notin: Annotated[Optional[datetime], Field(description="SQL NOT IN comparison, permits comma-separated values")] = None,
+        audio_detected_at__isnull: Annotated[Optional[StrictStr], Field(description="SQL IS null comparison, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__isnotnull: Annotated[Optional[StrictStr], Field(description="SQL IS NOT null comparison, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_detected_at__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_profile__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        audio_profile__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        audio_profile__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_profile__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_summary__contains: Annotated[Optional[Any], Field(description="SQL @> comparison")] = None,
+        audio_summary__notcontains: Annotated[Optional[Any], Field(description="SQL NOT @> comparison")] = None,
+        audio_summary__asc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)")] = None,
+        audio_summary__desc: Annotated[Optional[StrictStr], Field(description="SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)")] = None,
         _request_timeout: Union[
             None,
             Annotated[StrictFloat, Field(gt=0)],
@@ -2297,6 +2577,8 @@ class VideoApi:
         :type depth: int
         :param camera__load: load the given outbound relationship, value is ignored (presence of key is sufficient)
         :type camera__load: str
+        :param referenced_by_audio_event_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
+        :type referenced_by_audio_event_video_id__load: str
         :param referenced_by_detection_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
         :type referenced_by_detection_video_id__load: str
         :param referenced_by_track_video_id__load: load the given inbound relationship, value is ignored (presence of key is sufficient)
@@ -2637,6 +2919,66 @@ class VideoApi:
         :type overlay_offset_ms__asc: str
         :param overlay_offset_ms__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
         :type overlay_offset_ms__desc: str
+        :param audio_detector_claimed_until__eq: SQL = comparison
+        :type audio_detector_claimed_until__eq: datetime
+        :param audio_detector_claimed_until__ne: SQL != comparison
+        :type audio_detector_claimed_until__ne: datetime
+        :param audio_detector_claimed_until__gt: SQL > comparison, may not work with all column types
+        :type audio_detector_claimed_until__gt: datetime
+        :param audio_detector_claimed_until__gte: SQL >= comparison, may not work with all column types
+        :type audio_detector_claimed_until__gte: datetime
+        :param audio_detector_claimed_until__lt: SQL < comparison, may not work with all column types
+        :type audio_detector_claimed_until__lt: datetime
+        :param audio_detector_claimed_until__lte: SQL <= comparison, may not work with all column types
+        :type audio_detector_claimed_until__lte: datetime
+        :param audio_detector_claimed_until__in: SQL IN comparison, permits comma-separated values
+        :type audio_detector_claimed_until__in: datetime
+        :param audio_detector_claimed_until__notin: SQL NOT IN comparison, permits comma-separated values
+        :type audio_detector_claimed_until__notin: datetime
+        :param audio_detector_claimed_until__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_detector_claimed_until__asc: str
+        :param audio_detector_claimed_until__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_detector_claimed_until__desc: str
+        :param audio_detected_at__eq: SQL = comparison
+        :type audio_detected_at__eq: datetime
+        :param audio_detected_at__ne: SQL != comparison
+        :type audio_detected_at__ne: datetime
+        :param audio_detected_at__gt: SQL > comparison, may not work with all column types
+        :type audio_detected_at__gt: datetime
+        :param audio_detected_at__gte: SQL >= comparison, may not work with all column types
+        :type audio_detected_at__gte: datetime
+        :param audio_detected_at__lt: SQL < comparison, may not work with all column types
+        :type audio_detected_at__lt: datetime
+        :param audio_detected_at__lte: SQL <= comparison, may not work with all column types
+        :type audio_detected_at__lte: datetime
+        :param audio_detected_at__in: SQL IN comparison, permits comma-separated values
+        :type audio_detected_at__in: datetime
+        :param audio_detected_at__notin: SQL NOT IN comparison, permits comma-separated values
+        :type audio_detected_at__notin: datetime
+        :param audio_detected_at__isnull: SQL IS null comparison, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__isnull: str
+        :param audio_detected_at__isnotnull: SQL IS NOT null comparison, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__isnotnull: str
+        :param audio_detected_at__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__asc: str
+        :param audio_detected_at__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_detected_at__desc: str
+        :param audio_profile__contains: SQL @> comparison
+        :type audio_profile__contains: object
+        :param audio_profile__notcontains: SQL NOT @> comparison
+        :type audio_profile__notcontains: object
+        :param audio_profile__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_profile__asc: str
+        :param audio_profile__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_profile__desc: str
+        :param audio_summary__contains: SQL @> comparison
+        :type audio_summary__contains: object
+        :param audio_summary__notcontains: SQL NOT @> comparison
+        :type audio_summary__notcontains: object
+        :param audio_summary__asc: SQL ORDER BY _ ASC clause, value is ignored (presence of key is sufficient)
+        :type audio_summary__asc: str
+        :param audio_summary__desc: SQL ORDER BY _ DESC clause, value is ignored (presence of key is sufficient)
+        :type audio_summary__desc: str
         :param _request_timeout: timeout setting for this request. If one
                                  number provided, it will be total request
                                  timeout. It can also be a pair (tuple) of
@@ -2664,6 +3006,7 @@ class VideoApi:
             offset=offset,
             depth=depth,
             camera__load=camera__load,
+            referenced_by_audio_event_video_id__load=referenced_by_audio_event_video_id__load,
             referenced_by_detection_video_id__load=referenced_by_detection_video_id__load,
             referenced_by_track_video_id__load=referenced_by_track_video_id__load,
             created_at__eq=created_at__eq,
@@ -2834,6 +3177,36 @@ class VideoApi:
             overlay_offset_ms__isnotnull=overlay_offset_ms__isnotnull,
             overlay_offset_ms__asc=overlay_offset_ms__asc,
             overlay_offset_ms__desc=overlay_offset_ms__desc,
+            audio_detector_claimed_until__eq=audio_detector_claimed_until__eq,
+            audio_detector_claimed_until__ne=audio_detector_claimed_until__ne,
+            audio_detector_claimed_until__gt=audio_detector_claimed_until__gt,
+            audio_detector_claimed_until__gte=audio_detector_claimed_until__gte,
+            audio_detector_claimed_until__lt=audio_detector_claimed_until__lt,
+            audio_detector_claimed_until__lte=audio_detector_claimed_until__lte,
+            audio_detector_claimed_until__in=audio_detector_claimed_until__in,
+            audio_detector_claimed_until__notin=audio_detector_claimed_until__notin,
+            audio_detector_claimed_until__asc=audio_detector_claimed_until__asc,
+            audio_detector_claimed_until__desc=audio_detector_claimed_until__desc,
+            audio_detected_at__eq=audio_detected_at__eq,
+            audio_detected_at__ne=audio_detected_at__ne,
+            audio_detected_at__gt=audio_detected_at__gt,
+            audio_detected_at__gte=audio_detected_at__gte,
+            audio_detected_at__lt=audio_detected_at__lt,
+            audio_detected_at__lte=audio_detected_at__lte,
+            audio_detected_at__in=audio_detected_at__in,
+            audio_detected_at__notin=audio_detected_at__notin,
+            audio_detected_at__isnull=audio_detected_at__isnull,
+            audio_detected_at__isnotnull=audio_detected_at__isnotnull,
+            audio_detected_at__asc=audio_detected_at__asc,
+            audio_detected_at__desc=audio_detected_at__desc,
+            audio_profile__contains=audio_profile__contains,
+            audio_profile__notcontains=audio_profile__notcontains,
+            audio_profile__asc=audio_profile__asc,
+            audio_profile__desc=audio_profile__desc,
+            audio_summary__contains=audio_summary__contains,
+            audio_summary__notcontains=audio_summary__notcontains,
+            audio_summary__asc=audio_summary__asc,
+            audio_summary__desc=audio_summary__desc,
             _request_auth=_request_auth,
             _content_type=_content_type,
             _headers=_headers,
@@ -2856,6 +3229,7 @@ class VideoApi:
         offset,
         depth,
         camera__load,
+        referenced_by_audio_event_video_id__load,
         referenced_by_detection_video_id__load,
         referenced_by_track_video_id__load,
         created_at__eq,
@@ -3026,6 +3400,36 @@ class VideoApi:
         overlay_offset_ms__isnotnull,
         overlay_offset_ms__asc,
         overlay_offset_ms__desc,
+        audio_detector_claimed_until__eq,
+        audio_detector_claimed_until__ne,
+        audio_detector_claimed_until__gt,
+        audio_detector_claimed_until__gte,
+        audio_detector_claimed_until__lt,
+        audio_detector_claimed_until__lte,
+        audio_detector_claimed_until__in,
+        audio_detector_claimed_until__notin,
+        audio_detector_claimed_until__asc,
+        audio_detector_claimed_until__desc,
+        audio_detected_at__eq,
+        audio_detected_at__ne,
+        audio_detected_at__gt,
+        audio_detected_at__gte,
+        audio_detected_at__lt,
+        audio_detected_at__lte,
+        audio_detected_at__in,
+        audio_detected_at__notin,
+        audio_detected_at__isnull,
+        audio_detected_at__isnotnull,
+        audio_detected_at__asc,
+        audio_detected_at__desc,
+        audio_profile__contains,
+        audio_profile__notcontains,
+        audio_profile__asc,
+        audio_profile__desc,
+        audio_summary__contains,
+        audio_summary__notcontains,
+        audio_summary__asc,
+        audio_summary__desc,
         _request_auth,
         _content_type,
         _headers,
@@ -3061,6 +3465,10 @@ class VideoApi:
         if camera__load is not None:
             
             _query_params.append(('camera__load', camera__load))
+            
+        if referenced_by_audio_event_video_id__load is not None:
+            
+            _query_params.append(('referenced_by_AudioEvent_VideoID__load', referenced_by_audio_event_video_id__load))
             
         if referenced_by_detection_video_id__load is not None:
             
@@ -4246,6 +4654,270 @@ class VideoApi:
             
             _query_params.append(('overlay_offset_ms__desc', overlay_offset_ms__desc))
             
+        if audio_detector_claimed_until__eq is not None:
+            if isinstance(audio_detector_claimed_until__eq, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__eq',
+                        audio_detector_claimed_until__eq.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__eq', audio_detector_claimed_until__eq))
+            
+        if audio_detector_claimed_until__ne is not None:
+            if isinstance(audio_detector_claimed_until__ne, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__ne',
+                        audio_detector_claimed_until__ne.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__ne', audio_detector_claimed_until__ne))
+            
+        if audio_detector_claimed_until__gt is not None:
+            if isinstance(audio_detector_claimed_until__gt, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__gt',
+                        audio_detector_claimed_until__gt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__gt', audio_detector_claimed_until__gt))
+            
+        if audio_detector_claimed_until__gte is not None:
+            if isinstance(audio_detector_claimed_until__gte, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__gte',
+                        audio_detector_claimed_until__gte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__gte', audio_detector_claimed_until__gte))
+            
+        if audio_detector_claimed_until__lt is not None:
+            if isinstance(audio_detector_claimed_until__lt, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__lt',
+                        audio_detector_claimed_until__lt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__lt', audio_detector_claimed_until__lt))
+            
+        if audio_detector_claimed_until__lte is not None:
+            if isinstance(audio_detector_claimed_until__lte, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__lte',
+                        audio_detector_claimed_until__lte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__lte', audio_detector_claimed_until__lte))
+            
+        if audio_detector_claimed_until__in is not None:
+            if isinstance(audio_detector_claimed_until__in, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__in',
+                        audio_detector_claimed_until__in.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__in', audio_detector_claimed_until__in))
+            
+        if audio_detector_claimed_until__notin is not None:
+            if isinstance(audio_detector_claimed_until__notin, datetime):
+                _query_params.append(
+                    (
+                        'audio_detector_claimed_until__notin',
+                        audio_detector_claimed_until__notin.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detector_claimed_until__notin', audio_detector_claimed_until__notin))
+            
+        if audio_detector_claimed_until__asc is not None:
+            
+            _query_params.append(('audio_detector_claimed_until__asc', audio_detector_claimed_until__asc))
+            
+        if audio_detector_claimed_until__desc is not None:
+            
+            _query_params.append(('audio_detector_claimed_until__desc', audio_detector_claimed_until__desc))
+            
+        if audio_detected_at__eq is not None:
+            if isinstance(audio_detected_at__eq, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__eq',
+                        audio_detected_at__eq.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__eq', audio_detected_at__eq))
+            
+        if audio_detected_at__ne is not None:
+            if isinstance(audio_detected_at__ne, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__ne',
+                        audio_detected_at__ne.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__ne', audio_detected_at__ne))
+            
+        if audio_detected_at__gt is not None:
+            if isinstance(audio_detected_at__gt, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__gt',
+                        audio_detected_at__gt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__gt', audio_detected_at__gt))
+            
+        if audio_detected_at__gte is not None:
+            if isinstance(audio_detected_at__gte, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__gte',
+                        audio_detected_at__gte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__gte', audio_detected_at__gte))
+            
+        if audio_detected_at__lt is not None:
+            if isinstance(audio_detected_at__lt, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__lt',
+                        audio_detected_at__lt.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__lt', audio_detected_at__lt))
+            
+        if audio_detected_at__lte is not None:
+            if isinstance(audio_detected_at__lte, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__lte',
+                        audio_detected_at__lte.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__lte', audio_detected_at__lte))
+            
+        if audio_detected_at__in is not None:
+            if isinstance(audio_detected_at__in, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__in',
+                        audio_detected_at__in.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__in', audio_detected_at__in))
+            
+        if audio_detected_at__notin is not None:
+            if isinstance(audio_detected_at__notin, datetime):
+                _query_params.append(
+                    (
+                        'audio_detected_at__notin',
+                        audio_detected_at__notin.strftime(
+                            self.api_client.configuration.datetime_format
+                        )
+                    )
+                )
+            else:
+                _query_params.append(('audio_detected_at__notin', audio_detected_at__notin))
+            
+        if audio_detected_at__isnull is not None:
+            
+            _query_params.append(('audio_detected_at__isnull', audio_detected_at__isnull))
+            
+        if audio_detected_at__isnotnull is not None:
+            
+            _query_params.append(('audio_detected_at__isnotnull', audio_detected_at__isnotnull))
+            
+        if audio_detected_at__asc is not None:
+            
+            _query_params.append(('audio_detected_at__asc', audio_detected_at__asc))
+            
+        if audio_detected_at__desc is not None:
+            
+            _query_params.append(('audio_detected_at__desc', audio_detected_at__desc))
+            
+        if audio_profile__contains is not None:
+            
+            _query_params.append(('audio_profile__contains', audio_profile__contains))
+            
+        if audio_profile__notcontains is not None:
+            
+            _query_params.append(('audio_profile__notcontains', audio_profile__notcontains))
+            
+        if audio_profile__asc is not None:
+            
+            _query_params.append(('audio_profile__asc', audio_profile__asc))
+            
+        if audio_profile__desc is not None:
+            
+            _query_params.append(('audio_profile__desc', audio_profile__desc))
+            
+        if audio_summary__contains is not None:
+            
+            _query_params.append(('audio_summary__contains', audio_summary__contains))
+            
+        if audio_summary__notcontains is not None:
+            
+            _query_params.append(('audio_summary__notcontains', audio_summary__notcontains))
+            
+        if audio_summary__asc is not None:
+            
+            _query_params.append(('audio_summary__asc', audio_summary__asc))
+            
+        if audio_summary__desc is not None:
+            
+            _query_params.append(('audio_summary__desc', audio_summary__desc))
+            
         # process the header parameters
         # process the form parameters
         # process the body parameter
@@ -4853,6 +5525,306 @@ class VideoApi:
         return self.api_client.param_serialize(
             method='POST',
             resource_path='/api/videos',
+            path_params=_path_params,
+            query_params=_query_params,
+            header_params=_header_params,
+            body=_body_params,
+            post_params=_form_params,
+            files=_files,
+            auth_settings=_auth_settings,
+            collection_formats=_collection_formats,
+            _host=_host,
+            _request_auth=_request_auth
+        )
+
+
+
+
+    @validate_call
+    def post_videos_audio_detector_claim(
+        self,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        video_audio_detector_claim_request: VideoAudioDetectorClaimRequest,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ResponseWithGenericOfVideo:
+        """post_videos_audio_detector_claim
+
+
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param video_audio_detector_claim_request: (required)
+        :type video_audio_detector_claim_request: VideoAudioDetectorClaimRequest
+        :param depth: Query parameter depth
+        :type depth: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_videos_audio_detector_claim_serialize(
+            primary_key=primary_key,
+            video_audio_detector_claim_request=video_audio_detector_claim_request,
+            depth=depth,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResponseWithGenericOfVideo",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        ).data
+
+
+    @validate_call
+    def post_videos_audio_detector_claim_with_http_info(
+        self,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        video_audio_detector_claim_request: VideoAudioDetectorClaimRequest,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> ApiResponse[ResponseWithGenericOfVideo]:
+        """post_videos_audio_detector_claim
+
+
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param video_audio_detector_claim_request: (required)
+        :type video_audio_detector_claim_request: VideoAudioDetectorClaimRequest
+        :param depth: Query parameter depth
+        :type depth: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_videos_audio_detector_claim_serialize(
+            primary_key=primary_key,
+            video_audio_detector_claim_request=video_audio_detector_claim_request,
+            depth=depth,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResponseWithGenericOfVideo",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        response_data.read()
+        return self.api_client.response_deserialize(
+            response_data=response_data,
+            response_types_map=_response_types_map,
+        )
+
+
+    @validate_call
+    def post_videos_audio_detector_claim_without_preload_content(
+        self,
+        primary_key: Annotated[StrictStr, Field(description="Path parameter primaryKey")],
+        video_audio_detector_claim_request: VideoAudioDetectorClaimRequest,
+        depth: Annotated[Optional[StrictInt], Field(description="Query parameter depth")] = None,
+        _request_timeout: Union[
+            None,
+            Annotated[StrictFloat, Field(gt=0)],
+            Tuple[
+                Annotated[StrictFloat, Field(gt=0)],
+                Annotated[StrictFloat, Field(gt=0)]
+            ]
+        ] = None,
+        _request_auth: Optional[Dict[StrictStr, Any]] = None,
+        _content_type: Optional[StrictStr] = None,
+        _headers: Optional[Dict[StrictStr, Any]] = None,
+        _host_index: Annotated[StrictInt, Field(ge=0, le=0)] = 0,
+    ) -> RESTResponseType:
+        """post_videos_audio_detector_claim
+
+
+        :param primary_key: Path parameter primaryKey (required)
+        :type primary_key: str
+        :param video_audio_detector_claim_request: (required)
+        :type video_audio_detector_claim_request: VideoAudioDetectorClaimRequest
+        :param depth: Query parameter depth
+        :type depth: int
+        :param _request_timeout: timeout setting for this request. If one
+                                 number provided, it will be total request
+                                 timeout. It can also be a pair (tuple) of
+                                 (connection, read) timeouts.
+        :type _request_timeout: int, tuple(int, int), optional
+        :param _request_auth: set to override the auth_settings for an a single
+                              request; this effectively ignores the
+                              authentication in the spec for a single request.
+        :type _request_auth: dict, optional
+        :param _content_type: force content-type for the request.
+        :type _content_type: str, Optional
+        :param _headers: set to override the headers for a single
+                         request; this effectively ignores the headers
+                         in the spec for a single request.
+        :type _headers: dict, optional
+        :param _host_index: set to override the host_index for a single
+                            request; this effectively ignores the host_index
+                            in the spec for a single request.
+        :type _host_index: int, optional
+        :return: Returns the result object.
+        """ # noqa: E501
+
+        _param = self._post_videos_audio_detector_claim_serialize(
+            primary_key=primary_key,
+            video_audio_detector_claim_request=video_audio_detector_claim_request,
+            depth=depth,
+            _request_auth=_request_auth,
+            _content_type=_content_type,
+            _headers=_headers,
+            _host_index=_host_index
+        )
+
+        _response_types_map: Dict[str, Optional[str]] = {
+            '200': "ResponseWithGenericOfVideo",
+        }
+        response_data = self.api_client.call_api(
+            *_param,
+            _request_timeout=_request_timeout
+        )
+        return response_data.response
+
+
+    def _post_videos_audio_detector_claim_serialize(
+        self,
+        primary_key,
+        video_audio_detector_claim_request,
+        depth,
+        _request_auth,
+        _content_type,
+        _headers,
+        _host_index,
+    ) -> RequestSerialized:
+
+        _host = None
+
+        _collection_formats: Dict[str, str] = {
+        }
+
+        _path_params: Dict[str, str] = {}
+        _query_params: List[Tuple[str, str]] = []
+        _header_params: Dict[str, Optional[str]] = _headers or {}
+        _form_params: List[Tuple[str, str]] = []
+        _files: Dict[str, Union[str, bytes]] = {}
+        _body_params: Optional[bytes] = None
+
+        # process the path parameters
+        if primary_key is not None:
+            _path_params['primaryKey'] = primary_key
+        # process the query parameters
+        if depth is not None:
+            
+            _query_params.append(('depth', depth))
+            
+        # process the header parameters
+        # process the form parameters
+        # process the body parameter
+        if video_audio_detector_claim_request is not None:
+            _body_params = video_audio_detector_claim_request
+
+
+        # set the HTTP header `Accept`
+        if 'Accept' not in _header_params:
+            _header_params['Accept'] = self.api_client.select_header_accept(
+                [
+                    'application/json'
+                ]
+            )
+
+        # set the HTTP header `Content-Type`
+        if _content_type:
+            _header_params['Content-Type'] = _content_type
+        else:
+            _default_content_type = (
+                self.api_client.select_header_content_type(
+                    [
+                        'application/json'
+                    ]
+                )
+            )
+            if _default_content_type is not None:
+                _header_params['Content-Type'] = _default_content_type
+
+        # authentication setting
+        _auth_settings: List[str] = [
+        ]
+
+        return self.api_client.param_serialize(
+            method='POST',
+            resource_path='/api/videos/{primaryKey}/audio-detector-claim',
             path_params=_path_params,
             query_params=_query_params,
             header_params=_header_params,

@@ -1,4 +1,4 @@
-# GetCamerasDefaultResponse
+# PostAudioDetectorClaimVideosDefaultResponse
 
 ## Properties
 
@@ -10,79 +10,79 @@ Name | Type | Description | Notes
 
 ## Methods
 
-### NewGetCamerasDefaultResponse
+### NewPostAudioDetectorClaimVideosDefaultResponse
 
-`func NewGetCamerasDefaultResponse(error_ []string, status int32, success bool, ) *GetCamerasDefaultResponse`
+`func NewPostAudioDetectorClaimVideosDefaultResponse(error_ []string, status int32, success bool, ) *PostAudioDetectorClaimVideosDefaultResponse`
 
-NewGetCamerasDefaultResponse instantiates a new GetCamerasDefaultResponse object
+NewPostAudioDetectorClaimVideosDefaultResponse instantiates a new PostAudioDetectorClaimVideosDefaultResponse object
 This constructor will assign default values to properties that have it defined,
 and makes sure properties required by API are set, but the set of arguments
 will change when the set of required properties is changed
 
-### NewGetCamerasDefaultResponseWithDefaults
+### NewPostAudioDetectorClaimVideosDefaultResponseWithDefaults
 
-`func NewGetCamerasDefaultResponseWithDefaults() *GetCamerasDefaultResponse`
+`func NewPostAudioDetectorClaimVideosDefaultResponseWithDefaults() *PostAudioDetectorClaimVideosDefaultResponse`
 
-NewGetCamerasDefaultResponseWithDefaults instantiates a new GetCamerasDefaultResponse object
+NewPostAudioDetectorClaimVideosDefaultResponseWithDefaults instantiates a new PostAudioDetectorClaimVideosDefaultResponse object
 This constructor will only assign default values to properties that have it defined,
 but it doesn't guarantee that properties required by API are set
 
 ### GetError
 
-`func (o *GetCamerasDefaultResponse) GetError() []string`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) GetError() []string`
 
 GetError returns the Error field if non-nil, zero value otherwise.
 
 ### GetErrorOk
 
-`func (o *GetCamerasDefaultResponse) GetErrorOk() (*[]string, bool)`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) GetErrorOk() (*[]string, bool)`
 
 GetErrorOk returns a tuple with the Error field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetError
 
-`func (o *GetCamerasDefaultResponse) SetError(v []string)`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) SetError(v []string)`
 
 SetError sets Error field to given value.
 
 
 ### GetStatus
 
-`func (o *GetCamerasDefaultResponse) GetStatus() int32`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) GetStatus() int32`
 
 GetStatus returns the Status field if non-nil, zero value otherwise.
 
 ### GetStatusOk
 
-`func (o *GetCamerasDefaultResponse) GetStatusOk() (*int32, bool)`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) GetStatusOk() (*int32, bool)`
 
 GetStatusOk returns a tuple with the Status field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetStatus
 
-`func (o *GetCamerasDefaultResponse) SetStatus(v int32)`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) SetStatus(v int32)`
 
 SetStatus sets Status field to given value.
 
 
 ### GetSuccess
 
-`func (o *GetCamerasDefaultResponse) GetSuccess() bool`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) GetSuccess() bool`
 
 GetSuccess returns the Success field if non-nil, zero value otherwise.
 
 ### GetSuccessOk
 
-`func (o *GetCamerasDefaultResponse) GetSuccessOk() (*bool, bool)`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) GetSuccessOk() (*bool, bool)`
 
 GetSuccessOk returns a tuple with the Success field if it's non-nil, zero value otherwise
 and a boolean to check if the value has been set.
 
 ### SetSuccess
 
-`func (o *GetCamerasDefaultResponse) SetSuccess(v bool)`
+`func (o *PostAudioDetectorClaimVideosDefaultResponse) SetSuccess(v bool)`
 
 SetSuccess sets Success field to given value.
 
