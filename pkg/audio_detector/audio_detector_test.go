@@ -17,7 +17,7 @@ var testConfig = Config{
 	SampleRate:    48000,
 	WindowMs:      50,
 	GridMs:        100,
-	TriggerDb:     6.0,
+	TriggerDb:     14.0,
 	MaxGapWindows: 2,
 	FFTSize:       2048,
 	MelBands:      16,
@@ -85,7 +85,8 @@ func TestAnalyzeDetectsBurstOverBed(t *testing.T) {
 	assert.InDelta(t, 50.3, event.ProminenceDb, 2.0)
 	assert.InDelta(t, 3.01, event.CrestDb, 0.5)
 	assert.Equal(t, "tonal", event.Kind)
-	assert.Equal(t, 1.0, event.Score)
+	assert.Greater(t, event.Score, 0.7)
+	assert.Less(t, event.Score, 1.0)
 	assert.InDelta(t, 1000, event.Spectral.CentroidHz, 120)
 	assert.Greater(t, event.Spectral.Tonality, 0.5)
 	assert.Len(t, event.Spectral.Bands, testConfig.MelBands)
@@ -208,6 +209,19 @@ func TestScoreRisesWithProminence(t *testing.T) {
 	assert.Equal(t, 1.0, ScoreEvent(100, 40, 1, 6))
 }
 
+func TestScoreCalibration(t *testing.T) {
+	// Measured over 29,106 deployed events (2026-10-09..10): prominence p50 8.1 dB /
+	// p99 17.2 dB, crest p50 12.4 dB / p99 27.1 dB. The 2026-10-17 transients that
+	// started this feature sit at 46-52 dB prominence, so they own the top of the scale.
+	assert.Greater(t, ScoreEvent(46, 8, 0.3, 14), 0.8)
+	assert.Greater(t, ScoreEvent(17.2, 27.1, 0.3, 14), 0.4)
+	assert.Less(t, ScoreEvent(17.2, 27.1, 0.3, 14), 0.7)
+	assert.Less(t, ScoreEvent(8.1, 12.4, 0.3, 14), 0.2)
+
+	// The background median never clears the trigger, so it never becomes an event.
+	assert.Empty(t, FindSpans([]WindowStats{{RmsDbfs: -53.9, PeakDbfs: -50.0}}, -62.0, testConfig))
+}
+
 func requireFFmpeg(t *testing.T) {
 	t.Helper()
 
@@ -272,7 +286,7 @@ func TestGetSettingsDefaults(t *testing.T) {
 	assert.Equal(t, 48000, settings.Config.SampleRate)
 	assert.Equal(t, 50, settings.Config.WindowMs)
 	assert.Equal(t, 100, settings.Config.GridMs)
-	assert.Equal(t, 6.0, settings.Config.TriggerDb)
+	assert.Equal(t, 14.0, settings.Config.TriggerDb)
 	assert.Equal(t, 2, settings.Config.MaxGapWindows)
 	assert.Equal(t, 2048, settings.Config.FFTSize)
 	assert.Equal(t, 16, settings.Config.MelBands)

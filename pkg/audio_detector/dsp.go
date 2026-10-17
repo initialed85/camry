@@ -199,7 +199,7 @@ func FindSpans(stats []WindowStats, floorDbfs float64, cfg Config) []span {
 }
 
 func ScoreEvent(prominenceDb, crestDb, flux, triggerDb float64) float64 {
-	score := (prominenceDb-triggerDb)/20 + (crestDb-3)/15 + flux/0.3*0.2
+	score := 0.7*(prominenceDb-triggerDb)/30 + 0.3*(crestDb-10)/20 + 0.15*min(flux/0.3, 1.0)
 
 	if score < 0 {
 		return 0

@@ -78,7 +78,7 @@ func GetSettings() (Settings, error) {
 		return settings, err
 	}
 
-	triggerDb, err := internal.GetEnvironment("TRIGGER_DB", false, internal.Ptr(6.0))
+	triggerDb, err := internal.GetEnvironment("TRIGGER_DB", false, internal.Ptr(14.0))
 	if err != nil {
 		return settings, err
 	}
