@@ -10,12 +10,13 @@ import ModalDialog from "@mui/joy/ModalDialog";
 import Table from "@mui/joy/Table";
 import Tooltip from "@mui/joy/Tooltip";
 import Typography from "@mui/joy/Typography";
+import VolumeOffOutlinedIcon from "@mui/icons-material/VolumeOffOutlined";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { clientForReactQuery, useQuery } from "../api";
 import { components } from "../api/api";
-import { getDateString, OverlayMode } from "../helpers";
+import { audioScoreColor, getDateString, OverlayMode } from "../helpers";
 import { Video } from "./Video";
 
 const defaultLimit = 10;
@@ -269,6 +270,14 @@ export function VideoTable(props: VideoTableProps) {
             </th>
             <th
               style={{
+                width: props.responsive ? 70 : 150,
+                ...truncateStyleProps,
+              }}
+            >
+              {props.responsive ? "A" : "Audio"}
+            </th>
+            <th
+              style={{
                 width: props.responsive ? 80 : 160,
                 ...truncateStyleProps,
               }}
@@ -449,6 +458,49 @@ export function VideoTable(props: VideoTableProps) {
                     });
                 }
 
+                const audioSummary = (
+                  (video?.audio_summary as any[] | null) || []
+                )
+                  .slice()
+                  .sort((a: any, b: any) => (b?.score || 0) - (a?.score || 0));
+
+                let audioCell;
+
+                if ((video?.audio_profile as any)?.no_audio === true) {
+                  audioCell = (
+                    <Tooltip title="No audio stream">
+                      <VolumeOffOutlinedIcon />
+                    </Tooltip>
+                  );
+                } else if (!video?.audio_detected_at) {
+                  audioCell = (
+                    <Tooltip title="Audio pending">
+                      <HourglassEmptyOutlinedIcon />
+                    </Tooltip>
+                  );
+                } else if (!audioSummary.length) {
+                  audioCell = <Typography color="neutral">quiet</Typography>;
+                } else {
+                  audioCell = audioSummary.slice(0, 3).map((event: any) => {
+                    const score = (event?.score || 0).toFixed(2);
+                    const label = props.responsive
+                      ? `${event?.kind} @ ${score}`
+                      : `${event?.kind} @ ${score} (+${(
+                          event?.prominence_db || 0
+                        ).toFixed(1)} dB, ${event?.duration_ms} ms)`;
+
+                    return (
+                      <span
+                        key={`${video.id}-audio-${event?.offset_ms}`}
+                        style={{ color: audioScoreColor(event?.score || 0) }}
+                      >
+                        {label}
+                        <br />
+                      </span>
+                    );
+                  });
+                }
+
                 return (
                   <tr key={`video-table-row-${video.id}`}>
                     <td>
@@ -472,6 +524,7 @@ export function VideoTable(props: VideoTableProps) {
                       <Typography color="neutral">{fileSize} MB</Typography>
                     </td>
                     <td>{classNames}</td>
+                    <td>{audioCell}</td>
                     <td>
                       <Container
                         sx={{
@@ -522,7 +575,7 @@ export function VideoTable(props: VideoTableProps) {
               })
           ) : (
             <tr>
-              <td colSpan={5}>
+              <td colSpan={6}>
                 <Typography color={"neutral"}>
                   (No videos for the selected camera / date)
                 </Typography>
@@ -530,7 +583,7 @@ export function VideoTable(props: VideoTableProps) {
             </tr>
           )}
           <tr>
-            <td colSpan={5} ref={ref}>
+            <td colSpan={6} ref={ref}>
               <Typography color={"neutral"}> </Typography>
             </td>
           </tr>

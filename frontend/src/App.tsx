@@ -216,6 +216,7 @@ function App() {
       >
         <DateSlider
           responsive={responsive}
+          cameraId={cameraId}
           date={startedAtGt}
           setDate={setStartedAtLte}
         />

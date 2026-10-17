@@ -39,6 +39,16 @@ export const getDateString = (date: Date): string => {
   return formatDate(date).split("T")[0];
 };
 
+export const audioScoreColor = (score: number): string => {
+  if (score >= 0.7) {
+    return "#d32f2f";
+  }
+  if (score >= 0.4) {
+    return "#f6a800";
+  }
+  return "#66bb6a";
+};
+
 export const truncateDate = (date: Date): Date => {
   return parseDate(`${getDateString(date)}T00:00:00${getOffsetSuffix()}`);
 };
