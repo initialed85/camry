@@ -156,12 +156,13 @@ export default function DateSlider(props: DateSliderProps) {
     return millis > maxDateMillis ? maxDateMillis : millis;
   };
 
-  // The strip and the slider share one position: the strip's bar is the slider's
-  // thumb value, so clicking a spike moves the thumb and the table window together.
+  // The strip and the slider share one position: a bar covers [bar, bar + step),
+  // so clicking it sets the thumb to the bar and the table window to that same
+  // hour. The thumb is the window's start, not its end.
   const applyMillis = (millis: number) => {
     setSlidByUser(true);
     setCurrentMillis(millis);
-    props.setDate(new Date(millis).toISOString());
+    props.setDate(new Date(millis + dateSliderStepMillis).toISOString());
   };
 
   return (
