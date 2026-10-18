@@ -12,7 +12,7 @@ import (
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/camry/pkg/helpers"
-	"github.com/initialed85/djangolang/pkg/config"
+
 	"github.com/initialed85/djangolang/pkg/query"
 	"github.com/initialed85/djangolang/pkg/types"
 )
@@ -24,7 +24,7 @@ func main() {
 		destinationPath = "/srv/media"
 	}
 
-	db, err := config.GetDBFromEnvironment(ctx)
+	db, err := internal.GetDBFromEnvironment(ctx)
 	if err != nil {
 		log.Fatalf("failed to connect to database: %v", err)
 	}

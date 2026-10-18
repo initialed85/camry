@@ -13,7 +13,7 @@ import (
 
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/pkg/api"
-	"github.com/initialed85/djangolang/pkg/config"
+
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
@@ -320,7 +320,7 @@ func Run() error {
 	ctx, cancel := signal.NotifyContext(context.Background(), os.Interrupt, syscall.SIGTERM)
 	defer cancel()
 
-	db, err := config.GetDBFromEnvironment(ctx)
+	db, err := internal.GetDBFromEnvironment(ctx)
 	if err != nil {
 		return err
 	}

@@ -20,7 +20,7 @@ import (
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/camry/pkg/helpers"
-	"github.com/initialed85/djangolang/pkg/config"
+
 	djangolang_helpers "github.com/initialed85/djangolang/pkg/helpers"
 )
 
@@ -368,7 +368,7 @@ func Run() error {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	db, err := config.GetDBFromEnvironment(ctx)
+	db, err := internal.GetDBFromEnvironment(ctx)
 	if err != nil {
 		return err
 	}
