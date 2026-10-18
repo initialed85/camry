@@ -2,19 +2,29 @@ import Box from "@mui/joy/Box";
 import Slider, { sliderClasses } from "@mui/joy/Slider";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useAudioTimeline } from "../api/audioTimeline";
+import { useDetectionTimeline } from "../api/detectionTimeline";
 import {
   audioStripFullCountEvents,
   audioStripMinScore,
   dateSliderStepMillis,
   dateSliderWidthMillis,
+  detectionStripFullCountDetections,
+  detectionStripFullCountObjects,
+  detectionStripMinScore,
+  stripRowHeightPx,
 } from "../config";
-import { audioScoreColor, formatDateWithoutMillis } from "../helpers";
+import {
+  audioScoreColor,
+  formatDateWithoutMillis,
+  OverlayMode,
+} from "../helpers";
 
 export interface DateSliderProps {
   responsive: boolean;
   cameraId: string | undefined;
   date: string | undefined;
   setDate: Dispatch<SetStateAction<string | undefined>>;
+  overlayMode: OverlayMode;
 }
 
 const bucketCount =
@@ -44,6 +54,23 @@ const getStripWindowMillis = (): [number, number] => {
     minDateMillisLive * dateSliderStepMillis,
     (maxDateMillisLive + 1) * dateSliderStepMillis,
   ];
+};
+
+// One row of the strip: bars anchored to the row's bottom edge (direction "up") or top edge
+// ("down"), so a pair of rows mirrors around the strip's centre line, as in a waveform.
+interface StripBar {
+  index: number;
+  millis: number;
+  heightPercent: number;
+  color: string;
+  // Objects sit inside the detection bar as its solid core; the detections halo is translucent.
+  innerHeightPercent: number;
+  innerColor: string;
+  title: string;
+}
+
+const stripBarHeight = (count: number, fullCount: number): number => {
+  return count > 0 ? 8 + Math.min(1, count / fullCount) * 92 : 0;
 };
 
 export default function DateSlider(props: DateSliderProps) {
@@ -98,20 +125,34 @@ export default function DateSlider(props: DateSliderProps) {
     stripWindowMillis,
   ]);
 
+  const stripStartedAtGte = new Date(stripWindowMillis[0]).toISOString();
+  const stripStartedAtLt = new Date(stripWindowMillis[1]).toISOString();
+
   const { data: audioTimelineData } = useAudioTimeline(
     {
       cameraId: props.cameraId || undefined,
       // The strip window is hour-aligned, so its buckets line up with the view's rows exactly.
-      startedAtGte: new Date(stripWindowMillis[0]).toISOString(),
-      startedAtLt: new Date(stripWindowMillis[1]).toISOString(),
+      startedAtGte: stripStartedAtGte,
+      startedAtLt: stripStartedAtLt,
       minScore: audioStripMinScore,
       limit: 5_000,
     },
     60_000,
   );
 
-  const buckets = useMemo(() => {
-    const buckets = new Map<
+  const { data: detectionTimelineData } = useDetectionTimeline(
+    {
+      cameraId: props.cameraId || undefined,
+      startedAtGte: stripStartedAtGte,
+      startedAtLt: stripStartedAtLt,
+      minScore: detectionStripMinScore,
+      limit: 5_000,
+    },
+    60_000,
+  );
+
+  const audioBars = useMemo<StripBar[]>(() => {
+    const byIndex = new Map<
       number,
       { count: number; score: number; prominence: number }
     >();
@@ -132,7 +173,7 @@ export default function DateSlider(props: DateSliderProps) {
         return;
       }
 
-      const bucket = buckets.get(index) || {
+      const bucket = byIndex.get(index) || {
         count: 0,
         score: 0,
         prominence: 0,
@@ -144,11 +185,136 @@ export default function DateSlider(props: DateSliderProps) {
         row.peak_prominence_db || 0,
       );
 
-      buckets.set(index, bucket);
+      byIndex.set(index, bucket);
     });
 
-    return buckets;
+    return Array.from({ length: bucketCount }, (_, index) => {
+      const bucket = byIndex.get(index);
+      const millis = stripWindowMillis[0] + index * dateSliderStepMillis;
+
+      if (!bucket) {
+        return {
+          index,
+          millis,
+          heightPercent: 0,
+          color: "#00000022",
+          innerHeightPercent: 0,
+          innerColor: "#00000022",
+          title: formatDateWithoutMillis(new Date(millis)),
+        };
+      }
+
+      return {
+        index,
+        millis,
+        heightPercent: stripBarHeight(bucket.count, audioStripFullCountEvents),
+        color: audioScoreColor(bucket.score),
+        innerHeightPercent: 0,
+        innerColor: audioScoreColor(bucket.score),
+        title: `${formatDateWithoutMillis(new Date(millis))} | ${
+          bucket.count
+        } events | peak +${bucket.prominence.toFixed(1)} dB | score ${bucket.score.toFixed(
+          2,
+        )}`,
+      };
+    });
   }, [audioTimelineData, stripWindowMillis]);
+
+  const detectionBars = useMemo<StripBar[]>(() => {
+    const byIndex = new Map<
+      number,
+      {
+        detections: number;
+        objects: number;
+        score: number;
+        className: string;
+      }
+    >();
+
+    detectionTimelineData?.objects?.forEach((row) => {
+      if (!row?.bucket) {
+        return;
+      }
+
+      const offsetMillis =
+        new Date(row.bucket).getTime() - stripWindowMillis[0];
+      if (offsetMillis < 0) {
+        return;
+      }
+
+      const index = Math.floor(offsetMillis / dateSliderStepMillis);
+      if (index < 0 || index >= bucketCount) {
+        return;
+      }
+
+      const bucket = byIndex.get(index) || {
+        detections: 0,
+        objects: 0,
+        score: 0,
+        className: "",
+      };
+      bucket.detections += row.detection_count;
+      bucket.objects += row.object_count;
+      if (row.top_score >= bucket.score) {
+        bucket.score = row.top_score;
+        bucket.className = row.top_class_name || bucket.className;
+      }
+
+      byIndex.set(index, bucket);
+    });
+
+    const { showDetections, showObjects } = props.overlayMode;
+
+    return Array.from({ length: bucketCount }, (_, index) => {
+      const bucket = byIndex.get(index);
+      const millis = stripWindowMillis[0] + index * dateSliderStepMillis;
+
+      const detections = showDetections ? (bucket?.detections ?? 0) : 0;
+      const objects = showObjects ? (bucket?.objects ?? 0) : 0;
+
+      if (!bucket || (!detections && !objects)) {
+        return {
+          index,
+          millis,
+          heightPercent: 0,
+          color: "#00000022",
+          innerHeightPercent: 0,
+          innerColor: "#00000022",
+          title: formatDateWithoutMillis(new Date(millis)),
+        };
+      }
+
+      // A bucket with objects and no detections (the detector wrote tracks, prune took the
+      // detections) still needs a bar, so the bar covers whichever series is taller.
+      const detectionHeight = stripBarHeight(
+        detections,
+        detectionStripFullCountDetections,
+      );
+      const objectHeight = stripBarHeight(
+        objects,
+        detectionStripFullCountObjects,
+      );
+      const heightPercent = Math.max(detectionHeight, objectHeight);
+
+      const parts = [`${detections} detections`, `${objects} objects`];
+      if (bucket.className) {
+        parts.push(`score ${bucket.score.toFixed(2)} (${bucket.className})`);
+      }
+
+      return {
+        index,
+        millis,
+        heightPercent,
+        color: `${audioScoreColor(bucket.score)}77`,
+        innerHeightPercent:
+          heightPercent > 0 ? (objectHeight / heightPercent) * 100 : 0,
+        innerColor: audioScoreColor(bucket.score),
+        title: `${formatDateWithoutMillis(new Date(millis))} | ${parts.join(
+          " | ",
+        )}`,
+      };
+    });
+  }, [detectionTimelineData, props.overlayMode, stripWindowMillis]);
 
   const bucketMillis = (index: number): number => {
     const millis = stripWindowMillis[0] + index * dateSliderStepMillis;
@@ -165,60 +331,86 @@ export default function DateSlider(props: DateSliderProps) {
     props.setDate(new Date(millis + dateSliderStepMillis).toISOString());
   };
 
-  return (
-    <Box sx={{ width: "88%", display: "flex", flexDirection: "column" }}>
+  const renderStrip = (
+    bars: StripBar[],
+    prefix: string,
+    onClickBar: (bar: StripBar) => void,
+  ) => {
+    const rows: ("up" | "down")[] = ["up", "down"];
+
+    return rows.map((direction) => (
       <Box
+        key={`${prefix}-strip-${direction}`}
         sx={{
           display: "flex",
-          alignItems: "flex-end",
-          height: "28px",
-          mb: "2px",
+          alignItems: direction === "up" ? "flex-end" : "flex-start",
+          height: `${stripRowHeightPx}px`,
         }}
       >
-        {Array.from({ length: bucketCount }, (_, index) => index).map(
-          (index) => {
-            const bucket = buckets.get(index);
-            const startMillis = bucketMillis(index);
-
-            return (
+        {bars.map((bar) => (
+          <Box
+            key={`${prefix}-strip-${direction}-${bar.index}`}
+            title={bar.title}
+            onClick={() => onClickBar(bar)}
+            sx={{
+              position: "relative",
+              flex: 1,
+              mx: "0.5px",
+              height: bar.heightPercent ? `${bar.heightPercent}%` : "2px",
+              backgroundColor: bar.heightPercent ? bar.color : "#00000022",
+              borderRadius: "1px",
+              cursor: bar.heightPercent ? "pointer" : "default",
+            }}
+          >
+            {bar.innerHeightPercent > 0 && (
               <Box
-                key={`audio-strip-${index}`}
-                title={
-                  bucket
-                    ? `${formatDateWithoutMillis(new Date(startMillis))} | ${
-                        bucket.count
-                      } events | peak +${bucket.prominence.toFixed(1)} dB | score ${bucket.score.toFixed(
-                        2,
-                      )}`
-                    : formatDateWithoutMillis(new Date(startMillis))
-                }
-                onClick={() => {
-                  if (!bucket) {
-                    return;
-                  }
-
-                  applyMillis(startMillis);
-                }}
                 sx={{
-                  flex: 1,
-                  mx: "0.5px",
-                  height: bucket
-                    ? `${
-                        8 +
-                        Math.min(1, bucket.count / audioStripFullCountEvents) *
-                          92
-                      }%`
-                    : "2px",
-                  backgroundColor: bucket
-                    ? audioScoreColor(bucket.score)
-                    : "#00000022",
+                  position: "absolute",
+                  left: 0,
+                  right: 0,
+                  [direction === "up" ? "bottom" : "top"]: 0,
+                  height: `${bar.innerHeightPercent}%`,
+                  backgroundColor: bar.innerColor,
                   borderRadius: "1px",
-                  cursor: bucket ? "pointer" : "default",
                 }}
               />
-            );
-          },
-        )}
+            )}
+          </Box>
+        ))}
+      </Box>
+    ));
+  };
+
+  const labelSx = {
+    width: props.responsive ? "46px" : "108px",
+    flexShrink: 0,
+    fontSize: "12px",
+    color: "text.tertiary",
+    textAlign: "right" as const,
+    pr: "6px",
+    lineHeight: `${stripRowHeightPx * 2}px`,
+  };
+
+  const clickStripBar = (bar: StripBar) => {
+    if (!bar.heightPercent) {
+      return;
+    }
+
+    applyMillis(bucketMillis(bar.index));
+  };
+
+  return (
+    <Box sx={{ width: "88%", display: "flex", flexDirection: "column" }}>
+      <Box sx={{ display: "flex", flexDirection: "row", mb: "2px" }}>
+        <Box sx={labelSx}>
+          {props.responsive ? "S" : "Sound"}
+          <br />
+          {props.responsive ? "D/O" : "Detections / Objects"}
+        </Box>
+        <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
+          {renderStrip(audioBars, "audio", clickStripBar)}
+          {renderStrip(detectionBars, "detection", clickStripBar)}
+        </Box>
       </Box>
       <Slider
         variant="soft"

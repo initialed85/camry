@@ -108,7 +108,7 @@ func TestBuildSQLWithoutFilters(t *testing.T) {
 		t.Fatalf("ParseParams: %v", err)
 	}
 
-	selectSQL, countSQL, selectValues, countValues := query.BuildSQL()
+	selectSQL, countSQL, selectValues, countValues := query.BuildAudioSQL()
 
 	wants := []string{
 		"FROM public.v_audio_event_hour WHERE bucket >= $1 AND bucket < $2",
@@ -148,7 +148,7 @@ func TestBuildSQLWithCameraAndScoreFilters(t *testing.T) {
 		t.Fatalf("ParseParams: %v", err)
 	}
 
-	selectSQL, countSQL, selectValues, countValues := query.BuildSQL()
+	selectSQL, countSQL, selectValues, countValues := query.BuildAudioSQL()
 
 	wants := []string{
 		"bucket >= $1 AND bucket < $2 AND camera_id IN ($3::uuid, $4::uuid) AND top_score >= $5",
@@ -159,7 +159,7 @@ func TestBuildSQLWithCameraAndScoreFilters(t *testing.T) {
 			t.Fatalf("selectSQL %q does not contain %q", selectSQL, want)
 		}
 	}
-	if !strings.Contains(countSQL, sharedClause(selectSQL)) {
+	if !strings.Contains(countSQL, sharedClause(selectSQL, "FROM public.v_audio_event_hour WHERE ")) {
 		t.Fatalf("countSQL %q is not the matching count query", countSQL)
 	}
 	if len(selectValues) != 7 {
@@ -170,6 +170,83 @@ func TestBuildSQLWithCameraAndScoreFilters(t *testing.T) {
 	}
 	if len(countValues) != 5 {
 		t.Fatalf("len(countValues) = %v, want 5", len(countValues))
+	}
+	if got := maxPlaceholder(countSQL); got != len(countValues) {
+		t.Fatalf("countSQL top placeholder = %v, want %v", got, len(countValues))
+	}
+}
+
+func TestBuildDetectionSQLWithoutFilters(t *testing.T) {
+	query, err := ParseParams(params("started_at__gte=2026-10-17T00:00:00Z&started_at__lt=2026-10-18T00:00:00Z"))
+	if err != nil {
+		t.Fatalf("ParseParams: %v", err)
+	}
+
+	selectSQL, countSQL, selectValues, countValues := query.BuildDetectionSQL()
+
+	wants := []string{
+		"FROM timeline.detection_hour WHERE bucket >= $1 AND bucket < $2",
+		"detection_count, object_count, top_score, top_class_name",
+		"ORDER BY bucket ASC, camera_id ASC LIMIT $3 OFFSET $4",
+	}
+	for _, want := range wants {
+		if !strings.Contains(selectSQL, want) {
+			t.Fatalf("selectSQL %q does not contain %q", selectSQL, want)
+		}
+	}
+	if !strings.Contains(countSQL, sharedClause(selectSQL, "FROM timeline.detection_hour WHERE ")) {
+		t.Fatalf("countSQL %q is not the matching count query", countSQL)
+	}
+	if strings.Contains(selectSQL, "camera_id IN") || strings.Contains(selectSQL, "top_score >=") {
+		t.Fatalf("selectSQL %q carries a filter that was not asked for", selectSQL)
+	}
+	if strings.Contains(selectSQL, "JOIN") {
+		t.Fatalf("selectSQL %q joins; the projection is one materialized view", selectSQL)
+	}
+	if len(selectValues) != 4 || selectValues[2] != int64(defaultLimit) || selectValues[3] != int64(0) {
+		t.Fatalf("selectValues = %v, want [gte lt limit offset]", selectValues)
+	}
+	if len(countValues) != 2 {
+		t.Fatalf("countValues = %v, want [gte lt]", countValues)
+	}
+	if got := maxPlaceholder(selectSQL); got != len(selectValues) {
+		t.Fatalf("selectSQL top placeholder = %v, want %v", got, len(selectValues))
+	}
+	if got := maxPlaceholder(countSQL); got != len(countValues) {
+		t.Fatalf("countSQL top placeholder = %v, want %v", got, len(countValues))
+	}
+}
+
+func TestBuildDetectionSQLWithCameraAndScoreFilters(t *testing.T) {
+	raw := "started_at__gte=2026-10-17T00:00:00Z&started_at__lt=2026-10-18T00:00:00Z&camera_id__eq=" + cameraA + "&min_score=0.2&limit=100&offset=200"
+
+	query, err := ParseParams(params(raw))
+	if err != nil {
+		t.Fatalf("ParseParams: %v", err)
+	}
+
+	selectSQL, countSQL, selectValues, countValues := query.BuildDetectionSQL()
+
+	wants := []string{
+		"bucket >= $1 AND bucket < $2 AND camera_id IN ($3::uuid) AND top_score >= $4",
+		"ORDER BY bucket ASC, camera_id ASC LIMIT $5 OFFSET $6",
+	}
+	for _, want := range wants {
+		if !strings.Contains(selectSQL, want) {
+			t.Fatalf("selectSQL %q does not contain %q", selectSQL, want)
+		}
+	}
+	if !strings.Contains(countSQL, sharedClause(selectSQL, "FROM timeline.detection_hour WHERE ")) {
+		t.Fatalf("countSQL %q is not the matching count query", countSQL)
+	}
+	if len(selectValues) != 6 {
+		t.Fatalf("len(selectValues) = %v, want 6", len(selectValues))
+	}
+	if selectValues[2] != cameraA || selectValues[3] != 0.2 || selectValues[4] != int64(100) || selectValues[5] != int64(200) {
+		t.Fatalf("selectValues = %v, want [gte lt A 0.2 100 200]", selectValues)
+	}
+	if len(countValues) != 4 {
+		t.Fatalf("len(countValues) = %v, want 4", countValues)
 	}
 	if got := maxPlaceholder(countSQL); got != len(countValues) {
 		t.Fatalf("countSQL top placeholder = %v, want %v", got, len(countValues))
@@ -209,9 +286,10 @@ func maxPlaceholder(sql string) int {
 	return top
 }
 
-// sharedClause extracts the shared WHERE clause so the count query can be compared against the select.
-func sharedClause(selectSQL string) string {
-	start := strings.Index(selectSQL, "FROM public.v_audio_event_hour WHERE ")
+// sharedClause extracts the shared FROM clause so the count query can be compared against the
+// select. from is the projection's FROM prefix, which is where the shared clause starts.
+func sharedClause(selectSQL string, from string) string {
+	start := strings.Index(selectSQL, from)
 	end := strings.Index(selectSQL, " ORDER BY ")
 	if start < 0 || end < 0 {
 		panic("no shared clause in " + selectSQL)

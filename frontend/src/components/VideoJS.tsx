@@ -6,6 +6,8 @@ import "./VideoJS.css";
 interface VideoJSProps {
   options: any;
   onReady: () => void;
+  // The player is created once, so the parent keeps a handle on it for seeking (the modal's strip).
+  onPlayer?: (player: any) => void;
   onTimeUpdate: (
     left: number,
     top: number,
@@ -21,7 +23,7 @@ export const VideoJS = (props: VideoJSProps) => {
   const videoRef: MutableRefObject<any> = useRef(null);
   const playerRef: MutableRefObject<any> = useRef(null);
 
-  const { options, onReady, onTimeUpdate } = props;
+  const { options, onReady, onPlayer, onTimeUpdate } = props;
 
   useEffect(() => {
     if (!playerRef.current) {
@@ -65,6 +67,10 @@ export const VideoJS = (props: VideoJSProps) => {
             handleRequestAnimationFrame();
           });
         }, 3_00);
+
+        if (onPlayer) {
+          onPlayer(player);
+        }
 
         if (!onReady) {
           return;

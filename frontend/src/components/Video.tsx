@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "../api";
 import { components } from "../api/api";
+import { responsiveWidth } from "../config";
 import { OverlayMode } from "../helpers";
 import VideoJS from "./VideoJS";
+import VideoStrip from "./VideoStrip";
 
 type Detection = components["schemas"]["Detection"];
 type Track = components["schemas"]["Track"];
@@ -96,6 +98,11 @@ export interface VideoProps {
   height: number;
   overlayMode: OverlayMode;
 }
+
+// video.duration is an interval, which djangolang serialises as whole nanoseconds.
+const videoDurationMillis = (duration?: number): number => {
+  return Math.max(0, Math.round((duration || 0) / 1_000_000));
+};
 
 export function Video(props: VideoProps) {
   const lowResFileName = getLowResFileName(props.video.file_name);
@@ -194,6 +201,12 @@ export function Video(props: VideoProps) {
   const trackTimestampsRef = useRef<number[]>([]);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const stageFrameRef = useRef<HTMLDivElement | null>(null);
+  const playerRef = useRef<any>(null);
+  const stripTimeRef = useRef(0);
+  // The strip is React-rendered, so playback time reaches it through state, throttled to keep
+  // the per-frame draw loop free of a re-render each frame.
+  const [stripMillis, setStripMillis] = useState(0);
+  const [stripDurationMillis, setStripDurationMillis] = useState(0);
   // The stage only exists once the overlay has its coordinate system, so keep
   // it in state: the gesture wiring has to re-run when it mounts.
   const [stage, setStage] = useState<HTMLDivElement | null>(null);
@@ -572,6 +585,9 @@ export function Video(props: VideoProps) {
             onReady={() => {
               readyRef.current = true;
             }}
+            onPlayer={(player: any) => {
+              playerRef.current = player;
+            }}
             onTimeUpdate={(
               left: number,
               top: number,
@@ -581,6 +597,21 @@ export function Video(props: VideoProps) {
               sourceWidth: number,
               sourceHeight: number,
             ) => {
+              const durationSeconds = playerRef.current?.duration?.();
+              if (Number.isFinite(durationSeconds) && durationSeconds > 0) {
+                const durationMillis = Math.round(durationSeconds * 1_000);
+                setStripDurationMillis((current) =>
+                  current === durationMillis ? current : durationMillis,
+                );
+              }
+
+              if (
+                Math.abs(relativeTimeMilliseconds - stripTimeRef.current) >= 150
+              ) {
+                stripTimeRef.current = relativeTimeMilliseconds;
+                setStripMillis(relativeTimeMilliseconds);
+              }
+
               if (!canvasRef.current) {
                 return;
               }
@@ -832,6 +863,23 @@ export function Video(props: VideoProps) {
             }}
           />
         </div>
+        <VideoStrip
+          responsive={window.innerWidth < responsiveWidth}
+          durationMillis={
+            stripDurationMillis || videoDurationMillis(props.video.duration)
+          }
+          playbackStartedAtMillis={playbackVideoStartedAtRef.current}
+          audioSummary={(props.video.audio_summary as any[]) || []}
+          detections={data?.objects || []}
+          tracks={tracksData?.objects || []}
+          overlayMode={props.overlayMode}
+          currentTimeMillis={stripMillis}
+          onSeek={(millis: number) => {
+            stripTimeRef.current = millis;
+            setStripMillis(millis);
+            playerRef.current?.currentTime(millis / 1_000);
+          }}
+        />
       </div>
     </>
   );

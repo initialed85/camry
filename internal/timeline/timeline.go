@@ -43,6 +43,21 @@ type Bucket struct {
 	LastSeenAt       time.Time `json:"last_seen_at"`
 }
 
+// DetectionBucket is one camera-hour of detections and the objects that started in it. Same
+// argument as above, and a stronger one: the generated detection list route would return whole
+// rows for 25M detections, and the hour aggregate over them costs 213 s (see migration 00010), so
+// the projection is materialized and this endpoint reads the buckets off their unique index.
+type DetectionBucket struct {
+	Bucket         time.Time `json:"bucket"`
+	CameraID       string    `json:"camera_id"`
+	DetectionCount int64     `json:"detection_count"`
+	ObjectCount    int64     `json:"object_count"`
+	TopScore       float64   `json:"top_score"`
+	TopClassName   string    `json:"top_class_name"`
+	FirstSeenAt    time.Time `json:"first_seen_at"`
+	LastSeenAt     time.Time `json:"last_seen_at"`
+}
+
 type Timeline struct {
 	db *pgxpool.Pool
 }
@@ -53,12 +68,14 @@ func New(db *pgxpool.Pool) *Timeline {
 	}
 }
 
-// Routes mounts the projection under djangolang's /custom, i.e. GET /api/custom/audio-timeline.
-// Custom routes are not emitted into the generated OpenAPI schema, so the frontend calls this one
-// by hand (frontend/src/api/audioTimeline.ts). Traefik gates all of /api with camry-auth, so the
-// route is token-gated with no handler-side auth code.
+// Routes mounts the projections under djangolang's /custom, i.e. GET /api/custom/audio-timeline
+// and GET /api/custom/detection-timeline. Custom routes are not emitted into the generated OpenAPI
+// schema, so the frontend calls them by hand (frontend/src/api/audioTimeline.ts,
+// frontend/src/api/detectionTimeline.ts). Traefik gates all of /api with camry-auth, so the routes
+// are token-gated with no handler-side auth code.
 func (t *Timeline) Routes(r chi.Router) {
 	r.Get("/audio-timeline", t.HandleAudioTimeline)
+	r.Get("/detection-timeline", t.HandleDetectionTimeline)
 }
 
 // HandleAudioTimeline answers GET /api/custom/audio-timeline from the v_audio_event_hour view.
@@ -69,69 +86,74 @@ func (t *Timeline) HandleAudioTimeline(w http.ResponseWriter, req *http.Request)
 		return
 	}
 
-	selectSQL, countSQL, selectValues, countValues := query.BuildSQL()
+	selectSQL, countSQL, selectValues, countValues := query.BuildAudioSQL()
 
-	// At 7-day retention the strip window covers nearly the whole audio_event table, so the
-	// aggregate sorts every in-window row to pick top_kind. The default 4 MB work_mem spills that
-	// sort to disk (measured 241 ms with temp files); 64 MB keeps it in memory (measured 71 ms).
-	// Both queries run in one transaction so the setting applies to each.
-	tx, err := t.db.Begin(req.Context())
+	buckets, totalCount, err := runBuckets(req.Context(), t.db, selectSQL, selectValues, countSQL, countValues, scanAudioBucket)
 	if err != nil {
-		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to open audio timeline transaction; %v", err))
+		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to read audio timeline; %v", err))
 		return
 	}
 
-	defer tx.Rollback(req.Context())
+	writeBuckets(w, query, buckets, totalCount)
+}
 
-	_, err = tx.Exec(req.Context(), "select set_config('work_mem', $1, true)", workMem)
+// HandleDetectionTimeline answers GET /api/custom/detection-timeline from the materialized
+// timeline.detection_hour view, which carries detection and object counts per camera-hour.
+func (t *Timeline) HandleDetectionTimeline(w http.ResponseWriter, req *http.Request) {
+	query, err := ParseParams(req.URL.Query())
 	if err != nil {
-		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to set work_mem; %v", err))
+		server.HandleErrorResponse(w, http.StatusBadRequest, err)
 		return
 	}
 
-	buckets, err := t.queryBuckets(req.Context(), tx, selectSQL, selectValues)
+	selectSQL, countSQL, selectValues, countValues := query.BuildDetectionSQL()
+
+	buckets, totalCount, err := runBuckets(req.Context(), t.db, selectSQL, selectValues, countSQL, countValues, scanDetectionBucket)
 	if err != nil {
-		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to query audio timeline; %v", err))
+		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to read detection timeline; %v", err))
 		return
+	}
+
+	writeBuckets(w, query, buckets, totalCount)
+}
+
+// runBuckets reads one bucket page and its total count in a single transaction with work_mem
+// raised for both queries. The default 4 MB spills the audio aggregate's sort to disk (measured
+// 241 ms with temp files); 64 MB keeps it in memory (measured 71 ms).
+func runBuckets[T any](ctx context.Context, db *pgxpool.Pool, selectSQL string, selectValues []any, countSQL string, countValues []any, scan func(pgx.Row) (*T, error)) ([]*T, int64, error) {
+	tx, err := db.Begin(ctx)
+	if err != nil {
+		return nil, 0, fmt.Errorf("failed to open timeline transaction; %v", err)
+	}
+
+	defer tx.Rollback(ctx)
+
+	_, err = tx.Exec(ctx, "select set_config('work_mem', $1, true)", workMem)
+	if err != nil {
+		return nil, 0, fmt.Errorf("failed to set work_mem; %v", err)
+	}
+
+	buckets, err := queryBuckets(ctx, tx, selectSQL, selectValues, scan)
+	if err != nil {
+		return nil, 0, err
 	}
 
 	var totalCount int64
 
-	err = tx.QueryRow(req.Context(), countSQL, countValues...).Scan(&totalCount)
+	err = tx.QueryRow(ctx, countSQL, countValues...).Scan(&totalCount)
 	if err != nil {
-		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to count audio timeline buckets; %v", err))
-		return
+		return nil, 0, fmt.Errorf("failed to count timeline buckets; %v", err)
 	}
 
-	err = tx.Commit(req.Context())
+	err = tx.Commit(ctx)
 	if err != nil {
-		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to close audio timeline transaction; %v", err))
-		return
+		return nil, 0, fmt.Errorf("failed to close timeline transaction; %v", err)
 	}
 
-	response := server.Response[Bucket]{
-		Status:     http.StatusOK,
-		Success:    true,
-		Objects:    buckets,
-		Count:      int64(len(buckets)),
-		TotalCount: totalCount,
-		Limit:      query.Limit,
-		Offset:     query.Offset,
-	}
-
-	b, err := json.Marshal(response)
-	if err != nil {
-		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to marshal audio timeline; %v", err))
-		return
-	}
-
-	// the strip polls on a moving window, so an intermediate cache is never useful
-	w.Header().Set("Cache-Control", "no-store")
-
-	server.WriteResponse(w, http.StatusOK, b)
+	return buckets, totalCount, nil
 }
 
-func (t *Timeline) queryBuckets(ctx context.Context, tx pgx.Tx, selectSQL string, values []any) ([]*Bucket, error) {
+func queryBuckets[T any](ctx context.Context, tx pgx.Tx, selectSQL string, values []any, scan func(pgx.Row) (*T, error)) ([]*T, error) {
 	rows, err := tx.Query(ctx, selectSQL, values...)
 	if err != nil {
 		return nil, err
@@ -139,21 +161,10 @@ func (t *Timeline) queryBuckets(ctx context.Context, tx pgx.Tx, selectSQL string
 
 	defer rows.Close()
 
-	buckets := []*Bucket{}
+	buckets := []*T{}
 
 	for rows.Next() {
-		item := &Bucket{}
-
-		err = rows.Scan(
-			&item.Bucket,
-			&item.CameraID,
-			&item.EventCount,
-			&item.TopScore,
-			&item.PeakProminenceDb,
-			&item.TopKind,
-			&item.FirstSeenAt,
-			&item.LastSeenAt,
-		)
+		item, err := scan(rows)
 		if err != nil {
 			return nil, err
 		}
@@ -167,6 +178,63 @@ func (t *Timeline) queryBuckets(ctx context.Context, tx pgx.Tx, selectSQL string
 	}
 
 	return buckets, nil
+}
+
+func scanAudioBucket(row pgx.Row) (*Bucket, error) {
+	item := &Bucket{}
+
+	err := row.Scan(
+		&item.Bucket,
+		&item.CameraID,
+		&item.EventCount,
+		&item.TopScore,
+		&item.PeakProminenceDb,
+		&item.TopKind,
+		&item.FirstSeenAt,
+		&item.LastSeenAt,
+	)
+
+	return item, err
+}
+
+func scanDetectionBucket(row pgx.Row) (*DetectionBucket, error) {
+	item := &DetectionBucket{}
+
+	err := row.Scan(
+		&item.Bucket,
+		&item.CameraID,
+		&item.DetectionCount,
+		&item.ObjectCount,
+		&item.TopScore,
+		&item.TopClassName,
+		&item.FirstSeenAt,
+		&item.LastSeenAt,
+	)
+
+	return item, err
+}
+
+func writeBuckets[T any](w http.ResponseWriter, query *QueryParams, buckets []*T, totalCount int64) {
+	response := server.Response[T]{
+		Status:     http.StatusOK,
+		Success:    true,
+		Objects:    buckets,
+		Count:      int64(len(buckets)),
+		TotalCount: totalCount,
+		Limit:      query.Limit,
+		Offset:     query.Offset,
+	}
+
+	b, err := json.Marshal(response)
+	if err != nil {
+		server.HandleErrorResponse(w, http.StatusInternalServerError, fmt.Errorf("failed to marshal timeline; %v", err))
+		return
+	}
+
+	// the strip polls on a moving window, so an intermediate cache is never useful
+	w.Header().Set("Cache-Control", "no-store")
+
+	server.WriteResponse(w, http.StatusOK, b)
 }
 
 type QueryParams struct {
@@ -265,9 +333,46 @@ func ParseParams(values url.Values) (*QueryParams, error) {
 	return query, nil
 }
 
-// BuildSQL returns the bucket query, the matching count query, and their arguments. The count
+// BuildAudioSQL returns the bucket query, the matching count query, and their arguments. The count
 // query has no LIMIT/OFFSET, so it cannot share the bucket query's argument list.
-func (q *QueryParams) BuildSQL() (string, string, []any, []any) {
+func (q *QueryParams) BuildAudioSQL() (string, string, []any, []any) {
+	where, countValues := q.where()
+
+	shared := "FROM public.v_audio_event_hour WHERE " + strings.Join(where, " AND ")
+
+	selectSQL := "SELECT bucket, camera_id::text AS camera_id, event_count, top_score, peak_prominence_db, top_kind, first_seen_at, last_seen_at " +
+		shared +
+		fmt.Sprintf(" ORDER BY bucket ASC, camera_id ASC LIMIT $%v OFFSET $%v", len(countValues)+1, len(countValues)+2)
+
+	countSQL := "SELECT count(*) " + shared
+
+	selectValues := append(append([]any{}, countValues...), q.Limit, q.Offset)
+
+	return selectSQL, countSQL, selectValues, countValues
+}
+
+// BuildDetectionSQL is the same pair over the materialized projection. Object counts come from the
+// track half of the view, so a camera-hour with detections and no new objects reports zero.
+func (q *QueryParams) BuildDetectionSQL() (string, string, []any, []any) {
+	where, countValues := q.where()
+
+	shared := "FROM timeline.detection_hour WHERE " + strings.Join(where, " AND ")
+
+	selectSQL := "SELECT bucket, camera_id::text AS camera_id, detection_count, object_count, top_score, top_class_name, first_seen_at, last_seen_at " +
+		shared +
+		fmt.Sprintf(" ORDER BY bucket ASC, camera_id ASC LIMIT $%v OFFSET $%v", len(countValues)+1, len(countValues)+2)
+
+	countSQL := "SELECT count(*) " + shared
+
+	selectValues := append(append([]any{}, countValues...), q.Limit, q.Offset)
+
+	return selectSQL, countSQL, selectValues, countValues
+}
+
+// where builds the shared filter clause and its arguments: the window is always present, the camera
+// list and the score floor only when asked for. Both projections expose the same filter columns, so
+// the two queries take the same arguments.
+func (q *QueryParams) where() ([]string, []any) {
 	where := []string{"bucket >= $1", "bucket < $2"}
 	countValues := []any{q.StartedAtGte, q.StartedAtLt}
 
@@ -287,17 +392,7 @@ func (q *QueryParams) BuildSQL() (string, string, []any, []any) {
 		countValues = append(countValues, q.MinScore)
 	}
 
-	shared := "FROM public.v_audio_event_hour WHERE " + strings.Join(where, " AND ")
-
-	selectSQL := "SELECT bucket, camera_id::text AS camera_id, event_count, top_score, peak_prominence_db, top_kind, first_seen_at, last_seen_at " +
-		shared +
-		fmt.Sprintf(" ORDER BY bucket ASC, camera_id ASC LIMIT $%v OFFSET $%v", len(countValues)+1, len(countValues)+2)
-
-	countSQL := "SELECT count(*) " + shared
-
-	selectValues := append(append([]any{}, countValues...), q.Limit, q.Offset)
-
-	return selectSQL, countSQL, selectValues, countValues
+	return where, countValues
 }
 
 func parseTime(values url.Values, key string) (time.Time, error) {

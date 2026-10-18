@@ -219,6 +219,7 @@ function App() {
           cameraId={cameraId}
           date={startedAtGt}
           setDate={setStartedAtLte}
+          overlayMode={overlayMode}
         />
       </Grid>
 
