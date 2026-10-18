@@ -24,6 +24,7 @@ type Settings struct {
 	ClaimLeaseSeconds int
 	IdleSleepSeconds  int
 	MaxVideos         int
+	MaxAgeDays        int
 	Enabled           bool
 	Config            Config
 }
@@ -54,6 +55,11 @@ func GetSettings() (Settings, error) {
 	}
 
 	settings.MaxVideos, err = internal.GetEnvironment("MAX_VIDEOS", false, internal.Ptr(0))
+	if err != nil {
+		return settings, err
+	}
+
+	settings.MaxAgeDays, err = internal.GetEnvironment("MAX_AGE_DAYS", false, internal.Ptr(7))
 	if err != nil {
 		return settings, err
 	}
@@ -130,12 +136,24 @@ func claimVideo(ctx context.Context, db *pgxpool.Pool, settings Settings) (*api.
 		api.VideoTableIDColumn,
 	)
 
+	// Rows older than the prune horizon are deleted before the UI can reach them
+	// (the DateSlider spans 7 days), so claiming them spends CPU on footage that
+	// is about to disappear. MaxAgeDays 0 disables the bound.
 	where := fmt.Sprintf(
 		"%s IS NULL AND %s = false AND %s IN ('needs detection', 'needs tracking')",
 		api.VideoTableAudioDetectedAtColumn,
 		api.VideoTableIsLowResColumn,
 		api.VideoTableStatusColumn,
 	)
+
+	if settings.MaxAgeDays > 0 {
+		where = fmt.Sprintf(
+			"%s AND %s > now() - interval '%d days'",
+			where,
+			api.VideoTableStartedAtColumn,
+			settings.MaxAgeDays,
+		)
+	}
 
 	video, err := api.AudioDetectorClaimVideo(
 		ctx,

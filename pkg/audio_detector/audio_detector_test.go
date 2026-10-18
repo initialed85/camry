@@ -290,6 +290,7 @@ func TestGetSettingsDefaults(t *testing.T) {
 	assert.Equal(t, 2, settings.Config.MaxGapWindows)
 	assert.Equal(t, 2048, settings.Config.FFTSize)
 	assert.Equal(t, 16, settings.Config.MelBands)
+	assert.Equal(t, 7, settings.MaxAgeDays)
 }
 
 func TestNoAudioProfileEncodesEmptyValues(t *testing.T) {
