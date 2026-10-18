@@ -3,6 +3,7 @@ import Slider, { sliderClasses } from "@mui/joy/Slider";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
 import { useAudioTimeline } from "../api/audioTimeline";
 import {
+  audioStripFullCountEvents,
   audioStripMinScore,
   dateSliderStepMillis,
   dateSliderWidthMillis,
@@ -201,7 +202,13 @@ export default function DateSlider(props: DateSliderProps) {
                 sx={{
                   flex: 1,
                   mx: "0.5px",
-                  height: bucket ? `${8 + bucket.score * 92}%` : "2px",
+                  height: bucket
+                    ? `${
+                        8 +
+                        Math.min(1, bucket.count / audioStripFullCountEvents) *
+                          92
+                      }%`
+                    : "2px",
                   backgroundColor: bucket
                     ? audioScoreColor(bucket.score)
                     : "#00000022",
