@@ -57,10 +57,9 @@ const fetchAudioTimeline = async (
     query.offset = String(params.offset);
   }
 
-  const { data, error, response } = await (clientForReactQuery as any).raw(
-    "GET",
+  const { data, error, response } = await (clientForReactQuery as any).GET(
     "/api/custom/audio-timeline",
-    { query },
+    { params: { query } },
   );
 
   if (error || !response?.ok) {
