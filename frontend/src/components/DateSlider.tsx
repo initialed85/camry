@@ -103,6 +103,9 @@ export default function DateSlider(props: DateSliderProps) {
         camera_id__eq: props.cameraId || undefined,
         limit: 2_000,
         score__gte: audioStripMinScore,
+        // Loudest first: the API caps the list at `limit`, so without an ordering
+        // the strip only ever sees the oldest events in the window.
+        score__desc: "",
         seen_at__gte: new Date(stripWindowMillis[0]).toISOString(),
         seen_at__lt: new Date(stripWindowMillis[1]).toISOString(),
       },
