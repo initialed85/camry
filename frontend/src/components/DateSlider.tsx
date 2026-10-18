@@ -19,10 +19,15 @@ export interface DateSliderProps {
 const bucketCount =
   Math.round(dateSliderWidthMillis / dateSliderStepMillis) + 1;
 
+// min/max are snapped to the step grid because the Slider normalises every value
+// onto min + k*step: unaligned bounds would snap a strip click to an off-hour time.
 const getDateMillis = (): [number, number] => {
   const now = new Date();
-  const maxDateMillisLive = now.getTime();
-  const minDateMillisLive = now.getTime() - dateSliderWidthMillis;
+  const maxDateMillisLive =
+    Math.floor(now.getTime() / dateSliderStepMillis) * dateSliderStepMillis;
+  const minDateMillisLive =
+    Math.floor((now.getTime() - dateSliderWidthMillis) / dateSliderStepMillis) *
+    dateSliderStepMillis;
   return [maxDateMillisLive, minDateMillisLive];
 };
 
@@ -148,6 +153,14 @@ export default function DateSlider(props: DateSliderProps) {
     return millis > maxDateMillis ? maxDateMillis : millis;
   };
 
+  // The strip and the slider share one position: the strip's bar is the slider's
+  // thumb value, so clicking a spike moves the thumb and the table window together.
+  const applyMillis = (millis: number) => {
+    setSlidByUser(true);
+    setCurrentMillis(millis);
+    props.setDate(new Date(millis).toISOString());
+  };
+
   return (
     <Box sx={{ width: "88%", display: "flex", flexDirection: "column" }}>
       <Box
@@ -180,8 +193,7 @@ export default function DateSlider(props: DateSliderProps) {
                     return;
                   }
 
-                  setSlidByUser(true);
-                  props.setDate(new Date(startMillis).toISOString());
+                  applyMillis(startMillis);
                 }}
                 sx={{
                   flex: 1,
@@ -247,12 +259,7 @@ export default function DateSlider(props: DateSliderProps) {
         }}
         onChangeCommitted={(_, value) => {
           if (typeof value === "number") {
-            const adjustedValue = value > maxDateMillis ? maxDateMillis : value;
-
-            const date = new Date(adjustedValue).toISOString();
-            if (date !== props.date) {
-              props.setDate(date);
-            }
+            applyMillis(value > maxDateMillis ? maxDateMillis : value);
           }
         }}
         step={dateSliderStepMillis}
