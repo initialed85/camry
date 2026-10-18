@@ -6,9 +6,11 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/gomodule/redigo/redis"
+	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/internal/auth"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/djangolang/pkg/config"
+	"github.com/initialed85/djangolang/pkg/server"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -45,6 +47,7 @@ func main() {
 		api.RunDumpOpenAPIYAML()
 
 	case "serve":
-		api.RunServeWithEnvironment(nil, nil, addCustomHandlers)
+		// passing middlewares replaces the djangolang defaults, so start from them
+		api.RunServeWithEnvironment(server.GetDefaultHTTPMiddlewares(internal.JSONCompressMiddleware()), nil, addCustomHandlers)
 	}
 }
