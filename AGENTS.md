@@ -329,12 +329,14 @@ curl -fsSI http://127.0.0.1:18080/
 # Stop port-forward with Ctrl-C.
 ```
 
-For other components, inspect their actual StatefulSet/Deployment before using the equivalent restart. The API example is:
+For other components, inspect their actual StatefulSet/Deployment before using the equivalent restart. The API runs as a **Deployment with 3 replicas**, and each replica needs its own `DJANGOLANG_NODE_NAME` (from the pod name) because it owns a Postgres replication slot named `djangolang_<DJANGOLANG_NODE_NAME>` and a slot has exactly one active consumer. The API example is:
 
 ```sh
-kubectl --context home-dev -n camry rollout restart statefulset/api
-kubectl --context home-dev -n camry rollout status statefulset/api --timeout=300s
+kubectl --context home-dev -n camry rollout restart deployment/api
+kubectl --context home-dev -n camry rollout status deployment/api --timeout=300s
 ```
+
+After an API rollout, check slots/publications and write latency with `./tmp/api_replicas_check.sh`: one active slot and one walsender per pod, one `djangolang_api_*` publication per pod name (publications are not temporary, so each rollout leaks one per pod name; drop names with no live owner).
 
 Then verify:
 
@@ -344,7 +346,7 @@ kubectl -n camry get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{r
 kubectl -n camry logs -l app=object-detector --since=5m --prefix=true
 ```
 
-For detector-only fixes, use the fast image flow when the detector base image already exists locally and the Dockerfile uses the frozen base: build and push only the detector image, then restart only its StatefulSet. Verify the new digest on every pod and check recent logs for model/API errors. For generated API changes, build/push the API image and restart only the API StatefulSet.
+For detector-only fixes, use the fast image flow when the detector base image already exists locally and the Dockerfile uses the frozen base: build and push only the detector image, then restart only its StatefulSet. Verify the new digest on every pod and check recent logs for model/API errors. For generated API changes, build/push the API image and restart only the API Deployment.
 
 The detector matches high-res video rows to low-res detections using camera ID and nearby `started_at` time because the two segment writers may differ by a second in their filenames. Avoid sending Python-generated offset datetimes as API filters unless formatted as strict RFC3339 (`+08:00`); the generated client can serialize offsets as `+0800`, which the current API parser rejects.
 
