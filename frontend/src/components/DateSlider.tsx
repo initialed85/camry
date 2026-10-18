@@ -1,7 +1,7 @@
 import Box from "@mui/joy/Box";
 import Slider, { sliderClasses } from "@mui/joy/Slider";
 import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
-import { useQuery } from "../api";
+import { useAudioTimeline } from "../api/audioTimeline";
 import {
   audioStripMinScore,
   dateSliderStepMillis,
@@ -97,21 +97,17 @@ export default function DateSlider(props: DateSliderProps) {
     stripWindowMillis,
   ]);
 
-  const { data: audioEventsData } = useQuery("get", "/api/audio-events", {
-    params: {
-      query: {
-        camera_id__eq: props.cameraId || undefined,
-        limit: 2_000,
-        score__gte: audioStripMinScore,
-        // Loudest first: the API caps the list at `limit`, so without an ordering
-        // the strip only ever sees the oldest events in the window.
-        score__desc: "",
-        seen_at__gte: new Date(stripWindowMillis[0]).toISOString(),
-        seen_at__lt: new Date(stripWindowMillis[1]).toISOString(),
-      },
+  const { data: audioTimelineData } = useAudioTimeline(
+    {
+      cameraId: props.cameraId || undefined,
+      // The strip window is hour-aligned, so its buckets line up with the view's rows exactly.
+      startedAtGte: new Date(stripWindowMillis[0]).toISOString(),
+      startedAtLt: new Date(stripWindowMillis[1]).toISOString(),
+      minScore: audioStripMinScore,
+      limit: 5_000,
     },
-    refetchInterval: 60_000,
-  });
+    60_000,
+  );
 
   const buckets = useMemo(() => {
     const buckets = new Map<
@@ -119,13 +115,13 @@ export default function DateSlider(props: DateSliderProps) {
       { count: number; score: number; prominence: number }
     >();
 
-    audioEventsData?.objects?.forEach((event) => {
-      if (!event?.seen_at || !event?.score) {
+    audioTimelineData?.objects?.forEach((row) => {
+      if (!row?.bucket || !row?.event_count) {
         return;
       }
 
       const offsetMillis =
-        new Date(event.seen_at).getTime() - stripWindowMillis[0];
+        new Date(row.bucket).getTime() - stripWindowMillis[0];
       if (offsetMillis < 0) {
         return;
       }
@@ -140,15 +136,18 @@ export default function DateSlider(props: DateSliderProps) {
         score: 0,
         prominence: 0,
       };
-      bucket.count += 1;
-      bucket.score = Math.max(bucket.score, event.score);
-      bucket.prominence = Math.max(bucket.prominence, event.prominence_db || 0);
+      bucket.count += row.event_count;
+      bucket.score = Math.max(bucket.score, row.top_score);
+      bucket.prominence = Math.max(
+        bucket.prominence,
+        row.peak_prominence_db || 0,
+      );
 
       buckets.set(index, bucket);
     });
 
     return buckets;
-  }, [audioEventsData, stripWindowMillis]);
+  }, [audioTimelineData, stripWindowMillis]);
 
   const bucketMillis = (index: number): number => {
     const millis = stripWindowMillis[0] + index * dateSliderStepMillis;

@@ -8,6 +8,7 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/internal/auth"
+	"github.com/initialed85/camry/internal/timeline"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/djangolang/pkg/config"
 	"github.com/initialed85/djangolang/pkg/server"
@@ -22,6 +23,9 @@ func addCustomHandlers(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool) er
 	}
 
 	a.Routes(r)
+
+	// GET /api/custom/audio-timeline: hourly per-camera audio buckets for the date slider strip
+	timeline.New(db).Routes(r)
 
 	return nil
 }

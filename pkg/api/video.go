@@ -64,7 +64,7 @@ var VideoTable = "video"
 
 var VideoTableWithSchema = fmt.Sprintf("%s.%s", schema, VideoTable)
 
-var VideoTableNamespaceID int32 = 1337 + 6
+var VideoTableNamespaceID int32 = 1337 + 7
 
 var (
 	VideoTableIDColumn                         = "id"
