@@ -21,6 +21,9 @@ func GenerateThumbnail(videoPath, imagePath string) error {
 		imagePath,
 	}
 
+	// TODO(initialed85): software is hard, overwrite files if they already exist /shrug
+	arguments = append(arguments, "-y")
+
 	cmd := exec.Command(
 		"ffmpeg",
 		arguments...,
