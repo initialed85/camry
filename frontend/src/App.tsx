@@ -217,7 +217,15 @@ function App() {
       </Grid>
       <Grid
         container
-        sx={{ pb: 1, flexShrink: 0, display: "flex", justifyContent: "center" }}
+        sx={{
+          pb: 1,
+          // The strip band is full width, so give it the same small gutter the heading text and
+          // the table edges sit behind; flush to the window edge reads as clipped.
+          px: 0.5,
+          flexShrink: 0,
+          display: "flex",
+          justifyContent: "center",
+        }}
       >
         <DateSlider
           responsive={responsive}
