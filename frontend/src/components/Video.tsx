@@ -1,27 +1,29 @@
 import { useEffect, useRef, useState } from "react";
 import { useQuery } from "../api";
 import { components } from "../api/api";
+import {
+  useVideoOverlayDetections,
+  useVideoOverlayTracks,
+  useVideoTimeline,
+  VideoOverlayDetection,
+  VideoOverlayTrack,
+} from "../api/videoTimeline";
 import { responsiveWidth } from "../config";
 import { OverlayMode } from "../helpers";
 import VideoJS from "./VideoJS";
-import VideoStrip from "./VideoStrip";
+import VideoStrip, { bucketLayout } from "./VideoStrip";
 
-type Detection = components["schemas"]["Detection"];
-type Track = components["schemas"]["Track"];
-
-type EnrichedDetection = Detection & {
+type EnrichedDetection = VideoOverlayDetection & {
   timestampMilliseconds: number;
 };
 
 type TrajectorySample = {
-  seen_at?: string;
-  x?: number;
-  y?: number;
-  bbox?: number[];
+  seen_at: string;
+  bbox: number[];
 };
 
 type TrackSample = {
-  track: Track;
+  track: VideoOverlayTrack;
   sample: TrajectorySample;
 };
 
@@ -145,36 +147,31 @@ export function Video(props: VideoProps) {
       Date.parse(detectionVideo.started_at || "") + overlayOffsetMs;
   }, [detectionVideo.started_at, overlayOffsetMs]);
 
-  const { isLoading, error, data } = useQuery(
-    "get",
-    "/api/detections",
-    {
-      params: {
-        query: { video_id__eq: detectionVideoId, limit: 1_000_000 },
-      },
-    },
-    {
-      enabled:
-        Boolean(detectionVideoId) &&
-        (!shouldFindLowResVideo || !isLowResVideoLoading),
-    },
-  );
+  const overlayRowsEnabled =
+    Boolean(detectionVideoId) &&
+    (!shouldFindLowResVideo || !isLowResVideoLoading);
 
-  const { data: tracksData, isLoading: isTracksLoading } = useQuery(
-    "get",
-    "/api/tracks",
-    {
-      params: {
-        query: { video_id__eq: detectionVideoId, limit: 10_000 },
+  // The overlay canvas draws boxes, so it asks for the box columns only. The generated list route
+  // expands every detection's video and camera objects, which costs 3.6 kB per detection.
+  const {
+    isLoading: isDetectionsLoading,
+    error: detectionsError,
+    data: detectionsData,
+  } = useVideoOverlayDetections({
+    videoId: detectionVideoId,
+    limit: 200_000,
+    enabled: overlayRowsEnabled,
+  });
+
+  const { data: tracksData, isLoading: isTracksLoading } =
+    useVideoOverlayTracks(
+      {
+        videoId: detectionVideoId,
+        limit: 200_000,
+        enabled: overlayRowsEnabled,
       },
-    },
-    {
-      enabled:
-        Boolean(detectionVideoId) &&
-        props.overlayMode.showObjects &&
-        (!shouldFindLowResVideo || !isLowResVideoLoading),
-    },
-  );
+      props.overlayMode.showObjects,
+    );
 
   const [lowResDimensions, setLowResDimensions] =
     useState<FrameDimensions | null>(null);
@@ -207,6 +204,22 @@ export function Video(props: VideoProps) {
   // the per-frame draw loop free of a re-render each frame.
   const [stripMillis, setStripMillis] = useState(0);
   const [stripDurationMillis, setStripDurationMillis] = useState(0);
+  // The strip's bars come from the server: the same bucket width the strip draws, aligned to the
+  // playback zero the overlay boxes use.
+  const stripDuration =
+    stripDurationMillis || videoDurationMillis(props.video.duration);
+  const { bucketMillis: stripBucketMillis, count: stripBucketCount } =
+    bucketLayout(stripDuration);
+  const { data: stripTimelineData } = useVideoTimeline(
+    {
+      videoId: detectionVideoId,
+      bucketMillis: stripBucketMillis,
+      alignMillis: playbackVideoStartedAtRef.current,
+      limit: stripBucketCount + 1,
+      enabled: overlayRowsEnabled,
+    },
+    30_000,
+  );
   // The stage only exists once the overlay has its coordinate system, so keep
   // it in state: the gesture wiring has to re-run when it mounts.
   const [stage, setStage] = useState<HTMLDivElement | null>(null);
@@ -414,9 +427,9 @@ export function Video(props: VideoProps) {
   useEffect(() => {
     const tracksByTimestamp = new Map<number, TrackSample[]>();
 
-    const tracks: Track[] = tracksData?.objects || [];
-    tracks.forEach((track: Track) => {
-      const samples = (track.trajectory as TrajectorySample[]) || [];
+    const tracks: VideoOverlayTrack[] = tracksData?.objects || [];
+    tracks.forEach((track: VideoOverlayTrack) => {
+      const samples = track.trajectory || [];
 
       samples.forEach((sample: TrajectorySample) => {
         const timestampMilliseconds = Date.parse(sample?.seen_at || "");
@@ -439,8 +452,8 @@ export function Video(props: VideoProps) {
   useEffect(() => {
     const detectionsByTimestamp = new Map<number, EnrichedDetection[]>();
 
-    const detections: Detection[] = data?.objects || [];
-    detections.forEach((detection: Detection) => {
+    const detections: VideoOverlayDetection[] = detectionsData?.objects || [];
+    detections.forEach((detection: VideoOverlayDetection) => {
       if (detection?.score === undefined) {
         return;
       }
@@ -464,7 +477,7 @@ export function Video(props: VideoProps) {
     detectionTimestampsRef.current = Array.from(
       detectionsByTimestamp.keys(),
     ).sort((a, b) => a - b);
-  }, [data?.objects]);
+  }, [detectionsData?.objects]);
 
   const lowResMetadataVideo = lowResVideo?.file_name ? (
     <video
@@ -499,11 +512,11 @@ export function Video(props: VideoProps) {
     />
   ) : null;
 
-  if (error) {
-    console.warn(error);
+  if (detectionsError) {
+    console.warn(detectionsError);
     return (
       <div style={{ fontWeight: "bold", color: "red" }}>
-        ERROR: {JSON.stringify(error)}
+        ERROR: {JSON.stringify(detectionsError)}
       </div>
     );
   }
@@ -514,7 +527,7 @@ export function Video(props: VideoProps) {
   // in objects mode, its tracks before playback starts. Toggling a layer later
   // must not tear the player down mid-playback.
   if (
-    isLoading ||
+    isDetectionsLoading ||
     (shouldFindLowResVideo && isLowResVideoLoading) ||
     (lowResVideo?.file_name && !lowResDimensions) ||
     (!readyRef.current && props.overlayMode.showObjects && isTracksLoading)
@@ -715,22 +728,22 @@ export function Video(props: VideoProps) {
                     : detectionsByTimestampRef.current.get(matchedTimestamp) ||
                       [];
                 matchedDetections.forEach((detection: EnrichedDetection) => {
-                  const topLeft = detection.bounding_box?.[0];
-                  const bottomRight = detection.bounding_box?.[2];
+                  const box = detection.box;
                   const centroid = detection.centroid;
 
-                  if (topLeft?.X === undefined || topLeft?.Y === undefined) {
-                    return;
-                  }
-
                   if (
-                    bottomRight?.X === undefined ||
-                    bottomRight?.Y === undefined
+                    !box ||
+                    box.length < 4 ||
+                    !box.every((value) => Number.isFinite(value))
                   ) {
                     return;
                   }
 
-                  if (centroid?.X === undefined || centroid?.Y === undefined) {
+                  if (
+                    !centroid ||
+                    centroid.length < 2 ||
+                    !centroid.every((value) => Number.isFinite(value))
+                  ) {
                     return;
                   }
 
@@ -743,14 +756,14 @@ export function Video(props: VideoProps) {
                   const textOffsetY = 6 * visualScaleY;
                   const centroidRadius = 9 * visualScaleX;
 
-                  const topLeftX = topLeft.X * coordinateScaleX;
-                  const topLeftY = topLeft.Y * coordinateScaleY;
+                  const topLeftX = box[0] * coordinateScaleX;
+                  const topLeftY = box[1] * coordinateScaleY;
 
-                  const bottomRightX = bottomRight.X * coordinateScaleX;
-                  const bottomRightY = bottomRight.Y * coordinateScaleY;
+                  const bottomRightX = box[2] * coordinateScaleX;
+                  const bottomRightY = box[3] * coordinateScaleY;
 
-                  const centroidX = centroid.X * coordinateScaleX;
-                  const centroidY = centroid.Y * coordinateScaleY;
+                  const centroidX = centroid[0] * coordinateScaleX;
+                  const centroidY = centroid[1] * coordinateScaleY;
 
                   const grad = ctx.createLinearGradient(
                     topLeftX,
@@ -817,7 +830,6 @@ export function Video(props: VideoProps) {
                   const [x0, y0, x1, y1] = bbox;
                   const lineWidth = 4 * visualScaleX;
                   const textOffsetX = 6 * visualScaleX;
-                  const centroidRadius = 6 * visualScaleX;
 
                   const topLeftX = x0 * coordinateScaleX;
                   const topLeftY = y0 * coordinateScaleY;
@@ -846,18 +858,6 @@ export function Video(props: VideoProps) {
                     topLeftX + textOffsetX,
                     topLeftY + 32 * visualScaleY,
                   );
-
-                  if (sample.x !== undefined && sample.y !== undefined) {
-                    ctx.beginPath();
-                    ctx.arc(
-                      sample.x * coordinateScaleX,
-                      sample.y * coordinateScaleY,
-                      centroidRadius,
-                      0,
-                      Math.PI * 2,
-                    );
-                    ctx.stroke();
-                  }
                 });
               }
             }}
@@ -865,13 +865,10 @@ export function Video(props: VideoProps) {
         </div>
         <VideoStrip
           responsive={window.innerWidth < responsiveWidth}
-          durationMillis={
-            stripDurationMillis || videoDurationMillis(props.video.duration)
-          }
+          durationMillis={stripDuration}
           playbackStartedAtMillis={playbackVideoStartedAtRef.current}
           audioSummary={(props.video.audio_summary as any[]) || []}
-          detections={data?.objects || []}
-          tracks={tracksData?.objects || []}
+          buckets={stripTimelineData?.objects || []}
           overlayMode={props.overlayMode}
           currentTimeMillis={stripMillis}
           onSeek={(millis: number) => {

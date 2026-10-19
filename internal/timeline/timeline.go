@@ -76,6 +76,7 @@ func New(db *pgxpool.Pool) *Timeline {
 func (t *Timeline) Routes(r chi.Router) {
 	r.Get("/audio-timeline", t.HandleAudioTimeline)
 	r.Get("/detection-timeline", t.HandleDetectionTimeline)
+	t.videoRoutes(r)
 }
 
 // HandleAudioTimeline answers GET /api/custom/audio-timeline from the v_audio_event_hour view.

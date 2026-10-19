@@ -1,6 +1,6 @@
 import Box from "@mui/joy/Box";
 import { useMemo } from "react";
-import { components } from "../api/api";
+import { VideoTimelineBucket } from "../api/videoTimeline";
 import {
   videoStripBucketMillis,
   videoStripFullCountDetections,
@@ -11,17 +11,14 @@ import {
 } from "../config";
 import { audioScoreColor, OverlayMode } from "../helpers";
 
-type Detection = components["schemas"]["Detection"];
-type Track = components["schemas"]["Track"];
-
 interface VideoStripProps {
   responsive: boolean;
-  // Everything is relative to the playback timeline: the same zero the overlay boxes use.
+  // Everything is relative to the playback timeline: the same zero the overlay boxes use, and the
+  // same bucket width the strip endpoint was queried with.
   durationMillis: number;
   playbackStartedAtMillis: number;
   audioSummary: any[];
-  detections: Detection[];
-  tracks: Track[];
+  buckets: VideoTimelineBucket[];
   overlayMode: OverlayMode;
   currentTimeMillis: number;
   onSeek: (millis: number) => void;
@@ -58,8 +55,9 @@ const emptyBar = (index: number): StripBar => ({
 });
 
 // The strip is the video's own timeline: one bar per second, capped so a long recording stays
-// readable. Bars are mirrored around the strip's centre line, as in the top bar.
-const bucketLayout = (durationMillis: number) => {
+// readable. Bars are mirrored around the strip's centre line, as in the top bar. The querying
+// component uses this too, so the endpoint buckets and the drawn bars are the same widths.
+export const bucketLayout = (durationMillis: number) => {
   const bucketMillis = Math.max(
     videoStripBucketMillis,
     Math.ceil(durationMillis / videoStripMaxBuckets),
@@ -124,57 +122,21 @@ export default function VideoStrip(props: VideoStripProps) {
     const scores = new Array<number>(bucketTotal).fill(0);
     const classNames = new Array<string>(bucketTotal).fill("");
 
-    props.detections.forEach((detection) => {
-      const seenAtMillis = Date.parse(detection?.seen_at || "");
-      if (!Number.isFinite(seenAtMillis)) {
-        return;
-      }
-
-      const index = Math.floor(
-        (seenAtMillis - props.playbackStartedAtMillis) / bucketMillis,
+    // The endpoint buckets against the strip's own zero, so a bar index is exact.
+    props.buckets.forEach((row) => {
+      const index = Math.round(
+        (row.bucket_ms - props.playbackStartedAtMillis) / bucketMillis,
       );
       if (index < 0 || index >= bucketTotal) {
         return;
       }
 
-      detectionCounts[index] += 1;
-      if ((detection?.score || 0) >= scores[index]) {
-        scores[index] = detection?.score || 0;
-        classNames[index] = detection?.class_name || classNames[index];
-      }
-    });
+      detectionCounts[index] += row.detection_count;
+      objectCounts[index] += row.object_count;
 
-    // Objects are counted where they are visible, so a track spans its buckets.
-    props.tracks.forEach((track) => {
-      const startedAtMillis = Date.parse(track?.started_at || "");
-      if (!Number.isFinite(startedAtMillis)) {
-        return;
-      }
-
-      const parsedEndedAtMillis = Date.parse(track?.ended_at || "");
-      const endedAtMillis = Number.isFinite(parsedEndedAtMillis)
-        ? parsedEndedAtMillis
-        : startedAtMillis;
-
-      const firstIndex = Math.max(
-        0,
-        Math.floor(
-          (startedAtMillis - props.playbackStartedAtMillis) / bucketMillis,
-        ),
-      );
-      const lastIndex = Math.min(
-        bucketTotal - 1,
-        Math.floor(
-          (endedAtMillis - props.playbackStartedAtMillis) / bucketMillis,
-        ),
-      );
-
-      for (let index = firstIndex; index <= lastIndex; index += 1) {
-        objectCounts[index] += 1;
-        if ((track?.max_score || 0) >= scores[index]) {
-          scores[index] = track?.max_score || 0;
-          classNames[index] = track?.class_name || classNames[index];
-        }
+      if ((row.top_score || 0) >= scores[index]) {
+        scores[index] = row.top_score || 0;
+        classNames[index] = row.top_class_name || classNames[index];
       }
     });
 
@@ -208,8 +170,7 @@ export default function VideoStrip(props: VideoStripProps) {
       };
     });
   }, [
-    props.detections,
-    props.tracks,
+    props.buckets,
     props.overlayMode,
     props.playbackStartedAtMillis,
     bucketMillis,
