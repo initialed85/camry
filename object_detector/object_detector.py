@@ -479,13 +479,34 @@ def do(
         handle_video(sink, video, source_path)
 
 
-def quarantine_unopenable(sink: Sink, video: Video, high_res_video: Optional[Video]) -> None:
+def can_decode(path: Optional[str]) -> bool:
+    """Whether ffmpeg/OpenCV can actually read frames from this file."""
+
+    if path is None:
+        return False
+
+    cap: cv2.VideoCapture = cv2.VideoCapture(path)
+
+    opened: bool = cap.isOpened()
+
+    cap.release()
+
+    return opened
+
+
+def quarantine_unopenable(sink: Sink, video: Video, high_res_video: Optional[Video], high_res_path: Optional[str]) -> None:
     """Take an undecodable segment out of the claim pool without hiding why.
 
     The caller re-raises, so the failure stays in the log. `failed` is the status
     the UI already shows as an error and the detector never claims, and the lease
     stamp is the quarantine: fix.sql leaves `failed` alone, so the pair stays
     visible until prune deletes the rows with the files.
+
+    The high-res sibling is only stamped when its own file cannot be decoded
+    either. The two encoders die independently - 2 of the 22 corrupt pairs in dev
+    had an intact high-res file - and `failed` renders as an icon, not a
+    thumbnail, so stamping a good sibling would take playable footage out of the
+    list.
     """
 
     update = Video(
@@ -496,7 +517,7 @@ def quarantine_unopenable(sink: Sink, video: Video, high_res_video: Optional[Vid
 
     sink.patch_video(video, update)
 
-    if high_res_video and high_res_video.id:
+    if high_res_video and high_res_video.id and not can_decode(high_res_path):
         sink.patch_video(high_res_video, update)
 
     print(f"quarantined {video.file_name} as failed until {update.object_detector_claimed_until}")
@@ -533,7 +554,7 @@ def handle_video(sink: Sink, video: Video, source_path: str) -> None:
     except UnopenableSegment:
         # Loud in the log (the raise continues) and loud in the UI (`failed`
         # renders as an error), and out of the pool the claim filter reads.
-        quarantine_unopenable(sink, video, high_res_video)
+        quarantine_unopenable(sink, video, high_res_video, high_res_path)
         raise
 
     tracker = Tracker(

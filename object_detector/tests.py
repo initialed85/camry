@@ -189,11 +189,48 @@ class DetectorTest(unittest.TestCase):
 
     def test_undecodable_segment_is_quarantined_and_still_raises(self):
         # The truncation signature of a segment producer killed mid-write:
-        # k * MiB + 48 bytes, and no moov atom to open.
-        corrupt_name = "Segment_2026-10-14T21:44:00_cam-id_low_res.mp4"
+        # k * 0.5 MiB + 48 bytes, and no moov atom to open.
+        # Derived-sibling naming: strip "_low_res" and the sibling is the row setUp wrote.
+        corrupt_name = "Segment_2026-10-14T21:43:01_cam-id_low_res.mp4"
 
         with open(os.path.join(self.directory, corrupt_name), "wb") as corrupt_file:
-            corrupt_file.write(b"\x00" * (1 * 1024 * 1024 + 48))
+            corrupt_file.write(b"\x00" * (1 * 524288 + 48))
+
+        corrupt = make_video("corrupt-low-id", corrupt_name, True)
+
+        # The sibling's own file decodes, so it keeps its playable status.
+        write_segment(self.directory, sibling_name)
+
+        video_api = MagicMock()
+        video_api.get_videos.return_value = MagicMock(objects=[self.high_res])
+
+        with self.assertRaises(UnopenableSegment):
+            do(ApiSink(video_api, MagicMock(), MagicMock()), [corrupt], self.directory)
+
+        patches = [call.args for call in video_api.patch_video.call_args_list]
+
+        # `failed` renders as an icon, not a thumbnail, so a good sibling stays
+        # playable.
+        self.assertEqual([patch[1].status for patch in patches], ["detecting", "failed"])
+        self.assertEqual({patch[0] for patch in patches}, {"corrupt-low-id"})
+
+        # The quarantine: a lease far enough out that the claim filter's lease
+        # gate keeps handing the row to nobody.
+        quarantined_until = patches[1][1].object_detector_claimed_until
+
+        self.assertIsNotNone(quarantined_until)
+        self.assertGreater(quarantined_until.timestamp(), datetime.datetime.now().timestamp() + 6 * 24 * 60 * 60)
+
+    def test_undecodable_sibling_is_quarantined_too(self):
+        # Derived-sibling naming: strip "_low_res" and the sibling is the row setUp wrote.
+        corrupt_name = "Segment_2026-10-14T21:43:01_cam-id_low_res.mp4"
+
+        with open(os.path.join(self.directory, corrupt_name), "wb") as corrupt_file:
+            corrupt_file.write(b"\x00" * (2 * 524288 + 48))
+
+        # The 16-of-22 case: the same kill took out both encoders.
+        with open(os.path.join(self.directory, sibling_name), "wb") as corrupt_sibling:
+            corrupt_sibling.write(b"\x00" * (2 * 524288 + 48))
 
         corrupt = make_video("corrupt-low-id", corrupt_name, True)
 
@@ -207,15 +244,7 @@ class DetectorTest(unittest.TestCase):
 
         self.assertEqual([patch[1].status for patch in patches], ["detecting", "failed", "failed"])
         self.assertEqual({patch[0] for patch in patches}, {"corrupt-low-id", "high-id"})
-
-        # The quarantine: a lease far enough out that the claim filter's lease
-        # gate keeps handing the row to nobody.
-        quarantined_until = patches[1][1].object_detector_claimed_until
-
-        self.assertIsNotNone(quarantined_until)
-        self.assertGreater(quarantined_until.timestamp(), datetime.datetime.now().timestamp() + 6 * 24 * 60 * 60)
-
-        self.assertEqual(patches[2][1].object_detector_claimed_until, quarantined_until)
+        self.assertEqual(patches[1][1].object_detector_claimed_until, patches[2][1].object_detector_claimed_until)
 
     def test_live_sink_posts_detections_and_skips_empty_batches(self):
         video_api = MagicMock()
