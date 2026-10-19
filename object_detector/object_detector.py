@@ -499,6 +499,8 @@ def quarantine_unopenable(sink: Sink, video: Video, high_res_video: Optional[Vid
     if high_res_video and high_res_video.id:
         sink.patch_video(high_res_video, update)
 
+    print(f"quarantined {video.file_name} as failed until {update.object_detector_claimed_until}")
+
 
 def handle_video(sink: Sink, video: Video, source_path: str) -> None:
     print(f"claimed {video.file_name} - {video.status} - {video.started_at} - {video.duration}")
