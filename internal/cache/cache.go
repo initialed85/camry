@@ -129,7 +129,7 @@ func Middleware(store Store, statusOf StatusFunc, opts Options) func(http.Handle
 
 			if status != statusMiss {
 				if recorder.overflow {
-					log.Printf("cache: bypass: key: %v: bytes: %v: over max body bytes: %v", key, recorder.recorded, opts.MaxBodyBytes)
+					log.Printf("cache: bypass: key: %v: bytes: %v: over max body bytes: %v", key, recorder.seen, opts.MaxBodyBytes)
 				}
 				return
 			}
@@ -308,7 +308,7 @@ type recorder struct {
 	http.ResponseWriter
 	status   int
 	body     []byte
-	recorded int
+	seen     int
 	limit    int
 	overflow bool
 }
@@ -332,18 +332,21 @@ func (r *recorder) Write(b []byte) (int, error) {
 		r.status = http.StatusOK
 	}
 
+	// seen counts everything the handler wrote, including the bytes that went straight out after the
+	// cap was hit, so the bypass log line can name the size that made the response uncachable.
+	r.seen += len(b)
+
 	if r.overflow {
 		return r.ResponseWriter.Write(b)
 	}
 
-	if r.recorded+len(b) > r.limit {
+	if r.seen > r.limit {
 		r.overflow = true
 		r.flush()
 		return r.ResponseWriter.Write(b)
 	}
 
 	r.body = append(r.body, b...)
-	r.recorded += len(b)
 
 	return len(b), nil
 }

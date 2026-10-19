@@ -7,8 +7,10 @@ import (
 	"encoding/json"
 	"errors"
 	"io"
+	"log"
 	"net/http"
 	"net/http/httptest"
+	"os"
 	"strconv"
 	"strings"
 	"testing"
@@ -442,6 +444,10 @@ func TestOversizeStreamedResponseCarriesBypassHeader(t *testing.T) {
 	handler := jsonHandler(body)
 	handler.parts = true
 
+	var logged bytes.Buffer
+	log.SetOutput(&logged)
+	defer log.SetOutput(os.Stderr)
+
 	server := httptest.NewServer(Middleware(store, statuses(), testOptions(100))(handler))
 	defer server.Close()
 
@@ -467,6 +473,11 @@ func TestOversizeStreamedResponseCarriesBypassHeader(t *testing.T) {
 	}
 	if keys := store.storedKeys(); len(keys) != 0 {
 		t.Fatalf("stored keys = %v, want none", keys)
+	}
+
+	want := "bytes: " + strconv.Itoa(len(body))
+	if !strings.Contains(logged.String(), want) {
+		t.Fatalf("bypass log = %q, want it to name the response size (%v)", strings.TrimSpace(logged.String()), want)
 	}
 }
 
