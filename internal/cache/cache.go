@@ -354,6 +354,12 @@ func (r *recorder) flush() {
 		r.status = http.StatusOK
 	}
 
+	if r.overflow {
+		// This is the point where the headers go out, and after that the standard library ignores
+		// anything set on them: an oversize response has to carry its verdict here.
+		r.Header().Set(Header, statusBypass)
+	}
+
 	r.ResponseWriter.WriteHeader(r.status)
 
 	if len(r.body) > 0 {

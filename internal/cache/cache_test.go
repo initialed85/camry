@@ -431,8 +431,82 @@ func TestOversizeResponseIsStreamedAndBypassed(t *testing.T) {
 	}
 }
 
-func TestGzipAndIdentityNeverCrossServe(t *testing.T) {
+// TestOversizeStreamedResponseCarriesBypassHeader runs the middleware behind a real HTTP server,
+// because an oversize response flushes its headers on the way out and the standard library then
+// ignores anything set on them.
+func TestOversizeStreamedResponseCarriesBypassHeader(t *testing.T) {
 
+	body := `{"status":200,"objects":[` + strings.Repeat(`{"score":0.5},`, 500) + `{"score":0}]}`
+
+	store := newFakeStore()
+	handler := jsonHandler(body)
+	handler.parts = true
+
+	server := httptest.NewServer(Middleware(store, statuses(), testOptions(100))(handler))
+	defer server.Close()
+
+	resp, err := server.Client().Get(server.URL + "/api/detections?video_id__eq=" + videoFinalized)
+	if err != nil {
+		t.Fatalf("get: %v", err)
+	}
+	defer resp.Body.Close()
+
+	downloaded, err := io.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatalf("read body: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusOK {
+		t.Fatalf("status = %v, want 200", resp.StatusCode)
+	}
+	if string(downloaded) != body {
+		t.Fatalf("body = %v bytes, want %v", len(downloaded), len(body))
+	}
+	if got := resp.Header.Get(Header); got != statusBypass {
+		t.Fatalf("%v = %v, want %v on a streamed oversize response", Header, got, statusBypass)
+	}
+	if keys := store.storedKeys(); len(keys) != 0 {
+		t.Fatalf("stored keys = %v, want none", keys)
+	}
+}
+
+// TestUnauthorizedResponseCarriesBypassHeader is the same check on a response the handler refuses,
+// over a real connection.
+func TestUnauthorizedResponseCarriesBypassHeader(t *testing.T) {
+
+	store := newFakeStore()
+	handler := jsonHandler(`{"status":401,"success":false}`)
+	handler.status = http.StatusUnauthorized
+
+	server := httptest.NewServer(Middleware(store, statuses(), testOptions(MaxBodyBytes))(handler))
+	defer server.Close()
+
+	resp, err := server.Client().Get(server.URL + "/api/custom/video-detections?video_id__eq=" + videoFinalized)
+	if err != nil {
+		t.Fatalf("get: %v", err)
+	}
+	defer resp.Body.Close()
+
+	downloaded, err := io.ReadAll(resp.Body)
+	if err != nil {
+		t.Fatalf("read body: %v", err)
+	}
+
+	if resp.StatusCode != http.StatusUnauthorized {
+		t.Fatalf("status = %v, want 401", resp.StatusCode)
+	}
+	if string(downloaded) != handler.body {
+		t.Fatalf("body = %v, want %v", string(downloaded), handler.body)
+	}
+	if got := resp.Header.Get(Header); got != statusBypass {
+		t.Fatalf("%v = %v, want %v", Header, got, statusBypass)
+	}
+	if keys := store.storedKeys(); len(keys) != 0 {
+		t.Fatalf("stored keys = %v, want none", keys)
+	}
+}
+
+func TestGzipAndIdentityNeverCrossServe(t *testing.T) {
 	store := newFakeStore()
 	handler := &echoHandler{
 		status: http.StatusOK,
