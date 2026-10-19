@@ -8,6 +8,7 @@ import (
 	"github.com/gomodule/redigo/redis"
 	"github.com/initialed85/camry/internal"
 	"github.com/initialed85/camry/internal/auth"
+	"github.com/initialed85/camry/internal/cache"
 	"github.com/initialed85/camry/internal/timeline"
 	"github.com/initialed85/camry/pkg/api"
 	"github.com/initialed85/djangolang/pkg/config"
@@ -51,7 +52,14 @@ func main() {
 		api.RunDumpOpenAPIYAML()
 
 	case "serve":
-		// passing middlewares replaces the djangolang defaults, so start from them
-		api.RunServeWithEnvironment(server.GetDefaultHTTPMiddlewares(internal.JSONCompressMiddleware()), nil, addCustomHandlers)
+		// passing middlewares replaces the djangolang defaults, so start from them. The response
+		// cache goes outside the compressor: it stores and replays the bytes that go on the wire, so
+		// a hit replays a stored gzip body without recompressing it.
+		cacheMiddleware, err := cache.New()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		api.RunServeWithEnvironment(server.GetDefaultHTTPMiddlewares(cacheMiddleware, internal.JSONCompressMiddleware()), nil, addCustomHandlers)
 	}
 }
