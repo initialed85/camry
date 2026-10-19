@@ -92,6 +92,16 @@ API_TIMEOUT = int(os.getenv("API_TIMEOUT", "60"))
 # segment is not interrupted by a second worker starting the same row.
 CLAIM_LEASE_SECONDS = int(os.getenv("CLAIM_LEASE_SECONDS", "1200"))
 
+# A segment whose file cannot be decoded is not work, and re-claiming it every
+# lease expiry is a loop, not a retry. It is quarantined as `failed` with a
+# lease this far out: `failed` is not claimable, fix.sql does not requeue it,
+# and prune deletes the row together with the file at 7 days.
+UNOPENABLE_LEASE_SECONDS = int(os.getenv("UNOPENABLE_LEASE_SECONDS", str(7 * 24 * 60 * 60)))
+
+
+class UnopenableSegment(ValueError):
+    """The claimed segment's file is there and will not decode (ffmpeg killed mid-write: no moov atom)."""
+
 
 class Sink:
     """Where a handled segment's results go. Subclasses decide: the API, or a local fixture directory."""
@@ -469,6 +479,27 @@ def do(
         handle_video(sink, video, source_path)
 
 
+def quarantine_unopenable(sink: Sink, video: Video, high_res_video: Optional[Video]) -> None:
+    """Take an undecodable segment out of the claim pool without hiding why.
+
+    The caller re-raises, so the failure stays in the log. `failed` is the status
+    the UI already shows as an error and the detector never claims, and the lease
+    stamp is the quarantine: fix.sql leaves `failed` alone, so the pair stays
+    visible until prune deletes the rows with the files.
+    """
+
+    update = Video(
+        status="failed",
+        object_detector_claimed_until=datetime.datetime.now().replace(tzinfo=UTC)
+        + datetime.timedelta(seconds=UNOPENABLE_LEASE_SECONDS),
+    )
+
+    sink.patch_video(video, update)
+
+    if high_res_video and high_res_video.id:
+        sink.patch_video(high_res_video, update)
+
+
 def handle_video(sink: Sink, video: Video, source_path: str) -> None:
     print(f"claimed {video.file_name} - {video.status} - {video.started_at} - {video.duration}")
 
@@ -493,9 +524,15 @@ def handle_video(sink: Sink, video: Video, source_path: str) -> None:
         Video(status="detecting"),
     )
 
-    detections_by_frame, handled_frame_count, frame_width, frame_height = infer(
-        video, os.path.join(source_path, video_file_name)
-    )
+    try:
+        detections_by_frame, handled_frame_count, frame_width, frame_height = infer(
+            video, os.path.join(source_path, video_file_name)
+        )
+    except UnopenableSegment:
+        # Loud in the log (the raise continues) and loud in the UI (`failed`
+        # renders as an error), and out of the pool the claim filter reads.
+        quarantine_unopenable(sink, video, high_res_video)
+        raise
 
     tracker = Tracker(
         width=frame_width,
@@ -599,8 +636,6 @@ def infer(
     whether that is worth it.
     """
 
-    model = get_model()
-
     detections_by_frame: list[tuple[float, list[Detection]]] = []
     handled_frame_count = 0
 
@@ -611,7 +646,11 @@ def infer(
     if not cap.isOpened():
         # A segment that cannot be decoded is not a segment with no detections.
         # Marking it "needs tracking" hides the failure, so fail loudly instead.
-        raise ValueError(f"cannot open {filename}")
+        # The weights load after this check: an undecodable file should not pay
+        # for the model it never uses.
+        raise UnopenableSegment(f"cannot open {filename}")
+
+    model = get_model()
 
     try:
         frame_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))

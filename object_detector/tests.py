@@ -30,6 +30,7 @@ from .object_detector import (
     FixtureSink,
     TrackedObject,
     Tracker,
+    UnopenableSegment,
     claim_videos,
     do,
     load_fixture_videos,
@@ -185,6 +186,36 @@ class DetectorTest(unittest.TestCase):
         self.assertEqual(posted, [0])
 
         detection_api.post_detections.assert_not_called()
+
+    def test_undecodable_segment_is_quarantined_and_still_raises(self):
+        # The truncation signature of a segment producer killed mid-write:
+        # k * MiB + 48 bytes, and no moov atom to open.
+        corrupt_name = "Segment_2026-10-14T21:44:00_cam-id_low_res.mp4"
+
+        with open(os.path.join(self.directory, corrupt_name), "wb") as corrupt_file:
+            corrupt_file.write(b"\x00" * (1 * 1024 * 1024 + 48))
+
+        corrupt = make_video("corrupt-low-id", corrupt_name, True)
+
+        video_api = MagicMock()
+        video_api.get_videos.return_value = MagicMock(objects=[self.high_res])
+
+        with self.assertRaises(UnopenableSegment):
+            do(ApiSink(video_api, MagicMock(), MagicMock()), [corrupt], self.directory)
+
+        patches = [call.args for call in video_api.patch_video.call_args_list]
+
+        self.assertEqual([patch[1].status for patch in patches], ["detecting", "failed", "failed"])
+        self.assertEqual({patch[0] for patch in patches}, {"corrupt-low-id", "high-id"})
+
+        # The quarantine: a lease far enough out that the claim filter's lease
+        # gate keeps handing the row to nobody.
+        quarantined_until = patches[1][1].object_detector_claimed_until
+
+        self.assertIsNotNone(quarantined_until)
+        self.assertGreater(quarantined_until.timestamp(), datetime.datetime.now().timestamp() + 6 * 24 * 60 * 60)
+
+        self.assertEqual(patches[2][1].object_detector_claimed_until, quarantined_until)
 
     def test_live_sink_posts_detections_and_skips_empty_batches(self):
         video_api = MagicMock()
