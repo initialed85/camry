@@ -96,6 +96,9 @@ func getCommandLine(
 		}
 	}
 
+	// TODO(initialed85): software is hard, overwrite files if they already exist /shrug
+	arguments = append(arguments, "-y")
+
 	fileSuffix := ""
 	if isLowRes {
 		fileSuffix = "_low_res"
