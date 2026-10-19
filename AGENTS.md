@@ -29,20 +29,27 @@ The generated Camry code calls generic runtime/query code from the `github.com/i
 - **`recording`** — inserted by the segment producer (`pkg/segment_producer/recording.go`) when ffmpeg opens a new segment (high-res and low-res producers each write their own row); `file_size`/`duration` are updated while live. The UI treats `status !== "recording"` as playable.
 - **`needs detection`** — set by the segment producer on `onSave` (segment closed, `ended_at`/`duration`/thumbnail written). The recording half of the pipeline is done; the row is queued for the object detector.
 - **`failed`** — set by the segment producer when a segment is abandoned/corrupt (file reopened before save, or cleanup on a row that never reached `needs detection`). UI shows an error icon.
-- **`detecting`** — the object detector claims one unclaimed low-res row via `POST /api/object-detector-claim-video` (filtered on `status__eq="needs detection"`, `is_low_res__eq=true`, ordered oldest-first), then patches `status="detecting"` on **both** the low-res row and its high-res sibling (matched by file name minus `_low_res`).
+- **`detecting`** — the object detector claims one unclaimed low-res row via `POST /api/object-detector-claim-video` (filtered on `status__in="needs detection,detecting"`, `is_low_res__eq=true`, ordered oldest-first), then patches `status="detecting"` on **both** the low-res row and its high-res sibling (matched by file name minus `_low_res`). The claim endpoint itself appends `(object_detector_claimed_until IS NULL OR object_detector_claimed_until < now())` to whatever filters the caller sends, so claiming `detecting` recovers work abandoned mid-inference once the lease (`CLAIM_LEASE_SECONDS`, dev 1200) expires — no row is handed out twice while its lease is live.
 - **`needs tracking`** — the terminal state the pipeline actually reaches. After inference, the detector posts its tracks, posts detections (each stamped with the track row it belongs to), and patches both rows with `status="needs tracking"`, `detection_summary`, `track_summary`, and `object_tracker_claimed_until=now`.
 
 **`needs tracking` is NOT handled by anything running in production.** It is effectively "processed/finalized", not "broken/waiting":
 
 - No object-tracker workload is deployed (the cluster runs api, frontend, mediamtx, object-detector, postgres, redis, segment-producer, stream-producer).
 - The claim endpoint exists (`POST /api/object-tracker-claim-video` / `POST /api/videos/{id}/object-tracker-claim`, gated on `object_tracker_claimed_until < now()`, ordered by `object_tracker_claimed_until ASC`) and `object_detector_v2` (Rust, not deployed) would write this status, but nothing claims `needs tracking` rows today.
-- The detector only claims **low-res** rows, and the mid-run `status="detecting"` patch is written to the low-res row plus its high-res sibling only at completion. If a worker dies mid-inference, the low-res row stays `detecting` and its high-res sibling stays `needs detection`; since the detector never claims high-res rows, an orphaned high-res row is normally only repaired when its low-res twin gets re-queued and reprocessed (its detections still display, because the frontend resolves the low-res sibling at render time).
+- The detector only claims **low-res** rows, and the mid-run `status="detecting"` patch is written to the low-res row plus its high-res sibling only at completion. If a worker dies mid-inference, the low-res row stays `detecting` and its high-res sibling stays `needs detection`; since the detector never claims high-res rows, an orphaned high-res row is repaired by the hourly `video-fix` job, which mirrors finished low-res work (status, `detection_summary`, `track_summary`, `object_tracker_claimed_until`) onto the sibling. Its detections still display meanwhile, because the frontend resolves the low-res sibling at render time.
 - The SQL view `video_with_seen_person` (migration `00003`) is the intended consumer: it selects `status = 'needs tracking'` person detections (score ≥ 0.55, >20 frames, last day) to derive "new person events" per camera. The view and its indexes are generated into `pkg/api/0_meta.go`, but the API exposes no `/api/video-with-seen-person` route, and no Go/Python/frontend code reads it.
 - Detection queries in the frontend index by the **low-res** video id (`video_id__eq`), so a `needs tracking` low-res row is what backs the overlay boxes; high-res rows carry the mirrored status/summary for the list UI.
 
-So when you check "how is Camry going": `needs tracking` rows sitting around forever is expected terminal state, not backlog. `recording` should be only the live segments (one high-res + one low-res per camera). A persistent set of `detecting` low-res rows alongside a roughly-equal pile of `needs detection` high-res rows means workers were killed mid-inference (pod restarts/node reboots) rather than a throughput problem — check `kubectl get pods -l app=object-detector` start times against those rows' `started_at`.
+So when you check "how is Camry going": `needs tracking` rows sitting around forever is expected terminal state, not backlog. `recording` should be only the live segments (one high-res + one low-res per camera). A persistent set of `detecting` low-res rows alongside a roughly-equal pile of `needs detection` high-res rows means workers were killed mid-inference (pod restarts/node reboots) rather than a throughput problem — check `kubectl get pods -l app=object-detector` start times against those rows' `started_at`. Expired-lease rows come back to the detector on its own claim (no more than `CLAIM_LEASE_SECONDS` after the death) and the hourly `video-fix` job mirrors the finished work onto high-res siblings, so a *persistent* pile means the workers are not claiming at all. `./tmp/detector_queue.sh` reports claimable / leased / stuck / high-res pile, head-of-line lag, and arrival vs service per hour.
 
-The `prune` CronJob (namespace `camry`, configmap `prune`) runs alongside: deletes `/srv/media` files and `detection`/`video` rows older than 7 days, VACUUMs/ANALYZEs, and its `fix.sql` resets stuck `detecting` and `failed` rows back to `needs detection` so crashed work is retried automatically. It does **not** touch `needs tracking`. Because `fix.sql` re-queues stale `detecting` rows, a backlog of `detecting` low-res rows that keeps cycling back to `needs detection` usually means the detector workers are idle/not claiming (or high-res siblings stranded as above) rather than live inference.
+Two CronJobs in namespace `camry` run off the same configmap `prune`:
+
+- **`prune`** (daily) deletes `/srv/media` files and `detection`/`video` rows older than 7 days, VACUUMs/ANALYZEs, then applies `fix.sql`.
+- **`video-fix`** (hourly, `15 * * * *`) applies `fix.sql` and drops leaked publications. No media deletes, no VACUUM.
+
+`fix.sql` is lease-aware: it re-queues only `detecting`/`failed` rows whose `object_detector_claimed_until` has already expired (live work is never pulled out from under a worker), deletes that video's `detection`/`track` rows before requeuing so a re-run cannot post a second set, and mirrors finished low-res work onto stranded high-res siblings. It never touches `needs tracking` on the low-res side. Because it re-queues expired-lease rows, a backlog of `detecting` low-res rows that keeps cycling back to `needs detection` means the detector workers are not claiming (crashes land in inference, not mid-write — the stuck rows have 0 detections). Run `./tmp/detector_queue.sh` for the numbers.
+
+Leaked publications: djangolang names its publication and replication slot `djangolang_<DJANGOLANG_NODE_NAME>` with dashes folded to underscores (`raw_stream/stream.go`), so pod `api-0` owns `djangolang_api_0`. The slot is `Temporary: true` and vanishes with the connection; the publication is not temporary, so a pod killed hard (eviction, node reboot, SIGKILL) leaves its publication behind. Under the StatefulSet the next pod under the same ordinal re-adopts the name, so leaks self-heal; `video-fix` drops any `djangolang_*` publication whose name is not a live api pod. Check with `./tmp/pubs_script_test.sh` (stubbed kubectl/psql) and `./tmp/api_replicas_check.sh`.
 
 ## Object detector: knobs, tracking, fixtures
 
@@ -329,14 +336,14 @@ curl -fsSI http://127.0.0.1:18080/
 # Stop port-forward with Ctrl-C.
 ```
 
-For other components, inspect their actual StatefulSet/Deployment before using the equivalent restart. The API runs as a **Deployment with 3 replicas**, and each replica needs its own `DJANGOLANG_NODE_NAME` (from the pod name) because it owns a Postgres replication slot named `djangolang_<DJANGOLANG_NODE_NAME>` and a slot has exactly one active consumer. The API example is:
+For other components, inspect their actual StatefulSet/Deployment before using the equivalent restart. The API runs as a **StatefulSet with 3 replicas** (`podManagementPolicy: Parallel`, `updateStrategy.rollingUpdate.maxUnavailable: 1` — StatefulSets have no maxSurge), and each replica needs its own `DJANGOLANG_NODE_NAME` (from the pod name) because it owns a Postgres replication slot named `djangolang_<DJANGOLANG_NODE_NAME>` and a slot has exactly one active consumer. Stable ordinals (`api-0/1/2`) are the point: the slot and publication names are reused by the next pod under the same ordinal, so a hard-killed pod's leftover publication is re-adopted instead of orphaned. The API example is:
 
 ```sh
-kubectl --context home-dev -n camry rollout restart deployment/api
-kubectl --context home-dev -n camry rollout status deployment/api --timeout=300s
+kubectl --context home-dev -n camry rollout restart statefulset/api
+kubectl --context home-dev -n camry rollout status statefulset/api --timeout=300s
 ```
 
-After an API rollout, check slots/publications and write latency with `./tmp/api_replicas_check.sh`: one active slot and one walsender per pod, one `djangolang_api_*` publication per pod name (publications are not temporary, so each rollout leaks one per pod name; drop names with no live owner).
+After an API rollout, check slots/publications and write latency with `./tmp/api_replicas_check.sh`: one active slot and one walsender per pod, and one `djangolang_api_*` publication per live pod (publications are not temporary, so a hard-killed pod leaves one behind until that ordinal comes back or `video-fix` drops it).
 
 Then verify:
 
@@ -346,7 +353,7 @@ kubectl -n camry get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{r
 kubectl -n camry logs -l app=object-detector --since=5m --prefix=true
 ```
 
-For detector-only fixes, use the fast image flow when the detector base image already exists locally and the Dockerfile uses the frozen base: build and push only the detector image, then restart only its StatefulSet. Verify the new digest on every pod and check recent logs for model/API errors. For generated API changes, build/push the API image and restart only the API Deployment.
+For detector-only fixes, use the fast image flow when the detector base image already exists locally and the Dockerfile uses the frozen base: build and push only the detector image, then restart only its StatefulSet. Verify the new digest on every pod and check recent logs for model/API errors. For generated API changes, build/push the API image and restart only the API StatefulSet.
 
 The detector matches high-res video rows to low-res detections using camera ID and nearby `started_at` time because the two segment writers may differ by a second in their filenames. Avoid sending Python-generated offset datetimes as API filters unless formatted as strict RFC3339 (`+08:00`); the generated client can serialize offsets as `+0800`, which the current API parser rejects.
 

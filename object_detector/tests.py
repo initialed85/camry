@@ -30,6 +30,7 @@ from .object_detector import (
     FixtureSink,
     TrackedObject,
     Tracker,
+    claim_videos,
     do,
     load_fixture_videos,
     measure_content_offset_ms,
@@ -145,6 +146,19 @@ class DetectorTest(unittest.TestCase):
         self.low_res = make_video("low-id", segment_name, True)
 
         self.high_res = make_video("high-id", sibling_name, False)
+
+    def test_claim_covers_expired_lease_work_as_well_as_fresh_rows(self):
+        claim_api = MagicMock()
+        claim_api.post_object_detector_claim_videos.return_value = MagicMock(objects=[self.low_res])
+
+        videos = claim_videos(claim_api)
+
+        kwargs = claim_api.post_object_detector_claim_videos.call_args.kwargs
+
+        self.assertEqual(videos, [self.low_res])
+        self.assertNotIn("status__eq", kwargs)
+        self.assertEqual({value.strip() for value in kwargs["status__in"].split(",")}, {"needs detection", "detecting"})
+        self.assertIs(kwargs["is_low_res__eq"], True)
 
     def test_live_run_patches_both_rows_and_posts_once(self):
         video_api = MagicMock()

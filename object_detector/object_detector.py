@@ -1354,7 +1354,11 @@ def claim_videos(
             is_low_res__eq=True,
             # Segment producers leave files as "recording" until ffmpeg
             # closes them and writes the MP4 moov atom.
-            status__eq="needs detection",
+            #
+            # "detecting" is claimable too: the endpoint only hands out rows whose
+            # lease has expired, so this recovers work abandoned mid-inference
+            # within CLAIM_LEASE_SECONDS instead of waiting for prune's daily fix.
+            status__in="needs detection,detecting",
             started_at__asc="",
             _request_timeout=70,
         )
