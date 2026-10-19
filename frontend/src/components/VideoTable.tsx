@@ -16,7 +16,13 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { clientForReactQuery, useQuery } from "../api";
 import { components } from "../api/api";
-import { audioScoreColor, getDateString, OverlayMode } from "../helpers";
+import {
+  audioScoreColor,
+  formatScore,
+  getDateString,
+  OverlayMode,
+  scoreOf,
+} from "../helpers";
 import { Video } from "./Video";
 
 const defaultLimit = 10;
@@ -88,10 +94,6 @@ export function VideoTable(props: VideoTableProps) {
     ((props.overlayMode.showObjects
       ? video?.track_summary
       : video?.detection_summary) as any[] | null) || [];
-  const scoreOf = (summary: any) =>
-    typeof summary?.mean_score === "number"
-      ? summary.mean_score
-      : summary?.average_score;
   // Numeric confidence thresholds are applied client-side because the API
   // only supports JSON containment on detection_summary. Fetch a larger batch
   // so a high threshold does not make the search appear empty one page at a time.
@@ -376,14 +378,14 @@ export function VideoTable(props: VideoTableProps) {
                   const summaries = summariesOf(video);
 
                   return summaries.some((summary: any) => {
-                    const classMatches = (
-                      summary.class_name as string
-                    ).includes(detectionFilter.className);
+                    const classMatches = (summary.class_name ?? "").includes(
+                      detectionFilter.className,
+                    );
+                    const score = scoreOf(summary);
+                    const minimumScore = detectionFilter.minimumAverageScore;
                     const scoreMatches =
-                      detectionFilter.minimumAverageScore === undefined ||
-                      (typeof scoreOf(summary) === "number" &&
-                        scoreOf(summary) >=
-                          detectionFilter.minimumAverageScore);
+                      minimumScore === undefined ||
+                      (typeof score === "number" && score >= minimumScore);
                     return classMatches && scoreMatches;
                   });
                 }
@@ -491,45 +493,43 @@ export function VideoTable(props: VideoTableProps) {
                     .filter((summary: any) => {
                       return true;
                     })
-                    .map((x: any) => {
+                    .map((x: any, i: number) => {
+                      const className = x.class_name ?? "-";
+
                       if (props.responsive) {
                         return (
                           <span
-                            key={x.class_name}
+                            key={x.class_name ?? i}
                             style={{
                               color:
                                 detectionFilter.className &&
-                                (x.class_name as string).includes(
-                                  detectionFilter.className,
-                                )
+                                className.includes(detectionFilter.className)
                                   ? "#ff0000"
                                   : undefined,
                             }}
                           >
-                            {x.class_name} @ {scoreOf(x).toFixed(2)} <br />
+                            {className} @ {formatScore(x)} <br />
                           </span>
                         );
                       }
 
                       return (
                         <span
-                          key={x.class_name}
+                          key={x.class_name ?? i}
                           style={{
                             color:
                               detectionFilter.className &&
-                              (x.class_name as string).includes(
-                                detectionFilter.className,
-                              )
+                              className.includes(detectionFilter.className)
                                 ? "#ff0000"
                                 : undefined,
                           }}
                         >
                           {props.overlayMode.showObjects
-                            ? `${x.class_name} x${x.count} @ ${scoreOf(
+                            ? `${className} x${x.count} @ ${formatScore(
                                 x,
-                              ).toFixed(2)} (${x.frame_count} frames)`
-                            : `${x.class_name} @ ${scoreOf(x).toFixed(
-                                2,
+                              )} (${x.frame_count} frames)`
+                            : `${className} @ ${formatScore(
+                                x,
                               )} (over ${x.detected_frame_count} frames)`}
                           <br />
                         </span>

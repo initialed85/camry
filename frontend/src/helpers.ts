@@ -65,6 +65,19 @@ export const defaultOverlayMode: OverlayMode = {
   showObjects: false,
 };
 
+export const scoreOf = (summary: any): number | undefined =>
+  typeof summary?.mean_score === "number"
+    ? summary.mean_score
+    : summary?.average_score;
+
+export const formatScore = (summary: any): string => {
+  const score = scoreOf(summary);
+
+  return typeof score === "number" && Number.isFinite(score)
+    ? score.toFixed(2)
+    : "-";
+};
+
 export const readOverlayMode = (): OverlayMode => {
   const raw = localStorage.getItem(overlayModeKey);
 
