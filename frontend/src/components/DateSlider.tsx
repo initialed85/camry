@@ -4,6 +4,7 @@ import {
   Dispatch,
   SetStateAction,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
@@ -357,6 +358,62 @@ export default function DateSlider(props: DateSliderProps) {
     });
   }, [detectionTimelineData?.objects, props.overlayMode, stripMinMillis]);
 
+  // Bar tooltips: the native `title` tooltip pops under the cursor, which is exactly where the
+  // slider's value label sits. Draw ours above the strip instead, so the two never share a spot.
+  const stripRef = useRef<HTMLDivElement | null>(null);
+  const hoverTipRef = useRef<HTMLDivElement | null>(null);
+  const [hoverBar, setHoverBar] = useState<{
+    prefix: string;
+    index: number;
+  } | null>(null);
+
+  const onStripMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const bar = (event.target as HTMLElement).closest("[data-bar-index]");
+    const row = bar?.closest(
+      '[data-test$="-strip-up"], [data-test$="-strip-down"]',
+    );
+
+    if (!bar || !row) {
+      setHoverBar(null);
+
+      return;
+    }
+
+    const prefix = (row.getAttribute("data-test") || "").split("-strip-")[0];
+    const index = Number(bar.getAttribute("data-bar-index"));
+
+    // Only the hovered bar matters, so a sweep across a bar does not re-render 168 of them.
+    setHoverBar((previous) =>
+      previous?.prefix === prefix && previous.index === index
+        ? previous
+        : { prefix, index },
+    );
+  };
+
+  const hoverText = hoverBar
+    ? (hoverBar.prefix === "audio" ? audioBars : detectionBars)[hoverBar.index]
+        ?.title || ""
+    : "";
+
+  // Centred on the bar, then clamped into the strip's own x range whatever the text width is.
+  useLayoutEffect(() => {
+    const tip = hoverTipRef.current;
+    const strip = stripRef.current;
+
+    if (!tip || !strip || !hoverBar) {
+      return;
+    }
+
+    const areaWidth = strip.getBoundingClientRect().width;
+    const centre = ((hoverBar.index + 0.5) / stripIntervals) * areaWidth;
+    const half = tip.offsetWidth / 2;
+
+    tip.style.left = `${Math.min(
+      Math.max(centre, half + 2),
+      areaWidth - half - 2,
+    )}px`;
+  }, [hoverBar]);
+
   const renderStrip = (bars: StripBar[], prefix: string) => {
     const rows: ("up" | "down")[] = ["up", "down"];
 
@@ -378,7 +435,8 @@ export default function DateSlider(props: DateSliderProps) {
             data-test={`${prefix}-bar`}
             data-bar-index={bar.index}
             data-bar-millis={bar.millis}
-            title={bar.title}
+            // The tooltip text, on the bar, for the hover tip above the strip and for checks.
+            data-bar-title={bar.title}
             sx={{
               position: "relative",
               flex: 1,
@@ -453,10 +511,12 @@ export default function DateSlider(props: DateSliderProps) {
       }}
     >
       <Box
+        ref={stripRef}
         data-test="topbar-strip"
         onMouseDown={seekFromStrip}
         onClick={seekFromStrip}
-        title="Click to jump to this hour"
+        onMouseMove={onStripMouseMove}
+        onMouseLeave={() => setHoverBar(null)}
         sx={{
           position: "relative",
           pl: `${railInsetsPx[0]}px`,
@@ -499,6 +559,31 @@ export default function DateSlider(props: DateSliderProps) {
             backgroundColor: "rgba(0, 0, 0, 0.55)",
           }}
         />
+        {hoverBar && (
+          <Box
+            ref={hoverTipRef}
+            data-test="topbar-hover-tip"
+            sx={{
+              position: "absolute",
+              // Above the strip: below it is the slider value label's space.
+              bottom: "100%",
+              mb: "4px",
+              left: `${((hoverBar.index + 0.5) / stripIntervals) * 100}%`,
+              transform: "translateX(-50%)",
+              padding: "0.25rem 0.5rem",
+              borderRadius: "6px",
+              backgroundColor: "rgba(0, 0, 0, 0.75)",
+              color: "#fff",
+              fontSize: "0.75rem",
+              lineHeight: 1.2,
+              whiteSpace: "nowrap",
+              pointerEvents: "none",
+              zIndex: 3,
+            }}
+          >
+            {hoverText}
+          </Box>
+        )}
       </Box>
       <Slider
         sx={{
