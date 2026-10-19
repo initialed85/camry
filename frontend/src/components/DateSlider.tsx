@@ -603,6 +603,13 @@ export default function DateSlider(props: DateSliderProps) {
             boxShadow: "none",
             whiteSpace: "nowrap",
           },
+          // Joy's open-state rule (thumb hover, active, drag) re-points the label above the thumb,
+          // straight onto the strip bars. Outrank it so the label stays below in every state.
+          [`& .${sliderClasses.valueLabel}.${sliderClasses.valueLabelOpen}`]: {
+            transform:
+              "translateX(-50%) translateY(calc(var(--Slider-thumbSize) + var(--Slider-valueLabelArrowSize) + 2px))",
+            transformOrigin: "top center",
+          },
           [`& .${sliderClasses.valueLabel}::before`]: {
             content: '""',
             position: "absolute",
