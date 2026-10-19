@@ -55,6 +55,11 @@ function App() {
 
   const [overlayMode, setOverlayMode] = useState<OverlayMode>(readOverlayMode);
 
+  // The time range the video table is showing on screen, for the top strip's cursor box.
+  const [visibleRangeMillis, setVisibleRangeMillis] = useState<
+    [number, number] | undefined
+  >(undefined);
+
   useEffect(() => {
     localStorage.setItem(overlayModeKey, JSON.stringify(overlayMode));
   }, [overlayMode]);
@@ -220,6 +225,7 @@ function App() {
           date={startedAtGt}
           setDate={setStartedAtLte}
           overlayMode={overlayMode}
+          visibleRangeMillis={visibleRangeMillis}
         />
       </Grid>
 
@@ -240,6 +246,7 @@ function App() {
           startedAtLte={startedAtLte}
           classNameFilter={classNameFilter}
           overlayMode={overlayMode}
+          setVisibleRange={setVisibleRangeMillis}
         />
       </Box>
     </Sheet>

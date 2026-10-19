@@ -12,7 +12,7 @@ import Tooltip from "@mui/joy/Tooltip";
 import Typography from "@mui/joy/Typography";
 import VolumeOffOutlinedIcon from "@mui/icons-material/VolumeOffOutlined";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { clientForReactQuery, useQuery } from "../api";
 import { components } from "../api/api";
@@ -21,6 +21,9 @@ import { Video } from "./Video";
 
 const defaultLimit = 10;
 const desiredWidthRatio = 3840 / 2160;
+// Rows are one media segment each, and the newest visible row is still running: its own duration is
+// part of the section the strip should mark.
+const visibleRowSpanMillis = 60_000;
 
 type ParsedDetectionFilter = {
   className: string;
@@ -54,6 +57,8 @@ export interface VideoTableProps {
   startedAtLte: string | undefined;
   classNameFilter: string;
   overlayMode: OverlayMode;
+  // The time range of the rows currently on screen, so the top strip can mark that section.
+  setVisibleRange: Dispatch<SetStateAction<[number, number] | undefined>>;
 }
 
 export function VideoTable(props: VideoTableProps) {
@@ -225,9 +230,83 @@ export function VideoTable(props: VideoTableProps) {
     desiredMaxWidth = desiredHeight * desiredWidthRatio;
   }
 
+  // Which rows are on screen is what the top strip needs: the table is the app's only scroller, so
+  // the rows intersecting the viewport are the rows the user is looking at.
+  const tableRef = useRef<HTMLTableElement | null>(null);
+  const rowTimesRef = useRef(new Map<string, number>());
+  const lastRangeRef = useRef<[number, number] | undefined>(undefined);
+
+  const { setVisibleRange } = props;
+
+  const rowKeys = (videosData?.objects || [])
+    .map((video) => `${video.id}:${video.started_at}`)
+    .join(",");
+
+  useEffect(() => {
+    const times = new Map<string, number>();
+
+    (videosData?.objects || []).forEach((video) => {
+      const millis = Date.parse(video.started_at || "");
+
+      if (video.id && !Number.isNaN(millis)) {
+        times.set(video.id, millis);
+      }
+    });
+
+    rowTimesRef.current = times;
+
+    const rows =
+      tableRef.current?.querySelectorAll<HTMLTableRowElement>(
+        "tr[data-row-id]",
+      );
+
+    if (!rows?.length) {
+      return;
+    }
+
+    const visible = new Set<string>();
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        const id = (entry.target as HTMLElement).dataset.rowId || "";
+
+        if (entry.isIntersecting) {
+          visible.add(id);
+        } else {
+          visible.delete(id);
+        }
+      });
+
+      const millis: number[] = [];
+
+      visible.forEach((id) => {
+        const rowMillis = rowTimesRef.current.get(id);
+
+        if (rowMillis !== undefined) {
+          millis.push(rowMillis);
+        }
+      });
+
+      const next: [number, number] | undefined = millis.length
+        ? [Math.min(...millis), Math.max(...millis) + visibleRowSpanMillis]
+        : undefined;
+      const last = lastRangeRef.current;
+
+      if (next?.[0] !== last?.[0] || next?.[1] !== last?.[1]) {
+        lastRangeRef.current = next;
+        setVisibleRange(next);
+      }
+    });
+
+    rows.forEach((row) => observer.observe(row));
+
+    return () => observer.disconnect();
+  }, [rowKeys, videosData?.objects, setVisibleRange]);
+
   return (
     <>
       <Table
+        ref={tableRef}
         size="sm"
         sx={{
           th: {
@@ -502,7 +581,11 @@ export function VideoTable(props: VideoTableProps) {
                 }
 
                 return (
-                  <tr key={`video-table-row-${video.id}`}>
+                  <tr
+                    key={`video-table-row-${video.id}`}
+                    data-row-id={video.id}
+                    data-started-at={startedAt.getTime()}
+                  >
                     <td>
                       <Typography style={{ display: "inline" }}>
                         {getDateString(startedAt)}{" "}

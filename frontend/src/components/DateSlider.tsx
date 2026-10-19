@@ -1,6 +1,13 @@
 import Box from "@mui/joy/Box";
 import Slider, { sliderClasses } from "@mui/joy/Slider";
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useAudioTimeline } from "../api/audioTimeline";
 import { useDetectionTimeline } from "../api/detectionTimeline";
 import {
@@ -25,34 +32,21 @@ export interface DateSliderProps {
   date: string | undefined;
   setDate: Dispatch<SetStateAction<string | undefined>>;
   overlayMode: OverlayMode;
+  // The time range the video table is currently showing, so the strip can mark that section.
+  visibleRangeMillis: [number, number] | undefined;
 }
 
-const bucketCount =
-  Math.round(dateSliderWidthMillis / dateSliderStepMillis) + 1;
+// The slider's own domain is the strip window: hour-aligned bounds, `stripIntervals` steps across
+// the full width. Bar i covers interval i, so a strip pixel and a slider pixel name the same hour,
+// and a strip click snaps exactly like a slider drag at the same x.
+const stripIntervals = Math.round(dateSliderWidthMillis / dateSliderStepMillis);
 
-// min/max are snapped to the step grid because the Slider normalises every value
-// onto min + k*step: unaligned bounds would snap a strip click to an off-hour time.
-const getDateMillis = (): [number, number] => {
-  const now = new Date();
-  const maxDateMillisLive =
-    Math.floor(now.getTime() / dateSliderStepMillis) * dateSliderStepMillis;
-  const minDateMillisLive =
-    Math.floor((now.getTime() - dateSliderWidthMillis) / dateSliderStepMillis) *
-    dateSliderStepMillis;
-  return [maxDateMillisLive, minDateMillisLive];
-};
-
-// The strip window is hour-aligned so its query key only moves once an hour;
-// the slider's own window ticks every second and would refetch every tick.
 const getStripWindowMillis = (): [number, number] => {
-  const now = new Date();
-  const maxDateMillisLive = Math.floor(now.getTime() / dateSliderStepMillis);
-  const minDateMillisLive =
-    maxDateMillisLive -
-    Math.round(dateSliderWidthMillis / dateSliderStepMillis);
+  const maxHour = Math.floor(new Date().getTime() / dateSliderStepMillis);
+
   return [
-    minDateMillisLive * dateSliderStepMillis,
-    (maxDateMillisLive + 1) * dateSliderStepMillis,
+    (maxHour - stripIntervals) * dateSliderStepMillis,
+    maxHour * dateSliderStepMillis,
   ];
 };
 
@@ -69,71 +63,102 @@ interface StripBar {
   title: string;
 }
 
+// The bar at index i covers interval i of the strip window, which is the same interval the slider
+// puts at the same fraction of its track.
+const stripMillis = (stripMinMillis: number, index: number): number => {
+  return stripMinMillis + index * dateSliderStepMillis;
+};
+
 const stripBarHeight = (count: number, fullCount: number): number => {
   return count > 0 ? 8 + Math.min(1, count / fullCount) * 92 : 0;
 };
 
 export default function DateSlider(props: DateSliderProps) {
-  const [maxDateMillisLive, minDateMillisLive] = getDateMillis();
-
-  const [maxDateMillis, setMaxDateMillis] = useState(maxDateMillisLive);
-  const [minDateMillis, setMinDateMillis] = useState(minDateMillisLive);
-  const [currentMillis, setCurrentMillis] = useState(
-    maxDateMillis + dateSliderStepMillis * 1,
-  );
-
-  const [slidByUser, setSlidByUser] = useState(false);
-
   const [stripWindowMillis, setStripWindowMillis] = useState<[number, number]>(
     getStripWindowMillis(),
   );
+  const [stripMinMillis, stripMaxMillis] = stripWindowMillis;
+
+  const [currentMillis, setCurrentMillis] = useState(stripMaxMillis);
+
+  const [slidByUser, setSlidByUser] = useState(false);
+
+  // The strip bars have to share the slider's own box for a strip click and a slider click at the
+  // same x to pick the same hour. That box is the **rail** (the full-width base line): the track is
+  // the filled part and shrinks to 0 as the thumb moves left.
+  const [railInsetsPx, setRailInsetsPx] = useState<[number, number]>([0, 0]);
+
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const root = rootRef.current;
+    const rail = root?.querySelector<HTMLElement>(`.${sliderClasses.rail}`);
+
+    if (!root || !rail) {
+      return;
+    }
+
+    const measure = () => {
+      const rootRect = root.getBoundingClientRect();
+      const railRect = rail.getBoundingClientRect();
+
+      if (railRect.width <= 0) {
+        // Mid-mount / mid-transition: keep the last good inset rather than collapsing the strip.
+        return;
+      }
+
+      const next: [number, number] = [
+        Math.max(0, Math.round(railRect.left - rootRect.left)),
+        Math.max(0, Math.round(rootRect.right - railRect.right)),
+      ];
+
+      setRailInsetsPx((current) =>
+        current[0] === next[0] && current[1] === next[1] ? current : next,
+      );
+    };
+
+    measure();
+
+    const observer = new ResizeObserver(measure);
+    observer.observe(root);
+    observer.observe(rail);
+    window.addEventListener("resize", measure);
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
 
   useEffect(() => {
     const intervalId = setInterval(() => {
-      const [maxDateMillisLive, minDateMillisLive] = getDateMillis();
+      const [stripMinMillisLive, stripMaxMillisLive] = getStripWindowMillis();
 
-      setMaxDateMillis(maxDateMillisLive);
-      setMinDateMillis(minDateMillisLive);
-
-      if (!slidByUser && maxDateMillisLive - currentMillis > 1000) {
-        setCurrentMillis(maxDateMillisLive);
-      }
-
-      const [stripMinMillis, stripMaxMillis] = getStripWindowMillis();
       if (
-        stripMinMillis !== stripWindowMillis[0] ||
-        stripMaxMillis !== stripWindowMillis[1]
+        stripMinMillisLive !== stripMinMillis ||
+        stripMaxMillisLive !== stripMaxMillis
       ) {
-        setStripWindowMillis([stripMinMillis, stripMaxMillis]);
+        setStripWindowMillis([stripMinMillisLive, stripMaxMillisLive]);
       }
-    }, 1_000);
 
-    if (slidByUser && currentMillis > maxDateMillis) {
-      setSlidByUser(false);
-    }
+      if (!slidByUser && stripMaxMillisLive - currentMillis > 1000) {
+        setCurrentMillis(stripMaxMillisLive);
+      }
 
-    return () => {
-      clearInterval(intervalId);
-    };
-  }, [
-    currentMillis,
-    maxDateMillis,
-    maxDateMillisLive,
-    minDateMillis,
-    props,
-    slidByUser,
-    stripWindowMillis,
-  ]);
+      if (slidByUser && currentMillis > stripMaxMillisLive) {
+        setSlidByUser(false);
+      }
+    }, 1000);
 
-  const stripStartedAtGte = new Date(stripWindowMillis[0]).toISOString();
-  const stripStartedAtLt = new Date(stripWindowMillis[1]).toISOString();
+    return () => clearInterval(intervalId);
+  }, [slidByUser, currentMillis, stripMinMillis, stripMaxMillis]);
 
   const { data: audioTimelineData } = useAudioTimeline(
     {
       cameraId: props.cameraId || undefined,
       // The strip window is hour-aligned, so its buckets line up with the view's rows exactly.
-      startedAtGte: stripStartedAtGte,
-      startedAtLt: stripStartedAtLt,
+      startedAtGte: new Date(stripMinMillis).toISOString(),
+      startedAtLt: new Date(stripMaxMillis).toISOString(),
       minScore: audioStripMinScore,
       limit: 5_000,
     },
@@ -143,63 +168,91 @@ export default function DateSlider(props: DateSliderProps) {
   const { data: detectionTimelineData } = useDetectionTimeline(
     {
       cameraId: props.cameraId || undefined,
-      startedAtGte: stripStartedAtGte,
-      startedAtLt: stripStartedAtLt,
+      startedAtGte: new Date(stripMinMillis).toISOString(),
+      startedAtLt: new Date(stripMaxMillis).toISOString(),
       minScore: detectionStripMinScore,
       limit: 5_000,
     },
     60_000,
   );
 
+  const applyMillis = (millis: number) => {
+    props.setDate(new Date(millis + dateSliderStepMillis).toISOString());
+  };
+
+  const seekFromStrip = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+
+    if (rect.width <= 0) {
+      return;
+    }
+
+    const fraction = Math.min(
+      1,
+      Math.max(0, (event.clientX - rect.left) / rect.width),
+    );
+    const millis =
+      stripMinMillis +
+      Math.round(fraction * stripIntervals) * dateSliderStepMillis;
+
+    setSlidByUser(true);
+    setCurrentMillis(millis);
+    applyMillis(millis);
+  };
+
   const audioBars = useMemo<StripBar[]>(() => {
+    // The view is per camera-hour, so a bar sums the cameras it covers.
     const byIndex = new Map<
       number,
-      { count: number; score: number; prominence: number }
+      { count: number; score: number; kind: string; prominence: number }
     >();
 
-    audioTimelineData?.objects?.forEach((row) => {
+    (audioTimelineData?.objects || []).forEach((row) => {
       if (!row?.bucket || !row?.event_count) {
         return;
       }
 
-      const offsetMillis =
-        new Date(row.bucket).getTime() - stripWindowMillis[0];
-      if (offsetMillis < 0) {
-        return;
-      }
+      const index = Math.floor(
+        (Date.parse(row.bucket) - stripMinMillis) / dateSliderStepMillis,
+      );
 
-      const index = Math.floor(offsetMillis / dateSliderStepMillis);
-      if (index < 0 || index >= bucketCount) {
+      if (index < 0 || index >= stripIntervals) {
         return;
       }
 
       const bucket = byIndex.get(index) || {
         count: 0,
         score: 0,
+        kind: "",
         prominence: 0,
       };
+
       bucket.count += row.event_count;
-      bucket.score = Math.max(bucket.score, row.top_score);
       bucket.prominence = Math.max(
         bucket.prominence,
         row.peak_prominence_db || 0,
       );
 
+      if (row.top_score >= bucket.score) {
+        bucket.score = row.top_score;
+        bucket.kind = row.top_kind || bucket.kind;
+      }
+
       byIndex.set(index, bucket);
     });
 
-    return Array.from({ length: bucketCount }, (_, index) => {
+    return Array.from({ length: stripIntervals }, (_, index) => {
+      const millis = stripMillis(stripMinMillis, index);
       const bucket = byIndex.get(index);
-      const millis = stripWindowMillis[0] + index * dateSliderStepMillis;
 
       if (!bucket) {
         return {
           index,
           millis,
           heightPercent: 0,
-          color: "#00000022",
+          color: "#ffffff14",
           innerHeightPercent: 0,
-          innerColor: "#00000022",
+          innerColor: "#ffffff14",
           title: formatDateWithoutMillis(new Date(millis)),
         };
       }
@@ -208,42 +261,34 @@ export default function DateSlider(props: DateSliderProps) {
         index,
         millis,
         heightPercent: stripBarHeight(bucket.count, audioStripFullCountEvents),
-        color: audioScoreColor(bucket.score),
+        color: `${audioScoreColor(bucket.score)}bf`,
         innerHeightPercent: 0,
         innerColor: audioScoreColor(bucket.score),
         title: `${formatDateWithoutMillis(new Date(millis))} | ${
           bucket.count
         } events | peak +${bucket.prominence.toFixed(1)} dB | score ${bucket.score.toFixed(
           2,
-        )}`,
+        )} (${bucket.kind})`,
       };
     });
-  }, [audioTimelineData, stripWindowMillis]);
+  }, [audioTimelineData?.objects, stripMinMillis]);
 
   const detectionBars = useMemo<StripBar[]>(() => {
     const byIndex = new Map<
       number,
-      {
-        detections: number;
-        objects: number;
-        score: number;
-        className: string;
-      }
+      { detections: number; objects: number; score: number; className: string }
     >();
 
-    detectionTimelineData?.objects?.forEach((row) => {
+    (detectionTimelineData?.objects || []).forEach((row) => {
       if (!row?.bucket) {
         return;
       }
 
-      const offsetMillis =
-        new Date(row.bucket).getTime() - stripWindowMillis[0];
-      if (offsetMillis < 0) {
-        return;
-      }
+      const index = Math.floor(
+        (Date.parse(row.bucket) - stripMinMillis) / dateSliderStepMillis,
+      );
 
-      const index = Math.floor(offsetMillis / dateSliderStepMillis);
-      if (index < 0 || index >= bucketCount) {
+      if (index < 0 || index >= stripIntervals) {
         return;
       }
 
@@ -253,8 +298,10 @@ export default function DateSlider(props: DateSliderProps) {
         score: 0,
         className: "",
       };
-      bucket.detections += row.detection_count;
-      bucket.objects += row.object_count;
+
+      bucket.detections += row.detection_count || 0;
+      bucket.objects += row.object_count || 0;
+
       if (row.top_score >= bucket.score) {
         bucket.score = row.top_score;
         bucket.className = row.top_class_name || bucket.className;
@@ -265,27 +312,24 @@ export default function DateSlider(props: DateSliderProps) {
 
     const { showDetections, showObjects } = props.overlayMode;
 
-    return Array.from({ length: bucketCount }, (_, index) => {
+    return Array.from({ length: stripIntervals }, (_, index) => {
+      const millis = stripMillis(stripMinMillis, index);
       const bucket = byIndex.get(index);
-      const millis = stripWindowMillis[0] + index * dateSliderStepMillis;
+      const detections = showDetections ? bucket?.detections || 0 : 0;
+      const objects = showObjects ? bucket?.objects || 0 : 0;
 
-      const detections = showDetections ? (bucket?.detections ?? 0) : 0;
-      const objects = showObjects ? (bucket?.objects ?? 0) : 0;
-
-      if (!bucket || (!detections && !objects)) {
+      if (!detections && !objects) {
         return {
           index,
           millis,
           heightPercent: 0,
-          color: "#00000022",
+          color: "#ffffff14",
           innerHeightPercent: 0,
-          innerColor: "#00000022",
+          innerColor: "#ffffff14",
           title: formatDateWithoutMillis(new Date(millis)),
         };
       }
 
-      // A bucket with objects and no detections (the detector wrote tracks, prune took the
-      // detections) still needs a bar, so the bar covers whichever series is taller.
       const detectionHeight = stripBarHeight(
         detections,
         detectionStripFullCountDetections,
@@ -295,71 +339,53 @@ export default function DateSlider(props: DateSliderProps) {
         detectionStripFullCountObjects,
       );
       const heightPercent = Math.max(detectionHeight, objectHeight);
-
-      const parts = [`${detections} detections`, `${objects} objects`];
-      if (bucket.className) {
-        parts.push(`score ${bucket.score.toFixed(2)} (${bucket.className})`);
-      }
+      const score = bucket?.score || 0;
 
       return {
         index,
         millis,
         heightPercent,
-        color: `${audioScoreColor(bucket.score)}77`,
-        innerHeightPercent:
-          heightPercent > 0 ? (objectHeight / heightPercent) * 100 : 0,
-        innerColor: audioScoreColor(bucket.score),
-        title: `${formatDateWithoutMillis(new Date(millis))} | ${parts.join(
-          " | ",
-        )}`,
+        color: `${audioScoreColor(score)}77`,
+        innerHeightPercent: heightPercent
+          ? (objectHeight / heightPercent) * 100
+          : 0,
+        innerColor: audioScoreColor(score),
+        title: `${formatDateWithoutMillis(new Date(millis))} | ${detections} detections | ${
+          objects
+        } objects | score ${score.toFixed(2)} (${bucket?.className || "?"})`,
       };
     });
-  }, [detectionTimelineData, props.overlayMode, stripWindowMillis]);
+  }, [detectionTimelineData?.objects, props.overlayMode, stripMinMillis]);
 
-  const bucketMillis = (index: number): number => {
-    const millis = stripWindowMillis[0] + index * dateSliderStepMillis;
-
-    return millis > maxDateMillis ? maxDateMillis : millis;
-  };
-
-  // The strip and the slider share one position: a bar covers [bar, bar + step),
-  // so clicking it sets the thumb to the bar and the table window to that same
-  // hour. The thumb is the window's start, not its end.
-  const applyMillis = (millis: number) => {
-    setSlidByUser(true);
-    setCurrentMillis(millis);
-    props.setDate(new Date(millis + dateSliderStepMillis).toISOString());
-  };
-
-  const renderStrip = (
-    bars: StripBar[],
-    prefix: string,
-    onClickBar: (bar: StripBar) => void,
-  ) => {
+  const renderStrip = (bars: StripBar[], prefix: string) => {
     const rows: ("up" | "down")[] = ["up", "down"];
 
     return rows.map((direction) => (
       <Box
         key={`${prefix}-strip-${direction}`}
+        data-test={`${prefix}-strip-${direction}`}
         sx={{
+          position: "relative",
+          zIndex: 1,
           display: "flex",
           alignItems: direction === "up" ? "flex-end" : "flex-start",
-          height: `${stripRowHeightPx}px`,
+          height: `${props.responsive ? stripRowHeightPx - 4 : stripRowHeightPx}px`,
         }}
       >
         {bars.map((bar) => (
           <Box
             key={`${prefix}-strip-${direction}-${bar.index}`}
+            data-test={`${prefix}-bar`}
+            data-bar-index={bar.index}
+            data-bar-millis={bar.millis}
             title={bar.title}
-            onClick={() => onClickBar(bar)}
             sx={{
               position: "relative",
               flex: 1,
               mx: "0.5px",
               height: bar.heightPercent ? `${bar.heightPercent}%` : "2px",
-              backgroundColor: bar.heightPercent ? bar.color : "#00000022",
+              backgroundColor: bar.heightPercent ? bar.color : "#ffffff14",
               borderRadius: "1px",
-              cursor: bar.heightPercent ? "pointer" : "default",
             }}
           >
             {bar.innerHeightPercent > 0 && (
@@ -381,76 +407,122 @@ export default function DateSlider(props: DateSliderProps) {
     ));
   };
 
-  const labelSx = {
-    width: props.responsive ? "46px" : "108px",
-    flexShrink: 0,
-    fontSize: "12px",
-    color: "text.tertiary",
-    textAlign: "right" as const,
-    pr: "6px",
-    lineHeight: `${stripRowHeightPx * 2}px`,
+  const spanMillis = stripMaxMillis - stripMinMillis;
+
+  const percentOf = (millis: number): string => {
+    const fraction = Math.min(
+      1,
+      Math.max(0, (millis - stripMinMillis) / spanMillis),
+    );
+
+    return `${(fraction * 100).toFixed(4)}%`;
   };
 
-  const clickStripBar = (bar: StripBar) => {
-    if (!bar.heightPercent) {
-      return;
-    }
+  const cursorPercent = percentOf(Math.min(currentMillis, stripMaxMillis));
 
-    applyMillis(bucketMillis(bar.index));
+  const visibleRange = props.visibleRangeMillis;
+
+  // Snapped to the strip's own bars, so the box always covers whole bars: rows inside one hour read
+  // as one bar wide, not as a sliver at the hour boundary.
+  const boxBarIndex = (millis: number): number => {
+    return Math.min(
+      stripIntervals - 1,
+      Math.max(0, Math.floor((millis - stripMinMillis) / dateSliderStepMillis)),
+    );
   };
+
+  const boxRangeMillis: [number, number] | undefined = visibleRange
+    ? [
+        stripMinMillis + boxBarIndex(visibleRange[0]) * dateSliderStepMillis,
+        Math.min(
+          stripMaxMillis,
+          stripMinMillis +
+            (boxBarIndex(visibleRange[1]) + 1) * dateSliderStepMillis,
+        ),
+      ]
+    : undefined;
 
   return (
-    <Box sx={{ width: "88%", display: "flex", flexDirection: "column" }}>
-      <Box sx={{ display: "flex", flexDirection: "row", mb: "2px" }}>
-        <Box sx={labelSx}>
-          {props.responsive ? "S" : "Sound"}
-          <br />
-          {props.responsive ? "D/O" : "Detections / Objects"}
-        </Box>
-        <Box sx={{ flex: 1, display: "flex", flexDirection: "column" }}>
-          {renderStrip(audioBars, "audio", clickStripBar)}
-          {renderStrip(detectionBars, "detection", clickStripBar)}
-        </Box>
+    <Box
+      ref={rootRef}
+      sx={{
+        width: "88%",
+        maxWidth: 1000,
+        display: "flex",
+        flexDirection: "column",
+      }}
+    >
+      <Box
+        data-test="topbar-strip"
+        onMouseDown={seekFromStrip}
+        onClick={seekFromStrip}
+        title="Click to jump to this hour"
+        sx={{
+          position: "relative",
+          pl: `${railInsetsPx[0]}px`,
+          pr: `${railInsetsPx[1]}px`,
+          cursor: "text",
+        }}
+      >
+        {boxRangeMillis && (
+          <Box
+            data-test="topbar-visible-box"
+            sx={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: percentOf(boxRangeMillis[0]),
+              width: `calc(${percentOf(boxRangeMillis[1])} - ${percentOf(
+                boxRangeMillis[0],
+              )})`,
+              zIndex: 0,
+              pointerEvents: "none",
+              backgroundColor: "rgba(0, 0, 0, 0.05)",
+              border: "1px solid rgba(0, 0, 0, 0.22)",
+              borderRadius: "2px",
+              boxSizing: "border-box",
+            }}
+          />
+        )}
+        {renderStrip(audioBars, "audio")}
+        {renderStrip(detectionBars, "detection")}
+        <Box
+          data-test="topbar-cursor"
+          sx={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: cursorPercent,
+            width: "2px",
+            zIndex: 2,
+            pointerEvents: "none",
+            backgroundColor: "rgba(0, 0, 0, 0.55)",
+          }}
+        />
       </Box>
       <Slider
-        variant="soft"
-        size={"lg"}
-        color={slidByUser ? "danger" : "success"}
         sx={{
-          width: "100%",
-          py: "0px",
-          my: "10px",
-          // Need both of the selectors to make it works on the server-side and client-side
-          [`& [style*="left:0%"], & [style*="left: 0%"]`]: {
-            [`&.${sliderClasses.markLabel}`]: {
-              transform: "none",
-            },
-            [`& .${sliderClasses.valueLabel}`]: {
-              left: "calc(var(--Slider-thumbSize) / 2)",
-              borderBottomLeftRadius: 0,
-              "&::before": {
-                left: 0,
-                transform: "translateY(100%)",
-                borderLeftColor: "currentColor",
-              },
-            },
+          my: "6px",
+          [`& .${sliderClasses.valueLabel}`]: {
+            transform: "translateX(-50%) translateY(-100%)",
+            padding: "0.25rem 0.5rem",
+            borderRadius: "6px",
+            backgroundColor: "rgba(0, 0, 0, 0.75)",
+            color: "#fff",
+            boxShadow: "none",
+            whiteSpace: "nowrap",
           },
-          [`& [style*="left:100%"], & [style*="left: 100%"]`]: {
-            [`&.${sliderClasses.markLabel}`]: {
-              transform: "translateX(-100%)",
-            },
-            [`& .${sliderClasses.valueLabel}`]: {
-              right: "calc(var(--Slider-thumbSize) / 2)",
-              borderBottomRightRadius: 0,
-              "&::before": {
-                left: "initial",
-                right: 0,
-                transform: "translateY(100%)",
-                borderRightColor: "currentColor",
-              },
-            },
+          [`& .${sliderClasses.valueLabel}::before`]: {
+            content: '""',
+            position: "absolute",
+            left: "50%",
+            top: "100%",
+            transform: "translateX(-50%)",
+            border: "5px solid transparent",
+            borderTopColor: "rgba(0, 0, 0, 0.75)",
           },
         }}
+        size="lg"
         value={currentMillis}
         onChange={(_, value) => {
           setSlidByUser(true);
@@ -461,15 +533,15 @@ export default function DateSlider(props: DateSliderProps) {
         }}
         onChangeCommitted={(_, value) => {
           if (typeof value === "number") {
-            applyMillis(value > maxDateMillis ? maxDateMillis : value);
+            applyMillis(value > stripMaxMillis ? stripMaxMillis : value);
           }
         }}
         step={dateSliderStepMillis}
-        min={minDateMillis}
-        max={maxDateMillis + dateSliderStepMillis * 1}
+        min={stripMinMillis}
+        max={stripMaxMillis}
         valueLabelDisplay="auto"
         valueLabelFormat={(value: number): string => {
-          if (value > maxDateMillis) {
+          if (value >= stripMaxMillis) {
             return "(live)";
           }
 

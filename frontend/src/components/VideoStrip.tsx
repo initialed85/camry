@@ -21,6 +21,10 @@ interface VideoStripProps {
   buckets: VideoTimelineBucket[];
   overlayMode: OverlayMode;
   currentTimeMillis: number;
+  // The video.js scrubber's own box inside the stage. The strip shares it, so the playhead lands
+  // exactly above the scrubber handle and a click here is a click on the scrubber.
+  insetLeftPx: number;
+  insetRightPx: number;
   onSeek: (millis: number) => void;
 }
 
@@ -183,6 +187,7 @@ export default function VideoStrip(props: VideoStripProps) {
     return rows.map((direction) => (
       <Box
         key={`${prefix}-strip-${direction}`}
+        data-test={`${prefix}-strip-${direction}`}
         sx={{
           display: "flex",
           alignItems: direction === "up" ? "flex-end" : "flex-start",
@@ -192,6 +197,8 @@ export default function VideoStrip(props: VideoStripProps) {
         {bars.map((bar) => (
           <Box
             key={`${prefix}-strip-${direction}-${bar.index}`}
+            data-test={`${prefix}-bar`}
+            data-bar-index={bar.index}
             title={bar.title}
             sx={{
               position: "relative",
@@ -236,62 +243,41 @@ export default function VideoStrip(props: VideoStripProps) {
       ? Math.min(100, (props.currentTimeMillis / props.durationMillis) * 100)
       : 0;
 
-  const rowHeight = props.responsive
-    ? videoStripRowHeightPx - 4
-    : videoStripRowHeightPx;
-
   return (
     <Box
       onMouseDown={seekFromEvent}
+      onClick={seekFromEvent}
       title="Click to seek"
+      data-test="modal-strip"
       sx={{
         position: "absolute",
-        left: 0,
-        right: 0,
+        // The scrubber's box, so bar index, click fraction, playhead and scrubber handle all share
+        // one width.
+        left: `${props.insetLeftPx}px`,
+        right: `${props.insetRightPx}px`,
         // Above the video.js control bar (.vjs-control-bar is 3em tall) so its buttons stay clickable.
         bottom: "30px",
         // The strip is video chrome: translucent so the footage under it stays readable.
         backgroundColor: "rgba(0, 0, 0, 0.35)",
-        display: "flex",
-        flexDirection: "row",
-        alignItems: "stretch",
-        px: "2px",
         pb: "2px",
         zIndex: 400,
         cursor: "text",
       }}
     >
+      {renderStrip(audioBars, "audio")}
+      {renderStrip(detectionBars, "detection")}
       <Box
+        data-test="modal-playhead"
         sx={{
-          width: "34px",
-          flexShrink: 0,
-          fontSize: "10px",
-          lineHeight: `${rowHeight * 2}px`,
-          color: "rgba(255, 255, 255, 0.75)",
-          textAlign: "right",
-          pr: "4px",
-          userSelect: "none",
+          position: "absolute",
+          top: 0,
+          bottom: 0,
+          left: `${playheadPercent}%`,
+          width: "2px",
+          backgroundColor: "rgba(255, 255, 255, 0.9)",
+          pointerEvents: "none",
         }}
-      >
-        S
-        <br />
-        D/O
-      </Box>
-      <Box sx={{ flex: 1, position: "relative" }}>
-        {renderStrip(audioBars, "audio")}
-        {renderStrip(detectionBars, "detection")}
-        <Box
-          sx={{
-            position: "absolute",
-            top: 0,
-            bottom: 0,
-            left: `${playheadPercent}%`,
-            width: "2px",
-            backgroundColor: "rgba(255, 255, 255, 0.9)",
-            pointerEvents: "none",
-          }}
-        />
-      </Box>
+      />
     </Box>
   );
 }

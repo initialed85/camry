@@ -233,6 +233,73 @@ export function Video(props: VideoProps) {
     overlayModeRef.current = props.overlayMode;
   }, [props.overlayMode]);
 
+  // The strip shares the scrubber's box. video.js insets its progress bar with the play/volume
+  // buttons on the left and the time/settings/fullscreen controls on the right, so the strip is
+  // inset by the same amounts: its bar indexes, click fractions and playhead then line up with the
+  // scrubber handle.
+  const [stripInsetsPx, setStripInsetsPx] = useState<[number, number]>([0, 0]);
+
+  useEffect(() => {
+    if (!stage) {
+      return;
+    }
+
+    const measure = () => {
+      const holder = stage.querySelector<HTMLElement>(".vjs-progress-holder");
+
+      if (!holder) {
+        return;
+      }
+
+      const stageRect = stage.getBoundingClientRect();
+      const holderRect = holder.getBoundingClientRect();
+      const next: [number, number] = [
+        Math.max(0, Math.round(holderRect.left - stageRect.left)),
+        Math.max(0, Math.round(stageRect.right - holderRect.right)),
+      ];
+
+      setStripInsetsPx((current) =>
+        current[0] === next[0] && current[1] === next[1] ? current : next,
+      );
+    };
+
+    // The player mounts after the stage, the control bar is counter-translated by zoom, and the
+    // scrubber width changes with the media, so re-measure on any of that.
+    let queued = false;
+    const schedule = () => {
+      if (queued) {
+        return;
+      }
+
+      queued = true;
+      window.requestAnimationFrame(() => {
+        queued = false;
+        measure();
+      });
+    };
+
+    schedule();
+
+    const mutationObserver = new MutationObserver(schedule);
+    mutationObserver.observe(stage, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["style", "class"],
+    });
+
+    const resizeObserver = new ResizeObserver(schedule);
+    resizeObserver.observe(stage);
+
+    window.addEventListener("resize", schedule);
+
+    return () => {
+      mutationObserver.disconnect();
+      resizeObserver.disconnect();
+      window.removeEventListener("resize", schedule);
+    };
+  }, [stage]);
+
   // Zoom belongs to the media, not to the app: the chrome is pinned by the
   // viewport meta tag and touch-action, and the stage runs its own pinch. The
   // overlay follows for free, because the canvas is re-positioned from the
@@ -871,6 +938,8 @@ export function Video(props: VideoProps) {
           buckets={stripTimelineData?.objects || []}
           overlayMode={props.overlayMode}
           currentTimeMillis={stripMillis}
+          insetLeftPx={stripInsetsPx[0]}
+          insetRightPx={stripInsetsPx[1]}
           onSeek={(millis: number) => {
             stripTimeRef.current = millis;
             setStripMillis(millis);

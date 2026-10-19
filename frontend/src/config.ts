@@ -17,7 +17,7 @@ export const detectionStripFullCountDetections = 160_000;
 // max 1,495. Kept as its own constant so the objects core reads at its own scale inside the bar.
 export const detectionStripFullCountObjects = 1_500;
 // Each strip is a mirrored pair of rows (bars grow away from the strip's centre line).
-export const stripRowHeightPx = 22;
+export const stripRowHeightPx = 14;
 // The video modal's strip covers the recording's own duration at one bar per second, capped so a
 // long recording stays readable.
 export const videoStripBucketMillis = 1_000;
