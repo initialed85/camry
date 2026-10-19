@@ -23,6 +23,7 @@ type recording struct {
 	cameraMu             *sync.Mutex
 	destinationPath      string
 	claimRefreshDuration time.Duration
+	fence                *claimFence
 	isLowRes             bool
 
 	mu    sync.Mutex
@@ -36,6 +37,7 @@ func newRecording(
 	cameraMu *sync.Mutex,
 	destinationPath string,
 	claimRefreshDuration time.Duration,
+	fence *claimFence,
 	isLowRes bool,
 ) *recording {
 	return &recording{
@@ -45,12 +47,13 @@ func newRecording(
 		cameraMu:             cameraMu,
 		destinationPath:      destinationPath,
 		claimRefreshDuration: claimRefreshDuration,
+		fence:                fence,
 		isLowRes:             isLowRes,
 	}
 }
 
 func (r *recording) markVideoFailed(ctx context.Context, tx pgx.Tx, video *api.Video) error {
-	filePath := filepath.Join(r.destinationPath, video.FileName)
+	filePath := recoveredPath(filepath.Join(r.destinationPath, video.FileName))
 	_, fileName := filepath.Split(filePath)
 	video.FileName = fileName
 
@@ -71,6 +74,18 @@ func (r *recording) markVideoFailed(ctx context.Context, tx pgx.Tx, video *api.V
 func (r *recording) updateCamera(ctx context.Context, tx pgx.Tx, timestamp time.Time) error {
 	r.cameraMu.Lock()
 	defer r.cameraMu.Unlock()
+
+	// Refreshing is how we keep the claim, so it is only ever allowed while we own the fence. A
+	// producer that has lost the camera stops here instead of stamping its claim back on over the
+	// one that took it.
+	owned, err := r.fence.owns(ctx)
+	if err != nil {
+		return err
+	}
+	if !owned {
+		log.Printf("warning: no longer own the claim on camera %s", r.camera.ID)
+		return errClaimLost
+	}
 
 	r.camera.LastSeen = timestamp
 	r.camera.SegmentProducerClaimedUntil = timestamp.Add(r.claimRefreshDuration)
@@ -98,7 +113,7 @@ func (r *recording) onOpen(filePath string, _ float64, _ time.Time) error {
 		r.video = nil
 	}
 
-	_, fileName := filepath.Split(filePath)
+	_, fileName := filepath.Split(finalPathFor(filePath))
 	r.video = &api.Video{
 		FileName:  fileName,
 		StartedAt: internal.GetNow(),
@@ -156,6 +171,13 @@ func (r *recording) onSave(filePath string, fileSize float64, timestamp time.Tim
 		return err
 	}
 	defer func() { _ = tx.Rollback(r.ctx) }()
+
+	// The segment is closed, so it moves to its final name here and nowhere else.
+	finalPath, err := finalizeSegment(filePath)
+	if err != nil {
+		return fmt.Errorf("failed to finalize segment %v: %v", filePath, err)
+	}
+	filePath = finalPath
 
 	_, fileName := filepath.Split(filePath)
 	r.video.FileName = fileName

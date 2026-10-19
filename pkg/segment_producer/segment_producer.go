@@ -3,6 +3,7 @@ package segment_producer
 import (
 	"bufio"
 	"context"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -27,11 +28,58 @@ import (
 const (
 	executable      = "ffmpeg"
 	watchdogTimeout = time.Second * 30
+
+	// ffmpeg writes each segment under this suffix and the producer renames it away when the
+	// segment is closed, so a segment is only ever visible at its final name once it is complete.
+	tempFileSuffix = helpers.TempFileSuffix
 )
 
 var (
 	pattern = regexp.MustCompile(`Opening '(.*)' for writing`)
 )
+
+// finalPathFor maps an ffmpeg temp path to the path the finished segment lives at.
+func finalPathFor(filePath string) string {
+	return strings.TrimSuffix(filePath, tempFileSuffix)
+}
+
+// finalizeSegment moves a closed segment to its final name and returns it. ffmpeg's own rename
+// never happens, so this is the only point at which a segment becomes visible at its final name.
+func finalizeSegment(filePath string) (string, error) {
+	finalPath := finalPathFor(filePath)
+
+	if finalPath == filePath {
+		return finalPath, nil
+	}
+
+	if _, err := os.Stat(finalPath); err == nil {
+		return "", fmt.Errorf("refusing to overwrite existing %v", finalPath)
+	}
+
+	if err := os.Rename(filePath, finalPath); err != nil {
+		return "", err
+	}
+
+	return finalPath, nil
+}
+
+// recoveredPath returns filePath, moving a dead producer's leftover temp segment into place when
+// that is the only copy there is. ffmpeg writes a moov atom only at close, so a leftover temp file
+// has no index and its thumbnail fails; the row ends up as a failed one with no thumbnail.
+func recoveredPath(filePath string) string {
+	if _, err := os.Stat(filePath); err == nil {
+		return filePath
+	}
+
+	finalPath, err := finalizeSegment(filePath + tempFileSuffix)
+	if err != nil {
+		return filePath
+	}
+
+	log.Printf("recovered abandoned segment %v", finalPath)
+
+	return finalPath
+}
 
 func getCommandLine(
 	enablePassthrough bool,
@@ -78,6 +126,12 @@ func getCommandLine(
 		"-muxdelay", "0",
 		"-muxpreload", "0",
 		"-reset_timestamps", "1",
+		// moov before mdat: a browser can start playing a segment as it arrives instead of
+		// downloading all ~113MB of it first. It has to be handed to the mp4 muxer per segment -
+		// `-movflags +faststart` as an output option is accepted by `-f segment` and silently
+		// ignored (measured: moov at the tail), and `-segment_format_options` is what reaches each
+		// segment's own muxer (measured: moov at 32, mdat after it).
+		"-segment_format_options", "movflags=+faststart",
 	)
 
 	if !enablePassthrough {
@@ -96,7 +150,8 @@ func getCommandLine(
 		}
 	}
 
-	// TODO(initialed85): software is hard, overwrite files if they already exist /shrug
+	// -y is safe here: the pattern is this producer's private temp name, fenced by claimFence, so
+	// the only writer that can be sitting on it is us.
 	arguments = append(arguments, "-y")
 
 	fileSuffix := ""
@@ -106,7 +161,7 @@ func getCommandLine(
 
 	arguments = append(
 		arguments,
-		filepath.Join(destinationPath, "Segment_%Y-%m-%dT%H:%M:%S_"+cameraID.String()+fileSuffix+".mp4"),
+		filepath.Join(destinationPath, "Segment_%Y-%m-%dT%H:%M:%S_"+cameraID.String()+fileSuffix+".mp4"+tempFileSuffix),
 	)
 
 	return arguments
@@ -338,6 +393,11 @@ retry:
 		}
 
 		if err != nil {
+			if errors.Is(err, errClaimLost) {
+				log.Printf("claim on camera %s is gone; not writing any more segments", cameraID)
+				return err
+			}
+
 			log.Printf("warning: runCommand failed; err: %v- retrying...", err)
 		}
 
@@ -382,6 +442,7 @@ func Run() error {
 	claimRefreshDuration := (time.Duration(durationSeconds) * time.Second) + (time.Second * 2)
 
 	camera := &api.Camera{}
+	var fence *claimFence
 
 	for {
 		err = func() error {
@@ -392,6 +453,16 @@ func Run() error {
 
 			defer func() {
 				_ = tx.Rollback(ctx)
+			}()
+
+			// A fence taken here is only ours once the claim below commits; before that it has to
+			// go back, or we would sit on a camera we are not writing.
+			claimed := false
+			defer func() {
+				if !claimed && fence != nil {
+					_ = fence.release(context.Background())
+					fence = nil
+				}
 			}()
 
 			log.Printf("waiting to lock for claiming a camera...")
@@ -412,18 +483,42 @@ func Run() error {
 					"%v DESC",
 					api.CameraTableSegmentProducerClaimedUntilColumn,
 				)),
-				internal.Ptr(1),
+				internal.Ptr(10),
 				nil,
 			)
 			if err != nil {
 				return err
 			}
 
-			if len(cameras) != 1 {
-				return fmt.Errorf("wanted exactly 1 unclaimed camera, got %d", len(cameras))
+			if len(cameras) == 0 {
+				return fmt.Errorf("found no unclaimed cameras")
 			}
 
-			camera = cameras[0]
+			for _, candidate := range cameras {
+				candidateFence, err := newClaimFence(ctx, db, candidate.ID)
+				if err != nil {
+					return err
+				}
+
+				locked, err := candidateFence.take(ctx)
+				if err != nil {
+					_ = candidateFence.release(ctx)
+					return err
+				}
+
+				if locked {
+					camera, fence = candidate, candidateFence
+					break
+				}
+
+				// The lease says this camera is free, but a producer that is still writing it holds
+				// the fence, so take the next camera instead of sharing files with it.
+				_ = candidateFence.release(ctx)
+			}
+
+			if fence == nil {
+				return fmt.Errorf("all %d unclaimed cameras are being written by live producers", len(cameras))
+			}
 
 			log.Printf("found most recently unclaimed camera %s | %s | %s", camera.ID, camera.StreamURL, camera.Name)
 
@@ -447,6 +542,8 @@ func Run() error {
 				return err
 			}
 
+			claimed = true
+
 			return nil
 		}()
 		if err != nil {
@@ -456,6 +553,14 @@ func Run() error {
 		}
 
 		break
+	}
+
+	stale, err := helpers.CleanupStaleTempFiles(destinationPath, camera.ID.String(), time.Duration(3*durationSeconds)*time.Second)
+	if err != nil {
+		log.Printf("warning: cleaning stale temp files in %v: %v", destinationPath, err)
+	}
+	if stale > 0 {
+		log.Printf("cleaned %v stale temp segments in %v", stale, destinationPath)
 	}
 
 	err = func() error {
@@ -489,7 +594,7 @@ func Run() error {
 		for _, video := range orphanedVideos {
 			log.Printf("marking orphaned video %s as failed", video.ID)
 
-			filePath := filepath.Join(destinationPath, video.FileName)
+			filePath := recoveredPath(filepath.Join(destinationPath, video.FileName))
 
 			_, fileName := filepath.Split(filePath)
 			video.FileName = fileName
@@ -522,10 +627,10 @@ func Run() error {
 
 	cameraMu := new(sync.Mutex)
 	recordings := []*recording{
-		newRecording(ctx, db, camera, cameraMu, destinationPath, claimRefreshDuration, false),
+		newRecording(ctx, db, camera, cameraMu, destinationPath, claimRefreshDuration, fence, false),
 	}
 	if camera.LowResStreamURL != nil && strings.TrimSpace(*camera.LowResStreamURL) != "" {
-		recordings = append(recordings, newRecording(ctx, db, camera, cameraMu, destinationPath, claimRefreshDuration, true))
+		recordings = append(recordings, newRecording(ctx, db, camera, cameraMu, destinationPath, claimRefreshDuration, fence, true))
 	}
 
 	defer func() {
@@ -546,20 +651,36 @@ func Run() error {
 			}
 
 			cameraMu.Lock()
-			camera.SegmentProducerClaimedUntil = internal.GetNow()
-			err = camera.UpdateFields(cleanupCtx, tx, map[string]any{
-				api.CameraTableSegmentProducerClaimedUntilColumn: camera.SegmentProducerClaimedUntil,
-				api.CameraTableUpdatedAtColumn:                   time.Now().UTC(),
-			})
-			cameraMu.Unlock()
+			owned, err := fence.owns(cleanupCtx)
 			if err != nil {
-				return err
+				log.Printf("warning: checking ownership of camera %s on shutdown: %v", camera.ID, err)
 			}
+			if owned {
+				camera.SegmentProducerClaimedUntil = internal.GetNow()
+				err = camera.UpdateFields(cleanupCtx, tx, map[string]any{
+					api.CameraTableSegmentProducerClaimedUntilColumn: camera.SegmentProducerClaimedUntil,
+					api.CameraTableUpdatedAtColumn:                   time.Now().UTC(),
+				})
+				if err != nil {
+					cameraMu.Unlock()
+					return err
+				}
+			} else {
+				// Some live producer owns this camera and has stamped its own lease; ours is not
+				// ours to clear any more.
+				log.Printf("not releasing the claim on camera %s; we no longer own it", camera.ID)
+			}
+			cameraMu.Unlock()
 
 			return tx.Commit(cleanupCtx)
 		}()
 		if err != nil {
 			log.Printf("warning: had %v on shutdown cleanup", err)
+		}
+
+		// Last, so no one can take the camera while we are still writing.
+		if err := fence.release(context.Background()); err != nil {
+			log.Printf("warning: releasing the fence on camera %s: %v", camera.ID, err)
 		}
 	}()
 
