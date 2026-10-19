@@ -446,8 +446,8 @@ export default function DateSlider(props: DateSliderProps) {
     <Box
       ref={rootRef}
       sx={{
-        width: "88%",
-        maxWidth: 1000,
+        // Full width: the strip is 168 bars, so every pixel of width is click precision.
+        width: "100%",
         display: "flex",
         flexDirection: "column",
       }}
@@ -502,9 +502,15 @@ export default function DateSlider(props: DateSliderProps) {
       </Box>
       <Slider
         sx={{
-          my: "6px",
+          mt: "6px",
+          // The value label hangs **below** the thumb (see the valueLabel overrides): the strip
+          // bars sit above the slider, and above the thumb they covered the label. This bottom
+          // margin is that label's room, so it does not paint over the table header.
+          mb: "34px",
           [`& .${sliderClasses.valueLabel}`]: {
-            transform: "translateX(-50%) translateY(-100%)",
+            transform:
+              "translateX(-50%) translateY(calc(var(--Slider-thumbSize) + var(--Slider-valueLabelArrowSize) + 2px))",
+            transformOrigin: "top center",
             padding: "0.25rem 0.5rem",
             borderRadius: "6px",
             backgroundColor: "rgba(0, 0, 0, 0.75)",
@@ -516,10 +522,10 @@ export default function DateSlider(props: DateSliderProps) {
             content: '""',
             position: "absolute",
             left: "50%",
-            top: "100%",
+            bottom: "100%",
             transform: "translateX(-50%)",
             border: "5px solid transparent",
-            borderTopColor: "rgba(0, 0, 0, 0.75)",
+            borderBottomColor: "rgba(0, 0, 0, 0.75)",
           },
         }}
         size="lg"
