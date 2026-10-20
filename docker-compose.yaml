@@ -61,7 +61,7 @@ services:
       - "BASE_URL=/"
       - "SWAGGER_JSON_URL=http://0.0.0.0:7070/api/openapi.json"
     ports:
-      - "7071:8080/tcp"
+      - "7069:8080/tcp"
 
   nats:
     restart: unless-stopped

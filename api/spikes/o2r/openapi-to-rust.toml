@@ -1,0 +1,26 @@
+[generator]
+spec_path = "/home/edward/Projects/Home/camry/schema/openapi.json"
+output_dir = "src/gen"
+module_name = "camry"
+
+[features]
+enable_async_client = false
+
+[server]
+framework = "axum"
+operations = [
+  "tag:AudioDetectorClaimVideo",
+  "tag:AudioEvent",
+  "tag:Camera",
+  "tag:Detection",
+  "tag:ObjectDetectorClaimVideo",
+  "tag:ObjectTrackerClaimVideo",
+  "tag:SegmentProducerClaimCamera",
+  "tag:StreamProducerClaimCamera",
+  "tag:Track",
+  "tag:Video",
+]
+prune_models = true
+
+[server.validation]
+enabled = true
