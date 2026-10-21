@@ -2,9 +2,13 @@ use diesel::prelude::*;
 use dotenvy::dotenv;
 use std::env;
 
+pub mod app;
+#[rustfmt::skip]
+pub mod crud;
+pub mod pg_types;
+
 #[rustfmt::skip]
 pub mod models;
-pub mod pg_types;
 #[rustfmt::skip]
 pub mod schema;
 

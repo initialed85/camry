@@ -21,7 +21,9 @@ const MICROS_PER_MONTH: i64 = 30 * MICROS_PER_DAY;
 const POINT_BYTES: usize = 16;
 
 /// A `point`: two `float8`, big-endian on the wire.
-#[derive(Debug, Clone, Copy, PartialEq, AsExpression, FromSqlRow, Serialize, Deserialize)]
+#[derive(
+    Debug, Clone, Copy, Default, PartialEq, AsExpression, FromSqlRow, Serialize, Deserialize,
+)]
 #[diesel(sql_type = Point)]
 #[serde(rename_all = "PascalCase")]
 pub struct PgPoint {
@@ -32,6 +34,23 @@ pub struct PgPoint {
 impl PgPoint {
     pub fn new(x: f64, y: f64) -> Self {
         Self { x, y }
+    }
+
+    /// `(x, y)`, the text form PostgreSQL uses for a point.
+    pub fn parse(raw: &str) -> Result<Self, String> {
+        let body = raw.trim().trim_matches(|c| c == '(' || c == ')');
+        let mut parts = body.split(',').map(str::trim);
+
+        let x = parts
+            .next()
+            .and_then(|value| value.parse().ok())
+            .ok_or_else(|| format!("invalid point {raw}"))?;
+        let y = parts
+            .next()
+            .and_then(|value| value.parse().ok())
+            .ok_or_else(|| format!("invalid point {raw}"))?;
+
+        Ok(Self { x, y })
     }
 }
 
@@ -79,6 +98,35 @@ pub struct PgPolygon(pub Vec<PgPoint>);
 impl PgPolygon {
     pub fn new(points: Vec<PgPoint>) -> Self {
         Self(points)
+    }
+
+    /// `((x, y), (x, y))`, the text form PostgreSQL uses for a polygon.
+    pub fn parse(raw: &str) -> Result<Self, String> {
+        let mut points = Vec::new();
+        let mut depth = 0usize;
+        let mut start = None;
+
+        for (index, character) in raw.char_indices() {
+            match character {
+                '(' => {
+                    depth += 1;
+
+                    if depth == 2 {
+                        start = Some(index + 1);
+                    }
+                }
+                ')' => {
+                    if depth == 2 {
+                        points.push(PgPoint::parse(&raw[start.take().unwrap_or(index)..index])?);
+                    }
+
+                    depth = depth.saturating_sub(1);
+                }
+                _ => {}
+            }
+        }
+
+        Ok(Self(points))
     }
 }
 

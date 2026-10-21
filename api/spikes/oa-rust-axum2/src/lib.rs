@@ -1,3 +1,4 @@
+#![allow(non_snake_case, dead_code, unused_imports)]
 #![allow(
     missing_docs,
     trivial_casts,
