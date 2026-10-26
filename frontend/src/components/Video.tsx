@@ -667,6 +667,20 @@ export function Video(props: VideoProps) {
             }}
             onPlayer={(player: any) => {
               playerRef.current = player;
+              // Autoplay with sound is denied on iOS (and any browser with a
+              // user-gesture autoplay policy), so the modal opens paused there. The
+              // strip's seek would then only move a paused element's playhead, which
+              // shows frames without ever engaging the audio track, so the first
+              // touch also has to start playback, unmuted.
+              const startPlayback = () => {
+                player.unmute();
+                player.muted(false);
+                player.play();
+              };
+              player.on("firstUserGesture", startPlayback);
+              player.on("firstUserGestures", startPlayback);
+              // Left paused on its own, so the gesture handler above is the retry.
+              player.on("autoplay-failure", () => {});
             }}
             onTimeUpdate={(
               left: number,
@@ -943,7 +957,11 @@ export function Video(props: VideoProps) {
           onSeek={(millis: number) => {
             stripTimeRef.current = millis;
             setStripMillis(millis);
+            // Seek the playing state too: currentTime() on a paused element only moves
+            // the playhead (picture changes, no audio), which is what iOS's autoplay
+            // denial leaves us in.
             playerRef.current?.currentTime(millis / 1_000);
+            playerRef.current?.play();
           }}
         />
       </div>
