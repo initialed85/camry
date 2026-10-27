@@ -65,6 +65,76 @@ export const defaultOverlayMode: OverlayMode = {
   showObjects: false,
 };
 
+// A recording is written twice: a high-resolution half and a low-resolution half,
+// by two independent ffmpeg segmenters in the same pod. The low-resolution one opens
+// its next file 1-3 seconds earlier, so the two file names are never exact siblings
+// (measured on dev across the whole 7-day retention window: 0 of 126 high-resolution
+// rows had a "<name>_low_res.mp4" row). Pair the two halves the way the detector
+// pairs them, by camera and start time, not by name.
+export const recordingSiblingWindowMilliseconds = 20_000;
+
+export type RecordingSiblingQuery = {
+  camera_id__eq: string;
+  is_low_res__eq: true;
+  started_at__gte: string;
+  started_at__lte: string;
+  limit: number;
+};
+
+export const recordingSiblingQuery = (
+  cameraId: string | null | undefined,
+  startedAt: string | null | undefined,
+  windowMilliseconds: number = recordingSiblingWindowMilliseconds,
+): RecordingSiblingQuery | undefined => {
+  const startedAtMilliseconds = Date.parse(startedAt || "");
+
+  if (!cameraId || !Number.isFinite(startedAtMilliseconds)) {
+    return undefined;
+  }
+
+  // Strict RFC 3339 (a trailing Z): the API's filter parser rejects the +0800 form.
+  return {
+    camera_id__eq: cameraId,
+    is_low_res__eq: true,
+    started_at__gte: new Date(
+      startedAtMilliseconds - windowMilliseconds,
+    ).toISOString(),
+    started_at__lte: new Date(
+      startedAtMilliseconds + windowMilliseconds,
+    ).toISOString(),
+    limit: 10,
+  };
+};
+
+// Segments are 60 seconds long, so a 20 second window holds a single sibling; the
+// nearest start time is the tie-breaker for the rows a window can still reach.
+export const pickNearestStartedAt = <T extends { started_at?: string | null }>(
+  candidates: T[] | null | undefined,
+  startedAt: string | null | undefined,
+): T | undefined => {
+  const target = Date.parse(startedAt || "");
+
+  let nearest: T | undefined = undefined;
+  let nearestDistance = Number.POSITIVE_INFINITY;
+
+  for (const candidate of candidates || []) {
+    const candidateAt = Date.parse(candidate?.started_at || "");
+
+    if (!Number.isFinite(candidateAt)) {
+      continue;
+    }
+
+    const distance = Math.abs(candidateAt - target);
+
+    if (distance < nearestDistance) {
+      nearest = candidate;
+      nearestDistance = distance;
+    }
+  }
+
+  return nearest;
+};
+
 export const scoreOf = (summary: any): number | undefined =>
   typeof summary?.mean_score === "number"
     ? summary.mean_score

@@ -2,6 +2,8 @@ import {
   formatDate,
   formatScore,
   parseDate,
+  pickNearestStartedAt,
+  recordingSiblingQuery,
   scoreOf,
   truncateDate,
 } from "./helpers";
@@ -79,5 +81,53 @@ describe("summary scores should format without crashing", () => {
     expect(formatScore({ mean_score: Infinity })).toStrictEqual("-");
     expect(formatScore({ mean_score: "0.42" })).toStrictEqual("-");
     expect(formatScore({ average_score: "0.42" })).toStrictEqual("-");
+  });
+});
+
+// Real dev rows: one minute, cut by two independent segmenters. The low-res
+// encoder opened its file 1.5 s before the high-res one noticed its own.
+const highResStartedAt = "2026-10-27T16:01:03.181263+08:00";
+const cameraId = "326da5dd-8a6a-4534-9598-effeb03abe61";
+
+// A window can still reach the recordings on either side, so nearest wins.
+const siblingCandidates = [
+  { started_at: "2026-10-27T16:00:01.653999+08:00" },
+  { started_at: "2026-10-27T16:01:01.653999+08:00" },
+  { started_at: "2026-10-27T16:02:01.653999+08:00" },
+];
+
+describe("recording pairing should not depend on file names", () => {
+  test("pairs by camera and a start-time window in strict RFC 3339", () => {
+    expect(recordingSiblingQuery(cameraId, highResStartedAt)).toStrictEqual({
+      camera_id__eq: cameraId,
+      is_low_res__eq: true,
+      started_at__gte: "2026-10-27T08:00:43.181Z",
+      started_at__lte: "2026-10-27T08:01:23.181Z",
+      limit: 10,
+    });
+  });
+
+  test("refuses to guess a sibling without a camera or a start time", () => {
+    expect(recordingSiblingQuery(undefined, highResStartedAt)).toBeUndefined();
+    expect(recordingSiblingQuery("", highResStartedAt)).toBeUndefined();
+    expect(recordingSiblingQuery(cameraId, undefined)).toBeUndefined();
+    expect(recordingSiblingQuery(cameraId, "")).toBeUndefined();
+  });
+
+  test("picks the candidate that starts nearest the recording being played", () => {
+    expect(
+      pickNearestStartedAt(siblingCandidates, highResStartedAt),
+    ).toStrictEqual(siblingCandidates[1]);
+  });
+
+  test("ignores candidates with no start time, and finds nothing in an empty set", () => {
+    expect(pickNearestStartedAt([], highResStartedAt)).toBeUndefined();
+    expect(pickNearestStartedAt(undefined, highResStartedAt)).toBeUndefined();
+    expect(
+      pickNearestStartedAt(
+        [{ started_at: undefined }, ...siblingCandidates],
+        highResStartedAt,
+      ),
+    ).toStrictEqual(siblingCandidates[1]);
   });
 });

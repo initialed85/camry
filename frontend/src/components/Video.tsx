@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "../api";
 import { components } from "../api/api";
 import {
@@ -9,7 +9,11 @@ import {
   VideoOverlayTrack,
 } from "../api/videoTimeline";
 import { responsiveWidth } from "../config";
-import { OverlayMode } from "../helpers";
+import {
+  OverlayMode,
+  pickNearestStartedAt,
+  recordingSiblingQuery,
+} from "../helpers";
 import VideoJS from "./VideoJS";
 import VideoStrip, { bucketLayout } from "./VideoStrip";
 
@@ -81,19 +85,6 @@ function findClosestTimestamp(
   return closestTimestamp;
 }
 
-function getLowResFileName(fileName: string | undefined): string | undefined {
-  if (!fileName || fileName.includes("_low_res.")) {
-    return undefined;
-  }
-
-  const extensionIndex = fileName.lastIndexOf(".");
-  if (extensionIndex < 0) {
-    return `${fileName}_low_res`;
-  }
-
-  return `${fileName.slice(0, extensionIndex)}_low_res${fileName.slice(extensionIndex)}`;
-}
-
 export interface VideoProps {
   video: components["schemas"]["Video"];
   width: number;
@@ -107,29 +98,37 @@ const videoDurationMillis = (duration?: number): number => {
 };
 
 export function Video(props: VideoProps) {
-  const lowResFileName = getLowResFileName(props.video.file_name);
+  // Detection runs against the low-resolution recording, while the UI plays the
+  // matching high-resolution recording. They are the same recording but not the same
+  // file name: each camera writes its two halves with two independent ffmpeg
+  // segmenters that cut the same minute and open their files 1-3 seconds apart, so a
+  // high-resolution row never has a "<name>_low_res.mp4" row beside it (measured: 0
+  // of 126 rows across dev's whole retention window). Pair the halves the way the
+  // detector pairs them - same camera, nearest start time.
+  const siblingQuery = recordingSiblingQuery(
+    props.video.camera_id,
+    props.video.started_at,
+  );
   const shouldFindLowResVideo =
-    props.video.is_low_res !== true && Boolean(lowResFileName);
+    props.video.is_low_res !== true && siblingQuery !== undefined;
 
-  // Detection runs against the low-resolution recording, while the UI plays
-  // the matching high-resolution recording. Find that sibling so that we can
-  // load its detections and use its start time for timeline matching.
   const { data: lowResVideosData, isLoading: isLowResVideoLoading } = useQuery(
     "get",
     "/api/videos",
     {
       params: {
-        query: {
-          file_name__eq: lowResFileName || "",
-          is_low_res__eq: true,
-          limit: 1,
-        },
+        query: siblingQuery ?? {},
       },
     },
     { enabled: shouldFindLowResVideo },
   );
 
-  const lowResVideo = lowResVideosData?.objects?.[0];
+  const lowResVideo = useMemo(
+    () =>
+      pickNearestStartedAt(lowResVideosData?.objects, props.video.started_at),
+    [lowResVideosData?.objects, props.video.started_at],
+  );
+
   const detectionVideo = lowResVideo || props.video;
   const detectionVideoId = detectionVideo.id || "";
   // The detector correlates the high-resolution recording against the
