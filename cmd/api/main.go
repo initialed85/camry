@@ -16,19 +16,15 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func addCustomHandlers(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool) error {
+func addCustomHandlers(a *auth.Auth) func(chi.Router, *pgxpool.Pool, *redis.Pool) error {
+	return func(r chi.Router, db *pgxpool.Pool, redisPool *redis.Pool) error {
+		a.Routes(r)
 
-	a, err := auth.New()
-	if err != nil {
-		return err
+		// GET /api/custom/audio-timeline: hourly per-camera audio buckets for the date slider strip
+		timeline.New(db).Routes(r)
+
+		return nil
 	}
-
-	a.Routes(r)
-
-	// GET /api/custom/audio-timeline: hourly per-camera audio buckets for the date slider strip
-	timeline.New(db).Routes(r)
-
-	return nil
 }
 
 var log = api.ThisLogger()
@@ -52,14 +48,21 @@ func main() {
 		api.RunDumpOpenAPIYAML()
 
 	case "serve":
-		// passing middlewares replaces the djangolang defaults, so start from them. The response
-		// cache goes outside the compressor: it stores and replays the bytes that go on the wire, so
-		// a hit replays a stored gzip body without recompressing it.
+		a, err := auth.New()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		// The response cache goes outside the compressor: it stores and replays the bytes that go on
+		// the wire, so a hit replays a stored gzip body without recompressing it. The identity check is
+		// mounted ahead of the cache - djangolang appends these extras after RequestID/RealIP/Logger and
+		// chi runs them outermost-first - so a cached body is never replayed to a caller that has not
+		// passed it.
 		cacheMiddleware, err := cache.New()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		api.RunServeWithEnvironment(server.GetDefaultHTTPMiddlewares(cacheMiddleware, internal.JSONCompressMiddleware()), nil, addCustomHandlers)
+		api.RunServeWithEnvironment(server.GetDefaultHTTPMiddlewares(a.Middleware, cacheMiddleware, internal.JSONCompressMiddleware()), nil, addCustomHandlers(a))
 	}
 }

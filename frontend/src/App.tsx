@@ -4,10 +4,10 @@ import Input from "@mui/joy/Input";
 import Sheet from "@mui/joy/Sheet";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useState } from "react";
-import { AUTH_REQUIRED_EVENT, checkAuth } from "./auth";
+import { AUTH_REQUIRED_EVENT, checkAuth, signedInEmail } from "./auth";
 import CameraDropdownMenu from "./components/CameraDropdownMenu";
 import DateSlider from "./components/DateSlider";
-import Login from "./components/Login";
+import SignIn from "./components/SignIn";
 import ModeToggle from "./components/ModeToggle";
 import StreamDropdownMenu from "./components/StreamDropdownMenu";
 import { VideoTable } from "./components/VideoTable";
@@ -151,7 +151,12 @@ function App() {
   }
 
   if (!authenticated) {
-    return <Login onAuthenticated={() => setAuthenticated(true)} />;
+    return (
+      <SignIn
+        onAuthenticated={() => setAuthenticated(true)}
+        email={signedInEmail()}
+      />
+    );
   }
 
   return (
