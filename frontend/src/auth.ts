@@ -42,17 +42,38 @@ export const signInHost = (): string => {
   return `https://${labels.join(".")}`;
 };
 
+// signInUrl is where the Sign in button sends the browser: oauth2-proxy's own start route on the
+// auth host, with the current URL as the return target. Two reasons not to just reload this page:
+// a cross-origin navigation cannot be answered by a stale service worker, and ?rd= preserves the
+// deep link through Google the way the gate's own redirect does.
+export const signInUrl = (): string => {
+  const host = signInHost();
+
+  if (!host) {
+    return window.location.href;
+  }
+
+  return `${host}/oauth2/start?rd=${encodeURIComponent(window.location.href)}`;
+};
+
 export const checkAuth = async (): Promise<AuthStatus> => {
   const response = await fetch("/api/custom/auth", {
     method: "GET",
     credentials: "same-origin",
+    // redirect: manual so a session-less probe is visible as a redirect instead of a CORS failure
+    // on Google, which arrives as a plain "fetch failed" and is indistinguishable from Camry being down.
+    redirect: "manual",
   });
 
-  // An unauthenticated probe under the gate is answered with a redirect to Google, which fetch
-  // cannot follow across origins. The caller treats that as "not signed in".
-  if (!response.ok) {
-    identity = undefined;
+  identity = undefined;
 
+  // The gate answered with a 302 to Google. fetch() cannot follow it across origins, and with
+  // redirect:manual it shows up as an opaque 0 rather than an exception.
+  if (response.type === "opaqueredirect" || response.status === 0) {
+    return { authenticated: false, auth_required: true };
+  }
+
+  if (!response.ok) {
     if (response.status === 401) {
       return { authenticated: false, auth_required: true };
     }
@@ -75,8 +96,7 @@ export const checkAuth = async (): Promise<AuthStatus> => {
 };
 
 // requireSignIn is what a 401 from the API means now: the session is gone, or the address the gate
-// verified is not one Camry accepts. Reload is the sign-in gesture - the gate turns it into a Google
-// redirect and returns to the same URL.
+// verified is not one Camry accepts. App responds by offering signInUrl().
 export const requireSignIn = (): void => {
   identity = undefined;
   window.dispatchEvent(new Event(AUTH_REQUIRED_EVENT));

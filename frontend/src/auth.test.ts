@@ -1,4 +1,10 @@
-import { checkAuth, requireSignIn, signedInEmail, signInHost } from "./auth";
+import {
+  checkAuth,
+  requireSignIn,
+  signedInEmail,
+  signInHost,
+  signInUrl,
+} from "./auth";
 
 const setHost = (hostname: string) => {
   Object.defineProperty(window, "location", {
@@ -27,6 +33,37 @@ describe("sign-in helpers", () => {
   it("returns nothing for a host with no gate in front of it", () => {
     setHost("localhost");
     expect(signInHost()).toBe("");
+  });
+
+  it("sends sign-in to the gate itself and carries the deep link with it", () => {
+    setHost("camry.dev.initialed85.cc");
+
+    expect(signInUrl()).toBe(
+      "https://auth.dev.initialed85.cc/oauth2/start?rd=" +
+        encodeURIComponent("https://camry.dev.initialed85.cc/some/deep/link"),
+    );
+  });
+
+  it("has nowhere to send sign-in when there is no gate, so it reloads", () => {
+    setHost("localhost");
+    expect(signInUrl()).toBe("https://localhost/some/deep/link");
+  });
+
+  it("reads a gate redirect as signed out, not as Camry being down", async () => {
+    setHost("camry.dev.initialed85.cc");
+
+    // What fetch() reports for a 302 to Google when redirect:manual is set.
+    (global as any).fetch = async () => ({
+      ok: false,
+      status: 0,
+      type: "opaqueredirect",
+      json: async () => ({}),
+    });
+
+    const status = await checkAuth();
+
+    expect(status).toEqual({ authenticated: false, auth_required: true });
+    expect(signedInEmail()).toBeUndefined();
   });
 
   it("reports the identity the gate injected", async () => {

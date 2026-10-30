@@ -41,6 +41,18 @@ that came through Traefik must show a verified identity, so a misconfigured Ingr
 401 instead of quietly becoming public. `ALLOWED_EMAILS` (comma separated) narrows access to a
 per-app list; the family allowlist itself belongs to oauth2-proxy, not here.
 
+The Sign in card sends the browser to `https://auth.<env>.initialed85.cc/oauth2/start?rd=<current URL>`
+rather than reloading the page, and Camry deliberately ships no working service worker. The Create React
+App template's Workbox worker precached every build asset and answered all navigation requests with the
+ cached `index.html` - and a navigation answered from cache never reaches Traefik, so the gate never gets
+a request to redirect, while the SPA's `/api` and `/media` requests do hit the network and do get 302'd
+to Google. That is what a browser stuck on the precached shell looks like: a sign-in card a reload
+cannot escape, because the reload is answered from cache again. `src/service-worker.ts` is now a
+retirement stub (drop the caches, unregister, register no fetch handler), `index.tsx` sweeps up old
+registrations and caches, and nginx serves the SPA shell and `/service-worker.js` as `no-store` with the
+content-hashed `/static/` assets `immutable`. Chrome update-checks `/service-worker.js` on navigation,
+which is what frees a browser that is still holding the old worker.
+
 ## Usage
 
 ### Development

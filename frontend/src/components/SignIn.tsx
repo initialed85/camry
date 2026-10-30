@@ -3,7 +3,7 @@ import Button from "@mui/joy/Button";
 import Sheet from "@mui/joy/Sheet";
 import Stack from "@mui/joy/Stack";
 import Typography from "@mui/joy/Typography";
-import { signInHost } from "../auth";
+import { signInHost, signInUrl } from "../auth";
 
 export interface SignInProps {
   onAuthenticated: () => void;
@@ -19,9 +19,10 @@ export default function SignIn(props: SignInProps) {
   const host = signInHost();
 
   const signIn = () => {
-    // A top-level navigation is the only thing the gate can intercept: reload the current URL, Traefik
-    // redirects to Google, and the return_uri brings the browser back here with the session cookie set.
-    window.location.assign(window.location.href);
+    // Straight to oauth2-proxy, which goes on to Google and brings the browser back to this exact URL.
+    // Deliberately not a reload of this page: a reload can be answered by a service worker that is
+    // still holding a precached copy of the app, which is how this screen reappears forever.
+    window.location.assign(signInUrl());
   };
 
   return (

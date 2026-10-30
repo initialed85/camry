@@ -7,7 +7,7 @@ import { queryClient } from "./api";
 import App from "./App";
 import "./index.css";
 import reportWebVitals from "./reportWebVitals";
-import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
+import { retire as retireServiceWorkers } from "./serviceWorkerRegistration";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement,
@@ -23,10 +23,10 @@ root.render(
   </React.StrictMode>,
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://cra.link/PWA
-serviceWorkerRegistration.register();
+// Camry used to precache itself through a service worker. That is retired: a precached shell answers
+// every navigation before the sign-in gate ever sees one. Any Camry loaded from the network now sweeps
+// up the old registrations and the caches they wrote. See frontend/src/service-worker.ts.
+retireServiceWorkers();
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
