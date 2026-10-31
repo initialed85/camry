@@ -39,6 +39,23 @@ export const getDateString = (date: Date): string => {
   return formatDate(date).split("T")[0];
 };
 
+// A live query ("give me whatever is newest now") has to carry a time in its URL. Every cache
+// between the app and Postgres - the browser's HTTP cache, a service worker's CacheStorage, a
+// proxy in front of nginx - keys on the request URL, so a live request whose URL never changes
+// can be replayed for as long as the entry is kept: the symptom is opening the app and seeing
+// videos from the last time it was opened. Rounding up to the minute keeps every request inside
+// one minute on the same URL (react-query and offset pagination keep their loaded pages), while
+// staying a minute or two ahead of now so a segment recorded seconds ago is still inside the
+// window. djangolang reads a bound within an hour of now as "recent" and answers
+// `Cache-Control: max-age=60`, so the newest page is at worst about two minutes stale.
+export const liveQueryCeiling = (now: Date = new Date()): string => {
+  const minuteCeiling =
+    Math.floor(now.getTime() / 60_000) * 60_000 + 2 * 60_000;
+
+  // Strict RFC 3339 (a trailing Z): the API's filter parser rejects the +0800 form.
+  return new Date(minuteCeiling).toISOString();
+};
+
 export const audioScoreColor = (score: number): string => {
   if (score >= 0.7) {
     return "#d32f2f";

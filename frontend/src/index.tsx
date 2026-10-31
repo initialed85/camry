@@ -24,8 +24,9 @@ root.render(
 );
 
 // Camry used to precache itself through a service worker. That is retired: a precached shell answers
-// every navigation before the sign-in gate ever sees one. Any Camry loaded from the network now sweeps
-// up the old registrations and the caches they wrote. See frontend/src/service-worker.ts.
+// every navigation before the sign-in gate ever sees one. Nothing ships a worker now, and nginx
+// answers /service-worker.js as a 404 so the update check unregisters an old one; any Camry loaded
+// from the network sweeps up the registrations and caches the old worker left behind.
 retireServiceWorkers();
 
 // If you want to start measuring performance in your app, pass a function

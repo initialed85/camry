@@ -1,6 +1,7 @@
 import {
   formatDate,
   formatScore,
+  liveQueryCeiling,
   parseDate,
   pickNearestStartedAt,
   recordingSiblingQuery,
@@ -129,5 +130,28 @@ describe("recording pairing should not depend on file names", () => {
         highResStartedAt,
       ),
     ).toStrictEqual(siblingCandidates[1]);
+  });
+});
+
+describe("a live query ceiling should move with time, and stay ahead of now", () => {
+  test("rounds up to the next minute and sits one to two minutes ahead", () => {
+    const now = new Date("2024-07-19T11:59:30.000+08:00");
+    const ceiling = liveQueryCeiling(now);
+
+    expect(Date.parse(ceiling)).toBeGreaterThan(now.getTime() + 60_000);
+    expect(Date.parse(ceiling)).toBeLessThanOrEqual(now.getTime() + 120_000);
+    expect(Date.parse(ceiling) % 60_000).toBe(0);
+  });
+
+  test("answers with strict RFC 3339, which the API's filter parser accepts", () => {
+    const now = new Date("2024-07-19T11:59:30.000+08:00");
+
+    expect(liveQueryCeiling(now)).toStrictEqual("2024-07-19T04:01:00.000Z");
+  });
+
+  test("changes the moment the minute rolls over", () => {
+    expect(
+      liveQueryCeiling(new Date("2024-07-19T12:00:30.000+08:00")),
+    ).toStrictEqual("2024-07-19T04:02:00.000Z");
   });
 });

@@ -20,6 +20,7 @@ import {
   audioScoreColor,
   formatScore,
   getDateString,
+  liveQueryCeiling,
   OverlayMode,
   scoreOf,
 } from "../helpers";
@@ -126,7 +127,13 @@ export function VideoTable(props: VideoTableProps) {
                 : undefined,
             // TODO: skipping this means we can keep infinitely scrolling back forever, I think
             // started_at__gt: props.startedAtGt && props.startedAtGt,
-            started_at__lte: props.startedAtLte && props.startedAtLte,
+            // Live mode (the slider has not been moved) asks for the newest page, so the
+            // request gets a bound that moves with time: caches key on the URL, and a
+            // live URL that never changes is a URL a stale entry can sit under forever.
+            // Not in queryHash on purpose - the react-query key has to stay put or every
+            // minute the table would forget the pages it already scrolled into.
+            started_at__lte:
+              (props.startedAtLte && props.startedAtLte) || liveQueryCeiling(),
             started_at__desc: "",
             is_low_res__eq: false,
             limit: relevantLimit,
