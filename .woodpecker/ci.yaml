@@ -1,0 +1,80 @@
+# Camry CI: the Go services, the repo's own scripts, and the four images it actually publishes.
+#
+# This file existed as an untracked draft in the working tree, and it had two bugs that would have made it
+# inert. It gated on `branch: master` while the repo's default branch is `main`, so it would never have run
+# on a push; and its gofmt assertion covered the whole tree, where the only unformatted files are the 41 in
+# pkg/api_client, which openapi-generator writes and nobody hand-edits. Both are fixed here, and the
+# evidence is below rather than in a commit message nobody will read.
+#
+# Deliberately not here:
+#   - ./build.sh. It is the codegen path, not a test path: it needs the ./docker-compose.yaml stack up
+#     (it waits for post-migrate to exit 0), a running api to scrape /api/openapi.json, npm, and
+#     openapi-generator-cli. Regenerating the API in CI would also mean committing whatever changed.
+#   - Object detection images (object-detector, object-detector-v2). They are commented out in
+#     ./build-tag-and-push.sh, they sit on pytorch/rocm/gocv bases, and one wants a GPU. Publishing stays
+#     where it is: this pipeline builds images to prove the Dockerfiles, it never pushes.
+#   - pkg/scratch's TestScratch, excluded in the test step below with a reason.
+steps:
+  - name: test
+    image: docker.io/library/golang:1.26
+    commands:
+      - go version
+      # pkg/api_client is generated, so the gate is "no new unformatted hand-written file", measured as
+      # gofmt -l . minus that directory. Today the exclusion is the whole difference between green and red.
+      - test -z "$(gofmt -l . | grep -v '^pkg/api_client/')" || { gofmt -l . | grep -v '^pkg/api_client/'; echo "FATAL gofmt - commit the output of gofmt -w on your own code"; exit 1; }
+      - go vet ./...
+      # TestScratch dials a real NATS with JetStream (NATS_URL, default nats://127.0.0.1:4222) and pushes
+      # 1000 messages through two consumers, so it belongs to the compose stack. Everything else in ./...
+      # passes with no infrastructure, which was measured before writing this line, not assumed: internal,
+      # internal/auth, internal/cache, internal/timeline and pkg/helpers are all green on a machine with
+      # nothing running. Bringing scratch back means a NATS the step can reach; do not delete the test.
+      - go test -count=1 $(go list ./... | grep -v '/pkg/scratch')
+
+  - name: scripts
+    image: docker.io/library/bash
+    commands:
+      # these two are the whole documented build path, so they should at least parse after an edit
+      - bash -n build.sh build-tag-and-push.sh
+
+  - name: build-binaries
+    image: docker.io/library/golang:1.26
+    depends_on: [test]
+    commands:
+      # The published Go images do not compile anything - their Dockerfiles are runtime-only and
+      # `COPY ./tmp/<name>` a binary that ./build-tag-and-push.sh built first. So CI has to make the same
+      # four files the same way, and the repo's .dockerignore whitelists exactly these names out of tmp/*.
+      - mkdir -p ./tmp
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/api ./cmd/api
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/segment-producer ./cmd/segment_producer
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/fix-thumbnails ./cmd/fix_thumbnails
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/stream-producer ./cmd/stream_producer
+      # assert what was built instead of trusting the exit code: ELF magic at byte 0, x86-64 (3e 00) at
+      # offset 18. `file` is not installed on the runner and is not worth adding for a check this cheap.
+      - for f in api segment-producer fix-thumbnails stream-producer; do printf '%s header=%s machine=%s\n' "$f" "$(head -c 4 ./tmp/$f | od -An -tx1 | tr -d ' \n')" "$(head -c 20 ./tmp/$f | od -An -tx1 | tr -d ' \n' | tail -c 4)"; test "$(head -c 4 ./tmp/$f | od -An -tx1 | tr -d ' \n')" = 7f454c46; test "$(head -c 20 ./tmp/$f | od -An -tx1 | tr -d ' \n' | tail -c 4)" = 3e00; done
+      - ls -l ./tmp
+
+  - name: build-images
+    image: docker.io/library/docker:cli
+    privileged: true
+    depends_on: [build-binaries]
+    environment:
+      DOCKER_HOST: tcp://docker-ocnus-ci-2:2375
+    commands:
+      - docker version
+      # Build only, and under a camry-ci/ name that cannot be confused with the published
+      # initialed85/camry-* tags. This proves the four Dockerfiles still consume what build-binaries made;
+      # ./build-tag-and-push.sh remains the only thing that pushes :latest.
+      - docker build --pull --platform=linux/amd64 -t camry-ci/api:ci -f ./docker/api/Dockerfile .
+      - docker build --pull --platform=linux/amd64 -t camry-ci/segment-producer:ci -f ./docker/segment-producer/Dockerfile .
+      - docker build --pull --platform=linux/amd64 -t camry-ci/stream-producer:ci -f ./docker/stream-producer/Dockerfile .
+      # the frontend image is self-contained (node:lts builder, npm ci from the lockfile, react-scripts
+      # build, then nginx). Its build runs with CI unset inside the image, which matters: react-scripts
+      # turns warnings into errors when CI=true, so building it in a step instead would be a different test.
+      - docker build --pull --platform=linux/amd64 -t camry-ci/frontend:ci -f ./docker/frontend/Dockerfile .
+      - docker image ls -f reference='camry-ci/*'
+      - docker image rm -f camry-ci/api:ci camry-ci/segment-producer:ci camry-ci/stream-producer:ci camry-ci/frontend:ci
+
+when:
+  - event: push
+    branch: main
+  - event: pull_request
