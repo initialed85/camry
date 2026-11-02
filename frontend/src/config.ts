@@ -1,5 +1,5 @@
 export const responsiveWidth = 992;
-export const dateSliderWidthMillis = 7 * 24 * 60 * 60 * 1000; // 7 days
+export const dateSliderWidthMillis = 14 * 24 * 60 * 60 * 1000; // 14 days
 export const dateSliderStepMillis = 60 * 60 * 1000; // 1 hour
 export const audioStripMinScore = 0.2;
 // Strip bar height is events-per-hour, not the hour's loudest score: at the hour grain
