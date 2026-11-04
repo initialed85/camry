@@ -1,0 +1,172 @@
+# The publish pipeline: build the images Camry ships, tag them with this commit's sha, and commit that tag
+# into home-ops so Argo CD rolls the cluster.
+#
+# This is the last missing half of Camry's CI. .woodpecker/ci.yaml already proves the Go code and the
+# Dockerfiles, and it deliberately never pushes; this file is the only thing that publishes, and it is the
+# only CI write to the manifests repo. Before it existed, "deploy a new Camry" meant running
+# ./build-tag-and-push.sh by hand on a laptop and then deleting pods, because a new `:latest` is not a
+# manifest change and Argo does not roll pods on its own.
+#
+# Shape (the same contract as rooter, bench-chroma-rush and memebrary - see home-ops
+# ci/woodpecker/plugins/kustomize-deploy/README.md for the plugin side):
+#   1. `test` is the gate, and it is duplicated from ./ci.yaml on purpose. Two files in .woodpecker/ are two
+#      independent pipelines with no ordering between them (a workflow's workspace is per-workflow, and
+#      `depends_on` does not cross files), so the pipeline that pushes cannot rely on the pipeline that
+#      tests having finished first. A publish gate re-runs the checks rather than racing them.
+#   2. `compile-binaries` writes ./tmp/<name> into the shared workspace of THIS workflow. The published Go
+#      images compile nothing - every one of them is `FROM ubuntu` with a `COPY ./tmp/<name>` of a binary
+#      built beforehand (the in-image builder stages are commented out), which mirrors
+#      ./build-tag-and-push.sh and keeps the runtime images toolchain-free. .dockerignore whitelists exactly
+#      these names out of `tmp/*`.
+#   3. `build-and-push` is a `docker:cli` pod. A step is a pod with no docker socket of its own, so
+#      DOCKER_HOST points at one CI node's dockerd (Service docker-ocnus-ci-1:2375 -> 192.168.1.211,
+#      published by the `expose-docker-api-for-woodpecker` spec in home-ops clusters/dev/_deployed/deployed.yaml;
+#      ./ci.yaml's lane is docker-ocnus-ci-2 -> 192.168.1.212).
+#      One node per LANE, not one per repo: the gate lane ./ci.yaml builds on ocnus-ci-2, and a push to main
+#      runs both files at once, so putting the publisher on the same daemon would have two npm-ci +
+#      react-scripts frontend builds fighting for the same cores and thrashing the same layer cache. Each
+#      node keeps its own warm cache instead; ocnus-ci-1 starts cold for camry, which costs one slow first
+#      run (the ubuntu base pull and the apt/ffmpeg layers) and nothing after it.
+#   4. `deploy-home-ops` is the plugin: clone home-ops, `kustomize edit set image` on
+#      clusters/dev/applications/camry/kustomization.yaml, refuse to push a tree that does not render or a
+#      tag the rendered tree does not reference, commit that one file, push through a retry loop. Argo's
+#      auto-sync then does the rollout. Git is the deploy record and `git revert` is the rollback.
+#
+# Tags: `:$CI_COMMIT_SHA` is the immutable one and the one home-ops pins; `:latest` is kept for hand-run
+# `docker run` and for anything that still pulls it by hand. Camry declares no semver, so there is nothing
+# else to publish.
+#
+# Not here, with reasons:
+#   - camry-object-detector / -v2. Commented out of ./build-tag-and-push.sh, pytorch/rocm/gocv bases, one
+#     wants a GPU, and home-ops runs two workloads off the ONE image name `initialed85/camry-object-detector`
+#     with two tags (`:latest` on the nvidia pool, `:frozen-amd` on the AMD pool). kustomize's images
+#     transformer matches on name and ignores the tag it replaces, so pinning it would move both pools onto
+#     the same build. It stays a hand-built image until those manifests carry distinct names.
+#   - ./build.sh. It is the codegen path (compose stack, a running api to scrape, npm, Java,
+#     openapi-generator-cli) and it commits generated code; it is not a publish path.
+#
+# Credentials are native Kubernetes Secrets in the `woodpecker` namespace, mapped to env by
+# `backend_options.kubernetes.secrets` (the agent runs with WOODPECKER_BACKEND_K8S_ALLOW_NATIVE_SECRETS=true):
+# `dockerhub` (user + PAT, push target) and `home-ops-deploy-key` (ed25519 GitHub deploy key, write access to
+# the home-ops repository only - that key is the whole blast radius of a hijacked pipeline). No secret text
+# lives in this repository.
+steps:
+  - name: test
+    image: docker.io/library/golang:1.26
+    commands:
+      - go version
+      - go mod download
+      # pkg/api_client is generated, so the gate is "no new unformatted hand-written file" - same
+      # measurement as ./ci.yaml, where the 41 unformatted files under pkg/api_client are the whole
+      # difference between green and red.
+      - test -z "$(gofmt -l . | grep -v '^pkg/api_client/')" || { gofmt -l . | grep -v '^pkg/api_client/'; echo "FATAL gofmt - commit the output of gofmt -w on your own code"; exit 1; }
+      - go vet ./...
+      # pkg/scratch's TestScratch dials a real NATS with JetStream, so it belongs to the compose stack.
+      # Everything else passes with no infrastructure (measured in ./ci.yaml's comment, not assumed here).
+      - go test -count=1 $(go list ./... | grep -v '/pkg/scratch')
+
+  - name: compile-binaries
+    image: docker.io/library/golang:1.26
+    depends_on: [test]
+    commands:
+      - mkdir -p ./tmp
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/api ./cmd/api
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/segment-producer ./cmd/segment_producer
+      # fix-thumbnails is not a workload: docker/segment-producer/Dockerfile COPYs it next to the
+      # segment-producer binary, so it has to exist before that image is built.
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/fix-thumbnails ./cmd/fix_thumbnails
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/stream-producer ./cmd/stream_producer
+      - GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -trimpath -o ./tmp/audio-detector ./cmd/audio_detector
+      # Assert what was built rather than trusting the exit code: ELF magic at byte 0, x86-64 (3e 00) at
+      # offset 18. `file` is not on the runner and is not worth adding for a check this cheap.
+      - for f in api segment-producer fix-thumbnails stream-producer audio-detector; do printf '%s size=%s header=%s\n' "$f" "$(stat -c %s ./tmp/$f)" "$(head -c 4 ./tmp/$f | od -An -tx1 | tr -d ' \n')"; test "$(head -c 4 ./tmp/$f | od -An -tx1 | tr -d ' \n')" = 7f454c46; done
+      - ls -l ./tmp
+
+  - name: build-and-push
+    image: docker.io/library/docker:cli
+    privileged: true
+    depends_on: [compile-binaries]
+    environment:
+      DOCKER_HOST: tcp://docker-ocnus-ci-1:2375
+    backend_options:
+      kubernetes:
+        secrets:
+          - name: dockerhub
+            key: username
+            target:
+              env: DOCKERHUB_USER
+          - name: dockerhub
+            key: token
+            target:
+              env: DOCKERHUB_TOKEN
+    commands:
+      - docker info --format 'daemon={{.Name}} images_before={{.Images}}'
+      - echo "$DOCKERHUB_TOKEN" | docker login --username "$DOCKERHUB_USER" --password-stdin
+      # --pull so the ubuntu/nginx bases come from the registry rather than a stale local copy, and
+      # --platform so a build on an amd64 daemon cannot produce something an arm64 host cannot run.
+      - docker build --pull --platform=linux/amd64 -t "initialed85/camry-api:$CI_COMMIT_SHA" -t "initialed85/camry-api:latest" -f ./docker/api/Dockerfile .
+      - docker build --pull --platform=linux/amd64 -t "initialed85/camry-segment-producer:$CI_COMMIT_SHA" -t "initialed85/camry-segment-producer:latest" -f ./docker/segment-producer/Dockerfile .
+      - docker build --pull --platform=linux/amd64 -t "initialed85/camry-stream-producer:$CI_COMMIT_SHA" -t "initialed85/camry-stream-producer:latest" -f ./docker/stream-producer/Dockerfile .
+      - docker build --pull --platform=linux/amd64 -t "initialed85/camry-audio-detector:$CI_COMMIT_SHA" -t "initialed85/camry-audio-detector:latest" -f ./docker/audio-detector/Dockerfile .
+      # The frontend image is self-contained (node:lts builder, npm ci from the lockfile, react-scripts
+      # build, then nginx) and builds with CI unset inside the image, which matters: react-scripts turns
+      # warnings into errors when CI=true, so building it in a step instead would be a different test.
+      - docker build --pull --platform=linux/amd64 -t "initialed85/camry-frontend:$CI_COMMIT_SHA" -t "initialed85/camry-frontend:latest" -f ./docker/frontend/Dockerfile .
+      - docker push "initialed85/camry-api:$CI_COMMIT_SHA"
+      - docker push "initialed85/camry-segment-producer:$CI_COMMIT_SHA"
+      - docker push "initialed85/camry-stream-producer:$CI_COMMIT_SHA"
+      - docker push "initialed85/camry-audio-detector:$CI_COMMIT_SHA"
+      - docker push "initialed85/camry-frontend:$CI_COMMIT_SHA"
+      - docker image push initialed85/camry-api:latest
+      - docker image push initialed85/camry-segment-producer:latest
+      - docker image push initialed85/camry-stream-producer:latest
+      - docker image push initialed85/camry-audio-detector:latest
+      - docker image push initialed85/camry-frontend:latest
+      # Print the digests that home-ops is about to be pointed at. The sha tag is what the manifest pins;
+      # the digest is what proves the push landed and what to compare `.status.containerStatuses[].imageID`
+      # against when a pod looks like it did not move.
+      # Measured on this machine with docker/cli: `image inspect` has no `.Repository`/`.Tag` key (that is a
+      # `docker images` field), so this form dies with a template parsing error and takes the step with it.
+      - docker image inspect --format 'tags={{.RepoTags}} digests={{.RepoDigests}}' "initialed85/camry-api:$CI_COMMIT_SHA" "initialed85/camry-segment-producer:$CI_COMMIT_SHA" "initialed85/camry-stream-producer:$CI_COMMIT_SHA" "initialed85/camry-audio-detector:$CI_COMMIT_SHA" "initialed85/camry-frontend:$CI_COMMIT_SHA"
+      - docker system df
+
+  # A step counts as a plugin when it has no `commands`, no `entrypoint` and no `environment`
+  # (pipeline/frontend/yaml/types/container.go:IsPlugin), which is why everything below is `settings:`.
+  # `settings:` values are passed through VERBATIM - Woodpecker does not expand `$CI_COMMIT_SHA` there
+  # (compiler/settings/params.go) - so the plugin derives the tag from the step environment itself. A list
+  # of plain strings arrives comma-joined, not JSON (params.go:148 strings.Join(in, ",")), and the plugin
+  # accepts both; this is the five-images-one-commit shape memebrary and mqtt_things use.
+  #
+  # `image` must be spelled exactly as home-ops spells it in
+  # clusters/dev/applications/camry/kustomization.yaml (and as the StatefulSet spells `image:`), which for
+  # Camry means WITHOUT the `docker.io/` prefix. The images transformer matches the name string, not a
+  # normalised reference; a mismatch would record an entry that matches nothing and Argo would report Synced
+  # with the pods unchanged. The plugin greps the rendered tree for `image: <name>:<tag>` and fails loudly
+  # instead.
+  - name: deploy-home-ops
+    image: docker.io/initialed85/wp-kustomize-deploy:latest
+    depends_on: [build-and-push]
+    settings:
+      image:
+        - initialed85/camry-api
+        - initialed85/camry-segment-producer
+        - initialed85/camry-stream-producer
+        - initialed85/camry-audio-detector
+        - initialed85/camry-frontend
+      dir: clusters/dev/applications/camry
+    backend_options:
+      kubernetes:
+        secrets:
+          # The env name IS the plugin setting (PLUGIN_<KEY>), so this mapping is the whole contract.
+          - name: home-ops-deploy-key
+            key: id_ed25519
+            target:
+              env: PLUGIN_DEPLOY_KEY
+          - name: home-ops-deploy-key
+            key: known_hosts
+            target:
+              env: PLUGIN_KNOWN_HOSTS
+
+when:
+  - event: push
+    branch: main

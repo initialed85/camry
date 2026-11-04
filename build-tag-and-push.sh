@@ -2,6 +2,12 @@
 
 set -e
 
+# This is the hand-run equivalent of the publish pipeline, .woodpecker/build.yaml, which runs on every push
+# to main: it builds the same images, tags them $CI_COMMIT_SHA as well as :latest, and then commits that sha
+# into home-ops (clusters/dev/applications/camry/kustomization.yaml) so Argo CD rolls the cluster. This script
+# publishes images and nothing else - it does not, and cannot, deploy. Prefer the pipeline; use this when you
+# want the bytes without the deploy, or when CI is down.
+
 # this block ensures we can invoke this script from anywhere and have it automatically change to this folder first
 pushd "$(dirname -- "${BASH_SOURCE[0]}")" >/dev/null 2>&1
 function teardown() {
@@ -21,10 +27,12 @@ GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/api -trimpath -x ./cmd/a
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/segment-producer -trimpath -x ./cmd/segment_producer
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/fix-thumbnails -trimpath -x ./cmd/fix_thumbnails
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/stream-producer -trimpath -x ./cmd/stream_producer
+GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ./tmp/audio-detector -trimpath -x ./cmd/audio_detector
 
 docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-api:latest -f ./docker/api/Dockerfile .
 docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-segment-producer:latest -f ./docker/segment-producer/Dockerfile .
 docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-stream-producer:latest -f ./docker/stream-producer/Dockerfile .
+docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-audio-detector:latest -f ./docker/audio-detector/Dockerfile .
 docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-frontend:latest -f ./docker/frontend/Dockerfile .
 
 # docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-object-detector:frozen -f ./docker/object-detector/Dockerfile --build-arg BASE_IMAGE=pytorch/pytorch:2.14.0-cuda13.2-cudnn9-runtime .
@@ -42,6 +50,7 @@ docker build --progress=plain --platform=linux/amd64 -t initialed85/camry-fronte
 docker image push initialed85/camry-api:latest
 docker image push initialed85/camry-segment-producer:latest
 docker image push initialed85/camry-stream-producer:latest
+docker image push initialed85/camry-audio-detector:latest
 docker image push initialed85/camry-frontend:latest
 
 # docker image push initialed85/camry-object-detector:frozen

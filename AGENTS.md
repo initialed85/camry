@@ -291,7 +291,11 @@ The frontend build currently emits an existing `openapi-react-query` source-map 
 
 ## Runtime/deployment builds
 
-`build-tag-and-push.sh` builds and pushes all images. The object-detector CUDA/PyTorch image is very large and can take a long time to build/push. If only generated/API code changed, a targeted API build is usually sufficient:
+**CI is the publish and deploy path.** `.woodpecker/ci.yaml` gates and builds images without pushing; `.woodpecker/build.yaml` (push to `main` only) is the pipeline that publishes: it re-runs the test gate (two files are two independent pipelines with no ordering between them, so a publish cannot rely on the test lane finishing), compiles the five Go binaries into `./tmp/`, builds and pushes `initialed85/camry-{api,segment-producer,stream-producer,audio-detector,frontend}` tagged `$CI_COMMIT_SHA` **and** `:latest`, then runs the shared plugin `initialed85/wp-kustomize-deploy` to commit that sha into `home-ops/clusters/dev/applications/camry/kustomization.yaml`. Argo CD's auto-sync rolls the workloads. Nothing in that chain needs a laptop or a manual `kubectl`.
+
+Because home-ops now pins sha tags, `:latest` is no longer what the cluster runs for those five workloads. `git revert` the kustomize commit is the rollback (the tag is immutable, so the old bytes come back); editing a camry image tag by hand with `kubectl` is undone by Argo's selfHeal, and editing `kustomization.yaml` by hand fights the next pipeline run. `camry-object-detector` (`:latest` on the nvidia pool, `:frozen-amd` on the AMD pool) and the third-party images stay unpinned — see the comment in that kustomization: the images transformer matches on name and ignores the tag it replaces, so one `images:` entry for that name would move both pools onto one build. Distinct image names are the prerequisite for pinning it.
+
+`build-tag-and-push.sh` is the hand-run equivalent — it publishes images and never deploys. The object-detector CUDA/PyTorch image is very large and can take a long time to build/push. If only generated/API code changed, a targeted API build is usually sufficient:
 
 ```sh
 GOOS=linux GOARCH=amd64 CGO_ENABLED=0 \
@@ -302,7 +306,7 @@ docker build --platform=linux/amd64 \
 docker image push initialed85/camry-api:latest
 ```
 
-For frontend-only changes, avoid `build-tag-and-push.sh`: it also builds/pushes every other workload, including the large object-detector image. Build and push just the frontend image:
+A hand build is invisible to the cluster until something points at it: either push a sha tag and commit it to `kustomization.yaml` yourself, or let the next pipeline run pick the commit up. For frontend-only changes, avoid `build-tag-and-push.sh`: it also builds/pushes every other workload, including the large object-detector image. Build and push just the frontend image:
 
 ```sh
 docker build --progress=plain --platform=linux/amd64 \
@@ -311,7 +315,7 @@ docker image push initialed85/camry-frontend:latest
 docker buildx imagetools inspect docker.io/initialed85/camry-frontend:latest
 ```
 
-The deployment uses mutable `:latest` with `imagePullPolicy: Always`; confirm the published digest and `linux/amd64` manifest before restarting anything. For a complete release, use the project script as requested.
+The deployment uses mutable `:latest` with `imagePullPolicy: Always` for the workloads CI does not pin (object-detector, and the third-party images); confirm the published digest and `linux/amd64` manifest before restarting anything. For a complete release, push to `main` and let `.woodpecker/build.yaml` do it.
 
 ## Kubernetes rollout checks
 
