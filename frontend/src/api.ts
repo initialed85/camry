@@ -9,7 +9,7 @@ export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
       staleTime: 1000 * 60, // 1 minute,
-      gcTime: 1000 * 60 * 60 * 24 * 7, // 7 days
+      gcTime: 1000 * 60 * 60 * 24 * 14, // 14 days
       refetchInterval: 1000 * 5, // 5 second
       refetchIntervalInBackground: true,
       refetchOnMount: true,

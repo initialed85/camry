@@ -137,7 +137,7 @@ func claimVideo(ctx context.Context, db *pgxpool.Pool, settings Settings) (*api.
 	)
 
 	// Rows older than the prune horizon are deleted before the UI can reach them
-	// (the DateSlider spans 7 days), so claiming them spends CPU on footage that
+	// (the DateSlider spans 14 days), so claiming them spends CPU on footage that
 	// is about to disappear. MaxAgeDays 0 disables the bound.
 	where := fmt.Sprintf(
 		"%s IS NULL AND %s = false AND %s IN ('needs detection', 'needs tracking')",

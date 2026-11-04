@@ -95,7 +95,7 @@ CLAIM_LEASE_SECONDS = int(os.getenv("CLAIM_LEASE_SECONDS", "1200"))
 # A segment whose file cannot be decoded is not work, and re-claiming it every
 # lease expiry is a loop, not a retry. It is quarantined as `failed` with a
 # lease this far out: `failed` is not claimable, fix.sql does not requeue it,
-# and prune deletes the row together with the file at 7 days.
+# and prune deletes the row together with the file at 14 days.
 UNOPENABLE_LEASE_SECONDS = int(os.getenv("UNOPENABLE_LEASE_SECONDS", str(7 * 24 * 60 * 60)))
 
 

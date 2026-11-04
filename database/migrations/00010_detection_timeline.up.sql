@@ -42,7 +42,7 @@ WITH detections AS (
     max(seen_at) AS last_seen_at
   FROM public.detection
   WHERE deleted_at IS NULL
-    AND seen_at >= date_trunc('hour', now()) - interval '7 days'
+    AND seen_at >= date_trunc('hour', now()) - interval '14 days'
   GROUP BY date_trunc('hour', seen_at), camera_id
 ), tracks AS (
   -- Objects are counted in the hour their track started, so the row reads as "new objects in this
@@ -57,7 +57,7 @@ WITH detections AS (
     max(ended_at) AS last_seen_at
   FROM public.track
   WHERE deleted_at IS NULL
-    AND started_at >= date_trunc('hour', now()) - interval '7 days'
+    AND started_at >= date_trunc('hour', now()) - interval '14 days'
   GROUP BY date_trunc('hour', started_at), camera_id
 )
 SELECT

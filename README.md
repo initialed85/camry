@@ -64,7 +64,7 @@ A cache key is a URL, so anything that changes over time has to be in the URL.
 
 - nginx: the SPA shell (`/`, `/index.html`) is `no-store` - a cached shell is a stale bundle outliving
   a deploy. `/static/` is content-hashed, so `public, max-age=31536000, immutable`; `/media/` segment
-  and thumbnail names are final once recorded, so 7 days, matching prune.
+  and thumbnail names are final once recorded, so 14 days, matching prune.
 - The API's own `Cache-Control` comes from djangolang's heuristic (`pkg/server/browser_cache.go`): 1 s
   when the query carries no timestamp bound, 60 s when a bound sits within an hour of now, and 1 h for
   a settled historic window. A bound in the far future reads as *historic*, so a live ceiling is
